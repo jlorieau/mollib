@@ -193,6 +193,7 @@ class Molecule(dict):
 
         :identifier:  Either a filename, path, or pdb code.
         """
+        self.name = identifier
         self.read_identifier(identifier)
         super(Molecule, self).__init__(*args, **kwargs)
 
