@@ -24,8 +24,6 @@ jlorieau/mollib/master/mollib.py)
 
 ## Releases
 
-## Releases
-
 - v1.3: 20160728. Initial release with Python 2 and Pythong 3 compatibility.
   [v1.3.tar.gz](https://github.com/jlorieau/mollib/archive/v1.3.tar.gz)
   [v1.3.zip](https://github.com/jlorieau/mollib/archive/v1.3.zip)
