@@ -1,24 +1,16 @@
 """
-General report renderer.
+General Report Renderer
 
-author: J Lorieau
-
-Copyright 2016
+   @Author:             Justin L Lorieau <jlorieau>
+   @Date:               2016-07-31T12:32:10-05:00
+   @Last modified by:   jlorieau
+   @Last modified time: 2016-08-01T09:28:27-05:00
+   @License:            Copyright 2016
 """
+
 import os
 import subprocess
-
-class SectionRenderer(object):
-
-    name = None
-    header = "## {name}"
-
-    def __init__(self, name):
-        self.name = name
-        self.header = self.header.format(name=name)
-
-    def contents(self):
-        return ""
+from section_renderers import *
 
 
 class ReportRenderer(object):
@@ -36,6 +28,8 @@ class ReportRenderer(object):
             :title:     The title of the report.
 
         [Optional parameters]
+            :template_filename: The filename of the template file used to render
+                                the report.
             :output_filename:   The filename of the output file. If this is not
                                 specified, it will be constructed from the
                                 class's output_filename and title.
@@ -85,11 +79,6 @@ class ReportRenderer(object):
 
         return contents
 
-class PandocRenderer(ReportRenderer):
-
-    @staticmethod
-    def test_renderer():
-        pass
 
 ### Tests ###
 import unittest
