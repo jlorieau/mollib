@@ -4,7 +4,7 @@ Section Renderer
    @Author:             Justin L Lorieau <jlorieau>
    @Date:               2016-08-01T08:01:00-05:00
    @Last modified by:   jlorieau
-   @Last modified time: 2016-08-01T13:44:05-05:00
+   @Last modified time: 2016-08-01T14:38:45-05:00
    @License:            Copyright 2016
 """
 
@@ -71,7 +71,10 @@ class TableSection(SectionRenderer):
         self.rows.append([str(i) for i in row])
 
     def content(self):
-        """Renders a string for a markdown table."""
+        """Renders a string for a markdown table.
+
+        Note that this renders multiline tables in pandoc.
+        """
         # Find the largest item for each column
         column_widths = [len(c) for c in self.column_titles]
 
@@ -104,7 +107,7 @@ class TableSection(SectionRenderer):
         for row in self.rows:
             table += ' '.join([item.center(width+2) for item, width in
                                zip(row, column_widths)])
-            table += '\n'
+            table += '\n\n'
 
         # Add bottom bar
         table += '-'*total_length + '\n\n'
@@ -155,9 +158,12 @@ class TestSectionRenderer(unittest.TestCase):
 "-----------------------------------------------------------------------\n"
 "    one           two         three           four          and more   \n"
 "------------ ------------- ------------ --------------- ---------------\n"
-"     1             2            3              4              +++      \n"
-"    1.0           2.0          3.0            4.0             +++      \n"
-" first item   second item   third item   a fourth item   an extra item \n"
+"     1             2            3              4              +++      \n\n"
+
+"    1.0           2.0          3.0            4.0             +++      \n\n"
+
+" first item   second item   third item   a fourth item   an extra item \n\n"
+
 "-----------------------------------------------------------------------\n\n")
 
         self.assertEqual(content, target_content)
