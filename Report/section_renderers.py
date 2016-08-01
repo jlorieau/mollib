@@ -4,7 +4,7 @@ Section Renderer
    @Author:             Justin L Lorieau <jlorieau>
    @Date:               2016-08-01T08:01:00-05:00
    @Last modified by:   jlorieau
-   @Last modified time: 2016-08-01T10:50:02-05:00
+   @Last modified time: 2016-08-01T13:44:05-05:00
    @License:            Copyright 2016
 """
 
@@ -15,6 +15,7 @@ class SectionRenderer(object):
     def contents(self):
         """Returns the string contents of the section."""
         return ""
+
 
 class HeaderSection(SectionRenderer):
     """Renders a section heading in Markdown.
@@ -31,6 +32,17 @@ class HeaderSection(SectionRenderer):
                 "#"*self.level +
                 " {title}".format(title=self.title) +
                 "\n")
+
+
+class TextSection(SectionRenderer):
+    """Renders a basic markdown text section."""
+
+    def __init__(self, text):
+        super(TextSection, self).__init__()
+        self.text = text
+
+    def content(self):
+        return self.text
 
 
 class TableSection(SectionRenderer):
@@ -95,7 +107,7 @@ class TableSection(SectionRenderer):
             table += '\n'
 
         # Add bottom bar
-        table += '-'*total_length + '\n'
+        table += '-'*total_length + '\n\n'
 
         return table
 
@@ -121,6 +133,15 @@ class TestSectionRenderer(unittest.TestCase):
         self.assertEqual(section.content(),
                          "\n## This header is level 2\n")
 
+    def test_text_section(self):
+        "Test the rendering of the TextSection."
+        text = """This is *my* text section with multiple
+        lines and spaces."""
+
+        section = TextSection(text)
+
+        self.assertEqual(section.content(), text)
+
     def test_table_section(self):
         "Tests the rendering and spacing of the markdown table"
         section = TableSection(['one', 'two', 'three', 'four', 'and more'])
@@ -137,7 +158,7 @@ class TestSectionRenderer(unittest.TestCase):
 "     1             2            3              4              +++      \n"
 "    1.0           2.0          3.0            4.0             +++      \n"
 " first item   second item   third item   a fourth item   an extra item \n"
-"-----------------------------------------------------------------------\n")
+"-----------------------------------------------------------------------\n\n")
 
         self.assertEqual(content, target_content)
 
