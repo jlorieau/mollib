@@ -4,7 +4,7 @@ Section Renderer
    @Author:             Justin L Lorieau <jlorieau>
    @Date:               2016-08-01T08:01:00-05:00
    @Last modified by:   jlorieau
-   @Last modified time: 2016-08-01T10:42:04-05:00
+   @Last modified time: 2016-08-01T10:50:02-05:00
    @License:            Copyright 2016
 """
 
@@ -21,8 +21,8 @@ class HeaderSection(SectionRenderer):
     """
 
     def __init__(self, title, level=1):
-        super(HeaderSection, self).__init()
-        self.title = title
+        super(HeaderSection, self).__init__()
+        self.title = title.strip()
         self.level = level
 
 
@@ -107,7 +107,19 @@ class GraphSection(object):
 ### Tests ###
 import unittest
 
-class TestMolLib(unittest.TestCase):
+class TestSectionRenderer(unittest.TestCase):
+
+    def test_header_section(self):
+        "Tests the rendering of the HeaderSection."
+        # Test level one header
+        section = HeaderSection("My first section")
+        self.assertEqual(section.content(),
+                         "\n# My first section\n")
+
+        # Test level two header. Test strip spaces.
+        section = HeaderSection("     This header is level 2  ", level=2)
+        self.assertEqual(section.content(),
+                         "\n## This header is level 2\n")
 
     def test_table_section(self):
         "Tests the rendering and spacing of the markdown table"
