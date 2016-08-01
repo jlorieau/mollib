@@ -4,7 +4,7 @@ General Report Renderer
    @Author:             Justin L Lorieau <jlorieau>
    @Date:               2016-07-31T12:32:10-05:00
    @Last modified by:   jlorieau
-   @Last modified time: 2016-08-01T09:28:27-05:00
+   @Last modified time: 2016-08-01T13:52:46-05:00
    @License:            Copyright 2016
 """
 
@@ -37,6 +37,7 @@ class ReportRenderer(object):
         """
 
         self.title = title
+        self.renderers = []
 
         if 'output_filename' not in kwargs:
             self.output_filename = self.output_filename \
@@ -50,6 +51,10 @@ class ReportRenderer(object):
         for k,v in kwargs.values():
             if hasattr(self, k):
                 setattr(self, k, v)
+
+    def add_renderer(self, renderer):
+        """Adds a Renderer to this Report Renderer."""
+        self.renderers.append(renderer)
 
     def command_list(self):
         """Returns a list of commands and arguments to be executed by the
@@ -72,12 +77,13 @@ class ReportRenderer(object):
         args = self.command_list()
 
         process = subprocess.Popen(args=args, stdin=subprocess.PIPE)
-        process.communicate(input=self.contents())
+        process.communicate(input=self.content())
 
-    def contents(self):
-        contents = self.template
-
-        return contents
+    def content(self):
+        content = self.template + '\n'
+        content += '\n'.join([r.content() for r in self.renderers])
+        content += '\n'
+        return content
 
 
 ### Tests ###
@@ -86,12 +92,43 @@ import unittest
 class TestMolLib(unittest.TestCase):
 
     def test_report_renderer_header(self):
+        "Tests the proper placement of the title in the template."
         report = ReportRenderer('2KXA')
         self.assertIn('2KXA', report.template)
 
-    pass
+    def test_report_renderer_content(self):
+        "Tests the integration of multiple SectionRenderers"
+        report = ReportRenderer('My test report')
+
+        # The report template should not depend on an external file to work.
+        report.template = ('---\n'
+                          'title: My test report\n'
+                          'geometry: margin=1in\n'
+                          '---\n')
+
+        report.add_renderer(HeaderSection('My first title'))
+        report.add_renderer(TextSection('This is *my* text\n\nHere!!'))
+        report.add_renderer(HeaderSection('My sub-section', level=2))
+        report.add_renderer(TextSection('With its own _text_.'))
+
+        content = report.content()
+
+        target_content = ('---\n'
+                          'title: My test report\n'
+                          'geometry: margin=1in\n'
+                          '---\n'
+                          '\n\n'
+                          '# My first title\n\n'
+                          'This is *my* text\n\n'
+                          'Here!!\n\n'
+                          '## My sub-section\n\n'
+                          'With its own _text_.\n')
+
+        self.assertEqual(content, target_content)
+
 
     def test_render_pdf(self):
+        "Tests the create of the output pdf file"
         report = ReportRenderer('2KXA')
         report.renderPDF()
         self.assertTrue(os.path.isfile(report.output_filename))
