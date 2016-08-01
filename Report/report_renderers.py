@@ -4,7 +4,7 @@ General Report Renderer
    @Author:             Justin L Lorieau <jlorieau>
    @Date:               2016-07-31T12:32:10-05:00
    @Last modified by:   jlorieau
-   @Last modified time: 2016-08-01T13:52:46-05:00
+   @Last modified time: 2016-08-01T14:07:57-05:00
    @License:            Copyright 2016
 """
 
@@ -12,6 +12,10 @@ import os
 import subprocess
 from section_renderers import *
 
+template = ("---\n"
+            "title: {title}\n"
+            "geometry: margin=1in\n"
+            "---\n")
 
 class ReportRenderer(object):
 
@@ -45,8 +49,7 @@ class ReportRenderer(object):
         else:
             self.output_filename = kwargs['output_filename']
 
-        with open(self.template_filename) as f:
-            self.template = f.read().format(title=title)
+        self.template = template.format(title=title)
 
         for k,v in kwargs.values():
             if hasattr(self, k):
