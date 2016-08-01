@@ -23,42 +23,67 @@ class SectionRenderer(object):
 
 class ReportRenderer(object):
 
-    report_name = None
-    header_filename = 'template_header.md'
-    output_filename = '{report_name}_report.pdf'
+    template_filename = 'template_header.md'
+    output_filename = '{title}_report.pdf'
 
-    self.variables = {'author': None}
+    title = None
+    author = None
 
+    def __init__(self, title, **kwargs):
+        """Constructor
 
-    def __init__(self, report_name, **kwargs):
-        self.report_name = report_name
-        self.output_filename = self.output_filename \
-                                   .format(report_name=report_name)
-        with open(self.header_filename) as f:
-            self.header = f.read().format(report_name = report_name)
+        [Required parameters]
+            :title:     The title of the report.
+
+        [Optional parameters]
+            :output_filename:   The filename of the output file. If this is not
+                                specified, it will be constructed from the
+                                class's output_filename and title.
+            :author:            Author of the report.
+        """
+
+        self.title = title
+
+        if 'output_filename' not in kwargs:
+            self.output_filename = self.output_filename \
+                                       .format(title=title)
+        else:
+            self.output_filename = kwargs['output_filename']
+
+        with open(self.template_filename) as f:
+            self.template = f.read().format(title=title)
 
         for k,v in kwargs.values():
             if hasattr(self, k):
                 setattr(self, k, v)
 
-        self.variables = {}
+    def command_list(self):
+        """Returns a list of commands and arguments to be executed by the
+        renderer."""
+        args = ['pandoc',]
 
-        self.command = ["pandoc",]
-        if self.author is not None:
-            self.command += ["-V", "author:{author}".format(author=self.author)]
+        # Add variable definitions, if they're defined
+        for attr in ['title', 'author']:
+            value = getattr(self, attr, None)
+            if value is not None and type(value) == str:
+                args += ['-V', ':'.join((attr, value))]
 
-    def contents(self):
-        contents = self.header
-
-        return contents
+        # Add the output argument
+        args += ['-o', self.output_filename]
+        return args
 
     def renderPDF(self, filename=None):
         filename = filename if filename is not None else self.output_filename
 
-        args = self.command + \
-                ["-o", "{filename}".format(filename=filename)]
+        args = self.command_list()
+
         process = subprocess.Popen(args=args, stdin=subprocess.PIPE)
         process.communicate(input=self.contents())
+
+    def contents(self):
+        contents = self.template
+
+        return contents
 
 class PandocRenderer(ReportRenderer):
 
@@ -73,7 +98,7 @@ class TestMolLib(unittest.TestCase):
 
     def test_report_renderer_header(self):
         report = ReportRenderer('2KXA')
-        self.assertIn('2KXA', report.header)
+        self.assertIn('2KXA', report.template)
 
     pass
 

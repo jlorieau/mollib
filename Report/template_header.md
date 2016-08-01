@@ -1,4 +1,4 @@
 ---
-title: Report for {report_name}
+title: {title}
 geometry: margin=1in
 ---
