@@ -12,6 +12,8 @@ read and write functions in the Molecule class, and more sophisticated behavior
 can be added to the Molecule, Chain, Residue and Atom classes by deriving them
 and changing the chain_class, residue_class and atom_class of Molecule.
 
+TODO: Add a Model object that sits above Chain and below Molecule
+
 >>> mol=Molecule('2OED')
 >>> print(mol)
 Molecule:    1 chains, 56 residues, 862 atoms.
@@ -175,6 +177,18 @@ class Chain(dict):
     def atom_size(self):
         return len(list(self.atoms))
 
+    @property
+    def mass(self):
+            """ Returns the mass of the chain.
+
+            >>> mol = Molecule('3C9J')
+            >>> print("{:.2f}".format(mol['A'].mass)) # Chain A mass
+            2507.61
+            >>> print("{:.2f}".format(mol.mass)) # Total molecule mass
+            10030.44
+            """
+            return sum(a.mass for a in self.atoms)
+
 class Molecule(dict):
     "A class for molecular structures."
 
@@ -216,10 +230,20 @@ class Molecule(dict):
         return len(self)
 
     @property
+    def chains(self):
+        """Returns an iterator over all chains in this molecule.
+
+        >>> mol=Molecule('3C9J')
+        >>> print [c.id for c in mol.chains]
+        ['A', 'B', 'C', 'D']
+        """
+        return (c for k,c in sorted(self.items()))
+
+    @property
     def residues(self):
         """Returns an iterator over all residues in this molecule,
         sorted by residue number.
-        
+
         >>> mol=Molecule('2KXA')
         >>> print([r.number for r in mol.residues])
         [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24]
@@ -264,8 +288,8 @@ class Molecule(dict):
         >>> mol = Molecule('2KXA')
         >>> print("{:.3f} {:.3f} {:.3f}".format(*mol.center_of_mass))
         16.970 0.070 0.122
-        """        
-        
+        """
+
         x,y,z=(0,0,0)
         m_total = 0.
         for atom in self.atoms:
@@ -281,7 +305,7 @@ class Molecule(dict):
 
     def center(self):
         """Centers a molecule about its center_of_mass.
-        
+
         >>> mol = Molecule('2KXA')
         >>> print("{:.3f} {:.3f} {:.3f}".format(*mol.center_of_mass))
         16.970 0.070 0.122
@@ -379,10 +403,10 @@ class Molecule(dict):
             self.read_pdb(identifier)
         else:
             self.fetch_pdb(identifier)
-            
+
     def read_pdb(self, filename):
         "Reads in data from a PDB file."
-        
+
         with open(filename) as f:
             self.read_stream(f)
 
@@ -394,7 +418,7 @@ class Molecule(dict):
         if not os.path.isfile(path):
             urllib.urlretrieve(url, path)
         self.read_pdb(path)
-        
+
     def read_stream(self, stream):
         "Reads in data from a string stream."
 
@@ -416,7 +440,7 @@ class Molecule(dict):
                                "(?P<charge>[\d\s\.\-]{2})?"))
 
         # Find the ATOM lines and pull out the necessary data
-        atom_generator = filter(None, map(pdb_line.match, 
+        atom_generator = filter(None, map(pdb_line.match,
                                           stream.readlines()))
 
         # Retrieve a set from the match objects
