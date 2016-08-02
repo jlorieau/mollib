@@ -508,13 +508,23 @@ class Molecule(dict):
 
 #### TESTS ####
 import unittest
+import timeit
 
 class TestMolLib(unittest.TestCase):
 
-    pass
+    performance_tests = True
+
+    def test_large_molecule(self):
+        "Tests the parsing and performance of a very large protein complex."
+
+        if self.performance_tests:
+            id = '3H0G' # RNA Polymerase II from Schizosaccharomyces pombe
+            time = timeit.timeit("mol = Molecule('{id}')".format(id=id),
+                                 "from mollib import Molecule",number=1)
+            print("Loaded {id} in {time:.1f} seconds".format(id=id, time=time))
 
 
 if __name__ == "__main__":
     import doctest
-    doctest.testmod()
-#    unittest.main()
+    #doctest.testmod()
+    unittest.main()
