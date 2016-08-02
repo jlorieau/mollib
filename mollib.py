@@ -126,13 +126,10 @@ class Residue(dict):
                         'HIS': 'H', 'PRO': 'P', 'ARG': 'R', 'LYS': 'K'}
 
     def __init__(self, name, number, *args, **kwargs):
-        # The amino-acid must be one of the 20 known amino-acids.
-        name = name.upper()
-        assert name in self.one_letter_codes, \
-            "Amino-acid {} not recognized".format(name)
+        name = str(name).upper()
 
-        self.name = name                                # full name, i.e. MET
-        self.letter =  self.one_letter_codes[self.name] # letter code, ex: M
+        self.name = name                                         # full name,MET
+        self.letter =  self.one_letter_codes.get(self.name, 'X') # letter code
         self.number = number
         super(Residue, self).__init__(*args, **kwargs)
 
@@ -190,7 +187,7 @@ class Chain(dict):
             >>> print("{:.2f}".format(mol['A'].mass)) # Chain A mass
             2507.61
             >>> print("{:.2f}".format(mol.mass)) # Total molecule mass
-            10030.44
+            10164.55
             """
             return sum(a.mass for a in self.atoms)
 
@@ -200,6 +197,7 @@ class Molecule(dict):
     # TODO: add init() method to delete all atoms/residues of molecules
     # TODO: add translate method
     # TODO: add reset method to bring molecule back to its original state (keep track of source pdb file)
+    # TODO: only read first model
 
     # The following class-level attributes are used to customize the base or
     # derived Chain, Residue and Atom classes used in the molecule
@@ -228,9 +226,9 @@ class Molecule(dict):
     def chain_size(self):
         """Returns the number of chains.
 
-        >>> mol=Molecule('1HTM') # Influenza hemagglutinin, 6 subunits
+        >>> mol=Molecule('1HTM') # 6 subunits, 4 types of HOH
         >>> print(mol.chain_size)
-        6
+        10
         """
         return len(self)
 
@@ -240,7 +238,7 @@ class Molecule(dict):
 
         >>> mol=Molecule('3C9J')
         >>> print([c.id for c in mol.chains])
-        ['A', 'B', 'C', 'D']
+        ['A', 'B', 'B*', 'C', 'D']
         """
         return (c for k,c in sorted(self.items()))
 
@@ -274,7 +272,6 @@ class Molecule(dict):
 
 
     ### Molecular Properties ###
-    #TODO: replace atoms with different isotopes
 
     @property
     def mass(self):
@@ -443,7 +440,8 @@ class Molecule(dict):
 
         self.clear()
 
-        pdb_line = re.compile((r"ATOM  (?P<number>[\s\d]{5}) "
+        pdb_line = re.compile((r"(?P<type>ATOM  |HETATM)"
+                               "(?P<number>[\s\d]{5}) "
                                "(?P<name>[\s\w]{4})"
                                "(?P<alt_loc>[\w\s])"
                                "(?P<residue_name>[\w\s]{3}) "
@@ -458,7 +456,7 @@ class Molecule(dict):
                                "(?P<element>[\s\w]{2})"
                                "(?P<charge>[\d\s\.\-]{2})?"))
 
-        # Find the ATOM lines and pull out the necessary data
+        # Find the ATOM/HETATM lines and pull out the necessary data
         atom_generator = filter(None, map(pdb_line.match,
                                           stream.readlines()))
 
@@ -470,6 +468,12 @@ class Molecule(dict):
 
             # create Chain, if it doesn't already exist
             id = groupdict['chain']
+
+            # If this is a HETATM, then append a '*' to the chain name so that
+            # it doesn't overwrite protein chains.
+            if groupdict['type'] == 'HETATM':
+                id += '*'
+
             if id not in self:
                 chain = self.chain_class(id=id)
                 chain.molecule = self
@@ -512,5 +516,5 @@ class TestMolLib(unittest.TestCase):
 
 if __name__ == "__main__":
     import doctest
-    doctest.testmod(verbose=True)
+    doctest.testmod()
 #    unittest.main()
