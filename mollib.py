@@ -34,7 +34,11 @@ from itertools import chain as ichain
 from math import cos, sin, sqrt, pi
 import numpy as np
 
-import urllib
+try:
+    from urllib.request import urlretrieve
+except ImportError:
+    from urllib import urlretrieve
+
 import os.path
 
 ### Utility Functions
@@ -411,13 +415,19 @@ class Molecule(dict):
         with open(filename) as f:
             self.read_stream(f)
 
-    def fetch_pdb(self, pdb_code):
-        """Downloads/fetches a pdb file online."""
+    def fetch_pdb(self, pdb_code, load_cached=True):
+        """Downloads/fetches a pdb file online.
+
+        >>> mol = Molecule('2KXA')
+        >>> mol.fetch_pdb(pdb_code='2KXA', load_cached=False) # force download
+        >>> print(mol)
+        Molecule:    1 chains, 24 residues, 332 atoms.
+        """
         url = 'http://ftp.rcsb.org/download/{}.pdb'.format(pdb_code)
         path = os.path.join('/tmp',pdb_code) + '.pdb'
 
-        if not os.path.isfile(path):
-            urllib.urlretrieve(url, path)
+        if not os.path.isfile(path) or not load_cached:
+            urlretrieve(url, path)
         self.read_pdb(path)
 
     def read_stream(self, stream):
