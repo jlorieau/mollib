@@ -527,6 +527,7 @@ class Molecule(dict):
 
 #### TESTS ####
 import unittest
+import doctest
 import timeit
 
 class TestMolLib(unittest.TestCase):
@@ -562,6 +563,5 @@ class TestMolLib(unittest.TestCase):
         assert False
 
 if __name__ == "__main__":
-    import doctest
-    #doctest.testmod()
+    doctest.testmod()
     unittest.main()
