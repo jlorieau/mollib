@@ -418,6 +418,14 @@ class Molecule(dict):
     def fetch_pdb(self, pdb_code, load_cached=True):
         """Downloads/fetches a pdb file online.
 
+        [Required Parameters]
+        :pdb_code:     The 4 alphanumeric character PDB code to load.
+
+        [Optional Parameters]
+        :load_cached:  If true, this will first look for a locally downloaded
+                       file to load before trying to download the file from
+                       the PDB.
+
         >>> mol = Molecule('2KXA')
         >>> mol.fetch_pdb(pdb_code='2KXA', load_cached=False) # force download
         >>> print(mol)
