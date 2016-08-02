@@ -12,7 +12,8 @@ read and write functions in the Molecule class, and more sophisticated behavior
 can be added to the Molecule, Chain, Residue and Atom classes by deriving them
 and changing the chain_class, residue_class and atom_class of Molecule.
 
-TODO: Add a Model object that sits above Chain and below Molecule
+TODO: Add a Ensemble object that sits above Chain and below Molecule. It can
+      contain HETATM molecules
 
 >>> mol=Molecule('2OED')
 >>> print(mol)
@@ -234,7 +235,7 @@ class Molecule(dict):
         """Returns an iterator over all chains in this molecule.
 
         >>> mol=Molecule('3C9J')
-        >>> print [c.id for c in mol.chains]
+        >>> print([c.id for c in mol.chains])
         ['A', 'B', 'C', 'D']
         """
         return (c for k,c in sorted(self.items()))
