@@ -104,8 +104,10 @@ class Atom(Primitive):
                  'residue', 'chain', 'molecule')
     optional  = ('charge', 'residue', 'chain', 'molecule')
 
+    # Atom molecular weights. These must be labeled according the a str.title()
+    # function. eg. ZN becomes Zn.
     atom_Mw = {'H': 1.01, 'C': 12.01, 'N': 14.01, 'O': 16.00, 'Na': 22.99,
-               'P': 30.97, 'S': 32.07, 'Cl': 35.45}
+               'Mg': 24.31, 'P': 30.97, 'S': 32.07, 'Cl': 35.45, 'Zn': 65.38,}
 
     def __repr__(self):
         return u"{}-{}".format(self.residue,self.name) if self.residue else \
@@ -113,7 +115,7 @@ class Atom(Primitive):
 
     @property
     def mass(self):
-        return self.atom_Mw[self.element]
+        return self.atom_Mw[self.element.title()]
 
 
 class Residue(dict):
@@ -457,8 +459,25 @@ class Molecule(dict):
                                "(?P<charge>[\d\s\.\-]{2})?"))
 
         # Find the ATOM/HETATM lines and pull out the necessary data
-        atom_generator = filter(None, map(pdb_line.match,
-                                          stream.readlines()))
+
+        # Generator implementation 1: This generator function reads only the
+        # the first model. It's a little slower than implementation 2 (about
+        # 10%). It takes 6.0s to read 3H0G.
+        def generator():
+            for line in stream.readlines():
+                if line == 'ENDMDL':
+                    raise StopIteration
+                match = pdb_line.match(line)
+                if match:
+                    yield match
+
+        atom_generator = generator()
+
+        # Generator implementation 2: This generator is a little faster than
+        # generator 1, but it reads all of the models, saving only the last
+        # one. It takes 5.5 seconds on 5H0G
+        #atom_generator = filter(None, map(pdb_line.match,
+        #                                  stream.readlines()))
 
         # Retrieve a set from the match objects
         for match in atom_generator:
@@ -512,10 +531,11 @@ import timeit
 
 class TestMolLib(unittest.TestCase):
 
-    performance_tests = True
+    performance_tests = False
 
     def test_large_molecule(self):
         "Tests the parsing and performance of a very large protein complex."
+        import string
 
         if self.performance_tests:
             id = '3H0G' # RNA Polymerase II from Schizosaccharomyces pombe
@@ -523,6 +543,23 @@ class TestMolLib(unittest.TestCase):
                                  "from mollib import Molecule",number=1)
             print("Loaded {id} in {time:.1f} seconds".format(id=id, time=time))
 
+        mol = Molecule('3H0G')
+
+        # Test that all of the chains were read in correctly
+        chains = list(string.ascii_uppercase)[:24] # chains A-X
+        chains += ['A*', 'B*', 'C*', 'I*', 'J*', 'L*', 'M*', 'N*', 'O*', 'U*',
+        'V*', 'X*']
+        self.assertEqual([c.id for c in mol.chains], sorted(chains))
+        self.assertEqual(mol.chain_size, len(chains))
+
+        # Test the molecular mass of each chain
+        for chain in mol.chains:
+            self.assertGreater(chain.mass, 0.)
+
+        self.assertAlmostEqual(mol.mass, 833388.28, 2)
+
+    def test_multiple_models(self):
+        assert False
 
 if __name__ == "__main__":
     import doctest
