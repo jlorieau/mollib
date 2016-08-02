@@ -291,7 +291,7 @@ class Molecule(dict):
 
         >>> mol = Molecule('2KXA')
         >>> print("{:.3f} {:.3f} {:.3f}".format(*mol.center_of_mass))
-        16.970 0.070 0.122
+        16.938 -0.058 0.125
         """
 
         x,y,z=(0,0,0)
@@ -312,9 +312,10 @@ class Molecule(dict):
 
         >>> mol = Molecule('2KXA')
         >>> print("{:.3f} {:.3f} {:.3f}".format(*mol.center_of_mass))
-        16.970 0.070 0.122
+        16.938 -0.058 0.125
         >>> mol.center()
-        >>> print("{:.3f} {:.3f} {:.3f}".format(*mol.center_of_mass))
+        >>> # Center molecule. Map to absolute value to avoid values of -0.000
+        >>> print("{:.3f} {:.3f} {:.3f}".format(*map(abs, mol.center_of_mass)))
         0.000 0.000 0.000
         """
         com = self.center_of_mass
@@ -465,7 +466,7 @@ class Molecule(dict):
         # 10%). It takes 6.0s to read 3H0G.
         def generator():
             for line in stream.readlines():
-                if line == 'ENDMDL':
+                if line[0:6] == 'ENDMDL': # Skip if reading past the first model
                     raise StopIteration
                 match = pdb_line.match(line)
                 if match:
@@ -560,7 +561,14 @@ class TestMolLib(unittest.TestCase):
         self.assertAlmostEqual(mol.mass, 833388.28, 2)
 
     def test_multiple_models(self):
-        assert False
+        """Tests reading PDB files with multiple models. Only the first model
+        should be read in."""
+        mol = Molecule('2KXA') # 20 models
+
+        # These are the coordinates for this atom of the first model
+        self.assertEqual(mol['A'][3]['N'].x, 13.766)
+        self.assertEqual(mol['A'][3]['N'].y, -3.965)
+        self.assertEqual(mol['A'][3]['N'].z, 5.893)
 
 if __name__ == "__main__":
     doctest.testmod()
