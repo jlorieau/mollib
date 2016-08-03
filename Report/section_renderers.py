@@ -4,9 +4,12 @@ Section Renderer
    @Author:             Justin L Lorieau <jlorieau>
    @Date:               2016-08-01T08:01:00-05:00
    @Last modified by:   jlorieau
-   @Last modified time: 2016-08-02T21:36:55-05:00
+   @Last modified time: 2016-08-03T09:06:13-05:00
    @License:            Copyright 2016
 """
+# imports for tests
+import unittest
+
 
 class SectionRenderer(object):
     """An Abstract Base Class for report sections.
@@ -26,10 +29,9 @@ class HeaderSection(SectionRenderer):
         self.title = title.strip()
         self.level = level
 
-
     def content(self):
         return ("\n" +
-                "#"*self.level +
+                "#" * self.level +
                 " {title}".format(title=self.title) +
                 "\n")
 
@@ -87,40 +89,41 @@ class TableSection(SectionRenderer):
             column_widths[col_index] = max_width
 
         # Format the table headers. All of the items are centered
-        total_length = sum([width+3 for width in column_widths]) - 1
+        total_length = sum([width + 3 for width in column_widths]) - 1
 
         # Add top bar
-        table = '\n' + '-'*total_length + '\n'
+        table = '\n' + '-' * total_length + '\n'
 
         # Add headers
-        table += ' '.join([col.center(width+2) for col, width in
+        table += ' '.join([col.center(width + 2) for col, width in
                            zip(self.column_titles, column_widths)])
         table += '\n'
 
         # Add header bottom bars
-        table += ''. join(['-'*(width+2)
-                            if count==0 else ' ' + '-'*(width+2)
-                            for count,width in enumerate(column_widths)])
+        table += ''. join(['-' * (width + 2)
+                           if count == 0 else ' ' + '-' * (width + 2)
+                           for count, width in enumerate(column_widths)])
         table += '\n'
 
         # Add rows
         for row in self.rows:
-            table += ' '.join([item.center(width+2) for item, width in
+            table += ' '.join([item.center(width + 2) for item, width in
                                zip(row, column_widths)])
             table += '\n\n'
 
         # Add bottom bar
-        table += '-'*total_length + '\n\n'
+        table += '-' * total_length + '\n\n'
 
         return table
+
 
 class GraphSection(object):
     """Renders a graph section."""
     pass
 
 
-### Tests ###
-import unittest
+# Tests
+
 
 class TestSectionRenderer(unittest.TestCase):
 
@@ -159,11 +162,8 @@ class TestSectionRenderer(unittest.TestCase):
 "    one           two         three           four          and more   \n"
 "------------ ------------- ------------ --------------- ---------------\n"
 "     1             2            3              4              +++      \n\n"
-
 "    1.0           2.0          3.0            4.0             +++      \n\n"
-
 " first item   second item   third item   a fourth item   an extra item \n\n"
-
 "-----------------------------------------------------------------------\n\n")
 
         self.assertEqual(content, target_content)
