@@ -40,12 +40,13 @@ except ImportError:
 
 import os.path
 
-### Utility Functions
+# Utility Functions
+
 
 def convert(s):
     """Converts a string 's' into either an integer, float or string"""
     if isinstance(s, str):
-        s=s.strip()
+        s = s.strip()
     else:
         return None
     for t in int, float, str:
@@ -56,7 +57,7 @@ def convert(s):
     return None
 
 
-### MolLib Implementation
+# MolLib Implementation
 
 class PrimitiveMetaClass(type):
     """A Primitive Metaclass for properly assigning and collecting attributes,
@@ -66,12 +67,13 @@ class PrimitiveMetaClass(type):
         # This code adds 'optional' tuples from parent classes to the
         # 'optional' attribute of this class.
         parent_optional = tuple(*[getattr(base, 'optional')
-                                 for base in bases
-                                 if hasattr(base, 'optional')])
+                                  for base in bases
+                                  if hasattr(base, 'optional')])
         classDict['optional'] = classDict['optional'] + parent_optional \
             if 'optional' in classDict else parent_optional
 
         return type.__new__(meta, classname, bases, classDict)
+
 
 class Primitive(object):
     "The base for all objects."
@@ -90,7 +92,7 @@ class Primitive(object):
             .format(req_kwargs)
 
         # Assign the values
-        [setattr(self, kw, value) for kw,value in kwargs.items()
+        [setattr(self, kw, value) for kw, value in kwargs.items()
          if kw in self.__slots__]
 
         super(Primitive, self).__init__()
@@ -101,15 +103,15 @@ class Atom(Primitive):
 
     __slots__ = ('number', 'name', 'x', 'y', 'z', 'charge', 'element',
                  'residue', 'chain', 'molecule')
-    optional  = ('charge', 'residue', 'chain', 'molecule')
+    optional = ('charge', 'residue', 'chain', 'molecule')
 
     # Atom molecular weights. These must be labeled according the a str.title()
     # function. eg. ZN becomes Zn.
     atom_Mw = {'H': 1.01, 'C': 12.01, 'N': 14.01, 'O': 16.00, 'Na': 22.99,
-               'Mg': 24.31, 'P': 30.97, 'S': 32.07, 'Cl': 35.45, 'Zn': 65.38,}
+               'Mg': 24.31, 'P': 30.97, 'S': 32.07, 'Cl': 35.45, 'Zn': 65.38, }
 
     def __repr__(self):
-        return u"{}-{}".format(self.residue,self.name) if self.residue else \
+        return u"{}-{}".format(self.residue, self.name) if self.residue else \
             u"{}".format(self.name)
 
     @property
@@ -130,7 +132,7 @@ class Residue(dict):
         name = str(name).upper()
 
         self.name = name                                         # full name,MET
-        self.letter =  self.one_letter_codes.get(self.name, 'X') # letter code
+        self.letter = self.one_letter_codes.get(self.name, 'X')  # letter code
         self.number = number
         super(Residue, self).__init__(*args, **kwargs)
 
@@ -141,7 +143,7 @@ class Residue(dict):
     def atoms(self):
         """Returns an iterator over all atoms in this residue,
         sorted by atom number"""
-        return (atom for atom in sorted(self.values(), key=lambda a:a.number))
+        return (atom for atom in sorted(self.values(), key=lambda a: a.number))
 
     @property
     def atom_size(self):
@@ -182,15 +184,16 @@ class Chain(dict):
 
     @property
     def mass(self):
-            """ Returns the mass of the chain.
+        """ Returns the mass of the chain.
 
-            >>> mol = Molecule('3C9J')
-            >>> print("{:.2f}".format(mol['A'].mass)) # Chain A mass
-            2507.61
-            >>> print("{:.2f}".format(mol.mass)) # Total molecule mass
-            10164.55
-            """
-            return sum(a.mass for a in self.atoms)
+        >>> mol = Molecule('3C9J')
+        >>> print("{:.2f}".format(mol['A'].mass)) # Chain A mass
+        2507.61
+        >>> print("{:.2f}".format(mol.mass)) # Total molecule mass
+        10164.55
+        """
+        return sum(a.mass for a in self.atoms)
+
 
 class Molecule(dict):
     "A class for molecular structures."
@@ -217,9 +220,8 @@ class Molecule(dict):
 
     def __repr__(self):
         return (u"Molecule:"
-                 "    {} chains, {} residues, {} atoms." \
-                 .format(self.chain_size, self.residue_size, self.atom_size))
-
+                "    {} chains, {} residues, {} atoms."
+                .format(self.chain_size, self.residue_size, self.atom_size))
 
     ### Basic Accessors and Mutators ###
 
@@ -241,7 +243,7 @@ class Molecule(dict):
         >>> print([c.id for c in mol.chains])
         ['A', 'B', 'B*', 'C', 'D']
         """
-        return (c for k,c in sorted(self.items()))
+        return (c for k, c in sorted(self.items()))
 
     @property
     def residues(self):
@@ -264,13 +266,12 @@ class Molecule(dict):
         """Returns an iterator over all atoms in this molecule,
         sorted by atom number"""
         return (a for a in sorted(ichain(*[r.values() for r in
-                ichain(*[c.values() for c in self.values()])]),
-                key=lambda a:a.number))
+                                           ichain(*[c.values() for c in self.values()])]),
+                                  key=lambda a: a.number))
 
     @property
     def atom_size(self):
         return len(list(self.atoms))
-
 
     ### Molecular Properties ###
 
@@ -293,16 +294,15 @@ class Molecule(dict):
         16.938 -0.058 0.125
         """
 
-        x,y,z=(0,0,0)
+        x, y, z = (0, 0, 0)
         m_total = 0.
         for atom in self.atoms:
             mass = atom.mass
             m_total += mass
-            x += atom.x*mass
-            y += atom.y*mass
-            z += atom.z*mass
-        return (x/m_total, y/m_total, z/m_total)
-
+            x += atom.x * mass
+            y += atom.y * mass
+            z += atom.z * mass
+        return (x / m_total, y / m_total, z / m_total)
 
     ### Mutator Functions ###
 
@@ -327,13 +327,13 @@ class Molecule(dict):
         "Rotates a molecule by the Euler z-y-z angles in degrees."
 
         # Trig.
-        sin_a = sin(alpha*pi/180.)
-        sin_b = sin(beta*pi/180.)
-        sin_g = sin(gamma*pi/180.)
+        sin_a = sin(alpha * pi / 180.)
+        sin_b = sin(beta * pi / 180.)
+        sin_g = sin(gamma * pi / 180.)
 
-        cos_a = cos(alpha*pi/180.)
-        cos_b = cos(beta*pi/180.)
-        cos_g = cos(gamma*pi/180.)
+        cos_a = cos(alpha * pi / 180.)
+        cos_b = cos(beta * pi / 180.)
+        cos_g = cos(gamma * pi / 180.)
 
         m = np.matrix([[-sin_a * sin_g + cos_a * cos_b * cos_g,
                         cos_a * sin_g + sin_a * cos_b * cos_g,
@@ -346,7 +346,7 @@ class Molecule(dict):
                         cos_b]])
         for atom in self.atoms:
             v = np.matrix([atom.x, atom.y, atom.z]).T
-            v_new = np.dot(m,v)
+            v_new = np.dot(m, v)
             v_new = v_new.tolist()
             atom.x, atom.y, atom.z = v_new[0][0], v_new[1][0], v_new[2][0]
 
@@ -380,21 +380,21 @@ class Molecule(dict):
                          "\n")
 
             for count, atom in enumerate(self.atoms, 1):
-                atom_parms = {'line_type':'ATOM',
-                              'atom_num':count,
-                              'atom_name':atom.name,
-                              'alt_loc':'',
-                              'res_name':atom.residue.name,
-                              'chain':atom.chain,
-                              'res_number':atom.residue.number,
-                              'icode':'',
-                              'x':atom.x,
-                              'y':atom.y,
-                              'z':atom.z,
-                              'occupancy':1,
-                              'B_factor':0,
-                              'element':atom.element,
-                              'charge':atom.charge}
+                atom_parms = {'line_type': 'ATOM',
+                              'atom_num': count,
+                              'atom_name': atom.name,
+                              'alt_loc': '',
+                              'res_name': atom.residue.name,
+                              'chain': atom.chain,
+                              'res_number': atom.residue.number,
+                              'icode': '',
+                              'x': atom.x,
+                              'y': atom.y,
+                              'z': atom.z,
+                              'occupancy': 1,
+                              'B_factor': 0,
+                              'element': atom.element,
+                              'charge': atom.charge}
                 f.write(atom_line.format(**atom_parms))
 
     def read_identifier(self, identifier):
@@ -431,7 +431,7 @@ class Molecule(dict):
         Molecule:    1 chains, 24 residues, 332 atoms.
         """
         url = 'http://ftp.rcsb.org/download/{}.pdb'.format(pdb_code)
-        path = os.path.join('/tmp',pdb_code) + '.pdb'
+        path = os.path.join('/tmp', pdb_code) + '.pdb'
 
         if not os.path.isfile(path) or not load_cached:
             urlretrieve(url, path)
@@ -465,7 +465,7 @@ class Molecule(dict):
         # 10%). It takes 6.0s to read 3H0G.
         def generator():
             for line in stream.readlines():
-                if line[0:6] == 'ENDMDL': # Skip if reading past the first model
+                if line[0:6] == 'ENDMDL':  # Skip if reading past the first model
                     raise StopIteration
                 match = pdb_line.match(line)
                 if match:
@@ -476,12 +476,12 @@ class Molecule(dict):
         # Generator implementation 2: This generator is a little faster than
         # generator 1, but it reads all of the models, saving only the last
         # one. It takes 5.5 seconds on 5H0G
-        #atom_generator = filter(None, map(pdb_line.match,
+        # atom_generator = filter(None, map(pdb_line.match,
         #                                  stream.readlines()))
 
         # Retrieve a set from the match objects
         for match in atom_generator:
-            groupdict = {field_name:convert(field_value)
+            groupdict = {field_name: convert(field_value)
                          for field_name, field_value
                          in match.groupdict().items()}
 
@@ -502,7 +502,7 @@ class Molecule(dict):
 
             # create Residue, if it doesn't already exist
             number, name = (groupdict[i] for i in ('residue_number',
-                            'residue_name'))
+                                                   'residue_name'))
             if number not in chain:
                 try:
                     residue = self.residue_class(number=number, name=name)
@@ -516,7 +516,7 @@ class Molecule(dict):
             # create the Atom. The following code overwrites atoms duplicate
             # in atom name
             name = groupdict['name']
-            atom_dict = {k:v for k,v in groupdict.items()
+            atom_dict = {k: v for k, v in groupdict.items()
                          if k in Atom.__slots__}
             atom = self.atom_class(**atom_dict)
             atom.residue = residue
@@ -530,6 +530,7 @@ import unittest
 import doctest
 import timeit
 
+
 class TestMolLib(unittest.TestCase):
 
     performance_tests = False
@@ -539,17 +540,17 @@ class TestMolLib(unittest.TestCase):
         import string
 
         if self.performance_tests:
-            id = '3H0G' # RNA Polymerase II from Schizosaccharomyces pombe
+            id = '3H0G'  # RNA Polymerase II from Schizosaccharomyces pombe
             time = timeit.timeit("mol = Molecule('{id}')".format(id=id),
-                                 "from mollib import Molecule",number=1)
+                                 "from mollib import Molecule", number=1)
             print("Loaded {id} in {time:.1f} seconds".format(id=id, time=time))
 
         mol = Molecule('3H0G')
 
         # Test that all of the chains were read in correctly
-        chains = list(string.ascii_uppercase)[:24] # chains A-X
+        chains = list(string.ascii_uppercase)[:24]  # chains A-X
         chains += ['A*', 'B*', 'C*', 'I*', 'J*', 'L*', 'M*', 'N*', 'O*', 'U*',
-        'V*', 'X*']
+                   'V*', 'X*']
         self.assertEqual([c.id for c in mol.chains], sorted(chains))
         self.assertEqual(mol.chain_size, len(chains))
 
@@ -562,7 +563,7 @@ class TestMolLib(unittest.TestCase):
     def test_multiple_models(self):
         """Tests reading PDB files with multiple models. Only the first model
         should be read in."""
-        mol = Molecule('2KXA') # 20 models
+        mol = Molecule('2KXA')  # 20 models
 
         # These are the coordinates for this atom of the first model
         self.assertEqual(mol['A'][3]['N'].x, 13.766)
