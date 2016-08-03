@@ -112,8 +112,9 @@ class Atom(Primitive):
 
     # Atom molecular weights. These must be labeled according the a str.title()
     # function. eg. ZN becomes Zn.
-    atom_Mw = {'H': 1.01, 'C': 12.01, 'N': 14.01, 'O': 16.00, 'Na': 22.99,
-               'Mg': 24.31, 'P': 30.97, 'S': 32.07, 'Cl': 35.45, 'Zn': 65.38, }
+    atom_Mw = {'H': 1.01, 'C': 12.01, '13C': 13.00, 'N': 14.01, '15N': 15.00,
+               'O': 16.00, 'Na': 22.99, 'Mg': 24.31, 'P': 30.97, 'S': 32.07,
+               'Cl': 35.45, 'Zn': 65.38, }
 
     def __repr__(self):
         return u"{}-{}".format(self.residue, self.name) if self.residue else \
@@ -153,6 +154,16 @@ class Residue(dict):
     @property
     def atom_size(self):
         return len(list(self.atoms))
+
+    @property
+    def mass(self):
+        """ Returns the mass of the residue.
+
+        >>> mol = Molecule('2KXA')
+        >>> print("{:.2f}".format(mol['A'][3].mass)) # Phe-3 mass
+        147.19
+        """
+        return sum(a.mass for a in self.atoms)
 
 
 class Chain(dict):
@@ -330,6 +341,70 @@ class Molecule(dict):
             atom.x, atom.y, atom.z = v_new[0][0], v_new[1][0], v_new[2][0]
 
         return None
+
+    def add_atom(self, name, x, y, z, charge, element, residue, **kwargs):
+        """Adds an atom to the molecule.
+
+        >>> mol = Molecule('2KXA')
+        >>> print ('{:.2f}, {:.2f}'.format(mol.mass, mol['A'][3].mass))
+        2445.07, 147.19
+        >>> mol.add_atom('C3', 0.0, 0.0, 0.0, 0., 'C', mol['A'][3])
+        >>> print ('{:.2f}, {:.2f}'.format(mol.mass, mol['A'][3].mass))
+        2457.08, 159.20
+        """
+        kwargs['number'] = -1
+        kwargs['name'] = name
+        kwargs['x'] = x
+        kwargs['y'] = y
+        kwargs['z'] = z
+        kwargs['charge'] = charge
+        kwargs['element'] = element
+
+        atom = self.atom_class(**kwargs)
+        atom.residue = residue
+        atom.chain = residue.chain
+        atom.molecule = self
+        residue[name] = atom
+
+    def del_atom(self, atom):
+        """Deletes the specified atom (object) from the molecule.
+
+        >>> mol = Molecule('2KXA')
+        >>> print ('{:.2f}, {:.2f}'.format(mol.mass, mol['A'][3].mass))
+        2445.07, 147.19
+        >>> mol.del_atom(mol['A'][3]['N'])
+        >>> print ('{:.2f}, {:.2f}'.format(mol.mass, mol['A'][3].mass))
+        2431.06, 133.18
+        """
+        del atom.residue[atom.name]
+
+    def strip_atoms(self, element):
+        """Deletes all atoms with the given element (name, i.e. 'H')
+
+        >>> mol = Molecule('2KXA')
+        >>> print('{:.2f}'.format(mol.mass))
+        2445.07
+        >>> mol.strip_atoms('H')
+        >>> print('{:.2f}'.format(mol.mass))
+        2285.49
+        """
+        for atom in self.atoms:
+            if atom.element == element:
+                del atom.residue[atom.name]
+
+    def substitute_element(self, element_from, element_to):
+        """Substitutes all atoms of one element for another.
+
+        >>> mol = Molecule('2KXA')
+        >>> print('{:.2f}'.format(mol.mass))
+        2445.07
+        >>> mol.substitute_element('C', '13C')
+        >>> print('{:.2f}'.format(mol.mass))
+        2559.91
+        """
+        for atom in self.atoms:
+            if atom.element == element_from:
+                atom.element = element_to
 
     # Read and Write Methods
 
