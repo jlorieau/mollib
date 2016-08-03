@@ -12,8 +12,7 @@ read and write functions in the Molecule class, and more sophisticated behavior
 can be added to the Molecule, Chain, Residue and Atom classes by deriving them
 and changing the chain_class, residue_class and atom_class of Molecule.
 
-TODO: Add a Ensemble object that sits above Chain and below Molecule. It can
-      contain HETATM molecules
+TODO: Add a Ensemble object that sits above Chain and below Molecule.
 
 >>> mol=Molecule('2OED')
 >>> print(mol)
@@ -569,7 +568,3 @@ class TestMolLib(unittest.TestCase):
         self.assertEqual(mol['A'][3]['N'].x, 13.766)
         self.assertEqual(mol['A'][3]['N'].y, -3.965)
         self.assertEqual(mol['A'][3]['N'].z, 5.893)
-
-if __name__ == "__main__":
-    doctest.testmod()
-    unittest.main()

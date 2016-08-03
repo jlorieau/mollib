@@ -1,2 +1,2 @@
-from report_renderers import ReportRenderer
-from section_renderers import *
+from .report_renderers import ReportRenderer
+from .section_renderers import *

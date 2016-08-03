@@ -4,7 +4,7 @@ Section Renderer
    @Author:             Justin L Lorieau <jlorieau>
    @Date:               2016-08-01T08:01:00-05:00
    @Last modified by:   jlorieau
-   @Last modified time: 2016-08-01T14:38:45-05:00
+   @Last modified time: 2016-08-02T21:36:55-05:00
    @License:            Copyright 2016
 """
 
@@ -167,9 +167,3 @@ class TestSectionRenderer(unittest.TestCase):
 "-----------------------------------------------------------------------\n\n")
 
         self.assertEqual(content, target_content)
-
-
-if __name__ == "__main__":
-    import doctest
-    doctest.testmod(verbose=True)
-    unittest.main()

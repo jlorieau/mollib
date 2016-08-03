@@ -1,1 +1,1 @@
-from mollib import *
+from .mollib import *

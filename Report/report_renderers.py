@@ -4,13 +4,13 @@ General Report Renderer
    @Author:             Justin L Lorieau <jlorieau>
    @Date:               2016-07-31T12:32:10-05:00
    @Last modified by:   jlorieau
-   @Last modified time: 2016-08-01T14:07:57-05:00
+   @Last modified time: 2016-08-02T21:36:38-05:00
    @License:            Copyright 2016
 """
 
 import os
 import subprocess
-from section_renderers import *
+from .section_renderers import *
 
 template = ("---\n"
             "title: {title}\n"
@@ -80,7 +80,7 @@ class ReportRenderer(object):
         args = self.command_list()
 
         process = subprocess.Popen(args=args, stdin=subprocess.PIPE)
-        process.communicate(input=self.content())
+        process.communicate(input=self.content().encode())
 
     def content(self):
         content = self.template + '\n'
@@ -135,8 +135,3 @@ class TestMolLib(unittest.TestCase):
         report = ReportRenderer('2KXA')
         report.renderPDF()
         self.assertTrue(os.path.isfile(report.output_filename))
-
-if __name__ == "__main__":
-    import doctest
-    doctest.testmod(verbose=True)
-    unittest.main()

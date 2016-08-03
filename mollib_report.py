@@ -4,14 +4,14 @@ Report Renderer for MolLib
    @Author:             Justin L Lorieau <jlorieau>
    @Date:               2016-07-31T12:32:10-05:00
    @Last modified by:   jlorieau
-   @Last modified time: 2016-08-01T14:42:48-05:00
+   @Last modified time: 2016-08-02T21:37:10-05:00
    @License:            Copyright 2016
 """
 
 import os
-from mollib import Molecule
-from Report import ReportRenderer
-from Report import HeaderSection, TextSection, TableSection
+from .mollib import Molecule
+from .Report import ReportRenderer
+from .Report import HeaderSection, TextSection, TableSection
 
 
 class MoleculeReportRenderer(ReportRenderer):
@@ -58,8 +58,3 @@ class TestMoleculeReportRenderer(unittest.TestCase):
         report = MoleculeReportRenderer(molecule=mol)
 
         report.renderPDF()
-
-if __name__ == "__main__":
-    import doctest
-    doctest.testmod(verbose=True)
-    unittest.main()
