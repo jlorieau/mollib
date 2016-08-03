@@ -33,6 +33,11 @@ from itertools import chain as ichain
 from math import cos, sin, sqrt, pi
 import numpy as np
 
+# Imports for tests
+import unittest
+import doctest
+import timeit
+
 try:
     from urllib.request import urlretrieve
 except ImportError:
@@ -131,7 +136,7 @@ class Residue(dict):
     def __init__(self, name, number, *args, **kwargs):
         name = str(name).upper()
 
-        self.name = name                                         # full name,MET
+        self.name = name                                        # full name,MET
         self.letter = self.one_letter_codes.get(self.name, 'X')  # letter code
         self.number = number
         super(Residue, self).__init__(*args, **kwargs)
@@ -200,7 +205,8 @@ class Molecule(dict):
 
     # TODO: add init() method to delete all atoms/residues of molecules
     # TODO: add translate method
-    # TODO: add reset method to bring molecule back to its original state (keep track of source pdb file)
+    # TODO: add reset method to bring molecule back to its original state
+    #       (keep track of source pdb file)
     # TODO: only read first model
 
     # The following class-level attributes are used to customize the base or
@@ -223,7 +229,7 @@ class Molecule(dict):
                 "    {} chains, {} residues, {} atoms."
                 .format(self.chain_size, self.residue_size, self.atom_size))
 
-    ### Basic Accessors and Mutators ###
+    # Basic Accessors and Mutators
 
     @property
     def chain_size(self):
@@ -252,7 +258,8 @@ class Molecule(dict):
 
         >>> mol=Molecule('2KXA')
         >>> print([r.number for r in mol.residues])
-        [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24]
+        [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, \
+20, 21, 22, 23, 24]
         """
         return (r for r in sorted(ichain(*[r.values() for r in self.values()]),
                                   key=lambda r: r.number))
@@ -266,45 +273,15 @@ class Molecule(dict):
         """Returns an iterator over all atoms in this molecule,
         sorted by atom number"""
         return (a for a in sorted(ichain(*[r.values() for r in
-                                           ichain(*[c.values() for c in self.values()])]),
+                                           ichain(*[c.values() for c in
+                                                    self.values()])]),
                                   key=lambda a: a.number))
 
     @property
     def atom_size(self):
         return len(list(self.atoms))
 
-    ### Molecular Properties ###
-
-    @property
-    def mass(self):
-        """ Returns the mass of the molecule.
-
-        >>> mol = Molecule('2KXA')
-        >>> print("{:.2f}".format(mol.mass))
-        2445.07
-        """
-        return sum(a.mass for a in self.atoms)
-
-    @property
-    def center_of_mass(self):
-        """ Returns the center-of-mass x,y,z vector of the molecule.
-
-        >>> mol = Molecule('2KXA')
-        >>> print("{:.3f} {:.3f} {:.3f}".format(*mol.center_of_mass))
-        16.938 -0.058 0.125
-        """
-
-        x, y, z = (0, 0, 0)
-        m_total = 0.
-        for atom in self.atoms:
-            mass = atom.mass
-            m_total += mass
-            x += atom.x * mass
-            y += atom.y * mass
-            z += atom.z * mass
-        return (x / m_total, y / m_total, z / m_total)
-
-    ### Mutator Functions ###
+    # Mutator Functions
 
     def center(self):
         """Centers a molecule about its center_of_mass.
@@ -352,7 +329,7 @@ class Molecule(dict):
 
         return None
 
-    ### Read and Write Methods ###
+    # Read and Write Methods
 
     def write_pdb(self, filename):
         "Write data to a PDB file."
@@ -465,7 +442,8 @@ class Molecule(dict):
         # 10%). It takes 6.0s to read 3H0G.
         def generator():
             for line in stream.readlines():
-                if line[0:6] == 'ENDMDL':  # Skip if reading past the first model
+                # Read only the first model. Skip the rest
+                if line[0:6] == 'ENDMDL':
                     raise StopIteration
                 match = pdb_line.match(line)
                 if match:
@@ -524,12 +502,39 @@ class Molecule(dict):
             atom.molecule = self
             residue[name] = atom
 
+    # Molecular Properties
 
-#### TESTS ####
-import unittest
-import doctest
-import timeit
+    @property
+    def mass(self):
+        """ Returns the mass of the molecule.
 
+        >>> mol = Molecule('2KXA')
+        >>> print("{:.2f}".format(mol.mass))
+        2445.07
+        """
+        return sum(a.mass for a in self.atoms)
+
+    @property
+    def center_of_mass(self):
+        """ Returns the center-of-mass x,y,z vector of the molecule.
+
+        >>> mol = Molecule('2KXA')
+        >>> print("{:.3f} {:.3f} {:.3f}".format(*mol.center_of_mass))
+        16.938 -0.058 0.125
+        """
+
+        x, y, z = (0, 0, 0)
+        m_total = 0.
+        for atom in self.atoms:
+            mass = atom.mass
+            m_total += mass
+            x += atom.x * mass
+            y += atom.y * mass
+            z += atom.z * mass
+        return (x / m_total, y / m_total, z / m_total)
+
+
+# TESTS #
 
 class TestMolLib(unittest.TestCase):
 
