@@ -207,7 +207,9 @@ class Molecule(dict):
     # TODO: add translate method
     # TODO: add reset method to bring molecule back to its original state
     #       (keep track of source pdb file)
-    # TODO: only read first model
+    # TODO: Add methods to add hydrogens
+    # TODO: Add atom notes
+    # TODO: Add atom isotopes
 
     # The following class-level attributes are used to customize the base or
     # derived Chain, Residue and Atom classes used in the molecule
@@ -458,6 +460,7 @@ class Molecule(dict):
         #                                  stream.readlines()))
 
         # Retrieve a set from the match objects
+        last_residue = None
         for match in atom_generator:
             groupdict = {field_name: convert(field_value)
                          for field_name, field_value
@@ -486,6 +489,8 @@ class Molecule(dict):
                     residue = self.residue_class(number=number, name=name)
                     residue.chain = chain
                     residue.molecule = self
+                    residue.last_residue = last_residue
+                    last_residue = residue
                     chain[number] = residue
                 except:
                     continue
@@ -574,3 +579,14 @@ class TestMolLib(unittest.TestCase):
         self.assertEqual(mol['A'][3]['N'].x, 13.766)
         self.assertEqual(mol['A'][3]['N'].y, -3.965)
         self.assertEqual(mol['A'][3]['N'].z, 5.893)
+
+    def test_residue_ordering(self):
+        """Tests the linked lists of residues."""
+        mol = Molecule('2KXA')
+
+        last_residues = [r.last_residue.number
+                         if r.last_residue is not None else None
+                         for r in mol.residues]
+        self.assertEqual(last_residues,
+                         [None, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13,
+                          14, 15, 16, 17, 18, 19, 20, 21, 22, 23])
