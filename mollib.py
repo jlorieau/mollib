@@ -35,7 +35,7 @@ import numpy as np
 # Imports for tests
 import unittest
 import doctest
-import timeit
+from datetime import datetime
 
 try:
     from urllib.request import urlretrieve
@@ -46,19 +46,49 @@ import os.path
 
 # Utility Functions
 
+# regex matching functions for string, floats and ints
+re_str = re.compile(r'[a-zA-Z]')
+re_float = re.compile(r'-?\d+\.\d*')
+re_int = re.compile(r'-?\d+')
+
 
 def convert(s):
-    """Converts a string 's' into either an integer, float or string"""
-    if isinstance(s, str):
-        s = s.strip()
-    else:
-        return None
-    for t in int, float, str:
-        try:
-            return t(s)
-        except ValueError:
-            continue
-    return None
+    """Convert a string 's' into either an integer, float or string.
+    Strips spaces.
+
+    >>> value = convert('  -6.065')
+    >>> print("{} {}".format(value, isinstance(value, float)))
+    -6.065 True
+    >>> value = convert('  3 ')
+    >>> print("{} {}".format(value, isinstance(value, int)))
+    3 True
+    >>> value = convert(' 1232 ')
+    >>> print("{} {}".format(value, isinstance(value, int)))
+    1232 True
+    >>> value = convert('HETATM  ')
+    >>> print("{} {}".format(value, isinstance(value, str)))
+    HETATM True
+    >>> value = convert(' HZ3  ')
+    >>> print("{} {}".format(value, isinstance(value, str)))
+    HZ3 True
+    """
+    # If the string contains any letter, return as a string
+    m = re_str.search(s)
+    if m:
+        return str(s).strip()
+
+    # Try extracting float
+    m = re_float.search(s)
+    if m:
+        return float(m.group())
+
+    # Try extracting int
+    m = re_int.search(s)
+    if m:
+        return int(m.group())
+
+    # All else fails, try just returning the string
+    return str(s).strip()
 
 
 # MolLib Implementation
@@ -652,10 +682,15 @@ class TestMolLib(unittest.TestCase):
         import string
 
         if self.performance_tests:
+            # 5.5s - default atom generator
+            # 6.0s - swithching to atom generator 2
+            # 3.6s - after switching convert function to regexes. (2.75MB/s)
             id = '3H0G'  # RNA Polymerase II from Schizosaccharomyces pombe
-            time = timeit.timeit("mol = Molecule('{id}')".format(id=id),
-                                 "from mollib import Molecule", number=1)
-            print("Loaded {id} in {time:.1f} seconds".format(id=id, time=time))
+            start = datetime.now()
+            Molecule(id)
+            stop = datetime.now()
+            time = (stop - start).total_seconds()
+            print("Loaded {id} in {time} seconds".format(id=id, time=time))
 
         mol = Molecule('3H0G')
 
