@@ -105,7 +105,9 @@ class Primitive(object):
 class Atom(Primitive):
     "An atom in a residue."
 
-    __slots__ = ('number', 'name', 'x', 'y', 'z', 'charge', 'element',
+    # These are the required field. 'pos' (position)is the coordinate position
+    # of the atom, as a numpy array
+    __slots__ = ('number', 'name', 'pos', 'charge', 'element',
                  'residue', 'chain', 'molecule')
     optional = ('charge', 'residue', 'chain', 'molecule')
 
@@ -308,9 +310,9 @@ class Molecule(dict):
         """
         com = self.center_of_mass
         for atom in self.atoms:
-            atom.x -= com[0]
-            atom.y -= com[1]
-            atom.z -= com[2]
+            atom.pos[0] -= com[0]
+            atom.pos[1] -= com[1]
+            atom.pos[2] -= com[2]
 
     def rotate_zyz(self, alpha, beta, gamma):
         "Rotates a molecule by the Euler z-y-z angles in degrees."
@@ -334,28 +336,26 @@ class Molecule(dict):
                         sin_a * sin_b,
                         cos_b]])
         for atom in self.atoms:
-            v = np.matrix([atom.x, atom.y, atom.z]).T
+            v = np.matrix([atom.pos[0], atom.pos[1], atom.pos[2]]).T
             v_new = np.dot(m, v)
             v_new = v_new.tolist()
-            atom.x, atom.y, atom.z = v_new[0][0], v_new[1][0], v_new[2][0]
+            atom.pos = np.array((v_new[0][0], v_new[1][0], v_new[2][0]))
 
         return None
 
-    def add_atom(self, name, x, y, z, charge, element, residue, **kwargs):
+    def add_atom(self, name, pos, charge, element, residue, **kwargs):
         """Adds an atom to the molecule.
 
         >>> mol = Molecule('2KXA')
         >>> print ('{:.2f}, {:.2f}'.format(mol.mass, mol['A'][3].mass))
         2445.07, 147.19
-        >>> mol.add_atom('C3', 0.0, 0.0, 0.0, 0., 'C', mol['A'][3])
+        >>> mol.add_atom('C3', (0.0, 0.0, 0.0), 0., 'C', mol['A'][3])
         >>> print ('{:.2f}, {:.2f}'.format(mol.mass, mol['A'][3].mass))
         2457.08, 159.20
         """
         kwargs['number'] = -1
         kwargs['name'] = name
-        kwargs['x'] = x
-        kwargs['y'] = y
-        kwargs['z'] = z
+        kwargs['pos'] = np.array(pos)
         kwargs['charge'] = charge
         kwargs['element'] = element
 
@@ -441,9 +441,9 @@ class Molecule(dict):
                               'chain': atom.chain,
                               'res_number': atom.residue.number,
                               'icode': '',
-                              'x': atom.x,
-                              'y': atom.y,
-                              'z': atom.z,
+                              'x': atom.pos[0],
+                              'y': atom.pos[1],
+                              'z': atom.pos[2],
                               'occupancy': 1,
                               'B_factor': 0,
                               'element': atom.element,
@@ -573,6 +573,11 @@ class Molecule(dict):
             # create the Atom. The following code overwrites atoms duplicate
             # in atom name
             name = groupdict['name']
+
+            # Reformat the x/y/z coordinates to a numpy array
+            groupdict['pos'] = np.array((groupdict.pop('x'),
+                                         groupdict.pop('y'),
+                                         groupdict.pop('z')))
             atom_dict = {k: v for k, v in groupdict.items()
                          if k in Atom.__slots__}
             atom = self.atom_class(**atom_dict)
@@ -602,15 +607,13 @@ class Molecule(dict):
         16.938 -0.058 0.125
         """
 
-        x, y, z = (0, 0, 0)
+        pos = np.array((0., 0., 0.))
         m_total = 0.
         for atom in self.atoms:
             mass = atom.mass
             m_total += mass
-            x += atom.x * mass
-            y += atom.y * mass
-            z += atom.z * mass
-        return (x / m_total, y / m_total, z / m_total)
+            pos += atom.pos*mass
+        return pos / m_total
 
 
 # TESTS #
@@ -650,9 +653,9 @@ class TestMolLib(unittest.TestCase):
         mol = Molecule('2KXA')  # 20 models
 
         # These are the coordinates for this atom of the first model
-        self.assertEqual(mol['A'][3]['N'].x, 13.766)
-        self.assertEqual(mol['A'][3]['N'].y, -3.965)
-        self.assertEqual(mol['A'][3]['N'].z, 5.893)
+        self.assertEqual(mol['A'][3]['N'].pos[0], 13.766)
+        self.assertEqual(mol['A'][3]['N'].pos[1], -3.965)
+        self.assertEqual(mol['A'][3]['N'].pos[2], 5.893)
 
     def test_residue_ordering(self):
         """Tests the linked lists of residues."""
