@@ -4,14 +4,17 @@ MolLib functions for calculating hydrogen bonds and hydrogen positions.
    @Author:             Justin L Lorieau <jlorieau>
    @Date:               2016-08-03T12:01:01-05:00
    @Last modified by:   jlorieau
-   @Last modified time: 2016-08-04T11:24:24-05:00
+   @Last modified time: 2016-08-04T13:04:43-05:00
    @License:            Copyright 2016
 """
-from mollib import Molecule
 from pprint import pprint
 from math import sqrt, pi, acos
 import numpy as np
-
+from mollib import Molecule
+try:
+    from util import vector_length, calc_vector
+except ImportError:
+    from .util import vector_length, calc_vector
 
 # This is the cutoff distance between N and O atoms to be considered a
 # hydrogen bond
@@ -21,22 +24,6 @@ hydrogen_bond_cutoff = 2.5  # Angstroms
 # 1. L. Yao, B. Vogeli, J. Ying, A. Bax, J. Am. Chem. Soc.
 # 130, 16518-20 (2008).
 nh_optimal = 1.023  # Angstroms
-
-
-def vector_length(vector):
-    "Returns the length (in A) of a vector"
-    return sqrt(sum([i*i for i in vector]))
-
-
-def calc_vector(atom_i, atom_j, normalize=True):
-    "Returns the vector between atoms 'i' and 'j' with optional normalization."
-    vec = atom_i.pos - atom_j.pos
-
-    if normalize:
-        length = vector_length(vec)
-        return vec / length
-    else:
-        return vec
 
 
 def add_backbone_hn(molecule):

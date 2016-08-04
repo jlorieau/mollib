@@ -31,7 +31,10 @@ import re
 from itertools import chain as ichain
 from math import cos, sin, sqrt, pi, atan2, acos
 import numpy as np
-from .util import vector_length, calc_vector
+try:
+    from util import vector_length, calc_vector
+except ImportError:
+    from .util import vector_length, calc_vector
 
 # Imports for tests
 import unittest
