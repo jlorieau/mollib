@@ -125,6 +125,31 @@ class Atom(Primitive):
     def mass(self):
         return self.atom_Mw[self.element.title()]
 
+    # Atom coordinate getters and setters
+    @property
+    def x(self):
+        return self.pos[0]
+
+    @x.setter
+    def x(self, value):
+        self.pos[0] = value
+
+    @property
+    def y(self):
+        return self.pos[1]
+
+    @y.setter
+    def y(self, value):
+        self.pos[1] = value
+
+    @property
+    def z(self):
+        return self.pos[2]
+
+    @z.setter
+    def z(self, value):
+        self.pos[2] = value
+
 
 class Residue(dict):
     "A residue in a chain."
