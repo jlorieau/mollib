@@ -4,7 +4,7 @@ MolLib functions for calculating hydrogen bonds and hydrogen positions.
    @Author:             Justin L Lorieau <jlorieau>
    @Date:               2016-08-03T12:01:01-05:00
    @Last modified by:   jlorieau
-   @Last modified time: 2016-08-04T13:04:43-05:00
+   @Last modified time: 2016-08-04T15:20:15-05:00
    @License:            Copyright 2016
 """
 from pprint import pprint
@@ -24,6 +24,37 @@ hydrogen_bond_cutoff = 2.5  # Angstroms
 # 1. L. Yao, B. Vogeli, J. Ying, A. Bax, J. Am. Chem. Soc.
 # 130, 16518-20 (2008).
 nh_optimal = 1.023  # Angstroms
+
+
+class HydrogenBond(object):
+    "A basic class for storing hydrogen bond information."
+
+    donor = None
+    acceptor = None
+    major_classification = ''
+    minor_classification = ''
+    distance = None
+    angle = None
+
+    def __init__(self, **kwargs):
+        for k, v in kwargs.items():
+            if not hasattr(self, k):
+                continue
+            setattr(self, k, v)
+
+    def __repr__(self):
+        s = "Hbond: "
+        if self.major_classification:
+            s += "{major}".format(major=self.major_classification)
+        if self.minor_classification:
+            s += "({minor})".format(minor=self.minor_classification)
+        s += ": "
+        s = s.ljust(30)  # Even the classification column
+        s += "don.({d}) - acc.({a}). ".format(d=self.donor,
+                                              a=self.acceptor)
+        s += 'R = {d:.1f} A, angle = {a:.0f} deg.'.format(d=self.distance,
+                                                          a=self.angle)
+        return s
 
 
 def add_backbone_hn(molecule):
@@ -110,10 +141,24 @@ def find_amide_hbond_partners(molecule):
             theta = acos(dot_product) * 180. / pi
 
             # Add it to the list of possible hydrogen bonds
-            possible_hbonds.append(['', o_i, h_j, r_ij, theta])
+            donor = None
+            acceptor = None
+            major_classification = ''
+            minor_classification = ''
+            distance = None
+            angle = None
+            hbond = HydrogenBond(donor=o_i, acceptor=h_j, distance=r_ij,
+                                 angle=theta)
+            possible_hbonds.append(hbond)
 
     hbonds = classify_amide_hbonds(possible_hbonds)
     return hbonds
+
+
+def find_alpha_helices(hbonds):
+    """Given a list of hbonds, this function will classify alpha-helices.
+    """
+    pass
 
 
 def classify_amide_hbonds(possible_hbonds):
@@ -124,34 +169,41 @@ def classify_amide_hbonds(possible_hbonds):
     126, 7281-92 (2004).
     """
     for hbond in possible_hbonds:
-        classification, o_i, h_j, r_oh, theta = hbond
+        donor = hbond.donor
+        acceptor = hbond.acceptor
+        distance = hbond.distance
+        angle = hbond.angle
 
         # Check alpha-helix
-        if all((h_j.residue.number - o_i.residue.number == 4,
-                r_oh < 2.3,
-                theta > (149.-30.) and theta < (149.+30.))):  # 149 +/- 30 deg
-            hbond[0] = 'bb HN: alpha-helix'
+        if all((acceptor.residue.number - donor.residue.number == 4,
+                distance < 2.3,
+                angle > (149.-30.) and angle < (149.+30.))):  # 149 +/- 30 deg
+            hbond.major_classification = 'bb HN'
+            hbond.minor_classification = 'alpha-helix'
             continue
 
         # Check 310-helix
-        if all((h_j.residue.number - o_i.residue.number == 3,
-                r_oh < 2.4,
-                theta > (114.-30.) and theta < (114.+30.))):  # 114 +/- 30 deg
-            hbond[0] = 'bb HN: 310-helix'
+        if all((acceptor.residue.number - donor.residue.number == 3,
+                distance < 2.4,
+                angle > (114.-30.) and angle < (114.+30.))):  # 114 +/- 30 deg
+            hbond.major_classification = 'bb HN'
+            hbond.minor_classification = '310-helix'
             continue
 
         # Check pi-helix. I guessed these theta angles since they're not in
         # the publication
-        if all((h_j.residue.number - o_i.residue.number == 3,
-                r_oh < 2.4,
-                theta > (149.-30.) and theta < (149.+30.))):  # 49 +/- 30 deg
-            hbond[0] = 'bb HN: pi-helix'
+        if all((acceptor.residue.number - donor.residue.number == 3,
+                distance < 2.4,
+                angle > (149.-30.) and angle < (149.+30.))):  # 49 +/- 30 deg
+            hbond.major_classification = 'bb HN'
+            hbond.minor_classification = 'pi-helix'
             continue
 
         # Check beta-sheet
-        if all((r_oh < 2.2,
-                theta > (155.-30.) and theta < (155.+30.))):  # 155 +/- 30 deg
-            hbond[0] = 'bb HN: sheet'
+        if all((distance < 2.2,
+                angle > (155.-30.) and angle < (155.+30.))):  # 155 +/- 30 deg
+            hbond.major_classification = 'bb HN'
+            hbond.minor_classification = 'beta sheet'
             continue
 
     # Clear weak isolated hydrogen bonds (i.e. r_oh > 2.4 Angstroms)
