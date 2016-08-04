@@ -1,5 +1,4 @@
-"""
-MolLib for Python
+"""MolLib for Python.
 
 Author: J Lorieau
 
@@ -137,7 +136,7 @@ class Residue(dict):
     def __init__(self, name, number, *args, **kwargs):
         name = str(name).upper()
 
-        self.name = name # full name, MET
+        self.name = name  # full name, MET
         self.letter = self.one_letter_codes.get(self.name, 'X')  # letter code
         self.number = number
         super(Residue, self).__init__(*args, **kwargs)
