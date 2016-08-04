@@ -4,12 +4,13 @@ MolLib functions for calculating hydrogen bonds and hydrogen positions.
    @Author:             Justin L Lorieau <jlorieau>
    @Date:               2016-08-03T12:01:01-05:00
    @Last modified by:   jlorieau
-   @Last modified time: 2016-08-03T19:20:59-05:00
+   @Last modified time: 2016-08-04T11:24:24-05:00
    @License:            Copyright 2016
 """
 from mollib import Molecule
 from pprint import pprint
 from math import sqrt, pi, acos
+import numpy as np
 
 
 # This is the cutoff distance between N and O atoms to be considered a
@@ -22,36 +23,20 @@ hydrogen_bond_cutoff = 2.5  # Angstroms
 nh_optimal = 1.023  # Angstroms
 
 
-def distance(atom_i, atom_j):
-    "Returns the distance (in A) between two atoms"
-    return sqrt((atom_i.x - atom_j.x)**2 +
-                (atom_i.y - atom_j.y)**2 +
-                (atom_i.z - atom_j.z)**2)
+def vector_length(vector):
+    "Returns the length (in A) of a vector"
+    return sqrt(sum([i*i for i in vector]))
 
 
 def calc_vector(atom_i, atom_j, normalize=True):
     "Returns the vector between atoms 'i' and 'j' with optional normalization."
-    x = atom_i.x - atom_j.x
-    y = atom_i.y - atom_j.y
-    z = atom_i.z - atom_j.z
+    vec = atom_i.pos - atom_j.pos
 
     if normalize:
-        r_ij = distance(atom_i, atom_j)
-        return (x/r_ij, y/r_ij, z/r_ij)
+        length = vector_length(vec)
+        return vec / length
     else:
-        return (x, y, z)
-
-
-def normalize_vector(vector):
-    "Returns the normalized vector and the vector length."
-    length = sqrt(sum(i*i for i in vector))
-    new_vector = [i/length for i in vector]
-    return new_vector, length
-
-
-def vector_dot(vector_i, vector_j):
-    "Calculates the dot product between two vectors"
-    return sum([i*j for i, j in zip(vector_i, vector_j)])
+        return vec
 
 
 def add_backbone_hn(molecule):
@@ -77,19 +62,15 @@ def add_backbone_hn(molecule):
         # Calculate the n-ca, n-c and bisector vectors
         nca = calc_vector(n, ca)
         nc = calc_vector(n, c)
-        bisect = (nca[0] + nc[0],
-                  nca[1] + nc[1],
-                  nca[2] + nc[2])
-        bisect, _ = normalize_vector(bisect)
+        bisect = nca + nc
+        length = vector_length(bisect)
+        bisect /= length
 
         # calculate the hn position along the bisector
-        hn = (bisect[0] * nh_optimal + n.x,
-              bisect[1] * nh_optimal + n.y,
-              bisect[2] * nh_optimal + n.z)
+        hn = bisect * nh_optimal + n.pos
 
         # Create the new 'HN' atom
-        mol.add_atom(name='HN', x=hn[0], y=hn[1], z=hn[2], charge=0.0,
-                     element='H', residue=res_i)
+        mol.add_atom(name='HN', pos=hn, charge=0.0, element='H', residue=res_i)
 
 
 def find_amide_hbond_partners(molecule):
@@ -129,16 +110,16 @@ def find_amide_hbond_partners(molecule):
 
             # Calculate the HN--O distance. If these aren't within
             # hydrogen_bond_cutoff then they're not hydrogen bonded
-            r_ij = distance(o_i, h_j)
+            ho_ij = calc_vector(h_j, o_i, normalize=False)
+            r_ij = vector_length(ho_ij)
             if r_ij > hydrogen_bond_cutoff:
                 continue
 
-            # Calculate the C-O--HN angle
-            ho = calc_vector(h_j, o_i)
-            co_i, _ = normalize_vector(co_i)
-            ho, _ = normalize_vector(ho)
+            # Calculate the C-O--HN angle. Vectors have to be normalized;
+            # co_i is already normalized, but ho_ij isn't yet.
+            ho_ij /= r_ij
 
-            dot_product = vector_dot(ho, co_i)
+            dot_product = np.dot(ho_ij, co_i)
             theta = acos(dot_product) * 180. / pi
 
             # Add it to the list of possible hydrogen bonds
