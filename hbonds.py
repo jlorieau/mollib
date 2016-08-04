@@ -4,27 +4,30 @@ MolLib functions for calculating hydrogen bonds and hydrogen positions.
    @Author:             Justin L Lorieau <jlorieau>
    @Date:               2016-08-03T12:01:01-05:00
    @Last modified by:   jlorieau
-   @Last modified time: 2016-08-03T17:25:26-05:00
+   @Last modified time: 2016-08-03T19:20:59-05:00
    @License:            Copyright 2016
 """
 from mollib import Molecule
 from pprint import pprint
 from math import sqrt, pi, acos
 
+
 # This is the cutoff distance between N and O atoms to be considered a
 # hydrogen bond
-hydrogen_bond_cutoff = 2.5 # Angstroms
+hydrogen_bond_cutoff = 2.5  # Angstroms
 
 # This is the optimum NH bond length in proteins.
 # 1. L. Yao, B. Vogeli, J. Ying, A. Bax, J. Am. Chem. Soc.
 # 130, 16518-20 (2008).
-nh_optimal = 1.023 # Angstroms
+nh_optimal = 1.023  # Angstroms
+
 
 def distance(atom_i, atom_j):
     "Returns the distance (in A) between two atoms"
     return sqrt((atom_i.x - atom_j.x)**2 +
                 (atom_i.y - atom_j.y)**2 +
                 (atom_i.z - atom_j.z)**2)
+
 
 def calc_vector(atom_i, atom_j, normalize=True):
     "Returns the vector between atoms 'i' and 'j' with optional normalization."
@@ -38,15 +41,18 @@ def calc_vector(atom_i, atom_j, normalize=True):
     else:
         return (x, y, z)
 
+
 def normalize_vector(vector):
     "Returns the normalized vector and the vector length."
     length = sqrt(sum(i*i for i in vector))
     new_vector = [i/length for i in vector]
     return new_vector, length
 
+
 def vector_dot(vector_i, vector_j):
     "Calculates the dot product between two vectors"
-    return sum([i*j for i,j in zip(vector_i, vector_j)])
+    return sum([i*j for i, j in zip(vector_i, vector_j)])
+
 
 def add_backbone_hn(molecule):
     """Function to calculate and add the backbone amide protons (HN).
@@ -85,8 +91,8 @@ def add_backbone_hn(molecule):
         mol.add_atom(name='HN', x=hn[0], y=hn[1], z=hn[2], charge=0.0,
                      element='H', residue=res_i)
 
-def find_amide_hbond_partners(molecule):
 
+def find_amide_hbond_partners(molecule):
     """Finds the hydrogen bond partners between CO and N based on distance.
 
 
@@ -107,7 +113,7 @@ def find_amide_hbond_partners(molecule):
     for res_i in molecule.residues:
         o_i = res_i.get('O', None)
         c_i = res_i.get('C', None)
-        if o_i is None or c_i is None: # Skip if carbonyl not found
+        if o_i is None or c_i is None:  # Skip if carbonyl not found
             continue
 
         # Construct the normalized vector for the c-o bond
@@ -123,7 +129,7 @@ def find_amide_hbond_partners(molecule):
 
             # Calculate the HN--O distance. If these aren't within
             # hydrogen_bond_cutoff then they're not hydrogen bonded
-            r_ij = distance(o_i, h_j);
+            r_ij = distance(o_i, h_j)
             if r_ij > hydrogen_bond_cutoff:
                 continue
 
@@ -141,6 +147,7 @@ def find_amide_hbond_partners(molecule):
     hbonds = classify_amide_hbonds(possible_hbonds)
     return hbonds
 
+
 def classify_amide_hbonds(possible_hbonds):
     """Takes a list of possible hbonds from 'find_hbond_partners' and
     classifies their type.
@@ -154,37 +161,37 @@ def classify_amide_hbonds(possible_hbonds):
         # Check alpha-helix
         if all((h_j.residue.number - o_i.residue.number == 4,
                 r_oh < 2.3,
-                theta > (149.-30.) and theta < (149.+30.))): # 149 +/- 30 deg
-            hbond[0] = 'bb HN: alpha-helix';
+                theta > (149.-30.) and theta < (149.+30.))):  # 149 +/- 30 deg
+            hbond[0] = 'bb HN: alpha-helix'
             continue
 
         # Check 310-helix
         if all((h_j.residue.number - o_i.residue.number == 3,
                 r_oh < 2.4,
-                theta > (114.-30.) and theta < (114.+30.))): # 114 +/- 30 deg
-            hbond[0] = 'bb HN: 310-helix';
+                theta > (114.-30.) and theta < (114.+30.))):  # 114 +/- 30 deg
+            hbond[0] = 'bb HN: 310-helix'
             continue
 
         # Check pi-helix. I guessed these theta angles since they're not in
         # the publication
         if all((h_j.residue.number - o_i.residue.number == 3,
                 r_oh < 2.4,
-                theta > (149.-30.) and theta < (149.+30.))): # 49 +/- 30 deg
-            hbond[0] = 'bb HN: pi-helix';
+                theta > (149.-30.) and theta < (149.+30.))):  # 49 +/- 30 deg
+            hbond[0] = 'bb HN: pi-helix'
             continue
 
         # Check beta-sheet
         if all((r_oh < 2.2,
-                theta > (155.-30.) and theta < (155.+30.))): # 155 +/- 30 deg
-            hbond[0] = 'bb HN: sheet';
+                theta > (155.-30.) and theta < (155.+30.))):  # 155 +/- 30 deg
+            hbond[0] = 'bb HN: sheet'
             continue
 
     # Clear weak isolated hydrogen bonds (i.e. r_oh > 2.4 Angstroms)
-    #possible_hbonds = [hbond for hbond in possible_hbonds
+    # possible_hbonds = [hbond for hbond in possible_hbonds
     #                   if hbond[0] != '' and hbond[3] < 2.4]
 
     # Remove non-contiguous secondary structure elements
-    #assert
+    # assert
     return possible_hbonds
 
 if __name__ == "__main__":
