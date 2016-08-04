@@ -29,8 +29,9 @@ Q2-CA 12.01
 
 import re
 from itertools import chain as ichain
-from math import cos, sin, sqrt, pi
+from math import cos, sin, sqrt, pi, atan2, acos
 import numpy as np
+from .util import vector_length, calc_vector
 
 # Imports for tests
 import unittest
@@ -184,6 +185,11 @@ class Atom(Primitive):
 class Residue(dict):
     "A residue in a chain."
 
+    # These are linked-list pointers to the next and previous residues. These
+    # attributes are populated during molecule creation
+    last_residue = None
+    next_residue = None
+
     one_letter_codes = {'ALA': 'A', 'GLY': 'G', 'SER': 'S', 'THR': 'T',
                         'MET': 'M', 'CYS': 'C', 'ILE': 'I', 'LEU': 'L',
                         'VAL': 'V', 'PHE': 'F', 'TYR': 'Y', 'TRP': 'W',
@@ -221,6 +227,57 @@ class Residue(dict):
         """
         return sum(a.mass for a in self.atoms)
 
+    @property
+    def ramachandran_angles(self):
+        """Return the Ramachandran angles for this residue.
+
+        >>> mol = Molecule('2KXA')
+        >>> print("{:.1f} {:.1f}".format(*mol['A'][3].ramachandran_angles))
+        -65.2 -48.3
+        >>> print("{} {:.1f}".format(*mol['A'][1].ramachandran_angles))
+        None -179.9
+        """
+        # Retrieve the appropriate atoms to calculate the ramachandran angles
+        c_prev = (self.last_residue['C']
+                  if self.last_residue is not None else None)
+        n = self['N']
+        ca = self['CA']
+        c = self['C']
+        n_next = (self.next_residue['N']
+                  if self.next_residue is not None else None)
+
+        angles = [None, None]  # Initial phi/psi angles are set to None
+        # Iterate over phi (angles[0]) and phi (angles[1]) to calculate the
+        # dihedrals
+        for item, a, b, c, d in [(0, c_prev, n, ca, c),   # phi
+                                 (1, n, ca, c, n_next)]:  # psi
+            # The atom has to exist to calculate a dihedral
+            if a is None or b is None or c is None or d is None:
+                continue
+
+            # Calculate the normalized vectors.
+            ab = calc_vector(a, b, normalize=True)
+            bc = calc_vector(b, c, normalize=True)
+            cd = calc_vector(c, d, normalize=True)
+
+            # The dihedral is the angle between the plans a-b-c and b-c-d
+            # The angle between these plans can be calculated from their
+            # normals (cross products)
+            n1 = np.cross(ab, bc)
+            n2 = np.cross(bc, cd)
+
+            # The angle between n1 and n2 can be calculated with acos. However
+            # the followin atan2 relationship returns a number between 0 and
+            # 2pi
+            m1 = np.cross(n1, bc)
+            x = np.dot(n1, n2)
+            y = np.dot(m1, n2)
+            angle = atan2(y, x) * 180. / np.pi
+
+            angles[item] = angle
+
+        return angles
+
 
 class Chain(dict):
     "A chain in a molecule."
@@ -256,7 +313,7 @@ class Chain(dict):
 
     @property
     def mass(self):
-        """ Returns the mass of the chain.
+        """Returns the mass of the chain.
 
         >>> mol = Molecule('3C9J')
         >>> print("{:.2f}".format(mol['A'].mass)) # Chain A mass
@@ -460,6 +517,20 @@ class Molecule(dict):
             if atom.element == element_from:
                 atom.element = element_to
 
+    def link_residues(self):
+        "Create doubly a linked list of all residues."
+        # Create the residue linked lists
+        last_residue = None
+        next_residue = None
+        for residue in self.residues:
+            # Special first residue
+            if last_residue is None:
+                last_residue = residue
+                continue
+            last_residue.next_residue = residue
+            residue.last_residue = last_residue
+            last_residue = residue
+
     # Read and Write Methods
 
     def write_pdb(self, filename):
@@ -589,7 +660,6 @@ class Molecule(dict):
         #                                  stream.readlines()))
 
         # Retrieve a set from the match objects
-        last_residue = None
         for match in atom_generator:
             groupdict = {field_name: convert(field_value)
                          for field_name, field_value
@@ -616,12 +686,11 @@ class Molecule(dict):
             if number not in chain:
                 try:
                     residue = self.residue_class(number=number, name=name)
+
                     residue.chain = chain
                     residue.molecule = self
-                    residue.last_residue = last_residue
-                    last_residue = residue
                     chain[number] = residue
-                except:
+                except KeyError:
                     continue
             residue = chain[number]
 
@@ -640,6 +709,8 @@ class Molecule(dict):
             atom.chain = chain
             atom.molecule = self
             residue[name] = atom
+
+        self.link_residues()
 
     # Molecular Properties
 
