@@ -4,8 +4,11 @@ MolLib functions for calculating hydrogen bonds and hydrogen positions.
    @Author:             Justin L Lorieau <jlorieau>
    @Date:               2016-08-03T12:01:01-05:00
    @Last modified by:   jlorieau
-   @Last modified time: 2016-08-04T21:06:03-05:00
+   @Last modified time: 2016-08-05T09:07:26-05:00
    @License:            Copyright 2016
+
+TODO: add hydrogenation functions for HA, HB, and so on
+TODO: add classification functions for hydrogen bonds
 """
 from pprint import pprint
 from math import sqrt, pi, acos
@@ -19,6 +22,11 @@ except ImportError:
     from .util import vector_length, calc_vector
     from .mollib import Molecule
     from . import settings
+
+
+def in_range(value, target, range):
+    "Test whether the value is in the range of the target."
+    return (target - range <= value <= target + range)
 
 
 class HydrogenBond(object):
@@ -52,6 +60,9 @@ class HydrogenBond(object):
         return s
 
 
+# add_one_sp2_h(molecule, atom_name, target_atom, atom_1, atom_2, bond_length)
+# add_one_sp3_h
+# add_two_sp3_h
 def add_backbone_hn(molecule):
     """Function to calculate and add the backbone amide protons (HN).
 
@@ -80,7 +91,7 @@ def add_backbone_hn(molecule):
         bisect /= length
 
         # calculate the hn position along the bisector
-        nh_optimal = settings.bond_length['NH']
+        nh_optimal = settings.bond_length['N-H']
         hn = bisect * nh_optimal + n.pos
 
         # Create the new 'HN' atom
@@ -89,8 +100,6 @@ def add_backbone_hn(molecule):
 
 def find_amide_hbond_partners(molecule):
     """Finds the hydrogen bond partners between CO and N based on distance.
-
-
 
     [Required]
     :molecule:         The MolLib molecule object. This function expects the
@@ -172,9 +181,6 @@ def classify_amide_beta_turns(hbond):
 
     if phi_1 is None or psi_1 is None or phi_2 is None or psi_2 is None:
         return None
-    print (res_0, res_0.ramachandran_angles,
-           res_1.ramachandran_angles, res_2.ramachandran_angles,
-           res_3.ramachandran_angles)
 
     if (-80. <= phi_1 <= -40.):  # -60 +/- 20 deg
         # psi_1: -30 +/- 20 deg, phi_2: -90 +/- 20 deg
@@ -216,29 +222,29 @@ def classify_amide_hbonds(possible_hbonds):
 
         # Check alpha-helix
         if all((acceptor.residue.number - donor.residue.number == 4,
-                distance < 2.3,
-                angle > (149.-30.) and angle < (149.+30.))):  # 149 +/- 30 deg
+                in_range(angle, settings.hbond_a_helix_angle,
+                         settings.hbond_a_helix_angle_threshold))):
             hbond.minor_classification = 'alpha-helix'
             continue
 
         # Check 310-helix
         if all((acceptor.residue.number - donor.residue.number == 3,
-                distance < 2.4,
-                angle > (114.-30.) and angle < (114.+30.))):  # 114 +/- 30 deg
+                in_range(angle, settings.hbond_310_helix_angle,
+                         settings.hbond_310_helix_angle_threshold))):
             hbond.minor_classification = '310-helix'
             continue
 
         # Check pi-helix. I guessed these theta angles since they're not in
         # the publication
-        if all((acceptor.residue.number - donor.residue.number == 3,
-                distance < 2.4,
-                angle > (149.-30.) and angle < (149.+30.))):  # 49 +/- 30 deg
+        if all((acceptor.residue.number - donor.residue.number == 5,
+                in_range(angle, settings.hbond_pi_helix_angle,
+                         settings.hbond_pi_helix_angle_threshold))):
             hbond.minor_classification = 'pi-helix'
             continue
 
         # Check beta-sheet
-        if all((distance < 2.2,
-                angle > (155.-30.) and angle < (155.+30.))):  # 155 +/- 30 deg
+        if in_range(angle, settings.hbond_beta_sheet_angle,
+                    settings.hbond_beta_sheet_angle_threshold):
             hbond.minor_classification = 'beta sheet'
             continue
 
