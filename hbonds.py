@@ -4,12 +4,13 @@ MolLib functions for calculating hydrogen bonds and hydrogen positions.
    @Author:             Justin L Lorieau <jlorieau>
    @Date:               2016-08-03T12:01:01-05:00
    @Last modified by:   jlorieau
-   @Last modified time: 2016-08-05T10:51:13-05:00
+   @Last modified time: 2016-08-05T12:48:52-05:00
    @License:            Copyright 2016
 
 TODO: add hydrogenation functions for HA, HB, and so on
 TODO: add classification functions for hydrogen bonds
 """
+import logging
 from pprint import pprint
 from math import sqrt, pi, acos
 import numpy as np
@@ -70,6 +71,10 @@ def add_h(molecule, strip_h=True):
     if strip_h:
         mol.strip_atoms(element='H')
 
+    def missing_message(atom_name, target_name):
+        "Message to display when a proton couldn't be added."
+        return '{} could not be added to {}.'.format(atom_name, target_name)
+
     for residue in mol.residues:
         # Pull out the relevent atoms
         n = residue.get('N', None)
@@ -79,17 +84,21 @@ def add_h(molecule, strip_h=True):
         c_prev = (residue.last_residue.get('C', None)
                   if residue.last_residue is not None else None)
 
-        # Add amide protons HN
-        if residue.name != 'PRO':
-            add_one_sp2_h(molecule=mol, atom_name='HN', target_atom=n,
-                          atom_1=ca, atom_2=c_prev,
-                          bond_length=settings.bond_length['N-H'])
+        # Add amide protons HN -- except prolines and the first residue
+        if residue.name != 'PRO' and residue.number > 1:
+            r = add_one_sp2_h(molecule=mol, atom_name='HN', target_atom=n,
+                              atom_1=ca, atom_2=c_prev,
+                              bond_length=settings.bond_length['N-H'])
+            if r is not True:  # Couldn't add atom
+                logging.warning(missing_message('HN', n))
 
         # add HA protons -- except for Gly
         if residue.name != 'GLY':
-            add_one_sp3_h(molecule=mol, atom_name='HA', target_atom=ca,
-                          atom_1=n, atom_2=cb, atom_3=c,
-                          bond_length=settings.bond_length['CA-HA'])
+            r = add_one_sp3_h(molecule=mol, atom_name='HA', target_atom=ca,
+                              atom_1=n, atom_2=cb, atom_3=c,
+                              bond_length=settings.bond_length['CA-HA'])
+            if r is not True:  # Couldn't add atom
+                logging.warning(missing_message('HA', ca))
 
 
 # add_two_sp3_h
@@ -169,9 +178,13 @@ def find_amide_hbond_partners(molecule):
     """Finds the hydrogen bond partners between CO and N based on distance.
 
     [Required]
-    :molecule:         The MolLib molecule object. This function expects the
-                       amide protons ('HN') to be correctly placed in
-                       the molecule.
+    :molecule:        The MolLib molecule object. This function expects the
+                      amide protons ('HN') to be correctly placed in
+                      the molecule.
+    :donor_atom_1_name:    The first donor atom object for the hbond. ex: 'O'
+    :donor_atom_2_name:    The second donor atom object for the hbond. ex: 'C'
+    :acceptor_atom_1_name: The first acceptor atom object for the hbond.
+                           ex: 'HN'
 
     [Returns]
     :possible_hbonds:  An annotated list of possible hydrogen bonds.
