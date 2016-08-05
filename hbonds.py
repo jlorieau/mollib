@@ -4,26 +4,21 @@ MolLib functions for calculating hydrogen bonds and hydrogen positions.
    @Author:             Justin L Lorieau <jlorieau>
    @Date:               2016-08-03T12:01:01-05:00
    @Last modified by:   jlorieau
-   @Last modified time: 2016-08-04T15:20:15-05:00
+   @Last modified time: 2016-08-04T21:06:03-05:00
    @License:            Copyright 2016
 """
 from pprint import pprint
 from math import sqrt, pi, acos
 import numpy as np
-from mollib import Molecule
+
 try:
     from util import vector_length, calc_vector
+    from mollib import Molecule
+    import settings
 except ImportError:
     from .util import vector_length, calc_vector
-
-# This is the cutoff distance between N and O atoms to be considered a
-# hydrogen bond
-hydrogen_bond_cutoff = 2.5  # Angstroms
-
-# This is the optimum NH bond length in proteins.
-# 1. L. Yao, B. Vogeli, J. Ying, A. Bax, J. Am. Chem. Soc.
-# 130, 16518-20 (2008).
-nh_optimal = 1.023  # Angstroms
+    from .mollib import Molecule
+    from . import settings
 
 
 class HydrogenBond(object):
@@ -47,9 +42,9 @@ class HydrogenBond(object):
         if self.major_classification:
             s += "{major}".format(major=self.major_classification)
         if self.minor_classification:
-            s += "({minor})".format(minor=self.minor_classification)
+            s += " ({minor})".format(minor=self.minor_classification)
         s += ": "
-        s = s.ljust(30)  # Even the classification column
+        s = s.ljust(35)  # Even the classification column
         s += "don.({d}) - acc.({a}). ".format(d=self.donor,
                                               a=self.acceptor)
         s += 'R = {d:.1f} A, angle = {a:.0f} deg.'.format(d=self.distance,
@@ -85,6 +80,7 @@ def add_backbone_hn(molecule):
         bisect /= length
 
         # calculate the hn position along the bisector
+        nh_optimal = settings.bond_length['NH']
         hn = bisect * nh_optimal + n.pos
 
         # Create the new 'HN' atom
@@ -127,10 +123,10 @@ def find_amide_hbond_partners(molecule):
                 continue
 
             # Calculate the HN--O distance. If these aren't within
-            # hydrogen_bond_cutoff then they're not hydrogen bonded
+            # hbond_cutoff then they're not hydrogen bonded
             ho_ij = calc_vector(h_j, o_i, normalize=False)
             r_ij = vector_length(ho_ij)
-            if r_ij > hydrogen_bond_cutoff:
+            if r_ij > settings.hbond_cutoff:
                 continue
 
             # Calculate the C-O--HN angle. Vectors have to be normalized;
@@ -155,10 +151,46 @@ def find_amide_hbond_partners(molecule):
     return hbonds
 
 
-def find_alpha_helices(hbonds):
-    """Given a list of hbonds, this function will classify alpha-helices.
+def classify_amide_beta_turns(hbond):
+    """Given an hbond, this function will classify beta turns.
+
+    :hbond:     The HydrogenBond object to classify.
     """
-    pass
+    # Beta turns have a hydrogen bond between residue i and i+3
+    if abs(hbond.acceptor.residue.number - hbond.donor.residue.number) != 3:
+        return None
+
+    # Beta turns are then defined by the ramachandran angles of the residues
+    # between the residues i and i+3.
+    res_0 = hbond.donor.residue
+    res_1 = hbond.donor.residue.next_residue
+    res_2 = hbond.acceptor.residue.last_residue
+    res_3 = hbond.acceptor.residue
+
+    phi_1, psi_1 = res_1.ramachandran_angles
+    phi_2, psi_2 = res_2.ramachandran_angles
+
+    if phi_1 is None or psi_1 is None or phi_2 is None or psi_2 is None:
+        return None
+    print (res_0, res_0.ramachandran_angles,
+           res_1.ramachandran_angles, res_2.ramachandran_angles,
+           res_3.ramachandran_angles)
+
+    if (-80. <= phi_1 <= -40.):  # -60 +/- 20 deg
+        # psi_1: -30 +/- 20 deg, phi_2: -90 +/- 20 deg
+        if ((-50. <= psi_1 <= -10.) and (-110. <= phi_2 <= -70.)):
+            hbond.minor_classification = "beta-turn type I"
+        # psi_1: 120 +/- 20 deg, phi_2: 80 +/- 20 deg
+        elif ((100. <= psi_1 <= 140.) and (60. <= phi_2 <= 100.)):
+            hbond.minor_classification = "beta-turn type II"
+    elif (40. <= phi_1 <= 80.):  # 60 +/- 20 deg
+        # psi_1: 30 +/- 20 deg, phi_2: 90 +/- 20 deg
+        if ((10. <= psi_1 <= 50.) and (70. <= phi_2 <= 110.)):
+            hbond.minor_classification = "beta-turn type I'"
+        # psi_1: -120 +/- 20 deg, phi_2: -80 +/- 20 deg
+        elif ((-140. <= psi_1 <= -100.) and (-100. <= phi_2 <= -60.)):
+            hbond.minor_classification = "beta-turn type II"
+    return None
 
 
 def classify_amide_hbonds(possible_hbonds):
@@ -174,11 +206,18 @@ def classify_amide_hbonds(possible_hbonds):
         distance = hbond.distance
         angle = hbond.angle
 
+        if donor.name == 'O' and acceptor.name == 'HN':
+            hbond.major_classification = 'bb HN'
+
+        # Check beta-turn
+        classify_amide_beta_turns(hbond)
+        if hbond.minor_classification:
+            continue
+
         # Check alpha-helix
         if all((acceptor.residue.number - donor.residue.number == 4,
                 distance < 2.3,
                 angle > (149.-30.) and angle < (149.+30.))):  # 149 +/- 30 deg
-            hbond.major_classification = 'bb HN'
             hbond.minor_classification = 'alpha-helix'
             continue
 
@@ -186,7 +225,6 @@ def classify_amide_hbonds(possible_hbonds):
         if all((acceptor.residue.number - donor.residue.number == 3,
                 distance < 2.4,
                 angle > (114.-30.) and angle < (114.+30.))):  # 114 +/- 30 deg
-            hbond.major_classification = 'bb HN'
             hbond.minor_classification = '310-helix'
             continue
 
@@ -195,14 +233,12 @@ def classify_amide_hbonds(possible_hbonds):
         if all((acceptor.residue.number - donor.residue.number == 3,
                 distance < 2.4,
                 angle > (149.-30.) and angle < (149.+30.))):  # 49 +/- 30 deg
-            hbond.major_classification = 'bb HN'
             hbond.minor_classification = 'pi-helix'
             continue
 
         # Check beta-sheet
         if all((distance < 2.2,
                 angle > (155.-30.) and angle < (155.+30.))):  # 155 +/- 30 deg
-            hbond.major_classification = 'bb HN'
             hbond.minor_classification = 'beta sheet'
             continue
 
