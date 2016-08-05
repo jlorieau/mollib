@@ -4,7 +4,7 @@ MolLib for Python
    @Author:             Justin L Lorieau <jlorieau>
    @Date:               2016-08-04T19:07:27-05:00
    @Last modified by:   jlorieau
-   @Last modified time: 2016-08-04T19:30:17-05:00
+   @Last modified time: 2016-08-04T21:41:26-05:00
    @License:            Copyright 2011-2016
 
 MolLib is a simply Python toolset for manipulating molecular
@@ -525,7 +525,7 @@ class Molecule(dict):
                 atom.element = element_to
 
     def link_residues(self):
-        "Create doubly a linked list of all residues."
+        "Create a doubly linked list of all residues."
         # Create the residue linked lists
         last_residue = None
         next_residue = None
