@@ -4,7 +4,7 @@ MolLib functions for calculating hydrogen bonds and hydrogen positions.
    @Author:             Justin L Lorieau <jlorieau>
    @Date:               2016-08-03T12:01:01-05:00
    @Last modified by:   jlorieau
-   @Last modified time: 2016-08-05T09:07:26-05:00
+   @Last modified time: 2016-08-05T10:29:21-05:00
    @License:            Copyright 2016
 
 TODO: add hydrogenation functions for HA, HB, and so on
@@ -60,42 +60,63 @@ class HydrogenBond(object):
         return s
 
 
-# add_one_sp2_h(molecule, atom_name, target_atom, atom_1, atom_2, bond_length)
+def add_h(molecule, strip_h = True):
+    """Add hydrogens to a molecule.
+
+    :molecule:  The Molecule object to add a proton to.
+    :strip_h:   If true, all hydrogens will be stripped from the molecule
+                first.
+    """
+    if strip_h:
+        mol.strip_atoms(element='H')
+
+    for residue in mol.residues:
+        # Pull out the relevent atoms
+        n = residue.get('N', None)
+        ca = residue.get('CA', None)
+        c_prev = (residue.last_residue.get('C', None)
+                  if residue.last_residue is not None else None)
+
+        # Add amide protons HN
+        if residue.name != 'PRO':
+            add_one_sp2_h(molecule=mol, atom_name='HN', target_atom=n,
+                          atom_1=ca, atom_2=c_prev,
+                          bond_length=settings.bond_length['N-H'])
+
 # add_one_sp3_h
 # add_two_sp3_h
-def add_backbone_hn(molecule):
-    """Function to calculate and add the backbone amide protons (HN).
+def add_one_sp2_h(molecule, atom_name, target_atom, atom_1, atom_2,
+                  bond_length):
+    """Calculate and add a single proton to an sp2 hybridized atom.
 
-    Note that this function doesn't check to see if amide protons are already
-    in the molecule.
+    :molecule:    The Molecule object to add a proton to.
+    :atom_name:   The name of the new atom to create. ex: 'HN'
+    :target_name: The Atom object to which the new proton will be added to.
+    :atom_1:      The first Atom object bonded to the target_name atom.
+    :atom_2:      The second Atom object bonded to the target_name atom.
+    :bond_length: The length of the bond between the new proton and
+                  target_atom.
 
-    FIXME: Currently this implementation doesn't add amide protons the residue
-           #1
+    :RETURNS: True if atom was succesfully added, False if it wasn't.
     """
-    for res_i in molecule.residues:
-        # Get the adjacent N, C(i-1) and O atoms.
-        n = res_i.get('N', None)
-        ca = res_i.get('CA', None)
-        c = (res_i.last_residue.get('C', None)
-             if res_i.last_residue is not None else None)
+    # If any of the atoms are None, continue
+    if target_atom is None or atom_1 is None or atom_2 is None:
+        return False
 
-        # If any of the atoms are None or residue is a proline, continue
-        if n is None or ca is None or c is None or res_i.name == 'PRO':
-            continue
+    # Calculate the v1, v2 and bisector vectors
+    v1 = calc_vector(target_atom, atom_1)
+    v2 = calc_vector(target_atom, atom_2)
+    bisect = v1 + v2
+    length = vector_length(bisect)
+    bisect /= length
 
-        # Calculate the n-ca, n-c and bisector vectors
-        nca = calc_vector(n, ca)
-        nc = calc_vector(n, c)
-        bisect = nca + nc
-        length = vector_length(bisect)
-        bisect /= length
+    # calculate the hn position along the bisector
+    h = bisect * bond_length + target_atom.pos
 
-        # calculate the hn position along the bisector
-        nh_optimal = settings.bond_length['N-H']
-        hn = bisect * nh_optimal + n.pos
-
-        # Create the new 'HN' atom
-        mol.add_atom(name='HN', pos=hn, charge=0.0, element='H', residue=res_i)
+    # Create the new 'HN' atom
+    mol.add_atom(name=atom_name, pos=h, charge=0.0, element='H',
+                 residue=target_atom.residue)
+    return True
 
 
 def find_amide_hbond_partners(molecule):
@@ -258,7 +279,6 @@ def classify_amide_hbonds(possible_hbonds):
 
 if __name__ == "__main__":
     mol = Molecule('2MJB')
-    mol.strip_atoms(element='H')
-    add_backbone_hn(mol)
+    add_h(mol)
     hbonds = find_amide_hbond_partners(mol)
     pprint(hbonds)
