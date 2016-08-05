@@ -1,10 +1,13 @@
-"""MolLib for Python.
+"""
+MolLib for Python
 
-Author: J Lorieau
+   @Author:             Justin L Lorieau <jlorieau>
+   @Date:               2016-08-04T19:07:27-05:00
+   @Last modified by:   jlorieau
+   @Last modified time: 2016-08-04T19:30:17-05:00
+   @License:            Copyright 2011-2016
 
-Copyright 2011
-
-MolLib are a simply Python toolset for manipulating molecular
+MolLib is a simply Python toolset for manipulating molecular
 structures in Python. A Molecule is a dict of Chains, which is a dict of
 Residues, which is a dict of Atoms. The Molecule is constructed with helper
 read and write functions in the Molecule class, and more sophisticated behavior
@@ -12,6 +15,7 @@ can be added to the Molecule, Chain, Residue and Atom classes by deriving them
 and changing the chain_class, residue_class and atom_class of Molecule.
 
 TODO: Add a Ensemble object that sits above Chain and below Molecule.
+TODO: Replace dict inheritance with another object with dict-like accession.
 
 >>> mol=Molecule('2OED')
 >>> print(mol)
