@@ -1,5 +1,5 @@
 *.pdf
 *.pyc
 nosetests.json
-docs/
+docs/_build/*
 .idea
