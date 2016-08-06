@@ -4,7 +4,7 @@ MolLib settings file.
    @Author:             Justin L Lorieau <jlorieau>
    @Date:               2016-08-04T20:29:39-05:00
    @Last modified by:   jlorieau
-   @Last modified time: 2016-08-05T09:57:58-05:00
+   @Last modified time: 2016-08-06T07:50:26-05:00
    @License:            Copyright 2016
 """
 
@@ -32,22 +32,24 @@ bond_length = {'N-H': 1.023,    # L. Yao, et al. JACS 130, 16518-20 (2008)
 # The cutoff distance (in Angstroms) between donor and acceptor atoms to be
 # considered a valid hydrogen bond
 hbond_cutoff = 2.5
+hbond_amide_cutoff = hbond_cutoff
+hbond_aliphatic_cutoff = 2.8
 
 # The default threshold angle range (+/-) for hydrogen bonds
 hbond_angle_threshold = 30
 
 # alpha-helix hydrogen bond target CO-HN angle and threshold
-hbond_a_helix_angle = 149.
+hbond_a_helix_coh_angle = 149.
 hbond_a_helix_angle_threshold = hbond_angle_threshold
 
 # 310-helix hydrogen bond target CO-HN angle and threshold
-hbond_310_helix_angle = 114.
+hbond_310_helix_coh_angle = 114.
 hbond_310_helix_angle_threshold = hbond_angle_threshold
 
 # pi-helix hydrogen bond target CO-HN angle and threshold
-hbond_pi_helix_angle = 149.
+hbond_pi_helix_coh_angle = 149.
 hbond_pi_helix_angle_threshold = hbond_angle_threshold
 
 # beta-sheet hydrogen bond target CO-HN angle and threshold
-hbond_beta_sheet_angle = 155.
+hbond_beta_sheet_coh_angle = 155.
 hbond_beta_sheet_angle_threshold = hbond_angle_threshold

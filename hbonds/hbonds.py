@@ -4,10 +4,9 @@ MolLib functions for calculating hydrogen bonds and hydrogen positions.
    @Author:             Justin L Lorieau <jlorieau>
    @Date:               2016-08-03T12:01:01-05:00
    @Last modified by:   jlorieau
-   @Last modified time: 2016-08-06T06:07:42-05:00
+   @Last modified time: 2016-08-06T06:58:57-05:00
    @License:            Copyright 2016
 
-TODO: add hydrogenation functions for HA, HB, and so on
 TODO: add classification functions for hydrogen bonds
 """
 import logging
@@ -34,8 +33,7 @@ class HydrogenBond(object):
     minor_classification = ''
     distance = None
     angle = None
-    # TODO make distsance and angle a dict so that multiple distances can be
-    # measured
+    # TODO: Make distance and angle dicts
 
     def __init__(self, **kwargs):
         for k, v in kwargs.items():
@@ -44,17 +42,19 @@ class HydrogenBond(object):
             setattr(self, k, v)
 
     def __repr__(self):
-        s = "Hbond: "
+        s = "Hbond "
+        s += "don.({d}) - acc.({a}). ".format(d=self.donor,
+                                              a=self.acceptor)
         if self.major_classification:
             s += "{major}".format(major=self.major_classification)
         if self.minor_classification:
             s += " ({minor})".format(minor=self.minor_classification)
         s += ": "
         s = s.ljust(35)  # Even the classification column
-        s += "don.({d}) - acc.({a}). ".format(d=self.donor,
-                                              a=self.acceptor)
-        s += 'R = {d:.1f} A, angle = {a:.0f} deg.'.format(d=self.distance,
-                                                          a=self.angle)
+        for k, v in self.distance.items():
+            s += '\n\tR({})={:.1f}A'.format(k, v)
+        for k, v in self.angle.items():
+            s += '\n\tangle({})={:.1f}deg'.format(k, v)
         return s
 
 
@@ -62,7 +62,8 @@ def find_amide_hbond_partners(molecule):
     """Finds the backbone amide hydrogen bonds."""
     hbonds = find_hbond_partners(molecule=molecule,
                                  donor_name_1='O', donor_name_2='C',
-                                 acceptor_name='HN')
+                                 acceptor_name='HN',
+                                 hbond_cutoff=settings.hbond_amide_cutoff)
     classify_amide_hbonds(hbonds)
     return hbonds
 
@@ -71,11 +72,13 @@ def find_aliphatic_hbond_partners(molecule):
     """Finds the backbone aliphatic hydrogen bonds."""
     hbonds = find_hbond_partners(molecule=molecule,
                                  donor_name_1='O', donor_name_2='C',
-                                 acceptor_name='HA')
+                                 acceptor_name='HA',
+                                 hbond_cutoff=settings.hbond_aliphatic_cutoff)
     return hbonds
 
 
-def find_hbond_partners(molecule, donor_name_1, donor_name_2, acceptor_name):
+def find_hbond_partners(molecule, donor_name_1, donor_name_2, acceptor_name,
+                        hbond_cutoff=settings.hbond_cutoff):
     """Finds the hydrogen bond partners between donor atoms (C, O) and an
     acceptor (HN) based on distance.
 
@@ -114,7 +117,7 @@ def find_hbond_partners(molecule, donor_name_1, donor_name_2, acceptor_name):
             # aren't within hbond_cutoff then they're not hydrogen bonded
             vec_ij = calc_vector(acceptor_j, donor_1, normalize=False)
             r_ij = vector_length(vec_ij)
-            if r_ij > settings.hbond_cutoff:
+            if r_ij > hbond_cutoff:
                 continue
 
             # Calculate the donor-acceptor (C-O--HN) angle. Vectors have
@@ -126,14 +129,12 @@ def find_hbond_partners(molecule, donor_name_1, donor_name_2, acceptor_name):
             theta = acos(dot_product) * 180. / pi
 
             # Add it to the list of possible hydrogen bonds
-            donor = None
-            acceptor = None
-            major_classification = ''
-            minor_classification = ''
-            distance = None
-            angle = None
+            distance = {'{}-{}'.format(donor_1.name, acceptor_j.name): r_ij}
+            angle = {'{}-{}-{}'.format(donor_2.name, donor_1.name,
+                                       acceptor_j.name): theta}
             hbond = HydrogenBond(donor=donor_1, acceptor=acceptor_j,
-                                 distance=r_ij, angle=theta)
+                                 distance=distance, angle=angle)
+
             possible_hbonds.append(hbond)
     return possible_hbonds
 
@@ -187,8 +188,8 @@ def classify_amide_hbonds(possible_hbonds):
     for hbond in possible_hbonds:
         donor = hbond.donor
         acceptor = hbond.acceptor
-        distance = hbond.distance
-        angle = hbond.angle
+        distance = hbond.distance['O-HN']
+        angle = hbond.angle['C-O-HN']
 
         if donor.name == 'O' and acceptor.name == 'HN':
             hbond.major_classification = 'bb HN'
@@ -200,14 +201,14 @@ def classify_amide_hbonds(possible_hbonds):
 
         # Check alpha-helix
         if all((acceptor.residue.number - donor.residue.number == 4,
-                in_range(angle, settings.hbond_a_helix_angle,
+                in_range(angle, settings.hbond_a_helix_coh_angle,
                          settings.hbond_a_helix_angle_threshold))):
             hbond.minor_classification = 'alpha-helix'
             continue
 
         # Check 310-helix
         if all((acceptor.residue.number - donor.residue.number == 3,
-                in_range(angle, settings.hbond_310_helix_angle,
+                in_range(angle, settings.hbond_310_helix_coh_angle,
                          settings.hbond_310_helix_angle_threshold))):
             hbond.minor_classification = '310-helix'
             continue
@@ -215,13 +216,13 @@ def classify_amide_hbonds(possible_hbonds):
         # Check pi-helix. I guessed these theta angles since they're not in
         # the publication
         if all((acceptor.residue.number - donor.residue.number == 5,
-                in_range(angle, settings.hbond_pi_helix_angle,
+                in_range(angle, settings.hbond_pi_helix_coh_angle,
                          settings.hbond_pi_helix_angle_threshold))):
             hbond.minor_classification = 'pi-helix'
             continue
 
         # Check beta-sheet
-        if in_range(angle, settings.hbond_beta_sheet_angle,
+        if in_range(angle, settings.hbond_beta_sheet_coh_angle,
                     settings.hbond_beta_sheet_angle_threshold):
             hbond.minor_classification = 'beta sheet'
             continue
