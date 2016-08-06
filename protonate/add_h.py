@@ -1,3 +1,14 @@
+"""
+Functions to add hydrogens to molecules.
+
+   @Author:             Justin L Lorieau <jlorieau>
+   @Date:               2016-08-05T22:07:11-05:00
+   @Last modified by:   jlorieau
+   @Last modified time: 2016-08-06T06:35:20-05:00
+   @License:            Copyright 2016
+"""
+# TODO: add hydrogenation functions for HA, HB, and so on
+
 import numpy as np
 from mollib import settings
 from mollib.core import calc_vector, vector_length
@@ -6,9 +17,12 @@ from mollib.core import calc_vector, vector_length
 def add_h(molecule, strip_h=True):
     """Add hydrogens to a molecule.
 
-    :molecule:  The Molecule object to add a proton to.
-    :strip_h:   If true, all hydrogens will be stripped from the molecule
-                first.
+    Parameters
+    ----------
+    molecule: data-type
+        The Molecule object to add a proton to.
+    strip_h: bool, optional
+        If true, all hydrogens will be stripped from the molecule first.
     """
     if strip_h:
         molecule.strip_atoms(element='H')
@@ -49,15 +63,25 @@ def add_one_sp2_h(molecule, atom_name, target_atom, atom_1, atom_2,
                   bond_length):
     """Calculate and add a single proton to an sp2 hybridized atom.
 
-    :molecule:    The Molecule object to add a proton to.
-    :atom_name:   The name of the new atom to create. ex: 'HN'
-    :target_name: The Atom object to which the new proton will be added to.
-    :atom_1:      The first Atom object bonded to the target_name atom.
-    :atom_2:      The second Atom object bonded to the target_name atom.
-    :bond_length: The length of the bond between the new proton and
-                  target_atom.
+    Parameters
+    ----------
+    molecule: data-type
+        The Molecule object to add a proton to.
+    atom_name: str
+        The name of the new atom to create. ex: 'HN'
+    target_name: data-type
+        The Atom object to which the new proton will be added to.
+    atom_1: data-type
+        The first Atom object bonded to the target_name atom.
+    atom_2: data-type
+        The second Atom object bonded to the target_name atom.
+    bond_length: float
+        The length of the bond between the new proton and target_atom.
 
-    :RETURNS: True if atom was succesfully added, False if it wasn't.
+    Returns
+    -------
+    bool
+        True if atom was succesfully added, False if it wasn't.
     """
     # If any of the atoms are None, continue
     if target_atom is None or atom_1 is None or atom_2 is None:
@@ -83,17 +107,27 @@ def add_one_sp3_h(molecule, atom_name, target_atom, atom_1, atom_2, atom_3,
                   bond_length):
     """Calculate and add a single proton to an sp3 hybridized atom.
 
-    :molecule:    The Molecule object to add a proton to.
-    :atom_name:   The name of the new atom to create. ex: 'HN'
-    :target_name: The Atom object to which the new proton will be added to.
-    :atom_1:      The first Atom object bonded to the target_name atom.
-    :atom_2:      The second Atom object bonded to the target_name atom.
-    :atom_3:      The third Atom object bonded to the target_name atom.
-    :bond_length: The length of the bond between the new proton and
-                  target_atom.
+    Parameters
+    ----------
+    molecule: data-type
+        The Molecule object to add a proton to.
+    atom_name: data-type
+        The name of the new atom to create. ex: 'HN'
+    target_name: data-type
+        The Atom object to which the new proton will be added to.
+    atom_1: data-type
+        The first Atom object bonded to the target_name atom.
+    atom_2: data-type
+        The second Atom object bonded to the target_name atom.
+    atom_3: data-type
+        The third Atom object bonded to the target_name atom.
+    bond_length: float
+        The length of the bond between the new proton and target_atom.
 
-    [Returns]
-        True if atom was succesfully added, False if it wasn't.
+    Returns
+    -------
+    bool
+        True if atom was successfully added, False if it wasn't.
     """
     # If any of the atoms are None, continue
     if (target_atom is None or atom_1 is None or atom_2 is None or
