@@ -1,12 +1,8 @@
 """
 Functions to add hydrogens to molecules.
-
-   @Author:             Justin L Lorieau <jlorieau>
-   @Date:               2016-08-05T22:07:11-05:00
-   @Last modified by:   jlorieau
-   @Last modified time: 2016-08-06T06:35:20-05:00
-   @License:            Copyright 2016
 """
+# Author: Justin L Lorieau
+# Copyright 2016
 # TODO: add hydrogenation functions for HA, HB, and so on
 
 import numpy as np
@@ -19,7 +15,7 @@ def add_h(molecule, strip_h=True):
 
     Parameters
     ----------
-    molecule: data-type
+    molecule: :obj:`Molecule`
         The Molecule object to add a proton to.
     strip_h: bool, optional
         If true, all hydrogens will be stripped from the molecule first.

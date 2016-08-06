@@ -22,11 +22,18 @@ Classes
 .. autoclass:: Molecule
     :members:
 
+Plugins
+--------
+
+.. automodule:: mollib.protonate
+    :members: add_h
+
 Settings
 --------
 
 .. automodule:: mollib.settings
-   :members:
+    :members:
+
 
 Indices and tables
 ==================
