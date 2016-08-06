@@ -4,7 +4,7 @@ MolLib for Python
    @Author:             Justin L Lorieau <jlorieau>
    @Date:               2016-08-04T19:07:27-05:00
    @Last modified by:   jlorieau
-   @Last modified time: 2016-08-04T21:41:26-05:00
+   @Last modified time: 2016-08-06T05:59:06-05:00
    @License:            Copyright 2011-2016
 
 MolLib is a simply Python toolset for manipulating molecular
@@ -35,10 +35,8 @@ import re
 from itertools import chain as ichain
 from math import cos, sin, sqrt, pi, atan2, acos
 import numpy as np
-try:
-    from util import vector_length, calc_vector
-except ImportError:
-    from .util import vector_length, calc_vector
+
+from .utils import vector_length, calc_vector
 
 # Imports for tests
 import unittest

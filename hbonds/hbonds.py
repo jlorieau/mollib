@@ -4,7 +4,7 @@ MolLib functions for calculating hydrogen bonds and hydrogen positions.
    @Author:             Justin L Lorieau <jlorieau>
    @Date:               2016-08-03T12:01:01-05:00
    @Last modified by:   jlorieau
-   @Last modified time: 2016-08-05T15:37:44-05:00
+   @Last modified time: 2016-08-06T06:07:42-05:00
    @License:            Copyright 2016
 
 TODO: add hydrogenation functions for HA, HB, and so on
@@ -15,14 +15,9 @@ from pprint import pprint
 from math import sqrt, pi, acos
 import numpy as np
 
-try:
-    from util import vector_length, calc_vector
-    from mollib import Molecule
-    import settings
-except ImportError:
-    from .util import vector_length, calc_vector
-    from .mollib import Molecule
-    from . import settings
+from mollib import settings
+from mollib.protonate import add_h
+from mollib.core import Molecule, vector_length, calc_vector
 
 
 def in_range(value, target, range):
@@ -61,119 +56,6 @@ class HydrogenBond(object):
         s += 'R = {d:.1f} A, angle = {a:.0f} deg.'.format(d=self.distance,
                                                           a=self.angle)
         return s
-
-
-def add_h(molecule, strip_h=True):
-    """Add hydrogens to a molecule.
-
-    :molecule:  The Molecule object to add a proton to.
-    :strip_h:   If true, all hydrogens will be stripped from the molecule
-                first.
-    """
-    if strip_h:
-        mol.strip_atoms(element='H')
-
-    def missing_message(atom_name, target_name):
-        "Message to display when a proton couldn't be added."
-        return '{} could not be added to {}.'.format(atom_name, target_name)
-
-    for residue in mol.residues:
-        # Pull out the relevent atoms
-        n = residue.get('N', None)
-        ca = residue.get('CA', None)
-        c = residue.get('C', None)
-        cb = residue.get('CB', None)
-        c_prev = (residue.last_residue.get('C', None)
-                  if residue.last_residue is not None else None)
-
-        # Add amide protons HN -- except prolines and the first residue
-        if residue.name != 'PRO' and residue.number > 1:
-            r = add_one_sp2_h(molecule=mol, atom_name='HN', target_atom=n,
-                              atom_1=ca, atom_2=c_prev,
-                              bond_length=settings.bond_length['N-H'])
-            if r is not True:  # Couldn't add atom
-                logging.warning(missing_message('HN', n))
-
-        # add HA protons -- except for Gly
-        if residue.name != 'GLY':
-            r = add_one_sp3_h(molecule=mol, atom_name='HA', target_atom=ca,
-                              atom_1=n, atom_2=cb, atom_3=c,
-                              bond_length=settings.bond_length['CA-HA'])
-            if r is not True:  # Couldn't add atom
-                logging.warning(missing_message('HA', ca))
-
-
-# add_two_sp3_h
-def add_one_sp2_h(molecule, atom_name, target_atom, atom_1, atom_2,
-                  bond_length):
-    """Calculate and add a single proton to an sp2 hybridized atom.
-
-    :molecule:    The Molecule object to add a proton to.
-    :atom_name:   The name of the new atom to create. ex: 'HN'
-    :target_name: The Atom object to which the new proton will be added to.
-    :atom_1:      The first Atom object bonded to the target_name atom.
-    :atom_2:      The second Atom object bonded to the target_name atom.
-    :bond_length: The length of the bond between the new proton and
-                  target_atom.
-
-    :RETURNS: True if atom was succesfully added, False if it wasn't.
-    """
-    # If any of the atoms are None, continue
-    if target_atom is None or atom_1 is None or atom_2 is None:
-        return False
-
-    # Calculate the v1, v2 and bisector vectors
-    v1 = calc_vector(target_atom, atom_1)
-    v2 = calc_vector(target_atom, atom_2)
-    bisect = v1 + v2
-    length = vector_length(bisect)
-    bisect /= length
-
-    # calculate the h position along the bisector
-    h = bisect * bond_length + target_atom.pos
-
-    # Create the new hydrogen atom
-    mol.add_atom(name=atom_name, pos=h, charge=0.0, element='H',
-                 residue=target_atom.residue)
-    return True
-
-
-def add_one_sp3_h(molecule, atom_name, target_atom, atom_1, atom_2, atom_3,
-                  bond_length):
-    """Calculate and add a single proton to an sp3 hybridized atom.
-
-    :molecule:    The Molecule object to add a proton to.
-    :atom_name:   The name of the new atom to create. ex: 'HN'
-    :target_name: The Atom object to which the new proton will be added to.
-    :atom_1:      The first Atom object bonded to the target_name atom.
-    :atom_2:      The second Atom object bonded to the target_name atom.
-    :atom_3:      The third Atom object bonded to the target_name atom.
-    :bond_length: The length of the bond between the new proton and
-                  target_atom.
-
-    [Returns]
-        True if atom was succesfully added, False if it wasn't.
-    """
-    # If any of the atoms are None, continue
-    if (target_atom is None or atom_1 is None or atom_2 is None or
-       atom_3 is None):
-        return False
-
-    # Calculate the plane and the plane normal formed by
-    # atom_1, atom_2 and atom_3
-    v1 = calc_vector(atom_1, atom_2)
-    v2 = calc_vector(atom_2, atom_3)
-    norm = np.cross(v1, v2)
-    length = vector_length(norm)
-    norm /= length
-
-    # calculate the h position along the norm
-    h = norm * bond_length + target_atom.pos
-
-    # Create the new hydrogen atom
-    mol.add_atom(name=atom_name, pos=h, charge=0.0, element='H',
-                 residue=target_atom.residue)
-    return True
 
 
 def find_amide_hbond_partners(molecule):
@@ -351,12 +233,3 @@ def classify_amide_hbonds(possible_hbonds):
     # Remove non-contiguous secondary structure elements
     # assert
     return possible_hbonds
-
-if __name__ == "__main__":
-    mol = Molecule('2N7J')
-    add_h(mol)
-#    mol.write_pdb('2MJB_H.pdb')
-    hbonds = find_amide_hbond_partners(mol)
-    pprint(hbonds)
-    hbonds = find_aliphatic_hbond_partners(mol)
-    pprint(hbonds)
