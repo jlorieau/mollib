@@ -1,13 +1,7 @@
 """
 MolLib for Python
 
-   @Author:             Justin L Lorieau <jlorieau>
-   @Date:               2016-08-04T19:07:27-05:00
-   @Last modified by:   jlorieau
-   @Last modified time: 2016-08-06T05:59:06-05:00
-   @License:            Copyright 2011-2016
-
-MolLib is a simply Python toolset for manipulating molecular
+MolLib is a simple Python toolset for manipulating molecular
 structures in Python. A Molecule is a dict of Chains, which is a dict of
 Residues, which is a dict of Atoms. The Molecule is constructed with helper
 read and write functions in the Molecule class, and more sophisticated behavior
@@ -30,6 +24,8 @@ Q2-CA 12.01
 (0.133, -0.347, -0.002)
 >>> mol.rotate_zyz(0,90,0)
 """
+# Author: Justin L Lorieau
+# Copyright: 2016
 
 import re
 from itertools import chain as ichain
@@ -139,7 +135,35 @@ class Primitive(object):
 
 
 class Atom(Primitive):
-    "An atom in a residue."
+    """An atom in a residue.
+
+    Parameters
+    ----------
+    number: int
+        The atom number (order) in the molecule.
+    name: str
+        The atom's name. ex: 'HA'
+    pos: :obj:`numpy.array`
+        The atom's x/y/z position in the form of a numpy array.
+    charge: float, optional
+        The atom's charge
+    element: str
+        The atom's element. The element may be a different isotope. Suitable
+        values are documented in atom_MW.
+    residue: :obj:`Residue`, optional
+        The Residue object to which this atom instance belongs to.
+    chain: :obj:`Chain`, optional
+        The Chain object to which this atom instance belongs to.
+    molecule: :obj:`Molecule`, optional
+        The Molecule object to which this atom instance belongs to.
+
+    Attributes
+    ----------
+    atom_Mw: dict
+        The molecular weight (value, in Da or g/mol) of each element type (key)
+    options: tuple
+        A list of fields that are optional
+    """
 
     # These are the required field. 'pos' (position)is the coordinate position
     # of the atom, as a numpy array
@@ -159,11 +183,13 @@ class Atom(Primitive):
 
     @property
     def mass(self):
+        "The mass of this atom, depending on its element."
         return self.atom_Mw[self.element.title()]
 
     # Atom coordinate getters and setters
     @property
     def x(self):
+        "The x-coordinate of this atom."
         return self.pos[0]
 
     @x.setter
@@ -172,6 +198,7 @@ class Atom(Primitive):
 
     @property
     def y(self):
+        "The y-coordinate of this atom."
         return self.pos[1]
 
     @y.setter
@@ -180,6 +207,7 @@ class Atom(Primitive):
 
     @property
     def z(self):
+        "The z-coordinate of this atom."
         return self.pos[2]
 
     @z.setter
@@ -188,7 +216,33 @@ class Atom(Primitive):
 
 
 class Residue(dict):
-    "A residue in a chain."
+    """A residue in a chain.
+
+    Parameters
+    ----------
+    name: str
+        The residue's 3-letter name. ex: 'MET'
+    letter: str
+        The residue's 1-letter name. ex: 'M'
+    number: int
+        The residue's number in the sequence.
+
+    Attributes
+    ----------
+    one_letter_codes: dict
+        A dict for converting 3-letter residue names (key) to 1-letter residue
+        names (value). The residue object will use 'X' if the 3-letter name
+        is not found.
+    last_residue: :obj:`Residue`
+        The preceding residue object, in the sequence, from the molecule. This
+        is a link in a doubly-linked list.
+    next_residue: :obj:`Residue`
+        The proceeding residue object, in the sequence, from the molecule. This
+        is a link in a doubly-linked list.
+
+        .. note:: The `last_residue` and `next_residue` are populated by the
+                  Molecule object on creation--not the Residue object.
+    """
 
     # These are linked-list pointers to the next and previous residues. These
     # attributes are populated during molecule creation
@@ -214,17 +268,17 @@ class Residue(dict):
 
     @property
     def atoms(self):
-        """Returns an iterator over all atoms in this residue,
-        sorted by atom number"""
+        "An iterator over all atoms in this residue, sorted by atom number"
         return (atom for atom in sorted(self.values(), key=lambda a: a.number))
 
     @property
     def atom_size(self):
+        "The number of atoms in this residue."
         return len(list(self.atoms))
 
     @property
     def mass(self):
-        """ Returns the mass of the residue.
+        """The mass of all atoms in this residue.
 
         >>> mol = Molecule('2KXA')
         >>> print("{:.2f}".format(mol['A'][3].mass)) # Phe-3 mass
@@ -234,7 +288,13 @@ class Residue(dict):
 
     @property
     def ramachandran_angles(self):
-        """Return the Ramachandran angles for this residue.
+        """The backbone Ramachandran angles for this residue.
+
+        Returns
+        -------
+        angles: list
+            A pair of angles (floats) representing the phi and psi angles in
+            degrees.
 
         >>> mol = Molecule('2KXA')
         >>> print("{:.1f} {:.1f}".format(*mol['A'][3].ramachandran_angles))
@@ -285,7 +345,13 @@ class Residue(dict):
 
 
 class Chain(dict):
-    "A chain in a molecule."
+    """A chain in a molecule.
+
+    Parameters
+    ----------
+    id: str
+        The chain's id. ex: 'A'
+    """
 
     def __init__(self, id, *args, **kwargs):
         self.id = id
@@ -296,29 +362,31 @@ class Chain(dict):
 
     @property
     def residues(self):
-        """Returns an iterator over all residues in this chain,
-        sorted by residue number"""
+        """An iterator over all residues in this chain,
+        sorted by residue number."""
         return (residue for residue in
                 sorted(self.values(), key=lambda a: a.number))
 
     @property
     def residue_size(self):
+        "The number of residues in this chain."
         return len(list(self.residues))
 
     @property
     def atoms(self):
-        """Returns an iterator over all atoms in this chain,
-        sorted by atom number"""
+        """An iterator over all atoms in this chain,
+        sorted by atom number."""
         return (a for a in sorted(ichain(*[r.values() for r in self.values()]),
                                   key=lambda a: a.number))
 
     @property
     def atom_size(self):
+        "The number of atoms in this chain."
         return len(list(self.atoms))
 
     @property
     def mass(self):
-        """Returns the mass of the chain.
+        """The mass of all the atoms in this chain.
 
         >>> mol = Molecule('3C9J')
         >>> print("{:.2f}".format(mol['A'].mass)) # Chain A mass
@@ -330,13 +398,29 @@ class Chain(dict):
 
 
 class Molecule(dict):
-    "A class for molecular structures."
+    """A class for molecular structures.
 
-    # TODO: add init() method to delete all atoms/residues of molecules
+    Parameters
+    ----------
+    name: str
+        The name of this molecule. This is usually the PDB code of the molecule.
+
+    Attributes
+    ----------
+    chain_class: :class:`Chain`
+        The `Chain` class to use for generating chain objects for this
+        molecule.
+    residue_class: :class:`Residue`
+        The `Residue` class to use for generating residue objects for this
+        molecule.
+    atom_class: :class:`Atom`
+        The `Atom` class to use for generating atom objects for this molecule.
+
+        .. note:: A molecule object only reads the first model of a PDB file with
+                  multiple models
+    """
+
     # TODO: add translate method
-    # TODO: add reset method to bring molecule back to its original state
-    #       (keep track of source pdb file)
-    # TODO: Add methods to add hydrogens
     # TODO: Add atom notes
     # TODO: Add atom isotopes
 
@@ -347,9 +431,13 @@ class Molecule(dict):
     atom_class = Atom
 
     def __init__(self, identifier, *args, **kwargs):
-        """Constructor that accepts an identifier.
+        """Molecule constructor that accepts an identifier.
 
-        :identifier:  Either a filename, path, or pdb code.
+        Parameters
+        ----------
+        identifier: str
+            An molecule identifier that is either a filename (PDB format),
+            or PDB code (ex: '2KXA').
         """
         self.name = identifier
         self.read_identifier(identifier)
@@ -364,7 +452,7 @@ class Molecule(dict):
 
     @property
     def chain_size(self):
-        """Returns the number of chains.
+        """The number of chains in this molecule.
 
         >>> mol=Molecule('1HTM') # 6 subunits, 4 types of HOH
         >>> print(mol.chain_size)
@@ -374,7 +462,7 @@ class Molecule(dict):
 
     @property
     def chains(self):
-        """Returns an iterator over all chains in this molecule.
+        """An iterator over all chains in this molecule, sorted by chain id.
 
         >>> mol=Molecule('3C9J')
         >>> print([c.id for c in mol.chains])
@@ -384,8 +472,8 @@ class Molecule(dict):
 
     @property
     def residues(self):
-        """Returns an iterator over all residues in this molecule,
-        sorted by residue number.
+        """An iterator over all residues in this molecule, sorted by residue
+        number.
 
         >>> mol=Molecule('2KXA')
         >>> print([r.number for r in mol.residues])
@@ -397,12 +485,12 @@ class Molecule(dict):
 
     @property
     def residue_size(self):
+        "The number of residues in this molecule."
         return len(list(self.residues))
 
     @property
     def atoms(self):
-        """Returns an iterator over all atoms in this molecule,
-        sorted by atom number"""
+        "An iterator over all atoms in this molecule, sorted by atom number"
         return (a for a in sorted(ichain(*[r.values() for r in
                                            ichain(*[c.values() for c in
                                                     self.values()])]),
@@ -410,6 +498,7 @@ class Molecule(dict):
 
     @property
     def atom_size(self):
+        "The number of atoms in this molecule."
         return len(list(self.atoms))
 
     # Mutator Functions
@@ -463,6 +552,24 @@ class Molecule(dict):
     def add_atom(self, name, pos, charge, element, residue, **kwargs):
         """Adds an atom to the molecule.
 
+        Parameters
+        ----------
+        name: str
+            The name of the atom. ex: 'HA'
+        pos: :obj:`numpy.array`
+            An array containing the x, y and z coordinates of the atom.
+        charge: float
+            The charge of the atom.
+        element: str
+            The type of element for the atom. ex: 'H'
+        residue: :obj:`Residue`
+            The residue object to add the item to. This molecule should already
+            contain the residue object.
+        kwargs: dict, optional
+            Additional parameters to pass to the Atom constructor.
+
+        Examples
+        --------
         >>> mol = Molecule('2KXA')
         >>> print ('{:.2f}, {:.2f}'.format(mol.mass, mol['A'][3].mass))
         2445.07, 147.19
@@ -483,8 +590,10 @@ class Molecule(dict):
         residue[name] = atom
 
     def del_atom(self, atom):
-        """Deletes the specified atom (object) from the molecule.
+        """Deletes the specified :obj:`atom` from the molecule.
 
+        Examples
+        --------
         >>> mol = Molecule('2KXA')
         >>> print ('{:.2f}, {:.2f}'.format(mol.mass, mol['A'][3].mass))
         2445.07, 147.19
@@ -497,6 +606,8 @@ class Molecule(dict):
     def strip_atoms(self, element):
         """Deletes all atoms with the given element (name, i.e. 'H')
 
+        Examples
+        --------
         >>> mol = Molecule('2KXA')
         >>> print('{:.2f}'.format(mol.mass))
         2445.07
@@ -509,8 +620,10 @@ class Molecule(dict):
                 del atom.residue[atom.name]
 
     def substitute_element(self, element_from, element_to):
-        """Substitutes all atoms of one element for another.
+        """Substitutes all atoms of one element to another.
 
+        Examples
+        --------
         >>> mol = Molecule('2KXA')
         >>> print('{:.2f}'.format(mol.mass))
         2445.07
@@ -539,7 +652,13 @@ class Molecule(dict):
     # Read and Write Methods
 
     def write_pdb(self, filename):
-        "Write data to a PDB file."
+        """Write data to a PDB file.
+
+        Parameters
+        ----------
+        filename : str
+            The path and filename to write the file to.
+        """
 
         with open(filename, 'w') as f:
 
@@ -582,9 +701,13 @@ class Molecule(dict):
                 f.write(atom_line.format(**atom_parms))
 
     def read_identifier(self, identifier):
-        """Reads in structure based on identifier
+        """Reads in structure based on an identifier
 
-        :identifier:  Either a filename, path, or pdb code.
+        Parameters
+        ----------
+        identifier : str
+            The `identifier` is either a filename, path, or 4-alphanumeric
+            PDB code.
         """
         # Check to see if identifier is a filename or path
         if os.path.isfile(identifier):
@@ -599,16 +722,18 @@ class Molecule(dict):
             self.read_stream(f)
 
     def fetch_pdb(self, pdb_code, load_cached=True):
-        """Downloads/fetches a pdb file online.
+        """Download/fetch a PDB file online.
 
-        [Required Parameters]
-        :pdb_code:     The 4 alphanumeric character PDB code to load.
+        Parameters
+        ----------
+        pdb_code : str
+            The 4 alphanumeric character PDB code to load.
+        load_cached : bool, optional
+            If a cached version is available, use that instead of downloading
+            the file.
 
-        [Optional Parameters]
-        :load_cached:  If true, this will first look for a locally downloaded
-                       file to load before trying to download the file from
-                       the PDB.
-
+        Examples
+        --------
         >>> mol = Molecule('2KXA')
         >>> mol.fetch_pdb(pdb_code='2KXA', load_cached=False) # force download
         >>> print(mol)
@@ -622,7 +747,7 @@ class Molecule(dict):
         self.read_pdb(path)
 
     def read_stream(self, stream):
-        "Reads in data from a string stream."
+        "Reads in data from a stream."
 
         self.clear()
 
@@ -721,8 +846,10 @@ class Molecule(dict):
 
     @property
     def mass(self):
-        """ Returns the mass of the molecule.
+        """ The mass of the molecule.
 
+        Examples
+        --------
         >>> mol = Molecule('2KXA')
         >>> print("{:.2f}".format(mol.mass))
         2445.07
@@ -731,8 +858,15 @@ class Molecule(dict):
 
     @property
     def center_of_mass(self):
-        """ Returns the center-of-mass x,y,z vector of the molecule.
+        """The center-of-mass position of the molecule.
 
+        Returns
+        -------
+        pos : :obj:`numpy.array`
+            The x, y and z coordinates.
+
+        Examples
+        --------
         >>> mol = Molecule('2KXA')
         >>> print("{:.3f} {:.3f} {:.3f}".format(*mol.center_of_mass))
         16.938 -0.058 0.125
