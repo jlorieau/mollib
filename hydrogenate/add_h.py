@@ -25,7 +25,7 @@ def add_h(molecule, strip_h=True):
         molecule.strip_atoms(element='H')
 
     def missing_message(atom_name, target_name):
-        "Message to display when a proton couldn't be added."
+        """Message to display when a proton couldn't be added."""
         return '{} could not be added to {}.'.format(atom_name, target_name)
 
     for residue in molecule.residues:
@@ -58,7 +58,10 @@ def add_h(molecule, strip_h=True):
 # add_two_sp3_h
 def add_one_sp2_h(molecule, atom_name, target_atom, atom_1, atom_2,
                   bond_length):
-    """Calculate and add a single proton to an sp2 hybridized atom.
+    """Calculate and add a single hydrogens to an sp2 hybridized atom.
+
+    This function is useful for adding protons to add protons with a
+    120-degree geometry, like backbone HNs.
 
     Parameters
     ----------
@@ -66,7 +69,7 @@ def add_one_sp2_h(molecule, atom_name, target_atom, atom_1, atom_2,
         The Molecule object to add a proton to.
     atom_name: str
         The name of the new atom to create. ex: 'HN'
-    target_name: :obj:`Atom`
+    target_atom: :obj:`Atom`
         The Atom object to which the new proton will be added to.
     atom_1: :obj:`Atom`
         The first Atom object bonded to the target_name atom.
@@ -103,7 +106,9 @@ def add_one_sp2_h(molecule, atom_name, target_atom, atom_1, atom_2,
 
 def add_one_sp3_h(molecule, atom_name, target_atom, atom_1, atom_2, atom_3,
                   bond_length):
-    """Calculate and add a single proton to an sp3 hybridized atom.
+    """Calculate and add a single hydrogen to an sp3 hybridized atom.
+
+    This function is useful for adding methine protons, like backbone HAs.
 
     Parameters
     ----------
@@ -111,7 +116,7 @@ def add_one_sp3_h(molecule, atom_name, target_atom, atom_1, atom_2, atom_3,
         The Molecule object to add a proton to.
     atom_name: :obj:`Atom`
         The name of the new atom to create. ex: 'HN'
-    target_name: :obj:`Atom`
+    target_atom: :obj:`Atom`
         The Atom object to which the new proton will be added to.
     atom_1: :obj:`Atom`
         The first Atom object bonded to the target_name atom.
@@ -148,3 +153,33 @@ def add_one_sp3_h(molecule, atom_name, target_atom, atom_1, atom_2, atom_3,
     molecule.add_atom(name=atom_name, pos=h, charge=0.0, element='H',
                       residue=target_atom.residue)
     return True
+
+
+def add_two_sp3_h(molecule, atom_name, target_atom, atom_1, atom_2,
+                  bond_length):
+    """Calculate and add two hydrogens to an sp3 hybridized atom.
+
+    This function is useful for adding methylenes, like backbone HA2/HA3 for
+    glycines.
+
+    Parameters
+    ----------
+    molecule: :obj:`Molecule`
+        The Molecule object to add a proton to.
+    atom_name: :obj:`Atom`
+        The name of the new atom to create. ex: 'HN'
+    target_atom: :obj:`Atom`
+        The Atom object to which the new proton will be added to.
+    atom_1: :obj:`Atom`
+        The first Atom object bonded to the target_name atom.
+    atom_2: :obj:`Atom`
+        The second Atom object bonded to the target_name atom.
+    bond_length: float
+        The length of the bond (in Angstrom) between the new proton and
+        target_atom.
+
+    Returns
+    -------
+    bool:
+        True if atom was successfully added, False if it wasn't.
+    """
