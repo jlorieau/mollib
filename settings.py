@@ -44,15 +44,15 @@ hbond_a_helix_coh_angle = 149.
 "The default hydrogen bond C-O-HN angle for an *alpha-helix*."
 
 hbond_a_helix_angle_threshold = hbond_angle_threshold
-"The default hydrogen bond angle threshold from the ideal angle of an"\
-"*alpha-helix*."
+"""The default hydrogen bond angle threshold from the ideal angle of an
+*alpha-helix*."""
 
 hbond_310_helix_coh_angle = 114.
 "The default hydrogen bond C-O-HN angle for a *310-helix*."
 
 hbond_310_helix_angle_threshold = hbond_angle_threshold
-"The default hydrogen bond angle threshold from the ideal angle of a"\
-"*310-helix*."
+"""The default hydrogen bond angle threshold from the ideal angle of a
+*310-helix*."""
 
 hbond_pi_helix_coh_angle = 149.
 "The default hydrogen bond C-O-HN angle for a *pi-helix*."
