@@ -1,5 +1,5 @@
 """
-MolLib settings file.
+MolLib default settings
 """
 # Author: Justin L Lorieau
 # Copyright: 2016

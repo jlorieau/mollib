@@ -26,7 +26,7 @@ Plugins
 --------
 
 .. automodule:: mollib.protonate
-    :members: add_h
+    :members: add_h, add_one_sp2_h, add_one_sp3_h
 
 Settings
 --------

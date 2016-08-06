@@ -5,6 +5,7 @@ Functions to add hydrogens to molecules.
 # Copyright 2016
 # TODO: add hydrogenation functions for HA, HB, and so on
 
+import logging
 import numpy as np
 from mollib import settings
 from mollib.core import calc_vector, vector_length
@@ -61,23 +62,24 @@ def add_one_sp2_h(molecule, atom_name, target_atom, atom_1, atom_2,
 
     Parameters
     ----------
-    molecule: data-type
+    molecule: :obj:`Molecule`
         The Molecule object to add a proton to.
     atom_name: str
         The name of the new atom to create. ex: 'HN'
-    target_name: data-type
+    target_name: :obj:`Atom`
         The Atom object to which the new proton will be added to.
-    atom_1: data-type
+    atom_1: :obj:`Atom`
         The first Atom object bonded to the target_name atom.
-    atom_2: data-type
+    atom_2: :obj:`Atom`
         The second Atom object bonded to the target_name atom.
     bond_length: float
-        The length of the bond between the new proton and target_atom.
+        The length of the bond (in Angstroms) between the new proton and
+        target_atom.
 
     Returns
     -------
-    bool
-        True if atom was succesfully added, False if it wasn't.
+    bool:
+        True if atom was successfully added, False if it wasn't.
     """
     # If any of the atoms are None, continue
     if target_atom is None or atom_1 is None or atom_2 is None:
@@ -105,24 +107,25 @@ def add_one_sp3_h(molecule, atom_name, target_atom, atom_1, atom_2, atom_3,
 
     Parameters
     ----------
-    molecule: data-type
+    molecule: :obj:`Molecule`
         The Molecule object to add a proton to.
-    atom_name: data-type
+    atom_name: :obj:`Atom`
         The name of the new atom to create. ex: 'HN'
-    target_name: data-type
+    target_name: :obj:`Atom`
         The Atom object to which the new proton will be added to.
-    atom_1: data-type
+    atom_1: :obj:`Atom`
         The first Atom object bonded to the target_name atom.
-    atom_2: data-type
+    atom_2: :obj:`Atom`
         The second Atom object bonded to the target_name atom.
-    atom_3: data-type
+    atom_3: :obj:`Atom`
         The third Atom object bonded to the target_name atom.
     bond_length: float
-        The length of the bond between the new proton and target_atom.
+        The length of the bond (in Angstrom) between the new proton and
+        target_atom.
 
     Returns
     -------
-    bool
+    bool:
         True if atom was successfully added, False if it wasn't.
     """
     # If any of the atoms are None, continue
