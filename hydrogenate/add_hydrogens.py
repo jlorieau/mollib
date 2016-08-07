@@ -68,6 +68,10 @@ def add_h(molecule, strip_h=True):
         The Molecule object to add a proton to.
     strip_h: bool, optional
         If true, all hydrogens will be stripped from the molecule first.
+
+
+    .. note:: Methylene protons are added stereospecifically such that pro-R
+              hydrogens are H2 and pro-S hydrogens are H3.
     """
     if strip_h:
         molecule.strip_atoms(element='H')
