@@ -59,6 +59,8 @@ class TestMolLib(unittest.TestCase):
         self.assertTrue(all(residue_found))
 
     def test_methylenes(self):
+        """Tests the geometry and stereospecificity of methylene hydrogens
+        added."""
         tolerance = 10.  # degrees
 
         residue_found = {k: False for k in methylenes}
