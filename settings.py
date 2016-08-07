@@ -25,6 +25,9 @@ bond_length = {'N-H': 1.023,    # L. Yao, et al. JACS 130, 16518-20 (2008)
                }
 "The default optimal length of standard bonds (in Angstroms) for biomolecules"
 
+amide_atom_name = 'HN'
+"The default name to use for creating new amide protons."
+
 # Hydrogen bond parameters
 
 hbond_cutoff = 2.5
