@@ -11,14 +11,11 @@ from mollib.hbonds import (find_amide_hbond_partners,
 
 
 if __name__ == "__main__":
-    mol = Molecule('2KXA')
+    mol = Molecule('2PTN')
     add_h(mol)
 #    mol.write_pdb('2MJB_H.pdb')
     hbonds = find_amide_hbond_partners(mol)
     pprint(hbonds)
     hbonds = find_aliphatic_hbond_partners(mol)
     pprint(hbonds)
-    print(measure_angle(mol['A'][4]["HA3"],
-                        mol['A'][4]["CA"],
-                        mol['A'][4]["HA2"],))
-    mol.write_pdb('output/2KXA_h.pdb')
+    mol.write_pdb('output/2PTN_h.pdb')

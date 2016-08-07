@@ -7,9 +7,56 @@ Functions to add hydrogens to molecules.
 
 import logging
 import numpy as np
-from math import cos, sin, pi, sqrt
+from math import sqrt
 from mollib import settings
-from mollib.core import Molecule, calc_vector, vector_length, measure_angle
+from mollib.core import calc_vector, vector_length
+
+
+# Residues with a single alpha hydrogen
+alpha = ['PRO', 'ALA', 'ARG', 'ASN', 'ASP', 'CYS', 'GLN', 'GLU', 'HIS', 'ILE',
+         'LEU', 'LYS', 'MET', 'PHE', 'SER', 'THR', 'TRP', 'TYR', 'VAL']
+
+# Residues with a single amide hydrogen
+amide = ['GLY', 'ALA', 'ARG', 'ASN', 'ASP', 'CYS', 'GLN', 'GLU', 'HIS', 'ILE',
+         'LEU', 'LYS', 'MET', 'PHE', 'SER', 'THR', 'TRP', 'TYR', 'VAL']
+
+# Residues with a methine protons (except for HAs)
+methines = {'ILE': [['HB', 'CB', 'CG1', 'CA', 'CG2'],],
+            'LEU': [['HG', 'CG', 'CB', 'CD1', 'CD2'],],
+            'VAL': [['HB', 'CB', 'CA', 'CG1', 'CG2'],],
+            'THR': [['HB', 'CB', 'CA', 'CG2', 'OG1'],],
+            }
+
+# Residues with a methylene proton
+methylenes = {'PRO': [['HB', 'CB', 'CA', 'CG'],
+                      ['HG', 'CG', 'CB', 'CD'],
+                      ['HD', 'CD', 'CG', 'N']],
+              'GLY': [['HA', 'CA', 'N', 'C'],],
+              'ARG': [['HB', 'CB', 'CA', 'CG'],
+                      ['HG', 'CG', 'CB', 'CD'],
+                      ['HD', 'CD', 'CG', 'NE']],
+              'ARG': [['HB', 'CB', 'CA', 'CG'],],
+              'ASN': [['HB', 'CB', 'CA', 'CG'],],
+              'ASP': [['HB', 'CB', 'CA', 'CG'],],
+              'CYS': [['HB', 'CB', 'CA', 'SG'],],
+              'GLN': [['HB', 'CB', 'CA', 'CG'],
+                      ['HG', 'CG', 'CB', 'CD'],],
+              'GLU': [['HB', 'CB', 'CA', 'CG'],
+                      ['HG', 'CG', 'CB', 'CD'],],
+              'HIS': [['HB', 'CB', 'CA', 'CG'],],
+              'ILE': [['HG1', 'CG1', 'CB', 'CD1'],],
+              'LEU': [['HB', 'CB', 'CA', 'CG'],],
+              'LYS': [['HB', 'CB', 'CA', 'CG'],
+                      ['HG', 'CG', 'CB', 'CD'],
+                      ['HD', 'CD', 'CG', 'CE'],
+                      ['HE', 'CE', 'CD', 'NZ'],],
+              'MET': [['HB', 'CB', 'CA', 'CG'],
+                      ['HG', 'CG', 'CB', 'SD'], ],
+              'PHE': [['HB', 'CB', 'CA', 'CG'],],
+              'SER': [['HB', 'CB', 'CA', 'OG'],],
+              'TRP': [['HB', 'CB', 'CA', 'CG'],],
+              'TYR': [['HB', 'CB', 'CA', 'CG'],],
+              }
 
 
 def add_h(molecule, strip_h=True):
@@ -29,6 +76,7 @@ def add_h(molecule, strip_h=True):
         """Message to display when a proton couldn't be added."""
         return '{} could not be added to {}.'.format(atom_name, target_name)
 
+    first_residue = True
     for residue in molecule.residues:
         # Pull out the relevent atoms
         n = residue.get('N', None)
@@ -39,15 +87,17 @@ def add_h(molecule, strip_h=True):
                   if residue.last_residue is not None else None)
 
         # Add amide protons HN -- except prolines and the first residue
-        if residue.name != 'PRO' and residue.number > 1:
-            r = add_one_sp2_h(molecule=molecule, atom_name='HN', target_atom=n,
+        if residue.name in amide and not first_residue:
+            atom_name = settings.amide_atom_name
+            r = add_one_sp2_h(molecule=molecule, atom_name=atom_name,
+                              target_atom=n,
                               atom_1=ca, atom_2=c_prev,
                               bond_length=settings.bond_length['N-H'])
             if r is not True:  # Couldn't add atom
                 logging.warning(missing_message('HN', n))
 
         # add HA protons -- except for Gly
-        if residue.name != 'GLY':
+        if residue.name in alpha:
             r = add_one_sp3_h(molecule=molecule, atom_name='HA',
                               target_atom=ca,
                               atom_1=n, atom_2=cb, atom_3=c,
@@ -55,13 +105,37 @@ def add_h(molecule, strip_h=True):
             if r is not True:  # Couldn't add atom
                 logging.warning(missing_message('HA', ca))
 
-        # add HA protons to Glu
-        if residue.name == 'GLY':
-            r = add_two_sp3_h(molecule=molecule, atom_name='HA',
-                              target_atom=ca, atom_1=n, atom_2=c,
-                              bond_length=settings.bond_length['CA-HA'])
+        # Add methine protons
+        if residue.name in methines:
+            for atom_name, target_name, a_1_name, a_2_name, a_3_name in \
+                methines[residue.name]:
+                target_atom = residue.get(target_name, None)
+                atom_1 = residue.get(a_1_name, None)
+                atom_2 = residue.get(a_2_name, None)
+                atom_3 = residue.get(a_3_name, None)
+                r = add_one_sp3_h(molecule=molecule, atom_name=atom_name,
+                                  target_atom=target_atom,
+                                  atom_1=atom_1, atom_2=atom_2, atom_3=atom_3,
+                                  bond_length=settings.bond_length['C-H'])
+                if r is not True:
+                    logging.warning(missing_message(atom_name, target_atom))
 
-# add_two_sp3_h
+        # Add methylene protons
+        if residue.name in methylenes:
+            for atom_name, target_name, a_1_name, a_2_name in \
+                methylenes[residue.name]:
+                target_atom = residue.get(target_name, None)
+                atom_1 = residue.get(a_1_name, None)
+                atom_2 = residue.get(a_2_name, None)
+                r = add_two_sp3_h(molecule=molecule, atom_name=atom_name,
+                                  target_atom=target_atom,
+                                  atom_1=atom_1, atom_2=atom_2,
+                                  bond_length=settings.bond_length['C-H'])
+                if r is not True:
+                    logging.warning(missing_message(atom_name, target_atom))
+
+        first_residue = False  # No longer the first residue
+
 def add_one_sp2_h(molecule, atom_name, target_atom, atom_1, atom_2,
                   bond_length):
     """Calculate and add a single hydrogens to an sp2 hybridized atom.
@@ -89,6 +163,21 @@ def add_one_sp2_h(molecule, atom_name, target_atom, atom_1, atom_2,
     -------
     bool:
         True if atom was successfully added, False if it wasn't.
+
+    Examples
+    --------
+    >>> from mollib.core import Molecule, measure_angle
+    >>> mol = Molecule('2KXA')
+    >>> mol.strip_atoms(element='H')
+    >>> F3 = mol['A'][3]
+    >>> n, ca, c_prev = F3['N'], F3['CA'], F3.last_residue['C']
+    >>> add_one_sp2_h(mol, 'HN', n, c_prev, ca, 1.0)
+    True
+    >>> hn = F3['HN']
+    >>> angle1 = measure_angle(c_prev, n, hn)
+    >>> angle2 = measure_angle(ca, n, hn)
+    >>> print("{:.1f} {:.1f} degs".format(angle1, angle2))
+    119.4 119.4 degs
     """
     # If any of the atoms are None, continue
     if target_atom is None or atom_1 is None or atom_2 is None:
@@ -138,6 +227,22 @@ def add_one_sp3_h(molecule, atom_name, target_atom, atom_1, atom_2, atom_3,
     -------
     bool:
         True if atom was successfully added, False if it wasn't.
+
+    Examples
+    --------
+    >>> from mollib.core import Molecule, measure_angle
+    >>> mol = Molecule('2KXA')
+    >>> mol.strip_atoms(element='H')
+    >>> F3 = mol['A'][3]
+    >>> n, ca, c, cb = F3['N'], F3['CA'], F3['C'], F3['CB']
+    >>> add_one_sp3_h(mol, 'HA', ca, n, cb, c, 1.0)
+    True
+    >>> ha = F3['HA']
+    >>> angle1 = measure_angle(n, ca, ha)
+    >>> angle2 = measure_angle(c, ca, ha)
+    >>> angle3 = measure_angle(cb, ca, ha)
+    >>> print("{:.1f} {:.1f} {:.1f} degs".format(angle1, angle2, angle3))
+    109.5 108.6 108.4 degs
     """
     # If any of the atoms are None, continue
     if (target_atom is None or atom_1 is None or atom_2 is None or
@@ -192,16 +297,18 @@ def add_two_sp3_h(molecule, atom_name, target_atom, atom_1, atom_2,
 
     Examples
     --------
+    >>> from mollib.core import Molecule, measure_angle
     >>> mol = Molecule('2KXA')
     >>> mol.strip_atoms(element='H')
-    >>> gly4 = mol['A'][4]
-    >>> ca = gly4['CA']
-    >>> n = gly4['N']
-    >>> c = gly4['C']
+    >>> G4 = mol['A'][4]
+    >>> n, ca, c = G4['N'], G4['CA'], G4['C']
     >>> add_two_sp3_h(mol, 'HA', ca, n, c, 1.0)
-    >>> angle = measure_angle(gly4['HA2'], gly4['CA'], gly4['HA3'])
-    >>> print('{:.1f} deg'.format(angle))
-    109.8 deg
+    True
+    >>> ha2, ha3 = G4['HA2'], G4['HA3']
+    >>> angle1 = measure_angle(ha2, ca, ha3)
+    >>> angle2 = measure_angle(n, ca, ha3)
+    >>> print('{:.1f} {:.1f} degs'.format(angle1, angle2))
+    109.8 113.6 degs
     """
     # If any of the atoms are None, continue
     if target_atom is None or atom_1 is None or atom_2 is None:
@@ -241,5 +348,4 @@ def add_two_sp3_h(molecule, atom_name, target_atom, atom_1, atom_2,
                       residue=target_atom.residue)
     molecule.add_atom(name=atom_name + '3', pos=h2, charge=0.0, element='H',
                       residue=target_atom.residue)
-
-
+    return True
