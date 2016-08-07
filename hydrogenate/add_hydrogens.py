@@ -7,8 +7,9 @@ Functions to add hydrogens to molecules.
 
 import logging
 import numpy as np
+from math import cos, sin, pi, sqrt
 from mollib import settings
-from mollib.core import calc_vector, vector_length
+from mollib.core import Molecule, calc_vector, vector_length, measure_angle
 
 
 def add_h(molecule, strip_h=True):
@@ -54,6 +55,11 @@ def add_h(molecule, strip_h=True):
             if r is not True:  # Couldn't add atom
                 logging.warning(missing_message('HA', ca))
 
+        # add HA protons to Glu
+        if residue.name == 'GLY':
+            r = add_two_sp3_h(molecule=molecule, atom_name='HA',
+                              target_atom=ca, atom_1=n, atom_2=c,
+                              bond_length=settings.bond_length['CA-HA'])
 
 # add_two_sp3_h
 def add_one_sp2_h(molecule, atom_name, target_atom, atom_1, atom_2,
@@ -167,7 +173,8 @@ def add_two_sp3_h(molecule, atom_name, target_atom, atom_1, atom_2,
     molecule: :obj:`Molecule`
         The Molecule object to add a proton to.
     atom_name: :obj:`Atom`
-        The name of the new atom to create. ex: 'HN'
+        The name of the new atom to create. Note that a stereospecific number
+        will be added to it (2 or 3). ex: 'HA' will be 'HA2' and 'HA3'
     target_atom: :obj:`Atom`
         The Atom object to which the new proton will be added to.
     atom_1: :obj:`Atom`
@@ -182,4 +189,57 @@ def add_two_sp3_h(molecule, atom_name, target_atom, atom_1, atom_2,
     -------
     bool:
         True if atom was successfully added, False if it wasn't.
+
+    Examples
+    --------
+    >>> mol = Molecule('2KXA')
+    >>> mol.strip_atoms(element='H')
+    >>> gly4 = mol['A'][4]
+    >>> ca = gly4['CA']
+    >>> n = gly4['N']
+    >>> c = gly4['C']
+    >>> add_two_sp3_h(mol, 'HA', ca, n, c, 1.0)
+    >>> angle = measure_angle(gly4['HA2'], gly4['CA'], gly4['HA3'])
+    >>> print('{:.1f} deg'.format(angle))
+    109.8 deg
     """
+    # If any of the atoms are None, continue
+    if target_atom is None or atom_1 is None or atom_2 is None:
+        return False
+
+    # Calculate the bisecting vector for the atom_1--target_atom--atom_2 angle
+    v1 = calc_vector(target_atom, atom_1)
+    v2 = calc_vector(target_atom, atom_2)
+    bisect = v1 + v2
+    length = vector_length(bisect)
+    bisect /= length
+
+    # Calculate the vector orthogonal to the atom_1--target_atom--atom2 plane
+    orthog = np.cross(v1, bisect)
+    length = vector_length(orthog)
+    orthog /= length
+
+    # Find the unit vector for hydrogens 1 and 2.
+    scale_bisect = sqrt(2.)/3
+    scale_orthog = 1.
+
+    h_v1 = bisect * scale_bisect - orthog * scale_orthog
+    length = vector_length(h_v1)
+    h_v1 /= length
+
+    h_v2 = bisect * scale_bisect + orthog * scale_bisect
+    length = vector_length(h_v2)
+    h_v2 /= length
+
+    # The new protons point along h_v1 and h_v2 with a length of bond_length
+    # from target_atom
+    h1 = h_v1 * bond_length + target_atom.pos
+    h2 = h_v2 * bond_length + target_atom.pos
+
+    # Create the new hydrogen atoms
+    molecule.add_atom(name=atom_name + '2', pos=h1, charge=0.0, element='H',
+                      residue=target_atom.residue)
+    molecule.add_atom(name=atom_name + '3', pos=h2, charge=0.0, element='H',
+                      residue=target_atom.residue)
+
+

@@ -28,16 +28,15 @@ Q2-CA 12.01
 # Copyright: 2016
 
 import re
+import unittest
 from itertools import chain as ichain
 from math import cos, sin, sqrt, pi, atan2, acos
+from datetime import datetime
+
 import numpy as np
 
-from .utils import vector_length, calc_vector
-
-# Imports for tests
-import unittest
-import doctest
-from datetime import datetime
+from .utils import calc_vector
+from .geometry import measure_dihedral
 
 try:
     from urllib.request import urlretrieve
@@ -316,31 +315,9 @@ class Residue(dict):
         # dihedrals
         for item, a, b, c, d in [(0, c_prev, n, ca, c),   # phi
                                  (1, n, ca, c, n_next)]:  # psi
-            # The atom has to exist to calculate a dihedral
             if a is None or b is None or c is None or d is None:
                 continue
-
-            # Calculate the normalized vectors.
-            ab = calc_vector(a, b, normalize=True)
-            bc = calc_vector(b, c, normalize=True)
-            cd = calc_vector(c, d, normalize=True)
-
-            # The dihedral is the angle between the plans a-b-c and b-c-d
-            # The angle between these plans can be calculated from their
-            # normals (cross products)
-            n1 = np.cross(ab, bc)
-            n2 = np.cross(bc, cd)
-
-            # The angle between n1 and n2 can be calculated with acos. However
-            # the followin atan2 relationship returns a number between 0 and
-            # 2pi
-            m1 = np.cross(n1, bc)
-            x = np.dot(n1, n2)
-            y = np.dot(m1, n2)
-            angle = atan2(y, x) * 180. / np.pi
-
-            angles[item] = angle
-
+            angles[item] = measure_dihedral(a, b, c, d)
         return angles
 
 

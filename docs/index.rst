@@ -2,7 +2,7 @@ MolLib's documentation
 ======================
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
 
 Classes
 -------
@@ -22,10 +22,21 @@ Classes
 .. autoclass:: Molecule
     :members:
 
+Functions
+---------
+
+.. automodule:: mollib.core
+
+.. autofunction:: measure_distance
+
+.. autofunction:: measure_angle
+
+.. autofunction:: measure_dihedral
+
 Plugins
 --------
 
-.. automodule:: mollib.protonate
+.. automodule:: mollib.hydrogenate
     :members: add_h, add_one_sp2_h, add_one_sp3_h
 
 Settings
