@@ -4,6 +4,8 @@ MolLib default settings
 # Author: Justin L Lorieau
 # Copyright: 2016
 
+# TODO: move plugin settings to their own plugin submodule
+
 # Ramachandran parameters
 
 dihedral_helix_angles = (-60, -45)
