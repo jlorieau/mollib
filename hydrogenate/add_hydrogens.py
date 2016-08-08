@@ -4,6 +4,7 @@ Functions to add hydrogens to molecules.
 # Author: Justin L Lorieau
 # Copyright 2016
 # TODO: add hydrogenation functions for HA, HB, and so on
+# TODO: Make all of the add_h functions have customizable angles from settings.
 
 import logging
 import numpy as np
@@ -108,8 +109,10 @@ def add_one_sp2_h(molecule, atom_name, target_atom, other_atoms,
         The name of the new atom to create. ex: 'HN'
     target_atom: :obj:`Atom`
         The Atom object to which the new proton will be added to.
+        These are both the atoms connected to target_atom.
     other_atoms: list
-        Other :obj:`Atom` objects relevant to positioning the new hydrogen.
+        The two other :obj:`Atom` objects relevant to positioning the new
+        hydrogen.
     bond_length: float
         The length of the bond (in Angstroms) between the new proton and
         target_atom.
@@ -170,7 +173,9 @@ def add_two_sp2_h(molecule, atom_name, target_atom, other_atoms,
         The Atom object to which the new proton will be added to. ex: 'NE2' of
         Gln.
     other_atoms : list
-        Other :obj:`Atom` objects relevant to positioning the new hydrogen.
+        The two other :obj:`Atom` objects relevant to positioning the new
+        hydrogen. These are two atoms: one is connected to target_atom, and the
+        other is connected to the first atom to define a plane.
     bond_length: float
         The length of the bond (in Angstroms) between the new proton an
         target_atom
@@ -251,8 +256,10 @@ def add_one_sp3_h(molecule, atom_name, target_atom, other_atoms,
         The name of the new atom to create. ex: 'HN'
     target_atom: :obj:`Atom`
         The Atom object to which the new proton will be added to.
+        These are the three other atoms connected to target_atom.
     other_atoms: list
-        Other :obj:`Atom` objects relevant to positioning the new hydrogen.
+        The three other :obj:`Atom` objects relevant to positioning the new
+        hydrogen.
     bond_length: float
         The length of the bond (in Angstrom) between the new proton and
         target_atom.
@@ -304,7 +311,7 @@ def add_one_sp3_h(molecule, atom_name, target_atom, other_atoms,
 
 def add_two_sp3_h(molecule, atom_name, target_atom, other_atoms,
                   bond_length):
-    """Calculate and add two hydrogens to an sp3 hybridized atom.
+    """Add two hydrogens to an sp3 hybridized atom.
 
     This function is useful for adding methylenes, like backbone HA2/HA3 for
     glycines.
@@ -318,8 +325,10 @@ def add_two_sp3_h(molecule, atom_name, target_atom, other_atoms,
         will be added to it (2 or 3). ex: 'HA' will be 'HA2' and 'HA3'
     target_atom: :obj:`Atom`
         The Atom object to which the new proton will be added to.
+        These are the other two atoms connected to target_atom.
     other_atoms: :list
-        Other :obj:`Atom` objects relevant to positioning the new hydrogen.
+        The two other :obj:`Atom` objects relevant to positioning the new
+        hydrogen.
     bond_length: float
         The length of the bond (in Angstrom) between the new proton and
         target_atom.
@@ -386,3 +395,104 @@ def add_two_sp3_h(molecule, atom_name, target_atom, other_atoms,
                       residue=target_atom.residue)
     return True
 
+
+def add_three_sp3_h(molecule, atom_name, target_atom, other_atoms,
+                  bond_length):
+    """Add three hydrogens to an sp3 hybridized atom.
+
+    This function is useful for adding methyls, like HBs of alanines.
+
+    Parameters
+    ----------
+    molecule: :obj:`Molecule`
+        The Molecule object to add a proton to.
+    atom_name: :obj:`Atom`
+        The name of the new atom to create. Note that a number will be added
+        to it (1, 2 or 3). ex: 'HB' will be 'HB1', 'HB2' and 'HB3'
+    target_atom: :obj:`Atom`
+        The Atom object to which the new proton will be added to.
+    other_atoms: :list
+        The other two :obj:`Atom` objects relevant to positioning the new
+        hydrogen. The first is bonded to target_atom and the second is bonded
+        to the first.
+    bond_length: float
+        The length of the bond (in Angstrom) between the new proton and
+        target_atom.
+
+    Returns
+    -------
+    bool:
+        True if atom was successfully added, False if it wasn't.
+
+    Examples
+    --------
+    >>> from mollib.core import Molecule, measure_angle, measure_distance
+    >>> mol = Molecule('2KXA')
+    >>> mol.strip_atoms(element='H')
+    >>> A5 = mol['A'][5]
+    >>> n, ca, cb = A5['N'], A5['CA'], A5['CB']
+    >>> add_three_sp3_h(mol, 'HB', cb, [ca, n], 1.0)
+    True
+    >>> hb1, hb2, hb3 = A5['HB1'], A5['HB2'], A5['HB3']
+    >>> angle1 = measure_angle(hb1, cb, ca)
+    >>> angle2 = measure_angle(hb2, cb, ca)
+    >>> angle3 = measure_angle(hb3, cb, ca)
+    >>> print('{:.1f} {:.1f} {:.1f} degs'.format(angle1, angle2, angle3))
+    109.5 109.5 109.5 degs
+    >>> d1 = measure_distance(hb1, cb)
+    >>> d2 = measure_distance(hb2, cb)
+    >>> d3 = measure_distance(hb3, cb)
+    >>> print('{:.2f} {:.2f} {:.2f} A'.format(d1, d2, d3))
+    1.00 1.00 1.00 A
+    """
+    atom_1, atom_2 = other_atoms
+
+    # If any of the atoms are None, continue
+    if target_atom is None or atom_1 is None:
+        return False
+
+    # Calculate the target_atom--atom_1 vector
+    v1 = calc_vector(target_atom, atom_1)
+    length = vector_length(v1)
+    v1 /= length
+
+    # Calculate the atom_1--atom_2 vector
+    v2 = calc_vector(atom_1, atom_2)
+    length = vector_length(v2)
+    v2 /= length
+
+    # Calculate the normal to v1 and v2
+    norm1 = np.cross(v1, v2)
+    length = vector_length(norm1)
+    norm1 /= length
+
+    # Calculate the normal to norm1 and v1. v1, norm1 and norm2 form an
+    # orthonormal set of vectors
+    norm2 = np.cross(norm1, v1)
+    length = vector_length(norm2)
+    norm2 /= length
+
+    # All three new protons are tilted away from v1. However, the first
+    # is opposite to v2 to make a trans group
+    c_705 = 0.33380  # cos(70.5-deg)
+    s_705 = 0.94264  # sin(70.5-deg)
+    h_v1 = c_705 * v1 + s_705 * norm2
+    h1 = h_v1 * bond_length + target_atom.pos
+
+    # Hydrogens 2 and 3 and first offset by 60-degrees using the normal
+    # vectors v1 and v2.
+    c_60 = 0.5  # cos(60-deg)
+    s_60 = sqrt(3)/2.  # sin(60-deg)
+    h_v2 = c_705 * v1 + s_705 * (-1. * c_60 * norm2 + s_60 * norm1)
+    h2 = h_v2 * bond_length + target_atom.pos
+    h_v3 = c_705 * v1 + s_705 * (-1. * c_60 * norm2 - s_60 * norm1)
+    h3 = h_v3 * bond_length + target_atom.pos
+
+    # Create the new hydrogen atoms
+    molecule.add_atom(name=atom_name + '1', pos=h1, charge=0.0, element='H',
+                      residue=target_atom.residue)
+    molecule.add_atom(name=atom_name + '2', pos=h2, charge=0.0, element='H',
+                      residue=target_atom.residue)
+    molecule.add_atom(name=atom_name + '3', pos=h3, charge=0.0, element='H',
+                      residue=target_atom.residue)
+    return True
