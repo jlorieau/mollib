@@ -4,6 +4,9 @@
 # Copyright 2016
 
 from pprint import pprint
+import logging
+import sys
+
 from mollib.core import Molecule, measure_angle
 from mollib.hydrogenate import add_h
 from mollib.hbonds import (find_amide_hbond_partners,
@@ -11,6 +14,7 @@ from mollib.hbonds import (find_amide_hbond_partners,
 
 
 def do():
+    #logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
     mol = Molecule('2PTN')
     add_h(mol)
     #    mol.write_pdb('2MJB_H.pdb')
