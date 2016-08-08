@@ -4,3 +4,4 @@ nosetests.json
 docs/_build/*
 .idea
 output/*
+data/*
