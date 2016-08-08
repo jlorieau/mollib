@@ -10,12 +10,14 @@ from mollib.hbonds import (find_amide_hbond_partners,
                            find_aliphatic_hbond_partners)
 
 
-if __name__ == "__main__":
+def do():
     mol = Molecule('2PTN')
     add_h(mol)
-#    mol.write_pdb('2MJB_H.pdb')
+    #    mol.write_pdb('2MJB_H.pdb')
     hbonds = find_amide_hbond_partners(mol)
-    pprint(hbonds)
     hbonds = find_aliphatic_hbond_partners(mol)
     pprint(hbonds)
     mol.write_pdb('output/2PTN_h.pdb')
+
+if __name__ == "__main__":
+    do()
