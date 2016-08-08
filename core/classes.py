@@ -397,6 +397,7 @@ class Molecule(dict):
     # TODO: add translate method
     # TODO: Add atom notes
     # TODO: Add atom isotopes
+    # TODO: Add function to read pdb header
 
     # The following class-level attributes are used to customize the base or
     # derived Chain, Residue and Atom classes used in the molecule
