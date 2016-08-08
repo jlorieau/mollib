@@ -2,49 +2,33 @@ MolLib's documentation
 ======================
 
 .. toctree::
-   :maxdepth: 1
+   :maxdepth: 2
+   :caption: User Documentation
 
-Classes
--------
+   classes
+   functions
+   plugins
+   settings
 
-.. automodule:: mollib
-    :members:
-
-.. autoclass:: Atom
-    :members:
-
-.. autoclass:: Residue
-    :members:
-
-.. autoclass:: Chain
-    :members:
-
-.. autoclass:: Molecule
-    :members:
-
-Functions
----------
-
-.. automodule:: mollib.core
-
-.. autofunction:: measure_distance
-
-.. autofunction:: measure_angle
-
-.. autofunction:: measure_dihedral
-
-Plugins
+Overview
 --------
 
-.. automodule:: mollib.hydrogenate
-    :members: add_h, add_one_sp2_h, add_two_sp2_h, add_one_sp3_h, add_two_sp3_h
+MolLib is a Python module for manipulation biomolecular structures with an
+emphasis on biophysical analysis
 
-Settings
+Github: https://github.com/jlorieau/mollib
+
+Download: `mollib-1.3.zip <https://github.com/jlorieau/mollib/archive/v1.3.zip>`_
+`mollib-1.3.tar.gz <https://github.com/jlorieau/mollib/archive/v1.3.tar.gz>`_
+
+Features
 --------
 
-.. automodule:: mollib.settings
-    :members:
-
+* Common manipulations of biomolecules for biophysics, like translation,
+  Euler rotations
+* Easily extendable data types (Atom, Residue, Chain, Molecule) through object
+  inheritance to add functionality and data to base objects.
+* Loading, fetching, caching  and writing PDB files
 
 Indices and tables
 ==================

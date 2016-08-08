@@ -292,6 +292,8 @@ class Residue(dict):
             A pair of angles (floats) representing the phi and psi angles in
             degrees.
 
+        Examples
+        --------
         >>> mol = Molecule('2KXA')
         >>> print("{:.1f} {:.1f}".format(*mol['A'][3].ramachandran_angles))
         -65.2 -48.3

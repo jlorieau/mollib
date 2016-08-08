@@ -185,7 +185,7 @@ def add_two_sp2_h(molecule, atom_name, target_atom, other_atoms,
     bool
         True if atom was successfully added, False if it wasn't.
 
-        Examples
+    Examples
     --------
     >>> from mollib.core import Molecule, measure_angle, measure_distance
     >>> mol = Molecule('2PTN')
