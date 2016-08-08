@@ -1,6 +1,45 @@
 import unittest
 from mollib.core import Molecule, measure_angle, measure_dihedral
-from mollib.hydrogenate import add_h, methines, methylenes
+from mollib.hydrogenate import add_h
+
+
+# Residues with a methine protons (except for HAs)
+methines = {'ILE': [['HB', 'CB', 'CG1', 'CA', 'CG2'],],
+            'LEU': [['HG', 'CG', 'CB', 'CD1', 'CD2'],],
+            'VAL': [['HB', 'CB', 'CA', 'CG1', 'CG2'],],
+            'THR': [['HB', 'CB', 'CA', 'CG2', 'OG1'],],
+            }
+
+# Residues with a methylene proton
+methylenes = {'PRO': [['HB', 'CB', 'CA', 'CG'],
+                      ['HG', 'CG', 'CB', 'CD'],
+                      ['HD', 'CD', 'CG', 'N']],
+              'GLY': [['HA', 'CA', 'N', 'C'],],
+              'ARG': [['HB', 'CB', 'CA', 'CG'],
+                      ['HG', 'CG', 'CB', 'CD'],
+                      ['HD', 'CD', 'CG', 'NE']],
+              'ARG': [['HB', 'CB', 'CA', 'CG'],],
+              'ASN': [['HB', 'CB', 'CA', 'CG'],],
+              'ASP': [['HB', 'CB', 'CA', 'CG'],],
+              'CYS': [['HB', 'CB', 'CA', 'SG'],],
+              'GLN': [['HB', 'CB', 'CA', 'CG'],
+                      ['HG', 'CG', 'CB', 'CD'],],
+              'GLU': [['HB', 'CB', 'CA', 'CG'],
+                      ['HG', 'CG', 'CB', 'CD'],],
+              'HIS': [['HB', 'CB', 'CA', 'CG'],],
+              'ILE': [['HG1', 'CG1', 'CB', 'CD1'],],
+              'LEU': [['HB', 'CB', 'CA', 'CG'],],
+              'LYS': [['HB', 'CB', 'CA', 'CG'],
+                      ['HG', 'CG', 'CB', 'CD'],
+                      ['HD', 'CD', 'CG', 'CE'],
+                      ['HE', 'CE', 'CD', 'NZ'],],
+              'MET': [['HB', 'CB', 'CA', 'CG'],
+                      ['HG', 'CG', 'CB', 'SD'], ],
+              'PHE': [['HB', 'CB', 'CA', 'CG'],],
+              'SER': [['HB', 'CB', 'CA', 'OG'],],
+              'TRP': [['HB', 'CB', 'CA', 'CG'],],
+              'TYR': [['HB', 'CB', 'CA', 'CG'],],
+              }
 
 
 def in_range(value, target, tolerance, print_false=True):
@@ -11,7 +50,7 @@ def in_range(value, target, tolerance, print_false=True):
     return r
 
 
-class TestMolLib(unittest.TestCase):
+class TestHydrogenate(unittest.TestCase):
     """Tests hydrogenation functions"""
 
     def setUp(self):
