@@ -12,8 +12,8 @@ TODO: add classification functions for hydrogen bonds
 from math import sqrt, pi, acos
 import numpy as np
 
-from mollib import settings
-from mollib.core import Molecule, vector_length, calc_vector
+from mollib.core import vector_length, calc_vector
+import settings
 
 
 def in_range(value, target, range):

@@ -8,9 +8,9 @@ import logging
 import sys
 
 from mollib.core import Molecule, measure_angle
-from mollib.hydrogenate import add_h
-from mollib.hbonds import (find_amide_hbond_partners,
-                           find_aliphatic_hbond_partners)
+from mollib.plugins.hydrogenate import add_h
+from mollib.plugins.hbonds import (find_amide_hbond_partners,
+                                   find_aliphatic_hbond_partners)
 
 
 def do():
