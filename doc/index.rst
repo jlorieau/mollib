@@ -16,9 +16,9 @@ Introduction
 MolLib is a Python module for manipulation biomolecular structures with an
 emphasis on biophysical analysis
 
-Github: https://github.com/jlorieau/mollib
+**Github**: https://github.com/jlorieau/mollib
 
-Download: `mollib-1.3.zip <https://github.com/jlorieau/mollib/archive/v1.3.zip>`_
+**Download**: `mollib-1.3.zip <https://github.com/jlorieau/mollib/archive/v1.3.zip>`_
 `mollib-1.3.tar.gz <https://github.com/jlorieau/mollib/archive/v1.3.tar.gz>`_
 
 Features
