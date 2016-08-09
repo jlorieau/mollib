@@ -13,7 +13,7 @@ from mollib.core import calc_vector, vector_length
 from .topology import aminoacids
 from . import settings
 
-
+# .bonded, #.hybrid
 def add_h(molecule, strip_h=True):
     """Add hydrogens to a molecule.
 
@@ -27,6 +27,9 @@ def add_h(molecule, strip_h=True):
 
     .. note:: Methylene protons are added stereospecifically such that pro-R
               hydrogens are H2 and pro-S hydrogens are H3.
+
+    .. note:: Protons added to double-bonded atoms will respect the (E), (Z)
+              assignment convention.
     """
     if strip_h:
         molecule.strip_atoms(element='H')
@@ -122,6 +125,10 @@ def add_one_sp2_h(molecule, atom_name, target_atom, other_atoms,
     bool:
         True if atom was successfully added, False if it wasn't.
 
+
+    .. note:: Protons added to double-bonded atoms will respect the (E), (Z)
+              assignment convention.
+
     Examples
     --------
     >>> from mollib.core import Molecule, measure_angle
@@ -184,6 +191,10 @@ def add_two_sp2_h(molecule, atom_name, target_atom, other_atoms,
     -------
     bool
         True if atom was successfully added, False if it wasn't.
+
+
+    .. note:: Protons added to double-bonded atoms will respect the (E), (Z)
+              assignment convention.
 
     Examples
     --------

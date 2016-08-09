@@ -5,7 +5,7 @@ from . import settings
 
 # Amino-acid hydrogen topologies
 aminoacids = {'GLY': {'HN': {'target_name': 'N',
-                             'other_atom_names': ['CA', 'C-1'],
+                             'other_atom_names': ['*CA', '*C-1'],
                              'bond_length': settings.bond_length['N-H'],
                              'function': 'add_one_sp2_h'},
                       'HA': {'target_name': 'CA',

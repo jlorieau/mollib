@@ -1,6 +1,4 @@
 """
-Hydrogenate
-===========
 Add hydrogens to a molecular structure.
 """
 

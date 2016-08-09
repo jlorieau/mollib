@@ -1,7 +1,7 @@
 *.pdf
 *.pyc
 nosetests.json
-docs/_build/*
+doc/_build/*
 .idea
 output/*
 data/*

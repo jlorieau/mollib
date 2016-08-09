@@ -2,8 +2,8 @@ MolLib's documentation
 ======================
 
 .. toctree::
-   :maxdepth: 2
-   :caption: User Documentation
+   :maxdepth: 3
+   :caption: API Documentation
 
    classes
    functions
