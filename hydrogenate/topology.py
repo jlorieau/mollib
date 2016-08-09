@@ -3,9 +3,20 @@ A listing of hydrogen atom topologies in molecules.
 """
 from . import settings
 
+# TODO: Upgrade this plugin to a typology
+# topology = {'GLY': {'N': {'bonded_atom_names': ['CA', 'C-1'],
+#                           'hybridization': 'sp2',
+#                           'hydrogen_name': 'HN',
+#                           'bond_length': settings.bond_length['N-H']},
+#                     'CA': {'bonded_atom_names': ['N', 'C'],
+#                            'hybridization': 'sp3',
+#                            'bond_length': settings.bond_length['C-H']},
+#                    }
+#             }
+
 # Amino-acid hydrogen topologies
 aminoacids = {'GLY': {'HN': {'target_name': 'N',
-                             'other_atom_names': ['*CA', '*C-1'],
+                             'other_atom_names': ['CA', 'C-1'],
                              'bond_length': settings.bond_length['N-H'],
                              'function': 'add_one_sp2_h'},
                       'HA': {'target_name': 'CA',
