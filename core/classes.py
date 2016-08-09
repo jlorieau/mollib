@@ -66,8 +66,9 @@ Center at 0.000, 0.000, 0.000 A
 
 # Author: Justin L Lorieau
 # Copyright: 2016
-# TODO: Add a Ensemble object that sits above Chain and below Molecule.
-# TODO: Replace dict inheritance with another object with dict-like accession.
+# TODO: Add a Ensemble object that sits above Molecule.
+# TODO: Add atom annotations, like hbond_donor and hydridization (sp2, sp3)
+#       hbond_donor = True, hbond_acceptor = True, hybridization = 'sp2'
 
 import re
 from itertools import chain as ichain

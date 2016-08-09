@@ -8,9 +8,6 @@ import numpy as np
 from math import acos, pi, atan2
 from .utils import calc_vector, vector_length
 
-# TODO: measure_dihedral
-# TODO: add functions to documentation
-
 
 def measure_distance(atom_1, atom_2):
     """Measure the atom_1--atom_2 distance.
