@@ -1,6 +1,6 @@
 import unittest
 from mollib.core import Molecule, measure_angle, measure_dihedral
-from mollib.plugins.hydrogenate import add_h
+from mollib.hydrogenate import add_h
 
 
 # Residues with a methine protons (except for HAs)

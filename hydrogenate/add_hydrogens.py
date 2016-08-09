@@ -11,7 +11,7 @@ import numpy as np
 from math import sqrt
 from mollib.core import calc_vector, vector_length
 from .topology import aminoacids
-import settings
+from . import settings
 
 
 def add_h(molecule, strip_h=True):

@@ -14,14 +14,8 @@ from pprint import pprint
 from math import sqrt, pi, acos
 import numpy as np
 
-<<<<<<< HEAD:plugins/hbonds/hbonds.py
+from . import settings
 from mollib.core import vector_length, calc_vector
-import settings
-=======
-from mollib import settings
-from mollib.protonate import add_h
-from mollib.core import Molecule, vector_length, calc_vector
->>>>>>> parent of 5ebb1f5... Fixed imports:hbonds/hbonds.py
 
 
 def in_range(value, target, range):

@@ -1,7 +1,7 @@
 """
 A listing of hydrogen atom topologies in molecules.
 """
-import settings
+from . import settings
 
 # Amino-acid hydrogen topologies
 aminoacids = {'GLY': {'HN': {'target_name': 'N',
