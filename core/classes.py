@@ -42,7 +42,7 @@ mass and atomic position of :obj:`Atom` `CA` in residue 2:
 >>> atom = mol['A'][2]['CA']
 >>> print("Atom {} has a {:.2f} Da mass.".format(atom, atom.mass))
 Atom Q2-CA has a 12.01 Da mass.
->>> print("{} is located at {}, {}, {} A".format(atom, atom.pos))
+>>> print("{} is located at {}, {}, {} A".format(atom, *atom.pos))
 Q2-CA is located at -3.086, -11.321, -1.361 A
 
 
@@ -60,7 +60,7 @@ centers the molecule.
 Center at 0.133, -0.347, -0.002 A
 >>> mol.center()
 >>> center = map(abs, mol.center_of_mass)
->>> print("Center at {:.3f}, {:.3f}, {:.3f} A".format(*center)
+>>> print("Center at {:.3f}, {:.3f}, {:.3f} A".format(*center))
 Center at 0.000, 0.000, 0.000 A
 """
 
@@ -92,7 +92,7 @@ re_str = re.compile(r'[a-zA-Z]')
 re_float = re.compile(r'-?\d+\.\d*')
 re_int = re.compile(r'-?\d+')
 
-
+# FIXME: move to utils
 def convert(s):
     """Convert a string 's' into either an integer, float or string.
     Strips spaces.
