@@ -2,7 +2,6 @@ Core Classes
 ============
 
 .. automodule:: mollib
-    :members:
 
 .. autoclass:: Atom
     :members:

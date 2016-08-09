@@ -10,8 +10,8 @@ MolLib's documentation
    plugins
    settings
 
-Overview
---------
+Introduction
+------------
 
 MolLib is a Python module for manipulation biomolecular structures with an
 emphasis on biophysical analysis
@@ -29,6 +29,8 @@ Features
 * Easily extendable data types (Atom, Residue, Chain, Molecule) through object
   inheritance to add functionality and data to base objects.
 * Loading, fetching, caching  and writing PDB files
+
+.. automodule:: mollib.core.classes
 
 Indices and tables
 ==================
