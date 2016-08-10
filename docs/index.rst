@@ -30,7 +30,7 @@ Features
   inheritance to add functionality and data to base objects.
 * Loading, fetching, caching  and writing PDB files
 
-.. automodule:: mollib.core.classes
+.. automodule:: mollib.core.molecule
 
 Indices and tables
 ==================
