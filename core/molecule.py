@@ -72,11 +72,14 @@ Center at 0.000, 0.000, 0.000 A
 
 import re
 from itertools import chain as ichain
-from math import cos, sin, sqrt, pi, atan2, acos
+from math import cos, sin, pi
 
 import numpy as np
 
-from .geometry import measure_dihedral
+from .utils import convert
+from .atom import Atom
+from .residue import Residue
+from .chain import Chain
 
 try:
     from urllib.request import urlretrieve
@@ -84,336 +87,6 @@ except ImportError:
     from urllib import urlretrieve
 
 import os.path
-
-# Utility Functions
-
-# regex matching functions for string, floats and ints
-re_str = re.compile(r'[a-zA-Z]')
-re_float = re.compile(r'-?\d+\.\d*')
-re_int = re.compile(r'-?\d+')
-
-# FIXME: move to utils
-def convert(s):
-    """Convert a string 's' into either an integer, float or string.
-    Strips spaces.
-
-    >>> value = convert('  -6.065')
-    >>> print("{} {}".format(value, isinstance(value, float)))
-    -6.065 True
-    >>> value = convert('  3 ')
-    >>> print("{} {}".format(value, isinstance(value, int)))
-    3 True
-    >>> value = convert(' 1232 ')
-    >>> print("{} {}".format(value, isinstance(value, int)))
-    1232 True
-    >>> value = convert('HETATM  ')
-    >>> print("{} {}".format(value, isinstance(value, str)))
-    HETATM True
-    >>> value = convert(' HZ3  ')
-    >>> print("{} {}".format(value, isinstance(value, str)))
-    HZ3 True
-    """
-    # If the string contains any letter, return as a string
-    m = re_str.search(s)
-    if m:
-        return str(s).strip()
-
-    # Try extracting float
-    m = re_float.search(s)
-    if m:
-        return float(m.group())
-
-    # Try extracting int
-    m = re_int.search(s)
-    if m:
-        return int(m.group())
-
-    # All else fails, try just returning the string
-    return str(s).strip()
-
-
-# MolLib Implementation
-
-class PrimitiveMetaClass(type):
-    """A Primitive Metaclass for properly assigning and collecting attributes,
-    such as 'optional'"""
-    def __new__(meta, classname, bases, classDict):
-
-        # This code adds 'optional' tuples from parent classes to the
-        # 'optional' attribute of this class.
-        parent_optional = tuple(*[getattr(base, 'optional')
-                                  for base in bases
-                                  if hasattr(base, 'optional')])
-        classDict['optional'] = classDict['optional'] + parent_optional \
-            if 'optional' in classDict else parent_optional
-
-        return type.__new__(meta, classname, bases, classDict)
-
-
-class Primitive(object):
-    "The base for all objects."
-
-    __metaclass__ = PrimitiveMetaClass
-
-    __slots__ = ()
-    optional = ()
-
-    def __init__(self, **kwargs):
-
-        # Check that the required arguments have been specified
-        req_kwargs = [kw for kw in self.__slots__ if kw not in self.optional]
-        assert all(kw in kwargs for kw in req_kwargs), \
-            "All of the following parameters are needed: {}"\
-            .format(req_kwargs)
-
-        # Assign the values
-        [setattr(self, kw, value) for kw, value in kwargs.items()
-         if kw in self.__slots__]
-
-        super(Primitive, self).__init__()
-
-
-class Atom(Primitive):
-    """An atom in a residue.
-
-    Parameters
-    ----------
-    number: int
-        The atom number (order) in the molecule.
-    name: str
-        The atom's name. ex: 'HA'
-    pos: :obj:`numpy.array`
-        The atom's x/y/z position in the form of a numpy array.
-    charge: float, optional
-        The atom's charge
-    element: str
-        The atom's element. The element may be a different isotope. Suitable
-        values are documented in atom_MW.
-    residue: :obj:`Residue`, optional
-        The Residue object to which this atom instance belongs to.
-    chain: :obj:`Chain`, optional
-        The Chain object to which this atom instance belongs to.
-    molecule: :obj:`Molecule`, optional
-        The Molecule object to which this atom instance belongs to.
-
-    Attributes
-    ----------
-    atom_Mw: dict
-        The molecular weight (value, in Da or g/mol) of each element type (key)
-    options: tuple
-        A list of fields that are optional
-    """
-
-    # These are the required field. 'pos' (position)is the coordinate position
-    # of the atom, as a numpy array
-    __slots__ = ('number', 'name', 'pos', 'charge', 'element',
-                 'residue', 'chain', 'molecule')
-    optional = ('charge', 'residue', 'chain', 'molecule')
-
-    # Atom molecular weights. These must be labeled according the a str.title()
-    # function. eg. ZN becomes Zn.
-    atom_Mw = {'H': 1.01, 'C': 12.01, '13C': 13.00, 'N': 14.01, '15N': 15.00,
-               'O': 16.00, 'Na': 22.99, 'Mg': 24.31, 'P': 30.97, 'S': 32.07,
-               'Cl': 35.45, 'Zn': 65.38, }
-
-    def __repr__(self):
-        return u"{}-{}".format(self.residue, self.name) if self.residue else \
-            u"{}".format(self.name)
-
-    @property
-    def mass(self):
-        "The mass of this atom, depending on its element."
-        return self.atom_Mw[self.element.title()]
-
-    # Atom coordinate getters and setters
-    @property
-    def x(self):
-        "The x-coordinate of this atom."
-        return self.pos[0]
-
-    @x.setter
-    def x(self, value):
-        self.pos[0] = value
-
-    @property
-    def y(self):
-        "The y-coordinate of this atom."
-        return self.pos[1]
-
-    @y.setter
-    def y(self, value):
-        self.pos[1] = value
-
-    @property
-    def z(self):
-        "The z-coordinate of this atom."
-        return self.pos[2]
-
-    @z.setter
-    def z(self, value):
-        self.pos[2] = value
-
-
-class Residue(dict):
-    """A residue in a chain.
-
-    Parameters
-    ----------
-    name: str
-        The residue's 3-letter name. ex: 'MET'
-    letter: str
-        The residue's 1-letter name. ex: 'M'
-    number: int
-        The residue's number in the sequence.
-
-    Attributes
-    ----------
-    one_letter_codes: dict
-        A dict for converting 3-letter residue names (key) to 1-letter residue
-        names (value). The residue object will use 'X' if the 3-letter name
-        is not found.
-    last_residue: :obj:`Residue`
-        The preceding residue object, in the sequence, from the molecule. This
-        is a link in a doubly-linked list.
-    next_residue: :obj:`Residue`
-        The proceeding residue object, in the sequence, from the molecule. This
-        is a link in a doubly-linked list.
-
-        .. note:: The `last_residue` and `next_residue` are populated by the
-                  Molecule object on creation--not the Residue object.
-    """
-
-    # These are linked-list pointers to the next and previous residues. These
-    # attributes are populated during molecule creation
-    last_residue = None
-    next_residue = None
-
-    one_letter_codes = {'ALA': 'A', 'GLY': 'G', 'SER': 'S', 'THR': 'T',
-                        'MET': 'M', 'CYS': 'C', 'ILE': 'I', 'LEU': 'L',
-                        'VAL': 'V', 'PHE': 'F', 'TYR': 'Y', 'TRP': 'W',
-                        'ASN': 'N', 'GLN': 'Q', 'ASP': 'D', 'GLU': 'E',
-                        'HIS': 'H', 'PRO': 'P', 'ARG': 'R', 'LYS': 'K'}
-
-    def __init__(self, name, number, *args, **kwargs):
-        name = str(name).upper()
-
-        self.name = name  # full name, MET
-        self.letter = self.one_letter_codes.get(self.name, 'X')  # letter code
-        self.number = number
-        super(Residue, self).__init__(*args, **kwargs)
-
-    def __repr__(self):
-        return u"{}{}".format(self.letter, self.number)
-
-    @property
-    def atoms(self):
-        "An iterator over all atoms in this residue, sorted by atom number"
-        return (atom for atom in sorted(self.values(), key=lambda a: a.number))
-
-    @property
-    def atom_size(self):
-        "The number of atoms in this residue."
-        return len(list(self.atoms))
-
-    @property
-    def mass(self):
-        """The mass of all atoms in this residue.
-
-        >>> mol = Molecule('2KXA')
-        >>> print("{:.2f}".format(mol['A'][3].mass)) # Phe-3 mass
-        147.19
-        """
-        return sum(a.mass for a in self.atoms)
-
-    @property
-    def ramachandran_angles(self):
-        """The backbone Ramachandran angles for this residue.
-
-        Returns
-        -------
-        angles: list
-            A pair of angles (floats) representing the phi and psi angles in
-            degrees.
-
-        Examples
-        --------
-        >>> mol = Molecule('2KXA')
-        >>> print("{:.1f} {:.1f}".format(*mol['A'][3].ramachandran_angles))
-        -65.2 -48.3
-        >>> print("{} {:.1f}".format(*mol['A'][1].ramachandran_angles))
-        None -179.9
-        """
-        # Retrieve the appropriate atoms to calculate the ramachandran angles
-        c_prev = (self.last_residue['C']
-                  if self.last_residue is not None else None)
-        n = self['N']
-        ca = self['CA']
-        c = self['C']
-        n_next = (self.next_residue['N']
-                  if self.next_residue is not None else None)
-
-        angles = [None, None]  # Initial phi/psi angles are set to None
-        # Iterate over phi (angles[0]) and phi (angles[1]) to calculate the
-        # dihedrals
-        for item, a, b, c, d in [(0, c_prev, n, ca, c),   # phi
-                                 (1, n, ca, c, n_next)]:  # psi
-            if a is None or b is None or c is None or d is None:
-                continue
-            angles[item] = measure_dihedral(a, b, c, d)
-        return angles
-
-
-class Chain(dict):
-    """A chain in a molecule.
-
-    Parameters
-    ----------
-    id: str
-        The chain's id. ex: 'A'
-    """
-
-    def __init__(self, id, *args, **kwargs):
-        self.id = id
-        super(Chain, self).__init__(*args, **kwargs)
-
-    def __repr__(self):
-        return u"{}".format(self.id)
-
-    @property
-    def residues(self):
-        """An iterator over all residues in this chain,
-        sorted by residue number."""
-        return (residue for residue in
-                sorted(self.values(), key=lambda a: a.number))
-
-    @property
-    def residue_size(self):
-        "The number of residues in this chain."
-        return len(list(self.residues))
-
-    @property
-    def atoms(self):
-        """An iterator over all atoms in this chain,
-        sorted by atom number."""
-        return (a for a in sorted(ichain(*[r.values() for r in self.values()]),
-                                  key=lambda a: a.number))
-
-    @property
-    def atom_size(self):
-        "The number of atoms in this chain."
-        return len(list(self.atoms))
-
-    @property
-    def mass(self):
-        """The mass of all the atoms in this chain.
-
-        >>> mol = Molecule('3C9J')
-        >>> print("{:.2f}".format(mol['A'].mass)) # Chain A mass
-        2507.61
-        >>> print("{:.2f}".format(mol.mass)) # Total molecule mass
-        10164.55
-        """
-        return sum(a.mass for a in self.atoms)
 
 
 class Molecule(dict):
@@ -435,8 +108,8 @@ class Molecule(dict):
     atom_class: :class:`Atom`
         The `Atom` class to use for generating atom objects for this molecule.
 
-        .. note:: A molecule object only reads the first model of a PDB file with
-                  multiple models
+        .. note:: A molecule object only reads the first model of a PDB file
+                  with multiple models
     """
 
     # TODO: add translate method
@@ -505,12 +178,13 @@ class Molecule(dict):
 
     @property
     def residue_size(self):
-        "The number of residues in this molecule."
+        """The number of residues in this molecule."""
         return len(list(self.residues))
 
     @property
     def atoms(self):
-        "An iterator over all atoms in this molecule, sorted by atom number"
+        """An iterator over all atoms in this molecule, sorted by atom
+        number."""
         return (a for a in sorted(ichain(*[r.values() for r in
                                            ichain(*[c.values() for c in
                                                     self.values()])]),
@@ -518,7 +192,7 @@ class Molecule(dict):
 
     @property
     def atom_size(self):
-        "The number of atoms in this molecule."
+        """The number of atoms in this molecule."""
         return len(list(self.atoms))
 
     # Mutator Functions
@@ -541,7 +215,7 @@ class Molecule(dict):
             atom.pos[2] -= com[2]
 
     def rotate_zyz(self, alpha, beta, gamma):
-        "Rotates a molecule by the Euler z-y-z angles in degrees."
+        """Rotates a molecule by the Euler z-y-z angles in degrees."""
 
         # Trig.
         sin_a = sin(alpha * pi / 180.)
@@ -602,11 +276,11 @@ class Molecule(dict):
         kwargs['pos'] = np.array(pos)
         kwargs['charge'] = charge
         kwargs['element'] = element
+        kwargs['residue'] = residue
+        kwargs['chain'] = residue.chain
+        kwargs['molecule'] = self
 
         atom = self.atom_class(**kwargs)
-        atom.residue = residue
-        atom.chain = residue.chain
-        atom.molecule = self
         residue[name] = atom
 
     def del_atom(self, atom):
@@ -620,6 +294,14 @@ class Molecule(dict):
         >>> mol.del_atom(mol['A'][3]['N'])
         >>> print ('{:.2f}, {:.2f}'.format(mol.mass, mol['A'][3].mass))
         2431.06, 133.18
+
+
+        .. note:: Since atom objects are only referenced in residues, this
+                  should delete the only atom reference in the molecule.
+                  However, if the atom was referenced elsewhere, it won't get
+                  deleted until that reference is deleted. An implementation
+                  that returns weakref.proxy links from the molecule may be
+                  preferable.
         """
         del atom.residue[atom.name]
 
@@ -656,10 +338,9 @@ class Molecule(dict):
                 atom.element = element_to
 
     def link_residues(self):
-        "Create a doubly linked list of all residues."
+        """Create a doubly linked list of all residues."""
         # Create the residue linked lists
         last_residue = None
-        next_residue = None
         for residue in self.residues:
             # Special first residue
             if last_residue is None:
@@ -736,7 +417,7 @@ class Molecule(dict):
             self.fetch_pdb(identifier)
 
     def read_pdb(self, filename):
-        "Reads in data from a PDB file."
+        """Reads in data from a PDB file."""
 
         with open(filename) as f:
             self.read_stream(f)
@@ -767,7 +448,7 @@ class Molecule(dict):
         self.read_pdb(path)
 
     def read_stream(self, stream):
-        "Reads in data from a stream."
+        """Reads in data from a stream."""
 
         self.clear()
 
@@ -797,9 +478,9 @@ class Molecule(dict):
                 # Read only the first model. Skip the rest
                 if line[0:6] == 'ENDMDL':
                     raise StopIteration
-                match = pdb_line.match(line)
-                if match:
-                    yield match
+                m = pdb_line.match(line)
+                if m:
+                    yield m
 
         atom_generator = generator()
 
@@ -816,19 +497,19 @@ class Molecule(dict):
                          in match.groupdict().items()}
 
             # create Chain, if it doesn't already exist
-            id = groupdict['chain']
+            identifier = groupdict['chain']
 
             # If this is a HETATM, then append a '*' to the chain name so that
             # it doesn't overwrite protein chains.
             if groupdict['type'] == 'HETATM':
-                id += '*'
+                identifier += '*'
 
-            if id not in self:
-                chain = self.chain_class(id=id)
+            if identifier not in self:
+                chain = self.chain_class(identifier=identifier)
                 chain.molecule = self
-                self[id] = chain
+                self[identifier] = chain
 
-            chain = self[id]
+            chain = self[identifier]
 
             # create Residue, if it doesn't already exist
             number, name = (groupdict[i] for i in ('residue_number',
@@ -852,12 +533,15 @@ class Molecule(dict):
             groupdict['pos'] = np.array((groupdict.pop('x'),
                                          groupdict.pop('y'),
                                          groupdict.pop('z')))
+
+            # Populate the new atom parameters and create the new Atom object.
             atom_dict = {k: v for k, v in groupdict.items()
                          if k in Atom.__slots__}
+            atom_dict['residue'] = residue
+            atom_dict['chain'] = chain
+            atom_dict['molecule'] = self
+
             atom = self.atom_class(**atom_dict)
-            atom.residue = residue
-            atom.chain = chain
-            atom.molecule = self
             residue[name] = atom
 
         self.link_residues()
@@ -866,7 +550,7 @@ class Molecule(dict):
 
     @property
     def mass(self):
-        """ The mass of the molecule.
+        """Mass of the molecule.
 
         Examples
         --------
@@ -878,7 +562,7 @@ class Molecule(dict):
 
     @property
     def center_of_mass(self):
-        """The center-of-mass position of the molecule.
+        """Center-of-mass position of the molecule.
 
         Returns
         -------

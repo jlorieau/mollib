@@ -1,22 +1,18 @@
 """
 Utility functions.
-
-   @Author:             Justin L Lorieau <jlorieau>
-   @Date:               2016-08-04T12:07:09-05:00
-   @Last modified by:   jlorieau
-   @Last modified time: 2016-08-04T12:42:04-05:00
-   @License:            Copyright 2016
 """
 from math import sqrt
+import re
 
 
 def vector_length(vector):
-    "Returns the length (in A) of a vector"
+    """Returns the length (in A) of a vector"""
     return sqrt(sum([i*i for i in vector]))
 
 
 def calc_vector(atom_i, atom_j, normalize=True):
-    "Returns the vector between atoms 'i' and 'j' with optional normalization."
+    """Returns the vector between atoms 'i' and 'j' with optional
+    normalization."""
     vec = atom_i.pos - atom_j.pos
 
     if normalize:
@@ -24,3 +20,47 @@ def calc_vector(atom_i, atom_j, normalize=True):
         return vec / length
     else:
         return vec
+
+
+re_str = re.compile(r'[a-zA-Z]')
+re_float = re.compile(r'-?\d+\.\d*')
+re_int = re.compile(r'-?\d+')
+
+
+def convert(s):
+    """Convert a string 's' into either an integer, float or string.
+    Strips spaces.
+
+    >>> value = convert('  -6.065')
+    >>> print("{} {}".format(value, isinstance(value, float)))
+    -6.065 True
+    >>> value = convert('  3 ')
+    >>> print("{} {}".format(value, isinstance(value, int)))
+    3 True
+    >>> value = convert(' 1232 ')
+    >>> print("{} {}".format(value, isinstance(value, int)))
+    1232 True
+    >>> value = convert('HETATM  ')
+    >>> print("{} {}".format(value, isinstance(value, str)))
+    HETATM True
+    >>> value = convert(' HZ3  ')
+    >>> print("{} {}".format(value, isinstance(value, str)))
+    HZ3 True
+    """
+    # If the string contains any letter, return as a string
+    m = re_str.search(s)
+    if m:
+        return str(s).strip()
+
+    # Try extracting float
+    m = re_float.search(s)
+    if m:
+        return float(m.group())
+
+    # Try extracting int
+    m = re_int.search(s)
+    if m:
+        return int(m.group())
+
+    # All else fails, try just returning the string
+    return str(s).strip()
