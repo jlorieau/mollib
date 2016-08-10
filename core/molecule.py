@@ -440,6 +440,7 @@ class Molecule(dict):
         >>> print(mol)
         Molecule:    1 chains, 24 residues, 332 atoms.
         """
+        # TODO: fetch gzipped files instead of raw PDB files.
         url = 'http://ftp.rcsb.org/download/{}.pdb'.format(pdb_code)
         path = os.path.join('/tmp', pdb_code) + '.pdb'
 
@@ -448,8 +449,9 @@ class Molecule(dict):
         self.read_pdb(path)
 
     def read_stream(self, stream):
-        """Reads in data from a stream."""
-
+        """Reads in data from a stream.
+        """
+        # TODO: This may be much faster to implement in Cython with fixed str.
         self.clear()
 
         pdb_line = re.compile((r"(?P<type>ATOM  |HETATM)"

@@ -117,3 +117,6 @@ def measure_dihedral(atom_1, atom_2, atom_3, atom_4):
     y = np.dot(m1, n2)
     angle = atan2(y, x) * 180. / np.pi
     return angle
+
+
+# TODO: def measure_rmsd(molecule1, molecule2, atoms=None)
