@@ -339,6 +339,7 @@ class Molecule(dict):
 
     def link_residues(self):
         """Create a doubly linked list of all residues."""
+        # TODO: Make these weak references instead of regular references
         # Create the residue linked lists
         last_residue = None
         for residue in self.residues:
