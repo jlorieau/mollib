@@ -1,5 +1,5 @@
 Settings
 ========
 
-.. automodule:: mollib.settings
+.. automodule:: mollib.core.settings
     :members:

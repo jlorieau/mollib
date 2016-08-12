@@ -81,6 +81,7 @@ from .utils import convert
 from .atom import Atom
 from .residue import Residue
 from .chain import Chain
+from . import settings
 
 try:
     from urllib.request import urlretrieve
@@ -378,6 +379,14 @@ class Molecule(dict):
         if residue is not None:
             residue.last = True
             residue.next_residue = None
+
+    @property
+    def pH(self):
+        return getattr(self, '_pH', settings.default_pH)
+
+    @pH.setter
+    def pH(self, value):
+        self._pH = value
 
     # Read and Write Methods
 
