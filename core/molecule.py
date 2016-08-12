@@ -71,6 +71,7 @@ Center at 0.000, 0.000, 0.000 A
 #       hbond_donor = True, hbond_acceptor = True, hybridization = 'sp2'
 
 import re
+import weakref
 from itertools import chain as ichain
 from math import cos, sin, pi
 
@@ -338,18 +339,22 @@ class Molecule(dict):
                 atom.element = element_to
 
     def link_residues(self):
-        """Create a doubly linked list of all residues."""
+        """Create a doubly linked list of all residues and annotate the
+        first and last residues."""
         # TODO: Make these weak references instead of regular references
         # Create the residue linked lists
-        last_residue = None
+        prev_residue = None
+
+        #
+
         for residue in self.residues:
             # Special first residue
-            if last_residue is None:
-                last_residue = residue
+            if prev_residue is None:
+                prev_residue = residue
                 continue
-            last_residue.next_residue = residue
-            residue.last_residue = last_residue
-            last_residue = residue
+            prev_residue.next_residue = weakref.proxy(residue)
+            residue.prev_residue = weakref.proxy(prev_residue)
+            prev_residue = residue
 
     # Read and Write Methods
 
@@ -507,6 +512,7 @@ class Molecule(dict):
             if groupdict['type'] == 'HETATM':
                 identifier += '*'
 
+            # Create a new chain, if it doesn't already exist
             if identifier not in self:
                 chain = self.chain_class(identifier=identifier)
                 chain.molecule = self

@@ -151,7 +151,7 @@ def classify_amide_beta_turns(hbond):
     # between the residues i and i+3.
     res_0 = hbond.donor.residue
     res_1 = hbond.donor.residue.next_residue
-    res_2 = hbond.acceptor.residue.last_residue
+    res_2 = hbond.acceptor.residue.prev_residue
     res_3 = hbond.acceptor.residue
 
     phi_1, psi_1 = res_1.ramachandran_angles

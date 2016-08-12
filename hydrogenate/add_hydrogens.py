@@ -66,7 +66,7 @@ def add_h(molecule, strip_h=True):
                 other_atoms = []
                 for other_name in other_atom_names:
                     if other_name.endswith('-1'):  # Load the previous residue
-                        res = residue.last_residue
+                        res = residue.prev_residue
                         atom = (res.get(other_name[:-2])  # Remove the '-1'
                                 if res is not None else None)
                     else:
@@ -135,7 +135,7 @@ def add_one_sp2_h(molecule, atom_name, target_atom, other_atoms,
     >>> mol = Molecule('2KXA')
     >>> mol.strip_atoms(element='H')
     >>> F3 = mol['A'][3]
-    >>> n, ca, c_prev = F3['N'], F3['CA'], F3.last_residue['C']
+    >>> n, ca, c_prev = F3['N'], F3['CA'], F3.prev_residue['C']
     >>> add_one_sp2_h(mol, 'HN', n, [c_prev, ca], 1.0)
     True
     >>> hn = F3['HN']

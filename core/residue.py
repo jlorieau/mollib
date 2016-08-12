@@ -19,20 +19,20 @@ class Residue(dict):
         A dict for converting 3-letter residue names (key) to 1-letter residue
         names (value). The residue object will use 'X' if the 3-letter name
         is not found.
-    last_residue: :obj:`Residue`
+    prev_residue: :obj:`Residue`
         The preceding residue object, in the sequence, from the molecule. This
         is a link in a doubly-linked list.
     next_residue: :obj:`Residue`
         The proceeding residue object, in the sequence, from the molecule. This
         is a link in a doubly-linked list.
 
-        .. note:: The `last_residue` and `next_residue` are populated by the
+        .. note:: The `prev_residue` and `next_residue` are populated by the
                   Molecule object on creation--not the Residue object.
     """
 
     # These are linked-list pointers to the next and previous residues. These
     # attributes are populated during molecule creation
-    last_residue = None
+    prev_residue = None
     next_residue = None
 
     one_letter_codes = {'ALA': 'A', 'GLY': 'G', 'SER': 'S', 'THR': 'T',
@@ -93,8 +93,8 @@ class Residue(dict):
         None -179.9
         """
         # Retrieve the appropriate atoms to calculate the ramachandran angles
-        c_prev = (self.last_residue['C']
-                  if self.last_residue is not None else None)
+        c_prev = (self.prev_residue['C']
+                  if self.prev_residue is not None else None)
         n = self['N']
         ca = self['CA']
         c = self['C']

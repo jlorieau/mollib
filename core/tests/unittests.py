@@ -56,9 +56,9 @@ class TestMolLib(unittest.TestCase):
         """Tests the linked lists of residues."""
         mol = Molecule('2KXA')
 
-        last_residues = [r.last_residue.number
-                         if r.last_residue is not None else None
+        prev_residues = [r.prev_residue.number
+                         if r.prev_residue is not None else None
                          for r in mol.residues]
-        self.assertEqual(last_residues,
+        self.assertEqual(prev_residues,
                          [None, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13,
                           14, 15, 16, 17, 18, 19, 20, 21, 22, 23])
