@@ -169,13 +169,15 @@ class Molecule(dict):
         """An iterator over all residues in this molecule, sorted by residue
         number.
 
-        >>> mol=Molecule('2KXA')
-        >>> print([r.number for r in mol.residues])
-        [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, \
-20, 21, 22, 23, 24]
+        >>> mol=Molecule('2N65')
+        >>> l = [r.number for r in mol.residues]
+        >>> print(l[16:])
+        [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
+        >>> print(l[:16])
+        [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
         """
         return (r for r in sorted(ichain(*[r.values() for r in self.values()]),
-                                  key=lambda r: r.number))
+                                  key=lambda r: (r.chain.id, r.number)))
 
     @property
     def residue_size(self):
@@ -341,20 +343,41 @@ class Molecule(dict):
     def link_residues(self):
         """Create a doubly linked list of all residues and annotate the
         first and last residues."""
-        # TODO: Make these weak references instead of regular references
         # Create the residue linked lists
+        # Note: the prev_residue, next_residue, first and last attributes
+        # of the residue object are already set by the class
         prev_residue = None
-
-        #
-
+        residue = None
         for residue in self.residues:
-            # Special first residue
+            # Treat the first residue in the chain as special
             if prev_residue is None:
-                prev_residue = residue
-                continue
-            prev_residue.next_residue = weakref.proxy(residue)
-            residue.prev_residue = weakref.proxy(prev_residue)
+                residue.first = True
+
+                # Set the double-linked list
+                residue.prev_residue = None
+
+            # Otherwise this is not the first residue
+            else:
+                # Treat the first residue in the *next* chain as special
+                if prev_residue.chain.id != residue.chain.id:
+                    residue.first = True
+                    prev_residue.last = True
+
+                    # Set the double-linked list
+                    prev_residue.next_residue = None
+                    residue.prev_residue = None
+                else:
+                    # Set the double-linked list
+                    prev_residue.next_residue = weakref.proxy(prev_residue)
+                    residue.prev_residue = weakref.proxy(residue)
+
+            # Prepare for the next iteration
             prev_residue = residue
+
+        # Treat the very last residue as the last residue
+        if residue is not None:
+            residue.last = True
+            residue.next_residue = None
 
     # Read and Write Methods
 

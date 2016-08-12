@@ -20,20 +20,28 @@ class Residue(dict):
         names (value). The residue object will use 'X' if the 3-letter name
         is not found.
     prev_residue: :obj:`Residue`
-        The preceding residue object, in the sequence, from the molecule. This
-        is a link in a doubly-linked list.
+        The preceding residue object, in the sequence, from the :obj:`chain`.
+        This is a link in a doubly-linked list.
     next_residue: :obj:`Residue`
-        The proceeding residue object, in the sequence, from the molecule. This
-        is a link in a doubly-linked list.
+        The proceeding residue object, in the sequence, from the :obj:`chain`.
+        This is a link in a doubly-linked list.
+    first: bool
+        True if this is the first :obj:`residue` in the :obj:`chain`.
+    last: bool
+        True if this is the last :obj:`residue` in the :obj:`chain`.
 
-        .. note:: The `prev_residue` and `next_residue` are populated by the
-                  Molecule object on creation--not the Residue object.
+        .. note:: The `prev_residue`, `next_residue`, `first` and `last` are
+                  populated by the :obj:`molecule` object on creation--not the
+                  :obj:`residue` object.
     """
 
     # These are linked-list pointers to the next and previous residues. These
     # attributes are populated during molecule creation
     prev_residue = None
     next_residue = None
+
+    first = False
+    last = False
 
     one_letter_codes = {'ALA': 'A', 'GLY': 'G', 'SER': 'S', 'THR': 'T',
                         'MET': 'M', 'CYS': 'C', 'ILE': 'I', 'LEU': 'L',

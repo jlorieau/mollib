@@ -4,6 +4,7 @@
 # Copyright 2016
 
 import unittest
+import logging
 from datetime import datetime
 
 from mollib.core import Molecule
@@ -54,11 +55,41 @@ class TestMolLib(unittest.TestCase):
 
     def test_residue_ordering(self):
         """Tests the linked lists of residues."""
-        mol = Molecule('2KXA')
+        # Molecule is influenza M2 (19-49). It has 4 chains (A, B, C, D) and
+        # one drug 11.
+        mol = Molecule('2MUV')
 
-        prev_residues = [r.prev_residue.number
-                         if r.prev_residue is not None else None
-                         for r in mol.residues]
-        self.assertEqual(prev_residues,
-                         [None, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13,
-                          14, 15, 16, 17, 18, 19, 20, 21, 22, 23])
+        chain_ids = [c.id for c in mol.chains]
+        self.assertEqual(chain_ids,
+                         ['A', 'B', 'C', 'C*', 'D'])
+
+        for chain_id in chain_ids:
+            residue_size = mol[chain_id].residue_size
+            print(chain_id)
+            # Only the first residue is residue.first
+            first = [r.first for r in mol[chain_id].residues]
+            self.assertEqual(first,
+                             [True] + [False]*(residue_size-1))
+
+            # Only the last residue is residue.last
+            last = [r.last for r in mol[chain_id].residues]
+            self.assertEqual(last,
+                             [False] * (residue_size - 1) + [True])
+
+            # Check the flags and settings for the first and last residue
+            for count, residue in enumerate(mol[chain_id].residues):
+                if count == 0: # This is the first residue
+                    self.assertTrue(residue.first)
+                    self.assertIsNone(residue.prev_residue)
+                elif count + 1 == residue_size: # This is the last residue
+                    self.assertTrue(residue.last)
+                    self.assertIsNone(residue.next_residue)
+
+            # Checking the linking
+            prev_residues = [r.prev_residue if r is not None else None
+                             for r in mol[chain_id].residues]
+            next_residues = [r.next_residue if r is not None else None
+                             for r in mol[chain_id].residues]
+
+            self.assertEqual(prev_residues[:-1] + [None],
+                             [None] + next_residues[1:])
