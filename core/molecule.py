@@ -461,7 +461,6 @@ class Molecule(dict):
 
         Supported extensions include '.pdb' and '.pdb.gz'
         """
-        print(filename)
         if filename.endswith('.gz'):
             with gzip.open(filename) as f:
                 self.read_stream(f)
@@ -488,7 +487,7 @@ class Molecule(dict):
         Molecule:    1 chains, 24 residues, 332 atoms.
         """
         url = 'http://files.rcsb.org/download/{}.pdb.gz'.format(pdb_code)
-        temp_path = os.path.join(tempfile.tempdir, 'mollib')
+        temp_path = os.path.join(tempfile.gettempdir(), 'mollib')
         if not os.path.exists(temp_path):
             os.makedirs(temp_path)
 
