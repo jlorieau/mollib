@@ -72,6 +72,8 @@ Center at 0.000, 0.000, 0.000 A
 
 import re
 import weakref
+import tempfile
+import gzip
 from itertools import chain as ichain
 from math import cos, sin, pi
 
@@ -455,10 +457,17 @@ class Molecule(dict):
             self.fetch_pdb(identifier)
 
     def read_pdb(self, filename):
-        """Reads in data from a PDB file."""
+        """Reads in data from a PDB file.
 
-        with open(filename) as f:
-            self.read_stream(f)
+        Supported extensions include '.pdb' and '.pdb.gz'
+        """
+        print(filename)
+        if filename.endswith('.gz'):
+            with gzip.open(filename) as f:
+                self.read_stream(f)
+        else:
+            with open(filename) as f:
+                self.read_stream(f)
 
     def fetch_pdb(self, pdb_code, load_cached=True):
         """Download/fetch a PDB file online.
@@ -478,9 +487,12 @@ class Molecule(dict):
         >>> print(mol)
         Molecule:    1 chains, 24 residues, 332 atoms.
         """
-        # TODO: fetch gzipped files instead of raw PDB files.
-        url = 'http://ftp.rcsb.org/download/{}.pdb'.format(pdb_code)
-        path = os.path.join('/tmp', pdb_code) + '.pdb'
+        url = 'http://files.rcsb.org/download/{}.pdb.gz'.format(pdb_code)
+        temp_path = os.path.join(tempfile.tempdir, 'mollib')
+        if not os.path.exists(temp_path):
+            os.makedirs(temp_path)
+
+        path = os.path.join(temp_path, pdb_code) + '.pdb.gz'
 
         if not os.path.isfile(path) or not load_cached:
             urlretrieve(url, path)
@@ -515,6 +527,10 @@ class Molecule(dict):
         # 10%). It takes 6.0s to read 3H0G.
         def generator():
             for line in stream.readlines():
+                # Gzipped files return bytes lines that have to be decoded
+                if type(line) == bytes:
+                    line = line.decode('latin-1')
+
                 # Read only the first model. Skip the rest
                 if line[0:6] == 'ENDMDL':
                     raise StopIteration
