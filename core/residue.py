@@ -1,4 +1,9 @@
+from collections import namedtuple
+
 from .geometry import measure_dihedral
+from . import settings
+
+IonGroup = namedtuple('IonGroup', ['possible_atoms', 'pKs'])
 
 
 class Residue(dict):
@@ -119,3 +124,59 @@ class Residue(dict):
                 continue
             angles[item] = measure_dihedral(a, b, c, d)
         return angles
+
+    @property
+    def ionizeable_groups(self):
+        """The number and identity of ionizeable :obj:`iongroup`s for this
+         residue.
+
+         The returned list is *independent* of the molecule's pH. It's just a
+         listing of atom's that can be ionized in this residue.
+
+        Returns
+        -------
+        list
+            A list of :obj:`iongroup` tuples.
+            iongroup.number: The first item represents the number of
+                             ionizeable Hs to add to this residue.
+            iongroup.possible_atoms: The second item is a list of :obj:`atom`
+                                     objects that are ionizeable. These may or
+                                     may not already have Hs.
+
+        Examples
+        --------
+        >>> from mollib import Molecule
+        >>> mol = Molecule('2PTN')
+        >>> I16 = mol['A'][16] # First residue
+        >>> I16.ionizeable_groups
+        [IonGroup(possible_atoms=[I16-N], pKs=(7.7, 14.0, 14.0))]
+        >>> H40 = mol['A'][40]
+        >>> H40.ionizeable_groups
+        [IonGroup(possible_atoms=[H40-ND1, H40-NE2], pKs=(6.6, 14.0))]
+        >>> N245 = mol['A'][245] # Last residue
+        >>> N245.ionizeable_groups
+        [IonGroup(possible_atoms=[N245-O, N245-OXT], pKs=(-1.0, 3.3))]
+        """
+        groups = []
+        # Create an ionization group for the alpha-amino or terminal-carboxylate
+        if self.first:
+            groups += settings.pKs['first'].items()
+        if self.last:
+            groups += settings.pKs['last'].items()
+        if self.name in settings.pKs:
+            groups += settings.pKs[self.name].items()
+        if not groups:
+            return None
+
+        # Convert the pKs and names to actual atom objects
+        return_list = []
+        for names, pKs in groups:
+            # Note that multiple atom names are split with a '-' character
+            try:
+                atoms = [self[name] for name in names.split('-')]
+            # Skip this group if an atom isn't found
+            except KeyError:
+                continue
+            iongroup = IonGroup(possible_atoms=atoms, pKs=pKs)
+            return_list.append(iongroup)
+        return return_list
