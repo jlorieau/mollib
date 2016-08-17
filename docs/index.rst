@@ -29,6 +29,7 @@ Features
 * Easily extendable data types (Atom, Residue, Chain, Molecule) through object
   inheritance to add functionality and data to base objects.
 * Loading, fetching, caching  and writing PDB files
+* Handles gzipped and and plain text files
 
 .. automodule:: mollib.core.molecule
 
