@@ -65,7 +65,7 @@ class TestMolLib(unittest.TestCase):
 
         for chain_id in chain_ids:
             residue_size = mol[chain_id].residue_size
-            print(chain_id)
+
             # Only the first residue is residue.first
             first = [r.first for r in mol[chain_id].residues]
             self.assertEqual(first,
@@ -85,11 +85,16 @@ class TestMolLib(unittest.TestCase):
                     self.assertTrue(residue.last)
                     self.assertIsNone(residue.next_residue)
 
-            # Checking the linking
+            # Checking the linking. These tests have to use __repr__ because
+            # the prev_residue and next_residue are only weakref proxies.
             prev_residues = [r.prev_residue if r is not None else None
                              for r in mol[chain_id].residues]
+            self.assertEqual([r.__repr__() for r in prev_residues],
+                             ['None'] + [r.__repr__()
+                                       for r in mol[chain_id].residues][:-1])
+
             next_residues = [r.next_residue if r is not None else None
                              for r in mol[chain_id].residues]
-
-            self.assertEqual(prev_residues[:-1] + [None],
-                             [None] + next_residues[1:])
+            self.assertEqual([r.__repr__() for r in next_residues],
+                             [r.__repr__()
+                              for r in mol[chain_id].residues][1:] + ['None'])

@@ -114,6 +114,7 @@ class Residue(dict):
         # dihedrals
         for item, a, b, c, d in [(0, c_prev, n, ca, c),   # phi
                                  (1, n, ca, c, n_next)]:  # psi
+
             if a is None or b is None or c is None or d is None:
                 continue
             angles[item] = measure_dihedral(a, b, c, d)

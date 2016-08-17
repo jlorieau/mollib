@@ -371,8 +371,8 @@ class Molecule(dict):
                     residue.prev_residue = None
                 else:
                     # Set the double-linked list
-                    prev_residue.next_residue = weakref.proxy(prev_residue)
-                    residue.prev_residue = weakref.proxy(residue)
+                    prev_residue.next_residue = weakref.proxy(residue)
+                    residue.prev_residue = weakref.proxy(prev_residue)
 
             # Prepare for the next iteration
             prev_residue = residue
