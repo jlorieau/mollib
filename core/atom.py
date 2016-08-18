@@ -1,4 +1,6 @@
 from .primitives import Primitive
+from .topology import *
+from . import settings
 
 
 class Atom(Primitive):
@@ -41,9 +43,9 @@ class Atom(Primitive):
     # of the atom, as a numpy array
     __slots__ = ('number', 'name', 'pos', 'charge', 'element',
                  'residue', 'chain', 'molecule',
-                 'bonded_atom_names')
+                 '_pK', '_topology')
     optional = ('charge', 'residue', 'chain', 'molecule',
-                'bonded_atom_names')
+                '_pK', '_topology')
     # bonded_atom_names ' ['1N', '2C-1'
 
     # Atom molecular weights. These must be labeled according the a str.title()
@@ -88,3 +90,121 @@ class Atom(Primitive):
     @z.setter
     def z(self, value):
         self.pos[2] = value
+
+    @property
+    def topology(self):
+        """The complete list of the topology of other atom *names* to bonded
+        this atom.
+
+        Returns
+        -------
+        bonded_list : list
+            A list of the atoms names (str) of all :obj:`atoms` that may be
+            bonded to this :obj:`atom`.
+
+
+        .. note:: :obj:`atoms` from the preceding residue are terminated with
+                  '-1' and :obj:`atoms` from the proceeding residue are
+                  terminated with '+1'.
+
+        .. note:: The topology is a set, and can be modified using the standard
+                  set operations
+
+        Examples
+        --------
+        >>> from mollib import Molecule
+        >>> mol = Molecule('2KXA')
+        >>> D19 = mol['A'][19]
+        >>> D19['OD1'].topology
+        {'CG'}
+        >>> D19['OD1'].topology |= {'HD1'}
+        >>> D19['OD1'].topology
+        {'CG', 'HD1'}
+        """
+        if hasattr(self, '_topology'):
+            return getattr(self, '_topology')
+        try:
+            return topology[self.residue.name][self.name]
+        except KeyError:
+            return set()
+
+    @topology.setter
+    def topology(self, value):
+        if not hasattr(self, '_topology'):
+            self._topology = self.topology
+        self._topology = value
+
+    # @property
+    # def bonded_atoms(self):
+    #     """The atoms bonded to this atom.
+    #
+    #     Returns
+    #     -------
+    #     bonded : list
+    #       A list of the *actual* :obj:`atom` objects currently bonded to this
+    #       atom.
+    #
+    #
+    #     .. note:: This list may not correspond to the bonded_topology when
+    #               there are missing :obj:`atom` objects, like hydrogens.
+    #
+    #     Examples
+    #     --------
+    #     >>> from mollib import Molecule
+    #     >>> mol = Molecule('2KXA')
+    #     >>> D19 = mol['A'][19]
+    #     >>> D19['C'].bonded_atoms
+    #     ['D19-CA', 'G20-N']
+    #     """
+    #     raise NotImplementedError
+    #
+    # @property
+    # def geometry_atoms(self):
+    #     """The other non-bonded atoms that impact the geometry of bonding at
+    #     this atom.
+    #
+    #     For example, to determine the protonation of a C-O in a carboxylate,
+    #     the position of the other 'O' will be needed.
+    #
+    #     Returns
+    #     -------
+    #     geometry_list : list
+    #         A list of the other, *non-bonded* :obj:`atom` objects that
+    #         influence this :obj:`atom`'s geometry.
+    #
+    #     Examples
+    #     --------
+    #     >>> from mollib import Molecule
+    #     >>> mol = Molecule('2KXA')
+    #     >>> D19 = mol['A'][19]
+    #     >>> D19['OD1'].bonded_atoms
+    #     ['D19-OD2']
+    #     """
+    #     raise NotImplementedError
+    #
+    # @property
+    # def configuration(self):
+    #     """
+    #
+    #     Returns
+    #     -------
+    #
+    #     Examples
+    #     --------
+    #     >>> from mollib import Molecule
+    #     >>> mol = Molecule('2KXA')
+    #     >>> G1 = mol['A'][1]
+    #     >>> mol.pH = 2.0
+    #     >>> G1['N'].configuration
+    #     'tetrahedral'
+    #     >>> mol.pH = 12.0
+    #     >>> G1['N'].configuration
+    #     'tetragonal'
+    #
+    #
+    #     .. note:: this only works for atoms without an ionization_alternative.
+    #               It requires the pK attribute set and the molecule.pH
+    #               attribute set.
+    #     """
+    #     raise NotImplementedError
+
