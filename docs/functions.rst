@@ -8,3 +8,5 @@ Functions
 .. autofunction:: measure_angle
 
 .. autofunction:: measure_dihedral
+
+.. autofunction:: clear_cache

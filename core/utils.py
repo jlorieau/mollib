@@ -3,6 +3,8 @@ Utility functions.
 """
 from math import sqrt
 import re
+import tempfile
+import os
 
 
 def vector_length(vector):
@@ -64,3 +66,15 @@ def convert(s):
 
     # All else fails, try just returning the string
     return str(s).strip()
+
+
+def clear_cache():
+    """Clears the temporary cache for mollib."""
+    temp_path = os.path.join(tempfile.gettempdir(), 'mollib')
+    for filename in os.listdir(temp_path):
+        filepath = os.path.join(temp_path, filename)
+        try:
+            if os.path.isfile(filepath):
+                os.unlink(filepath)
+        except Exception as e:
+            print(e)
