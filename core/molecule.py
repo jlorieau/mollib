@@ -75,6 +75,7 @@ import weakref
 import tempfile
 import gzip
 from itertools import chain as ichain
+from collections import OrderedDict
 from math import cos, sin, pi
 
 import numpy as np
@@ -497,108 +498,118 @@ class Molecule(dict):
             urlretrieve(url, path)
         self.read_pdb(path)
 
+    _re_atom = re.compile((r"(?P<type>ATOM  |HETATM)"
+                            "(?P<number>[\s\d]{5}) "
+                            "(?P<name>[\s\w]{4})"
+                            "(?P<alt_loc>[\w\s])"
+                            "(?P<residue_name>[\w\s]{3}) "
+                            "(?P<chain>[\s\w]{1})"
+                            "(?P<residue_number>[\s\w]{4})"
+                            "(?P<icode>[\w\s])   "
+                            "(?P<x>[\d\s\.\-]{8})"
+                            "(?P<y>[\d\s\.\-]{8})"
+                            "(?P<z>[\d\s\.\-]{8})"
+                            "(?P<occupancy>[\d\s\.\-]{6})"
+                            "(?P<B_factor>[\d\s\.\-]{6})          "
+                            "(?P<element>[\s\w]{2})"
+                            "(?P<charge>[\d\s\.\-]{2})?"))
+
+    def _match_atom(self, match):
+        "Matches an ATOM or HETATM line in a PDB file"
+        groupdict = {field_name: convert(field_value)
+                     for field_name, field_value
+                     in match.groupdict().items()}
+
+        # create Chain, if it doesn't already exist
+        identifier = groupdict['chain']
+
+        # If this is a HETATM, then append a '*' to the chain name so that
+        # it doesn't overwrite protein chains.
+        if groupdict['type'] == 'HETATM':
+            identifier += '*'
+
+        # Create a new chain, if it doesn't already exist
+        if identifier not in self:
+            chain = self.chain_class(identifier=identifier)
+            chain.molecule = self
+            self[identifier] = chain
+
+        chain = self[identifier]
+
+        # create Residue, if it doesn't already exist
+        number, name = (groupdict[i] for i in ('residue_number',
+                                               'residue_name'))
+        if number not in chain:
+            try:
+                residue = self.residue_class(number=number, name=name)
+
+                residue.chain = chain
+                residue.molecule = self
+                chain[number] = residue
+            except KeyError:
+                return None
+        residue = chain[number]
+
+        # create the Atom. The following code overwrites atoms duplicate
+        # in atom name
+        name = groupdict['name']
+
+        # Reformat the x/y/z coordinates to a numpy array
+        groupdict['pos'] = np.array((groupdict.pop('x'),
+                                     groupdict.pop('y'),
+                                     groupdict.pop('z')))
+
+        # Populate the new atom parameters and create the new Atom object.
+        atom_dict = {k: v for k, v in groupdict.items()
+                     if k in Atom.__slots__}
+        atom_dict['residue'] = residue
+        atom_dict['chain'] = chain
+        atom_dict['molecule'] = self
+
+        atom = self.atom_class(**atom_dict)
+        residue[name] = atom
+
     def read_stream(self, stream):
         """Reads in data from a stream.
         """
-        # TODO: This may be much faster to implement in Cython with fixed str.
+        # TODO: Reading files be much faster to implement in Cython with
+        # fixed str.
         self.clear()
 
-        pdb_line = re.compile((r"(?P<type>ATOM  |HETATM)"
-                               "(?P<number>[\s\d]{5}) "
-                               "(?P<name>[\s\w]{4})"
-                               "(?P<alt_loc>[\w\s])"
-                               "(?P<residue_name>[\w\s]{3}) "
-                               "(?P<chain>[\s\w]{1})"
-                               "(?P<residue_number>[\s\w]{4})"
-                               "(?P<icode>[\w\s])   "
-                               "(?P<x>[\d\s\.\-]{8})"
-                               "(?P<y>[\d\s\.\-]{8})"
-                               "(?P<z>[\d\s\.\-]{8})"
-                               "(?P<occupancy>[\d\s\.\-]{6})"
-                               "(?P<B_factor>[\d\s\.\-]{6})          "
-                               "(?P<element>[\s\w]{2})"
-                               "(?P<charge>[\d\s\.\-]{2})?"))
+        # A list of regex matchers to harvest data from each line.
+        # The first item is the regex to match. If there is a match,
+        # the second item (function) will be called with the match
+        matchers = OrderedDict((
+                                ('ATOM', (self._re_atom, self._match_atom)),
+                                ))
 
         # Find the ATOM/HETATM lines and pull out the necessary data
 
         # Generator implementation 1: This generator function reads only the
         # the first model. It's a little slower than implementation 2 (about
-        # 10%). It takes 6.0s to read 3H0G.
-        def generator():
-            for line in stream.readlines():
-                # Gzipped files return bytes lines that have to be decoded
-                if type(line) == bytes:
-                    line = line.decode('latin-1')
+        # 10%). It takes 6.0s to read 3H0G
+        for line in stream.readlines():
+            m = None
+            # Gzipped files return bytes lines that have to be decoded
+            if type(line) == bytes:
+                line = line.decode('latin-1')
 
-                # Read only the first model. Skip the rest
-                if line[0:6] == 'ENDMDL':
-                    raise StopIteration
-                m = pdb_line.match(line)
+            # Read only the first model. Skip reading ATOM lines hereafter
+            if line[0:6] == 'ENDMDL' and 'ATOM' in matchers:
+                del matchers['ATOM']
+
+            # Advance the iterator if 1) no regex has been specified
+            # yet, 2) the current regex is returning no matches and
+            # it has before
+            for regex, function in matchers.values():
+                m = regex.match(line)
                 if m:
-                    yield m
-
-        atom_generator = generator()
-
-        # Generator implementation 2: This generator is a little faster than
-        # generator 1, but it reads all of the models, saving only the last
-        # one. It takes 5.5 seconds on 5H0G
-        # atom_generator = filter(None, map(pdb_line.match,
-        #                                  stream.readlines()))
-
-        # Retrieve a set from the match objects
-        for match in atom_generator:
-            groupdict = {field_name: convert(field_value)
-                         for field_name, field_value
-                         in match.groupdict().items()}
-
-            # create Chain, if it doesn't already exist
-            identifier = groupdict['chain']
-
-            # If this is a HETATM, then append a '*' to the chain name so that
-            # it doesn't overwrite protein chains.
-            if groupdict['type'] == 'HETATM':
-                identifier += '*'
-
-            # Create a new chain, if it doesn't already exist
-            if identifier not in self:
-                chain = self.chain_class(identifier=identifier)
-                chain.molecule = self
-                self[identifier] = chain
-
-            chain = self[identifier]
-
-            # create Residue, if it doesn't already exist
-            number, name = (groupdict[i] for i in ('residue_number',
-                                                   'residue_name'))
-            if number not in chain:
-                try:
-                    residue = self.residue_class(number=number, name=name)
-
-                    residue.chain = chain
-                    residue.molecule = self
-                    chain[number] = residue
-                except KeyError:
                     continue
-            residue = chain[number]
+            # If line cannot be matched, skip this line.
+            if m is None:
+                continue
+            function(m)
 
-            # create the Atom. The following code overwrites atoms duplicate
-            # in atom name
-            name = groupdict['name']
-
-            # Reformat the x/y/z coordinates to a numpy array
-            groupdict['pos'] = np.array((groupdict.pop('x'),
-                                         groupdict.pop('y'),
-                                         groupdict.pop('z')))
-
-            # Populate the new atom parameters and create the new Atom object.
-            atom_dict = {k: v for k, v in groupdict.items()
-                         if k in Atom.__slots__}
-            atom_dict['residue'] = residue
-            atom_dict['chain'] = chain
-            atom_dict['molecule'] = self
-
-            atom = self.atom_class(**atom_dict)
-            residue[name] = atom
 
         self.link_residues()
 
