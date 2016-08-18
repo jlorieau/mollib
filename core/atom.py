@@ -1,6 +1,14 @@
+import re
+
 from .primitives import Primitive
 from .topology import *
-from . import settings
+
+
+# A regex to match the atom __repr___
+re_atom = re.compile(r'\s*(?P<residue_letter>[A-Z])'
+                     r'(?P<residue_number>\d+)'
+                     r'-'
+                     r'(?P<atom_name>\w+)\s*')
 
 
 class Atom(Primitive):
@@ -55,8 +63,47 @@ class Atom(Primitive):
                'Cl': 35.45, 'Zn': 65.38, }
 
     def __repr__(self):
-        return u"{}-{}".format(self.residue, self.name) if self.residue else \
-            u"{}".format(self.name)
+        return "{}-{}".format(self.residue, self.name) if self.residue else \
+            "{}".format(self.name)
+
+    def __lt__(self, other):
+        # TODO: add chain comparisons
+        return self.fullname.__lt__(other.fullname)
+
+    def __le__(self, other):
+        return self.fullname.__le__(other.fullname)
+
+    def __eq__(self, other):
+        return self.fullname.__eq__(other.fullname)
+
+    def __ne__(self, other):
+        return self.fullname.__ne__(other.fullname)
+
+    def __gt__(self, other):
+        return self.fullname.__gt__(other.fullname)
+
+    def __ge__(self, other):
+        return self.fullname.__ge__(other.fullname)
+
+    def __hash__(self):
+        return self.fullname.__hash__()
+
+    @property
+    def fullname(self):
+        """The full name of this atom, including the molecule and chain.
+
+        Examples
+        --------
+        >>> from mollib import Molecule
+        >>> mol = Molecule('2KXA')
+        >>> mol['A'][16]['CA'].fullname
+        '2KXA.A.G16-CA'
+        """
+        molecule_name = (self.molecule.name
+                         if self.molecule is not None else '')
+        chain_id = (self.chain.id
+                    if self.chain is not None else '')
+        return '.'.join((molecule_name, chain_id, self.__repr__()))
 
     @property
     def mass(self):
@@ -93,7 +140,7 @@ class Atom(Primitive):
 
     @property
     def topology(self):
-        """The complete list of the topology of other atom *names* to bonded
+        """The complete list of the topology of other atom *names* bonded
         this atom.
 
         Returns
@@ -110,17 +157,20 @@ class Atom(Primitive):
         .. note:: The topology is a set, and can be modified using the standard
                   set operations
 
+        .. note:: The topology list contains atoms that may or may not be
+                  actually bonded to this atom. Use the bonded_atoms to get
+                  a set of actual atoms bonded to this atom.
+
         Examples
         --------
         >>> from mollib import Molecule
         >>> mol = Molecule('2KXA')
         >>> D19 = mol['A'][19]
-        >>> D19['OD1'].topology
-        {'CG'}
-        >>> D19['OD1'].topology |= {'HD1'}
-        >>> D19['OD1'].topology
-        {'CG', 'HD1'}
+        >>> sorted(D19['OD1'].topology)
+        ['CG', 'HD1']
         """
+        # TODO: Add Molecule functionality for cystein bridges
+        # TODO: Add Molecule functionality to set first and last atom.
         if hasattr(self, '_topology'):
             return getattr(self, '_topology')
         try:
@@ -134,30 +184,48 @@ class Atom(Primitive):
             self._topology = self.topology
         self._topology = value
 
-    # @property
-    # def bonded_atoms(self):
-    #     """The atoms bonded to this atom.
-    #
-    #     Returns
-    #     -------
-    #     bonded : list
-    #       A list of the *actual* :obj:`atom` objects currently bonded to this
-    #       atom.
-    #
-    #
-    #     .. note:: This list may not correspond to the bonded_topology when
-    #               there are missing :obj:`atom` objects, like hydrogens.
-    #
-    #     Examples
-    #     --------
-    #     >>> from mollib import Molecule
-    #     >>> mol = Molecule('2KXA')
-    #     >>> D19 = mol['A'][19]
-    #     >>> D19['C'].bonded_atoms
-    #     ['D19-CA', 'G20-N']
-    #     """
-    #     raise NotImplementedError
-    #
+    @property
+    def bonded_atoms(self):
+        """The atoms bonded to this atom, based on the topology method.
+
+        Returns
+        -------
+        bonded : list
+          A list of the *actual* :obj:`atom` objects currently bonded to this
+          atom.
+
+        Examples
+        --------
+        >>> from mollib import Molecule
+        >>> mol = Molecule('2KXA')
+        >>> G16 = mol['A'][16]
+        >>> sorted(G16['C'].bonded_atoms)
+        [G16-CA, M17-N]
+        """
+        bonded = set()
+        for name in self.topology:
+            # Retrieve an atom from the previous or next residue, if specified
+            if name in self.residue:
+                bonded |= {self.residue[name]}
+            elif name.endswith('-1'):
+                bonded |= {self.residue.prev_residue[name[:-2]]}
+            elif name.endswith('+1'):
+                bonded |= {self.residue.next_residue[name[:-2]]}
+            # Retrieve an atom if a specific residue is specified. ex: 'C31-S'
+            elif '-' in name:
+                match = re_atom.match(name)
+                if match:
+                    residue_number = match.groupdict()['residue_number']
+                    atom_name = match.groupdict()['atom_name']
+                    residue = self.molecule.get(residue_number, None)
+                    atom = (residue.get(atom_name, None)
+                            if residue is not None else None)
+                    if atom is not None:
+                        bonded |= {atom}
+            else:
+                continue
+        return bonded
+
     # @property
     # def geometry_atoms(self):
     #     """The other non-bonded atoms that impact the geometry of bonding at
