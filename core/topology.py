@@ -24,5 +24,6 @@ topology = {'PRO': {'N':   {'C-1', 'CA', 'CD'},
                     'CA': {'N', 'C', 'CB', 'HA'},
                     'CB': {'CA', 'SG', 'HB2', 'HB3'},
                     'SG': {'CB', 'HG'},
+                    'C': {'CA', 'N+1'},
                     },
             }

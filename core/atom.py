@@ -4,8 +4,10 @@ from .primitives import Primitive
 from .topology import *
 
 
-# A regex to match the atom __repr___
-re_atom = re.compile(r'\s*(?P<residue_letter>[A-Z])'
+# A regex to match the atom fullname
+re_atom = re.compile(r'\s*(?P<molecule>[A-Z0-9]{1,4})\.'
+                     r'(?P<chain_id>[A-Z]{1,3})\.'
+                     r'(?P<residue_letter>[A-Z])'
                      r'(?P<residue_number>\d+)'
                      r'-'
                      r'(?P<atom_name>\w+)\s*')
@@ -164,10 +166,12 @@ class Atom(Primitive):
         Examples
         --------
         >>> from mollib import Molecule
-        >>> mol = Molecule('2KXA')
-        >>> D19 = mol['A'][19]
-        >>> sorted(D19['OD1'].topology)
-        ['CG', 'HD1']
+        >>> mol = Molecule('2PTN')
+        >>> C22 = mol['A'][22]
+        >>> sorted(C22['N'].topology)
+        ['C-1', 'CA', 'HN']
+        >>> sorted(C22['SG'].topology)  # disulfide bridge
+        ['2PTN.A.C157-SG', 'CB']
         """
         # TODO: Add Molecule functionality for cystein bridges
         # TODO: Add Molecule functionality to set first and last atom.
@@ -285,10 +289,12 @@ class Atom(Primitive):
         Examples
         --------
         >>> from mollib import Molecule
-        >>> mol = Molecule('2KXA')
-        >>> G16 = mol['A'][16]
-        >>> sorted(G16['C'].bonded_atoms)
-        [G16-CA, M17-N]
+        >>> mol = Molecule('2PTN')
+        >>> C22 = mol['A'][22]
+        >>> sorted(C22['C'].bonded_atoms)
+        [C22-CA, G23-N]
+        >>> sorted(C22['SG'].bonded_atoms)  # disulfide bridge
+        [C157-SG, C22-CB]
         """
         bonded = set()
         for name in self.topology:
@@ -299,13 +305,24 @@ class Atom(Primitive):
                 bonded |= {self.residue.prev_residue[name[:-2]]}
             elif name.endswith('+1'):
                 bonded |= {self.residue.next_residue[name[:-2]]}
-            # Retrieve an atom if a specific residue is specified. ex: 'C31-S'
+            # Retrieve an atom if it's using its fullname.
+            # ex: 2PTN.A.C220-SG
             elif '-' in name:
                 match = re_atom.match(name)
                 if match:
-                    residue_number = match.groupdict()['residue_number']
+
+                    residue_number = int(match.groupdict()['residue_number'])
                     atom_name = match.groupdict()['atom_name']
-                    residue = self.molecule.get(residue_number, None)
+                    chain_id = match.groupdict()['chain_id']
+                    molecule_name = match.groupdict()['molecule']
+
+                    # FIXME: Current implementation only works for atoms in the
+                    # same chain and molecule.
+                    if (molecule_name != self.molecule.name or
+                        chain_id != self.chain.id):
+                        continue
+
+                    residue = self.chain.get(residue_number, None)
                     atom = (residue.get(atom_name, None)
                             if residue is not None else None)
                     if atom is not None:
