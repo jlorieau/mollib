@@ -172,17 +172,105 @@ class Atom(Primitive):
         # TODO: Add Molecule functionality for cystein bridges
         # TODO: Add Molecule functionality to set first and last atom.
         if hasattr(self, '_topology'):
-            return getattr(self, '_topology')
+            return self._topology
         try:
-            return topology[self.residue.name][self.name]
+            self._topology = topology[self.residue.name][self.name].copy()
         except KeyError:
-            return set()
+            self._topology = set()
+        return self._topology
 
     @topology.setter
     def topology(self, value):
-        if not hasattr(self, '_topology'):
-            self._topology = self.topology
         self._topology = value
+
+    def reset_topology(self):
+        "Reset this atom's topology to its default values."
+        if hasattr(self, '_topology'):
+            del self._topology
+
+    def add_to_topology(self, atom):
+        """Adds the given atom to this atom's topology.
+
+
+        .. note:: Since the topology is a set, there is no risk in adding
+                  an atom to the topology twice.
+
+        Examples
+        --------
+        >>> from mollib import Molecule
+        >>> mol = Molecule('2PTN') # structure with no Hs
+        >>> G18 = mol['A'][18]
+        >>> sorted(G18['N'].topology)
+        ['C-1', 'CA', 'HN']
+        >>> G18['N'].add_to_topology(G18['C'])
+        >>> sorted(G18['N'].topology)
+        ['C', 'C-1', 'CA', 'HN']
+        >>> G18['N'].add_to_topology(mol['A'][16]['N'])
+        >>> sorted(G18['N'].topology)
+        ['2PTN.A.I16-N', 'C', 'C-1', 'CA', 'HN']
+        """
+        # If the residues are the same, simply add the atom's name
+        if (self.residue is not None and atom.residue is not None and
+            self.residue == atom.residue):
+            self_name = self.name
+            atom_name = atom.name
+        # Otherwise use the atom's fullname
+        else:
+            self_name = self.fullname
+            atom_name = atom.fullname
+
+        # Topologies are sets, so there is no risk of adding duplication
+        # atom names.
+        self.topology.update([atom_name,])
+        atom.topology.update([self_name,])
+
+    def in_topology(self, atom):
+        """Test whether atom is already in this atom's topology."""
+        if (self.residue is not None and atom.residue is not None and
+            self.residue.name == atom.residue.name):
+            atom_name = atom.name
+        # Otherwise use the atom's fullname
+        else:
+            atom_name = atom.fullname
+        return atom_name in self.topology
+
+    def replace_in_topology(self, atom, start_str='H'):
+        """Replaces an atom name from the topology starting with start_str
+        with the :obj:`atom` object.
+
+        This function is useful for creating new bonds while removing default
+        Hs bound to an atom, like a cystein SG.
+
+        Examples
+        --------
+        >>> from mollib import Molecule
+        >>> mol = Molecule('2KXA')
+        >>> A5 = mol['A'][5]
+        >>> sorted(A5['N'].topology)
+        ['C-1', 'CA', 'HN']
+        >>> A5['N'].replace_in_topology(A5['CB'])
+        >>> sorted(A5['N'].topology)
+        ['C-1', 'CA', 'CB']
+        >>> sorted(A5['CB'].topology) # both atoms lose an H.
+        ['CA', 'HB2', 'HB3', 'N']
+        """
+        # Go through the topologies of each atom.
+        for a1, a2 in ((self, atom), (atom, self)):
+            # Find a an atom name to replace. Use the first found.
+            try:
+                # sort the topology set so that the proton remove is
+                # deterministic
+                remove = next(i for i in sorted(a1.topology)
+                              if i.startswith(start_str))
+
+                # Note that an atom should only be replaced if the the given
+                # atom is not already in the topology.
+                if not a1.in_topology(a2):
+                    a1.topology.remove(remove)
+            except StopIteration:
+                continue
+
+        self.add_to_topology(atom)
 
     @property
     def bonded_atoms(self):

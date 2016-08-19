@@ -98,3 +98,28 @@ class TestMolLib(unittest.TestCase):
             self.assertEqual([r.__repr__() for r in next_residues],
                              [r.__repr__()
                               for r in mol[chain_id].residues][1:] + ['None'])
+
+    def test_connectivities(self):
+        """Tests whether the connectivities and topologies have been correctly
+        set."""
+        # Molecule is a domain of trypsinogen with 3 cysteine bridges
+        # and 2 Calcium ions
+        mol = Molecule('2PTN')
+
+        # There should be 20 CONECT entries
+        self.assertEqual(len(mol.connections), 20)
+
+        # The following tests the topology of the cysteine bridges
+        pairs = ((22, 157), (42, 58), (128, 232), (136, 201), (168, 182),
+                 (191, 220))
+        for i,j in pairs:
+            # Test the atom topologies
+            self.assertEqual(mol['A'][i]['SG'].topology,
+                             {'2PTN.A.C{}-SG'.format(j), 'CB'})
+            self.assertEqual(mol['A'][j]['SG'].topology,
+                             {'2PTN.A.C{}-SG'.format(i), 'CB'})
+
+        # Test that bonded_atoms works
+
+        # Test the alpha-amino and C-terminal COO topologies
+        #raise NotImplementedError

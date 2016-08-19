@@ -112,8 +112,13 @@ class Molecule(dict):
         molecule.
     atom_class: :class:`Atom`
         The `Atom` class to use for generating atom objects for this molecule.
+    connections: list
+        A list of lists of atom numbers for atoms that are connected to each
+        other. Note that each list item respect the field order and position
+        of the official PDB format.
 
-        .. note:: A molecule object only reads the first model of a PDB file
+
+    .. note:: A molecule object only reads the first model of a PDB file
                   with multiple models
     """
 
@@ -138,6 +143,9 @@ class Molecule(dict):
             or PDB code (ex: '2KXA').
         """
         self.name = identifier
+        self.connections = []
+
+        # Read in the data
         self.read_identifier(identifier)
         super(Molecule, self).__init__(*args, **kwargs)
 
@@ -383,6 +391,47 @@ class Molecule(dict):
             residue.last = True
             residue.next_residue = None
 
+    def set_atom_topologies(self):
+        """Sets special topological information for specific atoms, like the
+        amino terminal N or cystein bridges."""
+        # TODO: Handle first and last residue
+        # TODO: Handle salt bridges
+        # TODO: Handle hydrogen bonds
+        # Collect atom numbers and their respective atoms
+        atom_numbers = []
+        for connection in self.connections:
+            # PDB CONECT fields have 11 fields
+            if not len(connection) == 11:
+                continue
+
+            # 1: target_atom, 2: bonded_atom1, 3: bonded_atom2, 4: bonded_atom3
+            atom_numbers.append(connection[0:5])
+
+        # Convert the atom numbers to actual atoms. First collect all the
+        # atom numbers needed and convert it to a dict.
+        number_set = set(ichain(*atom_numbers))
+        atom_list = [a for a in self.atoms if a.number in number_set]
+        atom_dict = {a.number:a for a in atom_list}
+
+        # Set topological information
+        for tgt_no, b1_no, b2_no, b3_no, b4_no in atom_numbers:
+            tgt_atom = atom_dict.get(tgt_no, None)
+
+            if tgt_atom is None:  # atom not found
+                continue
+
+            for b_no in (b1_no, b2_no, b3_no):
+                # Get the bonded atom's name a figure out if it's in the
+                # same residue
+                bonded_atom = atom_dict.get(b_no, None)
+                if bonded_atom is None:  # atom not found
+                    continue
+
+                # add the atoms to each other topology, and remove a proton
+                # from each.
+                if tgt_atom != bonded_atom:
+                    tgt_atom.replace_in_topology(bonded_atom, 'H')
+
     @property
     def pH(self):
         return getattr(self, '_pH', settings.default_pH)
@@ -569,6 +618,28 @@ class Molecule(dict):
         atom = self.atom_class(**atom_dict)
         residue[name] = atom
 
+    _re_conect = re.compile(r'^CONECT(?P<numbers>[\s\d]+)$')
+
+    def _match_conect(self, match):
+        """Matches a 'CONECT' line in a PDB file and populates the connections
+        attributue.
+        """
+        # The CONECT line format uses fixed columns and some may be missing so
+        # This line has to be broken into fixed pieces
+        number_str = match.groupdict()['numbers']
+
+        str_len = len(number_str)
+        offset = -7 # This is for the stripped 'CONECT' string
+        cols = [(7, 11), (12, 16), (17, 21), (22, 26), (27, 31), (32, 36),
+                (37, 41), (42, 46), (47, 51), (52, 56), (57,61)]
+        cols = [(i+offset, j+offset+1) for i,j in cols]
+
+        atom_numbers = [number_str[i:j].strip()
+                        if (i < str_len and j <str_len) else None
+                        for i,j in cols]
+        atom_numbers = [int(i) if i else None for i in atom_numbers]
+        self.connections.append(atom_numbers)
+
     def read_stream(self, stream):
         """Reads in data from a stream.
         """
@@ -580,7 +651,8 @@ class Molecule(dict):
         # The first item is the regex to match. If there is a match,
         # the second item (function) will be called with the match
         matchers = OrderedDict((
-                                ('ATOM', (self._re_atom, self._match_atom)),
+                            ('ATOM', (self._re_atom, self._match_atom)),
+                            ('CONECT', (self._re_conect, self._match_conect)),
                                 ))
 
         # Find the ATOM/HETATM lines and pull out the necessary data
@@ -589,7 +661,7 @@ class Molecule(dict):
         # the first model. It's a little slower than implementation 2 (about
         # 10%). It takes 6.0s to read 3H0G
         for line in stream.readlines():
-            m = None
+            m, func = None, None
             # Gzipped files return bytes lines that have to be decoded
             if type(line) == bytes:
                 line = line.decode('latin-1')
@@ -601,17 +673,21 @@ class Molecule(dict):
             # Advance the iterator if 1) no regex has been specified
             # yet, 2) the current regex is returning no matches and
             # it has before
-            for regex, function in matchers.values():
+            for regex, func in matchers.values():
                 m = regex.match(line)
                 if m:
-                    continue
+                    break
             # If line cannot be matched, skip this line.
-            if m is None:
+            if m is None or func is None:
                 continue
-            function(m)
+            func(m)
 
-
+        # Create links and set the atom topologies
         self.link_residues()
+
+        # TODO: This test should skip CONECT items if there are more than
+        #       99,999 atoms
+        self.set_atom_topologies()
 
     # Molecular Properties
 
