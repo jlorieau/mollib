@@ -25,6 +25,13 @@ class Chain(dict):
                 sorted(self.values(), key=lambda a: a.number))
 
     @property
+    def residues_reversed(self):
+        """An iterator over all residues in this chain, sorted in *reversed*
+        residue number."""
+        return (residue for residue in
+                sorted(self.values(), key=lambda a: a.number, reverse=True))
+
+    @property
     def residue_size(self):
         """The number of residues in this chain."""
         return len(list(self.residues))

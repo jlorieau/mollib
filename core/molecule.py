@@ -181,15 +181,31 @@ class Molecule(dict):
         """An iterator over all residues in this molecule, sorted by residue
         number.
 
+        Examples
+        --------
         >>> mol=Molecule('2N65')
         >>> l = [r.number for r in mol.residues]
         >>> print(l[16:])
         [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
-        >>> print(l[:16])
-        [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
         """
         return (r for r in sorted(ichain(*[r.values() for r in self.values()]),
                                   key=lambda r: (r.chain.id, r.number)))
+
+    @property
+    def residues_reversed(self):
+        """An iterator over all residues in this molecule, sorted in *reversed*
+        residue number.
+
+        Examples
+        --------
+        >>> mol=Molecule('2N65')
+        >>> l = [r.number for r in mol.residues_reversed]
+        >>> print(l[16:])
+        [16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1]
+        """
+        return (r for r in sorted(ichain(*[r.values() for r in self.values()]),
+                                  key=lambda r: (r.chain.id, r.number),
+                                  reverse=True))
 
     @property
     def residue_size(self):
@@ -394,9 +410,35 @@ class Molecule(dict):
     def set_atom_topologies(self):
         """Sets special topological information for specific atoms, like the
         amino terminal N or cystein bridges."""
-        # TODO: Handle first and last residue
         # TODO: Handle salt bridges
         # TODO: Handle hydrogen bonds
+
+        # Properly set the topology for the alpha-amino and c-terminal groups
+        # of each chain
+        for chain in self.chains:
+            first_residue = next(i for i in chain.residues if i.first)
+            N = first_residue.get('N', None)
+            if N is not None:
+                if N.residue.name == 'PRO':
+                    atom_list = ('H1', 'H2',)
+                else:
+                    atom_list = ('H1', 'H2', 'H3')
+
+                for a in atom_list:
+                    N.topology.update([a,])
+                if 'HN' in N.topology:
+                    N.topology.remove('HN')
+                if 'C-1' in N.topology:
+                    N.topology.remove('C-1')
+
+            last_residue = next(i for i in chain.residues_reversed if i.last)
+            C = last_residue.get('C', None)
+            if C is not None:
+                C.topology.update(['OXT',])
+                if 'N+1' in C.topology:
+                    C.topology.remove('N+1')
+
+        # This part sets the connectivities listed under self.connections
         # Collect atom numbers and their respective atoms
         atom_numbers = []
         for connection in self.connections:
@@ -563,11 +605,30 @@ class Molecule(dict):
                             "(?P<element>[\s\w]{2})"
                             "(?P<charge>[\d\s\.\-]{2})?"))
 
+    _conversions = {'type': lambda x: str(x).strip(),
+                    'number': int,
+                    'name': lambda x: str(x).strip(),
+                    'alt_loc': lambda x: str(x).strip(),
+                    'residue_name': lambda x: str(x).strip(),
+                    'chain': lambda x: str(x).strip(),
+                    'residue_number': int,
+                    'icode': lambda x: str(x).strip(),
+                    'x': float,
+                    'y': float,
+                    'z': float,
+                    'occupancy': float,
+                    'B_factor': float,
+                    'element': lambda x: str(x).strip(),
+                    'charge': lambda x: float(x) if str(x).strip() else ''}
+
     def _match_atom(self, match):
         "Matches an ATOM or HETATM line in a PDB file"
-        groupdict = {field_name: convert(field_value)
+        groupdict = {field_name: self._conversions[field_name](field_value)
                      for field_name, field_value
                      in match.groupdict().items()}
+        # groupdict = {field_name: convert(field_value)
+        #              for field_name, field_value
+        #              in match.groupdict().items()}
 
         # create Chain, if it doesn't already exist
         identifier = groupdict['chain']
