@@ -292,7 +292,7 @@ class Atom(Primitive):
         >>> mol = Molecule('2PTN')
         >>> C22 = mol['A'][22]
         >>> sorted(C22['C'].bonded_atoms)
-        [C22-CA, G23-N]
+        [C22-CA, C22-O, G23-N]
         >>> sorted(C22['SG'].bonded_atoms)  # disulfide bridge
         [C157-SG, C22-CB]
         """
