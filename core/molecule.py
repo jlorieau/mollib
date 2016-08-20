@@ -572,13 +572,6 @@ class Molecule(dict):
         load_cached : bool, optional
             If a cached version is available, use that instead of downloading
             the file.
-
-        Examples
-        --------
-        >>> mol = Molecule('2KXA')
-        >>> mol.fetch_pdb(pdb_code='2KXA', load_cached=False) # force download
-        >>> print(mol)
-        Molecule:    1 chains, 24 residues, 332 atoms.
         """
         url = 'http://files.rcsb.org/download/{}.pdb.gz'.format(pdb_code)
         temp_path = os.path.join(tempfile.gettempdir(), 'mollib')
