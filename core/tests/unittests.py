@@ -6,8 +6,8 @@
 import unittest
 
 aminoacids = {'ALA', 'GLY', 'SER', 'THR', 'MET', 'CYS', 'ILE', 'LEU',
-                        'VAL', 'PHE', 'TYR', 'TRP', 'ASN', 'GLN', 'ASP', 'GLU',
-                        'HIS', 'PRO', 'ARG', 'LYS'}
+              'VAL', 'PHE', 'TYR', 'TRP', 'ASN', 'GLN', 'ASP', 'GLU',
+              'HIS', 'PRO', 'ARG', 'LYS'}
 
 
 from mollib.core import Molecule
@@ -110,13 +110,17 @@ class TestMolLib(unittest.TestCase):
                     self.assertEqual(residue['N'].topology,
                                      {'CA', 'HN', 'C-1'})
 
-                # Check the 'C' atom
+                # Check the 'C', 'O'  and 'OXT atom
                 if residue.last:
-                    self.assertEqual(residue['C'].topology,  # last residue
+                    self.assertEqual(residue['C'].topology,
                                      {'CA', 'O', 'OXT'})
+                    self.assertIn('C', residue['O'].topology)
+                    self.assertEqual(residue['OXT'].topology,
+                                     {'C', 'HXT'})
                 else:
-                    self.assertEqual(residue['C'].topology,  # last residue
+                    self.assertEqual(residue['C'].topology,
                                      {'CA', 'O', 'N+1'})
+                    self.assertIn('C', residue['O'].topology)
 
                 # check the 'CA atom
                 if residue.name == 'GLY':

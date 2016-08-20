@@ -439,6 +439,10 @@ class Molecule(dict):
                 C.topology.update(['OXT',])
                 if 'N+1' in C.topology:
                     C.topology.remove('N+1')
+            OXT = last_residue.get('OXT', None)
+            if OXT is not None:
+                OXT.topology.update(['C','HXT'])
+
 
         # This part sets the connectivities listed under self.connections
         # Collect atom numbers and their respective atoms
