@@ -4,8 +4,11 @@
 # Copyright 2016
 
 import unittest
-import logging
-from datetime import datetime
+
+aminoacids = {'ALA', 'GLY', 'SER', 'THR', 'MET', 'CYS', 'ILE', 'LEU',
+                        'VAL', 'PHE', 'TYR', 'TRP', 'ASN', 'GLN', 'ASP', 'GLU',
+                        'HIS', 'PRO', 'ARG', 'LYS'}
+
 
 from mollib.core import Molecule
 
@@ -86,8 +89,53 @@ class TestMolLib(unittest.TestCase):
                              [r.__repr__()
                               for r in mol[chain_id].residues][1:] + ['None'])
 
-    def test_topologies(self):
-        """Tests whether the atom topologies have been correctly set."""
+    def test_protein_topologies(self):
+        """Tests whether the atom topologies have been correctly set for
+        proteins."""
+
+        # Function to check all of the each atom topologies
+        def check_topology(molecule):
+            for residue in mol.residues:
+                if residue.name not in aminoacids:
+                    continue
+                    
+                # Check the 'N' atom
+                if residue.first and residue.name != 'PRO':
+                    self.assertEqual(residue['N'].topology,
+                                     {'CA', 'H1', 'H2', 'H3'})
+                elif residue.name == 'PRO':
+                    self.assertEqual(residue['N'].topology,
+                                     {'CA', 'CD', 'C-1'})
+                else:
+                    self.assertEqual(residue['N'].topology,
+                                     {'CA', 'HN', 'C-1'})
+
+                # Check the 'C' atom
+                if residue.last:
+                    self.assertEqual(residue['C'].topology,  # last residue
+                                     {'CA', 'O', 'OXT'})
+                else:
+                    self.assertEqual(residue['C'].topology,  # last residue
+                                     {'CA', 'O', 'N+1'})
+
+                # check the 'CA atom
+                if residue.name == 'GLY':
+                    self.assertEqual(residue['CA'].topology,
+                                     {'N', 'HA2', 'HA3', 'C'})
+                else:
+                    self.assertEqual(residue['CA'].topology,
+                                     {'N', 'CB', 'HA', 'C'})
+
+                # Check the CB
+                if residue.name in ('PRO', 'ARG', 'ASN', 'ASP', 'CYS', 'GLN',
+                                    'GLU', 'HIS', 'LEU', 'LYS', 'MET', 'PHE',
+                                    'SER', 'TRP', 'TYR'):
+                    t = residue['CB'].topology
+                    test = any((t == {'CA', 'HB2', 'HB3','CG'},
+                                t == {'CA', 'HB2', 'HB3', 'SG'},
+                                t == {'CA', 'HB2', 'HB3', 'OG'}))
+                    self.assertTrue(test)
+
         # Molecule is a domain of trypsinogen with 3 cysteine bridges
         # and 2 Calcium ions
         mol = Molecule('2PTN')
@@ -105,11 +153,4 @@ class TestMolLib(unittest.TestCase):
             self.assertEqual(mol['A'][j]['SG'].topology,
                              {'2PTN.A.C{}-SG'.format(i), 'CB'})
 
-        # Test the alpha-amino and C-terminal COO topologies
-        # self.assertEqual(mol['A'][16]['N'].topology,  # first residue
-        #                  {'CA','H1', 'H2', 'H3'})
-        # self.assertEqual(mol['A'][245]['C'].topology,  # last residue
-        #                  {'CA', 'O', 'OXT'})
-
-        # Check all of the backbone topologies
-        # raise NotImplementedError
+        check_topology(mol)
