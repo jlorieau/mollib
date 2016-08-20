@@ -98,7 +98,7 @@ class TestMolLib(unittest.TestCase):
             for residue in mol.residues:
                 if residue.name not in aminoacids:
                     continue
-                    
+
                 # Check the 'N' atom
                 if residue.first and residue.name != 'PRO':
                     self.assertEqual(residue['N'].topology,
@@ -135,6 +135,15 @@ class TestMolLib(unittest.TestCase):
                                 t == {'CA', 'HB2', 'HB3', 'SG'},
                                 t == {'CA', 'HB2', 'HB3', 'OG'}))
                     self.assertTrue(test)
+                elif residue.name is 'ILE':
+                    self.assertEqual(residue['CB'].topology,
+                                     {'HB', 'CA', 'CG1', 'CG2'})
+                elif residue.name is 'THR':
+                    self.assertEqual(residue['CB'].topology,
+                                     {'HB', 'CA', 'CG2', 'OG1'})
+                elif residue.name is 'VAL':
+                    self.assertEqual(residue['CB'].topology,
+                                     {'CA', 'HB', 'CG1', 'CG2'})
 
         # Molecule is a domain of trypsinogen with 3 cysteine bridges
         # and 2 Calcium ions
@@ -153,4 +162,8 @@ class TestMolLib(unittest.TestCase):
             self.assertEqual(mol['A'][j]['SG'].topology,
                              {'2PTN.A.C{}-SG'.format(i), 'CB'})
 
+        check_topology(mol)
+
+        # Check a structure with mulitple chains. The M2 channel has 4 chains
+        mol = Molecule('2MUV')
         check_topology(mol)
