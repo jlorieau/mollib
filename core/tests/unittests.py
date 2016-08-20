@@ -11,22 +11,9 @@ from mollib.core import Molecule
 
 class TestMolLib(unittest.TestCase):
 
-    performance_tests = False
-
     def test_large_molecule(self):
         "Tests the parsing and performance of a very large protein complex."
         import string
-
-        if self.performance_tests:
-            # 5.5s - default atom generator
-            # 6.0s - swithching to atom generator 2
-            # 3.6s - after switching convert function to regexes. (2.75MB/s)
-            id = '3H0G'  # RNA Polymerase II from Schizosaccharomyces pombe
-            start = datetime.now()
-            Molecule(id)
-            stop = datetime.now()
-            time = (stop - start).total_seconds()
-            print("Loaded {id} in {time} seconds".format(id=id, time=time))
 
         mol = Molecule('3H0G')
 
@@ -99,9 +86,8 @@ class TestMolLib(unittest.TestCase):
                              [r.__repr__()
                               for r in mol[chain_id].residues][1:] + ['None'])
 
-    def test_connectivities(self):
-        """Tests whether the connectivities and topologies have been correctly
-        set."""
+    def test_topologies(self):
+        """Tests whether the atom topologies have been correctly set."""
         # Molecule is a domain of trypsinogen with 3 cysteine bridges
         # and 2 Calcium ions
         mol = Molecule('2PTN')
@@ -119,7 +105,11 @@ class TestMolLib(unittest.TestCase):
             self.assertEqual(mol['A'][j]['SG'].topology,
                              {'2PTN.A.C{}-SG'.format(i), 'CB'})
 
-        # Test that bonded_atoms works
-
         # Test the alpha-amino and C-terminal COO topologies
-        #raise NotImplementedError
+        # self.assertEqual(mol['A'][16]['N'].topology,  # first residue
+        #                  {'CA','H1', 'H2', 'H3'})
+        # self.assertEqual(mol['A'][245]['C'].topology,  # last residue
+        #                  {'CA', 'O', 'OXT'})
+
+        # Check all of the backbone topologies
+        # raise NotImplementedError
