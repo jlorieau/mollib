@@ -126,3 +126,44 @@ number = 100000
 time = timeit.timeit(method, setup, number=number)
 print("namedtuple properties: {:.3f} us per iteration, {:.3f} s per 62875 matches".format(time*1000000/number,
                                                                                      time*62875/number))
+
+# converting a struct by dict-zip - 7.633 us per iteration, 0.480 s per 62875 matches
+setup = """
+import struct
+
+fieldwidths = (6, 5, -1, 4, 1, 3, -1, 1, 4, 1, -3, 8, 8, 8, 6, 6, -10, 2, 2 )
+fmtstring = ' '.join('{}{}'.format(abs(fw), 'x' if fw < 0 else 's')
+                     for fw in fieldwidths)
+fieldstruct = struct.Struct(fmtstring)
+
+funcs = (('type', lambda x: x.strip()),
+         ('number', int),
+         ('name', lambda x: x.strip()),
+         ('alt_loc', lambda x: x.strip()),
+         ('residue_name', lambda x: x.strip()),
+         ('chain_id', lambda x: x.strip()),
+         ('residue_number', int),
+         ('icode', lambda x: x.strip()),
+         ('x', float),
+         ('y', float),
+         ('z', float),
+         ('occupancy', float),
+         ('B_factor', float),
+         ('element', lambda x: x.strip()),
+         ('charge', lambda x: 0),
+        )
+
+line = "ATOM   1617  C   SER A 244      21.367   6.240  37.294  1.00 19.56           C  "
+
+s = fieldstruct.unpack_from(line)
+"""
+
+method = """
+{n:f(i) for (n,f),i in zip(funcs, s)}
+"""
+
+number = 100000
+time = timeit.timeit(method, setup, number=number)
+print(
+"struct dict-zip: {:.3f} us per iteration, {:.3f} s per 62875 matches".format(
+    time * 1000000 / number, time*62875/number))
