@@ -108,7 +108,7 @@ class TestMolLib(unittest.TestCase):
                                      {'CA', 'CD', 'C-1'})
                 else:
                     self.assertEqual(residue['N'].topology,
-                                     {'CA', 'HN', 'C-1'})
+                                     {'CA', 'H', 'C-1'})
 
                 # Check the 'C', 'O'  and 'OXT atom
                 if residue.last:

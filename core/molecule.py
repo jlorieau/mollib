@@ -430,6 +430,8 @@ class Molecule(dict):
                     N.topology.update([a,])
                 if 'HN' in N.topology:
                     N.topology.remove('HN')
+                if 'H' in N.topology:
+                    N.topology.remove('H')
                 if 'C-1' in N.topology:
                     N.topology.remove('C-1')
 

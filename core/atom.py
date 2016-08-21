@@ -163,13 +163,16 @@ class Atom(Primitive):
                   actually bonded to this atom. Use the bonded_atoms to get
                   a set of actual atoms bonded to this atom.
 
+        .. note:: The first letter of each topology string item must be the
+                  atom's element. (i.e. 'CA')
+
         Examples
         --------
         >>> from mollib import Molecule
         >>> mol = Molecule('2PTN')
         >>> C22 = mol['A'][22]
         >>> sorted(C22['N'].topology)
-        ['C-1', 'CA', 'HN']
+        ['C-1', 'CA', 'H']
         >>> sorted(C22['SG'].topology)  # disulfide bridge
         ['2PTN.A.C157-SG', 'CB']
         """
@@ -205,13 +208,13 @@ class Atom(Primitive):
         >>> mol = Molecule('2PTN') # structure with no Hs
         >>> G18 = mol['A'][18]
         >>> sorted(G18['N'].topology)
-        ['C-1', 'CA', 'HN']
+        ['C-1', 'CA', 'H']
         >>> G18['N'].add_to_topology(G18['C'])
         >>> sorted(G18['N'].topology)
-        ['C', 'C-1', 'CA', 'HN']
+        ['C', 'C-1', 'CA', 'H']
         >>> G18['N'].add_to_topology(mol['A'][16]['N'])
         >>> sorted(G18['N'].topology)
-        ['2PTN.A.I16-N', 'C', 'C-1', 'CA', 'HN']
+        ['2PTN.A.I16-N', 'C', 'C-1', 'CA', 'H']
         """
         # If the residues are the same, simply add the atom's name
         if (self.residue is not None and atom.residue is not None and
@@ -251,7 +254,7 @@ class Atom(Primitive):
         >>> mol = Molecule('2KXA')
         >>> A5 = mol['A'][5]
         >>> sorted(A5['N'].topology)
-        ['C-1', 'CA', 'HN']
+        ['C-1', 'CA', 'H']
         >>> A5['N'].replace_in_topology(A5['CB'])
         >>> sorted(A5['N'].topology)
         ['C-1', 'CA', 'CB']
