@@ -414,6 +414,7 @@ class Molecule(dict):
         amino terminal N or cystein bridges."""
         # TODO: Handle salt bridges
         # TODO: Handle hydrogen bonds
+        # TODO: Handle XPLOR formatted H names like 'HN'
 
         # Properly set the topology for the alpha-amino and c-terminal groups
         # of each chain
