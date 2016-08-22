@@ -160,8 +160,9 @@ class Atom(Primitive):
                   set operations
 
         .. note:: The topology list contains atoms that may or may not be
-                  actually bonded to this atom. Use the bonded_atoms to get
-                  a set of actual atoms bonded to this atom.
+                  actually bonded to this atom--most notable hydrogen atoms.
+                  Use the bonded_atoms to get a set of actual atoms bonded to
+                  this atom.
 
         .. note:: The first letter of each topology string item must be the
                   atom's element. (i.e. 'CA')
@@ -231,15 +232,56 @@ class Atom(Primitive):
         self.topology.update([atom_name,])
         atom.topology.update([self_name,])
 
+    def del_from_topology(self, atom):
+        """Delete atom from this atom's topology and vice-versa.
+
+        Parameters
+        ----------
+        atom: :obj:`atom`
+            The atom to remove from this atom's topology.
+
+        Examples
+        --------
+        >>> from mollib import Molecule
+        >>> mol = Molecule('2KXA') # structure with no Hs
+        >>> F3 = mol['A'][3]
+        >>> sorted(F3['N'].topology)
+        ['C-1', 'CA', 'H']
+        >>> F3['N'].del_from_topology(F3['H'])
+        >>> sorted(F3['N'].topology)
+        ['C-1', 'CA']
+        """
+        # If the residues are the same, simply add the atom's name
+        if (self.residue is not None and atom.residue is not None and
+                    self.residue == atom.residue):
+            self_name = self.name
+            atom_name = atom.name
+        # Otherwise use the atom's fullname
+        else:
+            self_name = self.fullname
+            atom_name = atom.fullname
+
+        self.topology -= {atom_name,}
+        atom.topology -= {self_name,}
+
+
     def in_topology(self, atom):
         """Test whether atom is already in this atom's topology."""
         if (self.residue is not None and atom.residue is not None and
             self.residue.name == atom.residue.name):
             atom_name = atom.name
+
+            # Do not set the _topology cache if not needed
+            if not hasattr(self, '_topology'):
+                try:
+                    return atom_name in topology[self.residue.name][self.name]
+                except KeyError:
+                    return atom_name in self.topology
+
         # Otherwise use the atom's fullname
         else:
             atom_name = atom.fullname
-        return atom_name in self.topology
+            return atom_name in self.topology
 
     def replace_in_topology(self, atom, start_str='H'):
         """Replaces an atom name from the topology starting with start_str

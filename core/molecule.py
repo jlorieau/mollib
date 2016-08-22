@@ -274,7 +274,8 @@ class Molecule(dict):
 
         return None
 
-    def add_atom(self, name, pos, charge, element, residue, **kwargs):
+    def add_atom(self, name, pos, charge, element, residue, bonded_atoms = None,
+                 **kwargs):
         """Adds an atom to the molecule.
 
         Parameters
@@ -290,6 +291,9 @@ class Molecule(dict):
         residue: :obj:`Residue`
             The residue object to add the item to. This molecule should already
             contain the residue object.
+        bonded_atoms: list
+            If specified, these atoms will be added to this atom's topology
+            (and vice-versa)
         kwargs: dict, optional
             Additional parameters to pass to the Atom constructor.
 
@@ -302,6 +306,7 @@ class Molecule(dict):
         >>> print ('{:.2f}, {:.2f}'.format(mol.mass, mol['A'][3].mass))
         2457.08, 159.20
         """
+        # TODO: add test.
         kwargs['number'] = -1
         kwargs['name'] = name
         kwargs['pos'] = np.array(pos)
@@ -314,17 +319,33 @@ class Molecule(dict):
         atom = self.atom_class(**kwargs)
         residue[name] = atom
 
-    def del_atom(self, atom):
+        # Add this atom to the topologies
+        if hasattr(bonded_atoms, '__iter__'):  # An iterable like a list
+            for bonded_atom in bonded_atoms:
+                atom.add_to_topology(bonded_atom)
+
+    def del_atom(self, atom, delete_topology=True):
         """Deletes the specified :obj:`atom` from the molecule.
+
+        Parameters
+        ----------
+        atom: :obj:`atom`
+            The atom object to delete from the molcule
+        delete_topology: bool
+            If True, this atom will be removed from its bonded atom topologies.
 
         Examples
         --------
         >>> mol = Molecule('2KXA')
-        >>> print ('{:.2f}, {:.2f}'.format(mol.mass, mol['A'][3].mass))
+        >>> print('{:.2f}, {:.2f}'.format(mol.mass, mol['A'][3].mass))
         2445.07, 147.19
+        >>> sorted(mol['A'][3]['CA'].bonded_atoms)
+        [F3-C, F3-CB, F3-HA, F3-N]
         >>> mol.del_atom(mol['A'][3]['N'])
-        >>> print ('{:.2f}, {:.2f}'.format(mol.mass, mol['A'][3].mass))
+        >>> print('{:.2f}, {:.2f}'.format(mol.mass, mol['A'][3].mass))
         2431.06, 133.18
+        >>> sorted(mol['A'][3]['CA'].bonded_atoms)
+        [F3-C, F3-CB, F3-HA]
 
 
         .. note:: Since atom objects are only referenced in residues, this
@@ -333,8 +354,14 @@ class Molecule(dict):
                   deleted until that reference is deleted. An implementation
                   that returns weakref.proxy links from the molecule may be
                   preferable.
+
+        .. note:: The delete_topology function will not remove hydrogens from
+                  the atom's topology (though the H atom will not longer be
+                  list in the atom's bonded_atoms). This is by design.
         """
-        # TODO: add option to also remove from topologies
+        if delete_topology:
+            for bonded_atom in atom.bonded_atoms:
+                bonded_atom.del_from_topology(atom)
         del atom.residue[atom.name]
 
     def strip_atoms(self, element):
