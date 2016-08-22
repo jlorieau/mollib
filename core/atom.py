@@ -60,9 +60,9 @@ class Atom(Primitive):
 
     # Atom molecular weights. These must be labeled according the a str.title()
     # function. eg. ZN becomes Zn.
-    atom_Mw = {'H': 1.01, 'C': 12.01, '13C': 13.00, 'N': 14.01, '15N': 15.00,
-               'O': 16.00, 'Na': 22.99, 'Mg': 24.31, 'P': 30.97, 'S': 32.07,
-               'Cl': 35.45, 'Zn': 65.38, }
+    atom_Mw = {'H': 1.01, 'D': 2.00, 'C': 12.01, '13C': 13.00, 'N': 14.01,
+               '15N': 15.00, 'O': 16.00, 'Na': 22.99, 'Mg': 24.31, 'P': 30.97,
+               'S': 32.07, 'Cl': 35.45, 'Zn': 65.38, }
 
     def __repr__(self):
         return "{}-{}".format(self.residue, self.name) if self.residue else \
@@ -327,8 +327,8 @@ class Atom(Primitive):
 
         Returns
         -------
-        bonded : list
-          A list of the *actual* :obj:`atom` objects currently bonded to this
+        bonded : set
+          A set of the *actual* :obj:`atom` objects currently bonded to this
           atom.
 
         Examples
@@ -375,6 +375,28 @@ class Atom(Primitive):
             else:
                 continue
         return bonded
+
+    @property
+    def bonded_heavy_atoms(self):
+        """The heavy atoms bonded to this atom, based on the topology method.
+
+        Returns
+        -------
+        bonded : set
+          A set of the *actual* :obj:`atom` objects for heavy atoms currently
+          bonded to this atom.
+
+        Examples
+        --------
+        >>> from mollib import Molecule
+        >>> mol = Molecule('2PTN')
+        >>> C22 = mol['A'][22]
+        >>> sorted(C22['CA'].bonded_heavy_atoms)
+        [C22-C, C22-CB, C22-N]
+        """
+        bonded_atoms = self.bonded_atoms
+        return {a for a in bonded_atoms
+                if not a.element == 'H' or a.element == 'D'}
 
     # @property
     # def geometry_atoms(self):
