@@ -377,6 +377,7 @@ class Molecule(dict):
         2285.49
         """
         # TODO: add option to also remove from topologies
+        # TODO: Support '|' OR elements.
         for atom in self.atoms:
             if atom.element == element:
                 del atom.residue[atom.name]
