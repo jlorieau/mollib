@@ -32,7 +32,7 @@ def add_hydrogens(molecule, strip=True):
         number_hydrogens = len([i for i in topology if i.startswith('H')])
         number_heavy_atoms = len([i for i in topology if not i.startswith('H')])
 
-        if atom.element == 'O':
+        if atom.element == 'O' and number_hydrogens == 1:
             # TODO this does not work for sp3 oxygens
             add_one_sp2_h(atom, settings.bond_length['O-H'])
         elif atom.element == 'N':
