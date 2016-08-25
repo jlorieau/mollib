@@ -33,15 +33,16 @@ def add_hydrogens(molecule, strip=True):
         number_heavy_atoms = len([i for i in topology if not i.startswith('H')])
 
         if atom.element == 'O':
-            if number_hydrogens == 1:
-                add_one_sp2_h(atom, settings.bond_length['O-H'])
+            # TODO this does not work for sp3 oxygens
+            add_one_sp2_h(atom, settings.bond_length['O-H'])
         elif atom.element == 'N':
             if number_hydrogens == 1:
                 add_one_sp2_h(atom, settings.bond_length['N-H'])
-        elif atom.element == 'C' and number_heavy_atoms <= 2:
-            if number_hydrogens == 1:
+        elif atom.element == 'C':
+            if number_heavy_atoms <= 2 and number_hydrogens == 1:
                 add_one_sp2_h(atom, settings.bond_length['C-H'])
-
+            if number_heavy_atoms == 3 and number_hydrogens == 1:
+                add_one_sp3_h(atom, settings.bond_length['C-H'])
 
 
 def add_one_sp2_h(atom, bond_length):
@@ -88,7 +89,7 @@ def add_one_sp2_h(atom, bond_length):
 
     # Get the name of the hydrogen to add
     h_name = list(filter(lambda x:x.startswith('H'), atom.topology))
-    if not h_name:  # Not eligible Hs found
+    if not h_name:  # No eligible Hs found
         msg = ("Could not find a H atom for {}. ".format(atom) +
                "Eligible atoms are: {}".format(atom.bonded_atoms))
         logging.warning(msg)
@@ -173,6 +174,74 @@ def add_one_sp2_h(atom, bond_length):
         return False
 
 
+def add_one_sp3_h(atom, bond_length):
+    """Add a single hydrogen to an sp3 hybridized atom.
+
+    This function is useful for adding methine protons, like backbone HAs.
+
+    Parameters
+    ----------
+    atom : :obj:`atom`
+        The atom to add a hydrogen to.
+    bond_length: float
+        The length of the atom-h bond (in Angstroms).
+
+    Returns
+    -------
+    bool:
+        True if atom was successfully added, False if it wasn't.
 
 
+    Examples
+    --------
+    >>> from mollib.core import Molecule, measure_angle
+    >>> mol = Molecule('2KXA')
+    >>> mol.strip_atoms(element='H')
+    >>> F3 = mol['A'][3]
+    >>> n, ca, c, cb = F3['N'], F3['CA'], F3['C'], F3['CB']
+    >>> add_one_sp3_h(ca, 1.0)
+    True
+    >>> ha = F3['HA']
+    >>> angle1 = measure_angle(n, ca, ha)
+    >>> angle2 = measure_angle(c, ca, ha)
+    >>> angle3 = measure_angle(cb, ca, ha)
+    >>> print("{:.1f} {:.1f} {:.1f} degs".format(angle1, angle2, angle3))
+    108.4 108.7 109.5 degs
+    """
+    bonded_heavy_atoms = sorted(atom.bonded_heavy_atoms, key=lambda a: a.mass,
+                                reverse=True)
+    molecule = atom.molecule
+
+    # Get the name of the hydrogen to add
+    h_name = list(filter(lambda x: x.startswith('H'), atom.topology))
+    if not h_name:  # No eligible Hs found
+        msg = ("Could not find a H atom for {}. ".format(atom) +
+               "Eligible atoms are: {}".format(atom.bonded_atoms))
+        logging.warning(msg)
+        return False
+    else:
+        h_name = h_name[0]  # return the first hydrogen found
+
+    if len(bonded_heavy_atoms) == 3:
+        # Calculate the plane and the plane normal formed by
+        # atom_1, atom_2 and atom_3
+        v1 = calc_vector(bonded_heavy_atoms[0], atom)
+        v1 /= vector_length(v1)
+        v2 = calc_vector(bonded_heavy_atoms[1], atom)
+        v2 /= vector_length(v2)
+        v3 = calc_vector(bonded_heavy_atoms[2], atom)
+        v3 /= vector_length(v3)
+        h_v = v1+v2+v3
+        h_v /= vector_length(h_v)
+
+        # calculate the h position along the norm
+        h = -1.*h_v * bond_length + atom.pos
+
+        # Create the new hydrogen atom
+        molecule.add_atom(name=h_name, pos=h, charge=0.0, element='H',
+                          residue=atom.residue)
+        return True
+    else:
+        msg = 'add_one_sp3_h() requires 3 heavy atoms.'
+        logging.warning(msg)
 
