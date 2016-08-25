@@ -84,6 +84,7 @@ from .atom import Atom
 from .residue import Residue
 from .chain import Chain
 from .topology import topology
+from .utils import grouper
 from . import settings
 
 try:
@@ -615,9 +616,13 @@ class Molecule(dict):
             # Write the CONECT lines
             for atom_number_1, bonded_numbers in sorted(conect_dict.items()):
                 bonded_numbers = sorted(bonded_numbers)
-                numbers = [bonded_numbers[i] if i < len(bonded_numbers)
-                           else '' for i in range(3)]
-                f.write(conect_line.format(atom_number_1, *numbers))
+
+                # Each CONECT line only supports 3 bonded atoms, so a
+                # separate CONECT LINE has to be added when there are more
+                # than 3 bonded atoms. The grouper produces groups of 3 atom
+                # numbers
+                for numbers in grouper(3, bonded_numbers, ''):
+                    f.write(conect_line.format(atom_number_1, *numbers))
 
     def read_identifier(self, identifier):
         """Reads in structure based on an identifier

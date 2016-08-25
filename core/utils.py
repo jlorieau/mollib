@@ -5,6 +5,7 @@ from math import sqrt
 import re
 import tempfile
 import os
+import itertools
 
 
 def vector_length(vector):
@@ -66,6 +67,12 @@ def convert(s):
 
     # All else fails, try just returning the string
     return str(s).strip()
+
+
+def grouper(n, iterable, fillvalue=None):
+    "grouper(3, 'ABCDEFG', 'x') --> ABC DEF Gxx."
+    args = [iter(iterable)] * n
+    return itertools.izip_longest(*args, fillvalue=fillvalue)
 
 
 def clear_cache():
