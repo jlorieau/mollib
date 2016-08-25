@@ -80,10 +80,10 @@ from math import cos, sin, pi
 
 import numpy as np
 
-from .utils import convert
 from .atom import Atom
 from .residue import Residue
 from .chain import Chain
+from .topology import topology
 from . import settings
 
 try:
@@ -511,6 +511,17 @@ class Molecule(dict):
                 if tgt_atom != bonded_atom:
                     tgt_atom.replace_in_topology(bonded_atom, 'H')
 
+    def renumber_atoms(self):
+        """Reset the atom numbers.
+
+        This function is useful for resetting the atom numbers when atoms
+        are removed or added. Since the self.connections list depends on
+        atom numbers, it is reset.
+        """
+        self.connections = []
+        for count, atom in enumerate(self.atoms, 1):
+            atom.number = count
+
     @property
     def pH(self):
         return getattr(self, '_pH', settings.default_pH)
@@ -529,11 +540,9 @@ class Molecule(dict):
         filename : str
             The path and filename to write the file to.
         """
-
+        self.renumber_atoms()
         with open(filename, 'w') as f:
-
-            # Populate 'ATOM' lines
-
+            # Populate 'ATOM' lines.
             atom_line = ("{line_type:6}"
                          "{atom_num:>5} "
                          "{atom_name:<4}"
@@ -551,10 +560,24 @@ class Molecule(dict):
                          "{element:>2}"
                          "{charge:2}"
                          "\n")
+            # Populate 'CONECT' lines
+            conect = set()
+            conect_line = ("CONECT"
+                           "{:>5}"
+                           "{:>5}"
+                           "{:>5}"
+                           "{:>5}"
+                           "\n")
 
-            for count, atom in enumerate(self.atoms, 1):
-                atom_parms = {'line_type': 'ATOM',
-                              'atom_num': count,
+            for atom in self.atoms:
+                # If the atom is in the standard topology, then it is a
+                # regular ATOM. Otherwise, treat it as a HETATM
+                line_type = ('ATOM'
+                             if atom.residue.name in topology else 'HETATM')
+
+                # Prepare and write the 'ATOM' line
+                atom_parms = {'line_type': line_type,
+                              'atom_num': atom.number,
                               'atom_name': atom.name,
                               'alt_loc': '',
                               'res_name': atom.residue.name,
@@ -568,7 +591,33 @@ class Molecule(dict):
                               'B_factor': 0,
                               'element': atom.element,
                               'charge': atom.charge}
+
                 f.write(atom_line.format(**atom_parms))
+
+                # Prepare the CONECT lines
+                bonded_interresidue_atoms = atom.bonded_interresidue_atoms
+                bonded_numbers = sorted([b.number
+                                         for b in bonded_interresidue_atoms])
+                if bonded_numbers:
+                    for bonded_number in bonded_numbers:
+                        # Skip duplicate connectivities
+                        if (bonded_number, atom.number) in conect:
+                            continue
+                        conect.add((atom.number, bonded_number))
+
+            # First the conect set has to be reformatted to group entries
+            # for the same atom number.
+            conect_dict = dict()
+            for atom_number_1, atom_number_2 in sorted(conect):
+                atom_1_set = conect_dict.setdefault(atom_number_1, set())
+                atom_1_set.add(atom_number_2)
+
+            # Write the CONECT lines
+            for atom_number_1, bonded_numbers in sorted(conect_dict.items()):
+                bonded_numbers = sorted(bonded_numbers)
+                numbers = [bonded_numbers[i] if i < len(bonded_numbers)
+                           else '' for i in range(3)]
+                f.write(conect_line.format(atom_number_1, *numbers))
 
     def read_identifier(self, identifier):
         """Reads in structure based on an identifier

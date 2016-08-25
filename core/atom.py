@@ -264,7 +264,6 @@ class Atom(Primitive):
         self.topology -= {atom_name,}
         atom.topology -= {self_name,}
 
-
     def in_topology(self, atom):
         """Test whether atom is already in this atom's topology."""
         if (self.residue is not None and atom.residue is not None and
@@ -383,8 +382,8 @@ class Atom(Primitive):
         Returns
         -------
         bonded : set
-          A set of the *actual* :obj:`atom` objects for heavy atoms currently
-          bonded to this atom.
+            A set of the *actual* :obj:`atom` objects for heavy atoms currently
+            bonded to this atom.
 
         Examples
         --------
@@ -397,6 +396,62 @@ class Atom(Primitive):
         bonded_atoms = self.bonded_atoms
         return {a for a in bonded_atoms
                 if not a.element == 'H' or a.element == 'D'}
+
+    @property
+    def bonded_interresidue_atoms(self):
+        """The heavy atoms bonded on this atom that are from other residues.
+
+        Returns
+        -------
+        bonded : set
+            A set of the *actual* :obj:`atom` objects for atoms bonded to this
+            atom from other residues.
+
+        Examples
+        --------
+        >>> from mollib import Molecule
+        >>> mol = Molecule('2PTN')
+        >>> C22 = mol['A'][22]
+        >>> sorted(C22['SG'].bonded_interresidue_atoms)
+        [C157-SG]
+        """
+        bonded = set()
+
+        # Atoms from other residues are only specified if this atom has
+        # marked them in its topology. If the topology isn't set (ie:
+        # _topology isn't set), then there are no atoms from other residues
+        # bonded to this atom
+        if not hasattr(self, '_topology'):
+            return bonded
+        topology = self._topology
+
+        # Atoms from other residues are identified by their fullname, which
+        # include '.' characters
+        for atom_name in topology:
+            if '-' not in atom_name:
+                continue
+
+            match = re_atom.match(atom_name)
+            if not match:
+                continue
+
+            molecule = match.groupdict()['molecule']
+            if not self.molecule.name == molecule:
+                continue
+            molecule = self.molecule
+
+            chain_id = match.groupdict()['chain_id']
+            residue_number = int(match.groupdict()['residue_number'])
+            name = match.groupdict()['atom_name']
+
+            try:
+                bonded_atom = molecule[chain_id][residue_number][name]
+            except KeyError:
+                continue
+
+            bonded.add(bonded_atom)
+
+        return bonded
 
     # @property
     # def geometry_atoms(self):
