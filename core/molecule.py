@@ -75,6 +75,7 @@ import weakref
 import tempfile
 import gzip
 from itertools import chain as ichain
+from itertools import count
 from collections import OrderedDict
 from math import cos, sin, pi
 
@@ -275,7 +276,7 @@ class Molecule(dict):
 
         return None
 
-    def add_atom(self, name, pos, charge, element, residue, bonded_atoms = None,
+    def add_atom(self, name, pos, element, residue, bonded_atoms = None,
                  **kwargs):
         """Adds an atom to the molecule.
 
@@ -285,8 +286,6 @@ class Molecule(dict):
             The name of the atom. ex: 'HA'
         pos: :obj:`numpy.array`
             An array containing the x, y and z coordinates of the atom.
-        charge: float
-            The charge of the atom.
         element: str
             The type of element for the atom. ex: 'H'
         residue: :obj:`Residue`
@@ -303,15 +302,16 @@ class Molecule(dict):
         >>> mol = Molecule('2KXA')
         >>> print ('{:.2f}, {:.2f}'.format(mol.mass, mol['A'][3].mass))
         2445.07, 147.19
-        >>> mol.add_atom('C3', (0.0, 0.0, 0.0), 0., 'C', mol['A'][3])
+        >>> mol.add_atom('C3', (0.0, 0.0, 0.0), 'C', mol['A'][3])
         >>> print ('{:.2f}, {:.2f}'.format(mol.mass, mol['A'][3].mass))
         2457.08, 159.20
         """
         # TODO: add test.
-        kwargs['number'] = -1
+        if 'number' not in kwargs:
+            kwargs['number'] = -1
+        # kwargs['number'] = -1
         kwargs['name'] = name
         kwargs['pos'] = np.array(pos)
-        kwargs['charge'] = charge
         kwargs['element'] = element
         kwargs['residue'] = residue
         kwargs['chain'] = residue.chain
@@ -520,8 +520,25 @@ class Molecule(dict):
         atom numbers, it is reset.
         """
         self.connections = []
-        for count, atom in enumerate(self.atoms, 1):
-            atom.number = count
+
+        # First order by the chains. The protein chains ('A', 'B', ...) should
+        # come before the heteroatom chains ('A*', 'B*', ...)
+        chains = list(self.chains)
+        chains_protein = [c for c in sorted(chains, key = lambda c : c.id)
+                          if not c.id.endswith('*')]
+        chains_hetatm = [c for c in sorted(chains, key = lambda c : c.id)
+                         if c.id.endswith('*')]
+        chains = chains_protein + chains_hetatm
+
+        # Prepare the atom number counter and renumber the atom numbers
+        counter = count(1)
+        for chain in chains:
+            for residue in chain.residues:
+                # The following sorts hydrogens together with their heavy atoms.
+                # ex: ['N', 'H', 'C', 'CA', 'HA', 'CB', 'HB1', 'HB2', 'HB3']
+                for atom in sorted(residue.atoms,
+                                   key = lambda a : (a.name[1:], a.name[0])):
+                    atom.number = counter.next()
 
     @property
     def pH(self):
@@ -591,7 +608,8 @@ class Molecule(dict):
                               'occupancy': 1,
                               'B_factor': 0,
                               'element': atom.element,
-                              'charge': atom.charge}
+                              'charge': (atom.charge if hasattr(atom, 'charge')
+                                         else '')}
 
                 f.write(atom_line.format(**atom_parms))
 
