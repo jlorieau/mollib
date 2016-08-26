@@ -126,7 +126,7 @@ def add_one_sp2_h(atom, bond_length):
         h += atom.pos
 
         # Create the new hydrogen atom
-        molecule.add_atom(name=h_name, pos=h, charge=0.0, element='H',
+        molecule.add_atom(name=h_name, pos=h, element='H',
                           residue=residue)
         return True
 
@@ -165,7 +165,7 @@ def add_one_sp2_h(atom, bond_length):
         h += atom.pos
 
         # Create the new hydrogen atom
-        molecule.add_atom(name=h_name, pos=h, charge=0.0, element='H',
+        molecule.add_atom(name=h_name, pos=h, element='H',
                           residue=residue)
         return True
     else:
@@ -238,7 +238,7 @@ def add_one_sp3_h(atom, bond_length):
         h = -1.*h_v * bond_length + atom.pos
 
         # Create the new hydrogen atom
-        molecule.add_atom(name=h_name, pos=h, charge=0.0, element='H',
+        molecule.add_atom(name=h_name, pos=h, element='H',
                           residue=atom.residue)
         return True
     else:
