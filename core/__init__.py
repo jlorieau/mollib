@@ -1,4 +1,4 @@
-from .atom import Atom
+from .atom import Atom, sorted_atom_list
 from .residue import Residue
 from .chain import Chain
 from .molecule import Molecule

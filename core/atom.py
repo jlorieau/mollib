@@ -13,6 +13,65 @@ re_atom = re.compile(r'\s*(?P<molecule>[A-Z0-9]{1,4})\.'
                      r'(?P<atom_name>\w+)\s*')
 
 
+def sorted_atom_list(atom_seq):
+    """Sort the atoms in the given sequence into a list by stereochemical
+    priority.
+
+    Parameters
+    ----------
+    atom_seq : sequence
+        A sequence type of (unsorted) :obj:`atom` objects.
+
+    Returns
+    -------
+    list
+        A sorted list of atoms.
+
+    Examples
+    --------
+    >>> from mollib import Molecule
+    >>> mol = Molecule('2MJB')
+    >>> I3 = mol['A'][3]
+    >>> sorted_atom_list(I3['CA'].bonded_atoms())
+    [I3-N, I3-C, I3-CB, I3-HA]
+    >>> R42 = mol['A'][42]
+    >>> sorted_atom_list(R42['CZ'].bonded_atoms())
+    [R42-NE, R42-NH2, R42-NH1]
+    """
+    # First find the masses of all atoms. These will be used to sort
+    # the atoms
+    masses = {a: [a.mass, ] for a in atom_seq}
+    mass_list = [a.mass for a in atom_seq]
+
+    # Then find all duplicate masses. These are equivalent and have to
+    # be sorted based on their bonded atoms.
+    duplicate_masses = {k: v for k, v in masses.items()
+                        if mass_list.count(v[0]) > 1}
+
+    # No duplicates found. Just return the sorted masses
+    if not duplicate_masses:
+        return [a for a, m in sorted(masses.items(), reverse=True,
+                                     key=lambda t: t[1])]
+
+    # Otherwise look at the bonded atoms for the masses
+    mass_of_bonded = {a: sum([b.mass for b in a.bonded_atoms()])
+                      for a in duplicate_masses.keys()}
+
+    # This loop extends the mass list in masses so that the bonded mass
+    # can be used as a secondary sorting method. If these are still equal,
+    # just use the atom's name
+    for a, l in masses.items():
+        if a in mass_of_bonded:
+            l.append(mass_of_bonded[a])
+            l.append(a.name)
+        else:
+            l.append(0)
+            l.append(a.name)
+
+    return [a for a, m in sorted(masses.items(), reverse=True,
+                                 key=lambda t: t[1])]
+
+
 class Atom(Primitive):
     """An atom in a residue.
 
@@ -320,8 +379,14 @@ class Atom(Primitive):
 
         self.add_to_topology(atom)
 
-    def bonded_atoms(self):
+    def bonded_atoms(self, sorted=False):
         """The atoms bonded to this atom, based on the topology method.
+
+        Parameters
+        ----------
+        sorted: bool
+            If True, atoms will be sorted according to their stereochemical
+            priority
 
         Returns
         -------
@@ -334,9 +399,9 @@ class Atom(Primitive):
         >>> from mollib import Molecule
         >>> mol = Molecule('2PTN')
         >>> C22 = mol['A'][22]
-        >>> sorted(C22['C'].bonded_atoms())
-        [C22-CA, C22-O, G23-N]
-        >>> sorted(C22['SG'].bonded_atoms())  # disulfide bridge
+        >>> C22['C'].bonded_atoms(sorted=True)
+        [C22-O, G23-N, C22-CA]
+        >>> C22['SG'].bonded_atoms(sorted=True)  # disulfide bridge
         [C157-SG, C22-CB]
         """
         bonded = set()
@@ -372,10 +437,19 @@ class Atom(Primitive):
                         bonded |= {atom}
             else:
                 continue
-        return bonded
+        if sorted:
+            return sorted_atom_list(bonded)
+        else:
+            return list(bonded)
 
-    def bonded_heavy_atoms(self):
+    def bonded_heavy_atoms(self, sorted=False):
         """The heavy atoms bonded to this atom, based on the topology method.
+
+        Parameters
+        ----------
+        sorted: bool
+            If True, atoms will be sorted according to their stereochemical
+            priority
 
         Returns
         -------
@@ -388,15 +462,24 @@ class Atom(Primitive):
         >>> from mollib import Molecule
         >>> mol = Molecule('2PTN')
         >>> C22 = mol['A'][22]
-        >>> sorted(C22['CA'].bonded_heavy_atoms())
-        [C22-C, C22-CB, C22-N]
+        >>> C22['CA'].bonded_heavy_atoms(sorted=True)
+        [C22-N, C22-CB, C22-C]
         """
-        bonded_atoms = self.bonded_atoms()
-        return {a for a in bonded_atoms
-                if not a.element == 'H' or a.element == 'D'}
+        bonded = {a for a in self.bonded_atoms()
+                        if not a.element == 'H' or a.element == 'D'}
+        if sorted:
+            return sorted_atom_list(bonded)
+        else:
+            return list(bonded)
 
-    def bonded_interresidue_atoms(self):
+    def bonded_interresidue_atoms(self, sorted=False):
         """The heavy atoms bonded on this atom that are from other residues.
+
+        Parameters
+        ----------
+        sorted: bool
+            If True, atoms will be sorted according to their stereochemical
+            priority
 
         Returns
         -------
@@ -409,7 +492,7 @@ class Atom(Primitive):
         >>> from mollib import Molecule
         >>> mol = Molecule('2PTN')
         >>> C22 = mol['A'][22]
-        >>> sorted(C22['SG'].bonded_interresidue_atoms())
+        >>> C22['SG'].bonded_interresidue_atoms(sorted=True)
         [C157-SG]
         """
         bonded = set()
@@ -419,7 +502,7 @@ class Atom(Primitive):
         # _topology isn't set), then there are no atoms from other residues
         # bonded to this atom
         if not hasattr(self, '_topology'):
-            return bonded
+            return list(bonded)
         topology = self._topology
 
         # Atoms from other residues are identified by their fullname, which
@@ -448,7 +531,10 @@ class Atom(Primitive):
 
             bonded.add(bonded_atom)
 
-        return bonded
+        if sorted:
+            return sorted_atom_list(bonded)
+        else:
+            return list(bonded)
 
     # @property
     # def geometry_atoms(self):
