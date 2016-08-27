@@ -38,6 +38,8 @@ def add_hydrogens(molecule, strip=True):
         elif atom.element == 'N':
             if number_hydrogens == 1:
                 add_one_sp2_h(atom, settings.bond_length['N-H'])
+            if number_hydrogens == 2:
+                add_two_sp2_h(atom, settings.bond_length['N-H2'])
         elif atom.element == 'C':
             if number_heavy_atoms <= 2 and number_hydrogens == 1:
                 add_one_sp2_h(atom, settings.bond_length['C-H'])
@@ -82,27 +84,19 @@ def add_one_sp2_h(atom, bond_length):
     >>> print("{:.1f} {:.1f} degs".format(angle1, angle2))
     119.4 119.4 degs
     """
-    bonded_heavy_atoms = sorted(atom.bonded_heavy_atoms, key=lambda a: a.mass,
-                          reverse=True)
+    bonded_heavy_atoms = atom.bonded_heavy_atoms(sorted=True)
     residue = atom.residue
     molecule = atom.molecule
 
     # Get the name of the hydrogen to add
-    h_name = list(filter(lambda x:x.startswith('H'), atom.topology))
-    if not h_name:  # No eligible Hs found
-        msg = ("Could not find a H atom for {}. ".format(atom) +
-               "Eligible atoms are: {}".format(atom.bonded_atoms))
-        logging.warning(msg)
-        return False
-    else:
-        h_name = h_name[0]  # return the first hydrogen found
+    h_name = 'H' + atom.name[1:]
 
     # The current implementation determines the geometry based on two bonded
     # atoms.
     if len(bonded_heavy_atoms) == 2:
         # Calculate the v1, v2 and bisector vectors
-        v1 = calc_vector(atom, bonded_heavy_atoms[0])
-        v2 = calc_vector(atom, bonded_heavy_atoms[1])
+        v1 = calc_vector(atom, bonded_heavy_atoms[0], normalize=True)
+        v2 = calc_vector(atom, bonded_heavy_atoms[1], normalize=True)
         bisect = v1 + v2
         length = vector_length(bisect)
         bisect /= length
@@ -137,8 +131,7 @@ def add_one_sp2_h(atom, bond_length):
         bonded = bonded_heavy_atoms[0]
 
         # Find the atoms bonded to the bonded heavy atom that aren't 'atom'
-        bonded_to_bonded = sorted(bonded.bonded_heavy_atoms,
-                                  key=lambda a: a.mass, reverse=True)
+        bonded_to_bonded = bonded.bonded_heavy_atoms(sorted=True)
         bonded_to_bonded = [a for a in bonded_to_bonded if a != atom]
         if len(bonded_to_bonded) < 1:
             return False
@@ -149,11 +142,9 @@ def add_one_sp2_h(atom, bond_length):
         sin60 = sqrt(3.)/2.
         cos60 = 0.5
 
-        v1 = calc_vector(atom, bonded_heavy_atoms[0])
-        v1 /= vector_length(v1)
-
-        v2 = calc_vector(bonded_heavy_atoms[0], bonded_to_bonded)
-        v2 /= vector_length(v2)
+        v1 = calc_vector(atom, bonded_heavy_atoms[0], normalize=True)
+        v2 = calc_vector(bonded_heavy_atoms[0], bonded_to_bonded,
+                         normalize=True)
 
         n_v1v2 = np.cross(v1, v2)
         n_v1v2 /= vector_length(n_v1v2)
@@ -172,6 +163,106 @@ def add_one_sp2_h(atom, bond_length):
         logging.warning("Number of bonded atoms "
                         "for {} is {}.".format(atom, len(bonded_heavy_atoms)))
         return False
+
+
+def add_two_sp2_h(atom, bond_length):
+    """Add two hydrogens to an sp2 hybridized atom.
+
+    Parameters
+    ----------
+    atom : :obj:`atom`
+        The atom object to add a hydrogen to.
+    bond_length: float
+        The length of the bond (in Angstroms) between the new proton an
+        target_atom
+
+    Returns
+    -------
+    bool
+        True if atom was successfully added, False if it wasn't.
+
+
+    .. note:: Protons added to double-bonded atoms will respect the (E), (Z)
+              assignment convention.
+
+    Examples
+    --------
+    >>> from mollib.core import Molecule, measure_angle, measure_distance
+    >>> mol = Molecule('2MJB')
+    >>> mol.strip_atoms(element='H')
+    >>> Q2 = mol['A'][2]
+    >>> ne2 = Q2['NE2']
+    >>> add_two_sp2_h(ne2, 1.0)
+    True
+    >>> h1, h2, cd, oe1 = Q2['HE21'], Q2['HE22'], Q2['CD'], Q2['OE1']
+    >>> angle1 = measure_angle(h1, ne2, cd)
+    >>> angle2 = measure_angle(h2, ne2, cd)
+    >>> print("{:.1f} {:.1f} degs".format(angle1, angle2))
+    120.0 120.0 degs
+    >>> d1 = measure_distance(h1, oe1)
+    >>> d2 = measure_distance(h2, oe1)
+    >>> print("E:{:.1f} A, Z:{:.1f} A".format(d1, d2))  # stereoassn't
+    E:3.1 A, Z:2.5 A
+    """
+    bonded_heavy_atoms = atom.bonded_heavy_atoms(sorted=True)
+    residue = atom.residue
+    molecule = atom.molecule
+
+    # Get the name of the hydrogen to add
+    h_name_1 = 'H' + atom.name[1:] + '1'  # E
+    h_name_2 = 'H' + atom.name[1:] + '2'  # Z
+
+    if len(bonded_heavy_atoms) == 1:
+        bonded = bonded_heavy_atoms[0]
+
+        # Find the atoms bonded to the bonded heavy atom that aren't 'atom'
+        bonded_to_bonded = bonded.bonded_heavy_atoms(sorted=True)
+        bonded_to_bonded = [a for a in bonded_to_bonded if a != atom]
+
+        if len(bonded_to_bonded) < 1:
+            return False
+        bonded_to_bonded = bonded_to_bonded[0]
+
+        # Calculate the atom--bonded_atom vector (x-axis)
+        x = calc_vector(atom, bonded, normalize=True)
+
+        # Calculate the bonded_atom--bonded_to_bonded vector. The
+        # bonded_to_bonded should be sorted by mass in order to preserve
+        # the E/Z notation.
+        vec = calc_vector(bonded, bonded_to_bonded, normalize=True)
+
+        # Calculate the z-axis as the orthogonal vector to these two
+        z = np.cross(x, vec)
+        z /= vector_length(z)
+
+        # Calculate the y-axis as the orthogonal to the x- and y- axes.
+        # The y-axis is pointing toward the bonded_to_bonded atom for
+        # the 'Z' assignment
+        y = np.cross(z, x)
+        y /= vector_length(y)
+
+        # The new protons are along the x- and y-axes, tilted by 60-degrees
+        cos_60 = 0.5
+        sin_60 = sqrt(3.) / 2.
+        # The convention for E/Z assignment of Arg is the reverse for
+        # Asn and Gln. Good grief. See: Markley et al., JBNMR 12, 1-23 (1998)
+        if not atom.residue.name == 'ARG':
+            h1_vec = x * cos_60 + y * sin_60
+            h2_vec = x * cos_60 - y * sin_60
+        else:
+            h1_vec = x * cos_60 - y * sin_60
+            h2_vec = x * cos_60 + y * sin_60
+
+        h1 = h1_vec * bond_length + atom.pos
+        h2 = h2_vec * bond_length + atom.pos
+
+        # Add the new protons to the target_atom
+        molecule.add_atom(name=h_name_1, pos=h1,
+                          element='H', residue=atom.residue)
+        molecule.add_atom(name=h_name_2, pos=h2,
+                          element='H', residue=atom.residue)
+
+        return True
 
 
 def add_one_sp3_h(atom, bond_length):
@@ -208,19 +299,11 @@ def add_one_sp3_h(atom, bond_length):
     >>> print("{:.1f} {:.1f} {:.1f} degs".format(angle1, angle2, angle3))
     108.4 108.7 109.5 degs
     """
-    bonded_heavy_atoms = sorted(atom.bonded_heavy_atoms, key=lambda a: a.mass,
-                                reverse=True)
+    bonded_heavy_atoms = atom.bonded_heavy_atoms(sorted=True)
     molecule = atom.molecule
 
     # Get the name of the hydrogen to add
-    h_name = list(filter(lambda x: x.startswith('H'), atom.topology))
-    if not h_name:  # No eligible Hs found
-        msg = ("Could not find a H atom for {}. ".format(atom) +
-               "Eligible atoms are: {}".format(atom.bonded_atoms))
-        logging.warning(msg)
-        return False
-    else:
-        h_name = h_name[0]  # return the first hydrogen found
+    h_name = 'H' + atom.name[1:]
 
     if len(bonded_heavy_atoms) == 3:
         # Calculate the plane and the plane normal formed by

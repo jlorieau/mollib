@@ -1,7 +1,7 @@
 import unittest
 
 from mollib.core import Molecule, measure_angle, measure_distance
-from mollib.hydrogens import add_one_sp2_h, settings
+from mollib.hydrogens import add_hydrogens
 
 
 aminoacids = {'ALA', 'GLY', 'SER', 'THR', 'MET', 'CYS', 'ILE', 'LEU',
@@ -25,6 +25,56 @@ class TestHydrogenate(unittest.TestCase):
              H positions may be tilted away from their ideal values. It is for
              this reason that the tolerance is so large.
     """
+
+    def _test_residues(self, molecule_h, molecule_ref, residue_dict, tolerance,
+                       skip_first=True):
+        """Test that all of the hydrogen atoms listed in residue_dict match
+        the same position between molecule_h and molecule_ref, within tolerance.
+
+        Parameters
+        ----------
+        molecule_h: :obj:`molecule`
+            The molecule that has had hydrogens added to it.
+        molecule_ref: :obj:`molecule`
+            The reference molecule with the correct hydrogen positions
+        residue_dict: dict
+            A dictionary of residue names (keys) and list of tuples with the
+            heavy atom and proton atom names to test.
+            ex: {'ARG'] = [('NE', 'HE'), ]}
+        tolerance: float
+            The tolerance to use for the hydrogen positions between molecule_h
+            and molecule_ref to be considered a match.
+        """
+        for residue in molecule_h.residues:
+            if residue.name not in residue_dict:
+                continue
+            for target_name, h_name in residue_dict[residue.name]:
+                # See how far these are from the reference structure
+                a1 = residue.get(h_name, None)
+                residue_ref = molecule_ref[residue.chain.id][residue.number]
+                a2 = residue_ref.get(h_name, None)
+
+                if a1 is None:
+                    msg = "molecule_h ({}): ".format(molecule_h.name)
+                    msg += "Atom '{}' in residue '{}' ".format(h_name,
+                                                               residue_ref)
+                    msg += "not found in the hydrogenated molecule."
+                    print(msg)
+                    continue
+                if a2 is None:
+                    msg = "molecule_ref ({}): ".format(molecule_ref.name)
+                    msg += "Atom '{}' in residue '{}' ".format(h_name,
+                                                               residue_ref)
+                    msg += "not found in the reference molecule."
+                    print(msg)
+                    continue
+                distance = measure_distance(a1, a2)  # Angstroms
+
+                msg = "Molecule ({}):".format(a1.molecule.name)
+                msg += "{} and {} are {:.3f} A ".format(a1, a2, distance)
+                msg += "from each other."
+                self.assertTrue(within(distance, 0.0, self.tolerance),
+                                msg=msg)
 
     def test_add_one_sp2_h(self):
         # TODO: This test only tests atoms that need Hs and have 2 heavy atoms.
@@ -53,35 +103,24 @@ class TestHydrogenate(unittest.TestCase):
         for mol_name in  ('2KXA',  # has FWY
                           '2MJB',  # has FRHY
                           ):
-            mol_h = Molecule(mol_name)
-            mol = Molecule(mol_name)
-            mol.strip_atoms(element='H')
+            mol_ref = Molecule(mol_name)
 
-            # Try a variety of atoms. Check that these are within self.tolerance
-            # of the reference structure
-            for residue in mol.residues:
-                if residue.name not in res:  # only check residues from the res
-                    continue                 # dict
-                for target_name, h_name in res[residue.name]:
-                    if residue.first and target_name == 'N':  # NH3+ isn't sp2
-                        continue
-                    bond_length = (settings.bond_length['N-H']
-                                   if target_name.startswith('N') else
-                                   settings.bond_length['C-H'])
-                    msg = "Could not add {} to {} for {}.".format(h_name,
-                                                                  target_name,
-                                                                  residue)
-                    self.assertTrue(add_one_sp2_h(residue[target_name],
-                                                  bond_length), msg=msg)
-                    # See how far these are from the reference structure
-                    a1 = residue.get(h_name, None)
-                    a2 = mol_h['A'][residue.number].get(h_name, None)
-                    if a1 is None or a2 is None:
-                        continue
-                    distance = measure_distance(a1, a2)  # Angstroms
-                    print(distance, a1, a2)
-                    msg = "Molecule ({}):".format(a1.molecule.name)
-                    msg += "{} and {} are {:.3f} A ".format(a1, a2, distance)
-                    msg += "from each other."
-                    self.assertTrue(within(distance, 0.0, self.tolerance),
-                                    msg=msg)
+            mol = Molecule(mol_name)
+            add_hydrogens(mol, strip=True)
+
+            self._test_residues(mol, mol_ref, res, self.tolerance)
+
+    def test_add_two_sp2_h(self):
+        # These are the sp2 atoms that need two Hs in proteins.
+        res = {}
+        res['ARG'] = [('NH1', 'HH11'), ('NH1', 'HH12'),
+                      ('NH2', 'HH21'), ('NH2', 'HH22')]
+        res['ASN'] = [('ND2', 'HD21'), ('ND2', 'HD22')]
+        res['GLN'] = [('NE2', 'HE21'), ('NE2', 'HE22')]
+
+        # Reference structure with protons. Try multiple PDBs
+        for mol_name in ('2MJB',):  # has RNQ
+            mol_ref = Molecule(mol_name)
+            mol = Molecule(mol_name)
+            add_hydrogens(mol, strip=True)
+            self._test_residues(mol, mol_ref, res, self.tolerance)
