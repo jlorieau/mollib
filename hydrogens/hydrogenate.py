@@ -244,8 +244,8 @@ def add_two_sp2_h(atom, bond_length):
         # The new protons are along the x- and y-axes, tilted by 60-degrees
         cos_60 = 0.5
         sin_60 = sqrt(3.) / 2.
-        # The convention for E/Z assignment of Arg is the reverse for
-        # Asn and Gln. Good grief. See: Markley et al., JBNMR 12, 1-23 (1998)
+        # The convention for E/Z assignment of Arg is the reverse in comparison
+        # to Asn and Gln. Good grief. See: Markley et al., JBNMR 12, 1-23 (1998)
         if not atom.residue.name == 'ARG':
             h1_vec = x * cos_60 + y * sin_60
             h2_vec = x * cos_60 - y * sin_60
