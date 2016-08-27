@@ -27,6 +27,12 @@ def sorted_atom_list(atom_seq):
     list
         A sorted list of atoms.
 
+
+    .. note:: The current implementation sorts by mass (reverse order), and
+              only looks at one level of bonded_atoms to sort atoms with the
+              same mass. A better implementation would seach bonded (and
+              bonded of bonded) through a robust recursive function.
+
     Examples
     --------
     >>> from mollib import Molecule
