@@ -320,7 +320,6 @@ class Atom(Primitive):
 
         self.add_to_topology(atom)
 
-    @property
     def bonded_atoms(self):
         """The atoms bonded to this atom, based on the topology method.
 
@@ -335,9 +334,9 @@ class Atom(Primitive):
         >>> from mollib import Molecule
         >>> mol = Molecule('2PTN')
         >>> C22 = mol['A'][22]
-        >>> sorted(C22['C'].bonded_atoms)
+        >>> sorted(C22['C'].bonded_atoms())
         [C22-CA, C22-O, G23-N]
-        >>> sorted(C22['SG'].bonded_atoms)  # disulfide bridge
+        >>> sorted(C22['SG'].bonded_atoms())  # disulfide bridge
         [C157-SG, C22-CB]
         """
         bonded = set()
@@ -375,7 +374,6 @@ class Atom(Primitive):
                 continue
         return bonded
 
-    @property
     def bonded_heavy_atoms(self):
         """The heavy atoms bonded to this atom, based on the topology method.
 
@@ -390,14 +388,13 @@ class Atom(Primitive):
         >>> from mollib import Molecule
         >>> mol = Molecule('2PTN')
         >>> C22 = mol['A'][22]
-        >>> sorted(C22['CA'].bonded_heavy_atoms)
+        >>> sorted(C22['CA'].bonded_heavy_atoms())
         [C22-C, C22-CB, C22-N]
         """
-        bonded_atoms = self.bonded_atoms
+        bonded_atoms = self.bonded_atoms()
         return {a for a in bonded_atoms
                 if not a.element == 'H' or a.element == 'D'}
 
-    @property
     def bonded_interresidue_atoms(self):
         """The heavy atoms bonded on this atom that are from other residues.
 
@@ -412,7 +409,7 @@ class Atom(Primitive):
         >>> from mollib import Molecule
         >>> mol = Molecule('2PTN')
         >>> C22 = mol['A'][22]
-        >>> sorted(C22['SG'].bonded_interresidue_atoms)
+        >>> sorted(C22['SG'].bonded_interresidue_atoms())
         [C157-SG]
         """
         bonded = set()

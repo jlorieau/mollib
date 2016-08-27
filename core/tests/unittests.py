@@ -179,17 +179,17 @@ class TestMolLib(unittest.TestCase):
         # Replace H with a methyl to a tyrosine
         Y22 = mol['A'][22]
         h = Y22['HH']
-        self.assertIn(h, Y22['OH'].bonded_atoms)
+        self.assertIn(h, Y22['OH'].bonded_atoms())
         mol.del_atom(h)
-        self.assertNotIn(h, Y22['OH'].bonded_atoms)
+        self.assertNotIn(h, Y22['OH'].bonded_atoms())
 
         mol.add_atom(name='CH', pos=(0,0,0), charge=0, element='C',
                      residue=Y22, bonded_atoms=[Y22['OH']],)
-        self.assertIn(Y22['CH'], Y22['OH'].bonded_atoms)
+        self.assertIn(Y22['CH'], Y22['OH'].bonded_atoms())
         for i in '123':
             mol.add_atom(name='HH'+i, pos=(0, 0, 0), charge=0, element='H',
                          residue=Y22, bonded_atoms=[Y22['CH']], )
-        self.assertEqual(Y22['CH'].bonded_atoms,
+        self.assertEqual(Y22['CH'].bonded_atoms(),
                          {Y22['OH'], Y22['HH1'], Y22['HH2'], Y22['HH3']})
 
         # Replace methyl with an H on the tyrosine

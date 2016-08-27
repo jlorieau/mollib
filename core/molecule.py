@@ -340,12 +340,12 @@ class Molecule(dict):
         >>> mol = Molecule('2KXA')
         >>> print('{:.2f}, {:.2f}'.format(mol.mass, mol['A'][3].mass))
         2445.07, 147.19
-        >>> sorted(mol['A'][3]['CA'].bonded_atoms)
+        >>> sorted(mol['A'][3]['CA'].bonded_atoms())
         [F3-C, F3-CB, F3-HA, F3-N]
         >>> mol.del_atom(mol['A'][3]['N'])
         >>> print('{:.2f}, {:.2f}'.format(mol.mass, mol['A'][3].mass))
         2431.06, 133.18
-        >>> sorted(mol['A'][3]['CA'].bonded_atoms)
+        >>> sorted(mol['A'][3]['CA'].bonded_atoms())
         [F3-C, F3-CB, F3-HA]
 
 
@@ -361,7 +361,7 @@ class Molecule(dict):
                   list in the atom's bonded_atoms). This is by design.
         """
         if delete_topology:
-            for bonded_atom in atom.bonded_atoms:
+            for bonded_atom in atom.bonded_atoms():
                 bonded_atom.del_from_topology(atom)
         del atom.residue[atom.name]
 
@@ -614,7 +614,7 @@ class Molecule(dict):
                 f.write(atom_line.format(**atom_parms))
 
                 # Prepare the CONECT lines
-                bonded_interresidue_atoms = atom.bonded_interresidue_atoms
+                bonded_interresidue_atoms = atom.bonded_interresidue_atoms()
                 bonded_numbers = sorted([b.number
                                          for b in bonded_interresidue_atoms])
                 if bonded_numbers:
