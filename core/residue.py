@@ -165,8 +165,6 @@ class Residue(dict):
             groups += settings.pKs['last'].items()
         if self.name in settings.pKs:
             groups += settings.pKs[self.name].items()
-        if not groups:
-            return None
 
         # Convert the pKs and names to actual atom objects
         return_list = []
