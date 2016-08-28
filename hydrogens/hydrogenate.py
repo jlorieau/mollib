@@ -7,6 +7,10 @@ Category: Add_hydrogens
 name: atom.full_name and '_' and angle(s)
 
 """
+# TODO: work with the residue ionization groups
+# TODO: Add framework to modify ideal hydrogen geometries
+# TODO: work with topology of HETATMS
+
 import logging
 from math import sqrt, cos, sin, pi
 
