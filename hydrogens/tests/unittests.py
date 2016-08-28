@@ -216,7 +216,7 @@ class TestHydrogenate(unittest.TestCase):
                                                    0.0)
                         angle = (measure_dihedral(h, atom, bonded, bonded2)
                                  + offset)
-                        print(h, atom, bonded, bonded2, angle)
+
                         mol.set_parameter('Add_hydrogens',
                                           atom.fullname + '_alpha',
                                           angle)
