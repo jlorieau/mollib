@@ -13,6 +13,7 @@ name: atom.full_name and '_' and angle(s)
 
 import logging
 from math import sqrt, cos, sin, pi
+from itertools import chain
 
 import numpy as np
 
@@ -34,32 +35,65 @@ def add_hydrogens(molecule, strip=True):
     if strip:
         molecule.strip_atoms(element='H')
 
-    for atom in molecule.atoms:
-        if atom.element == 'H':
-            continue
-        topology = atom.topology
-        number_hydrogens = len([i for i in topology if i.startswith('H')])
-        number_heavy_atoms = len([i for i in topology if not i.startswith('H')])
+    for residue in molecule.residues:
+        # Get a list of the ionizeable groups to figure out how many protons
+        # they need separately
+        ion_groups = residue.ionizeable_groups
+        ion_atoms = chain(*[i.possible_atoms for i in ion_groups])
+        print(list(ion_atoms))
+        for atom in residue.atoms:
+            if atom.element == 'H' or atom.element == 'D':
+                continue
 
-        if atom.element == 'O' and number_hydrogens == 1:
-            # TODO this does not work for sp3 oxygens
-            add_one_sp2_h(atom, settings.bond_length['O-H'])
-        elif atom.element == 'N':
-            if number_hydrogens == 1:
-                add_one_sp2_h(atom, settings.bond_length['N-H'])
-            if number_hydrogens == 2:
-                add_two_sp2_h(atom, settings.bond_length['N-H2'])
-            if number_hydrogens == 3:
-                add_three_sp3_h(atom, settings.bond_length['N-H'])
-        elif atom.element == 'C':
-            if number_heavy_atoms <= 2 and number_hydrogens == 1:
-                add_one_sp2_h(atom, settings.bond_length['C-H'])
-            if number_heavy_atoms == 3 and number_hydrogens == 1:
-                add_one_sp3_h(atom, settings.bond_length['C-H'])
-            if number_heavy_atoms == 2 and number_hydrogens == 2:
-                add_two_sp3_h(atom, settings.bond_length['C-H'])
-            if number_hydrogens == 3:
-                add_three_sp3_h(atom, settings.bond_length['C-H'])
+            # Process ionizeable groups separately
+            if atom in ion_atoms:
+                continue
+
+            return_value = add_hydrogen_to_atom(atom)
+            if return_value is False:
+                msg = "Could not add hydrogen to '{}' ".format(atom.fullname)
+                logging.warning(msg)
+
+
+def add_hydrogen_to_atom(atom):
+    """Add hydrogens to atom, making a decision on its hybridization.
+
+    Parameters
+    ----------
+    atom: :obj:`atom`
+        The atom object to add one or more hydrogens to.
+
+    Returns
+    -------
+    bool
+        True, if the addition was successful
+        False, if the addition was not successful
+    """
+    topology = atom.topology
+    number_hydrogens = len([i for i in topology
+                            if i.startswith('H')])
+    number_heavy_atoms = len([i for i in topology
+                              if not i.startswith('H')])
+
+    if atom.element == 'O' and number_hydrogens == 1:
+        # TODO this does not work for sp3 oxygens
+        add_one_sp2_h(atom, settings.bond_length['O-H'])
+    elif atom.element == 'N':
+        if number_hydrogens == 1:
+            return add_one_sp2_h(atom, settings.bond_length['N-H'])
+        if number_hydrogens == 2:
+            return add_two_sp2_h(atom, settings.bond_length['N-H2'])
+        if number_hydrogens == 3:
+            return add_three_sp3_h(atom, settings.bond_length['N-H'])
+    elif atom.element == 'C':
+        if number_heavy_atoms <= 2 and number_hydrogens == 1:
+            return add_one_sp2_h(atom, settings.bond_length['C-H'])
+        if number_heavy_atoms == 3 and number_hydrogens == 1:
+            return add_one_sp3_h(atom, settings.bond_length['C-H'])
+        if number_heavy_atoms == 2 and number_hydrogens == 2:
+            return add_two_sp3_h(atom, settings.bond_length['C-H'])
+        if number_hydrogens == 3:
+            return add_three_sp3_h(atom, settings.bond_length['C-H'])
 
 
 def add_one_sp2_h(atom, bond_length):
