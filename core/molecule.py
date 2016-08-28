@@ -146,7 +146,7 @@ class Molecule(dict):
         """
         self.name = identifier
         self.connections = []
-        self._properties = {}
+        self._parameters = {}
 
         # Read in the data
         self.read_identifier(identifier)
@@ -229,21 +229,21 @@ class Molecule(dict):
         """The number of atoms in this molecule."""
         return len(list(self.atoms))
 
-    # Getting and setting property functions
-    def get_property(self, category, name):
-        """Get the property for the given property category and name.
+    # Getting and setting parameters
+    def get_parameter(self, category, name):
+        """Get the parameter for the given property category and name.
 
         Parameters
         ----------
         category: str
-            The category of the property. ex: 'hydrogens'
+            The category of the parameter. ex: 'hydrogens'
         name: str
-            The name of the property. ex: 'Q61-CA'
+            The name of the parameter. ex: 'Q61-CA'
 
         Returns
         -------
         value
-            The property value for the name property in the given category.
+            The property value for the name parameter in the given category.
         None
             If no value was found.
 
@@ -251,26 +251,26 @@ class Molecule(dict):
         --------
         >>> from mollib import Molecule
         >>> mol = Molecule('2KXA')
-        >>> mol.set_property('Biophysical Characteristics', 'Rg', 10.5)
-        >>> mol.get_property('Biophysical Characteristics', 'Rg')
+        >>> mol.set_parameter('Biophysical Characteristics', 'Rg', 10.5)
+        >>> mol.get_parameter('Biophysical Characteristics', 'Rg')
         10.5
         """
-        category_dict = self._properties.setdefault(category, {})
+        category_dict = self._parameters.setdefault(category, {})
         return category_dict.get(name, None)
 
-    def set_property(self, category, name, value):
-        """Set the property for the given property category and name.
+    def set_parameter(self, category, name, value):
+        """Set the parameter for the given property category and name.
 
         Parameters
         ----------
         category: str
-            The category of the property. ex: 'hydrogens'
+            The category of the parameter. ex: 'hydrogens'
         name: str
-            The name of the property. ex: 'Q61-CA'
+            The name of the parameter. ex: 'Q61-CA'
         value
-            The value of the property
+            The value of the parameter
         """
-        category_dict = self._properties.setdefault(category, {})
+        category_dict = self._parameters.setdefault(category, {})
         category_dict[name] = value
 
     # Mutator Functions
