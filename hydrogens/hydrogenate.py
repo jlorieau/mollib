@@ -1,8 +1,14 @@
 """
 Functions to add hydrogens to atoms in a molecule.
+
+Molecule Configuration Parameters
+---------------------------------
+Category: Add_hydrogens
+name: atom.full_name and '_' and angle(s)
+
 """
 import logging
-from math import sqrt, cos, sin
+from math import sqrt, cos, sin, pi
 
 import numpy as np
 
@@ -39,6 +45,8 @@ def add_hydrogens(molecule, strip=True):
                 add_one_sp2_h(atom, settings.bond_length['N-H'])
             if number_hydrogens == 2:
                 add_two_sp2_h(atom, settings.bond_length['N-H2'])
+            if number_hydrogens == 3:
+                add_three_sp3_h(atom, settings.bond_length['N-H'])
         elif atom.element == 'C':
             if number_heavy_atoms <= 2 and number_hydrogens == 1:
                 add_one_sp2_h(atom, settings.bond_length['C-H'])
@@ -399,6 +407,8 @@ def add_two_sp3_h(atom, bond_length, jbnmr_convention=True):
     reversed = False
 
     if jbnmr_convention:
+        # Note that this implementation depends on the sort_atom_list
+        # implementation, which currently makes some mistakes in CG/CD atoms.
         if ((res_name == 'MET' and (atom_name == 'CB' or atom_name == 'CG')) or
             (res_name == 'GLN' and atom_name == 'CG') or
             (res_name == 'GLU' and atom_name == 'CG') or
@@ -407,7 +417,7 @@ def add_two_sp3_h(atom, bond_length, jbnmr_convention=True):
             (res_name == 'SER' and atom_name == 'CB') or
             (res_name == 'ASP' and atom_name == 'CB') or
             (res_name == 'ASN' and atom_name == 'CB') or
-            (res_name == 'ARG' and atom_name == 'CD') or  
+            (res_name == 'ARG' and atom_name == 'CD') or
             (res_name == 'CYS' and atom_name == 'CB')
             ):
             reversed = True
@@ -457,7 +467,7 @@ def add_two_sp3_h(atom, bond_length, jbnmr_convention=True):
         return False
 
 
-def add_three_sp3_h(atom, bond_length, alpha=0.0):
+def add_three_sp3_h(atom, bond_length, alpha=None):
     """Add three hydrogens to an sp3 hybridized atom.
 
     This function is useful for adding methyls, like HBs of alanines.
@@ -470,6 +480,13 @@ def add_three_sp3_h(atom, bond_length, alpha=0.0):
         The length of the bond between atom and the new hydrogens.
     alpha: float, optional
         The rotation angle to use for the atom-H3 group in degrees.
+        If specified, this angle will be used. Otherwise, if a value exists in
+        the :obj:`Molecule`'s parameters, that value will be used. The value
+        defaults to 0.0 degrees.
+
+
+    .. note: This function will replace the alpha value with the one stored in
+             the molecule property if it is set.
 
     Returns
     -------
@@ -497,8 +514,14 @@ def add_three_sp3_h(atom, bond_length, alpha=0.0):
     >>> print('{:.2f} {:.2f} {:.2f} A'.format(d1, d2, d3))
     1.00 1.00 1.00 A
     """
-    bonded_heavy_atoms = atom.bonded_heavy_atoms(sorted=True)
+    # Set the alpha angle value
     molecule = atom.molecule
+    alpha_parameter = molecule.get_parameter('Add_hydrogens',
+                                             atom.fullname + '_alpha')
+    alpha = alpha or alpha_parameter or 0.0
+
+    # Get the heavy atoms bonded to this atom
+    bonded_heavy_atoms = atom.bonded_heavy_atoms(sorted=True)
 
     # Get the name of the hydrogen to add
     h_name_1 = 'H' + atom.name[1:] + '1'
@@ -537,16 +560,17 @@ def add_three_sp3_h(atom, bond_length, alpha=0.0):
         # is opposite to v2 to make a trans group
         c_705 = 0.33380  # cos(70.5-deg)
         s_705 = 0.94264  # sin(70.5-deg)
-        h_v1 = c_705 * v1 + s_705 * norm2
+
+        h_v1 = c_705 * v1 + s_705 * (norm2 * cos((alpha + 0.)*pi/180.) +
+                                     norm1 * sin((alpha + 0.)*pi/180.))
         h1 = h_v1 * bond_length + atom.pos
 
-        # Hydrogens 2 and 3 and first offset by 60-degrees using the normal
-        # vectors v1 and v2.
-        c_60 = 0.5  # cos(60-deg)
-        s_60 = sqrt(3) / 2.  # sin(60-deg)
-        h_v2 = c_705 * v1 + s_705 * (-1. * c_60 * norm2 + s_60 * norm1)
+        h_v2 = c_705 * v1 + s_705 * (norm2 * cos((alpha + 240.)*pi/180.) +
+                                     norm1 * sin((alpha + 240.)*pi/180.))
         h2 = h_v2 * bond_length + atom.pos
-        h_v3 = c_705 * v1 + s_705 * (-1. * c_60 * norm2 - s_60 * norm1)
+
+        h_v3 = c_705 * v1 + s_705 * (norm2 * cos((alpha + 120.)*pi/180.) +
+                                     norm1 * sin((alpha + 120.)*pi/180.))
         h3 = h_v3 * bond_length + atom.pos
 
         # Create the new hydrogen atoms

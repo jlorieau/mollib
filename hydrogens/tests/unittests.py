@@ -1,6 +1,7 @@
 import unittest
 
-from mollib.core import Molecule, measure_angle, measure_distance
+from mollib.core import (Molecule, measure_angle, measure_distance,
+                         measure_dihedral)
 from mollib.hydrogens import add_hydrogens
 
 
@@ -165,14 +166,60 @@ class TestHydrogenate(unittest.TestCase):
             add_hydrogens(mol, strip=True)
             self._test_residues(mol, mol_ref, res, self.tolerance)
 
-    # def test_add_three_sp3_h(self):
-    #     # These are the sp2 atoms that need two Hs in proteins.
-    #     res = {}
-    #     res['ALA'] = [('CB', 'HB1'), ('CB', 'HB2'), ('CB', 'HB3')]
-    #
-    #     # Reference structure with protons. Try multiple PDBs
-    #     for mol_name in ('2MJB',):  # has A
-    #         mol_ref = Molecule(mol_name)
-    #         mol = Molecule(mol_name)
-    #         add_hydrogens(mol, strip=True)
-    #         self._test_residues(mol, mol_ref, res, self.tolerance)
+    def test_add_three_sp3_h(self):
+        # These are the sp2 atoms that need two Hs in proteins.
+        res = {}
+        res['ALA'] = [('CB', 'HB1'), ('CB', 'HB2'), ('CB', 'HB3')]
+        res['ILE'] = [('CG2', 'HG21'), ('CG2', 'HG22'), ('CG2', 'HG23'),
+                      ('CD1', 'HD11'), ('CD1', 'HD12'), ('CD1', 'HD13')]
+        res['LEU'] = [('CD1', 'HD11'), ('CD1', 'HD12'), ('CD1', 'HD13'),
+                      ('CD2', 'HD21'), ('CD2', 'HD22'), ('CD2', 'HD23')]
+        res['LYS'] = [('NZ', 'HZ1'), ('NZ', 'HZ2'), ('NZ', 'HZ3')]
+        res['MET'] = [('CE', 'HE1'), ('CE', 'HE2'), ('CE', 'HE3')]
+        res['THR'] = [('CG2', 'HG21'), ('CG2', 'HG22'), ('CG2', 'HG23')]
+        res['VAL'] = [('CG1', 'HG11'), ('CG1', 'HG12'), ('CG1', 'HG13'),
+                      ('CG2', 'HG21'), ('CG2', 'HG22'), ('CG2', 'HG23')]
+
+
+        angle_offsets = {('ALA', 'CB'): 180.,
+                         ('ILE', 'CD1'): 180.,
+                         ('ILE', 'CG2'): 180.,
+                         ('LEU', 'CD1'): 180.,
+                         ('LEU', 'CD2'): 180.,
+                         ('LYS', 'NZ'): 180.,
+                         ('MET', 'CE'): 180.,
+                         ('THR', 'CG2'): 180.,
+                         ('VAL', 'CG1'): 180.,
+                         ('VAL', 'CG2'): 180.,}
+        # Reference structure with protons. Try multiple PDBs
+        for mol_name in ('2MJB',):  # has AILKMTV
+            mol_ref = Molecule(mol_name)
+            mol = Molecule(mol_name)
+
+            # First set the alpha angle for all relevant sp3 atoms so that
+            # the atom positions match with methyl or amine rotations.
+            for residue in mol_ref.residues:
+                if residue.name in res:
+                    for atom_name, h_name in res[residue.name]:
+                        if not h_name.endswith('1'):
+                            continue
+
+                        atom, h = residue[atom_name], residue[h_name]
+                        bonded = atom.bonded_heavy_atoms(sorted=True)[0]
+                        bonded2 = [a for a
+                                   in bonded.bonded_heavy_atoms(sorted=True)
+                                   if a != atom][0]
+
+                        # The angles in the PDB files are different from these
+                        # dihedrals by angle offsets.
+                        offset = angle_offsets.get((residue.name, atom_name),
+                                                   0.0)
+                        angle = (measure_dihedral(h, atom, bonded, bonded2)
+                                 + offset)
+                        print(h, atom, bonded, bonded2, angle)
+                        mol.set_parameter('Add_hydrogens',
+                                          atom.fullname + '_alpha',
+                                          angle)
+
+            add_hydrogens(mol, strip=True)
+            self._test_residues(mol, mol_ref, res, self.tolerance)
