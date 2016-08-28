@@ -585,14 +585,6 @@ class Molecule(dict):
                                    key = lambda a : (a.name[1:], a.name[0])):
                     atom.number = counter.next()
 
-    @property
-    def pH(self):
-        return getattr(self, '_pH', settings.default_pH)
-
-    @pH.setter
-    def pH(self, value):
-        self._pH = value
-
     # Read and Write Methods
 
     def write_pdb(self, filename):
@@ -861,8 +853,8 @@ class Molecule(dict):
     def read_stream(self, stream):
         """Reads in data from a stream.
         """
-        # TODO: Reading files be much faster to implement in Cython with
-        # fixed str.
+        # TODO: Make a faster reader with structs and binary, with a fallback
+        #       to the regex matcher.
         self.clear()
 
         # A list of regex matchers to harvest data from each line.
