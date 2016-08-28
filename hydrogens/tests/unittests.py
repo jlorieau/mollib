@@ -158,9 +158,21 @@ class TestHydrogenate(unittest.TestCase):
         res['TYR'] = [('CB', 'HB2'), ('CB', 'HB3'), ]
 
         # Reference structure with protons. Try multiple PDBs
-        for mol_name in ('2MJB',):  # has PGRNDQEHILMFSY
-                                    # has CW
+        for mol_name in ('2MJB',   # has PGRNDQEHILMFSY
+                         '2A5M'):  # has CW
             mol_ref = Molecule(mol_name)
             mol = Molecule(mol_name)
             add_hydrogens(mol, strip=True)
             self._test_residues(mol, mol_ref, res, self.tolerance)
+
+    # def test_add_three_sp3_h(self):
+    #     # These are the sp2 atoms that need two Hs in proteins.
+    #     res = {}
+    #     res['ALA'] = [('CB', 'HB1'), ('CB', 'HB2'), ('CB', 'HB3')]
+    #
+    #     # Reference structure with protons. Try multiple PDBs
+    #     for mol_name in ('2MJB',):  # has A
+    #         mol_ref = Molecule(mol_name)
+    #         mol = Molecule(mol_name)
+    #         add_hydrogens(mol, strip=True)
+    #         self._test_residues(mol, mol_ref, res, self.tolerance)

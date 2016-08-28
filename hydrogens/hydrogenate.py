@@ -46,6 +46,8 @@ def add_hydrogens(molecule, strip=True):
                 add_one_sp3_h(atom, settings.bond_length['C-H'])
             if number_heavy_atoms == 2 and number_hydrogens == 2:
                 add_two_sp3_h(atom, settings.bond_length['C-H'])
+            if number_hydrogens == 3:
+                add_three_sp3_h(atom, settings.bond_length['C-H'])
 
 
 def add_one_sp2_h(atom, bond_length):
@@ -400,13 +402,14 @@ def add_two_sp3_h(atom, bond_length, jbnmr_convention=True):
         if ((res_name == 'MET' and (atom_name == 'CB' or atom_name == 'CG')) or
             (res_name == 'GLN' and atom_name == 'CG') or
             (res_name == 'GLU' and atom_name == 'CG') or
-            (res_name == 'LYS' and atom_name == 'CE') or  # should be CD as well
-            (res_name == 'PRO' and atom_name == 'CD') or  # should be CG as well
+            (res_name == 'LYS' and atom_name == 'CE') or
+            (res_name == 'PRO' and atom_name == 'CD') or
             (res_name == 'SER' and atom_name == 'CB') or
             (res_name == 'ASP' and atom_name == 'CB') or
             (res_name == 'ASN' and atom_name == 'CB') or
-            (res_name == 'ARG' and atom_name == 'CD')  # should be CG as well
-        ):
+            (res_name == 'ARG' and atom_name == 'CD') or  
+            (res_name == 'CYS' and atom_name == 'CB')
+            ):
             reversed = True
 
     if len(bonded_heavy_atoms) == 2:
@@ -422,8 +425,8 @@ def add_two_sp3_h(atom, bond_length, jbnmr_convention=True):
         orthog /= vector_length(orthog)
 
         # Find the unit vector for hydrogens 2 and 3.
-        s = 0.8166415551616789 # sin(54.75deg) -- 54.75 deg = 109.5/2 deg
-        c = 0.5771451900372336 # cos(54.75deg)
+        s = 0.8166415551616789  # sin(54.75deg) -- 54.75 deg = 109.5/2 deg
+        c = 0.5771451900372336  # cos(54.75deg)
 
         if reversed:
             h_v2 = bisect * c + orthog * s
@@ -444,6 +447,111 @@ def add_two_sp3_h(atom, bond_length, jbnmr_convention=True):
         h3 = h_v3 * bond_length + atom.pos  # pro-S
 
         # Create the new hydrogen atoms
+        molecule.add_atom(name=h_name_2, pos=h2, element='H',
+                          residue=atom.residue)
+        molecule.add_atom(name=h_name_3, pos=h3, element='H',
+                          residue=atom.residue)
+        return True
+
+    else:
+        return False
+
+
+def add_three_sp3_h(atom, bond_length, alpha=0.0):
+    """Add three hydrogens to an sp3 hybridized atom.
+
+    This function is useful for adding methyls, like HBs of alanines.
+
+    Parameters
+    ----------
+    atom: :obj:`atom`
+        The :obj:`atom` object to add hydrogens to.
+    bond_length: float
+        The length of the bond between atom and the new hydrogens.
+    alpha: float, optional
+        The rotation angle to use for the atom-H3 group in degrees.
+
+    Returns
+    -------
+    bool:
+        True if atom was successfully added, False if it wasn't.
+
+    Examples
+    --------
+    >>> from mollib.core import Molecule, measure_angle, measure_distance
+    >>> mol = Molecule('2KXA')
+    >>> mol.strip_atoms(element='H')
+    >>> A5 = mol['A'][5]
+    >>> n, ca, cb = A5['N'], A5['CA'], A5['CB']
+    >>> add_three_sp3_h(cb, 1.0)
+    True
+    >>> hb1, hb2, hb3 = A5['HB1'], A5['HB2'], A5['HB3']
+    >>> angle1 = measure_angle(hb1, cb, ca)
+    >>> angle2 = measure_angle(hb2, cb, ca)
+    >>> angle3 = measure_angle(hb3, cb, ca)
+    >>> print('{:.1f} {:.1f} {:.1f} degs'.format(angle1, angle2, angle3))
+    109.5 109.5 109.5 degs
+    >>> d1 = measure_distance(hb1, cb)
+    >>> d2 = measure_distance(hb2, cb)
+    >>> d3 = measure_distance(hb3, cb)
+    >>> print('{:.2f} {:.2f} {:.2f} A'.format(d1, d2, d3))
+    1.00 1.00 1.00 A
+    """
+    bonded_heavy_atoms = atom.bonded_heavy_atoms(sorted=True)
+    molecule = atom.molecule
+
+    # Get the name of the hydrogen to add
+    h_name_1 = 'H' + atom.name[1:] + '1'
+    h_name_2 = 'H' + atom.name[1:] + '2'
+    h_name_3 = 'H' + atom.name[1:] + '3'
+
+    if len(bonded_heavy_atoms) == 1:
+        bonded = bonded_heavy_atoms[0]
+
+        # Find the atoms bonded to the bonded heavy atom that aren't 'atom'
+        bonded_to_bonded = bonded.bonded_heavy_atoms(sorted=True)
+        bonded_to_bonded = [a for a in bonded_to_bonded if a != atom]
+
+        if len(bonded_to_bonded) < 1:
+            return False
+        bonded_to_bonded = bonded_to_bonded[0]
+
+        # Calculate the atom--bonded vector
+        v1 = calc_vector(atom, bonded)
+        v1 /= vector_length(v1)
+
+        # Calculate the bonded--bonded_to_bonded vector
+        v2 = calc_vector(bonded, bonded_to_bonded)
+        v2 /= vector_length(v2)
+
+        # Calculate the normal to v1 and v2
+        norm1 = np.cross(v1, v2)
+        norm1 /= vector_length(norm1)
+
+        # Calculate the normal to norm1 and v1. v1, norm1 and norm2 form an
+        # orthonormal set of vectors
+        norm2 = np.cross(norm1, v1)
+        norm2 /= vector_length(norm2)
+
+        # All three new protons are tilted away from v1. However, the first
+        # is opposite to v2 to make a trans group
+        c_705 = 0.33380  # cos(70.5-deg)
+        s_705 = 0.94264  # sin(70.5-deg)
+        h_v1 = c_705 * v1 + s_705 * norm2
+        h1 = h_v1 * bond_length + atom.pos
+
+        # Hydrogens 2 and 3 and first offset by 60-degrees using the normal
+        # vectors v1 and v2.
+        c_60 = 0.5  # cos(60-deg)
+        s_60 = sqrt(3) / 2.  # sin(60-deg)
+        h_v2 = c_705 * v1 + s_705 * (-1. * c_60 * norm2 + s_60 * norm1)
+        h2 = h_v2 * bond_length + atom.pos
+        h_v3 = c_705 * v1 + s_705 * (-1. * c_60 * norm2 - s_60 * norm1)
+        h3 = h_v3 * bond_length + atom.pos
+
+        # Create the new hydrogen atoms
+        molecule.add_atom(name=h_name_1, pos=h1, element='H',
+                          residue=atom.residue)
         molecule.add_atom(name=h_name_2, pos=h2, element='H',
                           residue=atom.residue)
         molecule.add_atom(name=h_name_3, pos=h3, element='H',
