@@ -514,6 +514,8 @@ def add_three_sp3_h(atom, bond_length, alpha=None):
     >>> print('{:.2f} {:.2f} {:.2f} A'.format(d1, d2, d3))
     1.00 1.00 1.00 A
     """
+    # TODO: Add molecule parameters using a more human-readable name
+    # TODO: Add beta tetrahedral distortion angle.
     # Set the alpha angle value
     molecule = atom.molecule
     alpha_parameter = molecule.get_parameter('Add_hydrogens',
