@@ -48,6 +48,7 @@ class TestHydrogenate(unittest.TestCase):
         for residue in molecule_h.residues:
             if residue.name not in residue_dict:
                 continue
+
             for target_name, h_name in residue_dict[residue.name]:
                 # See how far these are from the reference structure
                 a1 = residue.get(h_name, None)
@@ -120,6 +121,45 @@ class TestHydrogenate(unittest.TestCase):
 
         # Reference structure with protons. Try multiple PDBs
         for mol_name in ('2MJB',):  # has RNQ
+            mol_ref = Molecule(mol_name)
+            mol = Molecule(mol_name)
+            add_hydrogens(mol, strip=True)
+            self._test_residues(mol, mol_ref, res, self.tolerance)
+
+    def test_add_two_sp3_h(self):
+        # These are the sp2 atoms that need two Hs in proteins.
+        res = {}
+        res['PRO'] = [('CB', 'HB2'), ('CB', 'HB3'),
+                      ('CG', 'HG2'), ('CG', 'HG3'),
+                      ('CD', 'HD2'), ('CB', 'HD3'), ]
+        res['GLY'] = [('CA', 'HA2'), ('CA', 'HA2'), ]
+        res['ARG'] = [('CB', 'HB2'), ('CB', 'HB3'),
+                      ('CG', 'HG2'), ('CG', 'HG3'),
+                      ('CD', 'HD2'), ('CD', 'HD3'), ]
+        res['ASN'] = [('CB', 'HB2'), ('CB', 'HB3'), ]
+        res['ASP'] = [('CB', 'HB2'), ('CB', 'HB3'), ]
+        res['CYS'] = [('CB', 'HB2'), ('CB', 'HB3'), ]
+        res['GLN'] = [('CB', 'HB2'), ('CB', 'HB3'),
+                      ('CG', 'HG2'), ('CG', 'HG3'), ]
+        res['GLU'] = [('CB', 'HB2'), ('CB', 'HB3'),
+                      ('CG', 'HG2'), ('CG', 'HG3'), ]
+        res['HIS'] = [('CB', 'HB2'), ('CB', 'HB3'), ]
+        res['ILE'] = [('CG1', 'HG12'), ('CG1', 'HG13'), ]
+        res['LEU'] = [('CB', 'HB2'), ('CB', 'HB3'), ]
+        res['LYS'] = [('CB', 'HB2'), ('CB', 'HB3'),
+                      ('CG', 'HG2'), ('CG', 'HG3'),
+                      ('CD', 'HD2'), ('CD', 'HD3'),
+                      ('CE', 'HE2'), ('CE', 'HE3'), ]
+        res['MET'] = [('CB', 'HB2'), ('CB', 'HB3'),
+                      ('CG', 'HG2'), ('CG', 'HG3'), ]
+        res['PHE'] = [('CB', 'HB2'), ('CB', 'HB3'), ]
+        res['SER'] = [('CB', 'HB2'), ('CB', 'HB3'), ]
+        res['TRP'] = [('CB', 'HB2'), ('CB', 'HB3'), ]
+        res['TYR'] = [('CB', 'HB2'), ('CB', 'HB3'), ]
+
+        # Reference structure with protons. Try multiple PDBs
+        for mol_name in ('2MJB',):  # has PGRNDQEHILMFSY
+                                    # has CW
             mol_ref = Molecule(mol_name)
             mol = Molecule(mol_name)
             add_hydrogens(mol, strip=True)

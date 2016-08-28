@@ -11,16 +11,15 @@ from . import settings
 
 
 def add_hydrogens(molecule, strip=True):
-    """
+    """Add hydrogens to a molecule.
 
     Parameters
     ----------
-    molecule
-    strip
-
-    Returns
-    -------
-
+    molecule: :obj:`molecule`
+        Molecule object to add hydrogens to.
+    strip: bool
+        If True, all hydrogen atoms will be stripped from the molecule before
+        adding new hydrogens
     """
     if strip:
         molecule.strip_atoms(element='H')
@@ -45,6 +44,8 @@ def add_hydrogens(molecule, strip=True):
                 add_one_sp2_h(atom, settings.bond_length['C-H'])
             if number_heavy_atoms == 3 and number_hydrogens == 1:
                 add_one_sp3_h(atom, settings.bond_length['C-H'])
+            if number_heavy_atoms == 2 and number_hydrogens == 2:
+                add_two_sp3_h(atom, settings.bond_length['C-H'])
 
 
 def add_one_sp2_h(atom, bond_length):
@@ -165,7 +166,7 @@ def add_one_sp2_h(atom, bond_length):
         return False
 
 
-def add_two_sp2_h(atom, bond_length):
+def add_two_sp2_h(atom, bond_length, jbnmr_convention=True):
     """Add two hydrogens to an sp2 hybridized atom.
 
     Parameters
@@ -175,6 +176,8 @@ def add_two_sp2_h(atom, bond_length):
     bond_length: float
         The length of the bond (in Angstroms) between the new proton an
         target_atom
+    jbnmr_convention: bool, optional
+        Use the JBNMR 12,1 (1998) naming convention.
 
     Returns
     -------
@@ -182,8 +185,9 @@ def add_two_sp2_h(atom, bond_length):
         True if atom was successfully added, False if it wasn't.
 
 
-    .. note:: Protons added to double-bonded atoms will respect the (E), (Z)
-              assignment convention.
+    .. note:: Protons added to double-bonded atoms will respect the E/Z
+              convention for E:H1 and Z: H2. The exception is for Arginines,
+              for which this convention is reversed.
 
     Examples
     --------
@@ -211,6 +215,18 @@ def add_two_sp2_h(atom, bond_length):
     # Get the name of the hydrogen to add
     h_name_1 = 'H' + atom.name[1:] + '1'  # E
     h_name_2 = 'H' + atom.name[1:] + '2'  # Z
+
+    # We use H1 for E and H2 for Z. However, if the JBNMR convention
+    # is followed, some of the atoms have to be switched.
+    # The following atoms have reversed stereo-specific assignment
+    res_name = atom.residue.name
+    atom_name = atom.name
+    reversed = False
+
+    if jbnmr_convention:
+        if ((res_name == 'ARG' and (atom_name == 'NH1' or atom_name == 'NH2'))
+            ):
+            reversed = True
 
     if len(bonded_heavy_atoms) == 1:
         bonded = bonded_heavy_atoms[0]
@@ -244,9 +260,9 @@ def add_two_sp2_h(atom, bond_length):
         # The new protons are along the x- and y-axes, tilted by 60-degrees
         cos_60 = 0.5
         sin_60 = sqrt(3.) / 2.
-        # The convention for E/Z assignment of Arg is the reverse in comparison
-        # to Asn and Gln. Good grief. See: Markley et al., JBNMR 12, 1-23 (1998)
-        if not atom.residue.name == 'ARG':
+
+        # Get the vectors for each hydrogen
+        if not reversed:
             h1_vec = x * cos_60 + y * sin_60
             h2_vec = x * cos_60 - y * sin_60
         else:
@@ -328,3 +344,111 @@ def add_one_sp3_h(atom, bond_length):
         msg = 'add_one_sp3_h() requires 3 heavy atoms.'
         logging.warning(msg)
 
+
+def add_two_sp3_h(atom, bond_length, jbnmr_convention=True):
+    """Add two hydrogens to an sp3 hybridized atom.
+
+    This function is useful for adding methylenes, like backbone HA2/HA3 for
+    glycines. The atoms are added stereospecifically with HA2 as pro-R and
+    HA3 as pro-S.
+
+    Parameters
+    ----------
+    atom: :obj:`atom`
+        The :obj:`atom` object to add two hydrogens to.
+    bond_length: float
+        The length of the bond (in Angstrom) between the new proton and
+        atom.
+    jbnmr_convention: bool, optional
+        Use the JBNMR 12,1 (1998) naming convention.
+
+    Returns
+    -------
+    bool:
+        True if atom was successfully added, False if it wasn't.
+
+    Examples
+    --------
+    >>> from mollib.core import Molecule, measure_angle
+    >>> mol = Molecule('2KXA')
+    >>> mol.strip_atoms(element='H')
+    >>> G4 = mol['A'][4]
+    >>> n, ca, c = G4['N'], G4['CA'], G4['C']
+    >>> add_two_sp3_h(ca, 1.0)
+    True
+    >>> ha2, ha3 = G4['HA2'], G4['HA3']
+    >>> angle1 = measure_angle(ha2, ca, ha3)
+    >>> angle2 = measure_angle(n, ca, ha3)
+    >>> print('{:.1f} {:.1f} degs'.format(angle1, angle2))
+    109.5 109.1 degs
+    """
+    bonded_heavy_atoms = atom.bonded_heavy_atoms(sorted=True)
+    molecule = atom.molecule
+
+    # Get the name of the hydrogen to add
+    h_name_2 = 'H' + atom.name[1:] + '2'
+    h_name_3 = 'H' + atom.name[1:] + '3'
+
+    # We use H2 for pro-R and H3 for pro-S. However, if the JBNMR convention
+    # is followed, some of the atoms have to be switched.
+    # The following atoms have reversed stereo-specific assignment
+    res_name = atom.residue.name
+    atom_name = atom.name
+    reversed = False
+
+    if jbnmr_convention:
+        if ((res_name == 'MET' and (atom_name == 'CB' or atom_name == 'CG')) or
+            (res_name == 'GLN' and atom_name == 'CG') or
+            (res_name == 'GLU' and atom_name == 'CG') or
+            (res_name == 'LYS' and atom_name == 'CE') or  # should be CD as well
+            (res_name == 'PRO' and atom_name == 'CD') or  # should be CG as well
+            (res_name == 'SER' and atom_name == 'CB') or
+            (res_name == 'ASP' and atom_name == 'CB') or
+            (res_name == 'ASN' and atom_name == 'CB') or
+            (res_name == 'ARG' and atom_name == 'CD')  # should be CG as well
+        ):
+            reversed = True
+
+    if len(bonded_heavy_atoms) == 2:
+        # Calculate the bisecting vector between bonded[0]--atom--bonded[1]
+        v1 = calc_vector(atom, bonded_heavy_atoms[0])
+        v2 = calc_vector(atom, bonded_heavy_atoms[1])
+        bisect = v1 + v2
+        bisect /= vector_length(bisect)
+
+        # Calculate the vector orthogonal to the bonded[0]--atom--bonded[1]
+        # plane
+        orthog = np.cross(v1, bisect)
+        orthog /= vector_length(orthog)
+
+        # Find the unit vector for hydrogens 2 and 3.
+        s = 0.8166415551616789 # sin(54.75deg) -- 54.75 deg = 109.5/2 deg
+        c = 0.5771451900372336 # cos(54.75deg)
+
+        if reversed:
+            h_v2 = bisect * c + orthog * s
+            h_v2 /= vector_length(h_v2)
+
+            h_v3 = bisect * c - orthog * s
+            h_v3 /= vector_length(h_v3)
+        else:
+            h_v2 = bisect * c - orthog * s
+            h_v2 /= vector_length(h_v2)
+
+            h_v3 = bisect * c + orthog * s
+            h_v3 /= vector_length(h_v3)
+
+        # The new protons point along h_v1 and h_v2 with a length of bond_length
+        # from target_atom
+        h2 = h_v2 * bond_length + atom.pos  # pro-R
+        h3 = h_v3 * bond_length + atom.pos  # pro-S
+
+        # Create the new hydrogen atoms
+        molecule.add_atom(name=h_name_2, pos=h2, element='H',
+                          residue=atom.residue)
+        molecule.add_atom(name=h_name_3, pos=h3, element='H',
+                          residue=atom.residue)
+        return True
+
+    else:
+        return False
