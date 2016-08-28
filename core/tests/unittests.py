@@ -189,8 +189,8 @@ class TestMolLib(unittest.TestCase):
         for i in '123':
             mol.add_atom(name='HH'+i, pos=(0, 0, 0), charge=0, element='H',
                          residue=Y22, bonded_atoms=[Y22['CH']], )
-        self.assertEqual(Y22['CH'].bonded_atoms(),
-                         {Y22['OH'], Y22['HH1'], Y22['HH2'], Y22['HH3']})
+        self.assertEqual(Y22['CH'].bonded_atoms(sorted=True),
+                         [Y22['OH'], Y22['HH3'], Y22['HH2'], Y22['HH1']])
 
         # Replace methyl with an H on the tyrosine
         for name in ('OH', 'HH1', 'HH2', 'HH3'):
