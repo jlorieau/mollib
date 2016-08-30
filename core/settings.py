@@ -19,7 +19,7 @@ default_pH = 7.0
 """The default pH of new molecules."""
 
 pKs = {'ASP': {'OD1-OD2': (-1.0, 3.5)},
-       'GLU': {'OE1-OD2': (-1.0, 4.2)},
+       'GLU': {'OE1-OE2': (-1.0, 4.2)},
        'HIS': {'ND1-NE2': (6.6, 14.0)},
        'CYS': {'SG': (6.8,)},
        'TYR': {'OH': (10.3,)},
