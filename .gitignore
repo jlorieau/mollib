@@ -3,5 +3,6 @@
 nosetests.json
 docs/_build/*
 .idea
+.noseids
 output/*
 data/*
