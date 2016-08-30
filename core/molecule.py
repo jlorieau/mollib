@@ -936,3 +936,15 @@ class Molecule(dict):
             m_total += mass
             pos += atom.pos*mass
         return pos / m_total
+
+    @property
+    def pH(self):
+        "Return the pH of the sample this molecule is in."
+        if 'pH' in self._parameters:
+            return self._parameters['pH']
+        return settings.default_pH
+
+    @pH.setter
+    def pH(self, value):
+        "Set the value of the pH for the sample of this molecule."
+        self._parameters['pH'] = value
