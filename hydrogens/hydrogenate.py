@@ -17,7 +17,7 @@ from itertools import chain
 
 import numpy as np
 
-from mollib.core import calc_vector, vector_length
+from mollib.core import calc_vector, vector_length, within_distance
 from . import settings
 
 
@@ -35,12 +35,14 @@ def add_hydrogens(molecule, strip=True):
     if strip:
         molecule.strip_atoms(element='H')
 
+    pH = molecule.pH
+
     for residue in molecule.residues:
         # Get a list of the ionizeable groups to figure out how many protons
         # they need separately
         ion_groups = residue.ionizeable_groups
-        ion_atoms = chain(*[i.possible_atoms for i in ion_groups])
-        print(list(ion_atoms))
+        ion_atoms = list(chain(*[i.possible_atoms for i in ion_groups]))
+
         for atom in residue.atoms:
             if atom.element == 'H' or atom.element == 'D':
                 continue
@@ -54,14 +56,18 @@ def add_hydrogens(molecule, strip=True):
                 msg = "Could not add hydrogen to '{}' ".format(atom.fullname)
                 logging.warning(msg)
 
+        # Now process ionizeable groups, based on the molecule's pH
+        add_hydrogen_iongroups(pH=pH, ion_groups=ion_groups)
 
-def add_hydrogen_to_atom(atom):
+def add_hydrogen_to_atom(atom, number_hydrogens=None):
     """Add hydrogens to atom, making a decision on its hybridization.
 
     Parameters
     ----------
     atom: :obj:`atom`
         The atom object to add one or more hydrogens to.
+    number_hydrogens: int (optional)
+        If specified, the given number of hydrogens will be added.
 
     Returns
     -------
@@ -70,14 +76,14 @@ def add_hydrogen_to_atom(atom):
         False, if the addition was not successful
     """
     topology = atom.topology
-    number_hydrogens = len([i for i in topology
-                            if i.startswith('H')])
+    number_hydrogens = number_hydrogens or len([i for i in topology
+                                               if i.startswith('H')])
     number_heavy_atoms = len([i for i in topology
                               if not i.startswith('H')])
 
     if atom.element == 'O' and number_hydrogens == 1:
         # TODO this does not work for sp3 oxygens
-        add_one_sp2_h(atom, settings.bond_length['O-H'])
+        add_one_sp3_h(atom, settings.bond_length['O-H'])
     elif atom.element == 'N':
         if number_hydrogens == 1:
             return add_one_sp2_h(atom, settings.bond_length['N-H'])
@@ -370,14 +376,13 @@ def add_one_sp3_h(atom, bond_length):
     h_name = 'H' + atom.name[1:]
 
     if len(bonded_heavy_atoms) == 3:
+        # This is the typical situation for a CA-HA, for example.
+
         # Calculate the plane and the plane normal formed by
         # atom_1, atom_2 and atom_3
-        v1 = calc_vector(bonded_heavy_atoms[0], atom)
-        v1 /= vector_length(v1)
-        v2 = calc_vector(bonded_heavy_atoms[1], atom)
-        v2 /= vector_length(v2)
-        v3 = calc_vector(bonded_heavy_atoms[2], atom)
-        v3 /= vector_length(v3)
+        v1 = calc_vector(bonded_heavy_atoms[0], atom, normalize=True)
+        v2 = calc_vector(bonded_heavy_atoms[1], atom, normalize=True)
+        v3 = calc_vector(bonded_heavy_atoms[2], atom, normalize=True)
         h_v = v1+v2+v3
         h_v /= vector_length(h_v)
 
@@ -388,8 +393,42 @@ def add_one_sp3_h(atom, bond_length):
         molecule.add_atom(name=h_name, pos=h, element='H',
                           residue=atom.residue)
         return True
+    elif len(bonded_heavy_atoms) == 1:
+        # This might occur for an O-H hydroxyl group. To get the correct
+        # geometry, the bonded-to-bonded atoms are needed
+        bonded = bonded_heavy_atoms[0]
+
+        # Find the atoms bonded to the bonded heavy atom that aren't 'atom'
+        bonded_to_bonded = bonded.bonded_heavy_atoms(sorted=True)
+        bonded_to_bonded = [a for a in bonded_to_bonded if a != atom]
+
+        if len(bonded_to_bonded) < 1:
+            return False
+        bonded_to_bonded = bonded_to_bonded[0]
+
+        # By default, make the new H trans to the bonded--bonded_to_bonded,
+        # but in the same plane.
+        v1 = calc_vector(bonded, atom, normalize=True)
+        v2 = calc_vector(bonded, bonded_to_bonded, normalize=True)
+
+        z = np.cross(v1, v2)
+        z /= vector_length(z)
+
+        y = np.cross(v1, z)
+        y /= vector_length(y)
+
+        h = (cos(19.5*pi/180.)*y -
+             sin(19.5*pi/180.)*v1)  # 19.5 = 109.5 - 90deg
+        h *= bond_length
+        h += atom.pos
+
+        # Create the new hydrogen atom
+        molecule.add_atom(name=h_name, pos=h, element='H',
+                          residue=atom.residue)
+        return True
     else:
-        msg = 'add_one_sp3_h() requires 3 heavy atoms.'
+        msg = 'add_one_sp3_h() requires 2 or 3 heavy atoms for atom {}.'
+        msg = msg.format(atom)
         logging.warning(msg)
 
 
@@ -624,3 +663,86 @@ def add_three_sp3_h(atom, bond_length, alpha=None):
 
     else:
         return False
+
+
+def add_hydrogen_iongroups(pH, ion_groups):
+    """Add hydrogen and make choices on which hydrogen to add for the given
+    ionization groups based on pH and pKs.
+
+    Parameters
+    ----------
+    pH: float
+        The pH of the sample the molecule is in.
+    ion_groups: list
+        The list of ion_group named tuples to add hydrogens to.
+        The named tuple has 'possible_atoms', which is a list of possible
+        atoms to add hydrogens to, and 'pKs', which is a tuple of pKs
+
+
+    .. note:: This function protonates atoms that are closer to hydrogen bond
+              acceptors ('O' and 'N' atoms) before protonating other sites.
+    """
+    # A dict with atoms (keys) and the number of hydrogens to add
+    atom_no_hydrogens = {}
+
+    for ion_group in ion_groups:
+        possible_atoms = ion_group.possible_atoms
+        pKs = ion_group.pKs
+
+        # Figure out how many hydrogens need to be added. This corresponds to
+        # the number of hydrogens that are below the pK.
+        number_of_hydrogens = len([pK for pK in pKs if pK > pH])
+
+        # Now determine which of the possible_atoms need to be protonated.
+        # This decision is made based on which group is closest to an H-bond
+        # acceptor, like an 'O' and an 'N'. The closest_NO is a dict with lists
+        # of atoms within 5.0 Angstroms from other residues. The atoms in the
+        # list are sorted in reverse order by distance. (i.e. the last item is
+        # the closest)
+        closest_NO = {}
+        for atom in possible_atoms:
+            sorted_by_distance = sorted(within_distance(atom=atom,
+                                                        distance_cutoff=5.0,
+                                                        intraresidue=False),
+                                        key = lambda t: t[1],
+                                        reverse=True)  # sort by dist. (reverse)
+            closest_NO[atom] = sorted_by_distance
+
+        # Go through and protonate the atoms
+        atom_no_hydrogens = {atom:0 for atom in closest_NO.keys()}
+        for count in range(number_of_hydrogens):
+            # Find the possible atom with the closest hbond acceptor
+            atom_with_closest = None
+            closest_distance = None
+
+            for atom, dist_list in sorted(closest_NO.items()):
+                # Set the new closest_distance if None has been set yet
+                # or if a new closest distance has been found
+                if (closest_distance is None or
+                    (len(dist_list) > 1 and
+                     dist_list[-1] < closest_distance)):
+                    atom_with_closest = atom
+
+            # atom_with_closest should be set at this point, either with the
+            # first atom in the closest_NO dict (sorted) or with the actual
+            # atom_with_closest hbond acceptor
+            no_hydrogens = (atom_no_hydrogens.setdefault(atom_with_closest, 0)
+                            + 1)
+            atom_no_hydrogens[atom_with_closest] = no_hydrogens
+
+        # Redistribute multiple hydrogens if there are many atoms. This
+        # keeps sidechains like His from getting two hydrogens on one
+        # heavy atom.
+        # FIXME: This rebalancing block isn't very robust and may not work
+        # for other types of molecules
+        if (sum(atom_no_hydrogens.values()) > 1 and
+            sum(atom_no_hydrogens.values()) == len(atom_no_hydrogens)):
+            atom_no_hydrogens = {atom:1 for atom in atom_no_hydrogens}
+
+        for atom, no_hydrogens in atom_no_hydrogens.items():
+            if no_hydrogens == 0:
+                continue
+            msg = "Added {} hydrogens to the ionizeable {}."
+            logging.info(msg.format(no_hydrogens, atom))
+            add_hydrogen_to_atom(atom=atom, number_hydrogens=no_hydrogens)
+

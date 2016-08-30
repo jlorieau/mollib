@@ -223,3 +223,175 @@ class TestHydrogenate(unittest.TestCase):
 
             add_hydrogens(mol, strip=True)
             self._test_residues(mol, mol_ref, res, self.tolerance)
+
+    def test_ionizeable_groups(self):
+        """Tests the correct protonation of ionizeable groups.
+        """
+
+        def test_geometry(atom, expected_no_H, expected_angle=None,
+                          tolerance=6):
+            "Tests an atom for the expect number of hydrogens and geometry."
+            # Count the number of hydrogens
+            hydrogens = [b for b in atom.bonded_atoms() if b.element == 'H']
+
+            msg = "Atom '{}' has {} hydrogens. {} expected."
+            msg = msg.format(atom, len(hydrogens), expected_no_H)
+            self.assertEqual(len(hydrogens), expected_no_H, msg)
+
+            # Check the angles and geometry
+            if expected_no_H > 0:
+                bonded_heavy_atom = atom.bonded_heavy_atoms()[0]
+                angle = measure_angle(bonded_heavy_atom, atom, hydrogens[0])
+
+                msg = "The '{}'-'{}'-'{}' angle is {}. Expected {}."
+                msg = msg.format(bonded_heavy_atom, atom, hydrogens[0],
+                                 angle, expected_angle)
+                self.assertTrue(within(angle, expected_angle, tolerance),
+                                msg)
+
+        def test_either_geometry(atom_1, atom_2, expected_no_H,
+                                 expected_angle=None, tolerance=6):
+            """Tests whether atom_1 and/or atom_2 has the expected number of
+            hydrogens. However, atom_1 and atom_2 can only have one hydrogen
+            at a time. Also checks geometry
+            """
+            hydrogens_1 = [b for b in atom_1.bonded_atoms()
+                           if b.element == 'H']
+            hydrogens_2 = [b for b in atom_2.bonded_atoms()
+                           if b.element == 'H']
+
+            msg = "Atom '{}' has {} hydrogens. <= 1 expected."
+            self.assertLessEqual(len(hydrogens_1), 1,
+                                 msg=msg.format(atom_1, len(hydrogens_1)))
+            self.assertLessEqual(len(hydrogens_2), 1,
+                                 msg=msg.format(atom_2, len(hydrogens_2)))
+
+            msg = "Atoms '{}' and '{}' have {} hydrogens together. {} expected."
+            total_hydrogens = len(hydrogens_1)+len(hydrogens_2)
+            self.assertEqual(total_hydrogens,
+                             expected_no_H,
+                             msg=msg.format(atom_1, atom_2, total_hydrogens,
+                                            expected_no_H))
+
+            if expected_no_H > 0:
+                msg = "The '{}'-'{}'-'{}' angle is {}. Expected {}."
+
+                if len(hydrogens_1) > 0:
+                    bonded_heavy_atom = atom_1.bonded_heavy_atoms()[0]
+
+                    angle = measure_angle(bonded_heavy_atom, atom_1,
+                                          hydrogens_1[0])
+                    self.assertTrue(within(angle, expected_angle, tolerance),
+                                    msg=msg.format(bonded_heavy_atom, atom_1,
+                                                   hydrogens_1[0], angle,
+                                                   expected_angle))
+                if len(hydrogens_2) > 0:
+                    bonded_heavy_atom = atom_2.bonded_heavy_atoms()[0]
+
+                    angle = measure_angle(bonded_heavy_atom, atom_2,
+                                          hydrogens_2[0])
+                    self.assertTrue(within(angle, expected_angle, tolerance),
+                                    msg=msg.format(bonded_heavy_atom, atom_2,
+                                                   hydrogens_2[0], angle,
+                                                   expected_angle))
+
+        # Ionizeable groups in proteins: DEHCYK, first residue, last
+        mol = Molecule('2MJB')  # has DEHYK
+
+        # test first at high pH
+        mol.pH = 12
+        add_hydrogens(mol, strip=True)
+
+        for residue in mol.residues:
+            if residue.first:
+                test_geometry(atom=residue['N'], expected_no_H=2,
+                              expected_angle=120.)
+            if residue.name == 'ASP':
+                test_either_geometry(atom_1=residue['OD1'],
+                                     atom_2=residue['OD2'],
+                                     expected_no_H=0)
+            if residue.name == 'GLU':
+                test_either_geometry(atom_1=residue['OE1'],
+                                     atom_2=residue['OE2'],
+                                     expected_no_H=0)
+            if residue.name == 'HIS':
+                test_either_geometry(atom_1=residue['ND1'],
+                                     atom_2=residue['NE2'],
+                                     expected_no_H=1,
+                                     expected_angle=120.)
+            if residue.name == 'TYR':
+                test_geometry(atom=residue['OH'], expected_no_H=0)
+            if residue.name == 'LYS':
+                test_geometry(atom=residue['NZ'], expected_no_H=2,
+                              expected_angle=120.)
+            if residue.last:
+                test_either_geometry(atom_1=residue['O'],
+                                     atom_2=residue['OXT'],
+                                     expected_no_H=0)
+
+        # test first at intermediate pH
+        mol.pH = 6
+        add_hydrogens(mol, strip=True)
+
+        for residue in mol.residues:
+            if residue.first:
+                test_geometry(atom=residue['N'], expected_no_H=3,
+                              expected_angle=109.5)
+            if residue.name == 'ASP':
+                test_either_geometry(atom_1=residue['OD1'],
+                                     atom_2=residue['OD2'],
+                                     expected_no_H=0)
+            if residue.name == 'GLU':
+                test_either_geometry(atom_1=residue['OE1'],
+                                     atom_2=residue['OE2'],
+                                     expected_no_H=0)
+            if residue.name == 'HIS':
+                test_either_geometry(atom_1=residue['ND1'],
+                                     atom_2=residue['NE2'],
+                                     expected_no_H=2,
+                                     expected_angle=120.)
+            if residue.name == 'TYR':
+                test_geometry(atom=residue['OH'], expected_no_H=1,
+                              expected_angle=109.5)
+            if residue.name == 'LYS':
+                test_geometry(atom=residue['NZ'], expected_no_H=3,
+                              expected_angle=109.5)
+            if residue.last:
+                test_either_geometry(atom_1=residue['O'],
+                                     atom_2=residue['OXT'],
+                                     expected_no_H=0)
+
+        # test first at intermediate pH
+        mol.pH = 1
+        add_hydrogens(mol, strip=True)
+
+        for residue in mol.residues:
+            if residue.first:
+                test_geometry(atom=residue['N'], expected_no_H=3,
+                              expected_angle=109.5)
+            if residue.name == 'ASP':
+                test_either_geometry(atom_1=residue['OD1'],
+                                     atom_2=residue['OD2'],
+                                     expected_no_H=1,
+                                     expected_angle=109.5)
+            if residue.name == 'GLU':
+                test_either_geometry(atom_1=residue['OE1'],
+                                     atom_2=residue['OE2'],
+                                     expected_no_H=1,
+                                     expected_angle=109.5)
+            if residue.name == 'HIS':
+                test_either_geometry(atom_1=residue['ND1'],
+                                     atom_2=residue['NE2'],
+                                     expected_no_H=2,
+                                     expected_angle=120.)
+            if residue.name == 'TYR':
+                test_geometry(atom=residue['OH'], expected_no_H=1,
+                              expected_angle=109.5)
+            if residue.name == 'LYS':
+                test_geometry(atom=residue['NZ'], expected_no_H=3,
+                              expected_angle=109.5)
+            if residue.last:
+                test_either_geometry(atom_1=residue['O'],
+                                     atom_2=residue['OXT'],
+                                     expected_no_H=1,
+                                     expected_angle=109.5)
