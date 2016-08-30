@@ -5,7 +5,7 @@ Tools to measure geometries in molecules.
 # Copyright 2016
 
 import numpy as np
-from math import acos, pi, atan2
+from math import acos, pi, atan2, sqrt
 from .utils import calc_vector, vector_length
 
 
@@ -117,6 +117,56 @@ def measure_dihedral(atom_1, atom_2, atom_3, atom_4):
     y = np.dot(m1, n2)
     angle = atan2(y, x) * 180. / np.pi
     return angle
+
+
+def within_distance(atom, distance_cutoff, element=''):
+    """Find all atoms of element within the specified distance (in Angstroms)
+    of atom.
+
+    Parameters
+    ----------
+    atom: :obj:`atom`
+        The atom to find atoms around it.
+    element: str
+        The element names of the atoms to return. This string supports the
+        or character '|'.
+        If '', all atoms within the distance will be returned
+        ex: 'H|C|N' for all H, C and N atoms
+    distance_cutoff: float
+        The distance boundary between atom and atoms of element to return.
+
+    Returns
+    -------
+    list
+        A list of tuples with (atom objects, distance).
+
+    Examples
+    --------
+    >>> from mollib import Molecule
+    >>> mol = Molecule('2MJB')
+    >>> D32 = mol['A'][32]
+    >>> distance_list = within_distance(D32['OD1'], 2.5)
+    >>> print(["{} {:.1f}A".format(a,d) for a,d in distance_list])
+    ['D32-CB 2.4A', 'D32-CG 1.2A', 'D32-OD2 2.2A']
+    >>> distance_list = within_distance(D32['OD1'], 2.5, element='N|O')
+    >>> print(["{} {:.1f}A".format(a,d) for a,d in distance_list])
+    ['D32-OD2 2.2A']
+    """
+    atom_list = []
+    element_list = element.split('|') if element != '' else []
+    d2 = distance_cutoff * distance_cutoff
+    molecule = atom.molecule
+
+    for a in molecule.atoms:
+        if a == atom or (element_list and a.element not in element_list):
+            continue
+
+        vec = atom.pos - a.pos
+        vec_d2 = np.dot(vec,vec)
+        if np.dot(vec,vec) < d2:
+            atom_list.append((a, sqrt(vec_d2)))
+
+    return atom_list
 
 
 # TODO: def measure_rmsd(molecule1, molecule2, atoms=None)
