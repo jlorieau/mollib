@@ -156,6 +156,7 @@ def within_distance(atom, distance_cutoff, element='', intraresidue=False):
     ['A28-O 3.4A', 'Q31-O 4.9A', 'Q31-OE1 4.3A']
     >>>
     """
+    # TODO: This would be a useful function to optimize
     atom_list = []
     element_list = element.split('|') if element != '' else []
     d2 = distance_cutoff * distance_cutoff
@@ -170,7 +171,7 @@ def within_distance(atom, distance_cutoff, element='', intraresidue=False):
         vec = atom.pos - a.pos
         vec_d2 = np.dot(vec,vec)
         if np.dot(vec,vec) < d2:
-            atom_list.append((a, sqrt(vec_d2)))
+           atom_list.append((a, sqrt(vec_d2)))
 
     return atom_list
 
