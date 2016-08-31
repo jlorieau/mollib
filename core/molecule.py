@@ -601,6 +601,7 @@ class Molecule(dict):
         filename : str
             The path and filename to write the file to.
         """
+        # FIXME: Add TER lines
         self.renumber_atoms()
         with open(filename, 'w') as f:
             # Populate 'ATOM' lines.
@@ -642,7 +643,7 @@ class Molecule(dict):
                               'atom_name': atom.name,
                               'alt_loc': '',
                               'res_name': atom.residue.name,
-                              'chain': atom.chain,
+                              'chain': atom.chain.id[:1],  # remove * from ids
                               'res_number': atom.residue.number,
                               'icode': '',
                               'x': atom.pos[0],
@@ -656,12 +657,16 @@ class Molecule(dict):
 
                 f.write(atom_line.format(**atom_parms))
 
-                # Prepare the CONECT lines
+                # Prepare the CONECT lines. CONECT lines aren't created for
+                # Hydrogen atoms
+                if atom.element == 'H' or atom.element == 'D':
+                    continue
+
                 if '*' in atom.chain.id:
                     # HETATM molecule chains are identified by a '*' in the
                     # chain ID. For these, all bonded atoms have to be
                     # saved in the CONECT lines.
-                    bonded_atoms = atom.bonded_heavy_atoms()
+                    bonded_atoms = atom.bonded_atoms()
                 else:
                     # Other ATOMS whose topologies are known do not have a
                     # '*' in the chain ids. We just need to create CONECT
@@ -678,6 +683,8 @@ class Molecule(dict):
 
             # First the conect set has to be reformatted to group entries
             # for the same atom number.
+            # FIXME: CONECT records shouldn't be made for Hydrogens, but heavy
+            # atoms should have hydrogens in their CONECT records.
             conect_dict = dict()
             for atom_number_1, atom_number_2 in sorted(conect):
                 atom_1_set = conect_dict.setdefault(atom_number_1, set())
