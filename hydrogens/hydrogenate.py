@@ -33,6 +33,8 @@ def add_hydrogens(molecule, strip=True):
         adding new hydrogens
     """
     # TODO: Make parralel with dict residue, namedtuple atom
+    # NOTE: I tried multiprocessing this function. It reaches the recursion
+    # limit on large molecules, and the ionization doesn't work.
     if strip:
         molecule.strip_atoms(element='H')
 
