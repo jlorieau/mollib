@@ -135,6 +135,18 @@ class Molecule(dict):
     residue_class = Residue
     atom_class = Atom
 
+
+
+    def __new__(cls, *args, **kwargs):
+        "Keep track of class instances"
+        instance = dict.__new__(cls, *args, **kwargs)
+        if "_instances" not in cls.__dict__:
+            cls._instances = []
+        ref = weakref.ref(instance)
+        if ref not in cls._instances and ref is not None:
+            cls._instances.append(ref)
+        return instance
+
     def __init__(self, identifier, *args, **kwargs):
         """Molecule constructor that accepts an identifier.
 
@@ -156,6 +168,32 @@ class Molecule(dict):
         return (u"Molecule:"
                 "    {} chains, {} residues, {} atoms."
                 .format(self.chain_size, self.residue_size, self.atom_size))
+
+    # Class properties
+
+    @classmethod
+    def get_weakref(cls, name, instance_number=0):
+        """Return a weakreference to an *existing* :obj:`molecule` instance
+        with the given name.
+
+        Parameters
+        ----------
+        name: str
+            The name of the molecule. ex: '2KXA'
+
+        Returns
+        -------
+        weakref.ref
+            A weakreference to the molecule instance.
+        None
+            If the molecule was not found.
+        """
+        if (hasattr(cls, '_instances')):
+            refs = [i for i in cls._instances
+                    if i() is not None and i().name == name]
+            if len(refs) > 0:
+                return refs[0]
+        return None
 
     # Basic Accessors and Mutators
 
@@ -567,7 +605,13 @@ class Molecule(dict):
         """Reset the atom numbers.
 
         This function is useful for resetting the atom numbers when atoms
-        are removed or added. Since the self.connections list depends on
+        are removed or added.
+
+        Parameters
+        ----------
+        skip_for_TER: bool (optional)
+
+        Since the self.connections list depends on
         atom numbers, it is reset.
         """
         self.connections = []

@@ -4,15 +4,45 @@
 # Copyright 2016
 
 import unittest
+import weakref
+
+from mollib.core import Molecule
 
 aminoacids = {'ALA', 'GLY', 'SER', 'THR', 'MET', 'CYS', 'ILE', 'LEU',
               'VAL', 'PHE', 'TYR', 'TRP', 'ASN', 'GLN', 'ASP', 'GLU',
               'HIS', 'PRO', 'ARG', 'LYS'}
 
 
-from mollib.core import Molecule
-
 class TestMolLib(unittest.TestCase):
+
+    def test_get_weakrefs(self):
+        "Tests the get_weakrefs Molecule class method."
+        # First the Molecule._instances list has to be cleared
+        Molecule._instances = []
+
+        molecules = {}
+        for name in ('2KXA', '2MUV'):
+            # No molecule instance exists yet
+            self.assertIsNone(Molecule.get_weakref(name))
+
+            # Create the molecule instance. A dict is used so that the molecule
+            # objects aren't garbage collected between iterations of this loop.
+            molecules[name] = Molecule(name)
+
+            # Now a molecule instance should exist, and this function should
+            # return a weakref to it.
+            ref = Molecule.get_weakref(name)
+            self.assertIsNotNone(ref)
+            self.assertIsInstance(ref, weakref.ref)
+
+            # Make sure that the weakref is indeed for that molecule.
+            self.assertEqual(ref(), molecules[name])
+
+        # Now try making a duplicate
+        mol = Molecule('2KXA')
+        ref = Molecule.get_weakref('2KXA')
+        self.assertEqual(ref(), molecules['2KXA'])
+        self.assertEqual(ref(), mol)
 
     def test_large_molecule(self):
         "Tests the parsing and performance of a very large protein complex."
