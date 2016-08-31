@@ -196,5 +196,14 @@ class TestMolLib(unittest.TestCase):
         for name in ('OH', 'HH1', 'HH2', 'HH3'):
             mol.del_atom(Y22[name])
 
+    def test_connectivities(self):
+        "Tests that the CONECT records are correctly read in for proteins."
+        mol = Molecule('2MUV')
 
+        # the molecule should have 39 entries
+        self.assertEqual(len(mol.connections), 39 )
 
+        hetmol = mol['C*'][100]
+        for atom in hetmol.atoms:
+            print(atom, atom.bonded_heavy_atoms(interresidue=True))
+        #raise NotImplementedError

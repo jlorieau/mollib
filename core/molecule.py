@@ -651,9 +651,9 @@ class Molecule(dict):
                 f.write(atom_line.format(**atom_parms))
 
                 # Prepare the CONECT lines
-                bonded_interresidue_atoms = atom.bonded_interresidue_atoms()
+                interresidue_atoms = atom.bonded_heavy_atoms(interresidue=True)
                 bonded_numbers = sorted([b.number
-                                         for b in bonded_interresidue_atoms])
+                                         for b in interresidue_atoms])
                 if bonded_numbers:
                     for bonded_number in bonded_numbers:
                         # Skip duplicate connectivities

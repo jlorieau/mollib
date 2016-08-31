@@ -448,14 +448,16 @@ class Atom(Primitive):
         else:
             return list(bonded)
 
-    def bonded_heavy_atoms(self, sorted=False):
+    def bonded_heavy_atoms(self, sorted=False, interresidue=False):
         """The heavy atoms bonded to this atom, based on the topology method.
 
         Parameters
         ----------
-        sorted: bool
+        sorted: bool (optional)
             If True, atoms will be sorted according to their stereochemical
             priority
+        interresidue: bool (optional)
+            If True, only atoms from other residues will be returned.
 
         Returns
         -------
@@ -470,125 +472,14 @@ class Atom(Primitive):
         >>> C22 = mol['A'][22]
         >>> C22['CA'].bonded_heavy_atoms(sorted=True)
         [C22-N, C22-CB, C22-C]
-        """
-        bonded = {a for a in self.bonded_atoms()
-                        if not a.element == 'H' or a.element == 'D'}
-        if sorted:
-            return sorted_atom_list(bonded)
-        else:
-            return list(bonded)
-
-    def bonded_interresidue_atoms(self, sorted=False):
-        """The heavy atoms bonded on this atom that are from other residues.
-
-        Parameters
-        ----------
-        sorted: bool
-            If True, atoms will be sorted according to their stereochemical
-            priority
-
-        Returns
-        -------
-        bonded : set
-            A set of the *actual* :obj:`atom` objects for atoms bonded to this
-            atom from other residues.
-
-        Examples
-        --------
-        >>> from mollib import Molecule
-        >>> mol = Molecule('2PTN')
-        >>> C22 = mol['A'][22]
-        >>> C22['SG'].bonded_interresidue_atoms(sorted=True)
+        >>> C22['SG'].bonded_heavy_atoms(sorted=True, interresidue=True)
         [C157-SG]
         """
-        bonded = set()
-
-        # Atoms from other residues are only specified if this atom has
-        # marked them in its topology. If the topology isn't set (ie:
-        # _topology isn't set), then there are no atoms from other residues
-        # bonded to this atom
-        if not hasattr(self, '_topology'):
-            return list(bonded)
-        topology = self._topology
-
-        # Atoms from other residues are identified by their fullname, which
-        # include '.' characters
-        for atom_name in topology:
-            if '-' not in atom_name:
-                continue
-
-            match = re_atom.match(atom_name)
-            if not match:
-                continue
-
-            molecule = match.groupdict()['molecule']
-            if not self.molecule.name == molecule:
-                continue
-            molecule = self.molecule
-
-            chain_id = match.groupdict()['chain_id']
-            residue_number = int(match.groupdict()['residue_number'])
-            name = match.groupdict()['atom_name']
-
-            try:
-                bonded_atom = molecule[chain_id][residue_number][name]
-            except KeyError:
-                continue
-
-            bonded.add(bonded_atom)
-
+        bonded = {a for a in self.bonded_atoms()
+                  if not a.element == 'H' or a.element == 'D'}
+        if interresidue:
+            bonded = {b for b in bonded if b.residue != self.residue}
         if sorted:
             return sorted_atom_list(bonded)
         else:
             return list(bonded)
-
-    # @property
-    # def geometry_atoms(self):
-    #     """The other non-bonded atoms that impact the geometry of bonding at
-    #     this atom.
-    #
-    #     For example, to determine the protonation of a C-O in a carboxylate,
-    #     the position of the other 'O' will be needed.
-    #
-    #     Returns
-    #     -------
-    #     geometry_list : list
-    #         A list of the other, *non-bonded* :obj:`atom` objects that
-    #         influence this :obj:`atom`'s geometry.
-    #
-    #     Examples
-    #     --------
-    #     >>> from mollib import Molecule
-    #     >>> mol = Molecule('2KXA')
-    #     >>> D19 = mol['A'][19]
-    #     >>> D19['OD1'].bonded_atoms
-    #     ['D19-OD2']
-    #     """
-    #     raise NotImplementedError
-    #
-    # @property
-    # def configuration(self):
-    #     """
-    #
-    #     Returns
-    #     -------
-    #
-    #     Examples
-    #     --------
-    #     >>> from mollib import Molecule
-    #     >>> mol = Molecule('2KXA')
-    #     >>> G1 = mol['A'][1]
-    #     >>> mol.pH = 2.0
-    #     >>> G1['N'].configuration
-    #     'tetrahedral'
-    #     >>> mol.pH = 12.0
-    #     >>> G1['N'].configuration
-    #     'tetragonal'
-    #
-    #
-    #     .. note:: this only works for atoms without an ionization_alternative.
-    #               It requires the pK attribute set and the molecule.pH
-    #               attribute set.
-    #     """
-    #     raise NotImplementedError
-
