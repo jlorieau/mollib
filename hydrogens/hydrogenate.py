@@ -32,6 +32,7 @@ def add_hydrogens(molecule, strip=True):
         If True, all hydrogen atoms will be stripped from the molecule before
         adding new hydrogens
     """
+    # TODO: Make parralel with dict residue, namedtuple atom
     if strip:
         molecule.strip_atoms(element='H')
 
