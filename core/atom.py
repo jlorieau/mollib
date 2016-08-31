@@ -127,7 +127,7 @@ class Atom(Primitive):
     # function. eg. ZN becomes Zn.
     atom_Mw = {'H': 1.01, 'D': 2.00, 'C': 12.01, '13C': 13.00, 'N': 14.01,
                '15N': 15.00, 'O': 16.00, 'Na': 22.99, 'Mg': 24.31, 'P': 30.97,
-               'S': 32.07, 'Cl': 35.45, 'Zn': 65.38, }
+               'S': 32.07, 'Cl': 35.45, 'Zn': 65.38, 'Br': 79.904}
 
     def __repr__(self):
         return "{}-{}".format(self.residue, self.name) if self.residue else \
