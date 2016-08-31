@@ -529,7 +529,8 @@ class Molecule(dict):
             if not len(connection) == 11:
                 continue
 
-            # 1: target_atom, 2: bonded_atom1, 3: bonded_atom2, 4: bonded_atom3
+            # 0: target_atom, 1: bonded_atom1, 2: bonded_atom2, 3: bonded_atom3
+            # 4: bonded_atom4
             atom_numbers.append(connection[0:5])
 
         # Convert the atom numbers to actual atoms. First collect all the
@@ -545,17 +546,22 @@ class Molecule(dict):
             if tgt_atom is None:  # atom not found
                 continue
 
-            for b_no in (b1_no, b2_no, b3_no):
+            for b_no in (b1_no, b2_no, b3_no, b4_no):
                 # Get the bonded atom's name a figure out if it's in the
                 # same residue
                 bonded_atom = atom_dict.get(b_no, None)
                 if bonded_atom is None:  # atom not found
                     continue
 
-                # add the atoms to each other topology, and remove a proton
-                # from each.
+                # add the atoms to each other topology.
+                # Some groups are oxidized when forming a bond, like Cys
+                # bridges, so a protons has to be removed from each atom in the
+                # bond. This is accomplished by 'replace_in_topology;
                 if tgt_atom != bonded_atom:
-                    tgt_atom.replace_in_topology(bonded_atom, 'H')
+                    if (tgt_atom.residue.name, tgt_atom.name)  == ('CYS','SG'):
+                        tgt_atom.replace_in_topology(bonded_atom, 'H')
+                    else:
+                        tgt_atom.add_to_topology(bonded_atom)
 
     def renumber_atoms(self):
         """Reset the atom numbers.
@@ -651,9 +657,18 @@ class Molecule(dict):
                 f.write(atom_line.format(**atom_parms))
 
                 # Prepare the CONECT lines
-                interresidue_atoms = atom.bonded_heavy_atoms(interresidue=True)
-                bonded_numbers = sorted([b.number
-                                         for b in interresidue_atoms])
+                if '*' in atom.chain.id:
+                    # HETATM molecule chains are identified by a '*' in the
+                    # chain ID. For these, all bonded atoms have to be
+                    # saved in the CONECT lines.
+                    bonded_atoms = atom.bonded_heavy_atoms()
+                else:
+                    # Other ATOMS whose topologies are known do not have a
+                    # '*' in the chain ids. We just need to create CONECT
+                    # lines for connectivities between residues
+                    bonded_atoms = atom.bonded_heavy_atoms(longrange=True)
+                bonded_numbers = sorted([b.number for b in bonded_atoms])
+
                 if bonded_numbers:
                     for bonded_number in bonded_numbers:
                         # Skip duplicate connectivities

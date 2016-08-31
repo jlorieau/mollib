@@ -59,8 +59,11 @@ def sorted_atom_list(atom_seq):
         return [a for a, m in sorted(masses.items(), reverse=True,
                                      key=lambda t: t[1])]
 
-    # Otherwise look at the bonded atoms for the masses
-    mass_of_bonded = {a: sum([b.mass for b in a.bonded_atoms()])
+    # Otherwise look at the bonded atoms for the masses. Get the sum of these
+    # masses. The sum of masses have to be rounded to avoid non-deterministic
+    # floating point sums that change the order, like: 25.04 vs 25.040000001
+    # one time and 25.0400000001 vs 25.04 the next.
+    mass_of_bonded = {a: round(sum([b.mass for b in a.bonded_atoms()]), 2)
                       for a in duplicate_masses.keys()}
 
     # This loop extends the mass list in masses so that the bonded mass
@@ -448,7 +451,7 @@ class Atom(Primitive):
         else:
             return list(bonded)
 
-    def bonded_heavy_atoms(self, sorted=False, interresidue=False):
+    def bonded_heavy_atoms(self, sorted=False, longrange=False):
         """The heavy atoms bonded to this atom, based on the topology method.
 
         Parameters
@@ -456,8 +459,9 @@ class Atom(Primitive):
         sorted: bool (optional)
             If True, atoms will be sorted according to their stereochemical
             priority
-        interresidue: bool (optional)
-            If True, only atoms from other residues will be returned.
+        longrange: bool (optional)
+            If True, only atoms from other residues will be returned (not
+            including residues +/- 1)
 
         Returns
         -------
@@ -472,13 +476,15 @@ class Atom(Primitive):
         >>> C22 = mol['A'][22]
         >>> C22['CA'].bonded_heavy_atoms(sorted=True)
         [C22-N, C22-CB, C22-C]
-        >>> C22['SG'].bonded_heavy_atoms(sorted=True, interresidue=True)
+        >>> C22['SG'].bonded_heavy_atoms(longrange=True)
         [C157-SG]
         """
         bonded = {a for a in self.bonded_atoms()
                   if not a.element == 'H' or a.element == 'D'}
-        if interresidue:
-            bonded = {b for b in bonded if b.residue != self.residue}
+        if longrange:
+            bonded = {b for b in bonded
+                      if b.chain.id != self.chain.id or
+                      abs(b.residue.number - self.residue.number) > 1}
         if sorted:
             return sorted_atom_list(bonded)
         else:

@@ -196,14 +196,48 @@ class TestMolLib(unittest.TestCase):
         for name in ('OH', 'HH1', 'HH2', 'HH3'):
             mol.del_atom(Y22[name])
 
-    def test_connectivities(self):
-        "Tests that the CONECT records are correctly read in for proteins."
+    def test_hetatm_connectivities(self):
+        "Tests that the CONECT records are correctly read in HETATMS."
+        # Influenza M2 structure with adamantane-like molecule bound.
         mol = Molecule('2MUV')
 
         # the molecule should have 39 entries
         self.assertEqual(len(mol.connections), 39 )
 
-        hetmol = mol['C*'][100]
-        for atom in hetmol.atoms:
-            print(atom, atom.bonded_heavy_atoms(interresidue=True))
-        #raise NotImplementedError
+        het = mol['C*'][100]
+        self.assertEqual(het['BR'].bonded_atoms(sorted=True),
+                         [het['C1'],])
+        self.assertEqual(het['S'].bonded_atoms(sorted=True),
+                         [het['C1'], het['C12']])
+        self.assertEqual(het['C1'].bonded_atoms(sorted=True),
+                         [het['BR'], het['S'], het['C2']])
+        self.assertEqual(het['C2'].bonded_atoms(sorted=True),
+                         [het['C1'], het['C3'], het['H2']])
+        self.assertEqual(het['C3'].bonded_atoms(sorted=True),
+                         [het['C12'], het['C2'], het['H3']])
+        self.assertEqual(het['C12'].bonded_atoms(sorted=True),
+                         [het['S'], het['C5'], het['C3']])
+        self.assertEqual(het['C5'].bonded_atoms(sorted=True),
+                         [het['N2'], het['C12'], het['H5A'], het['H5']])
+        self.assertEqual(het['N2'].bonded_atoms(sorted=True),
+                         [het['C10'], het['C5'], het['HN2A'], het['HN2']])
+        self.assertEqual(het['C10'].bonded_atoms(sorted=True),
+                         [het['N2'], het['C63'], het['C62'], het['C61']])
+        self.assertEqual(het['C61'].bonded_atoms(sorted=True),
+                         [het['C10'], het['C71'], het['H61A'], het['H61']])
+        self.assertEqual(het['C62'].bonded_atoms(sorted=True),
+                         [het['C10'], het['C72'], het['H62A'], het['H62']])
+        self.assertEqual(het['C63'].bonded_atoms(sorted=True),
+                         [het['C10'], het['C73'], het['H63A'], het['H63']])
+        self.assertEqual(het['C71'].bonded_atoms(sorted=True),
+                         [het['C83'], het['C81'], het['C61'], het['H71']])
+        self.assertEqual(het['C72'].bonded_atoms(sorted=True),
+                         [het['C82'], het['C81'], het['C62'], het['H72']])
+        self.assertEqual(het['C73'].bonded_atoms(sorted=True),
+                         [het['C83'], het['C82'], het['C63'], het['H73']])
+        self.assertEqual(het['C81'].bonded_atoms(sorted=True),
+                         [het['C72'], het['C71'], het['H81A'], het['H81']])
+        self.assertEqual(het['C82'].bonded_atoms(sorted=True),
+                         [het['C73'], het['C72'], het['H82A'], het['H82']])
+        self.assertEqual(het['C83'].bonded_atoms(sorted=True),
+                         [het['C73'], het['C71'], het['H83A'], het['H83']])
