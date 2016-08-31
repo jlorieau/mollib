@@ -388,14 +388,17 @@ class Atom(Primitive):
 
         self.add_to_topology(atom)
 
-    def bonded_atoms(self, sorted=False):
+    def bonded_atoms(self, sorted=False, longrange=False):
         """The atoms bonded to this atom, based on the topology method.
 
         Parameters
         ----------
-        sorted: bool
+        sorted: bool (optional)
             If True, atoms will be sorted according to their stereochemical
             priority
+        longrange: bool (optional)
+            If True, only atoms from other residues will be returned (not
+            including residues +/- 1)
 
         Returns
         -------
@@ -412,38 +415,53 @@ class Atom(Primitive):
         [C22-O, G23-N, C22-CA]
         >>> C22['SG'].bonded_atoms(sorted=True)  # disulfide bridge
         [C157-SG, C22-CB]
+        >>> C22['SG'].bonded_atoms(sorted=True, longrange=True)
+        [C157-SG]
         """
         bonded = set()
         for name in self.topology:
-            # Retrieve an atom from the previous or next residue, if specified
-            if name in self.residue:
+            # Retrieve an atom from the previous or next residue, if specified.
+            # But only do this if longrange is False
+            if name in self.residue and not longrange:
                 bonded |= {self.residue[name]}
-            elif name.endswith('-1'):
+                continue
+            elif name.endswith('-1') and not longrange:
                 bonded |= {self.residue.prev_residue[name[:-2]]}
-            elif name.endswith('+1'):
+                continue
+            elif name.endswith('+1') and not longrange:
                 bonded |= {self.residue.next_residue[name[:-2]]}
+                continue
+
             # Retrieve an atom if it's using its fullname.
             # ex: 2PTN.A.C220-SG
-            elif '-' in name:
-                match = re_atom.match(name)
-                if match:
+            match = re_atom.match(name)
+            if match:
+                residue_number = int(match.groupdict()['residue_number'])
+                atom_name = match.groupdict()['atom_name']
+                chain_id = match.groupdict()['chain_id']
+                molecule_name = match.groupdict()['molecule']
 
-                    residue_number = int(match.groupdict()['residue_number'])
-                    atom_name = match.groupdict()['atom_name']
-                    chain_id = match.groupdict()['chain_id']
-                    molecule_name = match.groupdict()['molecule']
+                # FIXME: Current implementation only works for atoms in the
+                # same  molecule.
+                if molecule_name != self.molecule.name:
+                    continue
 
-                    # FIXME: Current implementation only works for atoms in the
-                    # same chain and molecule.
-                    if (molecule_name != self.molecule.name or
-                        chain_id != self.chain.id):
-                        continue
+                chain = self.molecule.get(chain_id, None)
 
-                    residue = self.chain.get(residue_number, None)
-                    atom = (residue.get(atom_name, None)
-                            if residue is not None else None)
-                    if atom is not None:
-                        bonded |= {atom}
+                residue = (chain.get(residue_number, None)
+                           if chain is not None else None)
+
+                atom = (residue.get(atom_name, None)
+                        if residue is not None else None)
+
+                # Skip non-longrange atoms, if specified
+                if longrange and (self.chain != chain or
+                                  abs(self.residue.number -
+                                      residue_number) <= 1):
+                    continue
+
+                if atom is not None:
+                    bonded |= {atom}
             else:
                 continue
         if sorted:
@@ -479,13 +497,6 @@ class Atom(Primitive):
         >>> C22['SG'].bonded_heavy_atoms(longrange=True)
         [C157-SG]
         """
-        bonded = {a for a in self.bonded_atoms()
-                  if not a.element == 'H' or a.element == 'D'}
-        if longrange:
-            bonded = {b for b in bonded
-                      if b.chain.id != self.chain.id or
-                      abs(b.residue.number - self.residue.number) > 1}
-        if sorted:
-            return sorted_atom_list(bonded)
-        else:
-            return list(bonded)
+        bonded = [a for a in self.bonded_atoms(sorted, longrange)
+                  if not a.element == 'H' or a.element == 'D']
+        return list(bonded)
