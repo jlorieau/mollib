@@ -9,4 +9,9 @@ setup(name='mollib',
       packages=['mollib'],
       platforms='any',
       test_suite='nose.collector',
+      entry_points={
+          'console_scripts': [
+              'mollib = mollib.__main__:main'
+          ]
+      },
 )
