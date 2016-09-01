@@ -276,8 +276,10 @@ class TestMolLib(unittest.TestCase):
         "Tests Pickle serialization."
         import pickle
 
-        mol = Molecule('2KXA')
-        s = pickle.dumps(mol)
-        s = pickle.dumps(mol['A'])
-        s = pickle.dumps(mol['A'][3])
-        s = pickle.dumps(mol['A'][3]['N'])
+        for name in ('2KXA', '2A5M', '5CJP'):
+            mol = Molecule(name)
+            s = pickle.dumps(mol)
+            s = pickle.dumps(mol['A'])
+            s = pickle.dumps(mol['A'][23])
+            s = pickle.dumps(mol['A'][23]['N'])
+
