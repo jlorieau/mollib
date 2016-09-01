@@ -10,6 +10,7 @@ setup(name='mollib',
       packages=find_packages(),
       platforms='any',
       test_suite='nose.collector',
+      scripts=['bin/mol'],
       entry_points={
           'console_scripts': [
               'mollib = mollib.__main__:main'
