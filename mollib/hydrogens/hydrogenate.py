@@ -14,11 +14,77 @@ name: atom.full_name and '_' and angle(s)
 import logging
 from math import sqrt, cos, sin, pi
 from itertools import chain
+# import multiprocessing as mp
 
 import numpy as np
 
 from mollib.core import calc_vector, vector_length, within_distance
 from . import settings
+
+
+def add_hydrogens_to_residue(residue):
+    "Add hydrogens to the given residue."
+    pH = residue.molecule.pH
+
+    # Get a list of the ionizeable groups to figure out how many protons
+    # they need separately
+    ion_groups = residue.ionizeable_groups
+    ion_atoms = list(chain(*[i.possible_atoms for i in ion_groups]))
+
+    for atom in residue.atoms:
+        if atom.element == 'H' or atom.element == 'D':
+            continue
+
+        # Process ionizeable groups separately
+        if atom in ion_atoms:
+            continue
+
+        return_value = add_hydrogen_to_atom(atom)
+        if return_value is False:
+            msg = "Could not add hydrogen to '{}' ".format(atom.fullname)
+            logging.warning(msg)
+
+    # Now process ionizeable groups, based on the molecule's pH
+    add_hydrogen_iongroups(pH=pH, ion_groups=ion_groups)
+
+
+def add_hydrogens_to_queue(q, result):
+    """Add hydrogens to a queue of residues.
+
+    This function is used for the concurrent implementation of
+    add_hydrogens_to_residue. (see above)
+    """
+    while True:
+        residue = q.get()
+
+        if residue is None:
+            q.task_done()
+            break
+
+        pH = residue.molecule.pH
+
+        # Get a list of the ionizeable groups to figure out how many protons
+        # they need separately
+        ion_groups = residue.ionizeable_groups
+        ion_atoms = list(chain(*[i.possible_atoms for i in ion_groups]))
+
+        for atom in residue.atoms:
+            if atom.element == 'H' or atom.element == 'D':
+                continue
+
+            # Process ionizeable groups separately
+            if atom in ion_atoms:
+                continue
+
+            return_value = add_hydrogen_to_atom(atom)
+            if return_value is False:
+                msg = "Could not add hydrogen to '{}' ".format(atom.fullname)
+                logging.warning(msg)
+
+        # Now process ionizeable groups, based on the molecule's pH
+        add_hydrogen_iongroups(pH=pH, ion_groups=ion_groups)
+        q.task_done()
+        result.put(residue)
 
 
 def add_hydrogens(molecule, strip=True):
@@ -40,27 +106,41 @@ def add_hydrogens(molecule, strip=True):
 
     pH = molecule.pH
 
+    # Implementation #1 - single process
     for residue in molecule.residues:
-        # Get a list of the ionizeable groups to figure out how many protons
-        # they need separately
-        ion_groups = residue.ionizeable_groups
-        ion_atoms = list(chain(*[i.possible_atoms for i in ion_groups]))
+        add_hydrogens_to_residue(residue)
 
-        for atom in residue.atoms:
-            if atom.element == 'H' or atom.element == 'D':
-                continue
-
-            # Process ionizeable groups separately
-            if atom in ion_atoms:
-                continue
-
-            return_value = add_hydrogen_to_atom(atom)
-            if return_value is False:
-                msg = "Could not add hydrogen to '{}' ".format(atom.fullname)
-                logging.warning(msg)
-
-        # Now process ionizeable groups, based on the molecule's pH
-        add_hydrogen_iongroups(pH=pH, ion_groups=ion_groups)
+    # Implementation #2 - multiprocess (twice as slow)
+    # queue = mp.JoinableQueue()
+    # result = mp.Queue()
+    # num_workers = mp.cpu_count()
+    #
+    # workers = [mp.Process(target=add_hydrogens_to_queue, args=(queue, result))
+    #            for i in range(num_workers)]
+    # for w in workers:
+    #     w.start()
+    #
+    # count = 0
+    # for residue in molecule.residues:
+    #     queue.put(residue)
+    #     count +=1
+    #
+    # for i in range(num_workers):
+    #     queue.put(None)
+    #
+    # queue.join()
+    #
+    # while count > 0:
+    #     residue = result.get()
+    #     molecule_residue = molecule[residue.chain.id][residue.number]
+    #     for atom in residue.atoms:
+    #         if atom.name not in molecule_residue:
+    #             name = atom.name
+    #             pos = atom.pos
+    #             element = atom.element
+    #             molecule.add_atom(name=name, pos=pos, element=element,
+    #                               residue=molecule_residue)
+    #     count -= 1
 
 def add_hydrogen_to_atom(atom, number_hydrogens=None):
     """Add hydrogens to atom, making a decision on its hybridization.
