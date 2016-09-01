@@ -111,6 +111,10 @@ def add_hydrogens(molecule, strip=True):
         add_hydrogens_to_residue(residue)
 
     # Implementation #2 - multiprocess (twice as slow)
+    #     The concurrency with map seems to work very well, but it chokes
+    #     on residues within ionizeable groups, likely because the molecule
+    #     has to be traversed for these.
+    #
     # queue = mp.JoinableQueue()
     # result = mp.Queue()
     # num_workers = mp.cpu_count()
