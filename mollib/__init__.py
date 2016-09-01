@@ -1,3 +1,6 @@
 from .core import Atom, Residue, Chain, Molecule
+from .__main__ import main
 
-__version__ = '1.3a1'
+__author__ = 'Justin L Lorieau'
+__versioninfo__ = (1, 3, 'a1')
+__version__ = '.'.join(map(str, __versioninfo__))
