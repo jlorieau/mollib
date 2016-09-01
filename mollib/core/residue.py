@@ -6,6 +6,11 @@ from . import settings
 IonGroup = namedtuple('IonGroup', ['possible_atoms', 'pKs'])
 
 
+class ResidueProcessingError(Exception):
+    "An error in processing the residue."
+    pass
+
+
 class Residue(dict):
     """A residue in a chain.
 
@@ -40,10 +45,9 @@ class Residue(dict):
                   :obj:`residue` object.
     """
 
-    # These are linked-list pointers to the next and previous residues. These
-    # attributes are populated during molecule creation
-    prev_residue = None
-    next_residue = None
+    # These are set by the molecule
+    molecule = None
+    chain = None
 
     first = False
     last = False
@@ -85,6 +89,49 @@ class Residue(dict):
         147.19
         """
         return sum(a.mass for a in self.atoms)
+
+    @property
+    def next_residue(self):
+        "Return the next residue in the molecule, or None if not available."
+        if hasattr(self, '_next_residue_number'):
+            return self.chain[self._next_residue_number]
+        else:
+            return None
+
+    @next_residue.setter
+    def next_residue(self, residue):
+        "Set the next residue in the molecule."
+        if residue is None:
+            return None
+        if residue.molecule != self.molecule:
+            msg = 'Next residue {} has to be from the same molecule {}.'
+            raise ResidueProcessingError(msg.format(residue, self.molecule))
+        if residue.chain != self.chain:
+            msg = 'Next residue {} has to be from the same chain {}.'
+            raise ResidueProcessingError(msg.format(residue, self.chain))
+        self._next_residue_number = residue.number
+
+    @property
+    def prev_residue(self):
+        "Return the previous residue in the molecule, or None if not available."
+        if (hasattr(self, '_prev_residue_number') and
+                    self._prev_residue_number in self.chain):
+            return self.chain[self._prev_residue_number]
+        else:
+            return None
+
+    @prev_residue.setter
+    def prev_residue(self, residue):
+        "Set the previous residue in the molecule."
+        if residue is None:
+            return None
+        if residue.molecule != self.molecule:
+            msg = 'Next residue {} has to be from the same molecule {}.'
+            raise ResidueProcessingError(msg.format(residue, self.molecule))
+        if residue.chain != self.chain:
+            msg = 'Next residue {} has to be from the same chain {}.'
+            raise ResidueProcessingError(msg.format(residue, self.chain))
+        self._prev_residue_number = residue.number
 
     @property
     def ramachandran_angles(self):
