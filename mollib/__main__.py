@@ -9,14 +9,20 @@ import mollib
 def main():
     parser = argparse.ArgumentParser(prog='mollib',
                                      description='A molecular processor')
-    parser.add_argument('--version', action='version',
+    parser._optionals.title = 'options'
+
+    parser.add_argument('-v', '--version', action='version',
                         version='%(prog)s {}'.format(mollib.__version__))
     parser.add_argument('-i', '--in', action='append', nargs='+',
                         type=str, required=True, metavar='identifier',
-                        help='The filename or PDB identifier of the structure')
+                        help=('(required) The filename(s) or PDB identifier(s)'
+                              ' of the structure(s)'))
     parser.add_argument('-o', '--out', nargs=1,
                         type=str, required=False, metavar='output_file',
                         help='The output filename of the structure')
+    parser.add_argument('-c', '--config', nargs=1,
+                        type=str, required=False, metavar='config_file',
+                        help='The configuration file to use')
     parser.add_argument('--hydrogenate', action='store_true',
                         help='Strip the hydrogens and re-add hydrogens')
     parser.add_argument('--hbonds', required=False,
