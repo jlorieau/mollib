@@ -136,7 +136,6 @@ class Molecule(dict):
     atom_class = Atom
 
 
-
     def __new__(cls, *args, **kwargs):
         "Keep track of class instances"
         instance = dict.__new__(cls, *args, **kwargs)
@@ -510,8 +509,8 @@ class Molecule(dict):
                     residue.prev_residue = None
                 else:
                     # Set the double-linked list
-                    prev_residue.next_residue = weakref.proxy(residue)
-                    residue.prev_residue = weakref.proxy(prev_residue)
+                    prev_residue.next_residue = residue
+                    residue.prev_residue = prev_residue
 
             # Prepare for the next iteration
             prev_residue = residue
