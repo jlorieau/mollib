@@ -31,14 +31,23 @@ def main():
     # Prepare and preprocess the structure
     molecules = [mollib.Molecule(identifier) for identifier in args.i[0]]
     print(args)
-
     # Find the relevant plugins to execute
     active_plugins = [plugin for plugin in plugins if plugin.selected(args)]
 
+    # Pre-process the molecules
     for molecule in molecules:
         for plugin in active_plugins:
-            plugin.process(molecule)
+            plugin.preprocess(molecule, args)
 
+    # Process the molecules
+    for molecule in molecules:
+        for plugin in active_plugins:
+            plugin.process(molecule, args)
+
+    # Post-process the molecules
+    for molecule in molecules:
+        for plugin in active_plugins:
+            plugin.postprocess(molecule, args)
 
 if __name__ == "__main__":
     main()
