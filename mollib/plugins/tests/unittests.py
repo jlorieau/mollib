@@ -33,5 +33,5 @@ class TestMolLib(unittest.TestCase):
         # Test the process_molecule method. The base class should raise
         # a NotImplementedError
         with self.assertRaises(NotImplementedError):
-            plugin.process_molecule(molecule=None)
+            plugin.process(molecule=None)
 
