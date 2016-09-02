@@ -16,7 +16,7 @@ is parsed in terms chains, residues and atoms.
 >>> from mollib import Molecule
 >>> mol=Molecule('2OED')
 >>> print(mol)
-Molecule:    1 chains, 56 residues, 862 atoms.
+Molecule (2OED):    1 chains, 56 residues, 862 atoms.
 
 
   .. note:: The :class:`Molecule` class will only read the first model for a
@@ -155,7 +155,12 @@ class Molecule(dict):
             An molecule identifier that is either a filename (PDB format),
             or PDB code (ex: '2KXA').
         """
-        self.name = identifier
+        # The following strips path and extensition information from the
+        # identifier to make an easily readable name.
+        name = os.path.split(identifier)[-1]
+        name = os.path.splitext(name)[0]
+
+        self.name = name
         self.connections = []
         self._parameters = {}
 
@@ -164,7 +169,7 @@ class Molecule(dict):
         super(Molecule, self).__init__(*args, **kwargs)
 
     def __repr__(self):
-        return (u"Molecule:"
+        return ("Molecule ({}):".format(self.name) +
                 "    {} chains, {} residues, {} atoms."
                 .format(self.chain_size, self.residue_size, self.atom_size))
 
