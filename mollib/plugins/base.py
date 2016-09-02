@@ -2,7 +2,6 @@
 The base Plugin class.
 """
 
-
 # Common arguments for all parsers
 # in_args = ('-i',)
 # in_kwargs = {'action': 'append',
@@ -28,7 +27,7 @@ The base Plugin class.
 #
 
 class Plugin(object):
-    """Base class for mollib plugins.
+    """Abstract base class for mollib plugins.
 
     Attributes
     ----------
@@ -41,15 +40,24 @@ class Plugin(object):
     order: int
         The order to place the plugin in the command line options. (Higher is
         lower priority)
-    parents: argparser.parser
+    parents: list
         If specified, the following parsers will be added to the subparsers as
         parents. (in the options method)
+
+
+    .. note:: Preprocessor and postprocessor plugins should always return True
+              for the selected method. These should also add to the parent
+              parser.
+
+    .. note:: Preprocessor and postprocessor plugins should have an order
+              between 50-100. Analysis methods should have an order between
+              200-1000.
     """
 
     name = None
     enabled = True
     command = None
-    order = 100
+    order = 200
     parents = []
     argument_title = 'arguments'
 
@@ -78,15 +86,14 @@ class Plugin(object):
 
         Parameters
         ----------
-        parser: :obj:`argparse`
+        parser: :obj:`argparse.ArgumentParser`
             A root argparse instance.
 
         Returns
         -------
-        :obj:`argparse`
+        :obj:`argparse.ArgumentParser`
             The parser used by this plugin.
         """
-        print(self.parents)
         p = subparsers.add_parser(self.command, help=self.help(),
                                   parents=self.parents)
         p._optionals.title = self.argument_title
@@ -107,7 +114,7 @@ class Plugin(object):
 
         Parameters
         ----------
-        args: :obj:`argumentparser`
+        args: :obj:`argparse.ArgumentParser`
             The ArgumentParser parsed arguments.
 
         Returns
@@ -122,7 +129,21 @@ class Plugin(object):
         else:
             return False
 
-    def process(self, molecule):
+    def preprocess(self, molecule, args):
+        """Preprocess the molecule.
+
+        Executed before process.
+
+        Parameters
+        ----------
+        molecule: :obj:`mollib.Molecule`
+            The molecule object to pre-process.
+        args: :obj:`argparse.ArgumentParser`
+            The ArgumentParser parsed arguments.
+        """
+        pass
+
+    def process(self, molecule, args):
         """Process the given molecule.
 
         Subclasses implement this method to conduct operations on the molecule.
@@ -130,10 +151,26 @@ class Plugin(object):
 
         Parameters
         ----------
-        molecule: :obj:`molecule`
+        molecule: :obj:`mollib.Molecule`
             The molecule object to process.
+        args: :obj:`argparse.ArgumentParser`
+            The ArgumentParser parsed arguments.
         """
         raise NotImplementedError
+
+    def postprocess(self, molecule, args):
+        """Postprocess the molecule.
+
+        Executed after process.
+
+        Parameters
+        ----------
+        molecule: :obj:`mollib.Molecule`
+            The molecule object to post-process.
+        args: :obj:`argparse.ArgumentParser`
+            The ArgumentParser parsed arguments.
+        """
+        pass
 
     @classmethod
     def plugin_instances(cls):
