@@ -161,6 +161,7 @@ class Molecule(dict):
         name = os.path.splitext(name)[0]
 
         self.name = name
+        self.identifier = identifier
         self.connections = []
         self._parameters = {}
 
