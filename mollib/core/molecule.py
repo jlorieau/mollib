@@ -66,6 +66,9 @@ Center at 0.000, 0.000, 0.000 A
 
 # Author: Justin L Lorieau
 # Copyright: 2016
+# TODO: Separate pdb read and writer to separate file
+# TODO: Make PDB read parallel
+# TODO: Improve PDB writer
 # TODO: Add a Ensemble object that sits above Molecule.
 # TODO: Add atom annotations, like hbond_donor and hydridization (sp2, sp3)
 #       hbond_donor = True, hbond_acceptor = True, hybridization = 'sp2'
