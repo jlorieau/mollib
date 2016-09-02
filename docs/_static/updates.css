@@ -1,0 +1,28 @@
+div.body {
+  max-width: 1000px;
+}
+
+div.related {
+  max-width: 1290px;
+}
+
+.class dt {
+  background: #f7dab9;
+  padding: 2px 6px;
+}
+
+.attribute dt {
+  background: #fff3e7;
+}
+
+.method dt {
+  background: #fff3e7;
+}
+
+.function dt {
+  background: #fff3e7;
+}
+
+.classmethod dt {
+  background: #fff3e7;
+}

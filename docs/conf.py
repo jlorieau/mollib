@@ -350,3 +350,7 @@ texinfo_documents = [
 
 # Sort autodoc elements by source, not alphabetically (default)
 autodoc_member_order = 'bysource'
+
+# Custom css
+def setup(app):
+    app.add_stylesheet('updates.css')
