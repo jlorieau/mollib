@@ -4,5 +4,13 @@ Plugins
 .. toctree::
    :maxdepth: 2
 
-   plugins/hydrogens
+Base Plugin Classes
+-------------------
+
+.. automodule:: mollib.plugins
+    :members:
+    :imported-members:
+
+.. include:: plugins/hydrogens.rst
+
 
