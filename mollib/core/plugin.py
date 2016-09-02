@@ -2,7 +2,7 @@
 The plugin for the core submodule.
 """
 
-import argparse
+import logging
 
 from mollib.plugins import Plugin, check_number_arguments
 
@@ -19,7 +19,7 @@ class Process(Plugin):
         parent.order = self.order
 
         # Input filename or identifier
-        parent.add_argument('-i',
+        parent.add_argument('-i', '--in', dest='i',
                             action='append', nargs='+', required=True, type=str,
                             metavar='id/filename',
                             help=("(required) The filename(s) or PDB "
@@ -27,15 +27,15 @@ class Process(Plugin):
 
         # Output filename
         parent.add_argument('-o', '--out',
-                            nargs=1, required=False, type=str,
-                            metavar='filename',
-                            help="The output file's name for the structure")
+                            action='append', nargs='*', required=False,
+                            type=str, metavar='filename',
+                            help="The output filename(s) for the structure(s)")
 
         # Config filename
         parent.add_argument('-c', '--config',
                             nargs=1, required=False, type=str,
                             metavar='filename',
-                            help="The configuration file's name.")
+                            help="The configuration filename")
 
         # Add it to the list of parent parsers. This has to be added to the
         # parent Plugin ABC to be seen by Plugin subclasses Sorting is needed
@@ -54,19 +54,46 @@ class Process(Plugin):
     def help(self):
         return "Process the structure"
 
-    def process(self, molecule):
-        "Process and write the molecule file."
-        pass
+    def process(self, molecule, args):
+        """Do nothing.
+
+        Opening of the molecule (-i) and the configuration (-c) is
+        conducted elsewhere. Also, the file is written as the last operation.
+        """
+        print(molecule)
+
+    def postprocess(self, molecule, args):
+        """Writes the PDB file, if specified"""
+        # Do nothing if no output filename was given
+        if args.out is None:
+            return None
+
+        # Get the corresponding filename
+        output_filename = [o for i,o in zip(args.i[0], args.out[0])
+                           if i==molecule.identifier]
+
+        if len(output_filename) < 1:
+            msg = "No output filename was specificed for {}."
+            logging.error(msg.format(molecule.identifier))
+            return None
+
+        # Write the file.
+        output_filename = output_filename[0]
+        msg = "Writing ({}) to {}."
+        logging.debug(msg.format(molecule.name, output_filename))
+
+        molecule.write_pdb(output_filename)
 
     def selected(self, args):
         "This plugin is always active."
         return True
 
+
 class Measure(Plugin):
     """The core plugin to offer the 'measure' command."""
 
     enabled = True
-    order = 10
+    order = 100
 
     def options(self, subparsers):
         parser = super(Measure, self).options(subparsers)
@@ -88,6 +115,6 @@ class Measure(Plugin):
     def help(self):
         return "Measure geometries in molecules"
 
-    def process(self, molecule):
+    def process(self, molecule, args):
         "Measure geometries in molecules."
         pass
