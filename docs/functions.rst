@@ -1,5 +1,5 @@
-Functions
-=========
+Core Functions
+==============
 
 .. automodule:: mollib.core
 
