@@ -34,18 +34,18 @@ mollib plugins are installed.
 Process Command
 ---------------
 The ``process`` command is the main command for processing, reading and writing
-files. All of options and preprocessors are available in ``process`` and other
-commands.
+files. All of the options and preprocessors available in ``process`` are
+available to other commands.
 
     .. literalinclude:: cli/cli_process_help.txt
         :language: shell-session
 
-Basic Arguments
-~~~~~~~~~~~~~~~
+Arguments
+~~~~~~~~~
 
     ``-i`` / ``--in``
-        The listing of one or more structural identifiers (ex: PDB file identiers)
-        or filenames.
+        **(required)** The listing of one or more structural identifiers
+        (ex: PDB file identiers) or filenames.
 
         If the structure could not be found locally, a copy will be
         downloaded and cached for further analysis.
@@ -61,7 +61,7 @@ Basic Arguments
         done to the atoms, header comments or other aspects, depending on which
         preprocessors were used.
 
-        Note that multiple output filenames can be used, and these will be matched
+        Multiple output filenames can be used, and these will be matched
         to the corresponding entries in the input filenames or identifiers.
 
     ``-c`` / ``--config``
@@ -97,8 +97,8 @@ are also available.
     .. literalinclude:: cli/cli_measure_help.txt
         :language: shell-session
 
-Basic Arguments
-~~~~~~~~~~~~~~~
+Arguments
+~~~~~~~~~
 
     ``-d`` / ``--dist``
         Measure the distance (in Angstroms) between two atoms.

@@ -30,7 +30,8 @@ emphasis on biophysical analysis
 Features
 --------
 
-* Plugin interface to easily add functionality
+* A powerful command line interface and python module library
+* Plugin interface to easily add functionality.
 * Common manipulations of biomolecules for biophysics, like translation,
   Euler rotations
 * Easily extendable data types (Atom, Residue, Chain, Molecule) through object
