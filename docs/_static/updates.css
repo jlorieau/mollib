@@ -1,5 +1,17 @@
+div.related {
+  background: #1e69a8;
+}
+
 div.body {
   max-width: 1000px;
+}
+
+div.body h2 {
+  background: #e0ecf9;
+}
+
+div.body h3 {
+  background: #eaf1f7;
 }
 
 div.related {
