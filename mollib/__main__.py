@@ -4,6 +4,7 @@
 # Copyright 2016
 
 import argparse
+import logging
 
 import mollib
 from mollib.plugins import Plugin
@@ -18,6 +19,15 @@ def main():
                                      description='A molecular processor')
     subparsers = parser.add_subparsers(title='commands', dest='command',
                                        metavar='')
+    parser.add_argument('-d', '--debug',
+                        action="store_const", dest="loglevel",
+                        const=logging.DEBUG,
+                        default=logging.WARNING,
+                        help="Print debugging statements",)
+    parser.add_argument('-v', '--verbose',
+                        action="store_const", dest="loglevel",
+                        const=logging.INFO,
+                        help="Print extra information")
     parser.add_argument('--version', action='version',
                         version=('%(prog)s ' + mollib.__version__))
 
@@ -27,10 +37,14 @@ def main():
 
     # Parse the commands
     args = parser.parse_args()
+    logging.basicConfig(level=args.loglevel)
+    logging.debug(args)
+    logging.debug(plugins)
 
     # Prepare and preprocess the structure
     molecules = [mollib.Molecule(identifier) for identifier in args.i[0]]
-    print(args)
+
+
     # Find the relevant plugins to execute
     active_plugins = [plugin for plugin in plugins if plugin.selected(args)]
 
