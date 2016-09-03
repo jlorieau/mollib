@@ -1,3 +1,4 @@
+user@host$ mollib --help
 usage: mollib [-h] [-d] [-v] [--version]  ...
 
 A molecular processor

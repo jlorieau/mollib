@@ -357,5 +357,18 @@ def setup(app):
     app.add_stylesheet('updates.css')
 
 # Get the CLI output text
-os.system("cd ..&&python mollib/ --help > docs/cli/cli_help.txt&&cd docs")
+def process_cmd(string):
+    args = string.split()
+    progname = args[0]
+    args_name = '_'.join([i.strip('-') for i in args[1:]])
+
+    cmd = "echo 'user@host$ {cmd}' > cli/cli_{args_name}.txt\n"
+    cmd += "cd ..&&python {progname} {args} >> docs/cli/cli_{args_name}.txt"
+    cmd = cmd.format(cmd=string, progname=progname, args=' '.join(args[1:]),
+                     args_name=args_name)
+    os.system(cmd)
+
+process_cmd("mollib --help")
+process_cmd("mollib process --help")
+process_cmd("mollib measure --help")
 
