@@ -75,6 +75,7 @@ Center at 0.000, 0.000, 0.000 A
 
 import re
 import weakref
+import logging
 import tempfile
 import gzip
 from itertools import chain as ichain
@@ -845,20 +846,42 @@ class Molecule(dict):
         .. note:: This function uses the string conversion functions in
                   self._conversions.
         """
-        groupdict = {field_name: self._conversions[field_name](field_value)
-                     for field_name, field_value
-                     in match.groupdict().items()}
+        t = match.groups()
+        # Convert types
+        t = (t[0].strip(),  # 0: type
+             int(t[1]),     # 1: number
+             t[2].strip(),  # 2: name
+             t[3].strip(),  # 3: alt_loc
+             t[4].strip(),  # 4: residue_name
+             t[5].strip(),  # 5: chain
+             int(t[6]),     # 6: residue_number
+             t[7].strip(),  # 7: icode
+             float(t[8]),   # 8: x
+             float(t[9]),   # 9: y
+             float(t[10]),  # 10: z
+             float(t[11]),  # 11: occupancy
+             float(t[12]),  # 12: B-factor
+             t[13].strip(), # 13: element
+             (float(t[14]) if str(t[14]).strip() else '')  # 14: charge
+             )
+
+        # Implementation 2: twice as slow as implementation 1
+        # groupdict = {field_name: self._conversions[field_name](field_value)
+        #              for field_name, field_value
+        #              in match.groupdict().items()}
+        #
+        # Implementation 3: slower than implementaiton 2
         # Old implementation of string conversion using the slower convert(...)
         # groupdict = {field_name: convert(field_value)
         #              for field_name, field_value
         #              in match.groupdict().items()}
 
         # create Chain, if it doesn't already exist
-        identifier = groupdict['chain']
+        identifier = t[5]
 
         # If this is a HETATM, then append a '*' to the chain name so that
         # it doesn't overwrite protein chains.
-        if groupdict['type'] == 'HETATM':
+        if t[0] == 'HETATM':
             identifier += '*'
 
         # Create a new chain, if it doesn't already exist
@@ -870,36 +893,31 @@ class Molecule(dict):
         chain = self[identifier]
 
         # create Residue, if it doesn't already exist
-        number, name = (groupdict[i] for i in ('residue_number',
-                                               'residue_name'))
-        if number not in chain:
+        res_number, res_name, = t[6], t[4]
+
+        if res_number not in chain:
             try:
-                residue = self.residue_class(number=number, name=name)
+                residue = self.residue_class(number=res_number, name=res_name)
 
                 residue.chain = chain
                 residue.molecule = self
-                chain[number] = residue
+                chain[res_number] = residue
             except KeyError:
                 return None
-        residue = chain[number]
+        residue = chain[res_number]
 
         # create the Atom. The following code overwrites atoms duplicate
         # in atom name
-        name = groupdict['name']
+        number, name, alt_loc, element = t[1], t[2], t[3], t[13]
 
         # Reformat the x/y/z coordinates to a numpy array
-        groupdict['pos'] = np.array((groupdict.pop('x'),
-                                     groupdict.pop('y'),
-                                     groupdict.pop('z')))
+        pos = np.array(t[8:11])
 
         # Populate the new atom parameters and create the new Atom object.
-        atom_dict = {k: v for k, v in groupdict.items()
-                     if k in Atom.__slots__}
-        atom_dict['residue'] = residue
-        atom_dict['chain'] = chain
-        atom_dict['molecule'] = self
+        atom = self.atom_class(number=number, name=name, pos=pos,
+                               element=element, residue=residue, chain=chain,
+                               molecule=self)
 
-        atom = self.atom_class(**atom_dict)
         residue[name] = atom
 
     _re_conect = re.compile(r'^CONECT(?P<numbers>[\s\d]+)$')
@@ -957,7 +975,7 @@ class Molecule(dict):
             # Advance the iterator if 1) no regex has been specified
             # yet, 2) the current regex is returning no matches and
             # it has before
-            for regex, func in matchers.values():
+            for name, (regex, func) in matchers.items():
                 m = regex.match(line)
                 if m:
                     break
