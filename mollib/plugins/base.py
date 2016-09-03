@@ -40,9 +40,16 @@ class Plugin(object):
     order: int
         The order to place the plugin in the command line options. (Higher is
         lower priority)
-    parents: list
-        If specified, the following parsers will be added to the subparsers as
-        parents. (in the options method)
+    parents: dict
+        A dict of the parent processors. This is used if plugins want to add
+        options to other commands. The key is the command (str) and the value
+        is the parent parser. For example, the 'process' parent parser is
+        contains the arguments for the 'process' command.
+
+
+        .. note:: It is recommended that this dict be accessed with a
+                  setdefault method and a default value of:
+                    subparsers.add_parser('', add_help=False)
 
 
     .. note:: Preprocessor and postprocessor plugins should always return True
@@ -50,7 +57,8 @@ class Plugin(object):
               parser.
 
     .. note:: Preprocessor and postprocessor plugins should have an order
-              between 50-100. Analysis methods should have an order between
+              lower than 0 and should access the 'process' parent parser.
+              Analysis methods should have an order between
               200-1000.
     """
 
@@ -58,7 +66,7 @@ class Plugin(object):
     enabled = True
     command = None
     order = 200
-    parents = []
+    parents = {}
     argument_title = 'arguments'
 
     def __new__(cls, *args, **kwargs):
@@ -95,7 +103,7 @@ class Plugin(object):
             The parser used by this plugin.
         """
         p = subparsers.add_parser(self.command, help=self.help(),
-                                  parents=self.parents)
+                                  parents=self.parents.values())
         p._optionals.title = self.argument_title
 
         return p
@@ -156,7 +164,7 @@ class Plugin(object):
         args: :obj:`argparse.ArgumentParser`
             The ArgumentParser parsed arguments.
         """
-        raise NotImplementedError
+        pass
 
     def postprocess(self, molecule, args):
         """Postprocess the molecule.

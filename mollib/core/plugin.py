@@ -14,9 +14,10 @@ class Process(Plugin):
     order = 0
 
     def options(self, subparsers):
+
         # Create the parent processor parser to be used by other plugins.
-        parent = subparsers.add_parser('', add_help=False)
-        parent.order = self.order
+        parent = Plugin.parents.setdefault('process',
+                                    subparsers.add_parser('', add_help=False))
 
         # Input filename or identifier
         parent.add_argument('-i', '--in', dest='i',
@@ -37,15 +38,10 @@ class Process(Plugin):
                             metavar='filename',
                             help="The configuration filename")
 
-        # Add it to the list of parent parsers. This has to be added to the
-        # parent Plugin ABC to be seen by Plugin subclasses Sorting is needed
-        # so that the order of options in the command line help message do not
-        # change order.
-        Plugin.parents = sorted(Plugin.parents + [parent,],
-                                key=lambda p: p.order)
 
         # Create the process parser
-        parser = subparsers.add_parser(self.command, parents=self.parents,
+        parser = subparsers.add_parser(self.command,
+                                       parents=[parent,],
                                        help="Process a molecular structure")
         parser._optionals.title = self.argument_title
 
