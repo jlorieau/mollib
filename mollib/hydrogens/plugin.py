@@ -19,7 +19,9 @@ class Hydrogenate(Plugin):
         parent = Plugin.parents.setdefault('process',
                                     subparsers.add_parser('', add_help=False))
 
-        # Hydrogenate parameter
+        # Hydrogenate parameter. Note that since the argument share the same
+        # name as the class, this plugin will be active if the flag is passed.
+        # (i.e. the selected method will return True)
         parent.add_argument('--hydrogenate',
                              action='store_true', required=False,
                              help=("Strip hydrogens and re-add them before "
