@@ -274,6 +274,82 @@ class Molecule(dict):
         """The number of atoms in this molecule."""
         return len(list(self.atoms))
 
+    def get_atoms(self, *args):
+        """Return atoms matches the given locator names.
+
+        Parameters
+        ----------
+        args:
+            A series of strings for the atom locators. The atom
+            locators use the following conventions:
+
+            1.  (residue number)-(atom name). ex: 31-CA
+            2.  (chain id)-(residue number)-(atom name). ex: A-31-CA
+
+            If no chain id is specified, the chain 'A' is used.
+
+        Returns
+        -------
+        list
+            A list of :obj:`mollib.Atom` objects.
+
+        Examples
+        --------
+        >>> from mollib import Molecule
+        >>> mol = Molecule('2KXA')
+        >>> mol.get_atoms('A-18-CA', '6-CB')
+        [I18-CA, I6-CB]
+        >>> mol.get_atoms('A-35-CA')  # doesn't exist
+        []
+        """
+        atoms = []
+
+        # Prepare an error message in case the locator isn't formatted
+        # properly
+        msg = ("The atom '{}' cannot be found.\n"
+               "Locators should follow one of the following formats:\n"
+               "\t1. (residue number)-(atom name). ex: 31-CA.\n"
+               "\t2. (chain id)-(residue number)-(atom name). ex: A-31-CA.")
+
+        # Find the atoms given by the names
+        for locator in args:
+            # Find the relevant atoms using the locator
+            locator = locator.split('-')
+
+            if len(locator) == 3:
+                try:
+                    chain_id = locator[0]
+                    residue_number = int(locator[1])
+                    atom_name = locator[2]
+                except KeyError:
+                    logging.error(msg.format('-'.join(locator)))
+                    continue
+            elif len(locator) == 2:
+                try:
+                    chain_id = 'A'
+                    residue_number = int(locator[0])
+                    atom_name = locator[1]
+                except KeyError:
+                    logging.error(msg.format('-'.join(locator)))
+                    continue
+            else:
+                logging.error(msg.format('-'.join(locator)))
+                continue
+
+            chain = self.get(chain_id, None)
+            residue = (chain.get(residue_number, None)
+                       if chain is not None else None)
+            atom = (residue.get(atom_name, None)
+                    if residue is not None else None)
+
+            if atom is None:
+                logging.error(msg.format('-'.join(locator)))
+                continue
+
+            atoms.append(atom)
+
+        return atoms
+
     # Getting and setting parameters
     def get_parameter(self, category, name):
         """Get the parameter for the given property category and name.
