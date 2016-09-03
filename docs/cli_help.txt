@@ -1,0 +1,14 @@
+usage: mollib [-h] [-d] [-v] [--version]  ...
+
+A molecular processor
+
+optional arguments:
+  -h, --help     show this help message and exit
+  -d, --debug    Print debugging statements
+  -v, --verbose  Print extra information
+  --version      Show the program version
+
+commands:
+  
+    process      Process a molecular structure
+    measure      Measure geometries in molecules

@@ -1,5 +1,5 @@
 from .core import Atom, Residue, Chain, Molecule
-import hydrogens
+from . import hydrogens
 from .__main__ import main
 
 __author__ = 'Justin L Lorieau'

@@ -3,6 +3,12 @@ MolLib's documentation
 
 .. toctree::
    :maxdepth: 3
+   :caption: Commandline Interface
+
+   cli
+
+.. toctree::
+   :maxdepth: 3
    :caption: API Documentation
 
    classes
@@ -24,12 +30,16 @@ emphasis on biophysical analysis
 Features
 --------
 
+* Plugin interface to easily add functionality
 * Common manipulations of biomolecules for biophysics, like translation,
   Euler rotations
 * Easily extendable data types (Atom, Residue, Chain, Molecule) through object
   inheritance to add functionality and data to base objects.
 * Loading, fetching, caching  and writing PDB files
 * Handles gzipped and and plain text files
+
+Mollib Overview
+---------------
 
 .. automodule:: mollib.core.molecule
 

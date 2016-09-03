@@ -1,6 +1,4 @@
 """
-MolLib Overview
-===============
 The mollib is a simple Python toolset for manipulating molecular
 structures in Python. A Molecule is a dict of Chains, which is a dict of
 Residues, which is a dict of Atoms. The Molecule is constructed with helper

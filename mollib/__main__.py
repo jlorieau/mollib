@@ -29,7 +29,8 @@ def main():
                         const=logging.INFO,
                         help="Print extra information")
     parser.add_argument('--version', action='version',
-                        version=('%(prog)s ' + mollib.__version__))
+                        version=('%(prog)s ' + mollib.__version__),
+                        help='Show the program version')
 
     # Process the plugin subparsers
     for plugin in plugins:

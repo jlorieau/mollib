@@ -1,3 +1,4 @@
+
 # -*- coding: utf-8 -*-
 #
 # MolLib documentation build configuration file, created by
@@ -354,3 +355,7 @@ autodoc_member_order = 'bysource'
 # Custom css
 def setup(app):
     app.add_stylesheet('updates.css')
+
+# Get the CLI output text
+os.system("cd ..&&python mollib/ --help > docs/cli_help.txt&&cd docs")
+
