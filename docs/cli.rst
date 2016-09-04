@@ -97,17 +97,17 @@ are also available.
     .. literalinclude:: cli/cli_measure_help.txt
         :language: shell-session
 
-.. _atom-conventions:
+.. _atom-selectors:
 
-Atom Locators
-~~~~~~~~~~~~~
+Atom Selectors
+~~~~~~~~~~~~~~
 
 The measure methods find atoms using atom locators. Atom locators must
 follow one of these conventions:
 
     1. (residue number)-(atom name). ex: ``31-CB`` for the ``CB`` atom of
        residue number 31.
-    2. (chain id)-(residue number)-(atom name). ex: ``A-31-CB`` for the ``CB``
+    2. (chain id)-(residue number)-(atom name). ex: ``A.31-CB`` for the ``CB``
        atom of residue number 31 in chain 'A'.
 
 Additionally, the chain id, residue number or both can be expressed as a range
@@ -115,7 +115,7 @@ using the ``:`` character:
 
     1. (residue range)-(atom name). ex: ``31:34-CB`` for the ``CB`` atom of
        residue number 31, 32, 33 and 34.
-    2. (chain range)-(residue number)-(atom name). ex:``A:C-34-CB`` for the
+    2. (chain range)-(residue number)-(atom name). ex:``A:C.34-CB`` for the
        ``CB`` atom of residue number 34 for chains 'A', 'B', 'C' and 'D'.
 
 Finally, heteroatom chains have an asterisk appended to them. ex: 'C*'
@@ -136,7 +136,7 @@ Arguments
         Multiple atom pairs can used. ex: ``-d 31-N 31-CA -d 32-N 33-CA``
 
         Atoms must follow the standard naming conventions.
-        See :ref:`atom-conventions`.
+        See :ref:`atom-selectors`.
 
         **Examples:**
 
@@ -153,7 +153,7 @@ Arguments
         -a 32-N 32-CA 32-CB``
 
         Atoms must follow the standard naming conventions.
-        See :ref:`atom-conventions`.
+        See :ref:`atom-selectors`.
 
     ``-dih`` / ``--dihedral``
         Measure the dihedral angle (in degrees) between four atoms.
@@ -162,7 +162,7 @@ Arguments
         -dih 31-N 31-CA 31-C 32-N``
 
         Atoms must follow the standard naming conventions.
-        See :ref:`atom-conventions`.
+        See :ref:`atom-selectors`.
 
     ``-r`` / ``--ramachandran``
         Display a (Markdown) table of the structure's ramachandran angles

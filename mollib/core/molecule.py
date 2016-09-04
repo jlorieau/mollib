@@ -39,9 +39,9 @@ mass and atomic position of :obj:`Atom` `CA` in residue 2:
 
 >>> atom = mol['A'][2]['CA']
 >>> print("Atom {} has a {:.2f} Da mass.".format(atom, atom.mass))
-Atom Q2-CA has a 12.01 Da mass.
+Atom A.Q2-CA has a 12.01 Da mass.
 >>> print("{} is located at {}, {}, {} A".format(atom, *atom.pos))
-Q2-CA is located at -3.086, -11.321, -1.361 A
+A.Q2-CA is located at -3.086, -11.321, -1.361 A
 
 
 Or properties of the entire molecule may be calculated.
@@ -274,19 +274,26 @@ class Molecule(dict):
         """The number of atoms in this molecule."""
         return len(list(self.atoms))
 
-    def get_atoms(self, *args):
+    _selector = re.compile(r'\s*'
+                           '(?P<chains>[A-Z]\*?:?[A-Z]?\*?)?'
+                           '\.?'
+                           '(?P<res_nums>\d+:?\d*)'
+                           '-'
+                           '(?P<atom_name>\w+)\s*')
+
+    def get_atoms(self, *selectors):
         """Return atoms matches the given locator names.
 
         Parameters
         ----------
-        args:
-            A series of strings for the atom locators. The atom
+        selectors:
+            A series of selector strings that match self._selector. The atom
             locators use the following conventions:
 
             1. (residue number)-(atom name). ex: 31-CA
-            2. (chain id)-(residue number)-(atom name). ex: A-31-CA
+            2. (chain id)-(residue number)-(atom name). ex: A.31-CA
             *  Residue number of chain id ranges are allowed using a ':'.
-                ex: 18:24-CA or A:D-13-CB.
+                ex: 18:24-CA or A:D.13-CB.
 
             If no chain id is specified, the chain 'A' is used.
 
@@ -299,69 +306,48 @@ class Molecule(dict):
         --------
         >>> from mollib import Molecule
         >>> mol = Molecule('2MUV')
-        >>> mol.get_atoms('A-22-CA', '26-CB')
-        [S22-CA, L26-CB]
-        >>> mol.get_atoms('A-335-CA')  # doesn't exist
+        >>> mol.get_atoms('A.22-CA', '26-CB')
+        [A.S22-CA, A.L26-CB]
+        >>> mol.get_atoms('A.335-CA')  # doesn't exist
         []
-        >>> mol.get_atoms('A-22:26-CA')
-        [S22-CA, S23-CA, D24-CA, P25-CA, L26-CA]
-        >>> mol.get_atoms('A:D-22-CA')
-        [S22-CA, S22-CA, S22-CA, S22-CA]
+        >>> mol.get_atoms('A.22:26-CA')
+        [A.S22-CA, A.S23-CA, A.D24-CA, A.P25-CA, A.L26-CA]
+        >>> mol.get_atoms('A:D.22-CA')
+        [A.S22-CA, B.S22-CA, C.S22-CA, D.S22-CA]
         """
         atoms = []
 
-        # Prepare an error message in case the locator isn't formatted
-        # properly
-        msg = ("The atom '{}' cannot be found in molecule '{}'.")
-
         # Find the atoms given by the names
-        for locator in args:
-            msg = msg.format(locator, self.name)
-
+        for selector in selectors:
             # Find the relevant atoms using the locator
-            locator = locator.split('-')
+            match = self._selector.match(selector)
 
-            if len(locator) == 3:
-                try:
-                    chain_id = locator[0]
-                    residue_number = locator[1]
-                    atom_name = locator[2]
-                except KeyError:
-                    continue
-            elif len(locator) == 2:
-                try:
-                    chain_id = 'A'
-                    residue_number = locator[0]
-                    atom_name = locator[1]
-                except KeyError:
-                    continue
+            if match is None:
+                msg = ("The selector '{}' could not be interpreted.")
+                logging.error(msg.format(selector))
+                continue
+
+            # Parse the selector
+            seldict = match.groupdict()
+
+            # Convert A:D into ('A', 'B', 'C', 'D')
+            chain_ids = seldict['chains']
+            chain_ids = 'A' if chain_ids is None else chain_ids
+            chain_ids = chain_ids.split(':')
+            if len(chain_ids) == 2:
+                id1, id2 = chain_ids
+                chain_ids = [chr(i) for i in range(ord(id1), ord(id2) + 1)]
+
+            # Convert 23:26 into (23, 24, 25, 26) and convert into integers
+            residue_numbers = seldict['res_nums']
+            residue_numbers = residue_numbers.split(':')
+            if len(residue_numbers) == 2:
+                num1, num2 = int(residue_numbers[0]), int(residue_numbers[1])
+                residue_numbers = [int(i) for i in range(num1, num2 + 1)]
             else:
-                continue
+                residue_numbers = [int(r) for r in residue_numbers]
 
-            # see if a range of chains is specified
-            chain_id = chain_id.split(':')  # makes a list
-            if len(chain_id) == 1:
-                chain_ids = chain_id
-            elif len(chain_id) == 2:
-                id_1, id_2 = chain_id
-                chain_ids = [chr(i) for i in range(ord(id_1), ord(id_2)+1)]
-            else:
-                continue
-
-            # see if a range of residues is specified. These must be integers
-            residue_number = residue_number.split(':')  # makes a list
-            try:
-                residue_number = [int(i) for i in residue_number]
-            except KeyError:
-                continue
-
-            if len(residue_number) == 1:
-                residue_numbers = residue_number
-            elif len(residue_number) == 2:
-                num_1, num_2 = residue_number
-                residue_numbers = [i for i in range(num_1, num_2 + 1)]
-            else:
-                continue
+            atom_name = seldict['atom_name']
 
             # Get the relevant chains, residues and (hopefully) atoms
             for chain_id in chain_ids:
@@ -382,7 +368,8 @@ class Molecule(dict):
                     atoms.append(atom)
 
         if not atoms:
-            logging.error(msg)
+            msg = ("The selector '{}' could not find any atoms.")
+            logging.error(msg.format(selector))
         return atoms
 
     # Getting and setting parameters
@@ -394,7 +381,7 @@ class Molecule(dict):
         category: str
             The category of the parameter. ex: 'hydrogens'
         name: str
-            The name of the parameter. ex: 'Q61-CA'
+            The name of the parameter. ex: 'A.Q61-CA'
 
         Returns
         -------
@@ -422,7 +409,7 @@ class Molecule(dict):
         category: str
             The category of the parameter. ex: 'hydrogens'
         name: str
-            The name of the parameter. ex: 'Q61-CA'
+            The name of the parameter. ex: 'A.Q61-CA'
         value
             The value of the parameter
         """
@@ -542,12 +529,12 @@ class Molecule(dict):
         >>> print('{:.2f}, {:.2f}'.format(mol.mass, mol['A'][3].mass))
         2445.07, 147.19
         >>> sorted(mol['A'][3]['CA'].bonded_atoms())
-        [F3-C, F3-CB, F3-HA, F3-N]
+        [A.F3-C, A.F3-CB, A.F3-HA, A.F3-N]
         >>> mol.del_atom(mol['A'][3]['N'])
         >>> print('{:.2f}, {:.2f}'.format(mol.mass, mol['A'][3].mass))
         2431.06, 133.18
         >>> sorted(mol['A'][3]['CA'].bonded_atoms())
-        [F3-C, F3-CB, F3-HA]
+        [A.F3-C, A.F3-CB, A.F3-HA]
 
 
         .. note:: Since atom objects are only referenced in residues, this
