@@ -133,6 +133,7 @@ class Atom(Primitive):
                'S': 32.07, 'Cl': 35.45, 'Zn': 65.38, 'Br': 79.904}
 
     def __repr__(self):
+        # TODO: Add chain identifier too. ex: A-S31-N
         return "{}-{}".format(self.residue, self.name) if self.residue else \
             "{}".format(self.name)
 
