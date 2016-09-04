@@ -11,8 +11,7 @@ MolLib's documentation
    :maxdepth: 3
    :caption: API Documentation
 
-   classes
-   functions
+   core
    plugins
    settings
 
