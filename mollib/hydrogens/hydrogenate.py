@@ -207,10 +207,6 @@ def add_one_sp2_h(atom, bond_length):
     bool:
         True if atom was successfully added, False if it wasn't.
 
-
-    .. note:: Protons added to double-bonded atoms will respect the (E), (Z)
-              assignment convention.
-
     Examples
     --------
     >>> from mollib.core import Molecule, measure_angle
