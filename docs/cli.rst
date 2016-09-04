@@ -44,7 +44,7 @@ Arguments
 ~~~~~~~~~
 
     ``-i`` / ``--in``
-        **(required)** The listing of one or more structural identifiers
+        **(required) The listing of one or more structural identifiers
         (ex: PDB file identiers) or filenames.
 
         If the structure could not be found locally, a copy will be
@@ -91,34 +91,69 @@ Preprocessors Arguments
 Measure Command
 ---------------
 The ``measure`` command is used for measuring geometries in molecules.
-All of options and preprocessors are available in the :ref:`process-command`
+All of the options and preprocessors available from the :ref:`process-command`
 are also available.
 
     .. literalinclude:: cli/cli_measure_help.txt
         :language: shell-session
 
+.. _atom-conventions:
+
+Atom Locators
+~~~~~~~~~~~~~
+
+The measure methods find atoms using atom locators. Atom locators must
+follow one of these conventions:
+
+    1. (residue number)-(atom name). ex: ``31-CB`` for the ``CB`` atom of
+       residue number 31.
+    2. (chain id)-(residue number)-(atom name). ex: ``A-31-CB`` for the ``CB``
+       atom of residue number 31 in chain 'A'.
+
+Additionally, the chain id, residue number or both can be expressed as a range
+using the ``:`` character:
+
+    1. (residue range)-(atom name). ex: ``31:34-CB`` for the ``CB`` atom of
+       residue number 31, 32, 33 and 34.
+    2. (chain range)-(residue number)-(atom name). ex:``A:C-34-CB`` for the
+       ``CB`` atom of residue number 34 for chains 'A', 'B', 'C' and 'D'.
+
+Finally, heteroatom chains have an asterisk appended to them. ex: 'C*'
+
+
 Arguments
 ~~~~~~~~~
+
+    ``--intra``
+        Only report measurements within a residue.
+
+    ``--inter``
+        Only report measurements measurements between residues
 
     ``-d`` / ``--dist``
         Measure the distance (in Angstroms) between two atoms.
 
         Multiple atom pairs can used. ex: ``-d 31-N 31-CA -d 32-N 33-CA``
 
-        .. _atom-conventions:
+        Atoms must follow the standard naming conventions.
+        See :ref:`atom-conventions`.
 
-        Atoms must follow one of the following *atom conventions*:
-            1. (residue number)-(atom name). ex: ``31-CB``
-            2. (chain number)-(residue number)-(atom name). ex: ``A-31-CB``
+        **Examples:**
+
+        .. literalinclude:: cli/cli_measure_i_2KXA_d_10:13-CA_10:13-CA.txt
+            :language: shell-session
+
+        .. literalinclude:: cli/cli_measure_i_2MUV_d_23:32-H_23:32-HA_intra.txt
+            :language: shell-session
 
     ``-a`` / ``--angle``
         Measure the angle (in degrees) between three atoms.
 
         Multiple atom triplets can be used. ex: ``-a 31-N 31-CA 31-CB
-        32-N 32-CA 32-CB``
+        -a 32-N 32-CA 32-CB``
 
         Atoms must follow the standard naming conventions.
-        See :ref:`atom conventions <atom-conventions>`.
+        See :ref:`atom-conventions`.
 
     ``-dih`` / ``--dihedral``
         Measure the dihedral angle (in degrees) between four atoms.
@@ -127,7 +162,7 @@ Arguments
         -dih 31-N 31-CA 31-C 32-N``
 
         Atoms must follow the standard naming conventions.
-        See :ref:`atom conventions <atom-conventions>`.
+        See :ref:`atom-conventions`.
 
     ``-r`` / ``--ramachandran``
         Display a (Markdown) table of the structure's ramachandran angles
