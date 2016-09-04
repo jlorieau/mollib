@@ -283,8 +283,10 @@ class Molecule(dict):
             A series of strings for the atom locators. The atom
             locators use the following conventions:
 
-            1.  (residue number)-(atom name). ex: 31-CA
-            2.  (chain id)-(residue number)-(atom name). ex: A-31-CA
+            1. (residue number)-(atom name). ex: 31-CA
+            2. (chain id)-(residue number)-(atom name). ex: A-31-CA
+            *  Residue number of chain id ranges are allowed using a ':'.
+                ex: 18:24-CA or A:D-13-CB.
 
             If no chain id is specified, the chain 'A' is used.
 
@@ -296,58 +298,100 @@ class Molecule(dict):
         Examples
         --------
         >>> from mollib import Molecule
-        >>> mol = Molecule('2KXA')
-        >>> mol.get_atoms('A-18-CA', '6-CB')
-        [I18-CA, I6-CB]
-        >>> mol.get_atoms('A-35-CA')  # doesn't exist
+        >>> mol = Molecule('2MUV')
+        >>> mol.get_atoms('A-22-CA', '26-CB')
+        [S22-CA, L26-CB]
+        >>> mol.get_atoms('A-335-CA')  # doesn't exist
         []
+        >>> mol.get_atoms('A-22:26-CA')
+        [S22-CA, S23-CA, D24-CA, P25-CA, L26-CA]
+        >>> mol.get_atoms('A:D-22-CA')
+        [S22-CA, S22-CA, S22-CA, S22-CA]
         """
         atoms = []
 
         # Prepare an error message in case the locator isn't formatted
         # properly
-        msg = ("The atom '{}' cannot be found.\n"
-               "Locators should follow one of the following formats:\n"
-               "\t1. (residue number)-(atom name). ex: 31-CA.\n"
-               "\t2. (chain id)-(residue number)-(atom name). ex: A-31-CA.")
+        msg = ("The atom '{}' cannot be found in molecule '{}'.")
 
         # Find the atoms given by the names
         for locator in args:
+            msg = msg.format(locator, self.name)
+
             # Find the relevant atoms using the locator
             locator = locator.split('-')
 
             if len(locator) == 3:
                 try:
                     chain_id = locator[0]
-                    residue_number = int(locator[1])
+                    residue_number = locator[1]
                     atom_name = locator[2]
                 except KeyError:
-                    logging.error(msg.format('-'.join(locator)))
+                    logging.error(msg)
                     continue
             elif len(locator) == 2:
                 try:
                     chain_id = 'A'
-                    residue_number = int(locator[0])
+                    residue_number = locator[0]
                     atom_name = locator[1]
                 except KeyError:
-                    logging.error(msg.format('-'.join(locator)))
+                    logging.error(msg)
                     continue
             else:
-                logging.error(msg.format('-'.join(locator)))
+                logging.error(msg)
                 continue
 
-            chain = self.get(chain_id, None)
-            residue = (chain.get(residue_number, None)
-                       if chain is not None else None)
-            atom = (residue.get(atom_name, None)
-                    if residue is not None else None)
-
-            if atom is None:
-                logging.error(msg.format('-'.join(locator)))
+            # see if a range of chains is specified
+            chain_id = chain_id.split(':')  # makes a list
+            if len(chain_id) == 1:
+                chain_ids = chain_id
+            elif len(chain_id) == 2:
+                id_1, id_2 = chain_id
+                chain_ids = [chr(i) for i in range(ord(id_1), ord(id_2)+1)]
+            else:
+                logging.error(msg)
                 continue
 
-            atoms.append(atom)
+            # see if a range of residues is specified. These must be integers
+            residue_number = residue_number.split(':')  # makes a list
+            try:
+                residue_number = [int(i) for i in residue_number]
+            except KeyError:
+                logging.error(msg)
+                continue
 
+            if len(residue_number) == 1:
+                residue_numbers = residue_number
+            elif len(residue_number) == 2:
+                num_1, num_2 = residue_number
+                residue_numbers = [i for i in range(num_1, num_2 + 1)]
+            else:
+                logging.error(msg)
+                continue
+
+            # Get the relevant chains, residues and (hopefully) atoms
+            for chain_id in chain_ids:
+                chain = self.get(chain_id, None)
+                if chain is None:
+                    logging.error(msg)
+                    continue
+
+                for residue_number in residue_numbers:
+                    residue = chain.get(residue_number, None)
+                    if residue is None:
+                        logging.error(msg)
+                        continue
+
+                    atom = residue.get(atom_name, None)
+
+                    if atom is None:
+                        logging.error(msg)
+                        continue
+
+                    atoms.append(atom)
+
+        if not atoms:
+            logging.error(msg)
         return atoms
 
     # Getting and setting parameters
