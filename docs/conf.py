@@ -364,11 +364,15 @@ def process_cmd(string):
 
     cmd = "echo 'user@host$ {cmd}' > cli/cli_{args_name}.txt\n"
     cmd += "cd ..&&python {progname} {args} >> docs/cli/cli_{args_name}.txt"
+
     cmd = cmd.format(cmd=string, progname=progname, args=' '.join(args[1:]),
                      args_name=args_name)
     os.system(cmd)
 
 process_cmd("mollib --help")
-process_cmd("mollib process --help")
-process_cmd("mollib measure --help")
 
+process_cmd("mollib process --help")
+
+process_cmd("mollib measure --help")
+process_cmd("mollib measure -i 2KXA -d 10:13-CA 10:13-CA")
+process_cmd("mollib measure -i 2MUV -d 23:32-H 23:32-HA --intra")
