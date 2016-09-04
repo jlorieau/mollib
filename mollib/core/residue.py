@@ -196,13 +196,13 @@ class Residue(dict):
         >>> mol = Molecule('2PTN')
         >>> I16 = mol['A'][16] # First residue
         >>> I16.ionizeable_groups
-        [IonGroup(possible_atoms=[I16-N], pKs=(7.7, 14.0, 14.0))]
+        [IonGroup(possible_atoms=[A.I16-N], pKs=(7.7, 14.0, 14.0))]
         >>> H40 = mol['A'][40]
         >>> H40.ionizeable_groups
-        [IonGroup(possible_atoms=[H40-ND1, H40-NE2], pKs=(6.6, 14.0))]
+        [IonGroup(possible_atoms=[A.H40-ND1, A.H40-NE2], pKs=(6.6, 14.0))]
         >>> N245 = mol['A'][245] # Last residue
         >>> N245.ionizeable_groups
-        [IonGroup(possible_atoms=[N245-O, N245-OXT], pKs=(-1.0, 3.3))]
+        [IonGroup(possible_atoms=[A.N245-O, A.N245-OXT], pKs=(-1.0, 3.3))]
         """
         groups = []
         # Create an ionization group for the alpha-amino or terminal-carboxylate

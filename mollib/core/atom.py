@@ -39,10 +39,10 @@ def sorted_atom_list(atom_seq):
     >>> mol = Molecule('2MJB')
     >>> I3 = mol['A'][3]
     >>> sorted_atom_list(I3['CA'].bonded_atoms())
-    [I3-N, I3-C, I3-CB, I3-HA]
+    [A.I3-N, A.I3-C, A.I3-CB, A.I3-HA]
     >>> R42 = mol['A'][42]
     >>> sorted_atom_list(R42['CZ'].bonded_atoms())
-    [R42-NE, R42-NH2, R42-NH1]
+    [A.R42-NE, A.R42-NH2, A.R42-NH1]
     """
     # First find the masses of all atoms. These will be used to sort
     # the atoms
@@ -133,9 +133,13 @@ class Atom(Primitive):
                'S': 32.07, 'Cl': 35.45, 'Zn': 65.38, 'Br': 79.904}
 
     def __repr__(self):
-        # TODO: Add chain identifier too. ex: A-S31-N
-        return "{}-{}".format(self.residue, self.name) if self.residue else \
-            "{}".format(self.name)
+        repr = ''
+        if self.chain:
+            repr += "{}.".format(self.chain)
+        if self.residue:
+            repr += "{}-".format(self.residue)
+        repr += self.name
+        return repr
 
     def __lt__(self, other):
         # TODO: add chain comparisons
@@ -172,9 +176,7 @@ class Atom(Primitive):
         """
         molecule_name = (self.molecule.name
                          if self.molecule is not None else '')
-        chain_id = (self.chain.id
-                    if self.chain is not None else '')
-        return '.'.join((molecule_name, chain_id, self.__repr__()))
+        return '.'.join((molecule_name, self.__repr__()))
 
     @property
     def mass(self):
@@ -413,11 +415,11 @@ class Atom(Primitive):
         >>> mol = Molecule('2PTN')
         >>> C22 = mol['A'][22]
         >>> C22['C'].bonded_atoms(sorted=True)
-        [C22-O, G23-N, C22-CA]
+        [A.C22-O, A.G23-N, A.C22-CA]
         >>> C22['SG'].bonded_atoms(sorted=True)  # disulfide bridge
-        [C157-SG, C22-CB]
+        [A.C157-SG, A.C22-CB]
         >>> C22['SG'].bonded_atoms(sorted=True, longrange=True)
-        [C157-SG]
+        [A.C157-SG]
         """
         bonded = set()
         for name in self.topology:
@@ -494,9 +496,9 @@ class Atom(Primitive):
         >>> mol = Molecule('2PTN')
         >>> C22 = mol['A'][22]
         >>> C22['CA'].bonded_heavy_atoms(sorted=True)
-        [C22-N, C22-CB, C22-C]
+        [A.C22-N, A.C22-CB, A.C22-C]
         >>> C22['SG'].bonded_heavy_atoms(longrange=True)
-        [C157-SG]
+        [A.C157-SG]
         """
         bonded = [a for a in self.bonded_atoms(sorted, longrange)
                   if not a.element == 'H' or a.element == 'D']
