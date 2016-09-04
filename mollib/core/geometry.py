@@ -1,8 +1,7 @@
 """
 Tools to measure geometries in molecules.
 """
-# Author: Justin L Lorieau
-# Copyright 2016
+# TODO: def measure_rmsd(molecule1, molecule2, atoms=None)
 
 import numpy as np
 from math import acos, pi, atan2, sqrt
@@ -150,10 +149,10 @@ def within_distance(atom, distance_cutoff, element='', intraresidue=False):
     >>> D32 = mol['A'][32]
     >>> distance_list = within_distance(D32['OD1'], 2.5, intraresidue=True)
     >>> print(["{} {:.1f}A".format(a,d) for a,d in distance_list])
-    ['D32-CB 2.4A', 'D32-CG 1.2A', 'D32-OD2 2.2A']
+    ['A.D32-CB 2.4A', 'A.D32-CG 1.2A', 'A.D32-OD2 2.2A']
     >>> distance_list = within_distance(D32['OD1'], 5, element='N|O')
     >>> print(["{} {:.1f}A".format(a,d) for a,d in distance_list])
-    ['A28-O 3.4A', 'Q31-O 4.9A', 'Q31-OE1 4.3A']
+    ['A.A28-O 3.4A', 'A.Q31-O 4.9A', 'A.Q31-OE1 4.3A']
     >>>
     """
     # TODO: This would be a useful function to optimize
@@ -175,5 +174,100 @@ def within_distance(atom, distance_cutoff, element='', intraresidue=False):
 
     return atom_list
 
+def measure_distances(molecule, locator1, locator2,
+                      inter_residue=-1, same_chain=False):
+    """Measure the distances for atoms selection by locator1 and locator2.
 
-# TODO: def measure_rmsd(molecule1, molecule2, atoms=None)
+    Parameters
+    ----------
+    molecule: :obj:`mollib.Molecule`
+        The molecule object from which distances will be measured.
+    locator1: str
+        A string for locator of the first atom(s) to measure the distances
+        from.
+    locator2: str
+        A string for the locator of the second atom(s) to measure the distances
+        to.
+    inter_residue: int (optional)
+        - Default: If a negative number is specified, there are no restrictions
+          on the residue numbers of the two atoms reported.
+        - If 0 is specified, only atoms within the same residue will be
+          reported. These may be across chains, however, depending on the value
+          of same_chain.
+        - If a positive number is specified, only distances for residues between
+          this number are specified.
+    same_chain: bool (optional)
+        If True, only distances within the same chain will be reported.
+        Otherwise, distances between chains are reported (default).
+
+
+        .. note:: The locator respects the rules outlined in
+                  :class:`mollib.Molecule.get_atoms`
+
+    Returns
+    -------
+    list
+        A list of tuples for (atom1, atom2, distance) for each distance
+        selected.
+
+    Examples
+    --------
+    >>> from mollib.core import Molecule, measure_distances
+    >>> mol = Molecule('2MUV')
+    >>> dists = measure_distances(mol, '23:25-N', '23:25-CA', inter_residue=0)
+    >>> for i in dists: print(i)
+    (A.S23-N, A.S23-CA, 1.46)
+    (A.D24-N, A.D24-CA, 1.45)
+    (A.P25-N, A.P25-CA, 1.49)
+    >>> dists = measure_distances(mol, 'A:C.23-N', 'A:C.23-N', same_chain=False)
+    >>> for i in dists: print(i)
+    (A.S23-N, B.S23-N, 11.23)
+    (A.S23-N, C.S23-N, 15.49)
+    (B.S23-N, C.S23-N, 11.04)
+    """
+    # Keep track of which pairs have been observed to remove i-j/j-i duplicates
+    observed_pairs = {}
+
+    # Returned list
+    results = []
+
+    # This function logs an error if a1 or a2 isn't properly
+    # formatted. An additional message is not needed. Just skip
+    # it if both atoms aren't found.
+    atoms1 = molecule.get_atoms(locator1)
+    atoms2 = molecule.get_atoms(locator2)
+
+    if not atoms1 or not atoms2:
+        return results
+
+    for i in atoms1:
+        for j in atoms2:
+            # Check if this distance has already been observed
+            observed = (True if observed_pairs.get(i, None) and
+                        j in observed_pairs[i] else False)
+
+            # Skip if they're the same atom or if the distance
+            # has already be printed
+            if (i == j or observed):
+                continue
+
+            # Skip if these are in the same chain and same_chain is True
+            if same_chain and i.chain != j.chain:
+                continue
+
+            # Skip if these don't match the inter_residue number
+            if inter_residue == 0 and i.residue.number != j.residue.number:
+                continue
+            elif (inter_residue > 0 and
+                  abs(i.residue.number - j.residue.number) > inter_residue):
+                continue
+
+            # Mark the pair as observed (to avoid duplicates)
+            observed_pairs.setdefault(j, []).append(i)
+
+            # Add the distance to the results
+            dist = round(measure_distance(i, j),2)
+            results.append((i, j, dist))
+
+    return results
+
