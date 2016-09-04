@@ -1,8 +1,13 @@
-Core
-====
+#################
+API Documentation
+#################
+
+***********
+Core Module
+***********
 
 Classes
--------
+=======
 
 .. automodule:: mollib
 
@@ -19,7 +24,7 @@ Classes
     :members:
 
 Functions
----------
+=========
 
 .. automodule:: mollib.core
 
@@ -32,7 +37,7 @@ Functions
 .. autofunction:: clear_cache
 
 Plugins
--------
+=======
 
 .. automodule:: mollib.core.plugins
 
@@ -41,3 +46,25 @@ Plugins
 
     .. autoclass:: Measure
         :members:
+
+Settings
+========
+
+.. automodule:: mollib.core.settings
+    :members:
+
+*******
+Plugins
+*******
+
+Base Classes
+============
+
+.. automodule:: mollib.plugins
+    :members:
+    :imported-members:
+
+.. include:: plugins/hydrogens.rst
+
+
+

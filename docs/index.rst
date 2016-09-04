@@ -1,22 +1,7 @@
+######################
 MolLib's documentation
-======================
+######################
 
-.. toctree::
-   :maxdepth: 3
-   :caption: Commandline Interface
-
-   cli
-
-.. toctree::
-   :maxdepth: 3
-   :caption: API Documentation
-
-   core
-   plugins
-   settings
-
-Introduction
-------------
 
 MolLib is a Python module for manipulation biomolecular structures with an
 emphasis on biophysical analysis
@@ -27,7 +12,7 @@ emphasis on biophysical analysis
 `mollib-1.3.tar.gz <https://github.com/jlorieau/mollib/archive/v1.3.tar.gz>`_
 
 Features
---------
+========
 
 * A powerful command line interface and python module library
 * Plugin interface to easily add functionality.
@@ -38,13 +23,20 @@ Features
 * Loading, fetching, caching  and writing PDB files
 * Handles gzipped and and plain text files
 
-Mollib Overview
----------------
+Description
+===========
 
 .. automodule:: mollib.core.molecule
 
 Indices and tables
 ==================
+
+.. toctree::
+   :maxdepth: 3
+
+   cli
+   api
+
 
 * :ref:`genindex`
 * :ref:`modindex`

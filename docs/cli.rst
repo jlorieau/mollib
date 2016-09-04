@@ -1,5 +1,6 @@
-Overview
-========
+=====================
+Commandline Interface
+=====================
 The command line interface includes all of the mollib functions for processing
 molecules.
 
@@ -22,8 +23,9 @@ molecules.
     ``--version``
         Display the version number of the installed mollib.
 
+********
 Commands
-========
+********
 
 Commands include various types of operations that can be conducted by mollib.
 The command listing may contain additional commands, depending on whether
@@ -32,7 +34,7 @@ mollib plugins are installed.
 .. _process-command:
 
 Process Command
----------------
+===============
 The ``process`` command is the main command for processing, reading and writing
 files. All of the options and preprocessors available in ``process`` are
 available to other commands.
@@ -41,7 +43,7 @@ available to other commands.
         :language: shell-session
 
 Arguments
-~~~~~~~~~
+---------
 
     ``-i`` / ``--in``
         **(required) The listing of one or more structural identifiers
@@ -68,7 +70,7 @@ Arguments
         The configuration file.
 
 Preprocessors Arguments
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
     ``--hydrogenate``
         Strip all hydrogen atoms and re-add hydrogens based on ideal geometry.
@@ -89,7 +91,7 @@ Preprocessors Arguments
 .. _measure-command:
 
 Measure Command
----------------
+===============
 The ``measure`` command is used for measuring geometries in molecules.
 All of the options and preprocessors available from the :ref:`process-command`
 are also available.
@@ -100,29 +102,32 @@ are also available.
 .. _atom-selectors:
 
 Atom Selectors
-~~~~~~~~~~~~~~
+--------------
 
-The measure methods find atoms using atom locators. Atom locators must
-follow one of these conventions:
+Abbreviated Selectors
+~~~~~~~~~~~~~~~~~~~~~
 
-    1. (residue number)-(atom name). ex: ``31-CB`` for the ``CB`` atom of
-       residue number 31.
-    2. (chain id)-(residue number)-(atom name). ex: ``A.31-CB`` for the ``CB``
-       atom of residue number 31 in chain 'A'.
+    The measure methods find atoms using atom locators. Atom locators must
+    follow one of these conventions:
 
-Additionally, the chain id, residue number or both can be expressed as a range
-using the ``:`` character:
+        1. (residue number)-(atom name). ex: ``31-CB`` for the ``CB`` atom of
+           residue number 31.
+        2. (chain id)-(residue number)-(atom name). ex: ``A.31-CB`` for the
+           ``CB`` atom of residue number 31 in chain 'A'.
 
-    1. (residue range)-(atom name). ex: ``31:34-CB`` for the ``CB`` atom of
-       residue number 31, 32, 33 and 34.
-    2. (chain range)-(residue number)-(atom name). ex:``A:C.34-CB`` for the
-       ``CB`` atom of residue number 34 for chains 'A', 'B', 'C' and 'D'.
+    Additionally, the chain id, residue number or both can be expressed as a
+    range using the ``:`` character:
 
-Finally, heteroatom chains have an asterisk appended to them. ex: 'C*'
+        1. (residue range)-(atom name). ex: ``31:34-CB`` for the ``CB`` atom of
+           residue number 31, 32, 33 and 34.
+        2. (chain range)-(residue number)-(atom name). ex:``A:C.34-CB`` for the
+           ``CB`` atom of residue number 34 for chains 'A', 'B', 'C' and 'D'.
+
+    Finally, heteroatom chains have an asterisk appended to them. ex: 'C*'
 
 
 Arguments
-~~~~~~~~~
+---------
 
     ``--intra``
         Only report measurements within a residue.
