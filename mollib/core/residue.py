@@ -3,7 +3,19 @@ from collections import namedtuple
 from .geometry import measure_dihedral
 from . import settings
 
-IonGroup = namedtuple('IonGroup', ['possible_atoms', 'pKs'])
+class IonGroup(namedtuple('IonGroup', ['possible_atoms', 'pKs'])):
+    """A group of ionizeable atoms and their pKs.
+
+    Attributes
+    ----------
+    possible_atoms: list of :obj:`mollib.Atom` objects
+        A list of atoms that may be ionized. (i.e. may receive or lose a
+        hydrogen atom, depending on pH)
+    pKs: tuple of float
+        A tuple with all of the pK values for the :obj:`mollib.Atom` objects
+        in possible atoms.
+    """
+    pass
 
 
 class ResidueProcessingError(Exception):
@@ -174,21 +186,16 @@ class Residue(dict):
 
     @property
     def ionizeable_groups(self):
-        """The number and identity of ionizeable :obj:`iongroup`s for this
-         residue.
+        """The number and identity of ionizeable groups (:obj:`IonGroup`) for
+         this residue.
 
          The returned list is *independent* of the molecule's pH. It's just a
          listing of atom's that can be ionized in this residue.
 
         Returns
         -------
-        list
-            A list of :obj:`iongroup` tuples.
-            iongroup.number: The first item represents the number of
-                             ionizeable Hs to add to this residue.
-            iongroup.possible_atoms: The second item is a list of :obj:`atom`
-                                     objects that are ionizeable. These may or
-                                     may not already have Hs.
+        list of :obj:`IonGroup`
+            The list of ionizeable groups (:obj:`IonGroup`) for this residue.
 
         Examples
         --------

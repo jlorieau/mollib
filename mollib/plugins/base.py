@@ -49,7 +49,7 @@ class Plugin(object):
 
         .. note:: It is recommended that this dict be accessed with a
                   setdefault method and a default value of:
-                    subparsers.add_parser('', add_help=False)
+                  subparsers.add_parser('', add_help=False)
 
 
     .. note:: Preprocessor and postprocessor plugins should always return True

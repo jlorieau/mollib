@@ -10,11 +10,13 @@ Functions
 .. automodule:: mollib.hydrogens
     :members:
     :imported-members:
+    :noindex:
 
 Settings
 ========
 
 .. automodule:: mollib.hydrogens.settings
     :members:
+    :noindex:
 
 

@@ -34,6 +34,6 @@ separated by '-' characters. The different pKs for each ionization is
 listed in the subsequent items in the tuple.
 
 
-  .. [Ref]: G. R. Grimsley, J. M. Scholtz, C. N. Pace,
-            Protein Sci. 18, 247-51 (2009).
+  .. [Ref] G. R. Grimsley, J. M. Scholtz, C. N. Pace, Protein Sci. 18, 247-51
+           (2009).
 """

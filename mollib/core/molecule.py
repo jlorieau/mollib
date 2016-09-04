@@ -292,8 +292,9 @@ class Molecule(dict):
 
             1. (residue number)-(atom name). ex: 31-CA
             2. (chain id)-(residue number)-(atom name). ex: A.31-CA
-            *  Residue number of chain id ranges are allowed using a ':'.
-                ex: 18:24-CA or A:D.13-CB.
+
+            .. note::  Residue number of chain id ranges are allowed using a
+                       ':'. ex: 18:24-CA or A:D.13-CB.
 
             If no chain id is specified, the chain 'A' is used.
 

@@ -46,7 +46,7 @@ Arguments
 ---------
 
     ``-i`` / ``--in``
-        **(required) The listing of one or more structural identifiers
+        **(required)** The listing of one or more structural identifiers
         (ex: PDB file identiers) or filenames.
 
         If the structure could not be found locally, a copy will be
