@@ -327,7 +327,6 @@ class Molecule(dict):
                     residue_number = locator[1]
                     atom_name = locator[2]
                 except KeyError:
-                    logging.error(msg)
                     continue
             elif len(locator) == 2:
                 try:
@@ -335,10 +334,8 @@ class Molecule(dict):
                     residue_number = locator[0]
                     atom_name = locator[1]
                 except KeyError:
-                    logging.error(msg)
                     continue
             else:
-                logging.error(msg)
                 continue
 
             # see if a range of chains is specified
@@ -349,7 +346,6 @@ class Molecule(dict):
                 id_1, id_2 = chain_id
                 chain_ids = [chr(i) for i in range(ord(id_1), ord(id_2)+1)]
             else:
-                logging.error(msg)
                 continue
 
             # see if a range of residues is specified. These must be integers
@@ -357,7 +353,6 @@ class Molecule(dict):
             try:
                 residue_number = [int(i) for i in residue_number]
             except KeyError:
-                logging.error(msg)
                 continue
 
             if len(residue_number) == 1:
@@ -366,26 +361,22 @@ class Molecule(dict):
                 num_1, num_2 = residue_number
                 residue_numbers = [i for i in range(num_1, num_2 + 1)]
             else:
-                logging.error(msg)
                 continue
 
             # Get the relevant chains, residues and (hopefully) atoms
             for chain_id in chain_ids:
                 chain = self.get(chain_id, None)
                 if chain is None:
-                    logging.error(msg)
                     continue
 
                 for residue_number in residue_numbers:
                     residue = chain.get(residue_number, None)
                     if residue is None:
-                        logging.error(msg)
                         continue
 
                     atom = residue.get(atom_name, None)
 
                     if atom is None:
-                        logging.error(msg)
                         continue
 
                     atoms.append(atom)
