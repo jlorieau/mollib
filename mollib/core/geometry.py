@@ -174,8 +174,8 @@ def within_distance(atom, distance_cutoff, element='', intraresidue=False):
 
     return atom_list
 
-def measure_distances(molecule, locator1, locator2,
-                      inter_residue=-1, same_chain=False):
+def measure_distances(molecule, selector1, selector2,
+                      residue_delta=None, exclude_intra=False):
     """Measure the distances for atoms selection by locator1 and locator2.
 
     Parameters
@@ -188,17 +188,11 @@ def measure_distances(molecule, locator1, locator2,
     locator2: str
         A string for the locator of the second atom(s) to measure the distances
         to.
-    inter_residue: int (optional)
-        - Default: If a negative number is specified, there are no restrictions
-          on the residue numbers of the two atoms reported.
-        - If 0 is specified, only atoms within the same residue will be
-          reported. These may be across chains, however, depending on the value
-          of same_chain.
-        - If a positive number is specified, only distances for residues between
-          this number are specified.
-    same_chain: bool (optional)
-        If True, only distances within the same chain will be reported.
-        Otherwise, distances between chains are reported (default).
+    residue_delta: int, optional
+        If specified, only residues with the given residue number spacing
+        are reported.
+    exclude_intra: bool:
+        If True, distances within the same residue are excluded.
 
 
         .. note:: The locator respects the rules outlined in
@@ -214,16 +208,19 @@ def measure_distances(molecule, locator1, locator2,
     --------
     >>> from mollib.core import Molecule, measure_distances
     >>> mol = Molecule('2MUV')
-    >>> dists = measure_distances(mol, '23:25-N', '23:25-CA', inter_residue=0)
+    >>> dists = measure_distances(mol, '23:25-N', '23:25-CA', residue_delta=0)
     >>> for i in dists: print(i)
     (A.S23-N, A.S23-CA, 1.46)
     (A.D24-N, A.D24-CA, 1.45)
     (A.P25-N, A.P25-CA, 1.49)
-    >>> dists = measure_distances(mol, 'A:C.23-N', 'A:C.23-N', same_chain=False)
+    >>> dists = measure_distances(mol, 'A:C.23-N', 'A:C.23-N')
     >>> for i in dists: print(i)
     (A.S23-N, B.S23-N, 11.23)
     (A.S23-N, C.S23-N, 15.49)
     (B.S23-N, C.S23-N, 11.04)
+    >>> dists = measure_distances(mol, '23-N', '24-N', exclude_intra=True)
+    >>> for i in dists: print(i)
+    (A.S23-N, A.D24-N, 3.45)
     """
     # Keep track of which pairs have been observed to remove i-j/j-i duplicates
     observed_pairs = {}
@@ -234,8 +231,8 @@ def measure_distances(molecule, locator1, locator2,
     # This function logs an error if a1 or a2 isn't properly
     # formatted. An additional message is not needed. Just skip
     # it if both atoms aren't found.
-    atoms1 = molecule.get_atoms(locator1)
-    atoms2 = molecule.get_atoms(locator2)
+    atoms1 = molecule.get_atoms(selector1)
+    atoms2 = molecule.get_atoms(selector2)
 
     if not atoms1 or not atoms2:
         return results
@@ -251,15 +248,12 @@ def measure_distances(molecule, locator1, locator2,
             if (i == j or observed):
                 continue
 
-            # Skip if these are in the same chain and same_chain is True
-            if same_chain and i.chain != j.chain:
+            # Skip if these don't match the residue_delta or exclude_intra
+            # options
+            if exclude_intra and i.residue.number == j.residue.number:
                 continue
-
-            # Skip if these don't match the inter_residue number
-            if inter_residue == 0 and i.residue.number != j.residue.number:
-                continue
-            elif (inter_residue > 0 and
-                  abs(i.residue.number - j.residue.number) > inter_residue):
+            if (residue_delta is not None
+                and (j.residue.number - i.residue.number) != residue_delta):
                 continue
 
             # Mark the pair as observed (to avoid duplicates)

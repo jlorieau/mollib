@@ -5,15 +5,8 @@ The plugin for 'measure' command.
 import logging
 
 from mollib.plugins import Plugin
-from mollib.core.geometry import measure_distance, measure_angle, measure_dihedral
-
-
-# def check_interresidue(delta=0, *args):
-#     """Return try if the atoms listed in args are all within 'delta' number
-#     of residues from each other.
-#
-#
-#     """
+from mollib.core.geometry import (measure_distances, measure_angle,
+                                  measure_dihedral)
 
 
 class Measure(Plugin):
@@ -25,11 +18,6 @@ class Measure(Plugin):
     def options(self, subparsers):
         parser = super(Measure, self).options(subparsers)
         group = parser.add_mutually_exclusive_group(required=True)
-
-        ## mutually exclusive arguments
-        group.add_argument('-l', '--list',
-                           action='store_true',
-                           help="List details on the molecule")
 
         group.add_argument('-d', '--dist', nargs=2, required=False,
                         metavar='atom', type=str,
@@ -50,18 +38,18 @@ class Measure(Plugin):
                                  "the specified distance. "
                                  "ex: 31:33-N 5"))
 
-        # group.add_argument('-r', '--ramachandran', action='store_true',
-        #                    required=False,
-        #                    help=("Report a table of the Ramachandran angles."))
+        # Arguments to set inter-residue/intra-residue and chain options
+        group2 = parser.add_mutually_exclusive_group(required=False)
+        group2.add_argument('--exclude-intra',
+                            dest='exclude_intra',
+                            action='store_true', default=False,
+                            help='Exclude intra-residue measurements')
+        group2.add_argument('--delta',
+                            dest='residue_delta', action='store',
+                            default=None, metavar='DELTA', type=int,
+                            help=('Only report residues separated by DELTA '
+                                  'residue numbers.'))
 
-        # Arguments avaliable to all other arguments
-        parser.add_argument('--intra',
-                           action='store_true',
-                           help='Only report intraresidue measurements')
-
-        parser.add_argument('--inter',
-                            action='store_true',
-                            help='Only report interresidue measurements')
         return parser
 
     def help(self):
@@ -73,44 +61,17 @@ class Measure(Plugin):
             msg = "({molecule}) {a1: >8} {a2: <8}: {dist:.2f} A"
             observed_pairs = {}
 
-            for a1, a2 in args.dist:
-                # This function logs an error if a1 or a2 isn't properly
-                # formatted. An additional message is not needed. Just skip
-                # it if both atoms aren't found.
-                atoms1 = molecule.get_atoms(a1)
-                atoms2 = molecule.get_atoms(a2)
+            for selector1, selector2 in args.dist:
+                # Get the distances
+                dists = measure_distances(molecule, selector1, selector2,
+                                          residue_delta=args.residue_delta,
+                                          exclude_intra=args.exclude_intra)
 
-                if not atoms1 or not atoms2:
-                    continue
-
-                for i in atoms1:
-                    for j in atoms2:
-                        # Skip if they're the same atom or if the distance
-                        # has already be printed
-                        if (i==j or
-                            (observed_pairs.get(i, None) and
-                             j in observed_pairs[i])):
-                            continue
-
-                        # Skip inter-residue if specified
-                        if (args.intra and
-                            (i.chain.id != j.chain.id or
-                             i.residue.number != j.residue.number)):
-                            continue
-
-                        # Skip intra-residue if specified
-                        if (args.inter and
-                            (i.chain.id == j.chain.id and
-                             i.residue.number == j.residue.number)):
-                            continue
-
-                        # Mark the pair as observed (to avoid duplicates)
-                        observed_pairs.setdefault(j, []).append(i)
-
-                        # measure and print the output message
-                        dist = measure_distance(i, j)
-                        print(msg.format(molecule=molecule.name, a1=i, a2=j,
-                                         dist=dist))
+                # print the output message
+                for dist in dists:
+                    atom1, atom2, d = dist
+                    print(msg.format(molecule=molecule.name,
+                                     a1=atom1, a2=atom2, dist=d))
 
         if 'angle' in args and args.angle is not None:
             msg = "({molecule}) {a1: >8} {a2: ^8} {a3: <8}: {angle:.1f} deg"
