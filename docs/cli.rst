@@ -129,13 +129,14 @@ Abbreviated Selectors
 Arguments
 ---------
 
-    ``--intra``
-        Only report measurements within a residue.
+    ``--exclude-intra``
+        Exclude measurements within the same residue
 
-    ``--inter``
-        Only report measurements measurements between residues
+    ``--delta``
+        Report measurements only for residues separated by DELTA number of
+        residues.
 
-    ``-d`` / ``--dist``
+    ``-d`` ``atom`` ``atom`` / ``--dist`` ``atom`` ``atom``
         Measure the distance (in Angstroms) between two atoms.
 
         Multiple atom pairs can used. ex: ``-d 31-N 31-CA -d 32-N 33-CA``
@@ -145,10 +146,15 @@ Arguments
 
         **Examples:**
 
-        .. literalinclude:: cli/cli_measure_i_2KXA_d_10:13-CA_10:13-CA.txt
+        Report :math:`\alpha`-helical HA-H distances in chain 'A' for residues 23-49.
+
+        .. literalinclude:: cli/cli_measure_i_2MUV_d_23:49-HA_23:49-H_delta_3.txt
             :language: shell-session
 
-        .. literalinclude:: cli/cli_measure_i_2MUV_d_23:32-H_23:32-HA_intra.txt
+        Report CA-CA distances between residue 20-21 for chains 'A', 'B', 'C'
+        and 'D'--excluding same residue distances
+
+        .. literalinclude:: cli/cli_measure_i_2MUV_d_A:D.20:21-CA_A:D.20:21-CA_exclude-intra.txt
             :language: shell-session
 
     ``-a`` / ``--angle``
