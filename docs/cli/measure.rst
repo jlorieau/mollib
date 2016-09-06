@@ -22,7 +22,7 @@ Abbreviated Selectors
 
         1. (residue number)-(atom name). ex: ``31-CB`` for the ``CB`` atom of
            residue number 31.
-        2. (chain id)-(residue number)-(atom name). ex: ``A.31-CB`` for the
+        2. (chain id).(residue number)-(atom name). ex: ``A.31-CB`` for the
            ``CB`` atom of residue number 31 in chain 'A'.
 
     Additionally, the chain id, residue number or both can be expressed as a
@@ -30,7 +30,7 @@ Abbreviated Selectors
 
         1. (residue range)-(atom name). ex: ``31:34-CB`` for the ``CB`` atom of
            residue number 31, 32, 33 and 34.
-        2. (chain range)-(residue number)-(atom name). ex:``A:C.34-CB`` for the
+        2. (chain range).(residue number)-(atom name). ex:``A:C.34-CB`` for the
            ``CB`` atom of residue number 34 for chains 'A', 'B', 'C' and 'D'.
 
     Finally, heteroatom chains have an asterisk appended to them. ex: 'C*'
@@ -68,13 +68,6 @@ Filters
 Arguments
 ---------
 
-    ``--exclude-intra``
-        Exclude measurements within the same residue
-
-    ``--delta``
-        Report measurements only for residues separated by DELTA number of
-        residues.
-
     ``-d`` ``atom`` ``atom`` / ``--dist`` ``atom`` ``atom``
         Measure the distance (in Angstroms) between two atoms.
 
@@ -85,18 +78,26 @@ Arguments
 
         **Examples:**
 
-        Measure :math:`\alpha`-helical HA-H distances in chain 'A' for residues 23-49.
+        Measure :math:`\alpha`-helical HA-H distances in chain 'A' for
+        residues 23-49 of 2MUV, the homotetrametic influenza M2 channel.
 
         .. literalinclude:: output/cli_measure_i_2MUV_d_23:49-HA_23:49-H_only-delta_3.txt
             :language: shell-session
 
         Measure CA-CA distances between residue 20-21 for chains 'A', 'B', 'C'
-        and 'D'--excluding same residue distances and same chain distances
+        and 'D' of 2MUV--excluding same residue distances and same chain
+        distances.
 
         .. literalinclude:: output/cli_measure_i_2MUV_d_A:D.20:21-CA_A:D.20:21-CA_exclude-intra_exclude-intra-chain.txt
             :language: shell-session
 
-        Measure
+        Compare the distance between HA of residue 5 and H of residue 21 for
+        two different structures, 2KXA and 2LWA. The 2KXA structure represents
+        the wildtype hemagglutinin fusion peptide (HAfp) in the *closed*
+        helical-hairpin structure, placing these two atoms in close promixity.
+        The 2LWA structure represents the conformational ensemble of the
+        HAfp-G8A mutant with a closed structure (chain 'A'), and semi-closed
+        structure (chain 'B') and an open structure (chain 'C').
 
         .. literalinclude:: output/cli_measure_i_2KXA_2LWA_d_A:C.5-HA_A:C.21-H_only-intra-chain.txt
             :language: shell-session
@@ -109,6 +110,10 @@ Arguments
 
         Atoms must follow the standard naming conventions.
         See :ref:`atom-selectors` and :ref:`atom-filters`.
+
+        **Examples:**
+
+
 
     ``-dih`` / ``--dihedral``
         Measure the dihedral angle (in degrees) between four atoms.
