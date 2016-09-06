@@ -2,10 +2,15 @@
 Utility functions.
 """
 from math import sqrt
+
 import re
 import tempfile
 import os
-import itertools
+from itertools import combinations
+try:
+    from itertools import zip_longest
+except ImportError:
+    from itertools import izip_longest as zip_longest
 
 
 def vector_length(vector):
@@ -72,7 +77,7 @@ def convert(s):
 def grouper(n, iterable, fillvalue=None):
     "grouper(3, 'ABCDEFG', 'x') --> ABC DEF Gxx."
     args = [iter(iterable)] * n
-    return itertools.izip_longest(*args, fillvalue=fillvalue)
+    return zip_longest(*args, fillvalue=fillvalue)
 
 
 def clear_cache():
@@ -85,3 +90,127 @@ def clear_cache():
                 os.unlink(filepath)
         except Exception as e:
             print(e)
+
+
+def group_by_2(iterable):
+    """Group the items of iterable into a list of tuples of 2 items
+
+    Examples
+    --------
+    >>> group_by_2('ABCDE')
+    [('A', 'B'), ('B', 'C'), ('C', 'D'), ('D', 'E')]
+    """
+    return [(iterable[i], iterable[i + 1])
+            for i in range(len(iterable)) if i + 1 < len(iterable)]
+
+
+def filter_atoms(*atoms, **filters):
+    """Test whether the given atoms are excluded by the given filters.
+
+    Parameters
+    ----------
+    atoms: list of :obj:`mollib.Atom`
+        Atoms to filter
+    filters: dict
+        A dict with various options to filter the results.
+            - different: bool, optional:
+              If True (default), filter out atoms that are all the same.
+
+            - only_intra: bool, optional.
+              If True, only intraresidue measurements are displayed. This
+              option is mutually exclusive with residue_delta and exclude_intra.
+
+            - exclude_intra: bool, optional.
+              If True, distances within the same residue are excluded.
+
+            - only_intra_chain: bool, optional.
+              If True, only measurements within the same chain are included.
+
+            - exclude_intra_chain: bool, optional.
+              If True, measurements within the same chain are excluded.
+
+            - residue_delta: int, optional.
+              If specified, only residues with the given residue number spacing
+              are reported.
+
+            - bonded: bool, optional.
+              If True, only measurements from bonded atoms will be returned.
+              The bonded is only checked for sequential atoms. For example, if
+              3 atoms are passed, then the following bonds are checked:
+              atom1--atom2 and atom2--atom3. A bond between atom1--atom3 is not
+              checked, as this would require a cyclo molecule.
+
+    Returns
+    -------
+    bool
+        False if the atoms pass the criteria in filters and should not be
+        filtered.
+        True if the atoms fail the given filters, and they should be excluded
+
+    Examples
+    --------
+    >>> from mollib.core import Molecule, filter_atoms
+    >>> mol = Molecule('2MUV')
+    >>> a1, a2, a3 = mol['A'][23]['N'], mol['A'][23]['CA'], mol['A'][23]['C']
+    >>> filter_atoms(a1, a2, a3)
+    False
+    >>> filter_atoms(a1, a2, a3, exclude_intra=True)
+    True
+    """
+    different = filters.get('different', True)
+
+    only_intra = filters.get('only_intra', False)
+    exclude_intra = filters.get('exclude_intra', False)
+
+    only_intra_chain = filters.get('only_intra_chain', False)
+    exclude_intra_chain = filters.get('exclude_intra_chain', False)
+
+    residue_delta = filters.get('residue_delta', None)
+    bonded = filters.get('bonded', False)
+
+    # Filter atoms that are all the same, if the different filter is set
+    if different and all(i == j for i,j in combinations(atoms, 2)):
+        return True
+
+    # Filter if any of the atoms belong to multiple residues and
+    # exclude_intra is True
+    if exclude_intra and all(i.residue == j.residue
+                             for i,j in combinations(atoms, 2)):
+        return True
+
+    # Filter if the sequence of atoms are  not bonded and bonded is true.
+    # Ex: for 1-2-3, 1-2 must be bonded and 2-3 must be bonded (but not 1-3)
+    if bonded and any(i not in j.bonded_atoms()
+                      for i,j in group_by_2(atoms)):
+        return True
+
+    # Filter based on chains
+    if exclude_intra_chain and all(i.chain.id == j.chain.id
+                             for i,j in combinations(atoms, 2)):
+        return True
+
+    if only_intra_chain and any(i.chain.id != j.chain.id
+                                for i,j in combinations(atoms, 2)):
+        return True
+
+    # Calculate the residue number differences (deltas) between residues
+    # This will produce a list like [1, 2, 1]
+    deltas = [j.residue.number - i.residue.number
+              for i,j in combinations(atoms, 2)]
+
+    # Check that all of the atoms come from the same residue, if only_intra
+    if only_intra and not all(d == 0 for d in deltas):
+        return True
+
+    # Check that at least one set of residues are 'residue_delta' apart, if
+    # residue_delta is specified. Test that none of the deltas is equal to
+    # residue_delta, then the atoms should be filtered and True returned
+    if residue_delta and all(d != residue_delta for d in deltas):
+        return True
+
+    # If at least one of the residues is residue_delta apart, make sure the
+    # other ones are within residue_delta apart
+    if residue_delta and not all(d <= residue_delta for d in deltas):
+        return True
+
+    return False

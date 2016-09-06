@@ -5,7 +5,7 @@ Tools to measure geometries in molecules.
 
 import numpy as np
 from math import acos, pi, atan2, sqrt
-from .utils import calc_vector, vector_length
+from .utils import calc_vector, vector_length, filter_atoms
 
 
 def measure_distance(atom_1, atom_2):
@@ -139,7 +139,7 @@ def within_distance(atom, distance_cutoff, element='', intraresidue=False):
 
     Returns
     -------
-    list
+    list of tuples
         A list of tuples with (atom objects, distance).
 
     Examples
@@ -174,33 +174,31 @@ def within_distance(atom, distance_cutoff, element='', intraresidue=False):
 
     return atom_list
 
+
 def measure_distances(molecule, selector1, selector2,
-                      residue_delta=None, exclude_intra=False):
-    """Measure the distances for atoms selection by locator1 and locator2.
+                      **filters):
+    """Measure the distances for atoms selected by selector1 and selector2.
 
     Parameters
     ----------
     molecule: :obj:`mollib.Molecule`
         The molecule object from which distances will be measured.
-    locator1: str
+    selector1: str
         A string for locator of the first atom(s) to measure the distances
         from.
-    locator2: str
+    selector2: str
         A string for the locator of the second atom(s) to measure the distances
         to.
-    residue_delta: int, optional
-        If specified, only residues with the given residue number spacing
-        are reported.
-    exclude_intra: bool:
-        If True, distances within the same residue are excluded.
+    filters: dict
+        See :func:`mollib.core.filter_atoms`
 
 
-        .. note:: The locator respects the rules outlined in
+        .. note:: The selectors respects the rules outlined in
                   :class:`mollib.Molecule.get_atoms`
 
     Returns
     -------
-    list
+    list of tuples
         A list of tuples for (atom1, atom2, distance) for each distance
         selected.
 
@@ -208,7 +206,8 @@ def measure_distances(molecule, selector1, selector2,
     --------
     >>> from mollib.core import Molecule, measure_distances
     >>> mol = Molecule('2MUV')
-    >>> dists = measure_distances(mol, '23:25-N', '23:25-CA', residue_delta=0)
+    >>> dists = measure_distances(mol, '23:25-N', '23:25-CA', residue_delta=0, \
+                                  only_intra=True )
     >>> for i in dists: print(i)
     (A.S23-N, A.S23-CA, 1.46)
     (A.D24-N, A.D24-CA, 1.45)
@@ -222,11 +221,8 @@ def measure_distances(molecule, selector1, selector2,
     >>> for i in dists: print(i)
     (A.S23-N, A.D24-N, 3.45)
     """
-    # Keep track of which pairs have been observed to remove i-j/j-i duplicates
-    observed_pairs = {}
-
-    # Returned list
-    results = []
+    # Returned dict
+    results = {}
 
     # This function logs an error if a1 or a2 isn't properly
     # formatted. An additional message is not needed. Just skip
@@ -235,33 +231,115 @@ def measure_distances(molecule, selector1, selector2,
     atoms2 = molecule.get_atoms(selector2)
 
     if not atoms1 or not atoms2:
-        return results
+        return []
 
     for i in atoms1:
         for j in atoms2:
-            # Check if this distance has already been observed
-            observed = (True if observed_pairs.get(i, None) and
-                        j in observed_pairs[i] else False)
+            # Sort the atoms into a tuple
+            key = (i, j)
 
-            # Skip if they're the same atom or if the distance
-            # has already be printed
-            if (i == j or observed):
+            # The atoms in forward or reverse order are duplicates
+            if key in results or key[::-1] in results:
                 continue
 
-            # Skip if these don't match the residue_delta or exclude_intra
-            # options
-            if exclude_intra and i.residue.number == j.residue.number:
+            # Process the filters
+            if filter_atoms(*key, **filters):
                 continue
-            if (residue_delta is not None
-                and (j.residue.number - i.residue.number) != residue_delta):
-                continue
-
-            # Mark the pair as observed (to avoid duplicates)
-            observed_pairs.setdefault(j, []).append(i)
 
             # Add the distance to the results
-            dist = round(measure_distance(i, j),2)
-            results.append((i, j, dist))
+            dist = round(measure_distance(i, j), 2)
+            results[key] = dist
 
-    return results
+    # Return the sorted list of tuples. Sort first by chain number, then
+    # by residue number
+    sort_key = lambda i: (i[0][0].chain.id,
+                          i[0][1].chain.id,
+                          i[0][0].residue.number,
+                          i[0][1].residue.number)
+    return [(k[0], k[1], v)
+            for k, v in sorted(results.items(), key=sort_key)]
 
+
+def measure_angles(molecule, selector1, selector2, selector3,
+                   **filters):
+    """Measure the angles for atoms selected by selector1, selector 2 and
+    selector3.
+
+    Parameters
+    ----------
+    molecule: :obj:`mollib.Molecule`
+        The molecule object from which distances will be measured.
+    selector1: str
+        A string for the selector of the first atom(s) of the angle.
+    selector2: str
+        A string for the selector of the second atom(s) of the angle.
+    selector3: str
+        A string for the selector of the third atom(s) of the angle.
+    filters: dict
+        See :func:`mollib.core.filter_atoms`
+
+
+        .. note:: The locator respects the rules outlined in
+                  :class:`mollib.Molecule.get_atoms`
+
+    Returns
+    -------
+    list of tuples
+        A sorted list of tuples with (atom1, atom2, atom3, angle) for each
+        angle selected.
+
+    Examples
+    --------
+    >>> from mollib.core import Molecule, measure_angles
+    >>> mol = Molecule('2KXA')
+    >>> ang = measure_angles(mol, '3:5-N', '3:5-CA', '3:5-C', only_intra=True)
+    >>> for i in ang: print(i)
+    (A.F3-N, A.F3-CA, A.F3-C, 110.7)
+    (A.G4-N, A.G4-CA, A.G4-C, 110.9)
+    (A.A5-N, A.A5-CA, A.A5-C, 110.7)
+    >>> ang = measure_angles(mol, '3:8-C', '3:8-N', '3:8-CA', residue_delta=1, \
+                                                              bonded=True)
+    >>> for i in ang: print(i)
+    (A.F3-C, A.G4-N, A.G4-CA, 120.8)
+    (A.G4-C, A.A5-N, A.A5-CA, 121.5)
+    (A.A5-C, A.I6-N, A.I6-CA, 120.7)
+    (A.I6-C, A.A7-N, A.A7-CA, 121.2)
+    (A.A7-C, A.G8-N, A.G8-CA, 120.9)
+    """
+    # Returned dict
+    results = {}
+
+    # This function logs an error if a1 or a2 isn't properly
+    # formatted. An additional message is not needed. Just skip
+    # it if both atoms aren't found.
+    atoms1 = molecule.get_atoms(selector1)
+    atoms2 = molecule.get_atoms(selector2)
+    atoms3 = molecule.get_atoms(selector3)
+
+    if not atoms1 or not atoms2 or not atoms3:
+        return []
+
+    for i in atoms1:
+        for j in atoms2:
+            for k in atoms3:
+                # Sort the atoms into a tuple
+                key = (i, j, k)
+
+                # The atoms in forward or reverse order are duplicates
+                if key in results or key[::-1] in results:
+                    continue
+
+                # Process the filters
+                if filter_atoms(*key, **filters):
+                    continue
+
+                # Add the distance to the results
+                angle = round(measure_angle(i, j, k), 1)
+                results[key] = angle
+
+    # Return the sorted list of tuples
+    sort_key = lambda i: (i[0][0].residue.number,
+                          i[0][1].residue.number,
+                          i[0][2].residue.number)
+    return [(k[0], k[1], k[2], v)
+            for k,v in sorted(results.items(), key=sort_key)]

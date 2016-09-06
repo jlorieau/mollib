@@ -5,7 +5,7 @@ The plugin for 'measure' command.
 import logging
 
 from mollib.plugins import Plugin
-from mollib.core.geometry import (measure_distances, measure_angle,
+from mollib.core.geometry import (measure_distances, measure_angles,
                                   measure_dihedral)
 
 
@@ -38,17 +38,35 @@ class Measure(Plugin):
                                  "the specified distance. "
                                  "ex: 31:33-N 5"))
 
-        # Arguments to set inter-residue/intra-residue and chain options
-        group2 = parser.add_mutually_exclusive_group(required=False)
+        # Arguments to filter the results
+        #group2 = parser.add_mutually_exclusive_group(required=False)
+        group2 = parser.add_argument_group(title='filters')
+        group2.add_argument('--only-intra',
+                            dest='only_intra',
+                            action='store_true', default=False,
+                            help='Only report measurements within a residue')
         group2.add_argument('--exclude-intra',
                             dest='exclude_intra',
                             action='store_true', default=False,
-                            help='Exclude intra-residue measurements')
-        group2.add_argument('--delta',
+                            help='Exclude measurements within a residue')
+        group2.add_argument('--only-intra-chain',
+                            dest='only_intra_chain',
+                            action='store_true', default=False,
+                            help='Only report measurements within a chain')
+        group2.add_argument('--exclude-intra-chain',
+                            dest='exclude_intra_chain',
+                            action='store_true', default=False,
+                            help='Exclude measurements within a chain')
+        group2.add_argument('--only-delta',
                             dest='residue_delta', action='store',
                             default=None, metavar='DELTA', type=int,
                             help=('Only report residues separated by DELTA '
-                                  'residue numbers.'))
+                                  'residue numbers'))
+        group2.add_argument('--only-bonded',
+                            dest='bonded',
+                            action='store_true', default=None,
+                            help=('Only report measurements from bonded '
+                                  'atoms'))
 
         return parser
 
@@ -57,15 +75,20 @@ class Measure(Plugin):
 
     def process(self, molecule, args):
         "Measure geometries in molecules."
+        # setup the filters
+
         if 'dist' in args and args.dist is not None:
             msg = "({molecule}) {a1: >8} {a2: <8}: {dist:.2f} A"
-            observed_pairs = {}
 
             for selector1, selector2 in args.dist:
                 # Get the distances
                 dists = measure_distances(molecule, selector1, selector2,
-                                          residue_delta=args.residue_delta,
-                                          exclude_intra=args.exclude_intra)
+                                  only_intra=args.only_intra,
+                                  exclude_intra=args.exclude_intra,
+                                  only_intra_chain=args.only_intra_chain,
+                                  exclude_intra_chain=args.exclude_intra_chain,
+                                  residue_delta=args.residue_delta,
+                                  bonded=args.bonded)
 
                 # print the output message
                 for dist in dists:
@@ -75,25 +98,30 @@ class Measure(Plugin):
 
         if 'angle' in args and args.angle is not None:
             msg = "({molecule}) {a1: >8} {a2: ^8} {a3: <8}: {angle:.1f} deg"
-            for a1, a2, a3 in args.angle:
-                # This function logs an error if a1, a2 or a3 aren't properly
-                # formatted.
-                atoms1 = molecule.get_atoms(a1)
-                atoms2 = molecule.get_atoms(a2)
-                atoms3 = molecule.get_atoms(a3)
 
-                if not atoms1 or not atoms2 or not atoms3:
-                    continue
+            for selector1, selector2, selector3 in args.angle:
+                # Get the residue number arguments. By default, it is intra
+                # residue.
+                exclude_intra = args.exclude_intra
 
-                for i in atoms1:
-                   for j in atoms2:
-                       for k  in atoms3:
-                            # Skip if any atoms are the same
-                            if i==j or j==k or i==k:
-                                continue
+                residue_delta = args.residue_delta
+                residue_delta = (0 if (residue_delta is None and
+                                       not exclude_intra)
+                                 else residue_delta)
 
-                            # measure and print the angle
-                            angle = measure_angle(i, j, k)
-                            print(msg.format(molecule=molecule.name,
-                                             a1=i, a2=j, a3=k,
-                                             angle=angle))
+                angs = measure_angles(molecule, selector1, selector2, selector3,
+                                  only_intra=args.only_intra,
+                                  exclude_intra=args.exclude_intra,
+                                  only_intra_chain=args.only_intra_chain,
+                                  exclude_intra_chain=args.exclude_intra_chain,
+                                  residue_delta=args.residue_delta,
+                                  bonded=args.bonded)
+
+                # print the output message
+                for ang in angs:
+                    atom1, atom2, atom3, a = ang
+                    print(msg.format(molecule=molecule.name,
+                                     a1=atom1, a2=atom2, a3=atom3,
+                                     angle=a))
+
+
