@@ -2,7 +2,7 @@
 *.pyc
 nosetests.json
 docs/_build/*
-docs/cli/*
+docs/cli/output/*
 benchmarks/
 .idea
 .noseids
