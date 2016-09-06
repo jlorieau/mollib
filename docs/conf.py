@@ -19,6 +19,7 @@
 #
 import os
 import sys
+import textwrap
 sys.path.insert(0, os.path.abspath('..'))
 
 # -- General configuration ------------------------------------------------
@@ -361,12 +362,14 @@ def process_cmd(string):
     args = string.split()
     progname = args[0]
     args_name = '_'.join([i.strip('-') for i in args[1:]])
+    shell_cmd = "user@host$ {cmd}".format(cmd=string)
+    shell_cmd = " \\\n> ".join(textwrap.wrap(shell_cmd, 78))
 
-    cmd = "echo 'user@host$ {cmd}' > cli/cli_{args_name}.txt\n"
-    cmd += "cd ..&&python {progname} {args} >> docs/cli/cli_{args_name}.txt"
+    cmd = "echo '{shell_cmd}' > cli/output/cli_{args_name}.txt\n"
+    cmd += "cd ..&&python {progname} {args} >> docs/cli/output/cli_{args_name}.txt"
 
-    cmd = cmd.format(cmd=string, progname=progname, args=' '.join(args[1:]),
-                     args_name=args_name)
+    cmd = cmd.format(shell_cmd=shell_cmd, progname=progname,
+                     args=' '.join(args[1:]), args_name=args_name)
     os.system(cmd)
 
 process_cmd("mollib --help")
