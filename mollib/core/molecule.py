@@ -316,6 +316,7 @@ class Molecule(dict):
         >>> mol.get_atoms('A:D.22-CA')
         [A.S22-CA, B.S22-CA, C.S22-CA, D.S22-CA]
         """
+        # TODO: Add first and last residue selectors. (f:l)
         atoms = []
 
         # Find the atoms given by the names
