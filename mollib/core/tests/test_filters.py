@@ -36,9 +36,9 @@ class TestAtomFilters(unittest.TestCase):
                                       mol['A'][23]['CA'],
                                       mol['A'][24]['C'], only_intra=True))
 
-        self.assertFalse(filter_atoms(mol['A'][23]['N'],
-                                      mol['A'][23]['CA'],
-                                      mol['B'][23]['C'], only_intra=True))
+        self.assertTrue(filter_atoms(mol['A'][23]['N'],
+                                     mol['A'][23]['CA'],
+                                     mol['B'][23]['C'], only_intra=True))
 
         # Test the only_intra_chain filter
         self.assertFalse(filter_atoms(mol['A'][23]['N'],

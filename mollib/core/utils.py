@@ -172,6 +172,11 @@ def filter_atoms(*atoms, **filters):
     if different and all(i == j for i,j in combinations(atoms, 2)):
         return True
 
+    # Check that all of the atoms come from the same residue, if only_intra
+    if only_intra and not all(i.residue == j.residue
+                             for i,j in combinations(atoms, 2)):
+        return True
+
     # Filter if any of the atoms belong to multiple residues and
     # exclude_intra is True
     if exclude_intra and all(i.residue == j.residue
@@ -182,6 +187,8 @@ def filter_atoms(*atoms, **filters):
     # Ex: for 1-2-3, 1-2 must be bonded and 2-3 must be bonded (but not 1-3)
     if bonded and any(i not in j.bonded_atoms()
                       for i,j in group_by_2(atoms)):
+        # print(group_by_2(atoms), [i.bonded_atoms() for i in atoms])  #
+        # print(group_by_2(atoms), [i not in j.bonded_atoms() for i,j in group_by_2(atoms)])
         return True
 
     # Filter based on chains
@@ -197,10 +204,6 @@ def filter_atoms(*atoms, **filters):
     # This will produce a list like [1, 2, 1]
     deltas = [j.residue.number - i.residue.number
               for i,j in combinations(atoms, 2)]
-
-    # Check that all of the atoms come from the same residue, if only_intra
-    if only_intra and not all(d == 0 for d in deltas):
-        return True
 
     # Check that at least one set of residues are 'residue_delta' apart, if
     # residue_delta is specified. Test that none of the deltas is equal to
