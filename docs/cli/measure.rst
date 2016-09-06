@@ -40,26 +40,22 @@ Abbreviated Selectors
 Filters
 ~~~~~~~
 
-    ``--filter-intra``
+    ``--only-intra``
         Exclude atom selections that are *not* within the same residue number.
-        This filter ignores the chain identifier and may need to be combined
-        with ``--filter-intra-chain`` or ``--exclude-intra-chain``.
 
     ``--exclude-intra``
         Exclude atom selections that are within the same residue number.
-        This filter ignores the chain identifier and and may need to be combined
-        with ``--filter-intra-chain`` or ``--exclude-intra-chain``.
 
-    ``--filter-intra-chain``
+    ``--only-intra-chain``
         Exclude atom selections that are *not* within the same chain.
 
-    ``--filter-delta`` ``DELTA``
+    ``--only-delta`` ``DELTA``
         Exclude atom selections that don't have at least one set of atoms
         with residues separated by ``DELTA`` number. This filter ignores the
         chain identifier and and may need to be combined
         with ``--filter-intra-chain`` or ``--exclude-intra-chain``.
 
-    ``--filter-bonded``
+    ``--only-bonded``
         Exclude atom selections that are not bonded. The bonded tests linear
         bonding relationships. For example, a dihedral with four atoms (atom1,
         atom2, atom3 and atom4) must have bonds between atom1--atom2,
@@ -91,13 +87,13 @@ Arguments
         .. literalinclude:: output/cli_measure_i_2MUV_d_A:D.20:21-CA_A:D.20:21-CA_exclude-intra_exclude-intra-chain.txt
             :language: shell-session
 
-        Compare the distance between HA of residue 5 and H of residue 21 for
-        two different structures, 2KXA and 2LWA. The 2KXA structure represents
-        the wildtype hemagglutinin fusion peptide (HAfp) in the *closed*
-        helical-hairpin structure, placing these two atoms in close promixity.
-        The 2LWA structure represents the conformational ensemble of the
-        HAfp-G8A mutant with a closed structure (chain 'A'), and semi-closed
-        structure (chain 'B') and an open structure (chain 'C').
+        Compare the distance between the HA of residue 5 and the H of residue
+        21 for two different structures, 2KXA and 2LWA. The 2KXA structure
+        represents the wildtype hemagglutinin fusion peptide (HAfp) in the
+        *closed* helical-hairpin structure, placing these two atoms in close
+        promixity. The 2LWA structure represents the conformational ensemble
+        of theHAfp-G8A mutant with a closed structure (chain 'A'), and
+        semi-closed structure (chain 'B') and an open structure (chain 'C').
 
         .. literalinclude:: output/cli_measure_i_2KXA_2LWA_d_A:C.5-HA_A:C.21-H_only-intra-chain.txt
             :language: shell-session
@@ -113,6 +109,11 @@ Arguments
 
         **Examples:**
 
+        Measure the angle of the bonded 'C-1'--'N'--'H' atoms for residues
+        20-30 from the ubiquitin structure 2MJB.
+
+        .. literalinclude:: output/cli_measure_i_2MJB_a_20:30-C_20:30-N_20:30-H_only-bonded.txt
+            :language: shell-session
 
 
     ``-dih`` / ``--dihedral``
@@ -122,8 +123,4 @@ Arguments
         -dih 31-N 31-CA 31-C 32-N``
 
         Atoms must follow the standard naming conventions.
-        See :ref:`atom-selectors`.
-
-    ``-r`` / ``--ramachandran``
-        Display a (Markdown) table of the structure's ramachandran angles
-        (in degrees).
+        See :ref:`atom-selectors` and :ref:`atom-filters`.
