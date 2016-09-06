@@ -4,7 +4,6 @@ Commandline Interface
 The command line interface includes all of the mollib functions for processing
 molecules.
 
-
     .. literalinclude:: cli/cli_help.txt
         :language: shell-session
 
@@ -45,9 +44,9 @@ available to other commands.
 Arguments
 ---------
 
-    ``-i`` / ``--in``
+    ``-i`` ``id/filename`` / ``--in`` ``id/filename``
         **(required)** The listing of one or more structural identifiers
-        (ex: PDB file identiers) or filenames.
+        (ex: PDB file identifiers) or filenames.
 
         If the structure could not be found locally, a copy will be
         downloaded and cached for further analysis.
@@ -55,7 +54,7 @@ Arguments
         Multiple input identifiers and filename can be used simultaneously to
         process multiple files.
 
-    ``-o`` / ``--out``
+    ``-o`` ``filename`` / ``--out`` ``filename``
         The output filename(s).
 
         Structure files that are written have passed through the mollib parser and
@@ -66,7 +65,7 @@ Arguments
         Multiple output filenames can be used, and these will be matched
         to the corresponding entries in the input filenames or identifiers.
 
-    ``-c`` / ``--config``
+    ``-c`` ``filename`` / ``--config`` ``filename``
         The configuration file.
 
 Preprocessors Arguments
@@ -99,10 +98,10 @@ are also available.
     .. literalinclude:: cli/cli_measure_help.txt
         :language: shell-session
 
-.. _atom-selectors:
-
 Atom Selectors
 --------------
+
+.. _atom-selectors:
 
 Abbreviated Selectors
 ~~~~~~~~~~~~~~~~~~~~~
@@ -125,6 +124,35 @@ Abbreviated Selectors
 
     Finally, heteroatom chains have an asterisk appended to them. ex: 'C*'
 
+.. _atom-filters:
+
+Filters
+~~~~~~~
+
+    ``--filter-intra``
+        Exclude atom selections that are *not* within the same residue number.
+        This filter ignores the chain identifier and may need to be combined
+        with ``--filter-intra-chain`` or ``--exclude-intra-chain``.
+
+    ``--exclude-intra``
+        Exclude atom selections that are within the same residue number.
+        This filter ignores the chain identifier and and may need to be combined
+        with ``--filter-intra-chain`` or ``--exclude-intra-chain``.
+
+    ``--filter-intra-chain``
+        Exclude atom selections that are *not* within the same chain.
+
+    ``--filter-delta`` ``DELTA``
+        Exclude atom selections that don't have at least one set of atoms
+        with residues separated by ``DELTA`` number. This filter ignores the
+        chain identifier and and may need to be combined
+        with ``--filter-intra-chain`` or ``--exclude-intra-chain``.
+
+    ``--filter-bonded``
+        Exclude atom selections that are not bonded. The bonded tests linear
+        bonding relationships. For example, a dihedral with four atoms (atom1,
+        atom2, atom3 and atom4) must have bonds between atom1--atom2,
+        atom2--atom3 and atom3--atom4. Other bonds don't count.)
 
 Arguments
 ---------
@@ -142,19 +170,24 @@ Arguments
         Multiple atom pairs can used. ex: ``-d 31-N 31-CA -d 32-N 33-CA``
 
         Atoms must follow the standard naming conventions.
-        See :ref:`atom-selectors`.
+        See :ref:`atom-selectors` and :ref:`atom-filters`.
 
         **Examples:**
 
-        Report :math:`\alpha`-helical HA-H distances in chain 'A' for residues 23-49.
+        Measure :math:`\alpha`-helical HA-H distances in chain 'A' for residues 23-49.
 
-        .. literalinclude:: cli/cli_measure_i_2MUV_d_23:49-HA_23:49-H_delta_3.txt
+        .. literalinclude:: cli/cli_measure_i_2MUV_d_23:49-HA_23:49-H_only-delta_3.txt
             :language: shell-session
 
-        Report CA-CA distances between residue 20-21 for chains 'A', 'B', 'C'
-        and 'D'--excluding same residue distances
+        Measure CA-CA distances between residue 20-21 for chains 'A', 'B', 'C'
+        and 'D'--excluding same residue distances and same chain distances
 
-        .. literalinclude:: cli/cli_measure_i_2MUV_d_A:D.20:21-CA_A:D.20:21-CA_exclude-intra.txt
+        .. literalinclude:: cli/cli_measure_i_2MUV_d_A:D.20:21-CA_A:D.20:21-CA_exclude-intra_exclude-intra-chain.txt
+            :language: shell-session
+
+        Measure
+
+        .. literalinclude:: cli/cli_measure_i_2KXA_2LWA_d_A:C.5-HA_A:C.21-H_only-intra-chain.txt
             :language: shell-session
 
     ``-a`` / ``--angle``
@@ -164,7 +197,7 @@ Arguments
         -a 32-N 32-CA 32-CB``
 
         Atoms must follow the standard naming conventions.
-        See :ref:`atom-selectors`.
+        See :ref:`atom-selectors` and :ref:`atom-filters`.
 
     ``-dih`` / ``--dihedral``
         Measure the dihedral angle (in degrees) between four atoms.

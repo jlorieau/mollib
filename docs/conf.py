@@ -32,8 +32,8 @@ sys.path.insert(0, os.path.abspath('..'))
 # ones.
 extensions = [
     'sphinx.ext.autodoc',
-    'sphinxcontrib.napoleon',
     'sphinx.ext.mathjax',
+    'sphinxcontrib.napoleon',
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -374,5 +374,6 @@ process_cmd("mollib --help")
 process_cmd("mollib process --help")
 
 process_cmd("mollib measure --help")
-process_cmd("mollib measure -i 2MUV -d A:D.20:21-CA A:D.20:21-CA --exclude-intra")
-process_cmd("mollib measure -i 2MUV -d 23:49-HA 23:49-H --delta 3")
+process_cmd("mollib measure -i 2MUV -d A:D.20:21-CA A:D.20:21-CA --exclude-intra --exclude-intra-chain")
+process_cmd("mollib measure -i 2MUV -d 23:49-HA 23:49-H --only-delta 3")
+process_cmd("mollib measure -i 2KXA 2LWA -d A:C.5-HA A:C.21-H --only-intra-chain")
