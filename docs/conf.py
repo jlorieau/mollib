@@ -365,6 +365,7 @@ def process_cmd(string):
     shell_cmd = "user@host$ {cmd}".format(cmd=string)
     shell_cmd = " \\\n> ".join(textwrap.wrap(shell_cmd, 78))
 
+    # Prepare the CLI output file.
     cmd = "echo '{shell_cmd}' > cli/output/cli_{args_name}.txt\n"
     cmd += "cd ..&&python {progname} {args} >> docs/cli/output/cli_{args_name}.txt"
 
@@ -378,6 +379,6 @@ process_cmd("mollib process --help")
 
 process_cmd("mollib measure --help")
 process_cmd("mollib measure -i 2MUV -d A:D.20:21-CA A:D.20:21-CA --exclude-intra --exclude-intra-chain")
-process_cmd("mollib measure -i 2MUV -d 23:49-HA 23:49-H --only-delta 3")
+process_cmd("mollib measure -i 2MUV -d 23:49-HA 23:49-H --only-delta 3 --stats")
 process_cmd("mollib measure -i 2KXA 2LWA -d A:C.5-HA A:C.21-H --only-intra-chain")
 process_cmd("mollib measure -i 2MJB -a 20:30-C 20:30-N 20:30-H --only-bonded")
