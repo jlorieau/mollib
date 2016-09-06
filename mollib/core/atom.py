@@ -121,9 +121,9 @@ class Atom(Primitive):
     # of the atom, as a numpy array
     __slots__ = ('number', 'name', 'pos', 'charge', 'element',
                  'residue', 'chain', 'molecule',
-                 '_pK', '_topology','_repr')
+                 '_pK', '_topology','_repr', '_fullname')
     optional = ('charge', 'residue', 'chain', 'molecule',
-                '_pK', '_topology', '_repr')
+                '_pK', '_topology', '_repr', '_fullname')
     # bonded_atom_names ' ['1N', '2C-1'
 
     # Atom molecular weights. These must be labeled according the a str.title()
@@ -177,9 +177,11 @@ class Atom(Primitive):
         >>> mol['A'][16]['CA'].fullname
         '2KXA.A.G16-CA'
         """
-        molecule_name = (self.molecule.name
-                         if self.molecule is not None else '')
-        return '.'.join((molecule_name, self.__repr__()))
+        if not hasattr(self, '_fullname'):
+            molecule_name = (self.molecule.name
+                             if self.molecule is not None else '')
+            self._fullname = '.'.join((molecule_name, self.__repr__()))
+        return self._fullname
 
     @property
     def mass(self):
@@ -339,22 +341,43 @@ class Atom(Primitive):
         atom.topology -= {self_name,}
 
     def in_topology(self, atom):
-        """Test whether atom is already in this atom's topology."""
-        if (self.residue is not None and atom.residue is not None and
-            self.residue.name == atom.residue.name):
-            atom_name = atom.name
+        """Test whether atom is already in this atom's topology.
 
-            # Do not set the _topology cache if not needed
-            if not hasattr(self, '_topology'):
-                try:
-                    return atom_name in topology[self.residue.name][self.name]
-                except KeyError:
-                    return atom_name in self.topology
+        Examples
+        --------
+        >>> from mollib import Molecule
+        >>> mol = Molecule('2KXA')
+        >>> L2, F3, G4 = mol['A'][2], mol['A'][3], mol['A'][4]
+        >>> F3['N'].in_topology(F3['CA'])
+        True
+        >>> F3['N'].in_topology(L2['C'])
+        True
+        >>> F3['C'].in_topology(G4['N'])
+        True
+        >>> F3['C'].in_topology(F3['N'])
+        False
+        """
+        # Get the topology dict. Do not set the _topology cache if not needed
+        top = (self._topology
+               if hasattr(self, '_topology')
+               else topology.get(self.residue.name, {}).get(self.name, ''))
 
-        # Otherwise use the atom's fullname
-        else:
-            atom_name = atom.fullname
-            return atom_name in self.topology
+        if self.chain.id == atom.chain.id:
+            # If the two atoms are in residues that are separated by +/- 1 or 0,
+            # then the atom name is just the Atom's name with +1, -1 or nothing
+            # on the end.
+            delta = atom.residue.number - self.residue.number
+            atom_name = ("{name}{delta:+}".format(name=atom.name, delta=delta)
+                         if delta != 0 else atom.name)
+
+            # See if the atom's name is in there
+            if atom_name in top:
+                return True
+
+        # Otherwise try the atom's full name. This can happen for covalent
+        # bonds across the molecule, like Cystein bridges
+        atom_name = atom.fullname
+        return atom_name in top
 
     def replace_in_topology(self, atom, start_str='H'):
         """Replaces an atom name from the topology starting with start_str
