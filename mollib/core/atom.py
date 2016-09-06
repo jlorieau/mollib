@@ -121,9 +121,9 @@ class Atom(Primitive):
     # of the atom, as a numpy array
     __slots__ = ('number', 'name', 'pos', 'charge', 'element',
                  'residue', 'chain', 'molecule',
-                 '_pK', '_topology')
+                 '_pK', '_topology','_repr')
     optional = ('charge', 'residue', 'chain', 'molecule',
-                '_pK', '_topology')
+                '_pK', '_topology', '_repr')
     # bonded_atom_names ' ['1N', '2C-1'
 
     # Atom molecular weights. These must be labeled according the a str.title()
@@ -133,12 +133,15 @@ class Atom(Primitive):
                'S': 32.07, 'Cl': 35.45, 'Zn': 65.38, 'Br': 79.904}
 
     def __repr__(self):
+        if hasattr(self, '_repr'):
+            return self._repr
         repr = ''
         if self.chain:
             repr += "{}.".format(self.chain)
         if self.residue:
             repr += "{}-".format(self.residue)
         repr += self.name
+        self._repr = repr
         return repr
 
     def __lt__(self, other):
