@@ -19,18 +19,30 @@ def main():
                                      description='A molecular processor')
     subparsers = parser.add_subparsers(title='commands', dest='command',
                                        metavar='')
-    parser.add_argument('-d', '--debug',
+
+    # Logging levels
+    group = parser.add_mutually_exclusive_group(required=False)
+    group.add_argument('-d', '--debug',
                         action="store_const", dest="loglevel",
                         const=logging.DEBUG,
                         default=logging.WARNING,
                         help="Print debugging statements",)
-    parser.add_argument('-v', '--verbose',
+    group.add_argument('-s', '--suppress',
+                       action="store_const", dest="loglevel",
+                       const=logging.CRITICAL,
+                       default=logging.WARNING,
+                       help="Suppress all messages, except critical.", )
+    group.add_argument('-v', '--verbose',
                         action="store_const", dest="loglevel",
                         const=logging.INFO,
                         help="Print extra information")
+
+    # Version information
     parser.add_argument('--version', action='version',
                         version=('%(prog)s ' + mollib.__version__),
                         help='Show the program version')
+
+    #TODO: Add argument to just download pdb file ('-g --get')
 
     # Process the plugin subparsers
     for plugin in plugins:
