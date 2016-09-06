@@ -30,7 +30,11 @@ Functions
 
 .. autofunction:: measure_distance
 
+.. autofunction:: measure_distances
+
 .. autofunction:: measure_angle
+
+.. autofunction:: measure_angles
 
 .. autofunction:: measure_dihedral
 
