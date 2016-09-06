@@ -3,8 +3,27 @@ MolLib's documentation
 ######################
 
 
-MolLib is a Python module for manipulation biomolecular structures with an
-emphasis on biophysical analysis
+MolLib is a Python module and commandline program for the validation, quality
+analysis and manipulation molecular structures with an emphasis on biophysical
+analysis. The main objective are:
+
+- A *powerful* and *unified* Python package for analyzing and
+  manipulating structures.
+- A *powerful* and *unified* commandline program for analyzing and manipulating
+  structures.
+- To make a plugin framework to easily add tools for the validation, analysis
+  and manipulation of structures.
+- By using a common framework, tools can be *cross-validated* and *combined*.
+- All in one place: Provide standard and new quality analysis and
+  manipulation methods provided by Molprobity, Procheck and other
+  tools into one package.
+- Provide an open source reference implementation of analysis and manipulation
+  methods to document and teach how these methods are conducted.
+- Provide common functions and object structures for molecular analyses that
+  are computationally efficient (fast) and parallelizable. Computational speed
+  is achieved by converting time consuming portions of the program into C, C++
+  and Cython.
+- Produce detailed, easy to read reports on structures
 
 **Github**: https://github.com/jlorieau/mollib
 
@@ -14,14 +33,14 @@ emphasis on biophysical analysis
 Features
 ========
 
-* A powerful command line interface and python module library
 * Plugin interface to easily add functionality.
 * Common manipulations of biomolecules for biophysics, like translation,
-  Euler rotations
+  Euler rotations, hydrogenation and hydrogen bond detection.
 * Easily extendable data types (Atom, Residue, Chain, Molecule) through object
   inheritance to add functionality and data to base objects.
-* Loading, fetching, caching  and writing PDB files
+* Loading, fetching, caching  and writing PDB files.
 * Handles gzipped and and plain text files
+* A powerful commandline interface and python module library
 
 Description
 ===========
