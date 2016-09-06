@@ -41,13 +41,16 @@ Filters
 ~~~~~~~
 
     ``--only-intra``
-        Exclude atom selections that are *not* within the same residue number.
+        Exclude atom selections that are *not* within the same residue.
 
     ``--exclude-intra``
-        Exclude atom selections that are within the same residue number.
+        Exclude atom selections that are within the same residue.
 
     ``--only-intra-chain``
         Exclude atom selections that are *not* within the same chain.
+
+    ``--exclude-intra-chain``
+        Exclude atom selections that are within the same chain.
 
     ``--only-delta`` ``DELTA``
         Exclude atom selections that don't have at least one set of atoms
@@ -75,9 +78,10 @@ Arguments
         **Examples:**
 
         Measure :math:`\alpha`-helical HA-H distances in chain 'A' for
-        residues 23-49 of 2MUV, the homotetrametic influenza M2 channel.
+        residues 23-49 of 2MUV, the homotetrametic influenza M2 channel. Include
+        statistics on the measured distances.
 
-        .. literalinclude:: output/cli_measure_i_2MUV_d_23:49-HA_23:49-H_only-delta_3.txt
+        .. literalinclude:: output/cli_measure_i_2MUV_d_23:49-HA_23:49-H_only-delta_3_stats.txt
             :language: shell-session
 
         Measure CA-CA distances between residue 20-21 for chains 'A', 'B', 'C'
@@ -124,3 +128,6 @@ Arguments
 
         Atoms must follow the standard naming conventions.
         See :ref:`atom-selectors` and :ref:`atom-filters`.
+
+    ``--stats``
+        Report the average and standard deviation of all measured values.
