@@ -47,7 +47,7 @@ help:
 .PHONY: clean
 clean:
 	rm -rf $(BUILDDIR)/*
-	rm -rf cli/*
+	rm -rf cli/output/*
 
 .PHONY: html
 html:

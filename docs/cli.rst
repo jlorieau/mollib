@@ -4,7 +4,7 @@ Commandline Interface
 The command line interface includes all of the mollib functions for processing
 molecules.
 
-    .. literalinclude:: cli/cli_help.txt
+    .. literalinclude:: cli/output/cli_help.txt
         :language: shell-session
 
     ``-h`` / ``--help``
@@ -38,7 +38,7 @@ The ``process`` command is the main command for processing, reading and writing
 files. All of the options and preprocessors available in ``process`` are
 available to other commands.
 
-    .. literalinclude:: cli/cli_process_help.txt
+    .. literalinclude:: cli/output/cli_process_help.txt
         :language: shell-session
 
 Arguments
@@ -95,7 +95,7 @@ The ``measure`` command is used for measuring geometries in molecules.
 All of the options and preprocessors available from the :ref:`process-command`
 are also available.
 
-    .. literalinclude:: cli/cli_measure_help.txt
+    .. literalinclude:: cli/output/cli_measure_help.txt
         :language: shell-session
 
 Atom Selectors
@@ -176,18 +176,18 @@ Arguments
 
         Measure :math:`\alpha`-helical HA-H distances in chain 'A' for residues 23-49.
 
-        .. literalinclude:: cli/cli_measure_i_2MUV_d_23:49-HA_23:49-H_only-delta_3.txt
+        .. literalinclude:: cli/output/cli_measure_i_2MUV_d_23:49-HA_23:49-H_only-delta_3.txt
             :language: shell-session
 
         Measure CA-CA distances between residue 20-21 for chains 'A', 'B', 'C'
         and 'D'--excluding same residue distances and same chain distances
 
-        .. literalinclude:: cli/cli_measure_i_2MUV_d_A:D.20:21-CA_A:D.20:21-CA_exclude-intra_exclude-intra-chain.txt
+        .. literalinclude:: cli/output/cli_measure_i_2MUV_d_A:D.20:21-CA_A:D.20:21-CA_exclude-intra_exclude-intra-chain.txt
             :language: shell-session
 
         Measure
 
-        .. literalinclude:: cli/cli_measure_i_2KXA_2LWA_d_A:C.5-HA_A:C.21-H_only-intra-chain.txt
+        .. literalinclude:: cli/output/cli_measure_i_2KXA_2LWA_d_A:C.5-HA_A:C.21-H_only-intra-chain.txt
             :language: shell-session
 
     ``-a`` / ``--angle``
