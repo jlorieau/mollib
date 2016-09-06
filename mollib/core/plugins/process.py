@@ -14,6 +14,7 @@ class Process(Plugin):
     order = 0
 
     def options(self, subparsers):
+        #TODO: add list function
 
         # Create the parent processor parser to be used by other plugins.
         parent = Plugin.parents.setdefault('process',
