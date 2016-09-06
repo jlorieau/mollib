@@ -184,11 +184,9 @@ def filter_atoms(*atoms, **filters):
         return True
 
     # Filter if the sequence of atoms are  not bonded and bonded is true.
-    # Ex: for 1-2-3, 1-2 must be bonded and 2-3 must be bonded (but not 1-3)
-    if bonded and any(i not in j.bonded_atoms()
-                      for i,j in group_by_2(atoms)):
-        # print(group_by_2(atoms), [i.bonded_atoms() for i in atoms])  #
-        # print(group_by_2(atoms), [i not in j.bonded_atoms() for i,j in group_by_2(atoms)])
+    # Using the mollib.Atom.in_topology function because it's 30% faster than
+    # mollib.Atom.bonded()
+    if bonded and any(not j.in_topology(i) for i,j in group_by_2(atoms)):
         return True
 
     # Filter based on chains
