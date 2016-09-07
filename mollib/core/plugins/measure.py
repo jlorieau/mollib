@@ -223,7 +223,7 @@ class Measure(Plugin):
                     stats(dihs, spacing=colon_pos + 2, units='deg')
 
         if args.rama:
-            msg = ("({molecule}) {chain}.{res:<4} : "
+            msg = ("({molecule}) {chain}.{res:<5} : "
                    "{ang1:6.1f} {ang2:6.1f} deg")
 
             for residue in molecule.residues:
