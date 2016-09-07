@@ -148,8 +148,8 @@ Arguments
                   dihedrals are needed, checkout ``--rama``, ``--chi-1``.
 
     ``--rama``
-        Measure Ramachandran angles (in degrees) for a protein. Heteroatom
-        chains are skipped.
+        Measure Ramachandran angles (in degrees) for a protein. Filters and
+        options are ignored. Heteroatom chains are skipped.
 
         **Examples**
 
@@ -159,6 +159,8 @@ Arguments
         .. literalinclude:: output/cli_measure_i_2KXA_rama.txt
             :language: shell-session
 
+Options
+~~~~~~~
 
     ``--stats``
         Report the average and standard deviation of all measured values.
