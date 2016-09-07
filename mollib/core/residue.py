@@ -165,12 +165,12 @@ class Residue(dict):
         None -179.9
         """
         # Retrieve the appropriate atoms to calculate the ramachandran angles
-        c_prev = (self.prev_residue['C']
+        c_prev = (self.prev_residue.get('C', None)
                   if self.prev_residue is not None else None)
-        n = self['N']
-        ca = self['CA']
-        c = self['C']
-        n_next = (self.next_residue['N']
+        n = self.get('N', None)
+        ca = self.get('CA', None)
+        c = self.get('C', None)
+        n_next = (self.next_residue.get('N', None)
                   if self.next_residue is not None else None)
 
         angles = [None, None]  # Initial phi/psi angles are set to None
