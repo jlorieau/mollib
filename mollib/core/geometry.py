@@ -338,8 +338,105 @@ def measure_angles(molecule, selector1, selector2, selector3,
                 results[key] = angle
 
     # Return the sorted list of tuples
-    sort_key = lambda i: (i[0][0].residue.number,
+    sort_key = lambda i: (i[0][0].chain.id,
+                          i[0][1].chain.id,
+                          i[0][2].chain.id,
+                          i[0][0].residue.number,
                           i[0][1].residue.number,
                           i[0][2].residue.number)
     return [(k[0], k[1], k[2], v)
+            for k,v in sorted(results.items(), key=sort_key)]
+
+
+def measure_dihedrals(molecule, selector1, selector2, selector3, selector4,
+                      **filters):
+    """Measure the dihedral angles for atoms selected by selector1, selector 2,
+    selector3 and selector4.
+
+    Parameters
+    ----------
+    molecule: :obj:`mollib.Molecule`
+        The molecule object from which distances will be measured.
+    selector1: str
+        A string for the selector of the first atom(s) of the angle.
+    selector2: str
+        A string for the selector of the second atom(s) of the angle.
+    selector3: str
+        A string for the selector of the third atom(s) of the angle.
+    selector4: str
+        A string for the selector of the fourth atom(s) of the angle.
+    filters: dict
+        See :func:`mollib.core.filter_atoms`
+
+
+        .. note:: The locator respects the rules outlined in
+                  :class:`mollib.Molecule.get_atoms`
+
+    Returns
+    -------
+    list of tuples
+        A sorted list of tuples with (atom1, atom2, atom3, atom4, angle) for
+        each angle selected.
+
+    Examples
+    --------
+    >>> from mollib.core import Molecule, measure_angles
+    >>> mol = Molecule('2KXA')
+    >>> ang = measure_angles(mol, '3:5-N', '3:5-CA', '3:5-C', only_intra=True)
+    >>> for i in ang: print(i)
+    (A.F3-N, A.F3-CA, A.F3-C, 110.7)
+    (A.G4-N, A.G4-CA, A.G4-C, 110.9)
+    (A.A5-N, A.A5-CA, A.A5-C, 110.7)
+    >>> ang = measure_angles(mol, '3:8-C', '3:8-N', '3:8-CA', residue_delta=1, \
+                                                              bonded=True)
+    >>> for i in ang: print(i)
+    (A.F3-C, A.G4-N, A.G4-CA, 120.8)
+    (A.G4-C, A.A5-N, A.A5-CA, 121.5)
+    (A.A5-C, A.I6-N, A.I6-CA, 120.7)
+    (A.I6-C, A.A7-N, A.A7-CA, 121.2)
+    (A.A7-C, A.G8-N, A.G8-CA, 120.9)
+    """
+    # Returned dict
+    results = {}
+
+    # This function logs an error if a1 or a2 isn't properly
+    # formatted. An additional message is not needed. Just skip
+    # it if both atoms aren't found.
+    atoms1 = molecule.get_atoms(selector1)
+    atoms2 = molecule.get_atoms(selector2)
+    atoms3 = molecule.get_atoms(selector3)
+    atoms4 = molecule.get_atoms(selector4)
+
+    if not atoms1 or not atoms2 or not atoms3 or not atoms4:
+        return []
+
+    for i in atoms1:
+        for j in atoms2:
+            for k in atoms3:
+                for l in atoms4:
+                    # Sort the atoms into a tuple
+                    key = (i, j, k, l)
+
+                    # The atoms in forward or reverse order are duplicates
+                    if key in results or key[::-1] in results:
+                        continue
+
+                    # Process the filters
+                    if filter_atoms(*key, **filters):
+                        continue
+
+                    # Add the distance to the results
+                    dihedral = round(measure_dihedral(i, j, k, l), 1)
+                    results[key] = dihedral
+
+    # Return the sorted list of tuples
+    sort_key = lambda i: (i[0][0].chain.id,
+                          i[0][1].chain.id,
+                          i[0][2].chain.id,
+                          i[0][3].chain.id,
+                          i[0][0].residue.number,
+                          i[0][1].residue.number,
+                          i[0][2].residue.number,
+                          i[0][3].residue.number)
+    return [(k[0], k[1], k[2], k[3], v)
             for k,v in sorted(results.items(), key=sort_key)]
