@@ -35,6 +35,15 @@ Abbreviated Selectors
 
     Finally, heteroatom chains have an asterisk appended to them. ex: 'C*'
 
+
+    .. note:: Atom selections may encompass hundreds of atoms, which when used
+              in combination, could lead to searchers over millions of
+              combinations. To help improve their performance, you can either
+              narrow their scope by reducing the range of chains or residue
+              numbers, combine multiple _ref::`atom-filters` or use one of
+              the shortcut selectors, like ``--rama`` for Ramachandran
+              dihedral angles.
+
 .. _atom-filters:
 
 Filters
@@ -63,6 +72,12 @@ Filters
         bonding relationships. For example, a dihedral with four atoms (atom1,
         atom2, atom3 and atom4) must have bonds between atom1--atom2,
         atom2--atom3 and atom3--atom4. Other bonds don't count.)
+
+        .. note:: Bonded searches have to investigate the topology of each atom
+                  selection, which can be slower than the above filters.
+                  Combining the ``--only-bonded`` filter with other filters,
+                  like ``--only-delta 1``, can significantly speed up searches.
+
 
 Arguments
 ---------
@@ -128,6 +143,22 @@ Arguments
 
         Atoms must follow the standard naming conventions.
         See :ref:`atom-selectors` and :ref:`atom-filters`.
+
+        .. note:: If simple Ramachandran and side-chain
+                  dihedrals are needed, checkout ``--rama``, ``--chi-1``.
+
+    ``--rama``
+        Measure Ramachandran angles (in degrees) for a protein. Heteroatom
+        chains are skipped.
+
+        **Examples**
+
+        Measure the Ramachandran :math:`\phi` and :math:`\psi` angles for the
+        hemagglutinin fusion peptide structure 2KXA.
+
+        .. literalinclude:: output/cli_measure_i_2KXA_rama.txt
+            :language: shell-session
+
 
     ``--stats``
         Report the average and standard deviation of all measured values.
