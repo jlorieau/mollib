@@ -183,12 +183,6 @@ def filter_atoms(*atoms, **filters):
                              for i,j in combinations(atoms, 2)):
         return True
 
-    # Filter if the sequence of atoms are  not bonded and bonded is true.
-    # Using the mollib.Atom.in_topology function because it's 30% faster than
-    # mollib.Atom.bonded()
-    if bonded and any(not j.in_topology(i) for i,j in group_by_2(atoms)):
-        return True
-
     # Filter based on chains
     if exclude_intra_chain and all(i.chain.id == j.chain.id
                              for i,j in combinations(atoms, 2)):
@@ -214,4 +208,9 @@ def filter_atoms(*atoms, **filters):
     if residue_delta and not all(d <= residue_delta for d in deltas):
         return True
 
+    # Filter if the sequence of atoms are  not bonded and bonded is true.
+    # Using the mollib.Atom.in_topology function because it's 30% faster than
+    # mollib.Atom.bonded(). Also this is last because it is quite expensive.
+    if bonded and any(not j.in_topology(i) for i, j in group_by_2(atoms)):
+        return True
     return False
