@@ -4,7 +4,9 @@ MolLib default settings
 # Author: Justin L Lorieau
 # Copyright: 2016
 
-# TODO: move plugin settings to their own plugin submodule
+import ast
+import logging
+
 
 # Ramachandran parameters
 
@@ -37,3 +39,86 @@ listed in the subsequent items in the tuple.
   .. [Ref] G. R. Grimsley, J. M. Scholtz, C. N. Pace, Protein Sci. 18, 247-51
            (2009).
 """
+
+
+def import_config(config):
+    """Import all of the settings blocks from the configparser object.
+
+    Parameters
+    ----------
+    config: ``configparser.ConfigParser``
+        The ConfigParser object with all of the custom settings.
+    """
+    # Import this module's settings
+    import_settings(config, 'settings', locals())
+
+    # Import other module settings
+    setting_sections = [s for s in config.sections()
+                        if s.startswith('settings.')]
+    # for section in setting_sections:
+    #     try
+
+def import_settings(config, section, settings_dict):
+    """Import a settings block from the configparser object.
+
+    This function works in concert with import_config.
+
+    Parameters
+    ----------
+    config: ``configparser.ConfigParser``
+        The ConfigParser object with all of the custom settings.
+    section: str
+        The name of the settings section to import.
+    settings_dict: dict
+        The dict for the settings module.
+    """
+    err_msg = ("Parameter '{param}' in section '{sect}' could "
+               "not be read.\n Expected a '{type_expected}'.")
+
+    # Find all of the parameters in the settings_dict and replace them with
+    # values found in the config, provided the parameters are not callable
+    # functions.
+    for parameter, value in settings_dict.items():
+        if config.has_option(section, parameter) and not callable(parameter):
+
+            # Check the parameter value's type and convert accordingly
+            # These must match. If they don't an error is raise, and we
+            # proceed to the next value
+            if type(value) == int:
+                try:
+                    config_value = config.getint('settings', parameter)
+                except ValueError:
+                    logging.error(err_msg.format(param=parameter, sect=section,
+                                                 type_expected='int'))
+                    continue
+
+            elif type(value) == float:
+                try:
+                    config_value = config.getfloat('settings', parameter)
+                except ValueError:
+                    logging.error(err_msg.format(param=parameter, sect=section,
+                                                 type_expected='float'))
+                    continue
+
+            elif type(value) == bool:
+                try:
+                    config_value = config.getboolean('settings', parameter)
+                except ValueError:
+                    logging.error(err_msg.format(param=parameter, sect=section,
+                                                 type_expected='bool'))
+                    continue
+
+            else:
+                config_value = config.get('settings', parameter)  # str
+                config_value = ast.literal_eval(config_value)
+                if type(value) != type(config_value):
+                    logging.error(err_msg.format(param=parameter, sect=section,
+                                                 type_expected=type(value)))
+                    continue
+
+            # Set the value
+            settings_dict[parameter] = config_value
+
+            # Debug message
+            msg = "Config section '{}' imported '{}'"
+            logging.debug(msg.format(section, parameter))
