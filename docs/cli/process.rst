@@ -35,6 +35,25 @@ Arguments
     ``-c`` ``filename`` / ``--config`` ``filename``
         The configuration file.
 
+Configuration Files
+-------------------
+
+Mollib will check for a ``.mollibrc`` configuration file and a configuration
+file passed with the ``-c`` ``filename`` / ``--config`` ``filename``
+commandline argument for configuration parameters.
+
+Configuration files customize mollib's behavior from default values. If a
+``.mollibrc`` file is present and a configuration file is specified in the
+commandline, the commandline configuration file will take precedence for
+parameters that are mentioned in both.
+
+The following is an example configuration file. Note that only the parameters
+that need to be changed can be specified in the file.
+
+.. literalinclude:: ../../examples/setup.cfg
+    :caption: setup.cfg
+
+
 Preprocessors Arguments
 -----------------------
 
