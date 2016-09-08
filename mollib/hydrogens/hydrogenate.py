@@ -1,6 +1,19 @@
 """
 Functions to add hydrogens to atoms in a molecule.
 
+Implementation
+--------------
+The current implementation has the following features:
+
+- adds hydrogens in an idealized geometry with respect to local geometry
+  groups.
+- Ionizeable groups, like Asp and Glu carboxylates, are protonated based on the
+  molecule's sample pH and the set pKa values. When more than one heavy atom
+  can be protonated, the heavy atom closest to a hydrogen bond accector will
+  be selected.
+- Molecules with heteroatoms are correctly hydrogenated, provided the
+  topological information is provided.
+
 Molecule Configuration Parameters
 ---------------------------------
 Category: Add_hydrogens
