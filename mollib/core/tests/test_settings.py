@@ -1,12 +1,11 @@
-# -*- coding: utf-8 -*-
-
 import unittest
 try:
     import configparser
 except ImportError:
     import ConfigParser as configparser
 
-from mollib.core.settings import import_settings
+from mollib.core.settings import import_settings, import_config
+from mollib.core import settings
 
 class TestSettings(unittest.TestCase):
     "Tests the settings functions."
@@ -27,7 +26,7 @@ class TestSettings(unittest.TestCase):
 
         # Setup the config
         config = configparser.ConfigParser()
-        sample_config = """
+        sample_config = u"""
         [settings.nonmatching]
         value1 = 'new'
         value2 = 2.0
@@ -56,7 +55,7 @@ class TestSettings(unittest.TestCase):
 
         # Update the config with matching values, which should replace the
         # values
-        sample_config += """
+        sample_config += u"""
         [settings]
         value1 = 'new'
         value2 = 2.0
@@ -90,6 +89,52 @@ class TestSettings(unittest.TestCase):
 
         # Callables shouldn't be overwritten
         self.assertTrue(callable(settings.test_method))
+
+
+    def test_import_config(self):
+        "Tests the import_config function."
+
+        # Check default values in the core settings
+        func_ref = settings.register_settings
+        value_ref = settings.default_pH
+
+        # Setup the config
+        config = configparser.ConfigParser()
+        sample_config = u"""
+        [settings.nonmatching]
+        default_pH = 6.0
+        """
+        config.read_string(sample_config)
+
+        # Try changing the core settings
+        import_config(config)
+        self.assertEqual(settings.register_settings, func_ref)
+        self.assertEqual(settings.default_pH, value_ref)
+
+        # Try changing the core settings to values with a different type
+        # This should not change the values
+        sample_config = u"""
+        [settings]
+        default_pH = False
+        register_settings = False
+        """
+        config.read_string(sample_config)
+        import_config(config)
+        self.assertEqual(settings.register_settings, func_ref)
+        self.assertEqual(settings.default_pH, value_ref)
+
+        # Try chancing the core settings to values with the same type.
+        # Callables cannot be replaced.
+        sample_config = u"""
+        [settings]
+        default_pH = 6.0
+        register_settings = def test(): pass
+        """
+        config.read_string(sample_config)
+        import_config(config)
+        self.assertEqual(settings.register_settings, func_ref)
+        self.assertEqual(settings.default_pH, 6.0)
+
 
 
 
