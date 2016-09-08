@@ -5,3 +5,6 @@ from .hydrogenate import (add_hydrogens, add_one_sp2_h, add_two_sp2_h,
 # Load the plugins
 from .plugin import Hydrogenate
 hydrogenate = Hydrogenate()
+
+from mollib.core.settings import register_settings
+register_settings(settings)
