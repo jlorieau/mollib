@@ -6,10 +6,16 @@
 import argparse
 import logging
 import sys
+import os
 
 import mollib
 from mollib.plugins import Plugin
-from mollib.core.settings import list_global_settings
+from mollib.core.settings import list_global_settings, import_config
+
+try:
+    import configparser
+except ImportError:
+    import ConfigParser as configparser
 
 
 def list_plugins():
@@ -86,10 +92,14 @@ def main():
     args = parser.parse_args()
     logging.basicConfig(level=args.loglevel)
     logging.debug(args)
-    logging.debug(plugins)
 
     # Read in the configuration file(s)
-
+    config_files = ['~/.mollibrc', ]
+    if args.config:
+        config_files.append(args.config)
+    config = configparser.ConfigParser()
+    config.read(config_files)
+    import_config(config)
 
     # Prepare and preprocess the structure
     molecules = [mollib.Molecule(identifier) for identifier in args.i[0]]
