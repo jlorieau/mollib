@@ -53,8 +53,8 @@ Indices and tables
 .. toctree::
    :maxdepth: 3
 
-   cli
-   api
+   cli/cli
+   api/api
 
 
 * :ref:`genindex`

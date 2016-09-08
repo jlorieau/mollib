@@ -1,7 +1,3 @@
-#################
-API Documentation
-#################
-
 ***********
 Core Module
 ***********
@@ -56,19 +52,3 @@ Settings
 
 .. automodule:: mollib.core.settings
     :members:
-
-*******
-Plugins
-*******
-
-Base Classes
-============
-
-.. automodule:: mollib.plugins
-    :members:
-    :imported-members:
-
-.. include:: plugins/hydrogens.rst
-
-
-

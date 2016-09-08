@@ -4,7 +4,7 @@ Commandline Interface
 The command line interface includes all of the mollib functions for processing
 molecules.
 
-    .. literalinclude:: cli/output/cli_help.txt
+    .. literalinclude:: output/cli_help.txt
         :language: shell-session
 
     ``-h`` / ``--help``
@@ -33,5 +33,5 @@ mollib plugins are installed.
 .. toctree::
     :maxdepth: 1
 
-    cli/process
-    cli/measure
+    process
+    measure
