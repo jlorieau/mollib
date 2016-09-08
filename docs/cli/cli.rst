@@ -4,8 +4,8 @@ Commandline Interface
 The command line interface includes all of the mollib functions for processing
 molecules.
 
-    .. literalinclude:: output/cli_help.txt
-        :language: shell-session
+    .. include:: output/cli_help.html
+
 
     ``-h`` / ``--help``
         Get basic help information on usage of the command line interface, or one
@@ -15,12 +15,28 @@ molecules.
         Display debug messages to the terminal. This is usually only useful to
         developers or in helping to debug issues.
 
+    ``-s`` / ``--suppress``
+        Display only errors and critical errors.
+
     ``-v`` / ``--verbose``
         Display informational messages to the terminal. By default, only warning
         and error messages are displayed.
 
     ``--version``
         Display the version number of the installed mollib.
+
+    ``--list-plugins``
+        Display a list of installed and enabled plugins.
+
+        **Examples**
+
+        .. include:: output/cli_list-plugins.html
+
+    ``--list-settings``
+        Display a list of the settings sections that will be interpreted from
+        configuration files.
+
+        .. include:: output/cli_list-settings.html
 
 ********
 Commands

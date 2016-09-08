@@ -365,15 +365,39 @@ def process_cmd(string):
     shell_cmd = "user@host$ {cmd}".format(cmd=string)
     shell_cmd = " \\\n> ".join(textwrap.wrap(shell_cmd, 78))
 
+
     # Prepare the CLI output file.
-    cmd = "echo '{shell_cmd}' > cli/output/cli_{args_name}.txt\n"
-    cmd += "cd ..&&python {progname} {args} >> docs/cli/output/cli_{args_name}.txt"
+    # cmd = "echo '.. raw:: html\n\n' > cli/output/cli_{args_name}.html\n"
+    cmd = ("echo '{shell_cmd}' "
+            "> cli/output/cli_{args_name}.txt\n")
+
+    cmd += ("echo '.. raw:: html\n\n'"
+           "> cli/output/cli_{args_name}.html\n")
+
+    cmd += ("cd ..&&"
+            "python {progname} {args}"
+            ">> docs/cli/output/cli_{args_name}.txt\n")
+
+    cmd += ("pygmentize -l shell-session -f html docs/cli/output/cli_{args_name}.txt"
+            "|sed 's/^/    /g' >> docs/cli/output/cli_{args_name}.html\n")
+
+    # Replace ANSI colors
+    cmd += ("cat -e docs/cli/output/cli_{args_name}.html"
+            "|sed 's/\$$//g'"  # Remove $ at the end of lines
+            "|sed 's/\^\[\[92m/<font color=\"green\">/g'"
+            "|sed 's/\^\[\[0m/<\/font>/g'"
+            ">docs/cli/output/cli_{args_name}.tmp\n")
+
+    cmd += ("mv docs/cli/output/cli_{args_name}.tmp docs/cli/output/cli_{args_name}.html\n")
+    cmd += ("rm docs/cli/output/cli_{args_name}.txt\n")
 
     cmd = cmd.format(shell_cmd=shell_cmd, progname=progname,
                      args=' '.join(args[1:]), args_name=args_name)
     os.system(cmd)
 
 process_cmd("mollib --help")
+process_cmd("mollib --list-plugins")
+process_cmd("mollib --list-settings")
 
 process_cmd("mollib process --help")
 
