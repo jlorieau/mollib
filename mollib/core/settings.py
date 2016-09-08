@@ -17,10 +17,6 @@ MolLib default settings
 import ast
 import logging
 from collections import OrderedDict
-try:
-    import configparser
-except ImportError:
-    import ConfigParser as configparser
 
 
 default_pH = 7.0
