@@ -5,9 +5,29 @@
 
 import argparse
 import logging
+import sys
 
 import mollib
 from mollib.plugins import Plugin
+from mollib.core.settings import list_global_settings
+
+
+def list_plugins():
+    "Prints a list of the installed plugins."
+    print('Installed plugins:')
+    for plugin in Plugin.plugin_instances():
+        msg = '\t{:<15} '.format(plugin.name)
+        enabled = ('(\033[92mEnabled\033[0m)' if plugin.enabled
+                   else '(\033[91mNot Enabled\033[0m)')
+        print(msg + enabled)
+
+
+def list_settings():
+    "Prints a list of the installed setting sections."
+    print('Installed settings sections:')
+    for section in list_global_settings():
+        msg = '\t[{}]'.format(section)
+        print(msg)
 
 
 def main():
@@ -31,13 +51,19 @@ def main():
                        action="store_const", dest="loglevel",
                        const=logging.CRITICAL,
                        default=logging.WARNING,
-                       help="Suppress all messages, except critical.", )
+                       help="Suppress all messages, except critical", )
     group.add_argument('-v', '--verbose',
                         action="store_const", dest="loglevel",
                         const=logging.INFO,
                         help="Print extra information")
 
-    # Version information
+    # Version information and other installation information
+    parser.add_argument('--list-plugins',
+                       action='store_true',
+                       help='List the installed plugins')
+    parser.add_argument('--list-settings',
+                       action='store_true',
+                       help='List the available sections for settings')
     parser.add_argument('--version', action='version',
                         version=('%(prog)s ' + mollib.__version__),
                         help='Show the program version')
@@ -48,11 +74,22 @@ def main():
     for plugin in plugins:
         plugin.options(subparsers)
 
+    # process the --list-settings and --list_plugins options
+    if '--list-plugins' in sys.argv:
+        list_plugins()
+        exit()
+    if '--list-settings' in sys.argv:
+        list_settings()
+        exit()
+
     # Parse the commands
     args = parser.parse_args()
     logging.basicConfig(level=args.loglevel)
     logging.debug(args)
     logging.debug(plugins)
+
+    # Read in the configuration file(s)
+
 
     # Prepare and preprocess the structure
     molecules = [mollib.Molecule(identifier) for identifier in args.i[0]]
