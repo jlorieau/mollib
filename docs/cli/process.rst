@@ -59,8 +59,8 @@ Preprocessors Arguments
 
     ``--hydrogenate``
         Strip all hydrogen atoms and re-add hydrogens based on ideal geometry.
-        More details on the methods can be found in the API documentation
-        :doc:`../api/hydrogens`.
+        More details on the current implementation can be found in the API
+        documentation :doc:`../api/hydrogens`.
 
 
         .. note:: Adding two hydrogens to an sp2 heavy atom will label the
@@ -68,7 +68,7 @@ Preprocessors Arguments
                   happens with the HD2 hydrogens of asparagine residues, for
                   example.
 
-        .. note:: Adding two hydrogens to an sp3 heavy atom should will label
+        .. note:: Adding two hydrogens to an sp3 heavy atom will label
                   the pro-R hydrogen 'H2' and the pro-S hydrogen 'H3'. Some
                   exceptions in proteins exist. By default, the JBNMR 12, 1-23
                   (1998) convention is followed.
