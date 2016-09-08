@@ -104,6 +104,11 @@ def import_settings(config, section, settings_dict):
         The name of the settings section to import.
     settings_dict: dict
         The dict for the settings module.
+
+
+    .. note:: The config parser only stores case-insensitive parameter names.
+              Consequently, setting parameters should not have the same
+              lowercase names.
     """
     err_msg = ("Parameter '{param}' in section '{sect}' could "
                "not be read.\n Expected a '{type_expected}'.")
