@@ -118,7 +118,8 @@ def measure_dihedral(atom_1, atom_2, atom_3, atom_4):
     return angle
 
 
-def within_distance(atom, distance_cutoff, element='', intraresidue=False):
+def within_distance(atom, distance_cutoff, element='', intraresidue=False,
+                    nearest_atom_selection=None):
     """Find all atoms of element within the specified distance (in Angstroms)
     of atom.
 
@@ -136,6 +137,9 @@ def within_distance(atom, distance_cutoff, element='', intraresidue=False):
     intraresidue: bool
         If True, atoms within the same residue as atom will be included as
         well.
+    nearest_atom_selelction: iterable, optional
+        If specified, the nearest neighbors will be searched from this iterable
+        instead of the atom.molecule attribute.
 
     Returns
     -------
@@ -155,13 +159,16 @@ def within_distance(atom, distance_cutoff, element='', intraresidue=False):
     ['A.A28-O 3.4A', 'A.Q31-O 4.9A', 'A.Q31-OE1 4.3A']
     >>>
     """
-    # TODO: This would be a useful function to optimize
+    # TODO: This would be a useful function to optimize with a KD-tree
     atom_list = []
     element_list = element.split('|') if element != '' else []
     d2 = distance_cutoff * distance_cutoff
-    molecule = atom.molecule
 
-    for a in molecule.atoms:
+    # Get an iterable of atoms to search
+    atoms = (nearest_atom_selection if nearest_atom_selection is not None else
+             atom.molecule.atoms)
+
+    for a in atoms:
         if a == atom or (element_list and a.element not in element_list):
             continue
         if intraresidue is False and a.residue == atom.residue:
