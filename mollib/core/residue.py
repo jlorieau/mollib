@@ -79,7 +79,7 @@ class Residue(dict):
         super(Residue, self).__init__(*args, **kwargs)
 
     def __repr__(self):
-        return u"{}{}".format(self.letter, self.number)
+        return "{}{}".format(self.letter, self.number)
 
     @property
     def atoms(self):

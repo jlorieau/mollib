@@ -15,7 +15,7 @@ class Chain(dict):
         super(Chain, self).__init__(*args, **kwargs)
 
     def __repr__(self):
-        return u"{}".format(self.id)
+        return "{}".format(self.id)
 
     @property
     def residues(self):

@@ -946,20 +946,20 @@ class Molecule(dict):
         """
         t = match.groups()
         # Convert types
-        t = (t[0].strip(),  # 0: type
+        t = (str(t[0]).strip(),  # 0: type
              int(t[1]),     # 1: number
-             t[2].strip(),  # 2: name
-             t[3].strip(),  # 3: alt_loc
-             t[4].strip(),  # 4: residue_name
-             t[5].strip(),  # 5: chain
+             str(t[2]).strip(),  # 2: name
+             str(t[3]).strip(),  # 3: alt_loc
+             str(t[4]).strip(),  # 4: residue_name
+             str(t[5]).strip(),  # 5: chain
              int(t[6]),     # 6: residue_number
-             t[7].strip(),  # 7: icode
+             str(t[7]).strip(),  # 7: icode
              float(t[8]),   # 8: x
              float(t[9]),   # 9: y
              float(t[10]),  # 10: z
              float(t[11]),  # 11: occupancy
              float(t[12]),  # 12: B-factor
-             t[13].strip(), # 13: element
+             str(t[13]).strip(), # 13: element
              (float(t[14]) if str(t[14]).strip() else '')  # 14: charge
              )
 

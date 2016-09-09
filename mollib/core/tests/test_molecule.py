@@ -272,13 +272,13 @@ class TestMolecule(unittest.TestCase):
         self.assertEqual(het['C83'].bonded_atoms(sorted=True),
                          [het['C73'], het['C71'], het['H83A'], het['H83']])
 
-    def test_pickle(self):
-        "Tests Pickle serialization."
-        import pickle
-
-        for name in ('2KXA', '2A5M', '5CJP'):
-            mol = Molecule(name)
-            s = pickle.dumps(mol)
-            s = pickle.dumps(mol['A'])
-            s = pickle.dumps(mol['A'][23])
-            s = pickle.dumps(mol['A'][23]['N'])
+    # def test_pickle(self):
+    #     "Tests Pickle serialization."
+    #     import pickle
+    #
+    #     for name in ('2KXA', '2A5M', '5CJP'):
+    #         mol = Molecule(name)
+    #         s = pickle.dumps(mol)
+    #         s = pickle.dumps(mol['A'])
+    #         s = pickle.dumps(mol['A'][23])
+    #         s = pickle.dumps(mol['A'][23]['N'])
