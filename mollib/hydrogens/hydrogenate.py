@@ -14,10 +14,10 @@ The current implementation has the following features:
 - Molecules with heteroatoms are correctly hydrogenated, provided the
   topological information is provided.
 
-Molecule Configuration Parameters
----------------------------------
+Read Molecule Parameters
+~~~~~~~~~~~~~~~~~~~~~~~~
 Category: Add_hydrogens
-name: atom.full_name and '_' and angle(s)
+    - name: atom.full_name and '_' and angle(s)
 
 """
 # TODO: work with the residue ionization groups
