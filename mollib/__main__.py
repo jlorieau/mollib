@@ -94,7 +94,7 @@ def main():
     logging.debug(args)
 
     # Read in the configuration file(s)
-    config_files = ['~/.mollibrc', ]
+    config_files = [os.path.expanduser('~/.mollibrc'), ]
     if args.config:
         config_files.append(args.config)
     config = configparser.ConfigParser()
