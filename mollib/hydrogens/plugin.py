@@ -2,8 +2,6 @@
 The plugin for the hydrogen submodule.
 """
 
-import logging
-
 from mollib.plugins import Plugin
 from mollib.hydrogens import add_hydrogens
 
