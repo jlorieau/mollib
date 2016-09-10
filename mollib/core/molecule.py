@@ -412,11 +412,12 @@ class Molecule(dict):
             The category of the parameter.
         name: str
             The name of the parameter. ex: 'A.Q61-CA'
-        value
+        value:
             The value of the parameter
 
 
-        .. note:: Common categories include:
+        .. note:: Common categories include
+
                   - 'Structural Features': These are a listing of parameters
                     that highlight structural features within the molecule.
                     They're expected to be invariant to whole-body translations
