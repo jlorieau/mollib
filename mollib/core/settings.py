@@ -110,6 +110,8 @@ def import_settings(config, section, settings_dict):
               Consequently, setting parameters should not have the same
               lowercase names.
     """
+    # TODO: add string type validation
+
     err_msg = ("Parameter '{param}' in section '{sect}' could "
                "not be read.\n Expected a '{type_expected}'.")
 
