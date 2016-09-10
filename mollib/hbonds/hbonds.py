@@ -3,6 +3,9 @@ Functions to detect hydrogen bonds in molecules.
 
 Implementation
 --------------
+The current implementation finds acceptor and donor dipoles and finds acceptor
+--donor pairs that are within a distance range and angle range determined in
+the settings.
 
 Written Molecule Parameters
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -55,8 +58,8 @@ class HydrogenBond(object):
         - value: the distance (in A) between the :obj:`Atom` objects
     angles: dict
         A dict of the angles between atoms that define the hydrogen bond.
-        - key: tuple of three :obj:`Atom objects
-        - value: the angle (in deg) between the :obj:`Atom objects
+        - key: tuple of three :obj:`Atom` objects
+        - value: the angle (in deg) between the :obj:`Atom` objects
     """
 
     donor = None
@@ -210,6 +213,7 @@ def dipole_distances(donor_dipole, acceptor_dipole):
     dict
         A dict with the labels (keys) and distances (values). The keys are
         formatted as a1 for acceptor1 or d2 for donor2.
+
         ex: {'d1a1': 3.86,
              'd2a1': 3.22,
              'd1a2': 2.10,
