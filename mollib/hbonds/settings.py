@@ -14,7 +14,7 @@ acceptor2_elements = 'C|13C'
 operator.
 """
 
-hbond_distance_cutoff = {'d1a1': (1.9, 2.6),
+hbond_distance_cutoff = {'d1a1': (1.8, 2.5),
                          }
 """The cutoff distance ranges (in A) between atoms to be considered a hydrogen
 bond.
@@ -22,7 +22,7 @@ bond.
 'd2a2':
     The distance between the donor2 and acceptor2 atoms
 """
-hbond_angle_cutoff = {'theta': (100., 170.),
+hbond_angle_cutoff = {'theta': (110., 180.),
                        'phi': (-180., 180.)
                       }
 """The cutoff angle ranges (in deg) between atoms to be considered a
