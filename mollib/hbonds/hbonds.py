@@ -169,6 +169,7 @@ def find_dipoles(molecule, donor1_elements=None, donor2_elements=None,
     acceptor_list = list()
 
     for atom in molecule.atoms:
+
         if atom.element in donor2_elements:
             # see if donor2 is bonded to an atom of type donor1_element to form
             # a dipole
@@ -180,7 +181,7 @@ def find_dipoles(molecule, donor1_elements=None, donor2_elements=None,
                     dipole = Dipole(atom1=bonded_atom, atom2=atom)
                     donor_list.append(dipole)
 
-        elif atom.element in acceptor2_elements:
+        if atom.element in acceptor2_elements:
             # see if acceptor2 is bonded to an atom of type acceptor1_element
             # to form a dipole
             bonded_atoms = atom.bonded_atoms(sorted=True)
@@ -191,8 +192,6 @@ def find_dipoles(molecule, donor1_elements=None, donor2_elements=None,
                 if bonded_atom.element in acceptor1_elements:
                     dipole = Dipole(atom1=bonded_atom, atom2=atom)
                     acceptor_list.append(dipole)
-        else:
-            continue
 
     return donor_list, acceptor_list
 
@@ -340,7 +339,7 @@ def find_hbond_partners(molecule, donor1_elements=None, donor2_elements=None,
     >>> print(len(hbonds))
     18
     >>> print(hbonds[0].short_repr())
-    Hbond don.(A.G1-H2--A.G1-N) - acc.(A.G20-O--A.G20-C)
+    Hbond don.(A.G1-H1--A.G1-N) - acc.(A.G20-O--A.G20-C)
     """
     # Load default parameters
     dist_cutoff = (dist_cutoff if dist_cutoff is not None else
