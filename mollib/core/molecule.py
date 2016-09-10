@@ -1108,6 +1108,7 @@ class Molecule(dict):
         >>> print("{:.2f}".format(mol.mass))
         2445.07
         """
+        # TODO: turn into method that defaults to excluding water molecule
         return sum(a.mass for a in self.atoms)
 
     @property
