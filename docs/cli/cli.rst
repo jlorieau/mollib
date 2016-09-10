@@ -51,3 +51,4 @@ mollib plugins are installed.
 
     process
     measure
+    hbonds

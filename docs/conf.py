@@ -407,3 +407,6 @@ process_cmd("mollib measure -i 2MUV -d 23:49-HA 23:49-H --only-delta 3 --stats")
 process_cmd("mollib measure -i 2KXA 2LWA -d A:C.5-HA A:C.21-H --only-intra-chain")
 process_cmd("mollib measure -i 2MJB -a 20:30-C 20:30-N 20:30-H --only-bonded")
 process_cmd("mollib measure -i 2KXA --rama")
+
+process_cmd("mollib hbonds --help")
+process_cmd("mollib hbonds -i 2KXA")
