@@ -6,6 +6,8 @@
 import unittest
 import weakref
 
+from nose.plugins.attrib import attr
+
 from mollib.core import Molecule
 
 aminoacids = {'ALA', 'GLY', 'SER', 'THR', 'MET', 'CYS', 'ILE', 'LEU',
@@ -44,8 +46,19 @@ class TestMolecule(unittest.TestCase):
         self.assertEqual(ref(), molecules['2KXA'])
         self.assertEqual(ref(), mol)
 
+    @attr('slow')
     def test_large_molecule(self):
-        "Tests the parsing and performance of a very large protein complex."
+        """Tests the parsing and performance of a very large protein complex.
+
+        .. note:: This test takes about 3.3s. The cProfile bottlenecks are:
+                  - 1.093s : Molecule._match_atom
+                  - 0.626s : Primitives.__init__
+                  - 0.320s : bzip.readlines
+                  - 0.225s : collections.item
+                  - 0.170s : Molecule.prev_residue
+                  - 0.165s : Molecule.next_residue
+                  - 0.101s : collections.__iter__
+        """
         import string
 
         mol = Molecule('3H0G')
