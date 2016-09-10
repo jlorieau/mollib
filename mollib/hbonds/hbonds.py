@@ -6,31 +6,34 @@ Implementation
 
 Written Molecule Parameters
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Category: hbonds
-    - list of :obj:`mollib.hbond.HydrogenBond` objects
+Category: 'Structural Features'
+    hbonds: list of :obj:`HydrogenBond` objects
 """
 
-import logging
 from collections import namedtuple
-from math import pi, acos
+from math import pi, acos, atan2
 import numpy as np
 
 from . import settings
-from mollib.core import vector_length, calc_vector, within_distance
+from mollib.core import measure_distance, calc_vector, vector_length
 
 
-Dipole = namedtuple('Dipole','atom1 atom2')
-"""An electric dipole namedtuple.
+class Dipole(namedtuple('Dipole','atom1 atom2')):
+    """An electric dipole namedtuple.
 
-Attributes
-----------
-atom1: :obj:`mollib.Atom`
-    The first atom in the dipole. This is the 'H' atom in an hbond donor or
-    the 'O' atom in a hbond acceptor.
-atom2: :obj:`mollib.Atom`
-    The second atom in the dipole. This is the 'N' atom in an hbond donor or
-    the the 'C' atom in an hbond acceptor.
-"""
+    Attributes
+    ----------
+    atom1: :obj:`mollib.Atom`
+        The first atom in the dipole. This is the 'H' atom in an hbond donor or
+        the 'O' atom in a hbond acceptor.
+    atom2: :obj:`mollib.Atom`
+        The second atom in the dipole. This is the 'N' atom in an hbond donor or
+        the the 'C' atom in an hbond acceptor.
+    """
+
+    def __repr__(self):
+        return self.atom1.__repr__() + '--' + self.atom2.__repr__()
+
 
 class HydrogenBond(object):
     """A class for storing information on a hydrogen bond.
@@ -69,20 +72,35 @@ class HydrogenBond(object):
                 continue
             setattr(self, k, v)
 
+    def short_repr(self):
+        "The short representation of the HydrogenBond."
+        return "Hbond don.({d}) - acc.({a})".format(d=self.donor,
+                                                      a=self.acceptor)
+
     def __repr__(self):
-        s = "Hbond "
-        s += "don.({d}) - acc.({a}). ".format(d=self.donor,
-                                              a=self.acceptor)
+        "The long representation of the HydrogenBond."
+        s = self.short_repr()
+
         if self.major_classification:
             s += "{major}".format(major=self.major_classification)
         if self.minor_classification:
             s += " ({minor})".format(minor=self.minor_classification)
         s += ": "
         s = s.ljust(35)  # Even the classification column
-        for k, v in self.distances.items():
-            s += '\n\tR({})={:.1f}A'.format(k, v)
-        for k, v in self.angles.items():
-            s += '\n\tangle({})={:.1f}deg'.format(k, v)
+
+        # Add the distances, sorted by distance
+        for k, v in sorted(self.distances.items(), key=lambda i: i[1]):
+            # Convert strings like 'a2d2' to '{a2}{d2}'
+            names = ''.join(('{', k[0:2], '}...{', k[2:4], '}'))
+            names = names.format(d1=self.donor.atom1, d2=self.donor.atom2,
+                                 a1=self.acceptor.atom1, a2=self.acceptor.atom2)
+
+            s += '\n\tR({}) = {:.1f} A'.format(names, v)
+
+        # Add the angles, sorted by angle name
+        for k, v in sorted(self.angles.items(), key=lambda i: i[0]):
+            s += '\n\tangle({}) = {:.1f} deg'.format(k, v)
+
         return s
 
 
@@ -90,32 +108,42 @@ def find_dipoles(molecule, donor1_elements=None, donor2_elements=None,
                  acceptor1_elements=None, acceptor2_elements=None):
     """Find all of the hydrogen bond donor and acceptor dipoles.
 
+    Hydrogen bond dipoles are defined as:
+
+    donor2--donor1 .... acceptor1--acceptor2
+
     Parameters
     ----------
-    molecule
-    donor1_elements
-    donor2_elements
-    acceptor1_elements
-    acceptor2_elements
+    molecule: :obj:`mollib.Molecule`
+        The molecule to find the dipoles in.
+    donor1_elements: str, optional
+        The string for the elements for the donor1 atom. The '|' string is
+        supported. ex: 'HA|H'
+    donor2_elements: str: optional
+        The string for the elements for the donor2 atom.
+    acceptor1_elements: str, optional
+        The string for the elements for the acceptor1 atom.
+    acceptor2_elements: str, optional
+        The string for the elements for the acceptor2 atom.
 
     Returns
     -------
-    Two sets of :obj:`Dipole` objects
-        set1: donor dipole set
-        set2: acceptor dipole set
+    Two lists of :obj:`Dipole` objects
+        list1: donor dipole set
+        list2: acceptor dipole set
 
     Examples
     --------
     >>> from mollib.core import Molecule
     >>> mol = Molecule('2KXA')
-    >>> donor_set, acceptor_set = find_dipoles(mol)
+    >>> donor_list, acceptor_list = find_dipoles(mol)
     >>> msg = "There are {} donor dipoles and {} acceptor dipoles."
-    >>> print(msg.format(len(donor_set), len(acceptor_set)))
+    >>> print(msg.format(len(donor_list), len(acceptor_list)))
     There are 31 donor dipoles and 31 acceptor dipoles.
-    >>> sorted(donor_set)[0]
-    Dipole(atom1=A.A5-N, atom2=A.A5-H)
-    >>> sorted(acceptor_set)[0]
-    Dipole(atom1=A.A5-C, atom2=A.A5-O)
+    >>> sorted(donor_list)[0]
+    A.A5-H--A.A5-N
+    >>> sorted(acceptor_list)[0]
+    A.A5-O--A.A5-C
     """
     # Get the donor and acceptor elements values from settings if these aren't
     # specified in the function parameters,  and it splits the atom elements at
@@ -137,182 +165,237 @@ def find_dipoles(molecule, donor1_elements=None, donor2_elements=None,
 
     # Got through the molecule atoms and find all of the donor2 and acceptor2
     # atoms. These are used because these atoms are consistently heavy atoms.
-    donor_set = set()
-    acceptor_set = set()
+    donor_list = list()
+    acceptor_list = list()
 
     for atom in molecule.atoms:
         if atom.element in donor2_elements:
             # see if donor2 is bonded to an atom of type donor1_element to form
             # a dipole
-            bonded_atoms = atom.bonded_atoms()
+            bonded_atoms = atom.bonded_atoms(sorted=True)
             for bonded_atom in bonded_atoms:
 
                 # If a suitable dipole partner is found, create a donor diple
                 if bonded_atom.element in donor1_elements:
-                    dipole = Dipole(atom1=atom, atom2=bonded_atom)
-                    donor_set.add(dipole)
+                    dipole = Dipole(atom1=bonded_atom, atom2=atom)
+                    donor_list.append(dipole)
 
         elif atom.element in acceptor2_elements:
             # see if acceptor2 is bonded to an atom of type acceptor1_element
             # to form a dipole
-            bonded_atoms = atom.bonded_atoms()
+            bonded_atoms = atom.bonded_atoms(sorted=True)
             for bonded_atom in bonded_atoms:
 
                 # If a suitable dipole partner is found, create an acceptor
                 # dipole
                 if bonded_atom.element in acceptor1_elements:
-                    dipole = Dipole(atom1=atom, atom2=bonded_atom)
-                    acceptor_set.add(dipole)
+                    dipole = Dipole(atom1=bonded_atom, atom2=atom)
+                    acceptor_list.append(dipole)
         else:
             continue
 
-    return donor_set, acceptor_set
+    return donor_list, acceptor_list
 
 
-# def dipole_distance(dipole1, dipole2, dipole_distance_cutoff=None):
-#     """
-#
-#     Parameters
-#     ----------
-#     dipole1
-#     dipole2
-#     dipole_distance_cutoff
-#
-#     Returns
-#     -------
-#
-#     """
+def dipole_distances(donor_dipole, acceptor_dipole):
+    """Measure the distances between atoms in a dipole.
+
+    Parameters
+    ----------
+    donor_dipole: :obj:`Dipole`
+        The hydrogen bond donor dipole
+    acceptor_dipole: :obj:`Dipole`
+        The hydrogen bond acceptor dipole
+    Returns
+    -------
+    dict
+        A dict with the labels (keys) and distances (values). The keys are
+        formatted as a1 for acceptor1 or d2 for donor2.
+        ex: {'d1a1': 3.86,
+             'd2a1': 3.22,
+             'd1a2': 2.10,
+             'd2a2': 2.80,}
+
+    Examples
+    --------
+    >>> from mollib import Molecule
+    >>> mol = Molecule('2KXA')
+    >>> d_dipole = Dipole(atom1=mol['A'][7]['H'], atom2=mol['A'][7]['N'])
+    >>> a_dipole = Dipole(atom1=mol['A'][3]['O'], atom2=mol['A'][3]['C'])
+    >>> sorted(dipole_distances(d_dipole, a_dipole).items())
+    [('d1a1', 2.06), ('d1a2', 3.27), ('d2a1', 3.03), ('d2a2', 4.25)]
+    """
+    a1, a2 = acceptor_dipole.atom1, acceptor_dipole.atom2
+    d1, d2 = donor_dipole.atom1, donor_dipole.atom2
+
+    returned_dict = {}
+    returned_dict['d1a1'] = round(measure_distance(d1, a1), 2)
+    returned_dict['d1a2'] = round(measure_distance(d1, a2), 2)
+    returned_dict['d2a1'] = round(measure_distance(d2, a1), 2)
+    returned_dict['d2a2'] = round(measure_distance(d2, a2), 2)
+
+    return returned_dict
 
 
-# def find_hbond_partners(molecule,
-#                         dist_cutoff=settings.hbond_distance_cutoff,
-#                         ang_cutoff=settings.hbond_angle_cutoff):
-#     """Finds the hydrogen bond partners between donor atoms and an
-#     acceptor based on distance.
-#
-#     Parameters
-#     ----------
-#     molecule: :obj:`mollib.Molecule`
-#         The molecule to find hydrogen bonds in.
-#     dist_cutoff: dict, optional
-#         The distance cutoff dict (see the settings file)
-#     ang_cutoff: dict, optional
-#         The angle range cutoff dict (see the settings file)
-#
-#     Returns
-#     -------
-#     list of :obj:`HydrogenBond` objects
-#     """
-#     # Find all of the donor and acceptor elements
-#     elements = dict()  # A 3-member tuple with distance, donor_element,
-#                        # acceptor_element
-#     for cutoff_str, cutoff_dist in dist_cutoff.items():
-#         donor_element, acceptor_element = cutoff_str.split('-')
-#
-#         rounded_dist = round(cutoff_dist, 1)  # round the distance to 1 decimal
-#         elements.add((rounded_dist, donor_element, acceptor_element))
-#
-#     # Group the donor and acceptor elements
-#     donor_elements = {i[1] for i in elements}
-#     acceptor_elements = {i[2] for i in elements}
-#
-#     # Find all of the donor and acceptor atoms
-#     donors_dict = dict()     # A dict of distance (key) and donor atoms
-#     acceptors_dict = dict()  # A dict of distance (key) and acceptor atoms
-#     for atom in molecule.atoms:
-#         # Add the donor atom, if found
-#         if atom.element in donor_elements:
-#             # Find which donor set this donor belongs to
-#             for distance, donor_element, _ in elements:
-#                 if atom.element in donor_element:
-#                     donor_set =  donors_dict.setdefault(distance, set())
-#                     donor_set.add(atom)
-#                     break
-#         if atom.element in acceptor_elements:
-#             for distance, _, acceptor_element in elements:
-#                 if atom.element in acceptor_element:
-#                     acceptor_set = acceptors_dict.setdefault(distance, set())
-#                     acceptor_set.add(atom)
-#                     break
-#
-#         # At this stage, we have the donors_dict with distance (key) and
-#         # atoms (value) and the acceptors_dict with distance (key) and atoms
-#         # (value).
-#         #
-#         # The next step is to go through all the donors and find an acceptor
-#         # within the distance.
-#         for distance, donor_set in donors_dict.items():
-#             for donor_atom in donor_set:
-#                 # Find the corresponding acceptor atoms
-#                 if not distance in acceptors_dict:
-#                     continue
-#                 acceptors_set = acceptors_dict[distance]
-#
-#                 # Find the distances between donor and acceptor atoms
-#                 # This function returns a list of (atom objects, distance)
-#                 closest_acceptors = within_distance(donor_atom,
-#                                         distance_cutoff=distance,
-#                                         nearest_atom_selection=acceptors_set)
-#
-#
-#
-#
-#         # Add the acceptor atom, if found. Each distance cutoff has to be
-#         # checked
-#         elif atom.element in acceptor_elements:
-#             acceptor_atoms.add(atom)
-#
-#     # Find all of the donor and acceptor pairs
-#     for donor_atom in donor_atoms:
-#
-#         nearest_list = within_distance(donor_atom,
-#                                        distance_cutoff=1.0,
-#                                        nearest_atom_selection=acceptor_atoms)
-#
-#
-#     return
-#
-#     # Iterate over carbonyls oxygens
-#     possible_hbonds = []
-#     for res_i in molecule.residues:
-#         donor_1 = res_i.get(donor_name_1, None)  # typically O
-#         donor_2 = res_i.get(donor_name_2, None)  # typically C
-#         if donor_1 is None or donor_2 is None:   # Skip if carbonyl not found
-#             continue
-#
-#         # Construct the normalized vector for the c-o bond
-#         vec_i = calc_vector(donor_2, donor_1)
-#
-#         # Find the nearest amide proton
-#         for res_j in molecule.residues:
-#             # Skip if acceptor (hydrogen) not found or if residue 'i' and 'j'
-#             # are within 1 residue from each other.
-#             acceptor_j = res_j.get(acceptor_name, None)
-#             if (acceptor_j is None or
-#                abs(donor_1.residue.number - acceptor_j.residue.number) < 2):
-#                 continue
-#
-#             # Calculate the donor-acceptor (HN--O) distance. If these
-#             # aren't within hbond_cutoff then they're not hydrogen bonded
-#             vec_ij = calc_vector(acceptor_j, donor_1, normalize=False)
-#             r_ij = vector_length(vec_ij)
-#             if r_ij > hbond_cutoff:
-#                 continue
-#
-#             # Calculate the donor-acceptor (C-O--HN) angle. Vectors have
-#             # to be normalized; vec_i is already normalized, but vec_ij
-#             # isn't yet.
-#             vec_ij /= r_ij
-#
-#             dot_product = np.dot(vec_ij, vec_i)
-#             theta = acos(dot_product) * 180. / pi
-#
-#             # Add it to the list of possible hydrogen bonds
-#             distance = {'{}-{}'.format(donor_1.name, acceptor_j.name): r_ij}
-#             angle = {'{}-{}-{}'.format(donor_2.name, donor_1.name,
-#                                        acceptor_j.name): theta}
-#             hbond = HydrogenBond(donor=donor_1, acceptor=acceptor_j,
-#                                  distance=distance, angle=angle)
-#
-#             possible_hbonds.append(hbond)
-#     return possible_hbonds
+def dipole_angles(donor_dipole, acceptor_dipole):
+    """Measure the angles between the dipoles
+
+    Parameters
+    ----------
+    donor_dipole: :obj:`Dipole`
+        The hydrogen bond donor dipole
+    acceptor_dipole: :obj:`Dipole`
+        The hydrogen bond acceptor dipole
+
+    Returns
+    -------
+    dict
+        A dict with the labels (keys) and angles (values). The keys are
+        formatted using the following labels:
+        - theta: a2-a1-d1 angle
+
+    Examples
+    --------
+    >>> from mollib import Molecule
+    >>> mol = Molecule('2KXA')
+    >>> d_dipole = Dipole(atom1=mol['A'][7]['H'], atom2=mol['A'][7]['N'])
+    >>> a_dipole = Dipole(atom1=mol['A'][3]['O'], atom2=mol['A'][3]['C'])
+    >>> sorted(dipole_angles(d_dipole, a_dipole).items())
+    [('phi', 35.8), ('theta', 168.6)]
+    """
+    a1, a2 = acceptor_dipole.atom1, acceptor_dipole.atom2
+    d1, d2 = donor_dipole.atom1, donor_dipole.atom2
+
+    returned_dict = {}
+
+    # get the x, y, z coordinate system for the acceptor.
+    # The z-axis is defined by the a1-a2 vector
+    z = calc_vector(a1, a2, normalize=True)
+
+    # For the y-axis the *other* heavy atom bonded to a2 is needed. i.e. the
+    # one that isn't the a1 atom.
+    a2_bonded = [b for b in a2.bonded_heavy_atoms(sorted=True) if b != a1]
+    if len(a2_bonded) < 1:
+        return []
+    a2_bonded = a2_bonded[0]  # Pull the first atom from the list
+
+    v2 = calc_vector(a2, a2_bonded)
+    y = np.cross(z, v2)
+    y /= vector_length(y)
+
+    # The x-axis is orthogonal to the y- and z-axes
+    x = np.cross(y, z)
+    x /= vector_length(x)
+
+    # Calculate the theta, phi wrt the coordinate system of the a1-d1 vector
+    a1d1 = calc_vector(a1, d1, normalize=True)
+
+    theta = acos(np.dot(a1d1, z)) * 180. / pi
+    phi = atan2(np.dot(a1d1, y), np.dot(a1d1, x)) * 180. / pi
+
+
+    returned_dict["theta"] = round(theta, 1)
+    returned_dict["phi"] = round(phi, 1)
+
+    return returned_dict
+
+
+def find_hbond_partners(molecule, donor1_elements=None, donor2_elements=None,
+                        acceptor1_elements=None, acceptor2_elements=None,
+                        dist_cutoff=None, ang_cutoff=None):
+    """Finds the hydrogen bond partners between donor atoms and an
+    acceptor based on distance.
+
+    Parameters
+    ----------
+    molecule: :obj:`mollib.Molecule`
+        The molecule to find hydrogen bonds in.
+    donor1_elements: str, optional
+        The string for the elements for the donor1 atom. The '|' string is
+        supported. ex: 'HA|H'
+    donor2_elements: str: optional
+        The string for the elements for the donor2 atom.
+    acceptor1_elements: str, optional
+        The string for the elements for the acceptor1 atom.
+    acceptor2_elements: str, optional
+        The string for the elements for the acceptor2 atom.
+    dist_cutoff: dict, optional
+        The distance cutoff dict (see the settings file)
+    ang_cutoff: dict, optional
+        The angle range cutoff dict (see the settings file)
+
+
+    .. note: For the donor1_elements, donor2_elements, acceptor1_elements and
+             acceptor2_elements, see the documentation for :func:`find_dipoles`.
+
+    Returns
+    -------
+    list of :obj:`HydrogenBond` objects
+
+    Examples
+    --------
+    >>> from mollib import Molecule
+    >>> mol = Molecule('2KXA')
+    >>> hbonds = find_hbond_partners(mol)
+    >>> print(len(hbonds))
+    16
+    >>> print(hbonds[0].short_repr())
+    Hbond don.(A.G1-H2--A.G1-N) - acc.(A.W21-O--A.W21-C)
+    """
+    # Load default parameters
+    dist_cutoff = (dist_cutoff if dist_cutoff is not None else
+                   settings.hbond_distance_cutoff)
+    ang_cutoff = (ang_cutoff if ang_cutoff is not None else
+                  settings.hbond_angle_cutoff)
+
+    # Get the acceptor and donor dipole lists
+    donor_list, acceptor_list = find_dipoles(molecule, donor1_elements,
+                                           donor2_elements, acceptor1_elements,
+                                           acceptor2_elements)
+
+    # returned list
+    hbonds = []
+
+    # For each donor-acceptor pair, detect the distance and angles with all of
+    # the acceptors
+    for donor_dip in donor_list:
+        for acceptor_dip in acceptor_list:
+            # Measure the distances between atoms in the two dipoles
+            distance_dict = dipole_distances(donor_dip, acceptor_dip)
+
+            # Check to see if the distances are all within range
+            dist_test = []
+            for dist_type, (min_dist, max_dist) in dist_cutoff.items():
+                if dist_type not in distance_dict:
+                    continue
+                dist = distance_dict[dist_type]
+                dist_test.append(min_dist <= dist <= max_dist)
+
+            # This isn't a match if there were no distance constraints matched
+            # or if not all the distance constraints were within range
+            if len(dist_test) == 0 or not all(dist_test):
+                continue
+            # Measure the angles between atoms in the two dipoles
+            angle_dict = dipole_angles(donor_dip, acceptor_dip)
+
+            # Check to see if the angles are all within range
+            ang_test = []
+            for ang_type, (min_ang, max_ang) in ang_cutoff.items():
+                if ang_type not in angle_dict:
+                    continue
+                ang = angle_dict[ang_type]
+                ang_test.append(min_ang <= ang <= max_ang)
+
+            # This isn't a match if there were no angles constraints matched
+            # or if not all the angle constraints were within range
+            if len(ang_test) == 0 or not all(ang_test):
+                continue
+
+            # This is a hydrogen bond! Create a hydrogen bond object
+            hbond = HydrogenBond(donor=donor_dip, acceptor=acceptor_dip,
+                                 distances=distance_dict, angles=angle_dict)
+            hbonds.append(hbond)
+
+    # Set the hbonds molecular parameter and return the hbonds
+    molecule.set_parameter('Structural Features', 'hbonds', hbonds)
+    return hbonds
