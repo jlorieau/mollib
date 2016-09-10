@@ -132,7 +132,7 @@ def import_settings(config, section, settings_dict):
             # proceed to the next value
             if type(value) == int:
                 try:
-                    config_value = config.getint('settings', parameter)
+                    config_value = config.getint(section, parameter)
                 except ValueError:
                     logging.error(err_msg.format(param=parameter, sect=section,
                                                  type_expected='int'))
@@ -140,7 +140,7 @@ def import_settings(config, section, settings_dict):
 
             elif type(value) == float:
                 try:
-                    config_value = config.getfloat('settings', parameter)
+                    config_value = config.getfloat(section, parameter)
                 except ValueError:
                     logging.error(err_msg.format(param=parameter, sect=section,
                                                  type_expected='float'))
@@ -148,7 +148,7 @@ def import_settings(config, section, settings_dict):
 
             elif type(value) == bool:
                 try:
-                    config_value = config.getboolean('settings', parameter)
+                    config_value = config.getboolean(section, parameter)
                 except ValueError:
                     logging.error(err_msg.format(param=parameter, sect=section,
                                                  type_expected='bool'))
@@ -157,7 +157,7 @@ def import_settings(config, section, settings_dict):
             else:
                 # The executable (callable) parameters cannot be replaced.
                 # See the top of the if statement.
-                config_value = config.get('settings', parameter)  # str
+                config_value = config.get(section, parameter)  # str
                 config_value = ast.literal_eval(config_value)
 
                 # The config_value has to match the same type as the value it
