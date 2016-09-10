@@ -409,11 +409,18 @@ class Molecule(dict):
         Parameters
         ----------
         category: str
-            The category of the parameter. ex: 'hydrogens'
+            The category of the parameter.
         name: str
             The name of the parameter. ex: 'A.Q61-CA'
         value
             The value of the parameter
+
+
+        .. note:: Common categories include:
+                  - 'Structural Features': These are a listing of parameters
+                    that highlight structural features within the molecule.
+                    They're expected to be invariant to whole-body translations
+                    and rotations, but not changes in internal structure.
         """
         category_dict = self._parameters.setdefault(category, {})
         category_dict[name] = value
