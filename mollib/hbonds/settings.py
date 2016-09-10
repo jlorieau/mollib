@@ -14,7 +14,7 @@ acceptor2_elements = 'C|13C'
 operator.
 """
 
-hbond_distance_cutoff = {'d1a1': (1.9, 2.5),
+hbond_distance_cutoff = {'d1a1': (1.9, 2.6),
                          }
 """The cutoff distance ranges (in A) between atoms to be considered a hydrogen
 bond.

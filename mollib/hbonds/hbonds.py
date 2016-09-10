@@ -140,10 +140,10 @@ def find_dipoles(molecule, donor1_elements=None, donor2_elements=None,
     >>> msg = "There are {} donor dipoles and {} acceptor dipoles."
     >>> print(msg.format(len(donor_list), len(acceptor_list)))
     There are 31 donor dipoles and 31 acceptor dipoles.
-    >>> sorted(donor_list)[0]
-    A.A5-H--A.A5-N
-    >>> sorted(acceptor_list)[0]
-    A.A5-O--A.A5-C
+    >>> donor_list[0]
+    A.G1-H3--A.G1-N
+    >>> acceptor_list[0]
+    A.G1-O--A.G1-C
     """
     # Get the donor and acceptor elements values from settings if these aren't
     # specified in the function parameters,  and it splits the atom elements at
@@ -338,9 +338,9 @@ def find_hbond_partners(molecule, donor1_elements=None, donor2_elements=None,
     >>> mol = Molecule('2KXA')
     >>> hbonds = find_hbond_partners(mol)
     >>> print(len(hbonds))
-    16
+    18
     >>> print(hbonds[0].short_repr())
-    Hbond don.(A.G1-H2--A.G1-N) - acc.(A.W21-O--A.W21-C)
+    Hbond don.(A.G1-H2--A.G1-N) - acc.(A.G20-O--A.G20-C)
     """
     # Load default parameters
     dist_cutoff = (dist_cutoff if dist_cutoff is not None else
