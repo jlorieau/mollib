@@ -37,6 +37,7 @@ class Hbonds(Plugin):
         hbonds = find_hbond_partners(molecule)
         for count, hbond in enumerate(hbonds, 1):
             if args.detailed:
-                print("{}. {}".format(count, hbond))
+                print("{}. ({}) {}".format(count, molecule.name, hbond))
             else:
-                print("{}. {}".format(count, hbond.short_repr()))
+                print("{}. ({}) {}".format(count, molecule.name,
+                                           hbond.short_repr()))
