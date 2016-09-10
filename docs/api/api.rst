@@ -9,3 +9,4 @@ API Documentation
     core
     plugins
     hydrogens
+    hbonds
