@@ -25,3 +25,9 @@ If you'd like to uninstall the develop mode, use the following command.
 .. code-block:: shell-session
 
     python setup.py develop --uninstall
+
+To test the package, run the nosetests
+
+.. code-block:: shell-session
+
+    python setup.py nosetests
