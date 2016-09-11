@@ -232,10 +232,17 @@ def dipole_distances(donor_dipole, acceptor_dipole):
     d1, d2 = donor_dipole.atom1, donor_dipole.atom2
 
     returned_dict = {}
-    returned_dict['d1a1'] = round(measure_distance(d1, a1), 2)
-    returned_dict['d1a2'] = round(measure_distance(d1, a2), 2)
-    returned_dict['d2a1'] = round(measure_distance(d2, a1), 2)
-    returned_dict['d2a2'] = round(measure_distance(d2, a2), 2)
+
+    # Measure the donor1 -- acceptor1 distance
+    d1a1 = round(measure_distance(d1, a1), 2)
+
+    # Do a check on the first distance. If this is too long, the rest of the
+    # measurements won't be done
+    if d1a1 <= settings.hbond_distance_cutoff.get('d1a1', (1.8, 3.0))[1]:
+        returned_dict['d1a1'] = d1a1
+        returned_dict['d1a2'] = round(measure_distance(d1, a2), 2)
+        returned_dict['d2a1'] = round(measure_distance(d2, a1), 2)
+        returned_dict['d2a2'] = round(measure_distance(d2, a2), 2)
 
     return returned_dict
 
@@ -273,7 +280,7 @@ def dipole_angles(donor_dipole, acceptor_dipole):
 
     # get the x, y, z coordinate system for the acceptor.
     # The z-axis is defined by the a1-a2 vector
-    z = calc_vector(a1, a2, normalize=True)
+    z = calc_vector(a1.pos, a2.pos, normalize=True)
 
     # For the y-axis the *other* heavy atom bonded to a2 is needed. i.e. the
     # one that isn't the a1 atom.
@@ -282,7 +289,7 @@ def dipole_angles(donor_dipole, acceptor_dipole):
         return []
     a2_bonded = a2_bonded[0]  # Pull the first atom from the list
 
-    v2 = calc_vector(a2, a2_bonded)
+    v2 = calc_vector(a2.pos, a2_bonded.pos)
     y = np.cross(z, v2)
     y /= vector_length(y)
 
@@ -291,7 +298,7 @@ def dipole_angles(donor_dipole, acceptor_dipole):
     x /= vector_length(x)
 
     # Calculate the theta, phi wrt the coordinate system of the a1-d1 vector
-    a1d1 = calc_vector(a1, d1, normalize=True)
+    a1d1 = calc_vector(a1.pos, d1.pos, normalize=True)
 
     theta = acos(np.dot(a1d1, z)) * 180. / pi
     phi = atan2(np.dot(a1d1, y), np.dot(a1d1, x)) * 180. / pi

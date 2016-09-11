@@ -5,35 +5,8 @@ Tools to measure geometries in molecules.
 
 import numpy as np
 from math import acos, pi, atan2, sqrt
-from .utils import calc_vector, vector_length, filter_atoms
-
-
-def measure_distance(atom_1, atom_2):
-    """Measure the atom_1--atom_2 distance.
-
-    Parameters
-    ----------
-    atom_1 : :obj:`Atom`
-        The first atom.
-    atom_2 : :obj:`Atom`
-        The second atom.
-
-    Returns
-    -------
-    distance : float
-        The distance (in Angstroms)
-
-    Examples
-    --------
-    >>> from mollib import Molecule
-    >>> mol = Molecule('2KXA')
-    >>> d = measure_distance(mol['A'][3]['CA'], mol['A'][3]['HA'])
-    >>> print("{:.2f} A".format(d))
-    1.08 A
-    """
-    v = calc_vector(atom_1, atom_2, normalize=False)
-    length = vector_length(v)
-    return length
+from .utils import filter_atoms
+from mollib.geometry import measure_distance, vector_length, calc_vector
 
 
 def measure_angle(atom_1, atom_2, atom_3):
@@ -62,8 +35,8 @@ def measure_angle(atom_1, atom_2, atom_3):
     >>> print("{:.1f} deg".format(angle))
     109.3 deg
     """
-    v1 = calc_vector(atom_2, atom_1, normalize=True)
-    v2 = calc_vector(atom_2, atom_3, normalize=True)
+    v1 = calc_vector(atom_2.pos, atom_1.pos, normalize=True)
+    v2 = calc_vector(atom_2.pos, atom_3.pos, normalize=True)
 
     angle = acos(np.dot(v1, v2))
     return angle*180./pi
@@ -98,9 +71,9 @@ def measure_dihedral(atom_1, atom_2, atom_3, atom_4):
     -62.0 deg
     """
     # Calculate the normalized vectors.
-    ab = calc_vector(atom_1, atom_2, normalize=True)
-    bc = calc_vector(atom_2, atom_3, normalize=True)
-    cd = calc_vector(atom_3, atom_4, normalize=True)
+    ab = calc_vector(atom_1.pos, atom_2.pos, normalize=True)
+    bc = calc_vector(atom_2.pos, atom_3.pos, normalize=True)
+    cd = calc_vector(atom_3.pos, atom_4.pos, normalize=True)
 
     # The dihedral is the angle between the plans a-b-c and b-c-d
     # The angle between these plans can be calculated from their

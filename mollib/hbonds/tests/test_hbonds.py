@@ -21,11 +21,17 @@ class TestHydrogenBonds(unittest.TestCase):
                   - 8.200s  : mollib.hbonds.dipole_distances
                   - 7.663s  : mollib.core.calc_vector
                   - 2.861s  : mollib.core.measure_distance
+
+                  The following optimizations had the following test times:
+                  - 23.4s   : convert vector_length, calc_vector to cython
+                  - 21.2s   : optimize vector_length in cython
+                  -  5.1s   : cythonize measure_distance and cut down the
+                              number of call to it.
         """
 
         mol = Molecule('2N18')
         hbonds = find_hbond_partners(mol)
 
-        self.assertEqual(len(hbonds), 388)
+        self.assertEqual(len(hbonds), 380)
 
     

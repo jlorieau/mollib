@@ -246,8 +246,8 @@ def add_one_sp2_h(atom, bond_length):
     # atoms.
     if len(bonded_heavy_atoms) == 2:
         # Calculate the v1, v2 and bisector vectors
-        v1 = calc_vector(atom, bonded_heavy_atoms[0], normalize=True)
-        v2 = calc_vector(atom, bonded_heavy_atoms[1], normalize=True)
+        v1 = calc_vector(atom.pos, bonded_heavy_atoms[0].pos, normalize=True)
+        v2 = calc_vector(atom.pos, bonded_heavy_atoms[1].pos, normalize=True)
         bisect = v1 + v2
         length = vector_length(bisect)
         bisect /= length
@@ -293,8 +293,8 @@ def add_one_sp2_h(atom, bond_length):
         sin60 = sqrt(3.)/2.
         cos60 = 0.5
 
-        v1 = calc_vector(atom, bonded_heavy_atoms[0], normalize=True)
-        v2 = calc_vector(bonded_heavy_atoms[0], bonded_to_bonded,
+        v1 = calc_vector(atom.pos, bonded_heavy_atoms[0].pos, normalize=True)
+        v2 = calc_vector(bonded_heavy_atoms[0].pos, bonded_to_bonded.pos,
                          normalize=True)
 
         n_v1v2 = np.cross(v1, v2)
@@ -390,12 +390,12 @@ def add_two_sp2_h(atom, bond_length, jbnmr_convention=True):
         bonded_to_bonded = bonded_to_bonded[0]
 
         # Calculate the atom--bonded_atom vector (x-axis)
-        x = calc_vector(atom, bonded, normalize=True)
+        x = calc_vector(atom.pos, bonded.pos, normalize=True)
 
         # Calculate the bonded_atom--bonded_to_bonded vector. The
         # bonded_to_bonded should be sorted by mass in order to preserve
         # the E/Z notation.
-        vec = calc_vector(bonded, bonded_to_bonded, normalize=True)
+        vec = calc_vector(bonded.pos, bonded_to_bonded.pos, normalize=True)
 
         # Calculate the z-axis as the orthogonal vector to these two
         z = np.cross(x, vec)
@@ -476,9 +476,9 @@ def add_one_sp3_h(atom, bond_length):
 
         # Calculate the plane and the plane normal formed by
         # atom_1, atom_2 and atom_3
-        v1 = calc_vector(bonded_heavy_atoms[0], atom, normalize=True)
-        v2 = calc_vector(bonded_heavy_atoms[1], atom, normalize=True)
-        v3 = calc_vector(bonded_heavy_atoms[2], atom, normalize=True)
+        v1 = calc_vector(bonded_heavy_atoms[0].pos, atom.pos, normalize=True)
+        v2 = calc_vector(bonded_heavy_atoms[1].pos, atom.pos, normalize=True)
+        v3 = calc_vector(bonded_heavy_atoms[2].pos, atom.pos, normalize=True)
         h_v = v1+v2+v3
         h_v /= vector_length(h_v)
 
@@ -504,8 +504,8 @@ def add_one_sp3_h(atom, bond_length):
 
         # By default, make the new H trans to the bonded--bonded_to_bonded,
         # but in the same plane.
-        v1 = calc_vector(bonded, atom, normalize=True)
-        v2 = calc_vector(bonded, bonded_to_bonded, normalize=True)
+        v1 = calc_vector(bonded.pos, atom.pos, normalize=True)
+        v2 = calc_vector(bonded.pos, bonded_to_bonded.pos, normalize=True)
 
         z = np.cross(v1, v2)
         z /= vector_length(z)
@@ -597,8 +597,8 @@ def add_two_sp3_h(atom, bond_length, jbnmr_convention=True):
 
     if len(bonded_heavy_atoms) == 2:
         # Calculate the bisecting vector between bonded[0]--atom--bonded[1]
-        v1 = calc_vector(atom, bonded_heavy_atoms[0])
-        v2 = calc_vector(atom, bonded_heavy_atoms[1])
+        v1 = calc_vector(atom.pos, bonded_heavy_atoms[0].pos)
+        v2 = calc_vector(atom.pos, bonded_heavy_atoms[1].pos)
         bisect = v1 + v2
         bisect /= vector_length(bisect)
 
@@ -715,11 +715,11 @@ def add_three_sp3_h(atom, bond_length, alpha=None):
         bonded_to_bonded = bonded_to_bonded[0]
 
         # Calculate the atom--bonded vector
-        v1 = calc_vector(atom, bonded)
+        v1 = calc_vector(atom.pos, bonded.pos)
         v1 /= vector_length(v1)
 
         # Calculate the bonded--bonded_to_bonded vector
-        v2 = calc_vector(bonded, bonded_to_bonded)
+        v2 = calc_vector(bonded.pos, bonded_to_bonded.pos)
         v2 /= vector_length(v2)
 
         # Calculate the normal to v1 and v2

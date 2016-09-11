@@ -13,23 +13,6 @@ except ImportError:
     from itertools import izip_longest as zip_longest
 
 
-def vector_length(vector):
-    """Returns the length (in A) of a vector"""
-    return sqrt(sum([i*i for i in vector]))
-
-
-def calc_vector(atom_i, atom_j, normalize=True):
-    """Returns the vector between atoms 'i' and 'j' with optional
-    normalization."""
-    vec = atom_i.pos - atom_j.pos
-
-    if normalize:
-        length = vector_length(vec)
-        return vec / length
-    else:
-        return vec
-
-
 re_str = re.compile(r'[a-zA-Z]')
 re_float = re.compile(r'-?\d+\.\d*')
 re_int = re.compile(r'-?\d+')

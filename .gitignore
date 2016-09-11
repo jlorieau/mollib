@@ -1,5 +1,6 @@
 *.pdf
 *.pyc
+*.so
 nosetests.json
 docs/_build/*
 docs/cli/output/*
