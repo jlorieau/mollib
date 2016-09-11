@@ -4,6 +4,7 @@
 nosetests.json
 docs/_build/*
 docs/cli/output/*
+mollib.egg-info
 benchmarks/
 .idea
 .noseids
