@@ -3,11 +3,28 @@ Test the geometry functions
 """
 import unittest
 
-from mollib.core import Molecule, measure_distances, measure_angles
+from mollib.core import Molecule, measure_distances, calc_vector, vector_length
 
 
 class TestGeometry(unittest.TestCase):
     "Tests the geometry methods."
+
+    def test_calc_vector(self):
+        mol = Molecule('2KXA')
+
+        vec = calc_vector(mol['A'][3]['N'].pos, mol['A'][3]['H'].pos,
+                          normalize=True)
+        length = round(vector_length(vec), 2)
+        self.assertEqual([round(i, 2) for i in vec],
+                         [-0.39, 0.63, -0.67])
+        self.assertEqual(length, 1.00)
+
+        vec = calc_vector(mol['A'][3]['N'].pos, mol['A'][3]['H'].pos,
+                          normalize=False)
+        length = round(vector_length(vec), 2)
+        self.assertEqual([round(i, 2) for i in vec],
+                         [-0.38, 0.61, -0.66])
+        self.assertEqual(length, 0.98)
 
     def test_measure_distances(self):
         mol = Molecule('2MUV')
