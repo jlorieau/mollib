@@ -32,3 +32,6 @@ class Hydrogenate(Plugin):
         """
         if 'hydrogenate' in args:
             add_hydrogens(molecule, strip=True)
+
+    def selected(self, args):
+        return True if args.hydrogenate else False
