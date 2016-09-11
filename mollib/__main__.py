@@ -111,16 +111,22 @@ def main():
     # Pre-process the molecules
     for molecule in molecules:
         for plugin in active_plugins:
+            logging.debug('Preprocessing ({}): {}'.format(molecule.name,
+                                                          plugin))
             plugin.preprocess(molecule, args)
 
     # Process the molecules
     for molecule in molecules:
         for plugin in active_plugins:
+            logging.debug('Processing ({}): {}'.format(molecule.name,
+                                                       plugin))
             plugin.process(molecule, args)
 
     # Post-process the molecules
     for molecule in molecules:
         for plugin in active_plugins:
+            logging.debug('Post-rocessing ({}): {}'.format(molecule.name,
+                                                           plugin))
             plugin.postprocess(molecule, args)
 
 if __name__ == "__main__":
