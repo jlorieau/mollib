@@ -4,6 +4,12 @@ The ``hbonds`` command detects and reports hydrogen bonds in molecules.
 
     .. include:: output/cli_hbonds_help.html
 
+
+    .. note:: If the molecule does not have hydrogens, this command will need
+              to be run with the ``--hydrogenate`` parameter. See the
+              :ref:`hydrogenate <hydrogenate>` option.
+
+
     **Examples**
 
     .. include:: output/cli_hbonds_i_2KXA.html
