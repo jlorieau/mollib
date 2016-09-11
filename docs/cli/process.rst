@@ -35,6 +35,11 @@ Arguments
     ``-c`` ``filename`` / ``--config`` ``filename``
         The configuration file.
 
+    ``-l`` / ``--list``
+        List details on the molecule, including the number of chains, residues
+        and atoms. This option is helpful in determining selections in
+        :ref:`atom-selectors`.
+
 Configuration Files
 -------------------
 
@@ -56,6 +61,8 @@ that need to be changed can be specified in the file.
 
 Preprocessors Arguments
 -----------------------
+
+.. _hydrogenate:
 
     ``--hydrogenate``
         Strip all hydrogen atoms and re-add hydrogens based on ideal geometry.
