@@ -54,6 +54,7 @@ Indices and tables
    :maxdepth: 3
 
    cli/cli
+   develop
    api/api
 
 
