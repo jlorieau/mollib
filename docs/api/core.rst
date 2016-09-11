@@ -24,6 +24,10 @@ Functions
 
 .. automodule:: mollib.core
 
+.. autofunction:: calc_vector
+
+.. autofunction:: vector_length
+
 .. autofunction:: measure_distance
 
 .. autofunction:: measure_distances
