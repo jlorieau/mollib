@@ -39,6 +39,10 @@ class Process(Plugin):
                             metavar='filename',
                             help="The configuration filename")
 
+        # List molecule details
+        parent.add_argument('-l', '--list',
+                            action='store_true',
+                            help='List details on the molecule(s)')
 
         # Create the process parser
         parser = subparsers.add_parser(self.command,
@@ -52,15 +56,27 @@ class Process(Plugin):
         return "Process the structure"
 
     def process(self, molecule, args):
-        """Do nothing.
+        """Process the molecule
 
-        Opening of the molecule (-i) and the configuration (-c) is
-        conducted elsewhere. Also, the file is written as the last operation.
+        - list the molecule details
+
+
+        .. note:: Opening of the molecule (-i) and the configuration (-c) is
+                  conducted elsewhere. Also, the file is written as the last
+                  operation.
         """
-        pass
+        if args.list:
+            print(molecule)
+            chain_msg = '\tChain {:<3}: {:>4} residues, {:>4} atoms.'
+            for chain in molecule.chains:
+                print(chain_msg.format(chain, chain.residue_size,
+                                       chain.atom_size))
 
     def postprocess(self, molecule, args):
-        """Writes the PDB file, if specified"""
+        """Postprocess the molecules.
+
+        - Writes the PDB file, if specified
+        """
         # Do nothing if no output filename was given
         if args.out is None:
             return None
