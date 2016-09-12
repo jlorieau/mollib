@@ -234,12 +234,12 @@ def dipole_distances(donor_dipole, acceptor_dipole):
     returned_dict = {}
 
     # Measure the donor1 -- acceptor1 distance
-    d1a1 = round(measure_distance(d1, a1), 2)
+    d1a1 = measure_distance(d1, a1)
 
     # Do a check on the first distance. If this is too long, the rest of the
     # measurements won't be done
     if d1a1 <= settings.hbond_distance_cutoff.get('d1a1', (1.8, 3.0))[1]:
-        returned_dict['d1a1'] = d1a1
+        returned_dict['d1a1'] = round(d1a1, 2)
         returned_dict['d1a2'] = round(measure_distance(d1, a2), 2)
         returned_dict['d2a1'] = round(measure_distance(d2, a1), 2)
         returned_dict['d2a2'] = round(measure_distance(d2, a2), 2)
