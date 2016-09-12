@@ -28,6 +28,8 @@ Functions
 
 .. autofunction:: vector_length
 
+.. autofunction:: within_distance
+
 .. autofunction:: measure_distance
 
 .. autofunction:: measure_distances
