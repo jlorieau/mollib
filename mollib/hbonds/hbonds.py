@@ -35,7 +35,10 @@ class Dipole(namedtuple('Dipole','atom1 atom2')):
     """
 
     def __repr__(self):
-        return self.atom1.__repr__() + '--' + self.atom2.__repr__()
+        if self.atom1.residue == self.atom2.residue:
+            return self.atom1.__repr__() + '--' + self.atom2.name
+        else:
+            return self.atom1.__repr__() + '--' + self.atom2.__repr__()
 
 
 class HydrogenBond(object):
