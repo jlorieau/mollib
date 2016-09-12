@@ -3,11 +3,37 @@ Tools to measure geometries in molecules.
 """
 # TODO: def measure_rmsd(molecule1, molecule2, atoms=None)
 
-import numpy as np
 from math import acos, pi, atan2, sqrt
+
+import numpy as np
+
 from .utils import filter_atoms
 from mollib.geometry import (measure_distance, vector_length, calc_vector,
                              within_distance)
+
+
+# Note: This implementation is included for reference. The cKDTree actually
+# performs ~50-100% worse than the Cython brute search.
+#
+# from scipy.spatial import cKDTree
+#
+# def within_distance(atom, cutoff, elements='', exclude_intraresidue=False,
+#                     atom_selection=None):
+#     element_list = elements.split('|') if elements != '' else []
+#
+#     atoms = (atom_selection if atom_selection is not None else
+#              atom.molecule.atoms)
+#
+#     atoms = [a for a in atoms if
+#              ((a != atom) and
+#               (not element_list or a.element in element_list) and
+#               (not exclude_intraresidue or a.residue != atom.residue))]
+#
+#     if not hasattr(atom.molecule._cache, 'tree'):
+#         atom.molecule._cache['tree'] = cKDTree(atoms)
+#     tree = atom.molecule._cache['tree']
+#     indices = tree.query_ball_point(x=atom, r=cutoff)
+#     return [tree.data[i] for i in indices]
 
 
 def measure_angle(atom_1, atom_2, atom_3):
