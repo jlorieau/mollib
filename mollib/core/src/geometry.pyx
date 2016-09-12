@@ -145,10 +145,12 @@ cpdef list within_distance(object atom, double cutoff, str elements='',
     cdef double [:] v1, v2
     cdef object a
 
-    element_list = elements.split('|') if elements != '' else []
+
 
     # Get an iterable of atoms to search
     if atom_selection is None:
+        element_list = elements.split('|') if elements != '' else []
+
         atoms = atom.molecule.atoms
         # Filter the atoms in the iterable
         atoms = [a for a in atoms if
