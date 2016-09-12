@@ -1,1 +1,1 @@
-from markdown import MDTable
+from .markdown import MDTable
