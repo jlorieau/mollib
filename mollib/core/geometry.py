@@ -6,7 +6,8 @@ Tools to measure geometries in molecules.
 import numpy as np
 from math import acos, pi, atan2, sqrt
 from .utils import filter_atoms
-from mollib.geometry import measure_distance, vector_length, calc_vector
+from mollib.geometry import (measure_distance, vector_length, calc_vector,
+                             within_distance)
 
 
 def measure_angle(atom_1, atom_2, atom_3):
@@ -89,70 +90,6 @@ def measure_dihedral(atom_1, atom_2, atom_3, atom_4):
     y = np.dot(m1, n2)
     angle = atan2(y, x) * 180. / np.pi
     return angle
-
-
-def within_distance(atom, distance_cutoff, element='', intraresidue=False,
-                    nearest_atom_selection=None):
-    """Find all atoms of element within the specified distance (in Angstroms)
-    of atom.
-
-    Parameters
-    ----------
-    atom: :obj:`atom`
-        The atom to find atoms around it.
-    distance_cutoff: float
-        The distance boundary between atom and atoms of element to return.
-    element: str
-        The element names of the atoms to return. This string supports the
-        or character '|'.
-        If '', all atoms within the distance will be returned
-        ex: 'H|C|N' for all H, C and N atoms
-    intraresidue: bool
-        If True, atoms within the same residue as atom will be included as
-        well.
-    nearest_atom_selelction: iterable, optional
-        If specified, the nearest neighbors will be searched from this iterable
-        instead of the atom.molecule attribute.
-
-    Returns
-    -------
-    list of tuples
-        A list of tuples with (atom objects, distance).
-
-    Examples
-    --------
-    >>> from mollib import Molecule
-    >>> mol = Molecule('2MJB')
-    >>> D32 = mol['A'][32]
-    >>> distance_list = within_distance(D32['OD1'], 2.5, intraresidue=True)
-    >>> print(["{} {:.1f}A".format(a,d) for a,d in distance_list])
-    ['A.D32-CB 2.4A', 'A.D32-CG 1.2A', 'A.D32-OD2 2.2A']
-    >>> distance_list = within_distance(D32['OD1'], 5, element='N|O')
-    >>> print(["{} {:.1f}A".format(a,d) for a,d in distance_list])
-    ['A.A28-O 3.4A', 'A.Q31-O 4.9A', 'A.Q31-OE1 4.3A']
-    >>>
-    """
-    # TODO: This would be a useful function to optimize with a KD-tree
-    atom_list = []
-    element_list = element.split('|') if element != '' else []
-    d2 = distance_cutoff * distance_cutoff
-
-    # Get an iterable of atoms to search
-    atoms = (nearest_atom_selection if nearest_atom_selection is not None else
-             atom.molecule.atoms)
-
-    for a in atoms:
-        if a == atom or (element_list and a.element not in element_list):
-            continue
-        if intraresidue is False and a.residue == atom.residue:
-            continue
-
-        vec = atom.pos - a.pos
-        vec_d2 = np.dot(vec,vec)
-        if np.dot(vec,vec) < d2:
-           atom_list.append((a, sqrt(vec_d2)))
-
-    return atom_list
 
 
 def measure_distances(molecule, selector1, selector2,

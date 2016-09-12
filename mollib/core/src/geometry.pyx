@@ -1,7 +1,7 @@
 # cython: profile=False
 
 cdef extern from "math.h":
-    double sqrt(double m)
+    double sqrt(double m) nogil
 
 import numpy as np
 cimport numpy as np
@@ -30,7 +30,8 @@ def calc_vector(vector_i, vector_j, normalize=True):
         vec /= length
     return vec
 
-
+@cython.boundscheck(False)
+@cython.wraparound(False)
 cpdef double measure_distance(object atom_1, object atom_2):
     """Measure the atom_1--atom_2 distance.
 
@@ -54,7 +55,6 @@ cpdef double measure_distance(object atom_1, object atom_2):
     >>> print("{:.2f} A".format(d))
     1.08 A
     """
-    cdef i, size
     cdef double x, y, z
     cdef double length = 0.0
     cdef np.ndarray[np.float64_t, ndim=1] vi, vj
@@ -68,3 +68,103 @@ cpdef double measure_distance(object atom_1, object atom_2):
 
     length = sqrt(x * x + y * y + z * z)
     return length
+
+@cython.boundscheck(False)
+@cython.wraparound(False)
+cdef double _within_distance(double[:] point1, double[:] point2,
+                           double distance_cutoff) nogil:
+    """Test whether two points (specified by vectors) are within
+    distance_cutoff.
+
+    Parameters
+    ----------
+    point1: double[:]
+        A 1D memoryview of the first point.
+    point2
+        A 2D memoryview of the second point
+    Returns
+    -------
+    double
+        - The distance between the two points if within the distance_cutoff
+        - -1.0 if the distance between the two points is outside the
+          distance_cutoff
+    """
+    # assert
+    cdef double vx, vy, vz, d2
+    vx = point1[0] - point2[0]
+    vy = point1[1] - point2[1]
+    vz = point1[2] - point2[2]
+
+    d2 = vx * vx
+    d2 += vy * vy
+    d2 += vz * vz
+
+    if d2 < distance_cutoff * distance_cutoff:
+        return sqrt(d2)
+    else:
+        return -1.0
+
+cpdef list within_distance(object atom, double distance_cutoff, str element='',
+                           bint intraresidue=False,
+                           atom_selection=None):
+    """Find all atoms of element within the specified distance (in Angstroms)
+    of atom.
+
+    Parameters
+    ----------
+    atom: :obj:`atom`
+        The atom to find atoms around it.
+    distance_cutoff: float
+        The distance boundary between atom and atoms of element to return.
+    element: str
+        The element names of the atoms to return. This string supports the
+        or character '|'.
+        If '', all atoms within the distance will be returned
+        ex: 'H|C|N' for all H, C and N atoms
+    intraresidue: bool
+        If True, atoms within the same residue as atom will be included as
+        well.
+    atom_selelction: iterable, optional
+        If specified, the nearest neighbors will be searched from this iterable
+        instead of the atom.molecule attribute.
+
+    Returns
+    -------
+    list of tuples
+        A list of tuples with (atom objects, distance).
+    """
+    # prefetching atoms in a list reduces the execution time from 26s to 5s
+
+    cdef double d
+    cdef list atom_list = []
+    cdef list element_list
+    cdef double [:] v1, v2
+
+    atom_list = []
+    element_list = element.split('|') if element != '' else []
+
+    # Get an iterable of atoms to search
+    atoms = (atom_selection if atom_selection is not None else
+             atom.molecule.atoms)
+
+    # Filter the atoms in the iterable
+    atoms = [a for a in atoms if
+             ((a != atom) and
+              (a.element in element_list) and
+              (intraresidue is True and a.residue != atom.residue))]
+
+    for a in atoms:
+        # if a == atom or (element_list and a.element not in element_list):
+        #     continue
+        # if intraresidue is False and a.residue == atom.residue:
+        #     continue
+
+        v1 = atom.pos
+        v2 = a.pos
+        with nogil:
+            d = _within_distance(v1, v2, distance_cutoff)
+
+        if d > 0.0:
+           atom_list.append((a, d))
+
+    return atom_list
