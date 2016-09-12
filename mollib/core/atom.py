@@ -115,6 +115,9 @@ class Atom(Primitive):
     .. note:: __slots__ are used instead of a dicts because this can save a lot
               memory when many are instantiated and have faster attribute
               access.
+
+    .. note:: Atom objects support array access to the pos `numpy.array`.
+              Items 0, 1, 2 correspond to the pos[0], pos[1] and pos[2].
     """
 
     # These are the required field. 'pos' (position)is the coordinate position
@@ -166,6 +169,15 @@ class Atom(Primitive):
 
     def __hash__(self):
         return self.fullname.__hash__()
+
+    def __getitem__(self, b):
+        return self.pos[b]
+
+    def __setitem__(self, b, value):
+        self.pos[b] = value
+
+    def __len__(self):
+        return len(self.pos)
 
     @property
     def fullname(self):
