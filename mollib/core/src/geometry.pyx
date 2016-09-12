@@ -30,6 +30,7 @@ def calc_vector(vector_i, vector_j, normalize=True):
         vec /= length
     return vec
 
+
 @cython.boundscheck(False)
 @cython.wraparound(False)
 cpdef double measure_distance(object atom_1, object atom_2):
@@ -104,8 +105,8 @@ cdef double _within_distance(double[:] point1, double[:] point2,
     else:
         return -1.0
 
-cpdef list within_distance(object atom, double distance_cutoff, str element='',
-                           bint intraresidue=False,
+cpdef list within_distance(object atom, double cutoff, str elements='',
+                           bint exclude_intraresidue=False,
                            atom_selection=None):
     """Find all atoms of element within the specified distance (in Angstroms)
     of atom.
@@ -114,16 +115,15 @@ cpdef list within_distance(object atom, double distance_cutoff, str element='',
     ----------
     atom: :obj:`atom`
         The atom to find atoms around it.
-    distance_cutoff: float
+    cutoff: float
         The distance boundary between atom and atoms of element to return.
-    element: str
+    elements: str
         The element names of the atoms to return. This string supports the
         or character '|'.
         If '', all atoms within the distance will be returned
         ex: 'H|C|N' for all H, C and N atoms
-    intraresidue: bool
-        If True, atoms within the same residue as atom will be included as
-        well.
+    exclude_intraresidue: bool
+        If True, atoms within the same residue as atom will be excluded.
     atom_selelction: iterable, optional
         If specified, the nearest neighbors will be searched from this iterable
         instead of the atom.molecule attribute.
@@ -135,13 +135,13 @@ cpdef list within_distance(object atom, double distance_cutoff, str element='',
     """
     # prefetching atoms in a list reduces the execution time from 26s to 5s
 
-    cdef double d
+    cdef double distance
     cdef list atom_list = []
     cdef list element_list
     cdef double [:] v1, v2
 
     atom_list = []
-    element_list = element.split('|') if element != '' else []
+    element_list = elements.split('|') if elements != '' else []
 
     # Get an iterable of atoms to search
     atoms = (atom_selection if atom_selection is not None else
@@ -149,22 +149,21 @@ cpdef list within_distance(object atom, double distance_cutoff, str element='',
 
     # Filter the atoms in the iterable
     atoms = [a for a in atoms if
-             ((a != atom) and
-              (a.element in element_list) and
-              (intraresidue is True and a.residue != atom.residue))]
+              ((a != atom) and
+               (not element_list or a.element in element_list) and
+               (not exclude_intraresidue or a.residue != atom.residue))]
 
     for a in atoms:
         # if a == atom or (element_list and a.element not in element_list):
         #     continue
         # if intraresidue is False and a.residue == atom.residue:
         #     continue
-
         v1 = atom.pos
         v2 = a.pos
         with nogil:
-            d = _within_distance(v1, v2, distance_cutoff)
+            distance = _within_distance(v1, v2, cutoff)
 
-        if d > 0.0:
-           atom_list.append((a, d))
+        if distance > 0.0:
+           atom_list.append((a, distance))
 
     return atom_list

@@ -27,7 +27,6 @@ Category: Add_hydrogens
 import logging
 from math import sqrt, cos, sin, pi
 from itertools import chain
-# import multiprocessing as mp
 
 import numpy as np
 
@@ -798,8 +797,8 @@ def add_hydrogen_iongroups(pH, ion_groups):
         closest_NO = {}
         for atom in possible_atoms:
             sorted_by_distance = sorted(within_distance(atom=atom,
-                                                        distance_cutoff=5.0,
-                                                        intraresidue=False),
+                                                    cutoff=5.0,
+                                                    exclude_intraresidue=True),
                                         key = lambda t: t[1],
                                         reverse=True)  # sort by dist. (reverse)
             closest_NO[atom] = sorted_by_distance
