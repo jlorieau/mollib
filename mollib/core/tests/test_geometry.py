@@ -41,7 +41,7 @@ class TestGeometry(unittest.TestCase):
         The number of vectors is tuned so that this test takes 1.0s.
         """
         np.random.seed(0)
-        for i in range(55000):
+        for i in range(52000):
             pt1 = np.random.rand(3) * 10. - 5.0
             pt2 = np.random.rand(3) * 10. - 5.0
             vec = calc_vector(pt1, pt2)
@@ -86,7 +86,7 @@ class TestGeometry(unittest.TestCase):
         """
         mol = Molecule('2KXA')
 
-        for i in range(6):
+        for i in range(3):
             for atom in mol.atoms:
                 within_distance(atom, cutoff=3.0)
 
