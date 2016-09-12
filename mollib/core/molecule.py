@@ -121,9 +121,13 @@ class Molecule(dict):
         other. Note that each list item respect the field order and position
         of the official PDB format.
 
+    _parameters: dict
+        Stores the molecule's parameters
+    _cache: dict
+        Stored cached calculations for the molecule
 
     .. note:: A molecule object only reads the first model of a PDB file
-                  with multiple models
+              with multiple models
     """
 
     # TODO: add translate method
@@ -166,6 +170,7 @@ class Molecule(dict):
         self.identifier = identifier
         self.connections = []
         self._parameters = {}
+        self._cache = {}
 
         # Read in the data
         self.read_identifier(identifier)
