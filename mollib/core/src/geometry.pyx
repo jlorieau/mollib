@@ -128,6 +128,10 @@ cpdef list within_distance(object atom, double cutoff, str elements='',
         If specified, the nearest neighbors will be searched from this iterable
         instead of the atom.molecule attribute.
 
+
+        ..note : The elements and exclude_intraresidue methods are ignored when
+                 an atom_selection is specified.
+
     Returns
     -------
     list of tuples
@@ -139,27 +143,26 @@ cpdef list within_distance(object atom, double cutoff, str elements='',
     cdef list atom_list = []
     cdef list element_list
     cdef double [:] v1, v2
+    cdef object a
 
-    atom_list = []
     element_list = elements.split('|') if elements != '' else []
 
     # Get an iterable of atoms to search
-    atoms = (atom_selection if atom_selection is not None else
-             atom.molecule.atoms)
+    if atom_selection is None:
+        atoms = atom.molecule.atoms
+        # Filter the atoms in the iterable
+        atoms = [a for a in atoms if
+                 ((a != atom) and
+                  (not element_list or a.element in element_list) and
+                  (not exclude_intraresidue or a.residue != atom.residue))]
 
-    # Filter the atoms in the iterable
-    atoms = [a for a in atoms if
-              ((a != atom) and
-               (not element_list or a.element in element_list) and
-               (not exclude_intraresidue or a.residue != atom.residue))]
+    else:
+        atoms = atom_selection
 
     for a in atoms:
-        # if a == atom or (element_list and a.element not in element_list):
-        #     continue
-        # if intraresidue is False and a.residue == atom.residue:
-        #     continue
         v1 = atom.pos
         v2 = a.pos
+
         with nogil:
             distance = _within_distance(v1, v2, cutoff)
 

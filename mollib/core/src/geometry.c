@@ -2798,17 +2798,17 @@ static PyObject *__pyx_f_8geometry_within_distance(PyObject *__pyx_v_atom, doubl
   PyObject *__pyx_v_element_list = 0;
   __Pyx_memviewslice __pyx_v_v1 = { 0, 0, { 0 }, { 0 }, { 0 } };
   __Pyx_memviewslice __pyx_v_v2 = { 0, 0, { 0 }, { 0 }, { 0 } };
+  PyObject *__pyx_v_a = 0;
   PyObject *__pyx_v_atoms = NULL;
-  PyObject *__pyx_v_a = NULL;
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
   int __pyx_t_2;
   PyObject *__pyx_t_3 = NULL;
   PyObject *__pyx_t_4 = NULL;
-  Py_ssize_t __pyx_t_5;
-  PyObject *(*__pyx_t_6)(PyObject *);
-  int __pyx_t_7;
+  int __pyx_t_5;
+  Py_ssize_t __pyx_t_6;
+  PyObject *(*__pyx_t_7)(PyObject *);
   int __pyx_t_8;
   PyObject *__pyx_t_9 = NULL;
   PyObject *__pyx_t_10 = NULL;
@@ -2827,49 +2827,37 @@ static PyObject *__pyx_f_8geometry_within_distance(PyObject *__pyx_v_atom, doubl
     }
   }
 
-  /* "geometry.pyx":139
+  /* "geometry.pyx":143
  * 
  *     cdef double distance
  *     cdef list atom_list = []             # <<<<<<<<<<<<<<
  *     cdef list element_list
  *     cdef double [:] v1, v2
  */
-  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 139, __pyx_L1_error)
+  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 143, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_atom_list = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "geometry.pyx":143
- *     cdef double [:] v1, v2
+  /* "geometry.pyx":148
+ *     cdef object a
  * 
- *     atom_list = []             # <<<<<<<<<<<<<<
- *     element_list = elements.split('|') if elements != '' else []
- * 
- */
-  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 143, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_DECREF_SET(__pyx_v_atom_list, ((PyObject*)__pyx_t_1));
-  __pyx_t_1 = 0;
-
-  /* "geometry.pyx":144
- * 
- *     atom_list = []
  *     element_list = elements.split('|') if elements != '' else []             # <<<<<<<<<<<<<<
  * 
  *     # Get an iterable of atoms to search
  */
-  __pyx_t_2 = (__Pyx_PyString_Equals(__pyx_v_elements, __pyx_kp_s_, Py_NE)); if (unlikely(__pyx_t_2 < 0)) __PYX_ERR(0, 144, __pyx_L1_error)
+  __pyx_t_2 = (__Pyx_PyString_Equals(__pyx_v_elements, __pyx_kp_s_, Py_NE)); if (unlikely(__pyx_t_2 < 0)) __PYX_ERR(0, 148, __pyx_L1_error)
   if ((__pyx_t_2 != 0)) {
-    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_elements, __pyx_n_s_split); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 144, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_elements, __pyx_n_s_split); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 148, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_tuple__3, NULL); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 144, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_tuple__3, NULL); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 148, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    if (!(likely(PyList_CheckExact(__pyx_t_4))||((__pyx_t_4) == Py_None)||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "list", Py_TYPE(__pyx_t_4)->tp_name), 0))) __PYX_ERR(0, 144, __pyx_L1_error)
+    if (!(likely(PyList_CheckExact(__pyx_t_4))||((__pyx_t_4) == Py_None)||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "list", Py_TYPE(__pyx_t_4)->tp_name), 0))) __PYX_ERR(0, 148, __pyx_L1_error)
     __pyx_t_1 = __pyx_t_4;
     __pyx_t_4 = 0;
   } else {
-    __pyx_t_4 = PyList_New(0); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 144, __pyx_L1_error)
+    __pyx_t_4 = PyList_New(0); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 148, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     __pyx_t_1 = __pyx_t_4;
     __pyx_t_4 = 0;
@@ -2877,225 +2865,273 @@ static PyObject *__pyx_f_8geometry_within_distance(PyObject *__pyx_v_atom, doubl
   __pyx_v_element_list = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "geometry.pyx":147
- * 
- *     # Get an iterable of atoms to search
- *     atoms = (atom_selection if atom_selection is not None else             # <<<<<<<<<<<<<<
- *              atom.molecule.atoms)
- * 
- */
-  __pyx_t_2 = (__pyx_v_atom_selection != Py_None);
-  if ((__pyx_t_2 != 0)) {
-    __Pyx_INCREF(__pyx_v_atom_selection);
-    __pyx_t_1 = __pyx_v_atom_selection;
-  } else {
-
-    /* "geometry.pyx":148
- *     # Get an iterable of atoms to search
- *     atoms = (atom_selection if atom_selection is not None else
- *              atom.molecule.atoms)             # <<<<<<<<<<<<<<
- * 
- *     # Filter the atoms in the iterable
- */
-    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_atom, __pyx_n_s_molecule); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 148, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_atoms); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 148, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_3);
-    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __pyx_t_1 = __pyx_t_3;
-    __pyx_t_3 = 0;
-  }
-  __pyx_v_atoms = __pyx_t_1;
-  __pyx_t_1 = 0;
-
   /* "geometry.pyx":151
  * 
- *     # Filter the atoms in the iterable
- *     atoms = [a for a in atoms if             # <<<<<<<<<<<<<<
- *               ((a != atom) and
- *                (not element_list or a.element in element_list) and
+ *     # Get an iterable of atoms to search
+ *     if atom_selection is None:             # <<<<<<<<<<<<<<
+ *         atoms = atom.molecule.atoms
+ *         # Filter the atoms in the iterable
  */
-  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 151, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  if (likely(PyList_CheckExact(__pyx_v_atoms)) || PyTuple_CheckExact(__pyx_v_atoms)) {
-    __pyx_t_3 = __pyx_v_atoms; __Pyx_INCREF(__pyx_t_3); __pyx_t_5 = 0;
-    __pyx_t_6 = NULL;
-  } else {
-    __pyx_t_5 = -1; __pyx_t_3 = PyObject_GetIter(__pyx_v_atoms); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 151, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_6 = Py_TYPE(__pyx_t_3)->tp_iternext; if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 151, __pyx_L1_error)
-  }
-  for (;;) {
-    if (likely(!__pyx_t_6)) {
-      if (likely(PyList_CheckExact(__pyx_t_3))) {
-        if (__pyx_t_5 >= PyList_GET_SIZE(__pyx_t_3)) break;
-        #if CYTHON_COMPILING_IN_CPYTHON
-        __pyx_t_4 = PyList_GET_ITEM(__pyx_t_3, __pyx_t_5); __Pyx_INCREF(__pyx_t_4); __pyx_t_5++; if (unlikely(0 < 0)) __PYX_ERR(0, 151, __pyx_L1_error)
-        #else
-        __pyx_t_4 = PySequence_ITEM(__pyx_t_3, __pyx_t_5); __pyx_t_5++; if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 151, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_4);
-        #endif
-      } else {
-        if (__pyx_t_5 >= PyTuple_GET_SIZE(__pyx_t_3)) break;
-        #if CYTHON_COMPILING_IN_CPYTHON
-        __pyx_t_4 = PyTuple_GET_ITEM(__pyx_t_3, __pyx_t_5); __Pyx_INCREF(__pyx_t_4); __pyx_t_5++; if (unlikely(0 < 0)) __PYX_ERR(0, 151, __pyx_L1_error)
-        #else
-        __pyx_t_4 = PySequence_ITEM(__pyx_t_3, __pyx_t_5); __pyx_t_5++; if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 151, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_4);
-        #endif
-      }
-    } else {
-      __pyx_t_4 = __pyx_t_6(__pyx_t_3);
-      if (unlikely(!__pyx_t_4)) {
-        PyObject* exc_type = PyErr_Occurred();
-        if (exc_type) {
-          if (likely(exc_type == PyExc_StopIteration || PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-          else __PYX_ERR(0, 151, __pyx_L1_error)
-        }
-        break;
-      }
-      __Pyx_GOTREF(__pyx_t_4);
-    }
-    __Pyx_XDECREF_SET(__pyx_v_a, __pyx_t_4);
-    __pyx_t_4 = 0;
+  __pyx_t_2 = (__pyx_v_atom_selection == Py_None);
+  __pyx_t_5 = (__pyx_t_2 != 0);
+  if (__pyx_t_5) {
 
     /* "geometry.pyx":152
- *     # Filter the atoms in the iterable
- *     atoms = [a for a in atoms if
- *               ((a != atom) and             # <<<<<<<<<<<<<<
- *                (not element_list or a.element in element_list) and
- *                (not exclude_intraresidue or a.residue != atom.residue))]
+ *     # Get an iterable of atoms to search
+ *     if atom_selection is None:
+ *         atoms = atom.molecule.atoms             # <<<<<<<<<<<<<<
+ *         # Filter the atoms in the iterable
+ *         atoms = [a for a in atoms if
  */
-    __pyx_t_4 = PyObject_RichCompare(__pyx_v_a, __pyx_v_atom, Py_NE); __Pyx_XGOTREF(__pyx_t_4); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 152, __pyx_L1_error)
-    __pyx_t_7 = __Pyx_PyObject_IsTrue(__pyx_t_4); if (unlikely(__pyx_t_7 < 0)) __PYX_ERR(0, 152, __pyx_L1_error)
-    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    if (__pyx_t_7) {
-    } else {
-      __pyx_t_2 = __pyx_t_7;
-      goto __pyx_L6_bool_binop_done;
-    }
-
-    /* "geometry.pyx":153
- *     atoms = [a for a in atoms if
- *               ((a != atom) and
- *                (not element_list or a.element in element_list) and             # <<<<<<<<<<<<<<
- *                (not exclude_intraresidue or a.residue != atom.residue))]
- * 
- */
-    __pyx_t_7 = (__pyx_v_element_list != Py_None) && (PyList_GET_SIZE(__pyx_v_element_list) != 0);
-    __pyx_t_8 = ((!__pyx_t_7) != 0);
-    if (!__pyx_t_8) {
-    } else {
-      goto __pyx_L8_next_and;
-    }
-    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_a, __pyx_n_s_element); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 153, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_atom, __pyx_n_s_molecule); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 152, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_1);
+    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_atoms); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 152, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_8 = (__Pyx_PySequence_ContainsTF(__pyx_t_4, __pyx_v_element_list, Py_EQ)); if (unlikely(__pyx_t_8 < 0)) __PYX_ERR(0, 153, __pyx_L1_error)
-    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __pyx_t_7 = (__pyx_t_8 != 0);
-    if (__pyx_t_7) {
-    } else {
-      __pyx_t_2 = __pyx_t_7;
-      goto __pyx_L6_bool_binop_done;
-    }
-    __pyx_L8_next_and:;
+    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+    __pyx_v_atoms = __pyx_t_4;
+    __pyx_t_4 = 0;
 
     /* "geometry.pyx":154
- *               ((a != atom) and
- *                (not element_list or a.element in element_list) and
- *                (not exclude_intraresidue or a.residue != atom.residue))]             # <<<<<<<<<<<<<<
- * 
- *     for a in atoms:
+ *         atoms = atom.molecule.atoms
+ *         # Filter the atoms in the iterable
+ *         atoms = [a for a in atoms if             # <<<<<<<<<<<<<<
+ *                  ((a != atom) and
+ *                   (not element_list or a.element in element_list) and
  */
-    __pyx_t_7 = ((!(__pyx_v_exclude_intraresidue != 0)) != 0);
-    if (!__pyx_t_7) {
-    } else {
-      __pyx_t_2 = __pyx_t_7;
-      goto __pyx_L6_bool_binop_done;
-    }
-    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_a, __pyx_n_s_residue); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 154, __pyx_L1_error)
+    __pyx_t_4 = PyList_New(0); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 154, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_9 = __Pyx_PyObject_GetAttrStr(__pyx_v_atom, __pyx_n_s_residue); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 154, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_9);
-    __pyx_t_10 = PyObject_RichCompare(__pyx_t_4, __pyx_t_9, Py_NE); __Pyx_XGOTREF(__pyx_t_10); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 154, __pyx_L1_error)
-    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
-    __pyx_t_7 = __Pyx_PyObject_IsTrue(__pyx_t_10); if (unlikely(__pyx_t_7 < 0)) __PYX_ERR(0, 154, __pyx_L1_error)
-    __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
-    __pyx_t_2 = __pyx_t_7;
-    __pyx_L6_bool_binop_done:;
+    if (likely(PyList_CheckExact(__pyx_v_atoms)) || PyTuple_CheckExact(__pyx_v_atoms)) {
+      __pyx_t_1 = __pyx_v_atoms; __Pyx_INCREF(__pyx_t_1); __pyx_t_6 = 0;
+      __pyx_t_7 = NULL;
+    } else {
+      __pyx_t_6 = -1; __pyx_t_1 = PyObject_GetIter(__pyx_v_atoms); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 154, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_1);
+      __pyx_t_7 = Py_TYPE(__pyx_t_1)->tp_iternext; if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 154, __pyx_L1_error)
+    }
+    for (;;) {
+      if (likely(!__pyx_t_7)) {
+        if (likely(PyList_CheckExact(__pyx_t_1))) {
+          if (__pyx_t_6 >= PyList_GET_SIZE(__pyx_t_1)) break;
+          #if CYTHON_COMPILING_IN_CPYTHON
+          __pyx_t_3 = PyList_GET_ITEM(__pyx_t_1, __pyx_t_6); __Pyx_INCREF(__pyx_t_3); __pyx_t_6++; if (unlikely(0 < 0)) __PYX_ERR(0, 154, __pyx_L1_error)
+          #else
+          __pyx_t_3 = PySequence_ITEM(__pyx_t_1, __pyx_t_6); __pyx_t_6++; if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 154, __pyx_L1_error)
+          __Pyx_GOTREF(__pyx_t_3);
+          #endif
+        } else {
+          if (__pyx_t_6 >= PyTuple_GET_SIZE(__pyx_t_1)) break;
+          #if CYTHON_COMPILING_IN_CPYTHON
+          __pyx_t_3 = PyTuple_GET_ITEM(__pyx_t_1, __pyx_t_6); __Pyx_INCREF(__pyx_t_3); __pyx_t_6++; if (unlikely(0 < 0)) __PYX_ERR(0, 154, __pyx_L1_error)
+          #else
+          __pyx_t_3 = PySequence_ITEM(__pyx_t_1, __pyx_t_6); __pyx_t_6++; if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 154, __pyx_L1_error)
+          __Pyx_GOTREF(__pyx_t_3);
+          #endif
+        }
+      } else {
+        __pyx_t_3 = __pyx_t_7(__pyx_t_1);
+        if (unlikely(!__pyx_t_3)) {
+          PyObject* exc_type = PyErr_Occurred();
+          if (exc_type) {
+            if (likely(exc_type == PyExc_StopIteration || PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
+            else __PYX_ERR(0, 154, __pyx_L1_error)
+          }
+          break;
+        }
+        __Pyx_GOTREF(__pyx_t_3);
+      }
+      __Pyx_XDECREF_SET(__pyx_v_a, __pyx_t_3);
+      __pyx_t_3 = 0;
+
+      /* "geometry.pyx":155
+ *         # Filter the atoms in the iterable
+ *         atoms = [a for a in atoms if
+ *                  ((a != atom) and             # <<<<<<<<<<<<<<
+ *                   (not element_list or a.element in element_list) and
+ *                   (not exclude_intraresidue or a.residue != atom.residue))]
+ */
+      __pyx_t_3 = PyObject_RichCompare(__pyx_v_a, __pyx_v_atom, Py_NE); __Pyx_XGOTREF(__pyx_t_3); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 155, __pyx_L1_error)
+      __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_t_3); if (unlikely(__pyx_t_2 < 0)) __PYX_ERR(0, 155, __pyx_L1_error)
+      __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+      if (__pyx_t_2) {
+      } else {
+        __pyx_t_5 = __pyx_t_2;
+        goto __pyx_L7_bool_binop_done;
+      }
+
+      /* "geometry.pyx":156
+ *         atoms = [a for a in atoms if
+ *                  ((a != atom) and
+ *                   (not element_list or a.element in element_list) and             # <<<<<<<<<<<<<<
+ *                   (not exclude_intraresidue or a.residue != atom.residue))]
+ * 
+ */
+      __pyx_t_2 = (__pyx_v_element_list != Py_None) && (PyList_GET_SIZE(__pyx_v_element_list) != 0);
+      __pyx_t_8 = ((!__pyx_t_2) != 0);
+      if (!__pyx_t_8) {
+      } else {
+        goto __pyx_L9_next_and;
+      }
+      __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_a, __pyx_n_s_element); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 156, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_3);
+      __pyx_t_8 = (__Pyx_PySequence_ContainsTF(__pyx_t_3, __pyx_v_element_list, Py_EQ)); if (unlikely(__pyx_t_8 < 0)) __PYX_ERR(0, 156, __pyx_L1_error)
+      __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+      __pyx_t_2 = (__pyx_t_8 != 0);
+      if (__pyx_t_2) {
+      } else {
+        __pyx_t_5 = __pyx_t_2;
+        goto __pyx_L7_bool_binop_done;
+      }
+      __pyx_L9_next_and:;
+
+      /* "geometry.pyx":157
+ *                  ((a != atom) and
+ *                   (not element_list or a.element in element_list) and
+ *                   (not exclude_intraresidue or a.residue != atom.residue))]             # <<<<<<<<<<<<<<
+ * 
+ *     else:
+ */
+      __pyx_t_2 = ((!(__pyx_v_exclude_intraresidue != 0)) != 0);
+      if (!__pyx_t_2) {
+      } else {
+        __pyx_t_5 = __pyx_t_2;
+        goto __pyx_L7_bool_binop_done;
+      }
+      __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_a, __pyx_n_s_residue); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 157, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_3);
+      __pyx_t_9 = __Pyx_PyObject_GetAttrStr(__pyx_v_atom, __pyx_n_s_residue); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 157, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_9);
+      __pyx_t_10 = PyObject_RichCompare(__pyx_t_3, __pyx_t_9, Py_NE); __Pyx_XGOTREF(__pyx_t_10); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 157, __pyx_L1_error)
+      __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+      __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
+      __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_t_10); if (unlikely(__pyx_t_2 < 0)) __PYX_ERR(0, 157, __pyx_L1_error)
+      __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
+      __pyx_t_5 = __pyx_t_2;
+      __pyx_L7_bool_binop_done:;
+
+      /* "geometry.pyx":154
+ *         atoms = atom.molecule.atoms
+ *         # Filter the atoms in the iterable
+ *         atoms = [a for a in atoms if             # <<<<<<<<<<<<<<
+ *                  ((a != atom) and
+ *                   (not element_list or a.element in element_list) and
+ */
+      if (__pyx_t_5) {
+        if (unlikely(__Pyx_ListComp_Append(__pyx_t_4, (PyObject*)__pyx_v_a))) __PYX_ERR(0, 154, __pyx_L1_error)
+      }
+    }
+    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+    __Pyx_DECREF_SET(__pyx_v_atoms, __pyx_t_4);
+    __pyx_t_4 = 0;
 
     /* "geometry.pyx":151
  * 
- *     # Filter the atoms in the iterable
- *     atoms = [a for a in atoms if             # <<<<<<<<<<<<<<
- *               ((a != atom) and
- *                (not element_list or a.element in element_list) and
+ *     # Get an iterable of atoms to search
+ *     if atom_selection is None:             # <<<<<<<<<<<<<<
+ *         atoms = atom.molecule.atoms
+ *         # Filter the atoms in the iterable
  */
-    if (__pyx_t_2) {
-      if (unlikely(__Pyx_ListComp_Append(__pyx_t_1, (PyObject*)__pyx_v_a))) __PYX_ERR(0, 151, __pyx_L1_error)
-    }
+    goto __pyx_L3;
   }
-  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __Pyx_DECREF_SET(__pyx_v_atoms, __pyx_t_1);
-  __pyx_t_1 = 0;
 
-  /* "geometry.pyx":156
- *                (not exclude_intraresidue or a.residue != atom.residue))]
+  /* "geometry.pyx":160
+ * 
+ *     else:
+ *         atoms = atom_selection             # <<<<<<<<<<<<<<
+ * 
+ *     for a in atoms:
+ */
+  /*else*/ {
+    __Pyx_INCREF(__pyx_v_atom_selection);
+    __pyx_v_atoms = __pyx_v_atom_selection;
+  }
+  __pyx_L3:;
+
+  /* "geometry.pyx":162
+ *         atoms = atom_selection
  * 
  *     for a in atoms:             # <<<<<<<<<<<<<<
- *         # if a == atom or (element_list and a.element not in element_list):
- *         #     continue
+ *         v1 = atom.pos
+ *         v2 = a.pos
  */
-  __pyx_t_1 = __pyx_v_atoms; __Pyx_INCREF(__pyx_t_1); __pyx_t_5 = 0;
+  if (likely(PyList_CheckExact(__pyx_v_atoms)) || PyTuple_CheckExact(__pyx_v_atoms)) {
+    __pyx_t_4 = __pyx_v_atoms; __Pyx_INCREF(__pyx_t_4); __pyx_t_6 = 0;
+    __pyx_t_7 = NULL;
+  } else {
+    __pyx_t_6 = -1; __pyx_t_4 = PyObject_GetIter(__pyx_v_atoms); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 162, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_4);
+    __pyx_t_7 = Py_TYPE(__pyx_t_4)->tp_iternext; if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 162, __pyx_L1_error)
+  }
   for (;;) {
-    if (__pyx_t_5 >= PyList_GET_SIZE(__pyx_t_1)) break;
-    #if CYTHON_COMPILING_IN_CPYTHON
-    __pyx_t_3 = PyList_GET_ITEM(__pyx_t_1, __pyx_t_5); __Pyx_INCREF(__pyx_t_3); __pyx_t_5++; if (unlikely(0 < 0)) __PYX_ERR(0, 156, __pyx_L1_error)
-    #else
-    __pyx_t_3 = PySequence_ITEM(__pyx_t_1, __pyx_t_5); __pyx_t_5++; if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 156, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_3);
-    #endif
-    __Pyx_XDECREF_SET(__pyx_v_a, __pyx_t_3);
-    __pyx_t_3 = 0;
+    if (likely(!__pyx_t_7)) {
+      if (likely(PyList_CheckExact(__pyx_t_4))) {
+        if (__pyx_t_6 >= PyList_GET_SIZE(__pyx_t_4)) break;
+        #if CYTHON_COMPILING_IN_CPYTHON
+        __pyx_t_1 = PyList_GET_ITEM(__pyx_t_4, __pyx_t_6); __Pyx_INCREF(__pyx_t_1); __pyx_t_6++; if (unlikely(0 < 0)) __PYX_ERR(0, 162, __pyx_L1_error)
+        #else
+        __pyx_t_1 = PySequence_ITEM(__pyx_t_4, __pyx_t_6); __pyx_t_6++; if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 162, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_1);
+        #endif
+      } else {
+        if (__pyx_t_6 >= PyTuple_GET_SIZE(__pyx_t_4)) break;
+        #if CYTHON_COMPILING_IN_CPYTHON
+        __pyx_t_1 = PyTuple_GET_ITEM(__pyx_t_4, __pyx_t_6); __Pyx_INCREF(__pyx_t_1); __pyx_t_6++; if (unlikely(0 < 0)) __PYX_ERR(0, 162, __pyx_L1_error)
+        #else
+        __pyx_t_1 = PySequence_ITEM(__pyx_t_4, __pyx_t_6); __pyx_t_6++; if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 162, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_1);
+        #endif
+      }
+    } else {
+      __pyx_t_1 = __pyx_t_7(__pyx_t_4);
+      if (unlikely(!__pyx_t_1)) {
+        PyObject* exc_type = PyErr_Occurred();
+        if (exc_type) {
+          if (likely(exc_type == PyExc_StopIteration || PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
+          else __PYX_ERR(0, 162, __pyx_L1_error)
+        }
+        break;
+      }
+      __Pyx_GOTREF(__pyx_t_1);
+    }
+    __Pyx_XDECREF_SET(__pyx_v_a, __pyx_t_1);
+    __pyx_t_1 = 0;
 
-    /* "geometry.pyx":161
- *         # if intraresidue is False and a.residue == atom.residue:
- *         #     continue
+    /* "geometry.pyx":163
+ * 
+ *     for a in atoms:
  *         v1 = atom.pos             # <<<<<<<<<<<<<<
  *         v2 = a.pos
- *         with nogil:
+ * 
  */
-    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_atom, __pyx_n_s_pos); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 161, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_11 = __Pyx_PyObject_to_MemoryviewSlice_ds_double(__pyx_t_3);
-    if (unlikely(!__pyx_t_11.memview)) __PYX_ERR(0, 161, __pyx_L1_error)
-    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_atom, __pyx_n_s_pos); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 163, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_1);
+    __pyx_t_11 = __Pyx_PyObject_to_MemoryviewSlice_ds_double(__pyx_t_1);
+    if (unlikely(!__pyx_t_11.memview)) __PYX_ERR(0, 163, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
     __PYX_XDEC_MEMVIEW(&__pyx_v_v1, 1);
     __pyx_v_v1 = __pyx_t_11;
     __pyx_t_11.memview = NULL;
     __pyx_t_11.data = NULL;
 
-    /* "geometry.pyx":162
- *         #     continue
+    /* "geometry.pyx":164
+ *     for a in atoms:
  *         v1 = atom.pos
  *         v2 = a.pos             # <<<<<<<<<<<<<<
+ * 
  *         with nogil:
- *             distance = _within_distance(v1, v2, cutoff)
  */
-    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_a, __pyx_n_s_pos); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 162, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_11 = __Pyx_PyObject_to_MemoryviewSlice_ds_double(__pyx_t_3);
-    if (unlikely(!__pyx_t_11.memview)) __PYX_ERR(0, 162, __pyx_L1_error)
-    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_a, __pyx_n_s_pos); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 164, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_1);
+    __pyx_t_11 = __Pyx_PyObject_to_MemoryviewSlice_ds_double(__pyx_t_1);
+    if (unlikely(!__pyx_t_11.memview)) __PYX_ERR(0, 164, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
     __PYX_XDEC_MEMVIEW(&__pyx_v_v2, 1);
     __pyx_v_v2 = __pyx_t_11;
     __pyx_t_11.memview = NULL;
     __pyx_t_11.data = NULL;
 
-    /* "geometry.pyx":163
- *         v1 = atom.pos
+    /* "geometry.pyx":166
  *         v2 = a.pos
+ * 
  *         with nogil:             # <<<<<<<<<<<<<<
  *             distance = _within_distance(v1, v2, cutoff)
  * 
@@ -3107,8 +3143,8 @@ static PyObject *__pyx_f_8geometry_within_distance(PyObject *__pyx_v_atom, doubl
         #endif
         /*try:*/ {
 
-          /* "geometry.pyx":164
- *         v2 = a.pos
+          /* "geometry.pyx":167
+ * 
  *         with nogil:
  *             distance = _within_distance(v1, v2, cutoff)             # <<<<<<<<<<<<<<
  * 
@@ -3117,9 +3153,9 @@ static PyObject *__pyx_f_8geometry_within_distance(PyObject *__pyx_v_atom, doubl
           __pyx_v_distance = __pyx_f_8geometry__within_distance(__pyx_v_v1, __pyx_v_v2, __pyx_v_cutoff);
         }
 
-        /* "geometry.pyx":163
- *         v1 = atom.pos
+        /* "geometry.pyx":166
  *         v2 = a.pos
+ * 
  *         with nogil:             # <<<<<<<<<<<<<<
  *             distance = _within_distance(v1, v2, cutoff)
  * 
@@ -3129,43 +3165,43 @@ static PyObject *__pyx_f_8geometry_within_distance(PyObject *__pyx_v_atom, doubl
             #ifdef WITH_THREAD
             Py_BLOCK_THREADS
             #endif
-            goto __pyx_L17;
+            goto __pyx_L18;
           }
-          __pyx_L17:;
+          __pyx_L18:;
         }
     }
 
-    /* "geometry.pyx":166
+    /* "geometry.pyx":169
  *             distance = _within_distance(v1, v2, cutoff)
  * 
  *         if distance > 0.0:             # <<<<<<<<<<<<<<
  *            atom_list.append((a, distance))
  * 
  */
-    __pyx_t_2 = ((__pyx_v_distance > 0.0) != 0);
-    if (__pyx_t_2) {
+    __pyx_t_5 = ((__pyx_v_distance > 0.0) != 0);
+    if (__pyx_t_5) {
 
-      /* "geometry.pyx":167
+      /* "geometry.pyx":170
  * 
  *         if distance > 0.0:
  *            atom_list.append((a, distance))             # <<<<<<<<<<<<<<
  * 
  *     return atom_list
  */
-      __pyx_t_3 = PyFloat_FromDouble(__pyx_v_distance); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 167, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_3);
-      __pyx_t_10 = PyTuple_New(2); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 167, __pyx_L1_error)
+      __pyx_t_1 = PyFloat_FromDouble(__pyx_v_distance); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 170, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_1);
+      __pyx_t_10 = PyTuple_New(2); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 170, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_10);
       __Pyx_INCREF(__pyx_v_a);
       __Pyx_GIVEREF(__pyx_v_a);
       PyTuple_SET_ITEM(__pyx_t_10, 0, __pyx_v_a);
-      __Pyx_GIVEREF(__pyx_t_3);
-      PyTuple_SET_ITEM(__pyx_t_10, 1, __pyx_t_3);
-      __pyx_t_3 = 0;
-      __pyx_t_12 = __Pyx_PyList_Append(__pyx_v_atom_list, __pyx_t_10); if (unlikely(__pyx_t_12 == -1)) __PYX_ERR(0, 167, __pyx_L1_error)
+      __Pyx_GIVEREF(__pyx_t_1);
+      PyTuple_SET_ITEM(__pyx_t_10, 1, __pyx_t_1);
+      __pyx_t_1 = 0;
+      __pyx_t_12 = __Pyx_PyList_Append(__pyx_v_atom_list, __pyx_t_10); if (unlikely(__pyx_t_12 == -1)) __PYX_ERR(0, 170, __pyx_L1_error)
       __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
 
-      /* "geometry.pyx":166
+      /* "geometry.pyx":169
  *             distance = _within_distance(v1, v2, cutoff)
  * 
  *         if distance > 0.0:             # <<<<<<<<<<<<<<
@@ -3174,17 +3210,17 @@ static PyObject *__pyx_f_8geometry_within_distance(PyObject *__pyx_v_atom, doubl
  */
     }
 
-    /* "geometry.pyx":156
- *                (not exclude_intraresidue or a.residue != atom.residue))]
+    /* "geometry.pyx":162
+ *         atoms = atom_selection
  * 
  *     for a in atoms:             # <<<<<<<<<<<<<<
- *         # if a == atom or (element_list and a.element not in element_list):
- *         #     continue
+ *         v1 = atom.pos
+ *         v2 = a.pos
  */
   }
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-  /* "geometry.pyx":169
+  /* "geometry.pyx":172
  *            atom_list.append((a, distance))
  * 
  *     return atom_list             # <<<<<<<<<<<<<<
@@ -3217,8 +3253,8 @@ static PyObject *__pyx_f_8geometry_within_distance(PyObject *__pyx_v_atom, doubl
   __Pyx_XDECREF(__pyx_v_element_list);
   __PYX_XDEC_MEMVIEW(&__pyx_v_v1, 1);
   __PYX_XDEC_MEMVIEW(&__pyx_v_v2, 1);
-  __Pyx_XDECREF(__pyx_v_atoms);
   __Pyx_XDECREF(__pyx_v_a);
+  __Pyx_XDECREF(__pyx_v_atoms);
   __Pyx_XGIVEREF(__pyx_r);
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
@@ -3226,7 +3262,7 @@ static PyObject *__pyx_f_8geometry_within_distance(PyObject *__pyx_v_atom, doubl
 
 /* Python wrapper */
 static PyObject *__pyx_pw_8geometry_7within_distance(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static char __pyx_doc_8geometry_6within_distance[] = "Find all atoms of element within the specified distance (in Angstroms)\n    of atom.\n\n    Parameters\n    ----------\n    atom: :obj:`atom`\n        The atom to find atoms around it.\n    cutoff: float\n        The distance boundary between atom and atoms of element to return.\n    elements: str\n        The element names of the atoms to return. This string supports the\n        or character '|'.\n        If '', all atoms within the distance will be returned\n        ex: 'H|C|N' for all H, C and N atoms\n    exclude_intraresidue: bool\n        If True, atoms within the same residue as atom will be excluded.\n    atom_selelction: iterable, optional\n        If specified, the nearest neighbors will be searched from this iterable\n        instead of the atom.molecule attribute.\n\n    Returns\n    -------\n    list of tuples\n        A list of tuples with (atom objects, distance).\n    ";
+static char __pyx_doc_8geometry_6within_distance[] = "Find all atoms of element within the specified distance (in Angstroms)\n    of atom.\n\n    Parameters\n    ----------\n    atom: :obj:`atom`\n        The atom to find atoms around it.\n    cutoff: float\n        The distance boundary between atom and atoms of element to return.\n    elements: str\n        The element names of the atoms to return. This string supports the\n        or character '|'.\n        If '', all atoms within the distance will be returned\n        ex: 'H|C|N' for all H, C and N atoms\n    exclude_intraresidue: bool\n        If True, atoms within the same residue as atom will be excluded.\n    atom_selelction: iterable, optional\n        If specified, the nearest neighbors will be searched from this iterable\n        instead of the atom.molecule attribute.\n\n\n        ..note : The elements and exclude_intraresidue methods are ignored when\n                 an atom_selection is specified.\n\n    Returns\n    -------\n    list of tuples\n        A list of tuples with (atom objects, distance).\n    ";
 static PyObject *__pyx_pw_8geometry_7within_distance(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyObject *__pyx_v_atom = 0;
   double __pyx_v_cutoff;
@@ -17877,14 +17913,14 @@ static int __Pyx_InitCachedConstants(void) {
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__Pyx_InitCachedConstants", 0);
 
-  /* "geometry.pyx":144
+  /* "geometry.pyx":148
+ *     cdef object a
  * 
- *     atom_list = []
  *     element_list = elements.split('|') if elements != '' else []             # <<<<<<<<<<<<<<
  * 
  *     # Get an iterable of atoms to search
  */
-  __pyx_tuple__3 = PyTuple_Pack(1, __pyx_kp_s__2); if (unlikely(!__pyx_tuple__3)) __PYX_ERR(0, 144, __pyx_L1_error)
+  __pyx_tuple__3 = PyTuple_Pack(1, __pyx_kp_s__2); if (unlikely(!__pyx_tuple__3)) __PYX_ERR(0, 148, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__3);
   __Pyx_GIVEREF(__pyx_tuple__3);
 
