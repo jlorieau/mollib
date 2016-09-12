@@ -4,7 +4,7 @@ The plugin for the hbond submodule.
 
 from mollib.plugins import Plugin
 from mollib.hbonds import find_hbond_partners, settings
-
+from mollib.utils import MDTable
 
 class Hbonds(Plugin):
     """The core plugin to offer the 'Hbonds' command."""
@@ -35,9 +35,64 @@ class Hbonds(Plugin):
             settings.hbond_distance_cutoff['d1a1']= (1.8, 3.0)
 
         hbonds = find_hbond_partners(molecule)
-        for count, hbond in enumerate(hbonds, 1):
-            if args.detailed:
-                print("{}. ({}) {}".format(count, molecule.name, hbond))
-            else:
-                print("{}. ({}) {}".format(count, molecule.name,
-                                           hbond.short_repr()))
+
+        if args.detailed:
+            # Setup the table
+            table = MDTable('Num', 'Donor', 'Acceptor',
+                            'Parameter', 'Value')
+            table.title = ('Hydrogen bond detailed '
+                           'listing for {}'.format(molecule.name))
+
+            # Add the Hbonds to the table
+            for count, hbond in enumerate(hbonds, 1):
+                # Get the dipole atom distances
+                dists = [(atoms, d)
+                         for atoms,d in sorted(hbond.distances.items(),
+                                               key=lambda i: i[1])]
+
+                # Convert the distance names and distances to strings
+                # Add the atom names
+                for i in range(len(dists)):
+                    a = dists[i][0]
+                    dist = dists[i][1]
+                    name = ''.join(('{', a[0:2], '}...{', a[2:4], '}'))
+                    name = name.format(a1=hbond.acceptor.atom1,
+                                       a2=hbond.acceptor.atom2,
+                                       d1=hbond.donor.atom1,
+                                       d2=hbond.donor.atom2)
+
+                    dist = '{:3.2f}'.format(dist)
+                    dists[i] = (name, dist)
+
+                # Get the dipole angles
+                angs = [(name, a)
+                         for name,a in sorted(hbond.angles.items(),
+                                               key=lambda i: i[1])]
+
+                # Add the hbond row with the first distance.
+                table.add_row(count, hbond.donor, hbond.acceptor,
+                              dists[0][0], dists[0][1])
+
+                # Add the distance rows
+                for name, d in dists[1:]:
+
+                    # Create the rows
+                    table.add_row('', '', '', name, d)
+
+                # Add the angle rows
+                for name, a in angs:
+                    table.add_row('', '', '', name, a)
+
+                table.add_blank_row()
+
+            print(table.content())
+        else:
+            # Setup the table
+            table = MDTable('Num', 'Donor', 'Acceptor')
+            table.title = ('Hydrogen bond '
+                           'listing for {}'.format(molecule.name))
+
+            # Add the Hbonds to the table
+            for count, hbond in enumerate(hbonds, 1):
+                table.add_row(count, hbond.donor, hbond.acceptor)
+            print(table.content())
