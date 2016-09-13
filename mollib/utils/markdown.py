@@ -5,9 +5,9 @@ Utilities for rendering information in Markdown
 class MDTable(object):
     """Renders a table in Markdown.
 
-    Attributes
+    Parameters
     ----------
-    title: str
+    title: str, optional
         If specified, this attribute will be used as the table's title.
     column_titles: iterable
         An iterable (list) of strings for the column header titles
@@ -17,6 +17,11 @@ class MDTable(object):
     multiline: bool
         If True, this table will render as a multiline table
     """
+
+    title = None
+    column_titles = None
+    rows = None
+    multiline = False
 
     def __init__(self, *args):
         """Constructor that initializes the column headers.
@@ -31,7 +36,6 @@ class MDTable(object):
         """
         self.column_titles = args
         self.rows = []
-        self.multiline = False
         self.title = None
 
 
