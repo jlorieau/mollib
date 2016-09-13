@@ -10,3 +10,4 @@ API Documentation
     plugins
     hydrogens
     hbonds
+    utils
