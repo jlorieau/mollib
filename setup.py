@@ -11,7 +11,6 @@ import numpy as np
 ext_modules = [
     Extension(name="mollib.geometry",
               sources=["mollib/core/src/geometry.pyx"],
-
               ) ]
 
 setup(name='mollib',
