@@ -8,33 +8,32 @@ from math import acos, pi, atan2, sqrt
 import numpy as np
 
 from .utils import filter_atoms
-from mollib.geometry import (measure_distance, vector_length, calc_vector,
-                             within_distance)
+from mollib.geometry import (measure_distance, vector_length, calc_vector, Box)
+                             #within_distance)
 
+from math import sqrt, ceil
+from itertools import chain
 
-# Note: This implementation is included for reference. The cKDTree actually
-# performs ~50-100% worse than the Cython brute search.
-#
-# from scipy.spatial import cKDTree
-#
-# def within_distance(atom, cutoff, elements='', exclude_intraresidue=False,
-#                     atom_selection=None):
-#     element_list = elements.split('|') if elements != '' else []
-#
-#     atoms = (atom_selection if atom_selection is not None else
-#              atom.molecule.atoms)
-#
-#     atoms = [a for a in atoms if
-#              ((a != atom) and
-#               (not element_list or a.element in element_list) and
-#               (not exclude_intraresidue or a.residue != atom.residue))]
-#
-#     if not hasattr(atom.molecule._cache, 'tree'):
-#         atom.molecule._cache['tree'] = cKDTree(atoms)
-#     tree = atom.molecule._cache['tree']
-#     indices = tree.query_ball_point(x=atom, r=cutoff)
-#     return [tree.data[i] for i in indices]
+# - Make points contiguous with integer access numbers in box
+# - make find_hbonds use within_distance before measure_dipole_distance
 
+def within_distance(atom, cutoff, elements='', exclude_intraresidue=False):
+
+    if 'box' not in atom.molecule._cache:
+        box = Box(atom.molecule.atoms)
+        atom.molecule._cache['box'] = box
+
+    box = atom.molecule._cache['box']
+    atoms = box.get_points(atom, cutoff)
+
+    # Filter the atoms in the iterable
+    element_list = elements.split('|') if elements != '' else []
+
+    atoms = [a for a in atoms if
+             ((a != atom) and
+              (not element_list or a.element in element_list) and
+              (not exclude_intraresidue or a.residue != atom.residue))]
+    return atoms
 
 def measure_angle(atom_1, atom_2, atom_3):
     """Measure the atom_1--atom_2--atom_3 angle.

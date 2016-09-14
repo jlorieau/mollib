@@ -83,12 +83,15 @@ class TestGeometry(unittest.TestCase):
         """"Tests the speed of the vector_length function.
 
         The number of vectors is tuned so that this test takes 1.0s.
+        Cython within_distance:  3 / 1.0s
+        Cuthon box:             10 / 1.0s
         """
         mol = Molecule('2KXA')
 
-        for i in range(3):
+        for i in range(15):
             for atom in mol.atoms:
-                within_distance(atom, cutoff=3.0)
+                atoms = within_distance(atom, cutoff=3.0)
+
 
     def test_measure_distances(self):
         mol = Molecule('2MUV')
