@@ -18,6 +18,42 @@ from itertools import chain
 # - make find_hbonds use within_distance before measure_dipole_distance
 
 def within_distance(atom, cutoff, elements='', exclude_intraresidue=False):
+    """Find all atoms of element within the specified distance (in Angstroms)
+       of atom.
+
+   Parameters
+   ----------
+   atom: :obj:`atom`
+       The atom to find atoms around it.
+   cutoff: float
+       The distance boundary between atom and atoms of element to return.
+   elements: str
+       The element names of the atoms to return. This string supports the
+       or character '|'.
+       If '', all atoms within the distance will be returned
+       ex: 'H|C|N' for all H, C and N atoms
+   exclude_intraresidue: bool
+       If True, atoms within the same residue as atom will be excluded.
+   atom_selelction: iterable, optional
+       If specified, the nearest neighbors will be searched from this iterable
+       instead of the atom.molecule attribute.
+
+
+       ..note : The elements and exclude_intraresidue methods are ignored when
+                an atom_selection is specified.
+
+   Returns
+   -------
+   list of tuples
+       A list of tuples with (atom objects, distance).
+
+    Examples
+    --------
+    >>> from mollib import Molecule
+    >>> mol = Molecule('2KXA')
+    >>> within_distance(mol['A'][5]['CA'], cutoff=2.0)
+    [A.A5-CB, A.A5-C, A.A5-N, A.A5-HA]
+    """
 
     if 'box' not in atom.molecule.cache:
         box = Box(atom.molecule.atoms)

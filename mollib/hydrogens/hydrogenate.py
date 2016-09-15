@@ -35,9 +35,11 @@ from . import settings
 
 
 def add_hydrogens_to_residue(residue):
-    "Add hydrogens to the given residue."
-    pH = residue.molecule.pH
+    """Add hydrogens to the given residue.
 
+    Any ion groups for this residue are returned for processing last in the
+    molecule.
+    """
     # Get a list of the ionizeable groups to figure out how many protons
     # they need separately
     ion_groups = residue.ionizeable_groups
@@ -56,8 +58,7 @@ def add_hydrogens_to_residue(residue):
             msg = "Could not add hydrogen to '{}' ".format(atom.fullname)
             logging.warning(msg)
 
-    # Now process ionizeable groups, based on the molecule's pH
-    add_hydrogen_iongroups(pH=pH, ion_groups=ion_groups)
+    return ion_groups
 
 
 def add_hydrogens_to_queue(q, result):
@@ -119,8 +120,17 @@ def add_hydrogens(molecule, strip=True):
     pH = molecule.pH
 
     # Implementation #1 - single process
+    ion_groups_list = []
     for residue in molecule.residues:
-        add_hydrogens_to_residue(residue)
+        ion_groups_list.append(add_hydrogens_to_residue(residue))
+
+    # Process ion_groups separately
+    pH = residue.molecule.pH
+    for ion_groups in ion_groups_list:
+        add_hydrogen_iongroups(pH=pH, ion_groups=ion_groups)
+
+    # Now that all of the atoms have been added, clear the cache
+    molecule.clear_cache(scope='add_atoms')
 
     # Implementation #2 - multiprocess (twice as slow)
     #     The concurrency with map seems to work very well, but it chokes
@@ -271,7 +281,7 @@ def add_one_sp2_h(atom, bond_length):
 
         # Create the new hydrogen atom
         molecule.add_atom(name=h_name, pos=h, element='H',
-                          residue=residue)
+                          residue=residue, clear_cache=False)
         return True
 
     # If only one bonded_heavy_atom is available (like in a CO oxygen), the
@@ -307,7 +317,7 @@ def add_one_sp2_h(atom, bond_length):
 
         # Create the new hydrogen atom
         molecule.add_atom(name=h_name, pos=h, element='H',
-                          residue=residue)
+                          residue=residue, clear_cache=False)
         return True
     else:
         logging.warning("Number of bonded atoms "
@@ -423,9 +433,9 @@ def add_two_sp2_h(atom, bond_length, jbnmr_convention=True):
 
         # Add the new protons to the target_atom
         molecule.add_atom(name=h_name_1, pos=h1,
-                          element='H', residue=atom.residue)
+                          element='H', residue=atom.residue, clear_cache=False)
         molecule.add_atom(name=h_name_2, pos=h2,
-                          element='H', residue=atom.residue)
+                          element='H', residue=atom.residue, clear_cache=False)
 
         return True
 
@@ -486,7 +496,7 @@ def add_one_sp3_h(atom, bond_length):
 
         # Create the new hydrogen atom
         molecule.add_atom(name=h_name, pos=h, element='H',
-                          residue=atom.residue)
+                          residue=atom.residue, clear_cache=False)
         return True
     elif len(bonded_heavy_atoms) == 1:
         # This might occur for an O-H hydroxyl group. To get the correct
@@ -519,7 +529,7 @@ def add_one_sp3_h(atom, bond_length):
 
         # Create the new hydrogen atom
         molecule.add_atom(name=h_name, pos=h, element='H',
-                          residue=atom.residue)
+                          residue=atom.residue, clear_cache=False)
         return True
     else:
         msg = 'add_one_sp3_h() requires 2 or 3 heavy atoms for atom {}.'
@@ -630,9 +640,9 @@ def add_two_sp3_h(atom, bond_length, jbnmr_convention=True):
 
         # Create the new hydrogen atoms
         molecule.add_atom(name=h_name_2, pos=h2, element='H',
-                          residue=atom.residue)
+                          residue=atom.residue, clear_cache=False)
         molecule.add_atom(name=h_name_3, pos=h3, element='H',
-                          residue=atom.residue)
+                          residue=atom.residue, clear_cache=False)
         return True
 
     else:
@@ -749,11 +759,11 @@ def add_three_sp3_h(atom, bond_length, alpha=None):
 
         # Create the new hydrogen atoms
         molecule.add_atom(name=h_name_1, pos=h1, element='H',
-                          residue=atom.residue)
+                          residue=atom.residue, clear_cache=False)
         molecule.add_atom(name=h_name_2, pos=h2, element='H',
-                          residue=atom.residue)
+                          residue=atom.residue, clear_cache=False)
         molecule.add_atom(name=h_name_3, pos=h3, element='H',
-                          residue=atom.residue)
+                          residue=atom.residue, clear_cache=False)
         return True
 
     else:
