@@ -285,6 +285,78 @@ class TestMolecule(unittest.TestCase):
         self.assertEqual(het['C83'].bonded_atoms(sorted=True),
                          [het['C73'], het['C71'], het['H83A'], het['H83']])
 
+    def test_cache(self):
+        "Tests the cache_clear method."
+        class Mock(object):
+            "A Mock cache object."
+            pass
+
+        class TesterMethod(object):
+            "A tester for methods and cache clearing scopes"
+
+            def __init__(self, **kwargs):
+                for k,v in kwargs.items():
+                    setattr(self, k, v)
+
+        # A molecule object to add caches to
+        mol = Molecule('2KXA')
+
+        # A list of tester methods
+        testers = [TesterMethod(scope='preserve_cache_wb_rotation',
+                                method='rotate_zyz',
+                                args=(0., 0., 0.)),
+                   TesterMethod(scope='preserve_cache_wb_translation',
+                                method='center'),
+                   TesterMethod(scope='preserve_cache_add_atoms',
+                                method='add_atom',
+                                args=('T', (0., 0., 0.), 'C', mol['A'][5])),
+                   TesterMethod(scope='preserve_cache_del_atoms',
+                                method='strip_atoms',
+                                args=('H',)),
+                   TesterMethod(scope='preserve_cache_renumber_atoms',
+                                method='renumber_atoms')
+                   ]
+
+        # Test all of the tester methods
+        for tester in testers:
+            # The molecule cache should be empty after every run
+            self.assertEqual(len(mol.cache), 0)
+
+            # Create cache objects/dicts
+            obj = Mock()
+            setattr(obj, tester.scope, True)
+            d = {tester.scope: None}
+            mol.cache['obj'] = obj
+            mol.cache['d'] = d
+
+            # Objects are in the cache
+            self.assertIn('obj', mol.cache)
+            self.assertIn('d', mol.cache)
+
+            # Try a method that invalidates the cache in scope
+            if hasattr(tester, 'args'):
+                getattr(mol, tester.method)(*tester.args)
+            else:
+                getattr(mol, tester.method)()
+
+            # Objects are still in the cache
+            self.assertIn('obj', mol.cache)
+            self.assertIn('d', mol.cache)
+
+            # Reset the cached object attributes
+            setattr(obj, tester.scope, False)
+            del d[tester.scope]
+
+            # The same method should now invalidate the cache
+            if hasattr(tester, 'args'):
+                getattr(mol, tester.method)(*tester.args)
+            else:
+                getattr(mol, tester.method)()
+
+            # And the object and dict are no longer in the cache.
+            self.assertNotIn('obj', mol.cache)
+            self.assertNotIn('d', mol.cache)
+
     # def test_pickle(self):
     #     "Tests Pickle serialization."
     #     import pickle

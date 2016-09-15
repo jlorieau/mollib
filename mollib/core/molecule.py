@@ -123,8 +123,9 @@ class Molecule(dict):
 
     _parameters: dict
         Stores the molecule's parameters
-    _cache: dict
-        Stored cached calculations for the molecule
+    cache: dict
+        Stored cached calculations for the molecule. These are cleared by
+        the clear_cache method.
 
     .. note:: A molecule object only reads the first model of a PDB file
               with multiple models
@@ -170,7 +171,7 @@ class Molecule(dict):
         self.identifier = identifier
         self.connections = []
         self._parameters = {}
-        self._cache = {}
+        self.cache = {}
 
         # Read in the data
         self.read_identifier(identifier)
@@ -436,6 +437,12 @@ class Molecule(dict):
     def center(self):
         """Centers a molecule about its center_of_mass.
 
+
+        .. note:: This function invalidates cache objects with the attribute
+                  or key 'preserve_cache_wb_translation'
+
+        Examples
+        --------
         >>> mol = Molecule('2KXA')
         >>> print("{:.3f} {:.3f} {:.3f}".format(*mol.center_of_mass))
         16.938 -0.058 0.125
@@ -444,6 +451,9 @@ class Molecule(dict):
         >>> print("{:.3f} {:.3f} {:.3f}".format(*map(abs, mol.center_of_mass)))
         0.000 0.000 0.000
         """
+        # Invalidate the caches
+        self.clear_cache(scope='wb_translation')
+
         com = self.center_of_mass
         for atom in self.atoms:
             atom.pos[0] -= com[0]
@@ -451,7 +461,13 @@ class Molecule(dict):
             atom.pos[2] -= com[2]
 
     def rotate_zyz(self, alpha, beta, gamma):
-        """Rotates a molecule by the Euler z-y-z angles in degrees."""
+        """Rotates a molecule by the Euler z-y-z angles in degrees.
+
+        .. note:: This function invalidates the caches without
+                  'preserve_cache_wb_rotation'
+        """
+        # Invalidate the caches
+        self.clear_cache(scope='wb_rotation')
 
         # Trig.
         sin_a = sin(alpha * pi / 180.)
@@ -500,6 +516,10 @@ class Molecule(dict):
         kwargs: dict, optional
             Additional parameters to pass to the Atom constructor.
 
+
+        .. note:: This function invalidates cache objects with the attribute
+                  or method 'preserve_cache_add_atoms'
+
         Examples
         --------
         >>> mol = Molecule('2KXA')
@@ -509,6 +529,9 @@ class Molecule(dict):
         >>> print ('{:.2f}, {:.2f}'.format(mol.mass, mol['A'][3].mass))
         2457.08, 159.20
         """
+        # Invalidate the wb_rotation cache
+        self.clear_cache(scope='add_atoms')
+
         # TODO: add test.
         if 'number' not in kwargs:
             kwargs['number'] = -1
@@ -538,6 +561,21 @@ class Molecule(dict):
         delete_topology: bool
             If True, this atom will be removed from its bonded atom topologies.
 
+
+        .. note:: This function invalidates cache objects with the attribute
+                  or method 'preserve_cache_del_atoms'
+
+        .. note:: Since atom objects are only referenced in residues, this
+                  should delete the only atom reference in the molecule.
+                  However, if the atom was referenced elsewhere, it won't get
+                  deleted until that reference is deleted. An implementation
+                  that returns weakref.proxy links from the molecule may be
+                  preferable.
+
+        .. note:: The delete_topology function will not remove hydrogens from
+                  the atom's topology (though the H atom will not longer be
+                  list in the atom's bonded_atoms). This is by design.
+
         Examples
         --------
         >>> mol = Molecule('2KXA')
@@ -550,19 +588,10 @@ class Molecule(dict):
         2431.06, 133.18
         >>> sorted(mol['A'][3]['CA'].bonded_atoms())
         [A.F3-C, A.F3-CB, A.F3-HA]
-
-
-        .. note:: Since atom objects are only referenced in residues, this
-                  should delete the only atom reference in the molecule.
-                  However, if the atom was referenced elsewhere, it won't get
-                  deleted until that reference is deleted. An implementation
-                  that returns weakref.proxy links from the molecule may be
-                  preferable.
-
-        .. note:: The delete_topology function will not remove hydrogens from
-                  the atom's topology (though the H atom will not longer be
-                  list in the atom's bonded_atoms). This is by design.
         """
+        # Invalidate the caches
+        self.clear_cache(scope='del_atoms')
+
         if delete_topology:
             for bonded_atom in atom.bonded_atoms():
                 bonded_atom.del_from_topology(atom)
@@ -570,6 +599,10 @@ class Molecule(dict):
 
     def strip_atoms(self, element):
         """Deletes all atoms with the given element (name, i.e. 'H')
+
+
+        .. note:: This function invalidates cache objects with the attribute
+                  or method 'preserve_cache_del_atoms'
 
         Examples
         --------
@@ -580,6 +613,9 @@ class Molecule(dict):
         >>> print('{:.2f}'.format(mol.mass))
         2285.49
         """
+        # Invalidate the caches
+        self.clear_cache(scope='del_atoms')
+
         # TODO: add option to also remove from topologies
         # TODO: Support '|' OR elements.
         for atom in self.atoms:
@@ -733,7 +769,14 @@ class Molecule(dict):
 
         Since the self.connections list depends on
         atom numbers, it is reset.
+
+
+        .. note:: This function invalidates caches for objects without the
+                  attribute or key 'preserve_cache_renumber_atoms'.
         """
+        # Invalidate cache
+        self.clear_cache(scope='renumber_atoms')
+
         self.connections = []
 
         # First order by the chains. The protein chains ('A', 'B', ...) should
@@ -753,7 +796,74 @@ class Molecule(dict):
                 # ex: ['N', 'H', 'C', 'CA', 'HA', 'CB', 'HB1', 'HB2', 'HB3']
                 for atom in sorted(residue.atoms,
                                    key = lambda a : (a.name[1:], a.name[0])):
-                    atom.number = counter.next()
+                    atom.number = next(counter)
+
+    def clear_cache(self, scope=None):
+        """Clear objects from this molecule's cache.
+
+        Parameters
+        ----------
+        scope: str or None
+            If None, all cache items are cleared.
+            If a scope string is specified, all cache items that either do
+            not have a preserve_cache_scope attribute equal to True or a
+            key with 'preserve_cache_scope` will be removed. The scope can be
+            a variety of values.
+
+            - ``wb_rotation``: Cache items that are invalidated by a whole-body
+              (whole molecule) rotation. Must have the
+              preserve_cache_wb_rotation attribute equal to True or the
+              'preserve_cache_wb_rotation` key.
+            - ``wb_translation``: Cache items that are invalidated by whole-
+              body translations.
+            - ``add_atoms``: Cache items that are invalidated by adding atoms
+            - ``del_atoms``: Cache items that are invalidated by deleting atoms
+            - ``renumber_atoms``: Cache items that are invalidated by
+              renumbering items.
+
+        Returns
+        -------
+        int:
+            The number of cache items deleted
+
+        Examples
+        --------
+        >>> from mollib import Molecule
+        >>> mol = Molecule('2KXA')
+        >>> class Object: pass
+        >>> obj = Object()
+        >>> obj.preserve_cache_wb_rotation = True
+        >>> mol.cache['obj'] = obj
+        >>> mol.clear_cache('wb_rotation')
+        0
+        >>> 'obj' in mol.cache
+        True
+        >>> obj.preserve_cache_wb_rotation = False
+        >>> mol.clear_cache('wb_rotation')
+        1
+        >>> 'obj' in mol.cache
+        False
+        """
+        count = 0
+        keys_to_delete = []
+        for k,v in self.cache.items():
+            # Construct the name of the preserve_cache attribute or key
+            preserve_name = ('_'.join(('preserve_cache', scope)) if scope
+                             else None)
+
+            # Skip item if it matches the preserve_name from the scope
+            if preserve_name:
+                if hasattr(v, '__iter__') and preserve_name in v:
+                    continue
+                if getattr(v, preserve_name, False):
+                    continue
+            keys_to_delete.append(k)
+
+        for k in keys_to_delete:
+            count += 1
+            del self.cache[k]
+
+        return count
 
     # Read and Write Methods
 
@@ -884,7 +994,13 @@ class Molecule(dict):
         """Reads in data from a PDB file.
 
         Supported extensions include '.pdb' and '.pdb.gz'
+
+
+        .. note:: This function invalidates all caches.
         """
+        # Invalidate all caches
+        self.clear_cache()
+
         if filename.endswith('.gz'):
             with gzip.open(filename) as f:
                 self.read_stream(f)
