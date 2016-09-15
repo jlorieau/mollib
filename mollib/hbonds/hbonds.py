@@ -18,7 +18,8 @@ from math import pi, acos, atan2
 import numpy as np
 
 from . import settings
-from mollib.core import measure_distance, calc_vector, vector_length
+from mollib.core import (measure_distance, calc_vector, vector_length,
+                         within_distance)
 
 
 class Dipole(namedtuple('Dipole','atom1 atom2')):
@@ -372,7 +373,47 @@ def find_hbond_partners(molecule, donor1_elements=None, donor2_elements=None,
     # For each donor-acceptor pair, detect the distance and angles with all of
     # the acceptors
     for donor_dip in donor_list:
-        for acceptor_dip in acceptor_list:
+        # Prefilter the acceptor_list using within_distance. This speeds up
+        # searches of matching items.
+
+        # First, find which distance cutoff between atoms in the dipoles is
+        # largest
+        largest_cutoff = None
+        largest_cutoff_atoms = None
+        for k, v in settings.hbond_distance_cutoff.items():
+            cutoff_max = v[1]
+            if largest_cutoff is None or cutoff_max > largest_cutoff:
+                largest_cutoff = cutoff_max
+                largest_cutoff_atoms = k[0:2], k[2:4]  # split 'a1d1' to
+                                                       # ('a1', 'd1')
+
+        # If found, find all of the nearest neighbor atoms to the donor atom
+        # and filter the acceptor_list based on these atoms.
+        filtered_acceptor_list = acceptor_list
+        if largest_cutoff:
+            if 'd1' in largest_cutoff_atoms:
+                donor_atom = donor_dip.atom1
+            elif 'd2' in largest_cutoff_atoms:
+                donor_atom = donor_dip.atom2
+            else:
+                donor_atom = None
+
+            if donor_atom:
+                nearest_atoms = within_distance(donor_atom,
+                                                cutoff=largest_cutoff)
+
+                # We match based on atom ids because the __eq__ Atom method
+                # is expensive. The new filtered_acceptor_list will only contain
+                # acceptor dipoles that are within the distance cutoff of the
+                # donor dipole atoms.
+                nearest_atom_ids = [id(a) for a in nearest_atoms]
+                filtered_acceptor_list = [a for a in acceptor_list
+                                          if id(a.atom1) in nearest_atom_ids or
+                                          id(a.atom2) in nearest_atom_ids]
+
+        # Find all of the acceptor dipoles that have the right distances and
+        # angles to the donor dipoles.
+        for acceptor_dip in filtered_acceptor_list:
             # Measure the distances between atoms in the two dipoles
             distance_dict = dipole_distances(donor_dip, acceptor_dip)
 
