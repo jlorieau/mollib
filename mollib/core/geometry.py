@@ -19,11 +19,11 @@ from itertools import chain
 
 def within_distance(atom, cutoff, elements='', exclude_intraresidue=False):
 
-    if 'box' not in atom.molecule._cache:
+    if 'box' not in atom.molecule.cache:
         box = Box(atom.molecule.atoms)
-        atom.molecule._cache['box'] = box
+        atom.molecule.cache['box'] = box
 
-    box = atom.molecule._cache['box']
+    box = atom.molecule.cache['box']
     atoms = box.get_points(atom, cutoff)
 
     # Filter the atoms in the iterable
