@@ -496,7 +496,7 @@ class Molecule(dict):
         return None
 
     def add_atom(self, name, pos, element, residue, bonded_atoms = None,
-                 **kwargs):
+                 clear_cache=True, **kwargs):
         """Adds an atom to the molecule.
 
         Parameters
@@ -513,11 +513,14 @@ class Molecule(dict):
         bonded_atoms: list
             If specified, these atoms will be added to this atom's topology
             (and vice-versa)
+        clear_cache: bool, optional
+            If True, this function will clear the cache for objects. See note
+            below
         kwargs: dict, optional
             Additional parameters to pass to the Atom constructor.
 
 
-        .. note:: This function invalidates cache objects with the attribute
+        .. note:: This function invalidates cache objects without the attribute
                   or method 'preserve_cache_add_atoms'
 
         Examples
@@ -530,7 +533,8 @@ class Molecule(dict):
         2457.08, 159.20
         """
         # Invalidate the wb_rotation cache
-        self.clear_cache(scope='add_atoms')
+        if clear_cache:
+            self.clear_cache(scope='add_atoms')
 
         # TODO: add test.
         if 'number' not in kwargs:
@@ -846,6 +850,8 @@ class Molecule(dict):
         """
         count = 0
         keys_to_delete = []
+
+        # Find all of the cache kinds that should be deleted
         for k,v in self.cache.items():
             # Construct the name of the preserve_cache attribute or key
             preserve_name = ('_'.join(('preserve_cache', scope)) if scope
@@ -859,9 +865,14 @@ class Molecule(dict):
                     continue
             keys_to_delete.append(k)
 
+        # Setup debug messages
+        msg = "Clearing cache scope '{}'"
+
+        # Go through the keys_to_delete and delete these items from the cache
         for k in keys_to_delete:
             count += 1
             del self.cache[k]
+            logging.debug(msg.format(scope if scope is not None else 'all'))
 
         return count
 
