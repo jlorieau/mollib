@@ -183,6 +183,8 @@ cdef class Box:
     cdef double x_min, x_max, y_min, y_max, z_min, z_max, _node_size
     cdef int _x_no_box, _y_no_box, _z_no_box
     cdef list _box
+    cdef bint preserve_cache_wb_rotation, preserve_cache_wb_translation
+    cdef bint preserve_cache_renumber_atoms
 
     @cython.cdivision(True)
     def __init__(self, point_list, double node_size=2.0):
@@ -192,6 +194,10 @@ cdef class Box:
         cdef int i, j, k, no_points
         cdef object point
         cdef list points
+
+        self.preserve_cache_wb_rotation = True
+        self.preserve_cache_wb_translation = True
+        self.preserve_cache_renumber_atoms = True
 
         points = list(point_list)  # Convert generator to a list to traverse
                                    # multiple times
