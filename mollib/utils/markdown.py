@@ -18,6 +18,9 @@ def print_lines(text_items, widths):
         Items to print over multiple lines.
     widths: list of int
         width to fit the lines to.
+
+    Examples
+    --------
     >>> t = print_lines(['My', 'first and ever', 'multiline text'], \
                         [15, 15, 15])
     >>> print(t)
@@ -60,7 +63,7 @@ class MDTable(object):
         that match the number of columns in column_titles
     multiline: bool
         If True, this table will render as a multiline table
-    maxwidth: int, optional
+    max_width: int, optional
         The maximum width of the table. If the table columns exceed this value,
         the table is converted to a multiline and columns are wrapped to
         accomodate the max_width.
@@ -109,6 +112,7 @@ class MDTable(object):
         """Return the list of column widths for the current data.
 
         Returns
+        -------
         list of tuples
             Each item in the returned list is a (width, wrap) tuple of the
             column_width (width, int) and whether to textwrap the column (wrap,
