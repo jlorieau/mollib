@@ -12,7 +12,7 @@ from mollib.hbonds import find_hbond_partners
 class TestHydrogenBonds(unittest.TestCase):
     "Tests the objects and functions for hbonds."
 
-    @attr('slow')
+    @attr('bench')
     def test_large_molecule(self):
         """Tests the detection of hbonds in a large protein.
 
@@ -32,6 +32,6 @@ class TestHydrogenBonds(unittest.TestCase):
         mol = Molecule('2N18')
         hbonds = find_hbond_partners(mol)
 
-        self.assertEqual(len(hbonds), 380)
+        self.assertEqual(len(hbonds), 378)
 
     
