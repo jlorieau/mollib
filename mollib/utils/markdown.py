@@ -39,9 +39,9 @@ def print_lines(text_items, widths):
     text = ''
     for line_no in range(max_no_lines):
         for text_item, width in zip(text_items, widths):
-            text += (text_item[line_no].center(width)
+            text += (text_item[line_no].ljust(width)
                      if line_no < len(text_item) else
-                     ''.center(width))
+                     ''.ljust(width))
 
         # Print a new line on all lines except the last one
         if line_no != max_no_lines - 1 :
