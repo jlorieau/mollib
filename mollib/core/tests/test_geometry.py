@@ -2,12 +2,13 @@
 Test the geometry functions
 """
 import unittest
+from math import sqrt
 
 from nose.plugins.attrib import attr
 import numpy as np
 
 from mollib.core import (Molecule, measure_distances, calc_vector,
-                         vector_length, within_distance)
+                         vector_length, within_distance, Box)
 
 
 class TestGeometry(unittest.TestCase):
@@ -183,3 +184,52 @@ class TestGeometry(unittest.TestCase):
                           (mol['D'][23]['CA'], mol['D'][24]['CA']),
                           ])
 
+    def test_box(self):
+        """Tests the Box class for storing and accessing nearest-neighbor
+        points."""
+        # create the points
+        point_range = (-20., 20.)
+        no_points = 5000
+        node_size = 2.0
+
+        np.random.seed(0)
+        points = []
+        for i in range(no_points):
+            points.append(np.random.rand(3)*point_range[1] - point_range[1]/2.)
+
+        # Setup the distance function
+        def dist(p1, p2):
+            return sqrt(sum([(i-j)**2 for i,j in zip(p1, p2)]))
+
+        # Create the box
+        box = Box(points, node_size=node_size)
+        self.assertEqual(len(points), box.num_points())
+
+        # Test that the points are correctly retrieved and compare to a brute
+        # search
+        closest_points = list(box.get_points(points[0], radius=2.0))
+        brute_closest = [p for p in points if dist(p, points[0]) < 2.0]
+
+        self.assertGreater(len(closest_points), 0)
+        self.assertEqual(len(closest_points), len(brute_closest))
+
+        # Access an existing node
+        node = box.get_node(points[0])
+        self.assertIn(points[0], node)
+
+        # Access an non-existing node. This raises an IndexError
+        fake_point = (point_range[0]*3., point_range[0]*3., point_range[0]*3)
+        with self.assertRaises(IndexError):
+            node = box.get_node(fake_point)
+
+        # Try making a box with mismatched point dimensions. This raises an
+        # index error
+        points2 = [(1., 2., 3.),
+                   (4., 5.,)]
+        with self.assertRaises(IndexError):
+            box = Box(points2)
+
+        # Try making a box with a negative node_size. This raises an assertion
+        # error
+        with self.assertRaises(AssertionError):
+            box = Box(points, node_size=-2.)
