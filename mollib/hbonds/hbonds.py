@@ -18,6 +18,7 @@ from math import pi, acos, atan2
 import numpy as np
 
 from . import settings
+from .classify import classify
 from mollib.core import (measure_distance, calc_vector, vector_length,
                          within_distance)
 
@@ -448,6 +449,9 @@ def find_hbond_partners(molecule, donor1_elements=None, donor2_elements=None,
             # This is a hydrogen bond! Create a hydrogen bond object
             hbond = HydrogenBond(donor=donor_dip, acceptor=acceptor_dip,
                                  distances=distance_dict, angles=angle_dict)
+
+            # Classify this hydrogen bond and add to the hbond list
+            classify(hbond)
             hbonds.append(hbond)
 
     # Set the hbonds molecular parameter and return the hbonds

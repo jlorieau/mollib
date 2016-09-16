@@ -88,11 +88,13 @@ class Hbonds(Plugin):
             print(table.content())
         else:
             # Setup the table
-            table = MDTable('Num', 'Donor', 'Acceptor')
+            table = MDTable('Num', 'Donor', 'Acceptor', 'type (major)')
             table.title = ('Hydrogen bond '
                            'listing for {}'.format(molecule.name))
 
             # Add the Hbonds to the table
             for count, hbond in enumerate(hbonds, 1):
-                table.add_row(count, hbond.donor, hbond.acceptor)
+                table.add_row(count, hbond.donor, hbond.acceptor,
+                              ' '.join((hbond.major_classification,
+                                        hbond.minor_classification)))
             print(table.content())
