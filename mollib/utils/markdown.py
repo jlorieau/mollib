@@ -2,6 +2,50 @@
 Utilities for rendering information in Markdown
 """
 
+import textwrap
+from math import ceil
+
+from . import settings
+
+
+def print_lines(text_items, widths):
+    """Given the unwrapped text_items, print them to fit in the given widths
+    using textwrap.
+
+    Parameters
+    ----------
+    text_items: list of str
+        Items to print over multiple lines.
+    widths: list of int
+        width to fit the lines to.
+    >>> t = print_lines(['My', 'first and ever', 'multiline text'], \
+                        [15, 15, 15])
+    >>> print(t)
+           My       first and ever multiline text
+    >>> t = print_lines(['My', 'first and ever', 'multiline text'], \
+                        [10, 10, 10])
+    >>> t.splitlines()
+    ['    My    first and multiline ', '             ever      text   ']
+    """
+    assert(len(text_items) == len(widths))
+
+    # wrap the text_items
+    text_items = [textwrap.wrap(t, w) for t,w in zip(text_items, widths)]
+    no_lines = [len(t) for t in text_items]
+    max_no_lines = max(no_lines)
+    text = ''
+    for line_no in range(max_no_lines):
+        for text_item, width in zip(text_items, widths):
+            text += (text_item[line_no].center(width)
+                     if line_no < len(text_item) else
+                     ''.center(width))
+
+        # Print a new line on all lines except the last one
+        if line_no != max_no_lines - 1 :
+            text += '\n'
+    return text
+
+
 class MDTable(object):
     """Renders a table in Markdown.
 
@@ -16,12 +60,17 @@ class MDTable(object):
         that match the number of columns in column_titles
     multiline: bool
         If True, this table will render as a multiline table
+    maxwidth: int, optional
+        The maximum width of the table. If the table columns exceed this value,
+        the table is converted to a multiline and columns are wrapped to
+        accomodate the max_width.
     """
 
     title = None
     column_titles = None
     rows = None
     multiline = False
+    max_width = settings.default_table_max_width
 
     def __init__(self, *args):
         """Constructor that initializes the column headers.
@@ -57,7 +106,14 @@ class MDTable(object):
         self.rows.append(['' for i in range(num_cols)])
 
     def column_widths(self):
-        "Return the list of column widths for the current data."
+        """Return the list of column widths for the current data.
+
+        Returns
+        list of tuples
+            Each item in the returned list is a (width, wrap) tuple of the
+            column_width (width, int) and whether to textwrap the column (wrap,
+            bool)
+        """
         # Find the largest item for each column
         column_widths = [len(c) for c in self.column_titles]
 
@@ -67,13 +123,47 @@ class MDTable(object):
             for row in self.rows:
                 if len(row[col_index]) > max_width:
                     max_width = len(row[col_index])
-            column_widths[col_index] = max_width
-        return column_widths
+            column_widths[col_index] = max_width + 2  # Add a space around each
+                                                      # Column
 
-    def table_width(self):
-        "Return the width of the table."
-        column_widths = self.column_widths()
-        return sum([width + 3 for width in column_widths]) - 1
+        # Now if the sum of the column_widths is larger than the self.max_width,
+        # wrap the larger columns to fit the width
+        total_width = sum(column_widths)
+        if total_width > self.max_width:
+            self.multiline = True
+            difference = total_width - self.max_width
+            difference_per_column = int(ceil(float(difference) /
+                                             float(len(column_widths)))) + 2
+
+            # Find which columns need to be textwrapped. The
+            # largest_column_widths contains tuples of the index number(i) of
+            # the corresponding column in column_widths and the new widths.
+            largest_column_widths = [(i, w) for i,w in enumerate(column_widths)]
+            largest_column_widths = sorted(largest_column_widths,
+                                           key=lambda i: i[1], reverse=True)
+
+            while(sum([c[1] for c in largest_column_widths]) > self.max_width):
+                # Shrink the largest column by difference_per_column
+                index, width = largest_column_widths[0]
+                new_width = width - difference_per_column
+
+                # Make sure the column isn't too small.
+                if new_width < 5:
+                    new_width = 5
+
+                largest_column_widths[0] = (index, new_width)
+
+                # Resort the largest_column_widths by index number, and copy over
+                # to the column widths
+                largest_column_widths = sorted(largest_column_widths,
+                                               key= lambda i: i[1],
+                                               reverse=True)
+
+            for index, width in largest_column_widths:
+                if width < column_widths[index]:
+                    column_widths[index] = width
+
+        return column_widths
 
     def content(self):
         """Renders a string for a markdown table.
@@ -83,8 +173,7 @@ class MDTable(object):
         column_widths = self.column_widths()
 
         # Format the table headers. All of the items are centered
-        total_length = self.table_width()
-
+        total_length = sum(column_widths)
 
         # Prepare the talble for output
         table = ''
@@ -96,20 +185,19 @@ class MDTable(object):
         table += '\n' + '-' * total_length + '\n'
 
         # Add headers
-        table += ' '.join([col.center(width + 2) for col, width in
-                           zip(self.column_titles, column_widths)])
+        table += print_lines(self.column_titles, column_widths)
+
         table += '\n'
 
         # Add header bottom bars
-        table += ''. join(['-' * (width + 2)
-                           if count == 0 else ' ' + '-' * (width + 2)
+        table += ''. join(['-' * (width)
+                           if count == 0 else ' ' + '-' * (width - 1)
                            for count, width in enumerate(column_widths)])
         table += '\n'
 
         # Add rows
         for row in self.rows:
-            table += ' '.join([item.center(width + 2) for item, width in
-                               zip(row, column_widths)])
+            table += print_lines(row, column_widths)
             table += ('\n\n' if self.multiline else '\n')
 
         # Add bottom bar
