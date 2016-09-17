@@ -69,6 +69,7 @@ class HbondClassifier(object):
     minor_beta_turnIp = settings.minor_beta_turnIp
     minor_beta_turnIIp = settings.minor_beta_turnIIp
 
+    minor_beta = settings.minor_beta
     minor_beta_anti = settings.minor_beta_anti
     minor_beta_par = settings.minor_beta_par
 
@@ -254,23 +255,9 @@ class HbondClassifier(object):
             all(within_range(a, settings.beta_psi, wrap=360.)
                 for a in (d_psi, a_psi))):
 
-            # This is a beta sheet. Is it parallel or anti-parallel. We must
-            # look up the residue numbers for the preceeding and proceeding
-            # residues of both.
-            try:
-                acceptor_delta = (acceptor_res.next_residue.number -
-                                  acceptor_res.prev_residue.number)
-                donor_delta = (donor_res.next_residue.number -
-                               donor_res.prev_residue.number)
-            except AttributeError:
-                return False
-
-            # If acceptor_delta and donor_delta have the same sign, then
-            # they're parallel. Otherwise they're anti-parallel
-            if acceptor_delta * donor_delta > 0.:
-                hbond.minor_classification = self.minor_beta_par
-            else:
-                hbond.minor_classification = self.minor_beta_anti
+            # This is a beta sheet. The check for parallel or anti-parallel
+            # is done elsewhere.
+            hbond.minor_classification = self.minor_beta
             return True
 
         hbond.minor_classification = self.minor_isolated

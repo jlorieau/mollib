@@ -129,6 +129,9 @@ minor_beta_turnIp = "(type I' turn)"
 #: Minor classification name for type II' turns
 minor_beta_turnIIp = "(type II' turn)"
 
+#: Minor classification name for sheets
+minor_beta = '(sheet)'
+
 #: Minor classification name for anti-parallel beta-sheets
 minor_beta_anti = '(sheet, anti-parallel)'
 
