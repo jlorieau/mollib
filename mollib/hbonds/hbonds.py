@@ -3,9 +3,12 @@ Functions to detect hydrogen bonds in molecules.
 
 Implementation
 --------------
-The current implementation finds acceptor and donor dipoles and finds acceptor
---donor pairs that are within a distance range and angle range determined in
-the settings.
+The current implementation:
+
+- finds acceptor and donor dipoles and finds acceptor--donor pairs that are
+  within a distance range and angle range determined in the settings.
+- classifies backbone hydrogen bonds based on contiguous backbone-backbone
+  amide torsion angles.
 
 Written Molecule Parameters
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
