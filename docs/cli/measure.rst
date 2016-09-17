@@ -138,8 +138,14 @@ Arguments
         Atoms must follow the standard naming conventions.
         See :ref:`atom-selectors` and :ref:`atom-filters`.
 
+
         .. note:: If simple Ramachandran and side-chain
                   dihedrals are needed, checkout ``--rama``, ``--chi-1``.
+
+
+        **Examples**
+
+        .. include:: output/cli_measure_i_2KXA_dih_2:6-C_2:6-N_2:6-CA_2:6-C_only-bonded_stats.html
 
     ``--rama``
         Measure Ramachandran angles (in degrees) for a protein. Filters and
