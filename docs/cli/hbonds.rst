@@ -40,7 +40,12 @@ Arguments
         allowed in hydrogen bond donor dipoles.
 
     ``--detailed``
-        Present a detailed report on the geometries of hydrogen bonds.
+        Present a detailed report on the geometries of hydrogen bonds. Does not
+        include classification information.
+
+    ``--sort-type``
+        Sort the hydrogen bonds by classification type, like beta-sheet or
+        alpha-helix.
 
 Configuration File Settings
 ---------------------------
