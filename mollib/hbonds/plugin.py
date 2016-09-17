@@ -88,7 +88,7 @@ class Hbonds(Plugin):
             print(table.content())
         else:
             # Setup the table
-            table = MDTable('Num', 'Donor', 'Acceptor', 'type (major)')
+            table = MDTable('Num', 'Donor', 'Acceptor', 'Classification')
             table.title = ('Hydrogen bond '
                            'listing for {}'.format(molecule.name))
 
