@@ -10,7 +10,7 @@ import os
 
 import mollib
 from mollib.plugins import Plugin
-from mollib.core.settings import list_global_settings, import_config
+from mollib.core import list_global_settings, import_config
 
 try:
     import configparser

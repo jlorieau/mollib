@@ -5,5 +5,5 @@ from . import settings
 from .plugin import Hbonds
 hbonds = Hbonds()
 
-from mollib.core.settings import register_settings
+from mollib.core import register_settings
 register_settings(settings)

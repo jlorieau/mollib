@@ -4,7 +4,7 @@ try:
 except ImportError:
     import ConfigParser as configparser
 
-from mollib.core.settings import import_settings, import_config
+from mollib.core import register_settings, import_settings, import_config
 from mollib.core import settings
 
 class TestSettings(unittest.TestCase):
@@ -95,7 +95,7 @@ class TestSettings(unittest.TestCase):
         "Tests the import_config function."
 
         # Check default values in the core settings
-        func_ref = settings.register_settings
+        func_ref = register_settings
         value_ref = settings.default_pH
 
         # Setup the config
@@ -108,7 +108,7 @@ class TestSettings(unittest.TestCase):
 
         # Try changing the core settings
         import_config(config)
-        self.assertEqual(settings.register_settings, func_ref)
+        self.assertEqual(register_settings, func_ref)
         self.assertEqual(settings.default_pH, value_ref)
 
         # Try changing the core settings to values with a different type
@@ -120,7 +120,7 @@ class TestSettings(unittest.TestCase):
         """
         config.read_string(sample_config)
         import_config(config)
-        self.assertEqual(settings.register_settings, func_ref)
+        self.assertEqual(register_settings, func_ref)
         self.assertEqual(settings.default_pH, value_ref)
 
         # Try chancing the core settings to values with the same type.
@@ -132,7 +132,7 @@ class TestSettings(unittest.TestCase):
         """
         config.read_string(sample_config)
         import_config(config)
-        self.assertEqual(settings.register_settings, func_ref)
+        self.assertEqual(register_settings, func_ref)
         self.assertEqual(settings.default_pH, 6.0)
 
 
