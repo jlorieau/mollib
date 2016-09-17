@@ -2,21 +2,20 @@ from setuptools import setup, find_packages, Extension
 from Cython.Build import cythonize
 import numpy as np
 
-# import mollib
-
-# find . -name "*.so" | xargs rm
-# python setup.py build_ext --inplace  # python2
-# python3 setup.py build_ext --inplace  # python3
+__name__ = 'mollib'
+__author__ = 'Justin L Lorieau'
+__versioninfo__ = (1, 3, 'a1')
+__version__ = '.'.join(map(str, __versioninfo__))
 
 ext_modules = [
     Extension(name="mollib.geometry",
               sources=["mollib/core/src/geometry.pyx"],
               ) ]
 
-setup(name='mollib',
-      # version=mollib.__version__,
+setup(name=__name__,
+      version=__version__,
       license='GPL V2',
-      author='Justin L Lorieau',
+      author= __author__,
       description='A Python package to read molecular structures',
       packages=find_packages(),
       platforms='any',

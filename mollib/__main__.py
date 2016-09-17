@@ -71,7 +71,7 @@ def main():
                        action='store_true',
                        help='List the available sections for settings')
     parser.add_argument('--version', action='version',
-                        version=('%(prog)s ' + mollib.__version__),
+                        version=('%(prog)s ' + '1.3'),
                         help='Show the program version')
 
     #TODO: Add argument to just download pdb file ('-g --get')
