@@ -4,28 +4,43 @@ The plugin for 'measure' command.
 """
 
 from math import floor, log10
+from itertools import chain
 
 import numpy as np
 
 from mollib.plugins import Plugin
 from mollib.core.geometry import (measure_distances, measure_angles,
                                   measure_dihedrals)
+from mollib.utils import MDTable
 
 
-def stats(measurements, spacing=0, units=''):
-    """Given a list of measurements, this function calculates and prints the
-    stats.
+def round_to_sigs(value, error):
+    """Find the significant figures for error, and return a tuple with the
+    value and error rounded to those sig figs."""
+    # Determine the sig figs in the error so that the number can be properly
+    # rounded
+    try:
+        sigs = -int(floor(log10(abs(error))))
+    except ValueError:
+        return (value, error)
+
+    return (round(value, sigs), round(error, sigs))
+
+
+def stats(measurements):
+    """Given a list of measurements, this function calculates and returns the
+    mean and standard deviation.
 
     Parameters
     ----------
     measurements: list of tuples
         A list of tuples containing the atoms and their respective measurements.
         The last item of each tuple holds the measurement value.
-    spacing: int, optional
-        If specified, the printed output will be offset by the following
-        number of spaces
-    units: str
-        The units to use in reporting the statistics.
+
+    Returns
+    -------
+    tuple of floats
+        (mean, standard deviation)
     """
     # The values are in the last item of the tuples in the measurements
     x = [i[-1] for i in measurements]
@@ -137,9 +152,10 @@ class Measure(Plugin):
         "Measure geometries in molecules."
 
         if args.dist:
-            msg = ("({molecule}) "
-                    "{a1: <10} {a2: <10}: {dist:.2f} A")
+            table = MDTable('Num', 'Atom 1', 'Atom 2', 'Dist. (A)')
+            table.title = 'Distances for {}'.format(molecule.name)
 
+            dists_list = []
             for selector1, selector2 in args.dist:
                 # Get the distances
                 dists = measure_distances(molecule, selector1, selector2,
@@ -149,24 +165,32 @@ class Measure(Plugin):
                                   exclude_intra_chain=args.exclude_intra_chain,
                                   residue_delta=args.residue_delta,
                                   bonded=args.bonded)
+                dists_list.append(dists)
 
-                # print the output message
-                colon_pos = None  # Store the position of the ':' character
-                for dist in dists:
-                    atom1, atom2, d = dist
-                    output_msg = msg.format(molecule=molecule.name,
-                                            a1=atom1, a2=atom2, dist=d)
-                    colon_pos = output_msg.find(':')
-                    print(output_msg)
+            # Add the distances to the table
+            for count, dist in enumerate(chain(*dists_list), 1):
+                atom1, atom2, d = dist
+                table.add_row(count, atom1, atom2, d)
 
-                # Print the stats
-                # TODO: fix the spacing so that it is more flexible with msg
-                if args.stats and colon_pos is not None and colon_pos > 0:
-                    stats(dists, spacing=colon_pos + 2, units='A')
+            # Calculate the stats if specified
+            if args.stats:
+                values = [i[2] for i in chain(*dists_list)]
+                mean = np.mean(values)
+                std = np.std(values)
+                stat_str = '{} ± {}'.format(*round_to_sigs(mean, std))
+                stat_bar = '-' * len(stat_str)
+
+                table.add_row('', '', '', stat_bar)  # Draw a '----' bar
+                table.add_row('', '', '', stat_str)  # Add the stats
+
+            # Print the table
+            print(table.content())
 
         if args.angle:
-            msg = ("({molecule}) "
-                   "{a1: <10} {a2: <10} {a3: <10}: {angle:.1f} deg")
+            table = MDTable('Num', 'Atom 1', 'Atom 2', 'Atom 3', 'Angle (deg)')
+            table.title = 'Angles for {}'.format(molecule.name)
+
+            angs_list = []
 
             for selector1, selector2, selector3 in args.angle:
                 # get the angles
@@ -178,24 +202,33 @@ class Measure(Plugin):
                                   exclude_intra_chain=args.exclude_intra_chain,
                                   residue_delta=args.residue_delta,
                                   bonded=args.bonded)
+                angs_list.append(angs)
 
-                # print the output message
-                colon_pos = None  # Store the position of the ':' character
-                for ang in angs:
-                    atom1, atom2, atom3, a = ang
-                    output_msg = msg.format(molecule=molecule.name,
-                                            a1=atom1, a2=atom2, a3=atom3,
-                                            angle=a)
-                    colon_pos = output_msg.find(':')
-                    print(output_msg)
+            # Add the angles to the table
+            for count, ang in enumerate(chain(*angs_list), 1):
+                atom1, atom2, atom3, a = ang
+                table.add_row(count, atom1, atom2, atom3, a)
 
-                # Print the stats
-                if args.stats and colon_pos is not None and colon_pos > 0:
-                    stats(angs, spacing=colon_pos + 2, units='deg')
+            # Calculate the stats if specified
+            if args.stats:
+                values = [i[3] for i in chain(*angs_list)]
+                mean = np.mean(values)
+                std = np.std(values)
+                stat_str = '{} ± {}'.format(*round_to_sigs(mean, std))
+                stat_bar = '-' * len(stat_str)
+
+                table.add_row('', '', '', '', stat_bar)  # Draw a '----' bar
+                table.add_row('', '', '', '', stat_str)  # Add the stats
+
+            # Print the table
+            print(table.content())
 
         if args.dihedral:
-            msg = ("({molecule}) "
-                   "{a1: <10} {a2: <10} {a3: <10} {a4: <10}: {angle:.1f} deg")
+            table = MDTable('Num', 'Atom 1', 'Atom 2', 'Atom 3', 'atom 4',
+                            'Dihedral (deg)')
+            table.title = 'Dihedrals for {}'.format(molecule.name)
+
+            dihs_list = []
 
             for selector1, selector2, selector3, selector4 in args.dihedral:
                 # Get the dihedrals
@@ -207,24 +240,32 @@ class Measure(Plugin):
                                       exclude_intra_chain=args.exclude_intra_chain,
                                       residue_delta=args.residue_delta,
                                       bonded=args.bonded)
+                dihs_list.append(dihs)
 
-                # print the output message
-                colon_pos = None  # Store the position of the ':' character
-                for dih in dihs:
-                    atom1, atom2, atom3, atom4, a = dih
-                    output_msg = msg.format(molecule=molecule.name,
-                                            a1=atom1, a2=atom2, a3=atom3,
-                                            a4=atom4, angle=a)
-                    colon_pos = output_msg.find(':')
-                    print(output_msg)
+            # Add the angles to the table
+            for count, dih in enumerate(chain(*dihs_list), 1):
+                atom1, atom2, atom3, atom4, d = dih
+                table.add_row(count, atom1, atom2, atom3, atom4, d)
 
-                # Print the stats
-                if args.stats and colon_pos is not None and colon_pos > 0:
-                    stats(dihs, spacing=colon_pos + 2, units='deg')
+            # Calculate the stats if specified
+            if args.stats:
+                values = [i[4] for i in chain(*dihs_list)]
+                mean = np.mean(values)
+                std = np.std(values)
+                stat_str = '{} ± {}'.format(*round_to_sigs(mean, std))
+                stat_bar = '-' * len(stat_str)
+
+                table.add_row('', '', '', '', '', stat_bar)  # Draw a '----' bar
+                table.add_row('', '', '', '', '', stat_str)  # Add the stats
+
+            # Print the table
+            print(table.content())
 
         if args.rama:
-            msg = ("({molecule}) {chain}.{res:<5} : "
-                   "{ang1:6.1f} {ang2:6.1f} deg")
+            # Setup the table
+            table = MDTable('Residue', 'Phi (deg)', 'Psi (deg)')
+            table.title = ('Ramachandran angles '
+                           'for {}'.format(molecule.name))
 
             for residue in molecule.residues:
                 # Skip heteroatom chains
@@ -233,11 +274,8 @@ class Measure(Plugin):
 
                 phi, psi = residue.ramachandran_angles
 
-                # Print the output message. The phi or 0. outputs a floating
-                # point number of 0. instead of 'None' values for missing
-                # angles.
-                output_msg = msg.format(molecule=molecule.name, res=residue,
-                                        chain=residue.chain.id,
-                                        ang1=phi or 0., ang2=psi or 0.)
-                print(output_msg)
+                table.add_row('{}.{}'.format(residue.chain.id, residue),
+                              "{:>6.1f}".format(phi or 0.),
+                              "{:>6.1f}".format(psi or 0.))
+            print(table.content())
 
