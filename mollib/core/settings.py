@@ -18,10 +18,17 @@ import ast
 import logging
 from collections import OrderedDict
 
-
+#: The default pH of new molecules
 default_pH = 7.0
-"""The default pH of new molecules."""
 
+#: The default pKs of ionizable amino-acids. [Ref]_
+#:
+#: Some amino-acids have degenerate ionizeable atoms; these are listed and
+#: separated by '-' characters. The different pKs for each ionization is
+#: listed in the subsequent items in the tuple.
+#:
+#:  .. [Ref] G. R. Grimsley, J. M. Scholtz, C. N. Pace, Protein Sci. 18, 247-51
+#:           (2009).
 pKs = {'ASP': {'OD1-OD2': (-1.0, 3.5)},
        'GLU': {'OE1-OE2': (-1.0, 4.2)},
        'HIS': {'ND1-NE2': (6.6, 14.0)},
@@ -31,16 +38,6 @@ pKs = {'ASP': {'OD1-OD2': (-1.0, 3.5)},
        'last': {'O-OXT': (-1.0, 3.3)},
        'first': {'N': (7.7, 14.0, 14.0),}
      }
-"""The default pKs of ionizable amino-acids. [Ref]_
-
-Some amino-acids have degenerate ionizeable atoms; these are listed and
-separated by '-' characters. The different pKs for each ionization is
-listed in the subsequent items in the tuple.
-
-
-  .. [Ref] G. R. Grimsley, J. M. Scholtz, C. N. Pace, Protein Sci. 18, 247-51
-           (2009).
-"""
 
 # Create the _settings_modules dict and register the core settings module
 _setting_modules = OrderedDict({'settings': globals()})

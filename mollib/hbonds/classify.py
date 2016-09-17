@@ -50,32 +50,32 @@ class HbondClassifier(object):
               construction.
     """
 
-    major_bb_bb_amide = 'bb-bb amide'
-    major_bb_sc_amide = 'bb-sc amide'
-    major_sc_bb_amide = 'sc-bb amide'
-    major_sc_sc_amide = 'sc-sc amide'
+    major_bb_bb_amide = settings.major_bb_bb_amide
+    major_bb_sc_amide = settings.major_bb_sc_amide
+    major_sc_bb_amide = settings.major_sc_bb_amide
+    major_sc_sc_amide = settings.major_sc_sc_amide
 
-    major_bb_bb_aliphatic = 'bb-bb aliph.'
-    major_bb_sc_aliphatic = 'bb-sc aliph.'
-    major_sc_bb_aliphatic = 'sc-bb aliph.'
-    major_sc_sc_aliphatic = 'sc-sc aliph.'
+    major_bb_bb_aliphatic = settings.major_bb_bb_aliphatic
+    major_bb_sc_aliphatic = settings.major_bb_sc_aliphatic
+    major_sc_bb_aliphatic = settings.major_sc_bb_aliphatic
+    major_sc_sc_aliphatic = settings.major_sc_sc_aliphatic
 
-    major_bb_sc_hydroxyl = 'bb-sc hydroxyl'
-    major_sc_bb_hydroxyl = 'sc-bb hydroxyl'
-    major_sc_sc_hydroxyl = 'sc-sc hydroxyl'
+    major_bb_sc_hydroxyl = settings.major_bb_sc_hydroxyl
+    major_sc_bb_hydroxyl = settings.major_sc_bb_hydroxyl
+    major_sc_sc_hydroxyl = settings.major_sc_sc_hydroxyl
 
-    minor_beta_turnI = "(type I turn)"
-    minor_beta_turnII = "(type II turn)"
-    minor_beta_turnIp = "(type I' turn)"
-    minor_beta_turnIIp = "(type II' turn)"
+    minor_beta_turnI = settings.minor_beta_turnI
+    minor_beta_turnII = settings.minor_beta_turnII
+    minor_beta_turnIp = settings.minor_beta_turnIp
+    minor_beta_turnIIp = settings.minor_beta_turnIIp
 
-    minor_beta_anti = '(sheet, anti-paralle;)'
-    minor_beta_par = '(sheet, parallel)'
+    minor_beta_anti = settings.minor_beta_anti
+    minor_beta_par = settings.minor_beta_par
 
-    minor_310 = '(310-helix)'
-    minor_alpha = '(alpha-helix)'
-    minor_pi = '(pi-helix)'
-    minor_isolated = '(isolated)'
+    minor_310 = settings.minor_310
+    minor_alpha = settings.minor_alpha
+    minor_pi = settings.minor_pi
+    minor_isolated = settings.minor_isolated
 
     _instance = None
 
@@ -201,7 +201,7 @@ class HbondClassifier(object):
                           if within_range(phi[2], v)} &
                          {k for k, v in settings.beta_turn_i2_psi.items()
                           if within_range(psi[2], v)})
-            
+
             if len(turn_type) == 1:
                 turn_type = turn_type.pop()
                 classification = 'minor_beta_' + turn_type
