@@ -1,6 +1,23 @@
 Hbonds Command
 ==============
 The ``hbonds`` command detects and reports hydrogen bonds in molecules.
+The ``hbonds`` command has the following features:
+
+- It identifies hydrogen bonds between backbones, sidechains, subunits and
+  ligands.
+- It has a flexible interface to identify a wide-range of hydrogen bond types
+  including *amide*, *aliphatic*, *hydroxyl* and the specification of
+  arbritrary electric dipole types.
+- It classifies backbone-backbone hydrogen bonds based on backbone torsion
+  angles.
+
+    - Helical stretches require contiguous residues with helical backbone
+      torsion angles. This prevents the misclassification of 310-helices and
+      beta turns as well as isolated i+3, i+4 and i+5 hydrogen bonds.
+    - Beta-sheet hydrogen bonds are identified as either parallel or anti-
+      parallel, depending on the residue number of the next or prev residues.
+
+    **Usage**
 
     .. include:: output/cli_hbonds_help.html
 
@@ -27,8 +44,7 @@ Arguments
 
 Configuration File Settings
 ---------------------------
-The following are the configuration file settings. Do not include the comments
-in the file.
+The following are the configuration file settings.
 
     .. literalinclude:: /../mollib/hbonds/settings.py
         :caption: [hbonds.settings]
