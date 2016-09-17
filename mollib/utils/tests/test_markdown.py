@@ -5,6 +5,8 @@ from mollib.utils import MDTable
 
 class TestMarkdown(unittest.TestCase):
 
+    maxDiff = None
+
     def test_MDTable(self):
         "Tests the Markdown table rendering."
 
@@ -14,8 +16,8 @@ class TestMarkdown(unittest.TestCase):
         self.assertEqual(table.content(),
                                   ("\n"
                                    "-----------------------\n"
-                                   " one  two  three  four \n"
-                                   "----- ---- ------ -----\n"
+                                   "one  two  three  four  \n"
+                                   "---- ---- ------ ------\n"
                                    "-----------------------\n"
                                    "\n"))
 
@@ -31,10 +33,10 @@ class TestMarkdown(unittest.TestCase):
         self.assertEqual(table.content(),
                          ("\n"
                           "--------------------------------------------------\n"
-                          "  one           two           three        four   \n"
-                          "-------- ------------------ ----------- ----------\n"
-                          " First      Second item     Third item    Fourth  \n"
-                          " Item 1  Item 2 and change    Item 3    Item Four \n"
+                          "one     two                three       four       \n"
+                          "------- ------------------ ----------- -----------\n"
+                          "First   Second item        Third item  Fourth     \n"
+                          "Item 1  Item 2 and change  Item 3      Item Four  \n"
                           "--------------------------------------------------\n"
                           "\n"))
 
@@ -43,14 +45,14 @@ class TestMarkdown(unittest.TestCase):
         self.assertEqual(table.content(),
                          ("\n"
                           "----------------------------------------\n"
-                          "  one      two      three        four   \n"
-                          "-------- -------- ----------- ----------\n"
-                          " First    Second  Third item    Fourth  \n"
-                          "           item                         \n"
+                          "one     two      three       four       \n"
+                          "------- -------- ----------- -----------\n"
+                          "First   Second   Third item  Fourth     \n"
+                          "        item                            \n"
                           "\n"
-                          " Item 1   Item 2    Item 3    Item Four \n"
-                          "           and                          \n"
-                          "          change                        \n"
+                          "Item 1  Item 2   Item 3      Item Four  \n"
+                          "        and                             \n"
+                          "        change                          \n"
                           "\n"
                           "----------------------------------------\n"
                           "\n"))

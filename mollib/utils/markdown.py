@@ -23,12 +23,12 @@ def print_lines(text_items, widths):
     --------
     >>> t = print_lines(['My', 'first and ever', 'multiline text'], \
                         [15, 15, 15])
-    >>> print(t)
-           My       first and ever multiline text
+    >>> t
+    'My             first and ever multiline text '
     >>> t = print_lines(['My', 'first and ever', 'multiline text'], \
                         [10, 10, 10])
     >>> t.splitlines()
-    ['    My    first and multiline ', '             ever      text   ']
+    ['My        first and multiline ', '          ever      text      ']
     """
     assert(len(text_items) == len(widths))
 
@@ -194,10 +194,10 @@ class MDTable(object):
         table += '\n'
 
         # Add header bottom bars
-        table += ''. join(['-' * (width)
-                           if count == 0 else ' ' + '-' * (width - 1)
+        table += ''. join(['-' * (width-1)
+                           if count == 0 else ' ' + '-' * (width-1)
                            for count, width in enumerate(column_widths)])
-        table += '\n'
+        table += '-\n'
 
         # Add rows
         for row in self.rows:
