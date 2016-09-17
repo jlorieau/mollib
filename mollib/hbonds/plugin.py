@@ -25,6 +25,9 @@ class Hbonds(Plugin):
         p.add_argument('--detailed',
                        action='store_true',
                        help="Report detailed information on hydrogen bonds.")
+        p.add_argument('--sort-type',
+                       action='store_true',
+                       help='Sort hydrogen bonds by type')
         return p
 
     def process(self, molecule, args):
@@ -35,6 +38,13 @@ class Hbonds(Plugin):
             settings.hbond_distance_cutoff['d1a1']= (1.8, 3.0)
 
         hbonds = find_hbond_partners(molecule)
+
+        # Sort the hbonds by the given criteria
+        if args.sort_type:
+            hbonds = sorted(hbonds,
+                            key=lambda hb: (hb.major_classification,
+                                            hb.minor_classification,
+                                            hb.donor.atom2.residue.number))
 
         if args.detailed:
             # Setup the table
