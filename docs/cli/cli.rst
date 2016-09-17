@@ -61,7 +61,6 @@ The following are the general configuration file settings.
 
     .. literalinclude:: /../mollib/core/settings.py
         :caption: [settings]
-        :lines: 1-41
 
     .. literalinclude:: /../mollib/utils/settings.py
         :caption: [utils.settings]
