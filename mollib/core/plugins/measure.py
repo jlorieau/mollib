@@ -224,7 +224,7 @@ class Measure(Plugin):
             print(table.content())
 
         if args.dihedral:
-            table = MDTable('Num', 'Atom 1', 'Atom 2', 'Atom 3', 'atom 4',
+            table = MDTable('Num', 'Atom 1', 'Atom 2', 'Atom 3', 'Atom 4',
                             'Dihedral (deg)')
             table.title = 'Dihedrals for {}'.format(molecule.name)
 
