@@ -185,8 +185,11 @@ class MDTable(object):
         if isinstance(self.title, str):
             table += ''.join(('Table: ', self.title, '\n'))
 
-        # Add top bar
-        table += '\n' + '-' * total_length + '\n'
+        # Add top bar. Only needed for multiline tables
+        if self.multiline:
+            table += '\n' + '-' * total_length + '\n'
+        else:
+            table += '\n'
 
         # Add headers
         table += print_lines(self.column_titles, column_widths)
@@ -204,7 +207,8 @@ class MDTable(object):
             table += print_lines(row, column_widths)
             table += ('\n\n' if self.multiline else '\n')
 
-        # Add bottom bar
-        table += '-' * total_length + '\n\n'
-
+        # Add bottom bar. Only needed for multiline tables
+        if self.multiline:
+            table += '-' * total_length + '\n\n'
+        
         return table
