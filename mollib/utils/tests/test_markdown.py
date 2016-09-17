@@ -15,11 +15,9 @@ class TestMarkdown(unittest.TestCase):
         # Check the header rendering
         self.assertEqual(table.content(),
                                   ("\n"
-                                   "-----------------------\n"
                                    "one  two  three  four  \n"
                                    "---- ---- ------ ------\n"
-                                   "-----------------------\n"
-                                   "\n"))
+                                   ))
 
         # Add rows, and check the rendering
         table.add_row('First', 'Second item', 'Third item', 'Fourth')
@@ -32,13 +30,11 @@ class TestMarkdown(unittest.TestCase):
         # This table does not render as a multiline
         self.assertEqual(table.content(),
                          ("\n"
-                          "--------------------------------------------------\n"
                           "one     two                three       four       \n"
                           "------- ------------------ ----------- -----------\n"
                           "First   Second item        Third item  Fourth     \n"
                           "Item 1  Item 2 and change  Item 3      Item Four  \n"
-                          "--------------------------------------------------\n"
-                          "\n"))
+                          ))
 
         # This table will render as a multiline
         table.max_width = 40
@@ -55,4 +51,4 @@ class TestMarkdown(unittest.TestCase):
                           "        change                          \n"
                           "\n"
                           "----------------------------------------\n"
-                          "\n"))
+                          ))

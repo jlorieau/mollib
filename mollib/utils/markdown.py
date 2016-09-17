@@ -209,6 +209,5 @@ class MDTable(object):
 
         # Add bottom bar. Only needed for multiline tables
         if self.multiline:
-            table += '-' * total_length + '\n\n'
-        
+            table += '-' * total_length + '\n'
         return table
