@@ -170,7 +170,7 @@ class Measure(Plugin):
             # Add the distances to the table
             for count, dist in enumerate(chain(*dists_list), 1):
                 atom1, atom2, d = dist
-                table.add_row(count, atom1, atom2, d)
+                table.add_row(count, atom1, atom2, '{:.2f}'.format(d))
 
             # Calculate the stats if specified
             if args.stats:
@@ -207,7 +207,7 @@ class Measure(Plugin):
             # Add the angles to the table
             for count, ang in enumerate(chain(*angs_list), 1):
                 atom1, atom2, atom3, a = ang
-                table.add_row(count, atom1, atom2, atom3, a)
+                table.add_row(count, atom1, atom2, atom3, '{:.1f}'.format(a))
 
             # Calculate the stats if specified
             if args.stats:
@@ -245,7 +245,8 @@ class Measure(Plugin):
             # Add the angles to the table
             for count, dih in enumerate(chain(*dihs_list), 1):
                 atom1, atom2, atom3, atom4, d = dih
-                table.add_row(count, atom1, atom2, atom3, atom4, d)
+                table.add_row(count, atom1, atom2, atom3, atom4,
+                              '{:.1f}'.format(d))
 
             # Calculate the stats if specified
             if args.stats:
