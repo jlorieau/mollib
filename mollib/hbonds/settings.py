@@ -118,34 +118,34 @@ major_sc_bb_hydroxyl = 'sc-bb hydroxyl'
 major_sc_sc_hydroxyl = 'sc-sc hydroxyl'
 
 #: Minor classification name for type I turns
-minor_beta_turnI = "(type I turn)"
+minor_beta_turnI = "type I turn"
 
 #: Minor classification name for type II turns
-minor_beta_turnII = "(type II turn)"
+minor_beta_turnII = "type II turn"
 
 #: Minor classification name for type I' turns
-minor_beta_turnIp = "(type I' turn)"
+minor_beta_turnIp = "type I' turn"
 
 #: Minor classification name for type II' turns
-minor_beta_turnIIp = "(type II' turn)"
+minor_beta_turnIIp = "type II' turn"
 
 #: Minor classification name for sheets
-minor_beta = '(sheet)'
+minor_beta = 'sheet'
 
 #: Minor classification name for anti-parallel beta-sheets
-minor_beta_anti = '(sheet, anti-parallel)'
+minor_beta_anti = 'sheet, anti-parallel'
 
 #: Minor classification name for parallel beta-sheets
-minor_beta_par = '(sheet, parallel)'
+minor_beta_par = 'sheet, parallel'
 
 #: Minor classification name for 310-helices
-minor_310 = '(310-helix)'
+minor_310 = '310-helix'
 
 #: Minor classification name for alpha-helices
-minor_alpha = '(alpha-helix)'
+minor_alpha = 'alpha-helix'
 
 #: Minor classification name for pi-helices
-minor_pi = '(pi-helix)'
+minor_pi = 'pi-helix'
 
 #: Minor classification name for isolated hydrogen bonds
-minor_isolated = '(isolated)'
+minor_isolated = 'isolated'

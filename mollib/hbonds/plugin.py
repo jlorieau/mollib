@@ -105,6 +105,6 @@ class Hbonds(Plugin):
             # Add the Hbonds to the table
             for count, hbond in enumerate(hbonds, 1):
                 table.add_row(count, hbond.donor, hbond.acceptor,
-                              ' '.join((hbond.major_classification,
-                                        hbond.minor_classification)))
+                              '{} ({})'.format(hbond.major_classification,
+                                               hbond.minor_classification))
             print(table.content())
