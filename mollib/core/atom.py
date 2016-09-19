@@ -132,9 +132,9 @@ class Atom(Primitive):
     # Atom molecular weights. These must be labeled according the a str.title()
     # function. eg. ZN becomes Zn.
     atom_Mw = {'H': 1.01, 'D': 2.00, 'C': 12.01, '13C': 13.00, 'N': 14.01,
-               '15N': 15.00, 'O': 16.00, 'Na': 22.99, 'Mg': 24.31, 'P': 30.97,
-               'S': 32.07, 'Cl': 35.45, 'Fe': 55.845, 'Zn': 65.38,
-               'Br': 79.904}
+               '15N': 15.00, 'O': 16.00, 'F':19.00, 'Na': 22.99, 'Mg': 24.31,
+               'P': 30.97, 'S': 32.07, 'Cl': 35.45, 'Fe': 55.845, 'Zn': 65.38,
+               'Se': 78.96, 'As': 74.92, 'Br': 79.904, 'I': 126.90}
 
     def __repr__(self):
         if hasattr(self, '_repr'):
@@ -468,10 +468,16 @@ class Atom(Primitive):
                 bonded |= {self.residue[name]}
                 continue
             elif name.endswith('-1') and not longrange:
-                bonded |= {self.residue.prev_residue[name[:-2]]}
+                try:
+                    bonded |= {self.residue.prev_residue[name[:-2]]}
+                except (KeyError, TypeError):
+                    pass
                 continue
             elif name.endswith('+1') and not longrange:
-                bonded |= {self.residue.next_residue[name[:-2]]}
+                try:
+                    bonded |= {self.residue.next_residue[name[:-2]]}
+                except (KeyError, TypeError):
+                    pass
                 continue
 
             # Retrieve an atom if it's using its fullname.
