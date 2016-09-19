@@ -644,42 +644,61 @@ class Molecule(dict):
 
     def link_residues(self):
         """Create a doubly linked list of all residues and annotate the
-        first and last residues."""
-        # Create the residue linked lists
-        # Note: the prev_residue, next_residue, first and last attributes
-        # of the residue object are already set by the class
-        prev_residue = None
-        residue = None
-        for residue in self.residues:
-            # Treat the first residue in the chain as special
-            if prev_residue is None:
-                residue.first = True
+        first and last residues of each chain."""
+  
+        for chain in self.chains:
+            # Get the residue numbers
+            residues = list(chain.residues)
+            no_residues = len(residues)
 
-                # Set the double-linked list
-                residue.prev_residue = None
-
-            # Otherwise this is not the first residue
-            else:
-                # Treat the first residue in the *next* chain as special
-                if prev_residue.chain.id != residue.chain.id:
+            # If it's a HETATM chain, every residue is it's own molecule,
+            # and therefore they're each the first and last residue
+            if '*' in chain.id:
+                for residue in residues:
                     residue.first = True
-                    prev_residue.last = True
-
-                    # Set the double-linked list
-                    prev_residue.next_residue = None
+                    residue.last = True
                     residue.prev_residue = None
+                    residue.next_residue = None
+                continue
+
+            # Otherwise, create the linked list for each chain.
+            # The first residue creates a new chain
+            if no_residues > 0:
+                first_residue = residues[0]
+                first_residue.first = True
+                first_residue.prev_residue = None
+
+                if no_residues > 1:
+                    second_residue = residues[1]
+                    first_residue.last = False
+                    first_residue.next_residue = second_residue
                 else:
-                    # Set the double-linked list
-                    prev_residue.next_residue = residue
-                    residue.prev_residue = prev_residue
+                    first_residue.last = True
+                    first_residue.next_residue = None
 
-            # Prepare for the next iteration
-            prev_residue = residue
+            # Treat the last residue as special
+            if no_residues > 0:
+                last_residue = residues[-1]
+                last_residue.last = True
+                last_residue.next_residue = None
 
-        # Treat the very last residue as the last residue
-        if residue is not None:
-            residue.last = True
-            residue.next_residue = None
+                if no_residues > 1:
+                    before_last = residues[-2]
+                    last_residue.first = False
+                    last_residue.prev_residue = before_last
+                else:
+                    last_residue.first = True
+                    last_residue.prev_residue = None
+
+            # Now work on all the residues in between, starting with residue 2
+            for count, residue in enumerate(residues[1:-1], 1):
+                residue.first = False
+                residue.last = False
+                try:
+                    residue.prev_residue = residues[count - 1]
+                    residue.next_residue = residues[count + 1]
+                except KeyError:
+                    continue
 
     def set_atom_topologies(self):
         """Sets special topological information for specific atoms, like the
@@ -1074,7 +1093,9 @@ class Molecule(dict):
                     'charge': lambda x: float(x) if str(x).strip() else ''}
 
     def _match_atom(self, match):
-        """Matches an ATOM or HETATM line in a PDB file.
+        """Matches an ATOM or HETATM line in a PDB file and creates new
+        :obj:`mollib.Atom`, :obj:`mollib.Residue` and :obj:`mollib.Chain`
+        objects.
 
         Parameters
         ----------
