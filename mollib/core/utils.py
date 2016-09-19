@@ -72,7 +72,7 @@ def clear_cache():
             if os.path.isfile(filepath):
                 os.unlink(filepath)
         except Exception as e:
-            print(e)
+            raise e
 
 
 def group_by_2(iterable):
