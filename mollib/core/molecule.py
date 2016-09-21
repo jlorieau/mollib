@@ -1121,7 +1121,9 @@ class Molecule(dict):
              float(t[11]),  # 11: occupancy
              float(t[12]),  # 12: B-factor
              str(t[13]).strip(), # 13: element
-             (float(t[14]) if str(t[14]).strip() else '')  # 14: charge
+             str(t[14]).strip(), # 14: charge
+             #(float(t[14]) if t[14] and
+             # str(t[14]).strip() else '')  # 14: charge
              )
 
         # Implementation 2: twice as slow as implementation 1
