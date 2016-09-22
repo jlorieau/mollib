@@ -4,33 +4,52 @@ Development
 
 The following are instructions for locally developing a branch of mollib.
 
-First, checkout the branch using git.
+1. **Checkout**. First, checkout the branch using git.
 
-The Cython and C extensions can be compiled in place.
+2. **Build Cython Extensions**. The Cython and C extensions can be compiled in
+   place.
 
-..  code-block:: shell-session
+    ..  code-block:: shell-session
 
-    python setup.py build_ext --inplace
+        python setup.py build_ext --inplace
 
-Install the package in developed mode. This adds the package's source path
-to the python path. Edits to the source path are reflected in the global
-script.
+3. **Build Datasets** Build and compute the datasets. This may take a few hours.
 
-.. code-block:: shell-session
+    .. code-block:: shell-session
 
-    python setup.py develop
+        python setup.py build_data
 
-If you'd like to uninstall the develop mode, use the following command.
+4. **Build Documentation** Build the documentation in html format under
+   ``docs/``
 
-.. code-block:: shell-session
+    .. code-block:: shell-session
 
-    python setup.py develop --uninstall
+        python setup.py build_data
 
-To test the package, run the nosetests
+    .. note:: You will need to have ``sphinx``, ``sphinxcontrib-napoleon``
+              installed.
 
-.. code-block:: shell-session
+5. **Test the Build** Run the package's tests.
 
-    python setup.py nosetests
+    .. code-block:: shell-session
+
+        python setup.py nosetests
+
+    .. note:: You will need ``nosetests`` to run the tests.
+
+6. **Install in Developer Mode**. Install the package in developer mode. This
+adds the package's source path to the python path. Edits to the source path
+are reflected in the global script.
+
+    .. code-block:: shell-session
+
+        python setup.py develop
+
+    If you'd like to uninstall the develop mode, use the following command.
+
+    .. code-block:: shell-session
+
+        python setup.py develop --uninstall
 
 **************
 Adding Plugins
