@@ -105,10 +105,10 @@ class HbondClassifier(object):
 
         classification = 'major_'
         donor_type = ''
-        if d1.name == 'H' and d2.name == 'N':
+        if d2.name == 'N' and d1.name in ('H', 'H1', 'H2', 'H3'):
             classification += 'bb_'
             donor_type = 'amide'
-        elif d1.name == 'HA' and d2.name == 'CA':
+        elif d2.name == 'CA' and d1.name in ('HA', 'HA2', 'HA3'):
             classification += 'bb_'
             donor_type = 'aliphatic'
         elif d1.element == 'H' and d2.element == 'N':
