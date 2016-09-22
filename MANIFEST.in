@@ -1,0 +1,2 @@
+recursive-include mollib/data *
+recursive-exclude mollib/data *.tar
