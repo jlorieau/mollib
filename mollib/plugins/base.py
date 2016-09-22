@@ -2,29 +2,6 @@
 The base Plugin class.
 """
 
-# Common arguments for all parsers
-# in_args = ('-i',)
-# in_kwargs = {'action': 'append',
-#              'nargs': '+',
-#              'required': True,
-#              'type': str,
-#              'metavar': 'identifier/filename',
-#              'help': ('(required) The filename(s) or PDB identifier(s) of the'
-#                       ' structure(s)')
-#             }
-#
-# config_args = ('-c', '--config')
-# config_kwargs = {'nargs': 1,
-#                  'required': False,
-#                  'type': str,
-#                  'metavar': 'filename',
-#                  'help': "The configuration file's name."
-#                  }
-#
-# hydrogenate_args = ('--hydrogenate',)
-# hydrogenate_kwargs = {'action': 'store_true',
-#                       'help': 'Strip the hydrogens and re-add hydrogens'}
-#
 
 class Plugin(object):
     """Abstract base class for mollib plugins.
