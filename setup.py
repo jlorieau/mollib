@@ -2,17 +2,15 @@ from setuptools import setup, find_packages, Extension
 from Cython.Build import cythonize
 import numpy as np
 
-__name__ = 'mollib'
-__author__ = 'Justin L Lorieau'
-__versioninfo__ = (1, 3, 'a1')
-__version__ = '.'.join(map(str, __versioninfo__))
+# Get the version number and package information
+exec(open('mollib/__version__.py').read())
 
 ext_modules = [
     Extension(name="mollib.geometry",
               sources=["mollib/core/src/geometry.pyx"],
               ) ]
 
-setup(name=__name__,
+setup(name=__project_name__,
       version=__version__,
       license='GPL V2',
       author= __author__,
