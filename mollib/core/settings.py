@@ -19,3 +19,12 @@ pKs = {'ASP': {'OD1-OD2': (-1.0, 3.5)},
        'first': {'N': (7.7, 14.0, 14.0),}
      }
 
+#: Path for the datasets
+dataset_path = 'mollib/data/'
+
+#: Path for model input molecule identifiers
+model_molecule_identifiers = ('mollib/data/high_res.txt',
+                              )
+
+#: Path for the Ramachandran statistics datasets
+ramachandran_dataset_path = 'mollib/data/ramachandranstatistics/'

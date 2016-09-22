@@ -12,7 +12,7 @@ import sys
 from setuptools import Command
 
 from mollib import Molecule
-from . import settings
+from mollib.core import settings
 
 
 class Statistics(object):
@@ -29,11 +29,11 @@ class Statistics(object):
         The extension for the output data files.
     """
 
-    data_path = settings.data_path
+    data_path = settings.dataset_path
 
     def __init__(self, *filenames):
         filenames = set(*filenames)
-        filenames.add(*settings.input_molecule_files)
+        filenames.add(*settings.model_molecule_identifiers)
 
         self.molecule_files = filenames
         self.functions = []
@@ -190,6 +190,8 @@ class RamachandranStatistics(Statistics):
     """Collect statistics on Ramachandran angles.
     """
 
+    data_path = settings.dataset_path
+
     def process(self, molecule):
         """Process the molecule and return the Ramachandran angle statistics.
 
@@ -257,11 +259,11 @@ class BuildData(Command):
         pass
 
     def run(self):
+        "Process the measurements of all subclasses"
         for Subclass in Statistics.__subclasses__():
             subclass = Subclass()
 
             msg = "Processing data for '{}'"
-            print(msg.format(subclass.__class__.__name__),
-                  sys.stderr)
+            print(msg.format(subclass.__class__.__name__))
 
             subclass.process_measurements()
