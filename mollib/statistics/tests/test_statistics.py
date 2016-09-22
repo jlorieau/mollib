@@ -24,6 +24,6 @@ class TestStatistics(unittest.TestCase):
     def test_ramachandran_statistics(self):
         "Test the Ramachandran statistics method."
         stats = RamachandranStatistics()
-        #stats.process_measurements()
+        stats.process_measurements()
 
 
