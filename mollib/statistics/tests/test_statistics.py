@@ -21,9 +21,4 @@ class TestStatistics(unittest.TestCase):
         path, filename = os.path.split(filename)
         self.assertTrue(os.path.isdir(path))
 
-    def test_ramachandran_statistics(self):
-        "Test the Ramachandran statistics method."
-        stats = RamachandranStatistics()
-        stats.process_measurements()
-
 

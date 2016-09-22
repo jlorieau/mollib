@@ -7,6 +7,9 @@ import json
 import os
 import tarfile
 import io
+import sys
+
+from setuptools import Command
 
 from mollib import Molecule
 from . import settings
@@ -240,3 +243,25 @@ class RamachandranStatistics(Statistics):
 
         return return_dict
 
+class BuildData(Command):
+    """Build the Statistics data"""
+
+    description = "Build the statistics data"
+
+    user_options = []
+
+    def initialize_options(self):
+        pass
+
+    def finalize_options(self):
+        pass
+
+    def run(self):
+        for Subclass in Statistics.__subclasses__():
+            subclass = Subclass()
+
+            msg = "Processing data for '{}'"
+            print(msg.format(subclass.__class__.__name__),
+                  sys.stderr)
+
+            subclass.process_measurements()

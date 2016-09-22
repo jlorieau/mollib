@@ -25,8 +25,11 @@ setup(name=__name__,
       scripts=['bin/mollib'],
       entry_points={
           'console_scripts': [
-              'mollib = mollib.__main__:main'
-          ]
+            'mollib = mollib.__main__:main'
+          ],
+          'distutils.commands': [
+            'build_data = mollib.statistics:BuildData',
+          ],
       },
       ext_modules=cythonize(ext_modules,),
       # ext_modules=cythonize('mollib/core/src/geometry.pyx'),

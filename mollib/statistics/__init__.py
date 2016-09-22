@@ -1,2 +1,2 @@
 from . import settings
-from .statistics import Statistics, RamachandranStatistics
+from .statistics import Statistics, BuildData, RamachandranStatistics
