@@ -5,10 +5,14 @@ Implementation
 --------------
 The current implementation:
 
-- finds acceptor and donor dipoles and finds acceptor--donor pairs that are
+- Finds acceptor and donor dipoles and finds acceptor--donor pairs that are
   within a distance range and angle range determined in the settings.
-- classifies backbone hydrogen bonds based on contiguous backbone-backbone
+- Classifies backbone hydrogen bonds based on contiguous backbone-backbone
   amide torsion angles.
+- The classification algorithm is more conservative than DSSP in assigning
+  helices. In our implementation, all the torsion angles in the helix must
+  have helical torsion angles. This avoids the mistaken characterization of
+  turns as helices, like the beta-turn at P37-Q40 in ubiquitin (2MJB).
 
 Written Molecule Parameters
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -356,9 +360,9 @@ def find_hbond_partners(molecule, donor1_elements=None, donor2_elements=None,
     >>> mol = Molecule('2KXA')
     >>> hbonds = find_hbond_partners(mol)
     >>> print(len(hbonds))
-    18
+    19
     >>> print(hbonds[0].short_repr())
-    Hbond don.(A.G1-H1--N) - acc.(A.G20-O--C)
+    Hbond don.(A.G1-H2--N) - acc.(A.G20-O--C)
     """
     # Load default parameters
     dist_cutoff = (dist_cutoff if dist_cutoff is not None else

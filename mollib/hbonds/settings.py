@@ -23,7 +23,7 @@ acceptor2_elements = 'C|13C'
 #: bond.
 #:
 #: 'd1a1': The distance between the donor1 and acceptor1 atoms
-hbond_distance_cutoff = {'d1a1': (1.8, 2.5),
+hbond_distance_cutoff = {'d1a1': (1.8, 2.8),
                          }
 
 #: The cutoff angle ranges (in degrees) between atoms to be considered a
@@ -36,13 +36,13 @@ hbond_angle_cutoff = {'theta': (110., 180.),
 helix_phi = (-170., 0.)
 
 # Phi torsion angle range (in degrees) for helices. (Generously allowed)
-helix_psi = (-90., 45.)
+helix_psi = (-100., 55.)
 
 # Phi torsion angle range (in degrees) for beta-sheet. (Generously allowed)
-beta_phi = (-180.,-25.)
+beta_phi = (-200.,-25.)
 
 # Psi torsion angle range (in degrees) for beta-sheet. (Generously allowed)
-beta_psi = (-50., 180.)
+beta_psi = (45., 220.)
 
 
 #: Phi torsion angle ranges (in degrees) for residue i+1 in turns

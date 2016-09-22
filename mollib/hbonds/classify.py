@@ -154,15 +154,6 @@ class HbondClassifier(object):
         try:
             donor_res = hbond.donor.atom2.residue
             acceptor_res = hbond.acceptor.atom2.residue
-
-            # Get the residu i, i+1, i+2, i+3, i+4 and i+5
-            res_i = acceptor_res
-            res_i1 = res_i.next_residue
-            res_i2 = res_i1.next_residue
-            res_i3 = res_i2.next_residue
-            res_i4 = res_i3.next_residue
-            res_i5 = res_i4.next_residue
-
         except AttributeError:
             return False
 
@@ -176,9 +167,19 @@ class HbondClassifier(object):
         # and acceptor
         delta = (donor_res.number - acceptor_res.number)
 
+        # Get the residue i, i+1, i+2, i+3,
+        res_i = acceptor_res
+        res_i1 = (res_i.next_residue if res_i is not None else None)
+        res_i2 = (res_i1.next_residue if res_i1 is not None else None)
+        res_i3 = (res_i2.next_residue if res_i2 is not None else None)
+        res_i4 = (res_i3.next_residue if res_i3 is not None else None)
+        res_i5 = (res_i4.next_residue if res_i4 is not None else None)
+
         # Delta=3. These could be a beta-turn I, II or 310 helix, depending on
         # dihedrals.
-        if delta == 3:
+        # Check that the residue i, i+1, i+2 and i+3 are all real residues
+        # and not None
+        if delta == 3 and all((res_i, res_i1, res_i2, res_i3)):
             # Get the Ramachandran phi/psi angles. The ramachandran_angles
             # method returns a tuple for (phi, psi)
             phi_psi = [r.ramachandran_angles for r in (res_i, res_i1, res_i2,
@@ -210,10 +211,11 @@ class HbondClassifier(object):
                 if hasattr(self, classification):
                     hbond.minor_classification = getattr(self, classification)
                     return True
-                return False
 
         # Delta=4. These could be alpha-helix
-        elif delta==4:
+        # Check that the residue i, i+1, i+2, i+3 and i+4 are all real residues
+        # and not None
+        elif delta==4 and all((res_i, res_i1, res_i2, res_i3, res_i4)):
             # Get the Ramachandran phi/psi angles. The ramachandran_angles
             # method returns a tuple for (phi, psi)
             phi_psi = [r.ramachandran_angles for r in (res_i, res_i1, res_i2,
@@ -228,7 +230,10 @@ class HbondClassifier(object):
                 return True
 
         # Delta=5. These could be pi-helix
-        elif delta==5:
+        # Check that the residue i, i+1, i+2, i+3, i+4 and i+5 are all real
+        # residues and not None
+        elif delta==5 and all((res_i, res_i1, res_i2, res_i3, res_i4, res_i5)):
+
             # Get the Ramachandran phi/psi angles. The ramachandran_angles
             # method returns a tuple for (phi, psi)
             phi_psi = [r.ramachandran_angles for r in (res_i, res_i1, res_i2,
@@ -250,7 +255,8 @@ class HbondClassifier(object):
         a_phi, a_psi = acceptor_res.ramachandran_angles
 
         # See of backbone dihedrals are consistent with a beta sheet
-        if (all(within_range(a, settings.beta_phi, wrap=360.)
+        if (abs(delta) >= 4 and   ## beta sheet minimum iter-residue spacing
+            all(within_range(a, settings.beta_phi, wrap=360.)
                 for a in (d_phi, a_phi)) and
             all(within_range(a, settings.beta_psi, wrap=360.)
                 for a in (d_psi, a_psi))):
