@@ -27,61 +27,24 @@ def round_to_sigs(value, error):
     return (round(value, sigs), round(error, sigs))
 
 
-def stats(measurements):
-    """Given a list of measurements, this function calculates and returns the
-    mean and standard deviation.
-
-    Parameters
-    ----------
-    measurements: list of tuples
-        A list of tuples containing the atoms and their respective measurements.
-        The last item of each tuple holds the measurement value.
-
-    Returns
-    -------
-    tuple of floats
-        (mean, standard deviation)
-    """
-    # The values are in the last item of the tuples in the measurements
-    x = [i[-1] for i in measurements]
-    if len(x) == 0:
-        return None
-
-    mean = np.mean(x)
-    stdev = np.std(x)
-
-    # Determine the sig figs in the error so that the number can be properly
-    # rounded
-    try:
-        sigs = -int(floor(log10(abs(stdev))))
-    except ValueError:
-        return None
-
-    mean = round(mean, sigs)
-    stdev =  round(stdev, sigs)
-    format_str = "{} ± {} {}".format(mean, stdev, units)
-
-    print(" " * (spacing-1) + '-' * len(format_str))
-    print(" " * spacing + format_str)
-
-    return None
-
-
 class Measure(Plugin):
     """The core plugin to offer the 'measure' command."""
 
     enabled = True
     order = 100
+    create_command_subparser = True
 
-    def options(self, subparsers):
-        parser = super(Measure, self).options(subparsers)
-        group = parser.add_mutually_exclusive_group(required=True)
+    def process_parser(self):
+        "Process the 'measure' command parser."
+        subparser = self.command_subparsers['measure']
+
+        group = subparser.add_mutually_exclusive_group(required=True)
 
         group.add_argument('-d', '--dist', nargs=2, required=False,
-                        metavar='atom', type=str,
-                        action='append',
-                        help=("Measure distances between 2 atom selections."
-                              "ex: 31-N 32-CA"))
+                           metavar='atom', type=str,
+                           action='append',
+                           help=("Measure distances between 2 atom selections."
+                                 "ex: 31-N 32-CA"))
 
         group.add_argument('-a', '--angle', nargs=3, required=False,
                            metavar='atom', type=str,
@@ -108,42 +71,40 @@ class Measure(Plugin):
                                  "options are ignored."))
 
         # Add options for the output
-        options = parser.add_argument_group(title='options')
+        options = subparser.add_argument_group(title='options')
         options.add_argument('--stats',
-                          required=False, action='store_true',
-                          help=("Report statistics on the reported "
-                                "measurements."))
+                             required=False, action='store_true',
+                             help=("Report statistics on the reported "
+                                   "measurements."))
 
         # Arguments to filter the results
-        filters = parser.add_argument_group(title='filters')
+        filters = subparser.add_argument_group(title='filters')
         filters.add_argument('--only-intra',
-                            dest='only_intra',
-                            action='store_true', default=False,
-                            help='Only report measurements within a residue')
+                             dest='only_intra',
+                             action='store_true', default=False,
+                             help='Only report measurements within a residue')
         filters.add_argument('--exclude-intra',
-                            dest='exclude_intra',
-                            action='store_true', default=False,
-                            help='Exclude measurements within a residue')
+                             dest='exclude_intra',
+                             action='store_true', default=False,
+                             help='Exclude measurements within a residue')
         filters.add_argument('--only-intra-chain',
-                            dest='only_intra_chain',
-                            action='store_true', default=False,
-                            help='Only report measurements within a chain')
+                             dest='only_intra_chain',
+                             action='store_true', default=False,
+                             help='Only report measurements within a chain')
         filters.add_argument('--exclude-intra-chain',
-                            dest='exclude_intra_chain',
-                            action='store_true', default=False,
-                            help='Exclude measurements within a chain')
+                             dest='exclude_intra_chain',
+                             action='store_true', default=False,
+                             help='Exclude measurements within a chain')
         filters.add_argument('--only-delta',
-                            dest='residue_delta', action='store',
-                            default=None, metavar='DELTA', type=int,
-                            help=('Only report residues separated by DELTA '
-                                  'residue numbers'))
+                             dest='residue_delta', action='store',
+                             default=None, metavar='DELTA', type=int,
+                             help=('Only report residues separated by DELTA '
+                                   'residue numbers'))
         filters.add_argument('--only-bonded',
-                            dest='bonded',
-                            action='store_true', default=None,
-                            help=('Only report measurements from bonded '
-                                  'atoms'))
-
-        return parser
+                             dest='bonded',
+                             action='store_true', default=None,
+                             help=('Only report measurements from bonded '
+                                   'atoms'))
 
     def help(self):
         return "Measure geometries in molecules"

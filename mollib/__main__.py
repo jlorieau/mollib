@@ -37,8 +37,6 @@ def list_settings():
 
 
 def main():
-    # Load the plugins
-    plugins = Plugin.plugin_instances()
 
     # Load the argument parser and subparsers
     parser = argparse.ArgumentParser(prog='mollib',
@@ -75,10 +73,9 @@ def main():
                         help='Show the program version')
 
     #TODO: Add argument to just download pdb file ('-g --get')
-
-    # Process the plugin subparsers
-    for plugin in plugins:
-        plugin.options(subparsers)
+    # Load the plugins
+    global_plugin = Plugin(parser=parser, subparser=subparsers)
+    parser = global_plugin.process_parsers()
 
     # process the --list-settings and --list_plugins options
     if '--list-plugins' in sys.argv:
@@ -106,7 +103,8 @@ def main():
 
 
     # Find the relevant plugins to execute
-    active_plugins = [plugin for plugin in plugins if plugin.selected(args)]
+    active_plugins = [plugin for plugin in Plugin.plugin_instances()
+                      if plugin.selected(args)]
 
     # Pre-process the molecules
     for molecule in molecules:

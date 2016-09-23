@@ -15,9 +15,8 @@ class Hbonds(Plugin):
     def help(self):
         return "Find and report hydrogen bonds in molecules"
 
-    def options(self, subparsers):
-        "Setup the argument parser"
-        p = super(Hbonds, self).options(subparsers)
+    def process_parser(self):
+        p = self.command_subparsers['hbonds']
 
         p.add_argument('--aliphatic',
                        action='store_true',
@@ -28,7 +27,6 @@ class Hbonds(Plugin):
         p.add_argument('--sort-type',
                        action='store_true',
                        help='Sort hydrogen bonds by type')
-        return p
 
     def process(self, molecule, args):
         """Process the molecule by finding and reporting its hydrogen bonds.

@@ -12,45 +12,36 @@ class Process(Plugin):
 
     enabled = True
     order = 0
+    create_command_subparser = True
 
-    def options(self, subparsers):
-        #TODO: add list function
+    def process_parser(self):
+        "Process the 'process' command parser."
+        # Add the following commands to all subparsers
+        for subparser in self.command_subparsers.values():
+            # Input filename or identifier
+            subparser.add_argument('-i', '--in', dest='i',
+                                action='append', nargs='+', required=True,
+                                type=str,
+                                metavar='id/filename',
+                                help=("(required) The filename(s) or PDB "
+                                      "identifier(s) of the structure(s)"))
 
-        # Create the parent processor parser to be used by other plugins.
-        parent = Plugin.parents.setdefault('process',
-                                    subparsers.add_parser('', add_help=False))
+            # Output filename
+            subparser.add_argument('-o', '--out',
+                                action='append', nargs='*', required=False,
+                                type=str, metavar='filename',
+                                help="The output filename(s) for the structure(s)")
 
-        # Input filename or identifier
-        parent.add_argument('-i', '--in', dest='i',
-                            action='append', nargs='+', required=True, type=str,
-                            metavar='id/filename',
-                            help=("(required) The filename(s) or PDB "
-                             "identifier(s) of the structure(s)"))
+            # Config filename
+            subparser.add_argument('-c', '--config',
+                                nargs=1, required=False, type=str,
+                                metavar='filename',
+                                help="The configuration filename")
 
-        # Output filename
-        parent.add_argument('-o', '--out',
-                            action='append', nargs='*', required=False,
-                            type=str, metavar='filename',
-                            help="The output filename(s) for the structure(s)")
-
-        # Config filename
-        parent.add_argument('-c', '--config',
-                            nargs=1, required=False, type=str,
-                            metavar='filename',
-                            help="The configuration filename")
-
-        # List molecule details
-        parent.add_argument('-l', '--list',
-                            action='store_true',
-                            help='List details on the molecule(s)')
-
-        # Create the process parser
-        parser = subparsers.add_parser(self.command,
-                                       parents=[parent,],
-                                       help="Process a molecular structure")
-        parser._optionals.title = self.argument_title
-
-        return parser
+            # List molecule details
+            subparser.add_argument('-l', '--list',
+                                action='store_true',
+                                help='List details on the molecule(s)')
 
     def help(self):
         return "Process the structure"

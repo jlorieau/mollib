@@ -1,6 +1,7 @@
 """
 The base Plugin class.
 """
+import argparse
 
 
 class Plugin(object):
@@ -43,7 +44,11 @@ class Plugin(object):
     enabled = True
     command = None
     order = 200
-    parents = {}
+
+    command_subparsers = {}
+
+    create_command_subparser = True
+
     argument_title = 'arguments'
 
     def __new__(cls, *args, **kwargs):
@@ -53,35 +58,73 @@ class Plugin(object):
         instance = object.__new__(cls, *args, **kwargs)
         if "_instances" not in Plugin.__dict__:
             Plugin._instances = []
-        Plugin._instances.append(instance)
+        if instance.__class__ != Plugin:
+            Plugin._instances.append(instance)
         return instance
 
-    def __init__(self):
+    def __init__(self, parser=None, subparser=None):
         if self.name is None:
             self.name = self.__class__.__name__.lower()
         if self.command is None:
             self.command = self.__class__.__name__.lower()
 
-    def options(self, subparsers):
-        """Register the command line options.
+        if parser is not None and subparser is not None:
+            Plugin.parser = parser
+            Plugin.subparser = subparser
 
-        The base method creates a parser from the passed subparsers, with name
-        from self.command.
-        The subclasses method should add arguments to this new parser.
+            # Create all of the subparsers for existing instances
+            for instance in self._instances:
+                if instance.create_command_subparser:
+                    command = instance.command
+                    s = subparser.add_parser(command,
+                                             help=instance.help())
+                    Plugin.command_subparsers[command] = s
+
+
+    def process_parsers(self):
+        """Process and return the parser :obj:`argparse.ArgumentParser` for
+        this plugin.
+
+        Subclasses should derive this.
+        """
+        # Process all of the parsers for sublcasses of this class.
+        for instance in Plugin._instances:
+            instance.process_parser()
+        return self.parser
+
+    def process_parser(self):
+        pass
+
+    def get_command_parser(self, subparsers, command_name, help=None):
+        """Return the parser for the given command name.
 
         Parameters
         ----------
-        parser: :obj:`argparse.ArgumentParser`
-            A root argparse instance.
+        subparser: :obj:`argparse.ArgumentParser`
+            The root argparse instance.
+        command_name: str
+            The name of the command. ex: 'process', 'measure'
+        help: str, optional
+            If specified, the command's help description will be replaced with
+            the given string.
 
         Returns
         -------
         :obj:`argparse.ArgumentParser`
-            The parser used by this plugin.
+            The parser used for the specified command name.
         """
-        p = subparsers.add_parser(self.command, help=self.help(),
-                                  parents=self.parents.values())
+        d = Plugin.command_parsers
+        p = d.setdefault(command_name,
+                         subparsers.add_parser(command_name,
+                                               parents=self.parents,))
         p._optionals.title = self.argument_title
+
+        # Set the command help
+        if help is not None and hasattr(subparsers, '_choices_actions'):
+            choices = [i for i in subparsers._choices_actions
+                       if hasattr(i, 'dest') and i.dest == command_name]
+            if len(choices) > 0:
+                choices[0].help = help
 
         return p
 
