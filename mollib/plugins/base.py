@@ -2,54 +2,94 @@
 The base Plugin class.
 """
 import argparse
+from abc import ABCMeta, abstractmethod
 
 
-class Plugin(object):
-    """Abstract base class for mollib plugins.
+class PluginManager(object):
+    """Manager for plugins.
+
+    Manages subclass instances of :obj:`Plugin`.
 
     Attributes
     ----------
-    name: str
+    parser: :obj:`argparser.ArgumentParser`
+        The root parser.
+    subparser: subparser
+        The subparser for commands.
+    """
+
+    parser = None
+    subparser = None
+
+    def __init__(self, parser, subparser):
+        self.parser = parser
+        self.subparser = subparser
+
+        # Create all of the subparsers for existing instances
+        for instance in self.plugins():
+            if instance.create_command_subparser:
+                command = instance.command
+                s = subparser.add_parser(command,
+                                         help=instance.help())
+                Plugin.command_subparsers[command] = s
+
+    def process_parsers(self):
+        """Process the parsers using all of the plugin instances and return the
+        parser.
+
+        The method will call all of the :meth:`Plugin.process_parser` methods for
+        each plugin instance.
+
+        Returns
+        -------
+        parser: :obj:`argparse.ArgumentParser`
+            The processed parser.
+        """
+        # Process all of the parsers for sublcasses of this class.
+        for instance in self.plugins():
+            instance.process_parser()
+        return self.parser
+
+    def plugins(self):
+        """Return the active plugin instances."""
+        return Plugin._instances
+
+class Plugin(object):
+    """Abstract base class for plugins.
+
+    Attributes
+    ----------
+    name: str, optional
         The name of the plugin.
     enabled: bool
         If true, the plugin is enabled.
-    command: str
+    command: str, optional
         The shell command for this plugin.
     order: int
         The order to place the plugin in the command line options. (Higher is
         lower priority)
-    parents: dict
-        A dict of the parent processors. This is used if plugins want to add
-        options to other commands. The key is the command (str) and the value
-        is the parent parser. For example, the 'process' parent parser is
-        contains the arguments for the 'process' command.
-
-
-        .. note:: It is recommended that this dict be accessed with a
-                  setdefault method and a default value of:
-                  subparsers.add_parser('', add_help=False)
-
-
-    .. note:: Preprocessor and postprocessor plugins should always return True
-              for the selected method. These should also add to the parent
-              parser.
+    create_command_subparser: bool, optional
+        If True, a new command will be created for this plugin, base on the
+        plugin subclasses's name (in lowercase).
+    command_subparsers: dict
+        A dict containing the command names (key) and the comand subparsers
+        (value). Access this dict to add arguments to specific commands
 
     .. note:: Preprocessor and postprocessor plugins should have an order
               lower than 0 and should access the 'process' parent parser.
               Analysis methods should have an order between
               200-1000.
     """
+    __metaclass__ = ABCMeta
 
     name = None
     enabled = True
     command = None
     order = 200
 
-    command_subparsers = {}
-
     create_command_subparser = True
 
-    argument_title = 'arguments'
+    command_subparsers = {}
 
     def __new__(cls, *args, **kwargs):
         "Keep track of subclass instances"
@@ -58,75 +98,31 @@ class Plugin(object):
         instance = object.__new__(cls, *args, **kwargs)
         if "_instances" not in Plugin.__dict__:
             Plugin._instances = []
-        if instance.__class__ != Plugin:
-            Plugin._instances.append(instance)
+        Plugin._instances.append(instance)
         return instance
 
-    def __init__(self, parser=None, subparser=None):
-        if self.name is None:
-            self.name = self.__class__.__name__.lower()
-        if self.command is None:
-            self.command = self.__class__.__name__.lower()
+    def __init__(self):
+        self.name = self.__class__.__name__.lower()
+        self.command = self.__class__.__name__.lower()
 
-        if parser is not None and subparser is not None:
-            Plugin.parser = parser
-            Plugin.subparser = subparser
-
-            # Create all of the subparsers for existing instances
-            for instance in self._instances:
-                if instance.create_command_subparser:
-                    command = instance.command
-                    s = subparser.add_parser(command,
-                                             help=instance.help())
-                    Plugin.command_subparsers[command] = s
-
-
-    def process_parsers(self):
-        """Process and return the parser :obj:`argparse.ArgumentParser` for
-        this plugin.
-
-        Subclasses should derive this.
-        """
-        # Process all of the parsers for sublcasses of this class.
-        for instance in Plugin._instances:
-            instance.process_parser()
-        return self.parser
-
+    @abstractmethod
     def process_parser(self):
-        pass
+        """Process the argument parser for this plugin.
 
-    def get_command_parser(self, subparsers, command_name, help=None):
-        """Return the parser for the given command name.
+        This function is used to add arguments to the argument parser or to
+        the command subparsers.
 
-        Parameters
-        ----------
-        subparser: :obj:`argparse.ArgumentParser`
-            The root argparse instance.
-        command_name: str
-            The name of the command. ex: 'process', 'measure'
-        help: str, optional
-            If specified, the command's help description will be replaced with
-            the given string.
+        The subparser for a specific command is accessed by name from the
+        self.command_subparsers. ex: self.command_subparsers['hbonds']
+
+        This function is called by :meth:`PluginManager.process_parsers` for
+        each plugin instance.
 
         Returns
         -------
-        :obj:`argparse.ArgumentParser`
-            The parser used for the specified command name.
+        None
         """
-        d = Plugin.command_parsers
-        p = d.setdefault(command_name,
-                         subparsers.add_parser(command_name,
-                                               parents=self.parents,))
-        p._optionals.title = self.argument_title
-
-        # Set the command help
-        if help is not None and hasattr(subparsers, '_choices_actions'):
-            choices = [i for i in subparsers._choices_actions
-                       if hasattr(i, 'dest') and i.dest == command_name]
-            if len(choices) > 0:
-                choices[0].help = help
-
-        return p
+        pass
 
     def help(self):
         """Return help for this plugin.
@@ -134,28 +130,6 @@ class Plugin(object):
         The help string will be used in the command line option.
         """
         return "(no help available)"
-
-    def selected(self, args):
-        """Test whether this plugin was selected.
-
-        The application will run this plugin only if this method is True.
-
-        Parameters
-        ----------
-        args: :obj:`argparse.ArgumentParser`
-            The ArgumentParser parsed arguments.
-
-        Returns
-        -------
-        bool
-            True if this plugin was selected, otherwise False.
-        """
-        if (self.enabled and
-            hasattr(args, 'command') and
-            args.command == self.command):
-            return True
-        else:
-            return False
 
     def preprocess(self, molecule, args):
         """Preprocess the molecule.
@@ -200,8 +174,3 @@ class Plugin(object):
         """
         pass
 
-    @classmethod
-    def plugin_instances(cls):
-        if hasattr(cls, '_instances'):
-            return sorted(cls._instances, key=lambda i: i.order)
-        return []

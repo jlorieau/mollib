@@ -35,7 +35,7 @@ class Measure(Plugin):
     create_command_subparser = True
 
     def process_parser(self):
-        "Process the 'measure' command parser."
+        "Process the parser for the 'measure' command."
         subparser = self.command_subparsers['measure']
 
         group = subparser.add_mutually_exclusive_group(required=False)
@@ -107,50 +107,52 @@ class Measure(Plugin):
     def process(self, molecule, args):
         "Measure geometries in molecules."
 
-        if getattr(args, 'dist', False):
-            table = MDTable('Num', 'Atom 1', 'Atom 2', 'Dist. (A)')
-            table.title = 'Distances for {}'.format(molecule.name)
+        if args.command == 'measure':
+            if getattr(args, 'dist', False):
+                table = MDTable('Num', 'Atom 1', 'Atom 2', 'Dist. (A)')
+                table.title = 'Distances for {}'.format(molecule.name)
 
-            dists_list = []
-            for selector1, selector2 in args.dist:
-                # Get the distances
-                dists = measure_distances(molecule, selector1, selector2,
+                dists_list = []
+                for selector1, selector2 in args.dist:
+                    # Get the distances
+                    dists = measure_distances(molecule, selector1, selector2,
                                   only_intra=args.only_intra,
                                   exclude_intra=args.exclude_intra,
                                   only_intra_chain=args.only_intra_chain,
                                   exclude_intra_chain=args.exclude_intra_chain,
                                   residue_delta=args.residue_delta,
                                   bonded=args.bonded)
-                dists_list.append(dists)
+                    dists_list.append(dists)
 
-            # Add the distances to the table
-            for count, dist in enumerate(chain(*dists_list), 1):
-                atom1, atom2, d = dist
-                table.add_row(count, atom1, atom2, '{:.2f}'.format(d))
+                # Add the distances to the table
+                for count, dist in enumerate(chain(*dists_list), 1):
+                    atom1, atom2, d = dist
+                    table.add_row(count, atom1, atom2, '{:.2f}'.format(d))
 
-            # Calculate the stats if specified
-            if args.stats:
-                values = [i[2] for i in chain(*dists_list)]
-                mean = np.mean(values)
-                std = np.std(values)
-                stat_str = '{} ± {}'.format(*round_to_sigs(mean, std))
-                stat_bar = '-' * len(stat_str)
+                # Calculate the stats if specified
+                if args.stats:
+                    values = [i[2] for i in chain(*dists_list)]
+                    mean = np.mean(values)
+                    std = np.std(values)
+                    stat_str = '{} ± {}'.format(*round_to_sigs(mean, std))
+                    stat_bar = '-' * len(stat_str)
 
-                table.add_row('', '', '', stat_bar)  # Draw a '----' bar
-                table.add_row('', '', '', stat_str)  # Add the stats
+                    table.add_row('', '', '', stat_bar)  # Draw a '----' bar
+                    table.add_row('', '', '', stat_str)  # Add the stats
 
-            # Print the table
-            print(table.content())
+                # Print the table
+                print(table.content())
 
-        if getattr(args, 'angle', False):
-            table = MDTable('Num', 'Atom 1', 'Atom 2', 'Atom 3', 'Angle (deg)')
-            table.title = 'Angles for {}'.format(molecule.name)
+            if getattr(args, 'angle', False):
+                table = MDTable('Num', 'Atom 1', 'Atom 2', 'Atom 3',
+                                'Angle (deg)')
+                table.title = 'Angles for {}'.format(molecule.name)
 
-            angs_list = []
+                angs_list = []
 
-            for selector1, selector2, selector3 in args.angle:
-                # get the angles
-                angs = measure_angles(molecule, selector1, selector2,
+                for selector1, selector2, selector3 in args.angle:
+                    # get the angles
+                    angs = measure_angles(molecule, selector1, selector2,
                                   selector3,
                                   only_intra=args.only_intra,
                                   exclude_intra=args.exclude_intra,
@@ -158,62 +160,65 @@ class Measure(Plugin):
                                   exclude_intra_chain=args.exclude_intra_chain,
                                   residue_delta=args.residue_delta,
                                   bonded=args.bonded)
-                angs_list.append(angs)
+                    angs_list.append(angs)
 
-            # Add the angles to the table
-            for count, ang in enumerate(chain(*angs_list), 1):
-                atom1, atom2, atom3, a = ang
-                table.add_row(count, atom1, atom2, atom3, '{:.1f}'.format(a))
+                # Add the angles to the table
+                for count, ang in enumerate(chain(*angs_list), 1):
+                    atom1, atom2, atom3, a = ang
+                    table.add_row(count, atom1, atom2, atom3,
+                                  '{:.1f}'.format(a))
 
-            # Calculate the stats if specified
-            if args.stats:
-                values = [i[3] for i in chain(*angs_list)]
-                mean = np.mean(values)
-                std = np.std(values)
-                stat_str = '{} ± {}'.format(*round_to_sigs(mean, std))
-                stat_bar = '-' * len(stat_str)
+                # Calculate the stats if specified
+                if args.stats:
+                    values = [i[3] for i in chain(*angs_list)]
+                    mean = np.mean(values)
+                    std = np.std(values)
+                    stat_str = '{} ± {}'.format(*round_to_sigs(mean, std))
+                    stat_bar = '-' * len(stat_str)
 
-                table.add_row('', '', '', '', stat_bar)  # Draw a '----' bar
-                table.add_row('', '', '', '', stat_str)  # Add the stats
+                    table.add_row('', '', '', '', stat_bar)  # Draw a '----' bar
+                    table.add_row('', '', '', '', stat_str)  # Add the stats
 
-            # Print the table
-            print(table.content())
+                # Print the table
+                print(table.content())
 
-        if getattr(args, 'dihedral', False):
-            table = MDTable('Num', 'Atom 1', 'Atom 2', 'Atom 3', 'Atom 4',
-                            'Dihedral (deg)')
-            table.title = 'Dihedrals for {}'.format(molecule.name)
+            if getattr(args, 'dihedral', False):
+                table = MDTable('Num', 'Atom 1', 'Atom 2', 'Atom 3', 'Atom 4',
+                                'Dihedral (deg)')
+                table.title = 'Dihedrals for {}'.format(molecule.name)
 
-            dihs_list = []
+                dihs_list = []
 
-            for selector1, selector2, selector3, selector4 in args.dihedral:
-                # Get the dihedrals
-                dihs = measure_dihedrals(molecule, selector1, selector2,
-                                      selector3, selector4,
-                                      only_intra=args.only_intra,
-                                      exclude_intra=args.exclude_intra,
-                                      only_intra_chain=args.only_intra_chain,
-                                      exclude_intra_chain=args.exclude_intra_chain,
-                                      residue_delta=args.residue_delta,
-                                      bonded=args.bonded)
-                dihs_list.append(dihs)
+                for selector1, selector2, selector3, selector4 in args.dihedral:
+                    # Get the dihedrals
+                    dihs = measure_dihedrals(molecule, selector1, selector2,
+                                  selector3, selector4,
+                                  only_intra=args.only_intra,
+                                  exclude_intra=args.exclude_intra,
+                                  only_intra_chain=args.only_intra_chain,
+                                  exclude_intra_chain=args.exclude_intra_chain,
+                                  residue_delta=args.residue_delta,
+                                  bonded=args.bonded)
+                    dihs_list.append(dihs)
 
-            # Add the angles to the table
-            for count, dih in enumerate(chain(*dihs_list), 1):
-                atom1, atom2, atom3, atom4, d = dih
-                table.add_row(count, atom1, atom2, atom3, atom4,
-                              '{:.1f}'.format(d))
+                # Add the angles to the table
+                for count, dih in enumerate(chain(*dihs_list), 1):
+                    atom1, atom2, atom3, atom4, d = dih
+                    table.add_row(count, atom1, atom2, atom3, atom4,
+                                  '{:.1f}'.format(d))
 
-            # Calculate the stats if specified
-            if args.stats:
-                values = [i[4] for i in chain(*dihs_list)]
-                mean = np.mean(values)
-                std = np.std(values)
-                stat_str = '{} ± {}'.format(*round_to_sigs(mean, std))
-                stat_bar = '-' * len(stat_str)
+                # Calculate the stats if specified
+                if args.stats:
+                    values = [i[4] for i in chain(*dihs_list)]
+                    mean = np.mean(values)
+                    std = np.std(values)
+                    stat_str = '{} ± {}'.format(*round_to_sigs(mean, std))
+                    stat_bar = '-' * len(stat_str)
 
-                table.add_row('', '', '', '', '', stat_bar)  # Draw a '----' bar
-                table.add_row('', '', '', '', '', stat_str)  # Add the stats
+                    table.add_row('', '', '', '', '',
+                                  stat_bar)  # Draw a '----' bar
+                    table.add_row('', '', '', '', '',
+                                  stat_str)  # Add the stats
 
-            # Print the table
-            print(table.content())
+                # Print the table
+                print(table.content())

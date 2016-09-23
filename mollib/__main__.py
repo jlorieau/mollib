@@ -9,7 +9,7 @@ import sys
 import os
 
 import mollib
-from mollib.plugins import Plugin
+from mollib.plugins import PluginManager
 from mollib.core import list_global_settings, import_config
 
 try:
@@ -18,10 +18,10 @@ except ImportError:
     import ConfigParser as configparser
 
 
-def list_plugins():
+def list_plugins(plugin_manager):
     "Prints a list of the installed plugins."
     print('Installed plugins:')
-    for plugin in Plugin.plugin_instances():
+    for plugin in plugin_manager.plugins():
         msg = '\t{:<15} '.format(plugin.name)
         enabled = ('(\033[92mEnabled\033[0m)' if plugin.enabled
                    else '(\033[91mNot Enabled\033[0m)')
@@ -74,12 +74,12 @@ def main():
 
     #TODO: Add argument to just download pdb file ('-g --get')
     # Load the plugins
-    global_plugin = Plugin(parser=parser, subparser=subparsers)
-    parser = global_plugin.process_parsers()
+    plugin_manager = PluginManager(parser=parser, subparser=subparsers)
+    parser = plugin_manager.process_parsers()
 
     # process the --list-settings and --list_plugins options
     if '--list-plugins' in sys.argv:
-        list_plugins()
+        list_plugins(plugin_manager)
         exit()
     if '--list-settings' in sys.argv:
         list_settings()
@@ -101,9 +101,8 @@ def main():
     # Prepare and preprocess the structure
     molecules = [mollib.Molecule(identifier) for identifier in args.i[0]]
 
-
     # Find the relevant plugins to execute
-    active_plugins = [plugin for plugin in Plugin.plugin_instances()]
+    active_plugins = plugin_manager.plugins()
 
     # Pre-process the molecules
     for molecule in molecules:

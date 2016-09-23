@@ -15,7 +15,7 @@ class Process(Plugin):
     create_command_subparser = True
 
     def process_parser(self):
-        "Process the 'process' command parser."
+        "Process the parser for the 'process' command."
         # Add the following commands to all subparsers
         for subparser in self.command_subparsers.values():
             # Input filename or identifier
@@ -47,10 +47,9 @@ class Process(Plugin):
         return "Process the structure"
 
     def process(self, molecule, args):
-        """Process the molecule
+        """Process the molecule.
 
         - list the molecule details
-
 
         .. note:: Opening of the molecule (-i) and the configuration (-c) is
                   conducted elsewhere. Also, the file is written as the last
