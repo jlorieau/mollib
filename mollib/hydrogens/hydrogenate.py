@@ -14,10 +14,11 @@ The current implementation has the following features:
 - Molecules with heteroatoms are correctly hydrogenated, provided the
   topological information is provided.
 
-Read Molecule Parameters
-~~~~~~~~~~~~~~~~~~~~~~~~
-Category: Add_hydrogens
-    - name: atom.full_name and '_' and angle(s)
+Written Molecule Parameters
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Category: 'Structural Features'
+    hydrogenate: bool
+        True if the molecule was hydrogenated
 
 """
 # TODO: work with the residue ionization groups
@@ -100,20 +101,28 @@ def add_hydrogens_to_queue(q, result):
         result.put(residue)
 
 
-def add_hydrogens(molecule, strip=True):
-    """Add hydrogens to a molecule.
+def add_hydrogens(molecule, strip=True, force=False):
+    """Add hydrogens to a molecule, if it hasn't been done already.
 
     Parameters
     ----------
-    molecule: :obj:`molecule`
+    molecule: :obj:`mollib.Molecule`
         Molecule object to add hydrogens to.
-    strip: bool
+    strip: bool, optional
         If True, all hydrogen atoms will be stripped from the molecule before
         adding new hydrogens
+    force: bool, optional
+        If True, the molecule will be rehydrogenated, even if it has before.
     """
     # TODO: Make parralel with dict residue, namedtuple atom
     # NOTE: I tried multiprocessing this function. It reaches the recursion
     # limit on large molecules, and the ionization doesn't work.
+
+    already_hydrogenated = molecule.get_parameter('Structural Features',
+                                                  'hydrogenate')
+    if already_hydrogenated and not force:
+        return None
+
     if strip:
         molecule.strip_atoms(element='H')
 
@@ -131,6 +140,9 @@ def add_hydrogens(molecule, strip=True):
 
     # Now that all of the atoms have been added, clear the cache
     molecule.clear_cache(scope='add_atoms')
+
+    # Mark that the molecule was hydrogenated
+    molecule.set_parameter('Structural Features', 'hydrogenate', True)
 
     # Implementation #2 - multiprocess (twice as slow)
     #     The concurrency with map seems to work very well, but it chokes

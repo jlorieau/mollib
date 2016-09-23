@@ -300,7 +300,7 @@ class TestHydrogenate(unittest.TestCase):
 
         # test first at high pH
         mol.pH = 12
-        add_hydrogens(mol, strip=True)
+        add_hydrogens(mol, strip=True, force=True)
 
         for residue in mol.residues:
             if residue.first:
@@ -331,7 +331,7 @@ class TestHydrogenate(unittest.TestCase):
 
         # test first at intermediate pH
         mol.pH = 6
-        add_hydrogens(mol, strip=True)
+        add_hydrogens(mol, strip=True, force=True)
 
         for residue in mol.residues:
             if residue.first:
@@ -363,7 +363,7 @@ class TestHydrogenate(unittest.TestCase):
 
         # test first at intermediate pH
         mol.pH = 1
-        add_hydrogens(mol, strip=True)
+        add_hydrogens(mol, strip=True, force=True)
 
         for residue in mol.residues:
             if residue.first:
