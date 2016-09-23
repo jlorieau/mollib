@@ -18,6 +18,10 @@ from mollib.core import settings
 class Statistics(object):
     """Class to collect statistics on molecules.
 
+    Statistics are compiled first by processing measurements, then by processing
+    resulting datasets. Subclasses implement :meth:`process_measurement` and
+    :meth:`process_data`, and optionally should set the :attr:`data_path`.
+
     Attributes
     ----------
     molecule_files: str
@@ -25,8 +29,6 @@ class Statistics(object):
         collect statistics on.
     data_path: str
         The base path and filename for data files.
-    output_ext: str
-        The extension for the output data files.
     """
 
     data_path = settings.dataset_path
@@ -40,68 +42,6 @@ class Statistics(object):
 
         # Read in the molecule identifiers
         self.read_identifiers()
-
-    def process(self, molecule):
-        """Process the molecule.
-
-        Parameters
-        ----------
-        molecule: :obj:`mollib.Molecule` or str
-            A molecule or a identifier string for a molecule.
-
-        Returns
-        -------
-        :obj:`Molecule`
-            (parent class) The molecule to process. Subclasses should call this
-            parent class method to get the molecule.
-        dict
-            (subclasses) Return a dict containing values to collect statistics
-            on.
-        """
-        if isinstance(molecule, str):
-            molecule = Molecule(molecule)
-
-        #logging.info('Processing measurements statistics '
-        #             'for {}'.format(molecule.name))
-        return molecule
-
-    def process_measurements(self):
-        """Load all of the molecules and process each one, saving the data to
-        the output measurement file.
-
-        Results are stored
-
-        Returns
-        -------
-
-        """
-        measured_dict = self.get_measurement_dict()
-        processed_ids = set(measured_dict.keys())
-        to_process_ids = processed_ids ^ self.identifiers
-
-        tarfile_object = self.open_measurement_tarfile()
-
-        try:
-
-            for count, identifier in enumerate(sorted(to_process_ids),
-                                               len(processed_ids) + 1):
-                # Skip empty entries
-                if not identifier.strip():
-                    continue
-
-                print('{}'.format(count).rjust(4) + '.' +
-                     ' {}'.format(identifier))
-                molecule = Molecule(identifier)
-
-                return_dict = self.process(molecule)
-                self.write_measurement_dict(identifier=identifier,
-                                            d=return_dict,
-                                            tarfile_object=tarfile_object)
-            # Iterate over the identifiers and process each
-        except Exception as e:
-            raise e
-        finally:
-            tarfile_object.close()
 
     def read_identifiers(self):
         """Read in the list of identifiers from the molecule files."""
@@ -121,11 +61,79 @@ class Statistics(object):
                     if len(items) > 0:
                         self.identifiers.update(items)
 
+    def process_measurement(self, molecule):
+        """Process the measurements for the molecule.
+
+        Parameters
+        ----------
+        molecule: :obj:`mollib.Molecule` or str
+            A molecule or a identifier string for a molecule.
+
+        Returns
+        -------
+        :obj:`Molecule`
+            (parent class) The molecule to process. Subclasses should call this
+            parent class method to get the molecule.
+        dict
+            (subclasses) Return a dict containing values to collect statistics
+            on.
+        """
+        if isinstance(molecule, str):
+            molecule = Molecule(molecule)
+        return molecule
+
+    def process_measurements(self):
+        """Load all of the molecules and process_measurement each one, saving
+        the data to the output measurement file and returning the values in the
+        measurement dict.
+
+        Returns
+        -------
+        measurement_dict: dict
+            Collected processed values from :meth:`process_measurement`.
+            These are organized as follows:
+
+            - key: identifier (str) of the molecule
+            - value: measurement data for that molecule.
+        """
+        msg = "Processing measurements for {}."
+        print(msg.format(self.__class__.__name__))
+
+        measurement_dict = self.get_measurement_dict()
+        processed_ids = set(measurement_dict.keys())
+        to_process_ids = processed_ids ^ self.identifiers
+
+        tarfile_object = self.open_measurement_tarfile()
+
+        try:
+
+            for count, identifier in enumerate(sorted(to_process_ids),
+                                               len(processed_ids) + 1):
+                # Skip empty entries
+                if not identifier.strip():
+                    continue
+
+                print('{}'.format(count).rjust(4) + '.' +
+                     ' {}'.format(identifier))
+                molecule = Molecule(identifier)
+
+                return_dict = self.process_measurement(molecule)
+                self.write_measurement_dict(identifier=identifier,
+                                            d=return_dict,
+                                            tarfile_object=tarfile_object)
+                # Update the measurement_dict
+                measurement_dict.update(return_dict)
+
+            # Iterate over the identifiers and process_measurement each
+        except Exception as e:
+            raise e
+        finally:
+            tarfile_object.close()
+        return measurement_dict
+
     def get_measurement_filename(self):
         "Return the filename for the measurement data file"
         base = self.data_path
-        class_name = self.__class__.__name__.lower()
-        base = os.path.join(base, class_name)
 
         # Create the directory, if needed
         if not os.path.isdir(base):
@@ -155,14 +163,16 @@ class Statistics(object):
         with tfile:
             # Extract the files
             for member in tfile.getmembers():
-                with tfile.extractfile(member) as f:
-                    try:
-                        identifier = member.name.strip('.json')
-                        string = f.read().decode()
-                        return_dict = json.loads(string)
-                        measurement_dict[identifier] = return_dict
-                    except:
-                        continue
+                f = tfile.extractfile(member)
+                try:
+                    identifier = member.name.strip('.json')
+                    string = f.read().decode()
+                    return_dict = json.loads(string)
+                    measurement_dict[identifier] = return_dict
+                except:
+                    continue
+                finally:
+                    f.close()
         return measurement_dict
 
     def write_measurement_dict(self, identifier, d, tarfile_object):
@@ -179,31 +189,44 @@ class Statistics(object):
                                fileobj=io.BytesIO(string.encode()))
         return tarfile_object
 
-    def process_data(self, data_dict):
-        pass
+    def process_data(self, measurement_dict):
+        """Process the data dict.
 
+        Parameters
+        ----------
+        measurement_dict: dict
+            The data dict produced by :meth:`process_measurement`.
+        """
+        msg = "Processing data for {}."
+        print(msg.format(self.__class__.__name__))
+
+
+import os
+
+import numpy as np
 
 import mollib.hbonds
 import mollib.hydrogens
+
 
 class RamachandranStatistics(Statistics):
     """Collect statistics on Ramachandran angles.
     """
 
-    data_path = settings.dataset_path
+    data_path = settings.ramachandran_dataset_path
 
-    def process(self, molecule):
+    def process_measurement(self, molecule):
         """Process the molecule and return the Ramachandran angle statistics.
 
         Returns
         -------
-        dict
-            A dict with the following keys/values:
+        measurement_dict: dict
+            The dict produced by :meth:`process_measurement`.
 
-            - key: (str) secondary structure classification
-            - value: (list of tuples) listing of Ramachandran angles (phi, psi)
+            - key: molecule identifier (str)
+            - value: list of tuples of phi-psi angles [(float, float),]
         """
-        molecule = super(RamachandranStatistics, self).process(molecule)
+        molecule = super(RamachandranStatistics, self).process_measurement(molecule)
 
         # Hydrogenate the molecule
         mollib.hydrogens.add_hydrogens(molecule)
@@ -245,6 +268,50 @@ class RamachandranStatistics(Statistics):
 
         return return_dict
 
+    def process_data(self, measurement_dict):
+        """Process the output datasets from the data_dict.
+
+        - Creates 2d histogram files for the energies, E(kT), as a function of
+          the Ramachandran angles. These are saved as '.npz' files with the
+          'phi', 'psi' and 'hist2d' arrays.
+        - Creates background contour plot files (pdf) for the Ramachandran
+          probability densities. Each contour represents one kT unit.
+
+        Parameters
+        ----------
+        measurement_dict: dict
+            The dict produced by :meth:`process_measurement`.
+
+            - key: molecule identifier (str)
+            - value: list of tuples of phi-psi angles [(float, float),]
+        """
+        super(RamachandranStatistics, self).process_data(measurement_dict)
+
+        path = self.data_path
+
+        # Convert the measurement_dict into a dict organized by secondary
+        # structure classification
+        class_dict = {}
+        for identifier, return_dict in measurement_dict.items():
+            for classification, phi_psi_list in return_dict.items():
+                l = class_dict.setdefault(classification, list())
+                phi_psi_list = [(i, j) for i, j in phi_psi_list if
+                                isinstance(i, float) and isinstance(j, float)]
+                l.extend(phi_psi_list)
+
+        # Save the 2d histograms numpy arrays
+        for classification, phi_psi in class_dict.items():
+            phi, psi = zip(*phi_psi)
+
+            phi = np.array(phi)
+            psi = np.array(psi)
+            hist2d, phi, psi = np.histogram2d(psi, phi, bins=36,
+                                range=np.array([(-180., 181.), (-180., 181.)]))
+
+            filename = os.path.join(path, classification + '.npz')
+            np.savez(filename, phi, psi, hist2d)
+
+
 class BuildData(Command):
     """Build the Statistics data"""
 
@@ -263,7 +330,5 @@ class BuildData(Command):
         for Subclass in Statistics.__subclasses__():
             subclass = Subclass()
 
-            msg = "Processing data for '{}'"
-            print(msg.format(subclass.__class__.__name__))
-
-            subclass.process_measurements()
+            result = subclass.process_measurements()
+            subclass.process_data(result)
