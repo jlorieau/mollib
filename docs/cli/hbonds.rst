@@ -1,3 +1,5 @@
+.. _hbonds_command:
+
 Hbonds Command
 ==============
 The ``hbonds`` command detects and reports hydrogen bonds in molecules.
@@ -14,8 +16,6 @@ The ``hbonds`` command has the following features:
     - Helical stretches require contiguous residues with helical backbone
       torsion angles. This prevents the misclassification of 310-helices and
       beta turns as well as isolated i+3, i+4 and i+5 hydrogen bonds.
-    - Beta-sheet hydrogen bonds are identified as either parallel or anti-
-      parallel, depending on the residue number of the next or prev residues.
 
     **Usage**
 
