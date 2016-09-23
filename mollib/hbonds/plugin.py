@@ -142,8 +142,21 @@ class Hbonds(Plugin):
                     acceptor_res = hbond.acceptor.atom2.residue
                 except AttributeError:
                     continue
-                classification[donor_res.number] = hbond.minor_classification
-                classification[acceptor_res.number] = hbond.minor_classification
+
+                # Assign both the donor and acceptor residues
+                for res in (donor_res, acceptor_res):
+                    # If not assigned, assigned the classification
+                    if res.number not in classification:
+                        minor_class = hbond.minor_classification
+                        classification[res.number] = minor_class
+
+                    # If assigned, only replace if the current classification
+                    # is for an 'isolated' hydrogen bond
+                    else:
+                        current_class = classification[res.number]
+                        if current_class == settings.minor_isolated:
+                            minor_class = hbond.minor_classification
+                            classification[res.number] = minor_class
 
             # Populate the table with the ramachandran angles and secondary
             # structure classifications.
