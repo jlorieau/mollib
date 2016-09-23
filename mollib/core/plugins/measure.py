@@ -38,7 +38,7 @@ class Measure(Plugin):
         "Process the 'measure' command parser."
         subparser = self.command_subparsers['measure']
 
-        group = subparser.add_mutually_exclusive_group(required=True)
+        group = subparser.add_mutually_exclusive_group(required=False)
 
         group.add_argument('-d', '--dist', nargs=2, required=False,
                            metavar='atom', type=str,
@@ -64,11 +64,6 @@ class Measure(Plugin):
                            help=("Measure all distances from atom selection to "
                                  "within the specified distance. "
                                  "ex: 31:33-N 5"))
-
-        group.add_argument('--rama',
-                           action='store_true',
-                           help=("Report the Ramachandran angles. Filters and "
-                                 "options are ignored."))
 
         # Add options for the output
         options = subparser.add_argument_group(title='options')
@@ -112,7 +107,7 @@ class Measure(Plugin):
     def process(self, molecule, args):
         "Measure geometries in molecules."
 
-        if args.dist:
+        if getattr(args, 'dist', False):
             table = MDTable('Num', 'Atom 1', 'Atom 2', 'Dist. (A)')
             table.title = 'Distances for {}'.format(molecule.name)
 
@@ -147,7 +142,7 @@ class Measure(Plugin):
             # Print the table
             print(table.content())
 
-        if args.angle:
+        if getattr(args, 'angle', False):
             table = MDTable('Num', 'Atom 1', 'Atom 2', 'Atom 3', 'Angle (deg)')
             table.title = 'Angles for {}'.format(molecule.name)
 
@@ -184,7 +179,7 @@ class Measure(Plugin):
             # Print the table
             print(table.content())
 
-        if args.dihedral:
+        if getattr(args, 'dihedral', False):
             table = MDTable('Num', 'Atom 1', 'Atom 2', 'Atom 3', 'Atom 4',
                             'Dihedral (deg)')
             table.title = 'Dihedrals for {}'.format(molecule.name)
@@ -222,22 +217,3 @@ class Measure(Plugin):
 
             # Print the table
             print(table.content())
-
-        if args.rama:
-            # Setup the table
-            table = MDTable('Residue', 'Phi (deg)', 'Psi (deg)')
-            table.title = ('Ramachandran angles '
-                           'for {}'.format(molecule.name))
-
-            for residue in molecule.residues:
-                # Skip heteroatom chains
-                if '*' in residue.chain.id:
-                    continue
-
-                phi, psi = residue.ramachandran_angles
-
-                table.add_row('{}.{}'.format(residue.chain.id, residue),
-                              "{:>6.1f}".format(phi or 0.),
-                              "{:>6.1f}".format(psi or 0.))
-            print(table.content())
-
