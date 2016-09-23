@@ -103,8 +103,7 @@ def main():
 
 
     # Find the relevant plugins to execute
-    active_plugins = [plugin for plugin in Plugin.plugin_instances()
-                      if plugin.selected(args)]
+    active_plugins = [plugin for plugin in Plugin.plugin_instances()]
 
     # Pre-process the molecules
     for molecule in molecules:
