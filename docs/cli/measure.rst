@@ -151,6 +151,17 @@ Arguments
         Measure Ramachandran angles (in degrees) for a protein. Filters and
         options are ignored. Heteroatom chains are skipped.
 
+        The ``--rama`` command classifies Ramachandran angles based on
+        backbone-backbone amide hydrogen bonds. Residues without a
+        classification are either randomly coil, or they correspond to
+        secondary structure units at the surface of the protein, without an
+        intramolecular hydrogen bond.
+
+        The *isolated* classification is given for residues that have backbone
+        hydrogen bonds, but these cannot be classified into conventional
+        secondary structure units. See the :ref:`hbonds_command` for further
+        details.
+
         **Examples**
 
         Measure the Ramachandran :math:`\phi` and :math:`\psi` angles for the
