@@ -3,6 +3,7 @@ The plugin for the hbond submodule.
 """
 
 from mollib.plugins import Plugin
+from mollib.hydrogens import add_hydrogens
 from mollib.hbonds import find_hbond_partners, settings
 from mollib.utils import MDTable
 
@@ -117,20 +118,45 @@ class Hbonds(Plugin):
                                                    hbond.minor_classification))
                 print(table.content())
 
+        # Process the Ramachandran angles. This function detects secondary
+        # structure units from hbonds.
         if getattr(args, 'rama', False):
             # Setup the table
-            table = MDTable('Residue', 'Phi (deg)', 'Psi (deg)')
+            table = MDTable('Residue', 'Phi (deg)', 'Psi (deg)',
+                            'Classification')
             table.title = ('Ramachandran angles '
                            'for {}'.format(molecule.name))
 
+            # Detect hydrogen bonds
+            add_hydrogens(molecule)
+            hbonds = find_hbond_partners(molecule)
+
+            # Assign the residue secondary structure based on the hbond
+            # classifications
+            classification = {}  # {residue.number: classification}
+            for hbond in hbonds:
+                if hbond.major_classification != settings.major_bb_bb_amide:
+                    continue
+                try:
+                    donor_res = hbond.donor.atom2.residue
+                    acceptor_res = hbond.acceptor.atom2.residue
+                except AttributeError:
+                    continue
+                classification[donor_res.number] = hbond.minor_classification
+                classification[acceptor_res.number] = hbond.minor_classification
+
+            # Populate the table with the ramachandran angles and secondary
+            # structure classifications.
             for residue in molecule.residues:
                 # Skip heteroatom chains
                 if '*' in residue.chain.id:
                     continue
 
                 phi, psi = residue.ramachandran_angles
+                res_class = classification.get(residue.number, '')
 
                 table.add_row('{}.{}'.format(residue.chain.id, residue),
                               "{:>6.1f}".format(phi or 0.),
-                              "{:>6.1f}".format(psi or 0.))
+                              "{:>6.1f}".format(psi or 0.),
+                              res_class)
             print(table.content())
