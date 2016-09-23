@@ -28,23 +28,30 @@ class Hbonds(Plugin):
                        action='store_true',
                        help='Sort hydrogen bonds by type')
 
+        p = self.command_subparsers['measure']
+
+        p.add_argument('--rama',
+                       action='store_true',
+                       help=("Report the Ramachandran angles. Filters and "
+                             "options are ignored."))
+
     def process(self, molecule, args):
         """Process the molecule by finding and reporting its hydrogen bonds.
         """
-        if args.aliphatic:
+        if getattr(args, 'aliphatic', False):
             settings.donor2_elements += "|C|13C"
             settings.hbond_distance_cutoff['d1a1']= (1.8, 3.0)
 
         hbonds = find_hbond_partners(molecule)
 
         # Sort the hbonds by the given criteria
-        if args.sort_type:
+        if getattr(args, 'sort_type', False):
             hbonds = sorted(hbonds,
                             key=lambda hb: (hb.major_classification,
                                             hb.minor_classification,
                                             hb.donor.atom2.residue.number))
 
-        if args.detailed:
+        if getattr(args, 'detailed', False):
             # Setup the table
             table = MDTable('Num', 'Donor', 'Acceptor',
                             'Parameter', 'Value')
@@ -105,4 +112,22 @@ class Hbonds(Plugin):
                 table.add_row(count, hbond.donor, hbond.acceptor,
                               '{} ({})'.format(hbond.major_classification,
                                                hbond.minor_classification))
+            print(table.content())
+
+        if getattr(args, 'rama', True):
+            # Setup the table
+            table = MDTable('Residue', 'Phi (deg)', 'Psi (deg)')
+            table.title = ('Ramachandran angles '
+                           'for {}'.format(molecule.name))
+
+            for residue in molecule.residues:
+                # Skip heteroatom chains
+                if '*' in residue.chain.id:
+                    continue
+
+                phi, psi = residue.ramachandran_angles
+
+                table.add_row('{}.{}'.format(residue.chain.id, residue),
+                              "{:>6.1f}".format(phi or 0.),
+                              "{:>6.1f}".format(psi or 0.))
             print(table.content())

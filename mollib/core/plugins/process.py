@@ -56,7 +56,7 @@ class Process(Plugin):
                   conducted elsewhere. Also, the file is written as the last
                   operation.
         """
-        if args.list:
+        if getattr(args, 'list', False):
             print(molecule)
             chain_msg = '\tChain {:<3}: {:>4} residues, {:>4} atoms.'
             for chain in molecule.chains:
@@ -69,7 +69,7 @@ class Process(Plugin):
         - Writes the PDB file, if specified
         """
         # Do nothing if no output filename was given
-        if args.out is None:
+        if getattr(args, 'out', None) is None:
             return None
 
         # Get the corresponding filename

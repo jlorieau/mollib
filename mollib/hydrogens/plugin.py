@@ -27,7 +27,7 @@ class Hydrogenate(Plugin):
     def preprocess(self, molecule, args):
         """Preprocess the molecule by adding hydrogens to it.
         """
-        if 'hydrogenate' in args:
+        if getattr(args, 'hydrogenate', False):
             add_hydrogens(molecule, strip=True)
 
     def selected(self, args):
