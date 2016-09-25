@@ -79,10 +79,3 @@ Preprocessors Arguments
                   the pro-R hydrogen 'H2' and the pro-S hydrogen 'H3'. Some
                   exceptions in proteins exist. By default, the JBNMR 12, 1-23
                   (1998) convention is followed.
-
-Configuration File Settings
----------------------------
-The following are the configuration file settings.
-
-    .. literalinclude:: /../mollib/hydrogens/settings.py
-        :caption: [hydrogens.settings]

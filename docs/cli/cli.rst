@@ -57,10 +57,30 @@ mollib plugins are installed.
 Settings
 ********
 
-The following are the general configuration file settings.
+    The following are the general configuration file settings.
 
     .. literalinclude:: /../mollib/core/settings.py
         :caption: [settings]
 
+    The ``utils.settings`` impact how the data are presented.
+
     .. literalinclude:: /../mollib/utils/settings.py
         :caption: [utils.settings]
+
+    The ``hydrogens.settings`` impact how hydrogen atoms are added to a
+    molecule. These impact the ``--hydrogenate``.
+
+    .. literalinclude:: /../mollib/hydrogens/settings.py
+        :caption: [hydrogens.settings]
+
+    The ``hbonds.settings`` impact how hydrogen bonds are detected. These impact
+    the ``hbonds`` command and the ``--rama`` option in the ``measure`` command.
+
+    .. literalinclude:: /../mollib/hbonds/settings.py
+        :caption: [hbonds.settings]
+
+    The following options only impact the creation of mollib datasets through
+    the ``build_data`` setup command.
+
+    .. literalinclude:: /../mollib/statistics/settings.py
+        :caption: [statistics.settings]

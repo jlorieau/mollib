@@ -46,10 +46,3 @@ Arguments
     ``--sort-type``
         Sort the hydrogen bonds by classification type, like beta-sheet or
         alpha-helix.
-
-Configuration File Settings
----------------------------
-The following are the configuration file settings.
-
-    .. literalinclude:: /../mollib/hbonds/settings.py
-        :caption: [hbonds.settings]
