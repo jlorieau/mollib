@@ -1,10 +1,14 @@
+# -*- coding: utf-8 -*-
 """
 The plugin for the hbond submodule.
 """
+from math import exp
 
+import numpy as np
+
+import mollib.core.settings
 from mollib.plugins import Plugin
-from mollib.hydrogens import add_hydrogens
-from mollib.hbonds import find_hbond_partners, settings
+from mollib.hbonds import find_hbond_partners, classify_residues, settings
 from mollib.utils import MDTable
 
 class Hbonds(Plugin):
@@ -123,53 +127,53 @@ class Hbonds(Plugin):
         if getattr(args, 'rama', False):
             # Setup the table
             table = MDTable('Residue', 'Phi (deg)', 'Psi (deg)',
-                            'Classification')
+                            'Classification', 'E (kT)/Prob.')
             table.title = ('Ramachandran angles '
                            'for {}'.format(molecule.name))
 
-            # Detect hydrogen bonds
-            add_hydrogens(molecule)
-            hbonds = find_hbond_partners(molecule)
-
-            # Assign the residue secondary structure based on the hbond
-            # classifications
-            classification = {}  # {residue.number: classification}
-            for hbond in hbonds:
-                if hbond.major_classification != settings.major_bb_bb_amide:
-                    continue
-                try:
-                    donor_res = hbond.donor.atom2.residue
-                    acceptor_res = hbond.acceptor.atom2.residue
-                except AttributeError:
-                    continue
-
-                # Assign both the donor and acceptor residues
-                for res in (donor_res, acceptor_res):
-                    # If not assigned, assigned the classification
-                    if res.number not in classification:
-                        minor_class = hbond.minor_classification
-                        classification[res.number] = minor_class
-
-                    # If assigned, only replace if the current classification
-                    # is for an 'isolated' hydrogen bond
-                    else:
-                        current_class = classification[res.number]
-                        if current_class == settings.minor_isolated:
-                            minor_class = hbond.minor_classification
-                            classification[res.number] = minor_class
+            # Classify the residues based on their backbone amide hydrogen
+            # bonds
+            classify_residues(molecule)
 
             # Populate the table with the ramachandran angles and secondary
             # structure classifications.
+            energies = []
             for residue in molecule.residues:
                 # Skip heteroatom chains
                 if '*' in residue.chain.id:
                     continue
 
                 phi, psi = residue.ramachandran_angles
-                res_class = classification.get(residue.number, '')
+                classification = getattr(residue, 'hbond_classification', '')
+                energy = getattr(residue, 'energy_ramachandran', '-')
+
+                # If the energy has a value (float) and it is above the energy
+                # cutoff, add its value to the table. Otherwise, just print
+                # a '-' character, if it is within acceptable ranges.
+                if (isinstance(energy, float) and
+                    energy > mollib.core.settings.ramachandran_energy_cutoff):
+                    energies.append(energy)
+
+                    # Convert to string.
+                    # According to Morris. Proteins 12:345 (1992).
+                    # Core: 81.9% population. E(kT) = 1.71
+                    # Allowed: 14.8%. E(kT) = -3.41
+                    # Generous: 2.0%. E(kT) = -4.34
+                    E_prob = "{:>2.1f}/{:<3.1f}%"
+                    E_prob = E_prob.format(energy, exp(-1. * energy) * 100.)
+                else:
+                    E_prob = '✓'.center(10)
 
                 table.add_row('{}.{}'.format(residue.chain.id, residue),
                               "{:>6.1f}".format(phi or 0.),
                               "{:>6.1f}".format(psi or 0.),
-                              res_class)
+                              classification,
+                              E_prob)
+            # energy_mean = np.mean(energies)
+            # energy_std = np.std(energies)
+            # table.add_row('', '', '', '',
+            #               "{:>2.1f} +/- {:<2.1f}".format(energy_mean,
+            #                                              energy_std))
+
+
             print(table.content())
