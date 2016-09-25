@@ -28,3 +28,6 @@ model_molecule_identifiers = ('mollib/data/high_res.txt',
 
 #: Path for the Ramachandran statistics datasets
 ramachandran_dataset_path = 'mollib/data/ramachandranstatistics/'
+
+#: The cutoff Energy (in kT) to report outliers in the Ramachandran angles
+energy_cutoff_ramachandran = 3.4

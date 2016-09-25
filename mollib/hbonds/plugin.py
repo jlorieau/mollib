@@ -151,7 +151,7 @@ class Hbonds(Plugin):
                 # cutoff, add its value to the table. Otherwise, just print
                 # a '-' character, if it is within acceptable ranges.
                 if (isinstance(energy, float) and
-                    energy > mollib.core.settings.ramachandran_energy_cutoff):
+                    energy > mollib.core.settings.energy_cutoff_ramachandran):
                     energies.append(energy)
 
                     # Convert to string.
