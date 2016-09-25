@@ -1,5 +1,5 @@
 """
-Classify hydrogen bonds
+Classify hydrogen bonds and residues
 """
 from . import settings
 
@@ -269,7 +269,9 @@ class HbondClassifier(object):
         hbond.minor_classification = self.minor_isolated
         return True
 
+
 classifier = HbondClassifier()
+
 
 def classify(hbond):
     """Classify the hydrogen bond.
@@ -286,3 +288,4 @@ def classify(hbond):
     return_value &= classifier.classify_minor(hbond)
 
     return return_value
+
