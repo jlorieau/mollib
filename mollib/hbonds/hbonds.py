@@ -25,7 +25,7 @@ from math import pi, acos, atan2
 import numpy as np
 
 from . import settings
-from .classify import classify
+from .classify_hbonds import classify
 from mollib.core import (measure_distance, calc_vector, vector_length,
                          within_distance)
 
@@ -364,6 +364,8 @@ def find_hbond_partners(molecule, donor1_elements=None, donor2_elements=None,
     >>> print(hbonds[0].short_repr())
     Hbond don.(A.G1-H2--N) - acc.(A.G20-O--C)
     """
+    #: TODO: Implement a cache checking and force option like 'add_hydrogens'
+
     # Load default parameters
     dist_cutoff = (dist_cutoff if dist_cutoff is not None else
                    settings.hbond_distance_cutoff)
