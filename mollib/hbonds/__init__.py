@@ -1,4 +1,5 @@
 from .hbonds import find_hbond_partners, find_dipoles
+from .classify_secondary_structure import classify_residues
 from . import settings
 
 # Load plugins
