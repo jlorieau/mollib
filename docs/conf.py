@@ -377,7 +377,7 @@ def process_cmd(string):
            "> cli/output/cli_{args_name}.html\n")
 
     cmd += ("cd ..&&"
-            "python {progname} {args}"
+            "FORCE_COLOR=TRUE python {progname} {args}"
             ">> docs/cli/output/cli_{args_name}.txt\n")
 
     cmd += ("pygmentize -l shell-session -f html docs/cli/output/cli_{args_name}.txt"
@@ -386,7 +386,14 @@ def process_cmd(string):
     # Replace ANSI colors
     cmd += ("cat -e docs/cli/output/cli_{args_name}.html"
             "|sed 's/\$$//g'"  # Remove $ at the end of lines
+            "|sed 's/\^\[\[1m/<font style=\"font-weight:bold;\">/g'"
+            "|sed 's/\^\[\[22m/<\/font>/g'"
+            "|sed 's/\^\[\[91m/<font color=\"red\">/g'"
             "|sed 's/\^\[\[92m/<font color=\"green\">/g'"
+            "|sed 's/\^\[\[93m/<font color=\"#abb51f\">/g'"
+            "|sed 's/\^\[\[94m/<font color=\"blue\">/g'"
+            "|sed 's/\^\[\[95m/<font color=\"magenta\">/g'"
+            "|sed 's/\^\[\[96m/<font color=\"cyan\">/g'"
             "|sed 's/\^\[\[0m/<\/font>/g'"
             ">docs/cli/output/cli_{args_name}.tmp\n")
 
