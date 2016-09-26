@@ -26,8 +26,6 @@ def list_plugins(plugin_manager):
         msg = '\t{:<15} '.format(plugin.name)
         enabled = (FormattedStr('Enabled', 'green') if plugin.enabled else
                    FormattedStr('Not Enabled', 'red'))
-        #enabled = ('(\033[92mEnabled\033[0m)' if plugin.enabled
-        #           else '(\033[91mNot Enabled\033[0m)')
         print(msg + enabled)
 
 
@@ -36,7 +34,7 @@ def list_settings():
     print('Installed settings sections:')
     for section in list_global_settings():
         msg = '\t[{}]'.format(section)
-        print(msg)
+        print(FormattedStr(msg, 'magenta'))
 
 
 def main():
