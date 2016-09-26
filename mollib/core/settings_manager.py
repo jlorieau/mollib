@@ -1,21 +1,12 @@
-# Multiple implementations are possible here. I decided to put the settings
-# in the module itself because the settings are then documented well by Sphinx.
-# An alternative implementation that returns a singleton dict would not
-# document well. Returning a settings object would also be harder to access
-# through the api.
-#
-# In the implementation selected, the integrity of the module is kept by the
-# import_settings function, which makes sure that the config setting
-# matches that within the module. Also, functions cannot be replaced.
-
 import ast
+import os
 import logging
 from collections import OrderedDict
 
 from . import settings
 
 # Create the _settings_modules dict and register the core settings module
-_setting_modules = OrderedDict({'settings': settings})
+_settings_modules = OrderedDict({'settings': settings})
 
 
 def register_settings(module):
@@ -23,13 +14,13 @@ def register_settings(module):
 
     The name of the module is inferred from the module.__name__ field.
     """
-    global _setting_modules
+    global _settings_modules
     module_name = module.__name__.strip('mollib.')
 
-    if module_name in _setting_modules:
+    if module_name in _settings_modules:
         msg = "The settings for '{}' are already registered."
         logging.error(msg.format(module_name))
-    _setting_modules[module_name] = module
+    _settings_modules[module_name] = module
 
 
 def list_global_settings():
@@ -41,8 +32,8 @@ def list_global_settings():
         A list of the settings strings currently installed. The names returned
         are those that can be directly edited in configuration file sections.
     """
-    global _setting_modules
-    return _setting_modules.keys()
+    global _settings_modules
+    return _settings_modules.keys()
 
 
 def import_config(config):
@@ -53,13 +44,10 @@ def import_config(config):
     config: ``configparser.ConfigParser``
         The ConfigParser object with all of the custom settings.
     """
-    # # Import this module's settings
-    # import_settings(config, 'settings', locals())
-
     # Import other module settings in the core
-    global _setting_modules
+    global _settings_modules
 
-    for setting_name, setting_module in _setting_modules.items():
+    for setting_name, setting_module in _settings_modules.items():
         import_settings(config, setting_name, setting_module)
 
 
