@@ -1,6 +1,10 @@
 """
 Functions to collect statistics on molecules.
 """
+# FIXME: The paths from the settings module are copied and should be used
+#        directly. The BuildData also doesn't read the config files. Perhaps a
+#        CLI option?
+
 import csv
 import logging
 import json
@@ -12,7 +16,6 @@ from setuptools import Command
 
 from mollib import Molecule
 from mollib.core import settings
-
 
 class Statistics(object):
     """Class to collect statistics on molecules.
@@ -218,6 +221,8 @@ class BuildData(Command):
 
     def run(self):
         "Process the measurements of all subclasses"
+
+        # Run all of the Statistics submodules
         for Subclass in Statistics.__subclasses__():
             subclass = Subclass()
 
