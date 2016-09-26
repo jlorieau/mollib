@@ -34,11 +34,10 @@ def list_settings():
     print('Installed settings sections:')
     for section in list_global_settings():
         msg = '\t[{}]'.format(section)
-        print(FormattedStr(msg, 'magenta'))
+        print(FormattedStr(msg, 'blue'))
 
 
 def main():
-
     # Load the argument parser and subparsers
     parser = argparse.ArgumentParser(prog='mollib',
                                      description='A molecular processor')
