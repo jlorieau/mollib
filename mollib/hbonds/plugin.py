@@ -150,7 +150,7 @@ class Hbonds(Plugin):
                 # a '-' character, if it is within acceptable ranges.
                 if isinstance(energy, float):
                     if energy < mollib.core.settings.energy_cutoff_good:
-                        E_prob = '✓'.center(9)
+                        E_prob = 'ok'.center(7)
                         E_prob = FormattedStr(E_prob, 'green')
                     elif energy < mollib.core.settings.energy_cutoff_warning:
                         prob = exp(-1. * energy) * 100.
