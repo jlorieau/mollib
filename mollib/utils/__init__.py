@@ -1,4 +1,5 @@
 from .markdown import MDTable
+from .formatted_str import FormattedStr
 from . import settings
 
 # Register the settings

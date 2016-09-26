@@ -1,6 +1,6 @@
 import unittest
 
-from mollib.utils import MDTable
+from mollib.utils import MDTable, FormattedStr
 
 
 class TestMarkdown(unittest.TestCase):
@@ -9,6 +9,9 @@ class TestMarkdown(unittest.TestCase):
 
     def test_MDTable(self):
         "Tests the Markdown table rendering."
+
+        # Disable string formatting to more easily match strings
+        FormattedStr.color_term = False
 
         table = MDTable('one', 'two', 'three', 'four')
 

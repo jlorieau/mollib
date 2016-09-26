@@ -2,10 +2,11 @@
 Utilities for rendering information in Markdown
 """
 
-import textwrap
+#import textwrap
 from math import ceil
 
 from . import settings
+from .formatted_str import FormattedStr, wrap
 
 
 def print_lines(text_items, widths):
@@ -33,7 +34,7 @@ def print_lines(text_items, widths):
     assert(len(text_items) == len(widths))
 
     # wrap the text_items
-    text_items = [textwrap.wrap(t, w) for t,w in zip(text_items, widths)]
+    text_items = [wrap(t, w) for t,w in zip(text_items, widths)]
     no_lines = [len(t) for t in text_items]
     max_no_lines = max(no_lines)
     text = ''
@@ -86,7 +87,7 @@ class MDTable(object):
         *args: iterable
            A iterable (list) of strings for the column header titles
         """
-        self.column_titles = args
+        self.column_titles = [FormattedStr(i, 'bold') for i in args]
         self.rows = []
         self.title = None
 
@@ -101,7 +102,8 @@ class MDTable(object):
         assert(len(args) == len(self.column_titles))
 
         # Add the rows and convert them to strings
-        self.rows.append([str(i) for i in args])
+        self.rows.append([str(i) if not isinstance(i, str) else i
+                         for i in args])
 
     def add_blank_row(self):
         """Add a blank row to the table"""
@@ -183,7 +185,7 @@ class MDTable(object):
         table = ''
         # Add title, if present
         if isinstance(self.title, str):
-            table += ''.join(('Table: ', self.title, '\n'))
+            table += FormattedStr('Table: ', 'bold') + self.title + '\n'
 
         # Add top bar. Only needed for multiline tables
         if self.multiline:

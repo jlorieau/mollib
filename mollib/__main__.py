@@ -9,6 +9,7 @@ import sys
 import os
 
 import mollib
+from mollib.utils import FormattedStr
 from mollib.plugins import PluginManager
 from mollib.core import list_global_settings, import_config
 
@@ -23,8 +24,10 @@ def list_plugins(plugin_manager):
     print('Installed plugins:')
     for plugin in plugin_manager.plugins():
         msg = '\t{:<15} '.format(plugin.name)
-        enabled = ('(\033[92mEnabled\033[0m)' if plugin.enabled
-                   else '(\033[91mNot Enabled\033[0m)')
+        enabled = (FormattedStr('Enabled', 'green') if plugin.enabled else
+                   FormattedStr('Not Enabled', 'red'))
+        #enabled = ('(\033[92mEnabled\033[0m)' if plugin.enabled
+        #           else '(\033[91mNot Enabled\033[0m)')
         print(msg + enabled)
 
 
