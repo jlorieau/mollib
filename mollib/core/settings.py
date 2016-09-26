@@ -29,5 +29,7 @@ model_molecule_identifiers = ('mollib/data/high_res.txt',
 #: Path for the Ramachandran statistics datasets
 ramachandran_dataset_path = 'mollib/data/ramachandranstatistics/'
 
-#: The cutoff Energy (in kT) to report outliers in the Ramachandran angles
-energy_cutoff_ramachandran = 3.4
+#: The cutoff Energy (in kT) to report good, warning and bad energies.
+energy_cutoff_good    = 3.4  # Within 96.6% of observed values
+energy_cutoff_warning = 5.4  # Within 99.5% of observed values
+energy_cutoff_bad     = 20.0 # Only observed < 0.5% of the time.
