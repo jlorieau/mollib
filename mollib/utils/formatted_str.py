@@ -78,7 +78,9 @@ class FormattedStr(str):
         ----------
         args: tuple of str
             The first item is the string to be formatted. The subsequent items
-            are formatters (str) on how to format this string.
+            are formatters (str) on how to format this string. Available
+            formatting options include: 'red', 'green', 'yellow', 'blue',
+            'magenta', 'cyan', 'bold', 'underline'.
         """
         if cls.color_term:
             string = cls.color_term_formatter(string, *args)
@@ -121,7 +123,7 @@ class FormattedStr(str):
             elif formatter == 'green':
                 string = ''.join(('\033[92m', string, '\033[0m'))
             elif formatter == 'yellow':
-                string = ''.join(('\033[93m', string, '\033[0m'))
+                string = ''.join(('\033[33m', string, '\033[0m'))
             elif formatter == 'blue':
                 string = ''.join(('\033[94m', string, '\033[0m'))
             elif formatter == 'magenta':
