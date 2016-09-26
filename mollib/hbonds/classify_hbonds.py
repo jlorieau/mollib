@@ -1,7 +1,7 @@
 """
 Classify hydrogen bonds and residues
 """
-from . import settings
+from . import settings as s
 
 
 def within_range(value, value_range, wrap=None):
@@ -50,33 +50,6 @@ class HbondClassifier(object):
               construction.
     """
 
-    major_bb_bb_amide = settings.major_bb_bb_amide
-    major_bb_sc_amide = settings.major_bb_sc_amide
-    major_sc_bb_amide = settings.major_sc_bb_amide
-    major_sc_sc_amide = settings.major_sc_sc_amide
-
-    major_bb_bb_aliphatic = settings.major_bb_bb_aliphatic
-    major_bb_sc_aliphatic = settings.major_bb_sc_aliphatic
-    major_sc_bb_aliphatic = settings.major_sc_bb_aliphatic
-    major_sc_sc_aliphatic = settings.major_sc_sc_aliphatic
-
-    major_bb_sc_hydroxyl = settings.major_bb_sc_hydroxyl
-    major_sc_bb_hydroxyl = settings.major_sc_bb_hydroxyl
-    major_sc_sc_hydroxyl = settings.major_sc_sc_hydroxyl
-
-    minor_beta_turnI = settings.minor_beta_turnI
-    minor_beta_turnII = settings.minor_beta_turnII
-    minor_beta_turnIp = settings.minor_beta_turnIp
-    minor_beta_turnIIp = settings.minor_beta_turnIIp
-
-    minor_beta = settings.minor_beta
-    minor_beta_anti = settings.minor_beta_anti
-    minor_beta_par = settings.minor_beta_par
-
-    minor_310 = settings.minor_310
-    minor_alpha = settings.minor_alpha
-    minor_pi = settings.minor_pi
-    minor_isolated = settings.minor_isolated
 
     _instance = None
 
@@ -130,8 +103,8 @@ class HbondClassifier(object):
 
         classification += donor_type
 
-        if hasattr(self, classification):
-            hbond.major_classification = getattr(self, classification)
+        if hasattr(s, classification):
+            hbond.major_classification = getattr(s, classification)
             return True
         else:
             return False
@@ -159,8 +132,8 @@ class HbondClassifier(object):
 
         # All hydrogen bonds that are not Backbone-backbone amide are just
         # isolated hydrogen bonds.
-        if hbond.major_classification != self.major_bb_bb_amide:
-            hbond.minor_classification = self.minor_isolated
+        if hbond.major_classification != s.major_bb_bb_amide:
+            hbond.minor_classification = s.minor_isolated
             return True
 
         # Calculate the difference in residue number for the H-bond donor
@@ -188,28 +161,28 @@ class HbondClassifier(object):
             psi = [a[1] for a in phi_psi]
 
             # Check the 310-helix
-            if (all(within_range(a, settings.helix_phi) for a in phi) and
-                all(within_range(a, settings.helix_psi) for a in psi)):
-                hbond.minor_classification = self.minor_310
+            if (all(within_range(a, s.helix_phi) for a in phi) and
+                all(within_range(a, s.helix_psi) for a in psi)):
+                hbond.minor_classification = s.minor_310
                 return True
 
             # Check the Beta-turns. This part uses unions of sets to find the
             # common beta turn type for all of the dihedral angles.
-            turn_type = ({k for k,v in settings.beta_turn_i1_phi.items()
+            turn_type = ({k for k,v in s.beta_turn_i1_phi.items()
                           if within_range(phi[1], v)} &
-                         {k for k,v in settings.beta_turn_i1_psi.items()
+                         {k for k,v in s.beta_turn_i1_psi.items()
                           if within_range(psi[1], v)} &
-                         {k for k, v in settings.beta_turn_i2_phi.items()
+                         {k for k, v in s.beta_turn_i2_phi.items()
                           if within_range(phi[2], v)} &
-                         {k for k, v in settings.beta_turn_i2_psi.items()
+                         {k for k, v in s.beta_turn_i2_psi.items()
                           if within_range(psi[2], v)})
 
             if len(turn_type) == 1:
                 turn_type = turn_type.pop()
                 classification = 'minor_beta_' + turn_type
 
-                if hasattr(self, classification):
-                    hbond.minor_classification = getattr(self, classification)
+                if hasattr(s, classification):
+                    hbond.minor_classification = getattr(s, classification)
                     return True
 
         # Delta=4. These could be alpha-helix
@@ -224,9 +197,9 @@ class HbondClassifier(object):
             psi = [a[1] for a in phi_psi]
 
             # Check the 310-helix
-            if (all(within_range(a, settings.helix_phi) for a in phi) and
-                    all(within_range(a, settings.helix_psi) for a in psi)):
-                hbond.minor_classification = self.minor_alpha
+            if (all(within_range(a, s.helix_phi) for a in phi) and
+                    all(within_range(a, s.helix_psi) for a in psi)):
+                hbond.minor_classification = s.minor_alpha
                 return True
 
         # Delta=5. These could be pi-helix
@@ -242,9 +215,9 @@ class HbondClassifier(object):
             psi = [a[1] for a in phi_psi]
 
             # Check the 310-helix
-            if (all(within_range(a, settings.helix_phi) for a in phi) and
-                    all(within_range(a, settings.helix_psi) for a in psi)):
-                hbond.minor_classification = self.minor_pi
+            if (all(within_range(a, s.helix_phi) for a in phi) and
+                    all(within_range(a, s.helix_psi) for a in psi)):
+                hbond.minor_classification = s.minor_pi
                 return True
 
         # At this point, helices and beta turns have been filtered out.
@@ -256,36 +229,29 @@ class HbondClassifier(object):
 
         # See of backbone dihedrals are consistent with a beta sheet
         if (abs(delta) >= 4 and   ## beta sheet minimum iter-residue spacing
-            all(within_range(a, settings.beta_phi, wrap=360.)
+            all(within_range(a, s.beta_phi, wrap=360.)
                 for a in (d_phi, a_phi)) and
-            all(within_range(a, settings.beta_psi, wrap=360.)
+            all(within_range(a, s.beta_psi, wrap=360.)
                 for a in (d_psi, a_psi))):
 
             # This is a beta sheet. The check for parallel or anti-parallel
             # is done elsewhere.
-            hbond.minor_classification = self.minor_beta
+            hbond.minor_classification = s.minor_beta
             return True
 
-        hbond.minor_classification = self.minor_isolated
+        hbond.minor_classification = s.minor_isolated
         return True
 
 
 classifier = HbondClassifier()
 
 
-def classify(hbond):
-    """Classify the hydrogen bond.
-
-    Returns
-    -------
-    bool
-        True if the classification was succesful, otherwise False.
+def classify_hbonds(hbonds):
+    """Classify hydrogen bonds.
     """
     global classifier
 
-    return_value = False
-    return_value &= classifier.classify_major(hbond)
-    return_value &= classifier.classify_minor(hbond)
-
-    return return_value
+    for hbond in hbonds:
+        classifier.classify_major(hbond)
+        classifier.classify_minor(hbond)
 
