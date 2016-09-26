@@ -20,14 +20,14 @@ pKs = {'ASP': {'OD1-OD2': (-1.0, 3.5)},
      }
 
 #: Path for the datasets
-dataset_path = 'mollib/data/'
+dataset_path = 'data/'
 
 #: Path for model input molecule identifiers
-model_molecule_identifiers = ('mollib/data/high_res.txt',
+model_molecule_identifiers = ('data/high_res.txt',
                               )
 
 #: Path for the Ramachandran statistics datasets
-ramachandran_dataset_path = 'mollib/data/ramachandranstatistics/'
+ramachandran_dataset_path = 'data/ramachandranstatistics/'
 
 #: The cutoff Energy (in kT) to report good, warning and bad energies.
 energy_cutoff_good    = 3.4  # Within 96.6% of observed values

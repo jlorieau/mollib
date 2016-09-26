@@ -90,7 +90,7 @@ class RamachandranStatistics(Statistics):
         """
         super(RamachandranStatistics, self).process_data(measurement_dict)
 
-        path = self.data_path
+        path = os.path.join(self.root_path, '..', self.data_path)
 
         # Convert the measurement_dict into a dict organized by secondary
         # structure classification

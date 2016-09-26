@@ -69,8 +69,14 @@ def import_settings(config, section, settings_dict):
     .. note:: The config parser only stores case-insensitive parameter names.
               Consequently, setting parameters should not have the same
               lowercase names.
+
+    .. note:: Any settings with the string 'path' in it will have the root
+              path appended to it.
     """
     # TODO: add string type validation
+
+    # Get the root path for the application
+    root_path = os.path.abspath(os.path.dirname(__file__))
 
     err_msg = ("Parameter '{param}' in section '{sect}' could "
                "not be read.\n Expected a '{type_expected}'.")
@@ -136,3 +142,7 @@ def import_settings(config, section, settings_dict):
             # Debug message
             msg = "Config section '{}' imported '{}'"
             logging.debug(msg.format(section, parameter))
+
+        # Any parameter with 'path' in it shall of the root path added to it
+        if 'path' in parameter:
+            settings_dict[parameter] = os.path.join(root_path, '..', value)

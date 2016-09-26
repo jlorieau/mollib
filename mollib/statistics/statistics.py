@@ -7,7 +7,6 @@ import json
 import os
 import tarfile
 import io
-import sys
 
 from setuptools import Command
 
@@ -32,10 +31,13 @@ class Statistics(object):
     """
 
     data_path = settings.dataset_path
+    root_path = os.path.abspath(os.path.dirname(__file__))
 
     def __init__(self, *filenames):
-        filenames = set(*filenames)
+        filenames = set(filenames)
         filenames.add(*settings.model_molecule_identifiers)
+        filenames = set([os.path.join(self.root_path, '..', f)
+                         for f in filenames])
 
         self.molecule_files = filenames
         self.functions = []
@@ -133,7 +135,7 @@ class Statistics(object):
 
     def get_measurement_filename(self):
         "Return the filename for the measurement data file"
-        base = self.data_path
+        base = os.path.join(self.root_path, '..', self.data_path)
 
         # Create the directory, if needed
         if not os.path.isdir(base):
