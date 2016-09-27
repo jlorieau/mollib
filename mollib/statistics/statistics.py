@@ -1,9 +1,7 @@
 """
 Functions to collect statistics on molecules.
 """
-# FIXME: The paths from the settings module are copied and should be used
-#        directly. The BuildData also doesn't read the config files. Perhaps a
-#        CLI option?
+# FIXME: The BuildData doesn't read the config files. Perhaps a CLI option?
 
 import csv
 import logging
