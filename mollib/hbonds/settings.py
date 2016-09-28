@@ -144,14 +144,14 @@ minor_310 = '310-helix'
 #: Minor classification name for alpha-helices
 minor_alpha = 'alpha-helix'
 
-#: Minor classification name for the N-terminal residues of alpha-helices
-minor_alpha_N = 'alpha-helix, N-term'
-
-#: Minor classification name for the C-terminal residues of alpha-helices
-minor_alpha_C = 'alpha-helix, C-term'
-
 #: Minor classification name for pi-helices
 minor_pi = 'pi-helix'
 
 #: Minor classification name for isolated hydrogen bonds
 minor_isolated = 'isolated'
+
+#: Minor classification modifier for the N-terminal residues
+minor_N = 'N-term'
+
+#: Minor classification name for the C-terminal residues of alpha-helices
+minor_C = 'C-term'

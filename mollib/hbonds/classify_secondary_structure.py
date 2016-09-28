@@ -55,13 +55,13 @@ def classify_residues(molecule):
             # Some minor_classifications do not pertain to the donor
             # residue, where count==0, like the N-terminal residues of
             # helices
-            if count == 0 and minor_class == settings.minor_alpha_N:
+            if count == 0 and minor_class == settings.minor_N:
                 minor_class = settings.minor_alpha
 
             # Some minor_classifications do not pertain to the acceptor
             # residue, where count==0, like the C-terminal residues of
             # helices
-            if count == 1 and minor_class ==settings.minor_alpha_C:
+            if count == 1 and minor_class ==settings.minor_C:
                 minor_class = settings.minor_alpha
 
             # If the residue is already assigned and it isn't 'isolated'

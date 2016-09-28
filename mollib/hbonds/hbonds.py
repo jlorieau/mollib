@@ -64,6 +64,8 @@ class HydrogenBond(object):
         or 'backbone aliphatic'
     minor_classification: str
         The classification (minor) of the hydrogen bond. ex: 'alpha-helix'
+    minor_modifier: str, optional
+        The classification (minor) modifier. ex: 'N-term' or 'parallel'
     distances: dict
         A dict of the distances between atoms that define the hydrogen bond.
         - key: tuple of two :obj:`Atom` objects
@@ -78,6 +80,7 @@ class HydrogenBond(object):
     acceptor = None
     major_classification = ''
     minor_classification = ''
+    minor_modifier = ''
     distances = None
     angles = None
 

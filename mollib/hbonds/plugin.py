@@ -115,9 +115,15 @@ class Hbonds(Plugin):
 
                 # Add the Hbonds to the table
                 for count, hbond in enumerate(hbonds, 1):
+                    if hbond.minor_modifier:
+                        minor = '{}/{}'.format(hbond.minor_classification,
+                                               hbond.minor_modifier)
+                    else:
+                        minor = '{}'.format(hbond.minor_classification)
+                    class_str = '{} ({})'.format(hbond.major_classification,
+                                                minor)
                     table.add_row(count, hbond.donor, hbond.acceptor,
-                                  '{} ({})'.format(hbond.major_classification,
-                                                   hbond.minor_classification))
+                                  class_str)
                 print(table.content())
 
         # Process the Ramachandran angles. This function detects secondary

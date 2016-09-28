@@ -282,9 +282,9 @@ def classify_groups(hbonds):
         # Mark the starting and ending residues of the helices
         if len(hbonds_group) > 3:
             for hbond in hbonds_group[0:2]:
-                hbond.minor_classification = s.minor_alpha_N
+                hbond.minor_modifier = s.minor_N
             for hbond in hbonds_group[-2:]:
-                hbond.minor_classification = s.minor_alpha_C
+                hbond.minor_modifier = s.minor_C
 
     # Identify parallel and anti-parallel sheets
     # filter the beta-sheets
