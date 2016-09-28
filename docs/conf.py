@@ -390,7 +390,7 @@ def process_cmd(string):
             "|sed 's/\^\[\[22m/<\/font>/g'"
             "|sed 's/\^\[\[91m/<font color=\"red\">/g'"
             "|sed 's/\^\[\[92m/<font color=\"green\">/g'"
-            "|sed 's/\^\[\[93m/<font color=\"#abb51f\">/g'"
+            "|sed 's/\^\[\[33m/<font color=\"#abb51f\">/g'"
             "|sed 's/\^\[\[94m/<font color=\"blue\">/g'"
             "|sed 's/\^\[\[95m/<font color=\"magenta\">/g'"
             "|sed 's/\^\[\[96m/<font color=\"cyan\">/g'"
