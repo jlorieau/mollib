@@ -37,7 +37,7 @@ def classify_residues(molecule):
     classification = {}  # {residue.number: classification}
     for hbond in hbonds:
         # Only classify based on backbone-backbone amide hydrogen bonds
-        if hbond.major_classification != mollib.hbonds.settings.major_bb_bb_amide:
+        if hbond.major_classification != settings.major_bb_bb_amide:
             continue
 
         # Classify based on the residue identity for the atom2 (heavy atom)
@@ -49,19 +49,28 @@ def classify_residues(molecule):
             continue
 
         # Assign both the donor and acceptor residues
-        for res in (donor_res, acceptor_res):
-            # If not assigned, assigned the classification
-            if res.number not in classification:
-                minor_class = hbond.minor_classification
-                classification[res.number] = minor_class
+        for count, res in enumerate((donor_res, acceptor_res)):
+            minor_class = hbond.minor_classification
 
-            # If already assigned, only replace if the current classification
-            # is for an 'isolated' hydrogen bond
-            else:
-                current_class = classification[res.number]
-                if current_class == settings.minor_isolated:
-                    minor_class = hbond.minor_classification
-                    classification[res.number] = minor_class
+            # Some minor_classifications do not pertain to the donor
+            # residue, where count==0, like the N-terminal residues of
+            # helices
+            if count == 0 and minor_class == settings.minor_alpha_N:
+                minor_class = settings.minor_alpha
+
+            # Some minor_classifications do not pertain to the acceptor
+            # residue, where count==0, like the C-terminal residues of
+            # helices
+            if count == 1 and minor_class ==settings.minor_alpha_C:
+                minor_class = settings.minor_alpha
+
+            # If the residue is already assigned and it isn't 'isolated'
+            # then skip it
+            if (res.number in classification and
+                classification[res.number] != settings.minor_isolated):
+                continue
+
+            classification[res.number] = minor_class
 
     # Classify the residues. The classification dict has been populated
     # {residue.number(int): classification(str}
