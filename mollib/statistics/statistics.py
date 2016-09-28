@@ -12,6 +12,11 @@ import io
 
 from setuptools import Command
 
+try:
+    from tqdm import tqdm
+except ImportError:
+    pass
+
 from mollib import Molecule
 from mollib.core import settings
 
@@ -108,16 +113,22 @@ class Statistics(object):
 
         tarfile_object = self.open_measurement_tarfile()
 
+        # Create the iterator, optionally using the tqdm counter
+        it = enumerate(sorted(to_process_ids), len(processed_ids) + 1)
+        if 'tqdm' in globals():
+            it = tqdm(it, initial=len(processed_ids),
+                      total=len(self.identifiers))
+
+        identifier = None
         try:
 
-            for count, identifier in enumerate(sorted(to_process_ids),
-                                               len(processed_ids) + 1):
+            for count, identifier in it:
                 # Skip empty entries
                 if not identifier.strip():
                     continue
 
-                print('{}'.format(count).rjust(4) + '.' +
-                     ' {}'.format(identifier))
+                #print('{}'.format(count).rjust(4) + '.' +
+                #     ' {}'.format(identifier))
                 molecule = Molecule(identifier)
 
                 return_dict = self.process_measurement(molecule)
@@ -129,6 +140,7 @@ class Statistics(object):
 
             # Iterate over the identifiers and process_measurement each
         except Exception as e:
+            print("Failed at '{}'".format(identifier))
             raise e
         finally:
             tarfile_object.close()
@@ -219,6 +231,10 @@ class BuildData(Command):
 
     def run(self):
         "Process the measurements of all subclasses"
+
+        # Disable the logger for the following loop
+        logger = logging.getLogger()
+        logger.disabled = True
 
         # Run all of the Statistics submodules
         for Subclass in Statistics.__subclasses__():
