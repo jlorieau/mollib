@@ -12,7 +12,7 @@ from .hbonds import find_hbond_partners
 from . import settings
 
 
-def classify_residues(molecule):
+def classify_residues(molecule, skip_energy=False):
     """Classify the residues of a molecule based on their backbone-
     backbone amide hydrogen bonds.
 
@@ -23,6 +23,11 @@ def classify_residues(molecule):
         the following attributes:
 
         - `hbond_classification` with a 'str' to the hbond classification.
+        - `hbond_modifier` with a 'str' to the hbond minor classification
+           modifier.
+
+    skip_energy: bool, optional
+        If True, the ramachandran energy will not be calculated.
     """
     # TODO: make the classification a residue parameter (like molecule
     # parameters) using a parameter mixin class
@@ -50,37 +55,42 @@ def classify_residues(molecule):
 
         # Assign both the donor and acceptor residues
         for count, res in enumerate((donor_res, acceptor_res)):
-            minor_class = hbond.minor_classification
 
-            # Some minor_classifications do not pertain to the donor
+            minor_class = hbond.minor_classification
+            minor_modifier = ''
+
+            # Some modifiers do not pertain to the donor
             # residue, where count==0, like the N-terminal residues of
             # helices
-            if count == 0 and minor_class == settings.minor_N:
-                minor_class = settings.minor_alpha
+            if count == 1 and hbond.minor_modifier == settings.minor_N:
+                minor_modifier = hbond.minor_modifier
 
-            # Some minor_classifications do not pertain to the acceptor
+            # Some modifiers do not pertain to the acceptor
             # residue, where count==0, like the C-terminal residues of
             # helices
-            if count == 1 and minor_class ==settings.minor_C:
-                minor_class = settings.minor_alpha
+            if count == 0 and hbond.minor_modifier == settings.minor_C:
+                minor_modifier = hbond.minor_modifier
 
             # If the residue is already assigned and it isn't 'isolated'
             # then skip it
             if (res.number in classification and
-                classification[res.number] != settings.minor_isolated):
+                classification[res.number][0] != settings.minor_isolated):
                 continue
 
-            classification[res.number] = minor_class
+            classification[res.number] = (minor_class, minor_modifier)
 
     # Classify the residues. The classification dict has been populated
     # {residue.number(int): classification(str}
     # Now use it to classify the residues
     for residue in molecule.residues:
-        res_class = classification.get(residue.number, '')
-        residue.hbond_classification = res_class
+        res_class = classification.get(residue.number, ('',''))
+
+        residue.hbond_classification = res_class[0]
+        residue.hbond_modifier = res_class[1]
 
         # Add the ramachandran energy attribute to the residue
-        add_ramachandran_energy(residue)
+        if not skip_energy:
+            add_ramachandran_energy(residue)
 
 
 #: The Ramachandran energy datasets
@@ -140,8 +150,10 @@ def add_ramachandran_energy(residue):
 
     if res_class in energy_ramachandran_datasets:
         phi_1d, psi_1d, energy_2d = energy_ramachandran_datasets[res_class]
-    else:
+    elif '' in energy_ramachandran_datasets:
         phi_1d, psi_1d, energy_2d = energy_ramachandran_datasets['']
+    else:
+        return None
 
     # Find the appropriate phi and psi angles for the residue.
     phi, psi = residue.ramachandran_angles

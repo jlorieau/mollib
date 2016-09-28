@@ -5,6 +5,7 @@ Tests the classification functions
 import unittest
 
 from mollib import Molecule
+import mollib.core.settings
 from mollib.hbonds import classify_residues
 
 
@@ -14,30 +15,30 @@ class TestHbondClassify(unittest.TestCase):
         "Tests the residue classification from hbonds for specific molecule"
 
         # Hemagglutinin fusion peptide
-        answer_key = {'2KXA': {1:  'isolated',
-                               2:  'alpha-helix',
-                               3:  'alpha-helix',
-                               4:  'alpha-helix',
-                               5:  'alpha-helix',
-                               6:  'alpha-helix',
-                               7:  'alpha-helix',
-                               8:  'alpha-helix',
-                               9:  'alpha-helix',
-                               10: 'alpha-helix',
-                               11: 'alpha-helix',
-                               12: '',
-                               13: 'isolated',
-                               14: 'alpha-helix',
-                               15: 'alpha-helix',
-                               16: 'alpha-helix',
-                               17: 'alpha-helix',
-                               18: 'alpha-helix',
-                               19: 'alpha-helix',
-                               20: 'alpha-helix',
-                               21: 'alpha-helix',
-                               22: 'alpha-helix',
-                               23: '',
-                               24: 'isolated',
+        answer_key = {'2KXA': {1:  ('isolated', ''),
+                               2:  ('alpha-helix', 'N-term'),
+                               3:  ('alpha-helix', 'N-term'),
+                               4:  ('alpha-helix', ''),
+                               5:  ('alpha-helix', ''),
+                               6:  ('alpha-helix', ''),
+                               7:  ('alpha-helix', ''),
+                               8:  ('alpha-helix', ''),
+                               9:  ('alpha-helix', ''),
+                               10: ('alpha-helix', 'C-term'),
+                               11: ('alpha-helix', 'C-term'),
+                               12: ('', ''),
+                               13: ('isolated', ''),
+                               14: ('alpha-helix', 'N-term'),
+                               15: ('alpha-helix', 'N-term'),
+                               16: ('alpha-helix', ''),
+                               17: ('alpha-helix', ''),
+                               18: ('alpha-helix', ''),
+                               19: ('alpha-helix', ''),
+                               20: ('alpha-helix', ''),
+                               21: ('alpha-helix', 'C-term'),
+                               22: ('alpha-helix', 'C-term'),
+                               23: ('', ''),
+                               24: ('isolated', ''),
                                }
                       }
 
@@ -46,7 +47,33 @@ class TestHbondClassify(unittest.TestCase):
             classify_residues(mol)
 
             for residue in mol.residues:
-                res_class = class_dict[residue.number]
-                self.assertEqual(residue.hbond_classification,
-                                 res_class)
+                items = class_dict[residue.number]
+                hbond_classification, hbond_modifier = items
 
+                self.assertEqual(residue.hbond_classification,
+                                 hbond_classification)
+                self.assertEqual(residue.hbond_modifier,
+                                 hbond_modifier)
+
+    def test_energy_ramachandran(self):
+        """Test the 'energy_ramachandran` property of residues, set by
+        classify_residues.
+        """
+        mol = Molecule('2KXA')
+
+        # First confuse the path for the ramachandran_dataset_path so that the
+        # datasets cannot be found.
+        correct_path = mollib.core.settings.ramachandran_dataset_path
+        #mollib.core.settings.ramachandran_dataset_path = '.'
+        print(correct_path)
+
+        # Try classify_residues. All of the 'energy_ramachandran' attributes
+        # should be None.
+
+
+        # With the correct path, the datasets should be found and the energies
+        # are correctly set
+        classify_residues(mol)
+
+        for residue in mol.residues:
+            print(getattr(residue, 'energy_ramachandran', 'None'))

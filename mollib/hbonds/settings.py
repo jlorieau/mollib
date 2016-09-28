@@ -155,3 +155,6 @@ minor_N = 'N-term'
 
 #: Minor classification name for the C-terminal residues of alpha-helices
 minor_C = 'C-term'
+
+#: Minor classification for glycines
+minor_gly = 'Gly'
