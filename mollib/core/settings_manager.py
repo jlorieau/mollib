@@ -1,3 +1,12 @@
+"""
+The settings manager functions to register and load settings.
+
+Settings are stored in 'settings.py' files for each submodule or plugin.
+Accesses to values in the settings should be made directly, rather than copied,
+in the code so that updated settings (from config files) can be incorporated
+properly.
+"""
+
 import ast
 import os
 import logging
@@ -36,13 +45,14 @@ def list_global_settings():
     return _settings_modules.keys()
 
 
-def import_config(config):
+def load_settings(config=None):
     """Import all of the settings blocks from the configparser object.
 
     Parameters
     ----------
-    config: ``configparser.ConfigParser``
+    config: ``configparser.ConfigParser`` or None
         The ConfigParser object with all of the custom settings.
+        Or None.
     """
     # Import other module settings in the core
     global _settings_modules
@@ -54,12 +64,13 @@ def import_config(config):
 def import_settings(config, section, settings_dict):
     """Import a settings block from the configparser object.
 
-    This function works in concert with import_config.
+    This function works in concert with load_settings.
 
     Parameters
     ----------
-    config: ``configparser.ConfigParser``
+    config: ``configparser.ConfigParser`` or None
         The ConfigParser object with all of the custom settings.
+        Or None.
     section: str
         The name of the settings section to import.
     settings_dict: dict
@@ -91,7 +102,10 @@ def import_settings(config, section, settings_dict):
     # values found in the config, provided the parameters are not callable
     # functions.
     for parameter, value in settings_dict.items():
-        if config.has_option(section, parameter) and not callable(value):
+
+        # Load the configuration, if is is specified)
+        if (config and config.has_option(section, parameter) and
+            not callable(value)):
 
             # Check the parameter value's type and convert accordingly
             # These must match. If they don't an error is raise, and we

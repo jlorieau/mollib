@@ -11,7 +11,7 @@ import os
 import mollib
 from mollib.utils import FormattedStr
 from mollib.plugins import PluginManager
-from mollib.core import list_global_settings, import_config
+from mollib.core import list_global_settings, load_settings
 
 try:
     import configparser
@@ -96,7 +96,7 @@ def main():
         config_files.append(args.config)
     config = configparser.ConfigParser()
     config.read(config_files)
-    import_config(config)
+    load_settings(config)
 
     # Prepare and preprocess the structure
     molecules = [mollib.Molecule(identifier) for identifier in args.i[0]]
