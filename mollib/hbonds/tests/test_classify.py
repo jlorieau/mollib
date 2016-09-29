@@ -3,13 +3,18 @@ Tests the classification functions
 """
 
 import unittest
+import os
 
-from mollib import Molecule
+from mollib.core import Molecule, load_settings
 import mollib.core.settings
 from mollib.hbonds import classify_residues
 
 
 class TestHbondClassify(unittest.TestCase):
+
+    def setUp(self):
+        "Load the settings."
+        load_settings()
 
     def test_classify_residues(self):
         "Tests the residue classification from hbonds for specific molecule"
@@ -59,21 +64,28 @@ class TestHbondClassify(unittest.TestCase):
         """Test the 'energy_ramachandran` property of residues, set by
         classify_residues.
         """
+        # Load the molecule
         mol = Molecule('2KXA')
 
         # First confuse the path for the ramachandran_dataset_path so that the
         # datasets cannot be found.
         correct_path = mollib.core.settings.ramachandran_dataset_path
-        #mollib.core.settings.ramachandran_dataset_path = '.'
-        print(correct_path)
+        mollib.core.settings.ramachandran_dataset_path = ''
 
         # Try classify_residues. All of the 'energy_ramachandran' attributes
-        # should be None.
-
+        # should not be assigned because the datasets could not be found.
+        for residue in mol.residues:
+            self.assertFalse(hasattr(residue, 'energy_ramachandran'))
 
         # With the correct path, the datasets should be found and the energies
         # are correctly set
+        correct_path = os.path.join('../..', correct_path)
+        mollib.core.settings.ramachandran_dataset_path = correct_path
+
         classify_residues(mol)
 
+        # The 'energy_ramachandran' attributes should now be assigned and
+        # have float values
         for residue in mol.residues:
-            print(getattr(residue, 'energy_ramachandran', 'None'))
+            self.assertTrue(hasattr(residue, 'energy_ramachandran'))
+            self.assertIsInstance(residue.energy_ramachandran, float)

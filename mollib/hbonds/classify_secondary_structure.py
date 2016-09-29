@@ -12,7 +12,7 @@ from .hbonds import find_hbond_partners
 from . import settings
 
 
-def classify_residues(molecule, skip_energy=False):
+def classify_residues(molecule):
     """Classify the residues of a molecule based on their backbone-
     backbone amide hydrogen bonds.
 
@@ -89,15 +89,14 @@ def classify_residues(molecule, skip_energy=False):
         residue.hbond_modifier = res_class[1]
 
         # Add the ramachandran energy attribute to the residue
-        if not skip_energy:
-            add_ramachandran_energy(residue)
+        add_energy_ramachandran(residue)
 
 
 #: The Ramachandran energy datasets
 energy_ramachandran_datasets = None
 
 
-def add_ramachandran_energy(residue):
+def add_energy_ramachandran(residue):
     """Add the Ramachandran energy (kT) to the residue.
 
     The energy is assigned based on the `hbond_classification` and the energies
