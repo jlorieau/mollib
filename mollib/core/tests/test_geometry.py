@@ -8,7 +8,8 @@ from nose.plugins.attrib import attr
 import numpy as np
 
 from mollib.core import (Molecule, measure_distances, calc_vector,
-                         vector_length, within_distance, Box)
+                         vector_length, within_distance)
+from mollib.core.geometry_box import Box
 
 
 class TestGeometry(unittest.TestCase):

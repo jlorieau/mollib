@@ -3,19 +3,118 @@ Tools to measure geometries in molecules.
 """
 # TODO: def measure_rmsd(molecule1, molecule2, atoms=None)
 
-from math import acos, pi, atan2, sqrt
+# cython: profile=False
 
-import numpy as np
+from libc.math cimport sqrt, ceil, acos, atan2, M_PI as pi
 
-from .utils import filter_atoms
-from mollib.geometry import (measure_distance, vector_length, calc_vector, Box)
-                             #within_distance)
-
-from math import sqrt, ceil
 from itertools import chain
 
-# - Make points contiguous with integer access numbers in box
-# - make find_hbonds use within_distance before measure_dipole_distance
+import numpy as np
+cimport numpy as np
+cimport cython
+
+from .geometry_box cimport Box
+from .utils import filter_atoms
+
+
+@cython.boundscheck(False)
+@cython.wraparound(False)
+cpdef double vector_length(np.ndarray[np.float64_t, ndim=1] vector):
+    """Returns the length (in A) of a vector"""
+    cdef Py_ssize_t i
+    cdef Py_ssize_t vector_size = vector.shape[0]
+    cdef double v2 = 0.0
+    for i in range(vector_size):
+        v2 += vector[i]*vector[i]
+    return sqrt(v2)
+
+
+def calc_vector(vector_i, vector_j, normalize=True):
+    """Returns the vector between atoms 'i' and 'j' with optional
+    normalization."""
+    vec = vector_i - vector_j
+
+    if normalize:
+        length = vector_length(vec)
+        vec /= length
+    return vec
+
+
+@cython.boundscheck(False)
+@cython.wraparound(False)
+cpdef double measure_distance(object atom_1, object atom_2):
+    """Measure the atom_1--atom_2 distance.
+
+    Parameters
+    ----------
+    atom_1 : :obj:`Atom`
+        The first atom.
+    atom_2 : :obj:`Atom`
+        The second atom.
+
+    Returns
+    -------
+    distance : float
+        The distance (in Angstroms)
+
+    Examples
+    --------
+    >>> from mollib.core import Molecule, measure_distance
+    >>> mol = Molecule('2KXA')
+    >>> d = measure_distance(mol['A'][3]['CA'], mol['A'][3]['HA'])
+    >>> print("{:.2f} A".format(d))
+    1.08 A
+
+    """
+    cdef double x, y, z
+    cdef double length = 0.0
+    cdef np.ndarray[np.float64_t, ndim=1] vi, vj
+
+    vi = atom_1.pos
+    vj = atom_2.pos
+
+    x = vi[0] - vj[0]
+    y = vi[1] - vj[1]
+    z = vi[2] - vj[2]
+
+    length = sqrt(x * x + y * y + z * z)
+    return length
+
+@cython.boundscheck(False)
+@cython.wraparound(False)
+cdef double _within_distance(double[:] point1, double[:] point2,
+                           double distance_cutoff) nogil:
+    """Test whether two points (specified by vectors) are within
+    distance_cutoff.
+
+    Parameters
+    ----------
+    point1: double[:]
+        A 1D memoryview of the first point.
+    point2
+        A 2D memoryview of the second point
+    Returns
+    -------
+    double
+        - The distance between the two points if within the distance_cutoff
+        - -1.0 if the distance between the two points is outside the
+          distance_cutoff
+    """
+    # assert
+    cdef double vx, vy, vz, d2
+    vx = point1[0] - point2[0]
+    vy = point1[1] - point2[1]
+    vz = point1[2] - point2[2]
+
+    d2 = vx * vx
+    d2 += vy * vy
+    d2 += vz * vz
+
+    if d2 < distance_cutoff * distance_cutoff:
+        return sqrt(d2)
+    else:
+        return -1.0
+
 
 def within_distance(atom, cutoff, elements='', exclude_intraresidue=False):
     """Find all atoms of element within the specified distance (in Angstroms)
@@ -49,10 +148,11 @@ def within_distance(atom, cutoff, elements='', exclude_intraresidue=False):
 
     Examples
     --------
-    >>> from mollib import Molecule
+    >>> from mollib.core import Molecule, within_distance
     >>> mol = Molecule('2KXA')
     >>> within_distance(mol['A'][5]['CA'], cutoff=2.0)
     [A.A5-CB, A.A5-C, A.A5-N, A.A5-HA]
+
     """
 
     if 'box' not in atom.molecule.cache:
@@ -70,6 +170,7 @@ def within_distance(atom, cutoff, elements='', exclude_intraresidue=False):
               (not element_list or a.element in element_list) and
               (not exclude_intraresidue or a.residue != atom.residue))]
     return atoms
+
 
 def measure_angle(atom_1, atom_2, atom_3):
     """Measure the atom_1--atom_2--atom_3 angle.
@@ -90,12 +191,13 @@ def measure_angle(atom_1, atom_2, atom_3):
 
     Examples
     --------
-    >>> from mollib import Molecule
+    >>> from mollib.core import Molecule, measure_angle
     >>> mol = Molecule('2KXA')
     >>> gly4 = mol['A'][4]
     >>> angle = measure_angle(gly4['HA2'], gly4['CA'], gly4['HA3'])
     >>> print("{:.1f} deg".format(angle))
     109.3 deg
+
     """
     v1 = calc_vector(atom_2.pos, atom_1.pos, normalize=True)
     v2 = calc_vector(atom_2.pos, atom_3.pos, normalize=True)
@@ -125,12 +227,13 @@ def measure_dihedral(atom_1, atom_2, atom_3, atom_4):
 
     Examples
     --------
-    >>> from mollib import Molecule
+    >>> from mollib.core import Molecule, measure_dihedral
     >>> mol = Molecule('2KXA')
     >>> F3 = mol['A'][3]
     >>> angle = measure_dihedral(F3['N'], F3['CA'], F3['CB'], F3['CG'])
     >>> print("{:.1f} deg".format(angle))
     -62.0 deg
+
     """
     # Calculate the normalized vectors.
     ab = calc_vector(atom_1.pos, atom_2.pos, normalize=True)
@@ -184,8 +287,8 @@ def measure_distances(molecule, selector1, selector2,
     --------
     >>> from mollib.core import Molecule, measure_distances
     >>> mol = Molecule('2MUV')
-    >>> dists = measure_distances(mol, '23:25-N', '23:25-CA', residue_delta=0, \
-                                  only_intra=True )
+    >>> kwargs = {'residue_delta': 0, 'only_intra': True}
+    >>> dists = measure_distances(mol, '23:25-N', '23:25-CA', **kwargs)
     >>> for i in dists: print(i)
     (A.S23-N, A.S23-CA, 1.46)
     (A.D24-N, A.D24-CA, 1.45)
@@ -198,6 +301,7 @@ def measure_distances(molecule, selector1, selector2,
     >>> dists = measure_distances(mol, '23-N', '24-N', exclude_intra=True)
     >>> for i in dists: print(i)
     (A.S23-N, A.D24-N, 3.45)
+
     """
     # Returned dict
     results = {}
@@ -275,14 +379,15 @@ def measure_angles(molecule, selector1, selector2, selector3,
     (A.F3-N, A.F3-CA, A.F3-C, 110.7)
     (A.G4-N, A.G4-CA, A.G4-C, 110.9)
     (A.A5-N, A.A5-CA, A.A5-C, 110.7)
-    >>> ang = measure_angles(mol, '3:8-C', '3:8-N', '3:8-CA', residue_delta=1, \
-                                                              bonded=True)
+    >>> kwargs = {'residue_delta': 1, 'bonded': True}
+    >>> ang = measure_angles(mol, '3:8-C', '3:8-N', '3:8-CA', **kwargs)
     >>> for i in ang: print(i)
     (A.F3-C, A.G4-N, A.G4-CA, 120.8)
     (A.G4-C, A.A5-N, A.A5-CA, 121.5)
     (A.A5-C, A.I6-N, A.I6-CA, 120.7)
     (A.I6-C, A.A7-N, A.A7-CA, 121.2)
     (A.A7-C, A.G8-N, A.G8-CA, 120.9)
+
     """
     # Returned dict
     results = {}
@@ -358,21 +463,15 @@ def measure_dihedrals(molecule, selector1, selector2, selector3, selector4,
 
     Examples
     --------
-    >>> from mollib.core import Molecule, measure_angles
+    >>> from mollib.core import Molecule, measure_dihedrals
     >>> mol = Molecule('2KXA')
-    >>> ang = measure_angles(mol, '3:5-N', '3:5-CA', '3:5-C', only_intra=True)
-    >>> for i in ang: print(i)
-    (A.F3-N, A.F3-CA, A.F3-C, 110.7)
-    (A.G4-N, A.G4-CA, A.G4-C, 110.9)
-    (A.A5-N, A.A5-CA, A.A5-C, 110.7)
-    >>> ang = measure_angles(mol, '3:8-C', '3:8-N', '3:8-CA', residue_delta=1, \
-                                                              bonded=True)
-    >>> for i in ang: print(i)
-    (A.F3-C, A.G4-N, A.G4-CA, 120.8)
-    (A.G4-C, A.A5-N, A.A5-CA, 121.5)
-    (A.A5-C, A.I6-N, A.I6-CA, 120.7)
-    (A.I6-C, A.A7-N, A.A7-CA, 121.2)
-    (A.A7-C, A.G8-N, A.G8-CA, 120.9)
+    >>> args = ('3:5-C', '3:5-N', '3:5-CA', '3:5-C')
+    >>> kwargs = {'bonded': True}
+    >>> dihs = measure_dihedrals(mol, *args, **kwargs)
+    >>> for i in dihs: print(i)
+    (A.F3-C, A.G4-N, A.G4-CA, A.G4-C, -57.2)
+    (A.G4-C, A.A5-N, A.A5-CA, A.A5-C, -68.4)
+
     """
     # Returned dict
     results = {}

@@ -13,13 +13,12 @@ except ImportError:
 
 ext = '.pyx' if use_cython else '.c'
 
-extensions = [
-    Extension(name="mollib.geometry",
-              sources=["mollib/core/src/geometry" + ext],
-              ) ]
+# extensions = [
+#     Extension(["mollib/core/geometry" + ext],
+#               ) ]
 
 if use_cython:
-    extensions = cythonize(extensions)
+    extensions = cythonize('**/*.pyx')
 
 
 setup(name=__project_name__,
