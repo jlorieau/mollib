@@ -1,14 +1,26 @@
 from setuptools import setup, find_packages, Extension
-from Cython.Build import cythonize
 import numpy as np
 
 # Get the version number and package information
 exec(open('mollib/__version__.py').read())
 
-ext_modules = [
+# Setup Cython, if available
+try:
+    from Cython.Build import cythonize
+    use_cython = True
+except ImportError:
+    use_cython = False
+
+ext = '.pyx' if use_cython else '.c'
+
+extensions = [
     Extension(name="mollib.geometry",
-              sources=["mollib/core/src/geometry.pyx"],
+              sources=["mollib/core/src/geometry" + ext],
               ) ]
+
+if use_cython:
+    extensions = cythonize(extensions)
+
 
 setup(name=__project_name__,
       version=__version__,
@@ -29,7 +41,7 @@ setup(name=__project_name__,
             'build_data = mollib.statistics:BuildData',
           ],
       },
-      ext_modules=cythonize(ext_modules,),
-      # ext_modules=cythonize('mollib/core/src/geometry.pyx'),
+      ext_modules=extensions,
+      # ext_modules=cythonize("**/*.pyx"),
       include_dirs=[np.get_include()],
 )
