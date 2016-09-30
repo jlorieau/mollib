@@ -34,7 +34,7 @@ def list_settings():
     print('Installed settings sections:')
     for section in list_global_settings():
         msg = '\t[{}]'.format(section)
-        print(FormattedStr(msg, 'blue'))
+        print(msg)
 
 
 def main():
