@@ -1,7 +1,6 @@
 """
 Functions to collect statistics on molecules.
 """
-# FIXME: The BuildData doesn't read the config files. Perhaps a CLI option?
 
 import csv
 import logging
@@ -18,7 +17,7 @@ except ImportError:
     pass
 
 from mollib import Molecule
-from mollib.core import settings
+from mollib.core import settings, load_settings
 
 class Statistics(object):
     """Class to collect statistics on molecules.
@@ -36,20 +35,21 @@ class Statistics(object):
         The base path and filename for data files.
     """
 
-    data_path = settings.dataset_path
-    root_path = os.path.abspath(os.path.dirname(__file__))
-
     def __init__(self, *filenames):
+        # Find all of the files that contain identifiers.
         filenames = set(filenames)
-        filenames.add(*settings.model_molecule_identifiers)
-        filenames = set([os.path.join(self.root_path, '..', f)
-                         for f in filenames])
+        settings_filenames = [os.path.join(settings.dataset_path, i)
+                              for i in settings.model_molecule_identifiers]
+        filenames.add(*settings_filenames)
 
         self.molecule_files = filenames
         self.functions = []
 
         # Read in the molecule identifiers
         self.read_identifiers()
+
+        # Set the data paths
+        self.data_path = settings.dataset_path
 
     def read_identifiers(self):
         """Read in the list of identifiers from the molecule files."""
@@ -127,8 +127,6 @@ class Statistics(object):
                 if not identifier.strip():
                     continue
 
-                #print('{}'.format(count).rjust(4) + '.' +
-                #     ' {}'.format(identifier))
                 molecule = Molecule(identifier)
 
                 return_dict = self.process_measurement(molecule)
@@ -136,11 +134,11 @@ class Statistics(object):
                                             d=return_dict,
                                             tarfile_object=tarfile_object)
                 # Update the measurement_dict
-                measurement_dict.update(return_dict)
+                measurement_dict[identifier] = return_dict
 
             # Iterate over the identifiers and process_measurement each
         except Exception as e:
-            print("Failed at '{}'".format(identifier))
+            print("Failed at identifier '{}'".format(identifier))
             raise e
         finally:
             tarfile_object.close()
@@ -148,7 +146,7 @@ class Statistics(object):
 
     def get_measurement_filename(self):
         "Return the filename for the measurement data file"
-        base = os.path.join(self.root_path, '..', self.data_path)
+        base = self.data_path
 
         # Create the directory, if needed
         if not os.path.isdir(base):
@@ -231,6 +229,9 @@ class BuildData(Command):
 
     def run(self):
         "Process the measurements of all subclasses"
+
+        # Load the settings to correctly retrieve paths
+        load_settings()
 
         # Disable the logger for the following loop
         logger = logging.getLogger()

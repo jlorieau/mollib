@@ -12,11 +12,14 @@ import mollib.hydrogens
 from .statistics import Statistics
 from . import settings
 
+
 class RamachandranStatistics(Statistics):
     """Collect statistics on Ramachandran angles.
     """
 
-    data_path = mollib.core.settings.ramachandran_dataset_path
+    def __init__(self, *args, **kwargs):
+        super(RamachandranStatistics, self).__init__(*args, **kwargs)
+        self.data_path = mollib.core.settings.ramachandran_dataset_path
 
     def process_measurement(self, molecule):
         """Process the molecule and return the Ramachandran angle statistics.
@@ -26,50 +29,43 @@ class RamachandranStatistics(Statistics):
         measurement_dict: dict
             The dict produced by :meth:`process_measurement`.
 
-            - key: molecule identifier (str)
+            - key: residue classification (str)
             - value: list of tuples of phi-psi angles [(float, float),]
         """
-        molecule = super(RamachandranStatistics, self).process_measurement(molecule)
+        molecule = super(RamachandranStatistics,
+                         self).process_measurement(molecule)
 
-        # Hydrogenate the molecule
-        mollib.hydrogens.add_hydrogens(molecule)
+        # Get the hydrogen bonds for the molecule. This function also adds
+        # the residue.hbond_classification and residue.hbond_modifier
+        # attributes
+        mollib.hbonds.classify_residues(molecule)
 
-        # Get the hydrogen bonds for the molecule
-        hbonds = mollib.hbonds.find_hbond_partners(molecule)
-
-        # Group the hbonds into (chain.id, residue.number) and
-        #  major_classifications
-        residue_classes = dict()
-
-        for hbond in hbonds:
-            try:
-                donor_residue = hbond.donor.atom2.residue
-                acceptor_residue = hbond.acceptor.atom2.residue
-            except AttributeError:
-                continue
-            major_classification = hbond.major_classification
-            minor_classification = hbond.minor_classification
-
-            if major_classification == mollib.hbonds.settings.major_bb_bb_amide:
-                key = (donor_residue.chain.id, donor_residue.number)
-                residue_classes[key] = minor_classification
-
-                key = (acceptor_residue.chain.id, acceptor_residue.number)
-                residue_classes[key] = minor_classification
-
-        # Get the Ramachandran angles and group them.
-        return_dict = dict()
+        # Prepare the measure_dict to return the values
+        measure_dict = {}
 
         for residue in molecule.residues:
             phi_psi = residue.ramachandran_angles
-            key = (residue.chain.id, residue.number)
-            group = residue_classes.get(key, 'No hydrogen bonds')
+
+            if residue.name == 'GLY':
+                hbond_classification = 'Gly'
+            else:
+                hbond_classification = getattr(residue, 'hbond_classification',
+                                               'No hydrogen bonds')
+                hbond_classification = ('No hydrogen bonds' if
+                                        hbond_classification == '' else
+                                        hbond_classification)
+
+            hbond_modifier = getattr(residue, 'hbond_modifier', '')
 
             # None values are not saved
             if all(i is not None for i in phi_psi):
-                return_dict.setdefault(group, list()).append(phi_psi)
+                # Save the classification
 
-        return return_dict
+                name = (hbond_classification if not hbond_modifier else
+                        '/'.join((hbond_classification, hbond_modifier)))
+                measure_dict.setdefault(name,list()).append(phi_psi)
+
+        return measure_dict
 
     def process_data(self, measurement_dict):
         """Process the output datasets from the data_dict.
@@ -90,7 +86,7 @@ class RamachandranStatistics(Statistics):
         """
         super(RamachandranStatistics, self).process_data(measurement_dict)
 
-        path = os.path.join(self.root_path, '..', self.data_path)
+        path = self.data_path
 
         # Convert the measurement_dict into a dict organized by secondary
         # structure classification
