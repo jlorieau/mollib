@@ -23,7 +23,7 @@ pKs = {'ASP': {'OD1-OD2': (-1.0, 3.5)},
 dataset_path = 'data/'
 
 #: Path for model input molecule identifiers
-model_molecule_identifiers = ('data/high_res.txt',
+model_molecule_identifiers = ('high_res.txt',
                               )
 
 #: Path for the Ramachandran statistics datasets
