@@ -147,7 +147,11 @@ def add_energy_ramachandran(residue):
     # Get the energy for this residue's classification
     res_class = getattr(residue, 'hbond_classification', '')
 
-    if res_class in energy_ramachandran_datasets:
+    if residue.name == 'GLY' and 'Gly' in energy_ramachandran_datasets:
+        # Glycines are treated specially because they are more flexible in
+        # their backbone torsion angles
+        phi_1d, psi_1d, energy_2d = energy_ramachandran_datasets['Gly']
+    elif res_class in energy_ramachandran_datasets:
         phi_1d, psi_1d, energy_2d = energy_ramachandran_datasets[res_class]
     elif '' in energy_ramachandran_datasets:
         phi_1d, psi_1d, energy_2d = energy_ramachandran_datasets['']
