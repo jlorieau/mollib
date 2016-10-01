@@ -62,7 +62,7 @@ class RamachandranStatistics(Statistics):
                 # Save the classification
 
                 name = (hbond_classification if not hbond_modifier else
-                        '/'.join((hbond_classification, hbond_modifier)))
+                        '__'.join((hbond_classification, hbond_modifier)))
                 measure_dict.setdefault(name,list()).append(phi_psi)
 
         return measure_dict

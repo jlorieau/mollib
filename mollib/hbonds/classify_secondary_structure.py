@@ -29,9 +29,6 @@ def classify_residues(molecule):
     skip_energy: bool, optional
         If True, the ramachandran energy will not be calculated.
     """
-    # TODO: make the classification a residue parameter (like molecule
-    # parameters) using a parameter mixin class
-
     # Hydrogenate the molecule and detect its hydrogen bonds. These are
     # already classified by type
     add_hydrogens(molecule)
@@ -107,7 +104,12 @@ def add_energy_ramachandran(residue):
     residue: :obj:`mollib.Residue`
         The residue gains the following attributes:
 
-        - `energy_ramachandran` with a  float to the Ramachandran energy.
+    Added Residues Attributes
+    -------------------------
+    energy_ramachandran: float
+        The Ramachandran energy (in kT)
+    ramachandran_dataset: str
+        The name of the dataset used for the Ramachandran energy.
     """
     global energy_ramachandran_datasets
 
@@ -138,7 +140,7 @@ def add_energy_ramachandran(residue):
 
             energy_ramachandran_datasets[name] = (phi_1d, psi_1d, energy_2d)
 
-        # The 'No Hydrogen Bonds' classification is the same as the ''
+        # The 'No Hydrogen Bonds' hbond_classification is the same as the ''
         # classification above
         if 'No hydrogen bonds' in energy_ramachandran_datasets:
             v = energy_ramachandran_datasets['No hydrogen bonds']
@@ -147,14 +149,34 @@ def add_energy_ramachandran(residue):
     # Get the energy for this residue's classification
     res_class = getattr(residue, 'hbond_classification', '')
 
+    # Some energies are classified by hbond_classification and hbond_modifier.
+    # These have the name of both, separated by '__'
+    modifier = getattr(residue, 'hbond_modifier', '')
+    full_res_class = '__'.join((res_class, modifier))
+
     if residue.name == 'GLY' and 'Gly' in energy_ramachandran_datasets:
         # Glycines are treated specially because they are more flexible in
         # their backbone torsion angles
         phi_1d, psi_1d, energy_2d = energy_ramachandran_datasets['Gly']
+        residue.ramachandran_dataset = 'Gly'
+
+    elif full_res_class in energy_ramachandran_datasets:
+        # First, try to find the corresponding dataset using the
+        # hbond_classification and hbond_modifier
+        phi_1d, psi_1d, energy_2d = energy_ramachandran_datasets[full_res_class]
+        residue.ramachandran_dataset = full_res_class
+
     elif res_class in energy_ramachandran_datasets:
+        # Next, try to find the corresponding dataset using just the
+        # hbond_classification
         phi_1d, psi_1d, energy_2d = energy_ramachandran_datasets[res_class]
+        residue.ramachandran_dataset = res_class
+
     elif '' in energy_ramachandran_datasets:
+        # Finally try to use the dataset for not hydrogen bonds.
         phi_1d, psi_1d, energy_2d = energy_ramachandran_datasets['']
+        residue.ramachandran_dataset = 'No hydrogen bonds'
+
     else:
         return None
 
