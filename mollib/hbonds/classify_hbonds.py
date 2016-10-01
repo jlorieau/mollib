@@ -182,7 +182,7 @@ def classify_minor(hbond):
 
         # Check the 310-helix
         if (all(within_range(a, s.helix_phi) for a in phi) and
-                all(within_range(a, s.helix_psi) for a in psi)):
+            all(within_range(a, s.helix_psi) for a in psi)):
             hbond.minor_classification = s.minor_alpha
             return True
 
@@ -200,7 +200,7 @@ def classify_minor(hbond):
 
         # Check the 310-helix
         if (all(within_range(a, s.helix_phi) for a in phi) and
-                all(within_range(a, s.helix_psi) for a in psi)):
+            all(within_range(a, s.helix_psi) for a in psi)):
             hbond.minor_classification = s.minor_pi
             return True
 
@@ -285,13 +285,6 @@ def classify_groups(hbonds):
                 hbond.minor_modifier = s.minor_N
             for hbond in hbonds_group[-2:]:
                 hbond.minor_modifier = s.minor_C
-
-    # Identify parallel and anti-parallel sheets
-    # filter the beta-sheets
-    # beta_hbonds = [hbond for hbond in hbonds
-    #                  if hbond.minor_classification == s.minor_beta]
-    #
-    #
 
     return True
 
