@@ -23,7 +23,7 @@ acceptor2_elements = 'C|13C'
 #: bond.
 #:
 #: 'd1a1': The distance between the donor1 and acceptor1 atoms
-hbond_distance_cutoff = {'d1a1': (1.8, 2.8),
+hbond_distance_cutoff = {'d1a1': (1.5, 3.0),
                          }
 
 #: The cutoff angle ranges (in degrees) between atoms to be considered a

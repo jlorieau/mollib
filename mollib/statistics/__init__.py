@@ -1,5 +1,6 @@
 from .statistics import Statistics, BuildData
 from .ramachandran_statistics import RamachandranStatistics
+from .hbond_statistics import HbondStatistics
 from . import settings
 
 # Load the plugins

@@ -109,7 +109,8 @@ class Hbonds(Plugin):
                 print(table.content())
             else:
                 # Setup the table
-                table = MDTable('Num', 'Donor', 'Acceptor', 'Classification')
+                table = MDTable('Num', 'Donor', 'Acceptor', 'Classification',
+                                'E (kT) / Prob.')
                 table.title = ('Hydrogen bond '
                                'listing for {}'.format(molecule.name))
 
@@ -120,10 +121,28 @@ class Hbonds(Plugin):
                                                hbond.minor_modifier)
                     else:
                         minor = '{}'.format(hbond.minor_classification)
+
                     class_str = '{} ({})'.format(hbond.major_classification,
                                                 minor)
+                    energy = getattr(hbond, 'energy_hbond', '-')
+
+                    if isinstance(energy, float):
+                        if energy < mollib.core.settings.energy_cutoff_good:
+                            prob = exp(-1. * energy) * 100.
+                            E_prob = "{:>2.1f} / {:>4.1f}%".format(energy, prob)
+                            E_prob = FormattedStr(E_prob, 'green')
+                        elif energy < mollib.core.settings.energy_cutoff_warning:
+                            prob = exp(-1. * energy) * 100.
+                            E_prob = "{:>2.1f} / {:>4.1f}%".format(energy, prob)
+                            E_prob = FormattedStr(E_prob, 'yellow')
+
+                        else:
+                            prob = exp(-1. * energy) * 100.
+                            E_prob = "{:>2.1f} / {:>4.1f}%".format(energy, prob)
+                            E_prob = FormattedStr(E_prob, 'red')
+
                     table.add_row(count, hbond.donor, hbond.acceptor,
-                                  class_str)
+                                  class_str, E_prob)
                 print(table.content())
 
         # Process the Ramachandran angles. This function detects secondary
@@ -156,16 +175,17 @@ class Hbonds(Plugin):
                 # a '-' character, if it is within acceptable ranges.
                 if isinstance(energy, float):
                     if energy < mollib.core.settings.energy_cutoff_good:
-                        E_prob = 'ok'.center(9)
+                        prob = exp(-1. * energy) * 100.
+                        E_prob = "{:>2.1f} / {:>4.1f}%".format(energy, prob)
                         E_prob = FormattedStr(E_prob, 'green')
                     elif energy < mollib.core.settings.energy_cutoff_warning:
                         prob = exp(-1. * energy) * 100.
-                        E_prob = "{:>2.1f} / {:<3.1f}%".format(energy, prob)
+                        E_prob = "{:>2.1f} / {:>4.1f}%".format(energy, prob)
                         E_prob = FormattedStr(E_prob, 'yellow')
 
                     else:
                         prob = exp(-1. * energy) * 100.
-                        E_prob = "{:>2.1f} / {:<3.1f}%".format(energy, prob)
+                        E_prob = "{:>2.1f} / {:>4.1f}%".format(energy, prob)
                         E_prob = FormattedStr(E_prob, 'red')
 
                 table.add_row('{}.{}'.format(residue.chain.id, residue),

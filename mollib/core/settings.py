@@ -24,10 +24,14 @@ dataset_path = 'data/'
 
 #: Path for model input molecule identifiers
 model_molecule_identifiers = ('high_res.txt',
+                              #'high_res_short.txt',
                               )
 
 #: Path for the Ramachandran statistics datasets
 ramachandran_dataset_path = 'data/ramachandranstatistics/'
+
+#: Path for the Hbond statistics datasets
+hbond_dataset_path = 'data/hbondstatistics/'
 
 #: The cutoff Energy (in kT) to report good, warning and bad energies.
 energy_cutoff_good    = 3.4  # Within 96.6% of observed values
