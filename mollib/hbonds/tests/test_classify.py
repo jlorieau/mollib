@@ -29,9 +29,9 @@ class TestHbondClassify(unittest.TestCase):
                                7:  ('alpha-helix', ''),
                                8:  ('alpha-helix', ''),
                                9:  ('alpha-helix', ''),
-                               10: ('alpha-helix', 'C-term'),
+                               10: ('alpha-helix', ''),
                                11: ('alpha-helix', 'C-term'),
-                               12: ('', ''),
+                               12: ('alpha-helix', 'C-term'),
                                13: ('isolated', ''),
                                14: ('alpha-helix', 'N-term'),
                                15: ('alpha-helix', 'N-term'),
@@ -42,7 +42,7 @@ class TestHbondClassify(unittest.TestCase):
                                20: ('alpha-helix', ''),
                                21: ('alpha-helix', 'C-term'),
                                22: ('alpha-helix', 'C-term'),
-                               23: ('', ''),
+                               23: ('isolated', ''),
                                24: ('isolated', ''),
                                }
                       }
@@ -54,7 +54,7 @@ class TestHbondClassify(unittest.TestCase):
             for residue in mol.residues:
                 items = class_dict[residue.number]
                 hbond_classification, hbond_modifier = items
-
+                print(residue, residue.hbond_classification, residue.hbond_modifier)
                 self.assertEqual(residue.hbond_classification,
                                  hbond_classification)
                 self.assertEqual(residue.hbond_modifier,

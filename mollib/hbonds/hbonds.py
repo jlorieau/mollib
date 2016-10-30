@@ -363,7 +363,7 @@ def find_hbond_partners(molecule, donor1_elements=None, donor2_elements=None,
     >>> mol = Molecule('2KXA')
     >>> hbonds = find_hbond_partners(mol)
     >>> print(len(hbonds))
-    19
+    21
     >>> print(hbonds[0].short_repr())
     Hbond don.(A.G1-H2--N) - acc.(A.G20-O--C)
     """
