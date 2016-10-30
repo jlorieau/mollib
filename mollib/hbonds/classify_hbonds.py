@@ -1,9 +1,15 @@
 """
 Classify hydrogen bonds and residues
 """
-from . import settings as s
-
 from itertools import groupby
+import os
+import glob
+
+import numpy as np
+
+from . import settings as s
+import mollib.core.settings
+
 
 
 def within_range(value, value_range, wrap=None):
@@ -295,5 +301,99 @@ def classify_hbonds(hbonds):
     for hbond in hbonds:
         classify_major(hbond)
         classify_minor(hbond)
+        add_energy_hbonds(hbond)
     classify_groups(hbonds)
 
+
+#: The Hbond energy datasets
+energy_hbond_datasets = None
+
+
+def add_energy_hbonds(hbond):
+    """Add the Hbond energy (kT) to the HydrogenBond.
+
+    The energy is assigned based on the `hbond_classification` and the energies
+    computed from the statistics module data of HbondStatistics.
+
+    Parameters
+    ----------
+    residue: :obj:`mollib.hbonds.HydrogenBond`
+        The hydrogenbond gains the following attributes:
+
+    Added Residues Attributes
+    -------------------------
+    energy_hbond: float
+        The Hbond energy (in kT)
+    hbond_dataset: str
+        The name of the dataset used for the Hbond energy.
+    """
+    global energy_hbond_datasets
+
+    # Load the energy datasets.
+    if energy_hbond_datasets is None:
+        energy_hbond_datasets = {}
+
+        path = mollib.core.settings.hbond_dataset_path
+        path = os.path.join(path, '*.npz')
+        filepaths = glob.iglob(path)
+
+        for filepath in filepaths:
+            path, filename = os.path.split(filepath)
+            name, ext = os.path.splitext(filename)
+
+            # Load the dataset from a numpyz file
+            # The datasets are histogramdd datasets with a 3-d edges for the
+            # d1a1 distance, theta angle and phi angle.
+            try:
+                arrays = np.load(filepath)
+                d1a1_1d, theta_1d, phi_1d = arrays['arr_0']
+                energy_dataset = arrays['arr_1']
+            except IndexError:
+                continue
+
+            energy_hbond_datasets[name] = (d1a1_1d, theta_1d, phi_1d,
+                                           energy_dataset)
+
+    # Get the HydrogenBond's classification and see if we can find a matching
+    # energy dataset
+    major = hbond.major_classification
+    minor = hbond.minor_classification
+    modifier = hbond.minor_modifier
+    classification = '__'.join((major, minor))
+
+    if classification in energy_hbond_datasets:
+        (d1a1_1d, theta_1d, phi_1d,
+         energy_dataset) = energy_hbond_datasets[classification]
+        hbond.hbond_dataset = classification
+    elif major in energy_hbond_datasets:
+        (d1a1_1d, theta_1d, phi_1d,
+         energy_dataset) = energy_hbond_datasets[major]
+        hbond.hbond_dataset = major
+    else:
+        # Energy dataset not found. Nothing else can be done
+        return None
+
+    # Try to get the corresponding energy for this hbond
+    d1a1 = hbond.distances['d1a1']
+    theta = hbond.angles['theta']
+    phi = hbond.angles['phi']
+
+    # Find the corresponding index numbers for the energy array.
+    try:
+        d1a1_index = [i for i,p in enumerate(d1a1_1d) if p >= d1a1]
+        d1a1_index = d1a1_index[0]
+
+        theta_index = [i for i,p in enumerate(theta_1d) if p >= theta]
+        theta_index = theta_index[0]
+
+        phi_index = [i for i,p in enumerate(phi_1d) if p >= phi]
+        phi_index = phi_index[0]
+
+        energy = energy_dataset[d1a1_index - 1][theta_index - 1][phi_index - 1]
+    except IndexError as e:
+        msg = ("The d1a1 distanc {} and theta/phi angles ({},{}) could not be "
+               "found in the Hbond dataset.")
+        print(msg.format(d1a1, theta, phi))
+        raise e
+
+    hbond.energy_hbond = energy
