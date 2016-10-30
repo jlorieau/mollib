@@ -109,7 +109,7 @@ class Statistics(object):
 
         measurement_dict = self.get_measurement_dict()
         processed_ids = set(measurement_dict.keys())
-        to_process_ids = processed_ids ^ self.identifiers
+        to_process_ids = self.identifiers - processed_ids
 
         tarfile_object = self.open_measurement_tarfile()
 
@@ -190,10 +190,10 @@ class Statistics(object):
 
     def write_measurement_dict(self, identifier, d, tarfile_object):
         "Write the measurement dict."
-        try:
-            string = json.dumps(d)
-        except:
-            return None
+        # Dump the dict into a json string. Note that the dict's keys have
+        # to be strings
+        string = json.dumps(d)
+
 
         # Write the string buffer to the tar file
         tarinfo = tarfile.TarInfo(identifier + '.json')
