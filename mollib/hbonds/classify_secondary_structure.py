@@ -201,7 +201,7 @@ def add_energy_ramachandran(residue):
 
         # Get the energy from the energy_2d
         energy = energy_2d[psi_index - 1][phi_index - 1]
-    except KeyError as e:
+    except (KeyError, IndexError) as e:
         msg = ("The phi/psi angles ({},{}) for not be found in the "
                "Ramachandran dataset.")
         print(msg.format(phi, psi))
