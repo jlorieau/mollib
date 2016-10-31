@@ -391,9 +391,9 @@ def add_energy_hbonds(hbond):
 
         energy = energy_dataset[d1a1_index - 1][theta_index - 1][phi_index - 1]
     except IndexError as e:
-        msg = ("The d1a1 distanc {} and theta/phi angles ({},{}) could not be "
+        msg = ("The d1a1 distance {} and theta/phi angles ({},{}) could not be "
                "found in the Hbond dataset.")
         print(msg.format(d1a1, theta, phi))
-        raise e
+        return None
 
     hbond.energy_hbond = energy
