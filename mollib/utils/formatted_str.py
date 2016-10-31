@@ -6,6 +6,8 @@ import os
 import re
 import textwrap
 
+from . import term
+
 re_ansi = re.compile(r'\x1b\[\d+m')
 
 def wrap(string, *args, **kwargs):
@@ -146,8 +148,5 @@ class FormattedStr(str):
 
 
 # Setup the terminal
-try:
-    if os.isatty(sys.stdout.fileno()) or os.environ.get('FORCE_COLOR', False):
-        FormattedStr.color_term = True
-except:
-    pass
+if term.terminal or os.environ.get('FORCE_COLOR', False):
+    FormattedStr.color_term = True

@@ -6,6 +6,7 @@ Utilities for rendering information in Markdown
 from math import ceil
 
 from . import settings
+from . import term
 from .formatted_str import FormattedStr, wrap
 
 
@@ -74,7 +75,7 @@ class MDTable(object):
     column_titles = None
     rows = None
     multiline = False
-    max_width = settings.default_table_max_width
+    max_width = None
 
     def __init__(self, *args):
         """Constructor that initializes the column headers.
@@ -90,6 +91,11 @@ class MDTable(object):
         self.column_titles = [FormattedStr(i, 'bold') for i in args]
         self.rows = []
         self.title = None
+
+        if term.terminal and term.columns is not None:
+            self.max_width = term.columns
+        else:
+            self.max_width = settings.default_table_max_width
 
 
     def num_cols(self):
