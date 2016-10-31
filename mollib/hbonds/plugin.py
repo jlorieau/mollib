@@ -140,6 +140,8 @@ class Hbonds(Plugin):
                             prob = exp(-1. * energy) * 100.
                             E_prob = "{:>2.1f} / {:>4.1f}%".format(energy, prob)
                             E_prob = FormattedStr(E_prob, 'red')
+                    else:
+                        E_prob = '-'
 
                     table.add_row(count, hbond.donor, hbond.acceptor,
                                   class_str, E_prob)
