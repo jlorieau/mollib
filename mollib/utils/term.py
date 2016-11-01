@@ -14,11 +14,9 @@ Parameters
 import os
 import sys
 
-try:
-    os.isatty(sys.stdout.fileno())
+if sys.stdout.isatty():
     terminal = True
     rows, columns = os.popen('stty size', 'r').read().split()
-except:
+else:
     terminal = False
     rows, columns = None, None
-
