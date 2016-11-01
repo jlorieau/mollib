@@ -2,7 +2,7 @@ from math import exp
 
 import mollib.core.settings
 from mollib.utils import MDTable, FormattedStr
-from classify_secondary_structure import classify_residues
+from .classify_secondary_structure import classify_residues
 
 
 class RamaTable(MDTable):

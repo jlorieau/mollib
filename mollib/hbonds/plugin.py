@@ -4,12 +4,10 @@ The plugin for the hbond submodule.
 """
 from math import exp
 
-import mollib.core.settings
 from mollib.plugins import Plugin
-from mollib.hbonds import find_hbond_partners, classify_residues, settings
-from mollib.utils import MDTable, FormattedStr
-from hbond_table import HBondTable
-from rama_table import RamaTable
+from mollib.hbonds import find_hbond_partners, settings
+from .hbond_table import HBondTable
+from .rama_table import RamaTable
 
 
 class Hbonds(Plugin):
