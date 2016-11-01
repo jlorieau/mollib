@@ -32,6 +32,6 @@ class TestHydrogenBonds(unittest.TestCase):
         mol = Molecule('2N18')
         hbonds = find_hbond_partners(mol)
 
-        self.assertEqual(len(hbonds), 378)
+        self.assertEqual(len(hbonds), 492)
 
     
