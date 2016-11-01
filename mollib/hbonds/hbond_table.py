@@ -26,7 +26,7 @@ class HBondTable(MDTable):
 
         # Default settings
         self.detailed = settings.hbond_table_detailed
-        self.sort_type = settings.hbon_table_sort_type
+        self.sort_type = settings.hbond_table_sort_type
 
         # Copy over settings specified in the constructor.
         for key, value in kwargs.items():

@@ -163,4 +163,4 @@ minor_gly = 'Gly'
 hbond_table_detailed = False
 
 #: Sort HBond tables by the hydrogen bond type
-hbon_table_sort_type = False
+hbond_table_sort_type = False
