@@ -8,6 +8,8 @@ import mollib.core.settings
 from mollib.plugins import Plugin
 from mollib.hbonds import find_hbond_partners, classify_residues, settings
 from mollib.utils import MDTable, FormattedStr
+from hbond_table import HBondTable
+
 
 class Hbonds(Plugin):
     """The core plugin to offer the 'Hbonds' command."""
@@ -44,108 +46,25 @@ class Hbonds(Plugin):
         """Process the molecule by finding and reporting its hydrogen bonds.
         """
         if args.command == 'hbonds':
+            # Change the hydrogen bond search patterns for aliphatic
+            # hydrogen bonds
             if getattr(args, 'aliphatic', False):
                 settings.donor2_elements += "|C|13C"
                 settings.hbond_distance_cutoff['d1a1']= (1.8, 3.0)
 
+            # Get the specified settings
+            if hasattr(args, 'sort_type'):
+                settings.hbond_table_sort_type = args.sort_type
+            if hasattr(args, 'detailed'):
+                settings.hbond_table_detailed = args.detailed
+
+            # Measure the hydrogen bonds
             hbonds = find_hbond_partners(molecule)
 
-            # Sort the hbonds by the given criteria
-            if getattr(args, 'sort_type', False):
-                hbonds = sorted(hbonds,
-                                key=lambda hb: (hb.major_classification,
-                                                hb.minor_classification,
-                                                hb.donor.atom2.residue.number))
-
-            if getattr(args, 'detailed', False):
-                # Setup the table
-                table = MDTable('Num', 'Donor', 'Acceptor',
-                                'Parameter', 'Value')
-                table.title = ('Hydrogen bond detailed '
-                               'listing for {}'.format(molecule.name))
-
-                # Add the Hbonds to the table
-                for count, hbond in enumerate(hbonds, 1):
-                    # Get the dipole atom distances
-                    dists = [(atoms, d)
-                             for atoms,d in sorted(hbond.distances.items(),
-                                                   key=lambda i: i[1])]
-
-                    # Convert the distance names and distances to strings
-                    # Add the atom names
-                    for i in range(len(dists)):
-                        a = dists[i][0]
-                        dist = dists[i][1]
-                        name = ''.join(('{', a[0:2], '}...{', a[2:4], '}'))
-                        name = name.format(a1=hbond.acceptor.atom1,
-                                           a2=hbond.acceptor.atom2,
-                                           d1=hbond.donor.atom1,
-                                           d2=hbond.donor.atom2)
-
-                        dist = '{:3.2f}'.format(dist)
-                        dists[i] = (name, dist)
-
-                    # Get the dipole angles
-                    angs = [(name, a)
-                             for name,a in sorted(hbond.angles.items(),
-                                                   key=lambda i: i[1])]
-
-                    # Add the hbond row with the first distance.
-                    table.add_row(count, hbond.donor, hbond.acceptor,
-                                  dists[0][0], dists[0][1])
-
-                    # Add the distance rows
-                    for name, d in dists[1:]:
-
-                        # Create the rows
-                        table.add_row('', '', '', name, d)
-
-                    # Add the angle rows
-                    for name, a in angs:
-                        table.add_row('', '', '', name, a)
-
-                    table.add_blank_row()
-
-                print(table.content())
-            else:
-                # Setup the table
-                table = MDTable('Num', 'Donor', 'Acceptor', 'Classification',
-                                'E (kT) / Prob.')
-                table.title = ('Hydrogen bond '
-                               'listing for {}'.format(molecule.name))
-
-                # Add the Hbonds to the table
-                for count, hbond in enumerate(hbonds, 1):
-                    if hbond.minor_modifier:
-                        minor = '{}/{}'.format(hbond.minor_classification,
-                                               hbond.minor_modifier)
-                    else:
-                        minor = '{}'.format(hbond.minor_classification)
-
-                    class_str = '{} ({})'.format(hbond.major_classification,
-                                                minor)
-                    energy = getattr(hbond, 'energy_hbond', '-')
-
-                    if isinstance(energy, float):
-                        if energy < mollib.core.settings.energy_cutoff_good:
-                            prob = exp(-1. * energy) * 100.
-                            E_prob = "{:>2.1f} / {:>4.1f}%".format(energy, prob)
-                            E_prob = FormattedStr(E_prob, 'green')
-                        elif energy < mollib.core.settings.energy_cutoff_warning:
-                            prob = exp(-1. * energy) * 100.
-                            E_prob = "{:>2.1f} / {:>4.1f}%".format(energy, prob)
-                            E_prob = FormattedStr(E_prob, 'yellow')
-
-                        else:
-                            prob = exp(-1. * energy) * 100.
-                            E_prob = "{:>2.1f} / {:>4.1f}%".format(energy, prob)
-                            E_prob = FormattedStr(E_prob, 'red')
-                    else:
-                        E_prob = '-'
-
-                    table.add_row(count, hbond.donor, hbond.acceptor,
-                                  class_str, E_prob)
-                print(table.content())
+            # Setup and print the table
+            table = HBondTable(hbonds)
+            table.title = ('Hydrogen bond listing for {}'.format(molecule.name))
+            print(table.content())
 
         # Process the Ramachandran angles. This function detects secondary
         # structure units from hbonds.

@@ -158,3 +158,9 @@ minor_C = 'C-term'
 
 #: Minor classification for glycines
 minor_gly = 'Gly'
+
+#: Render HBond tables with detailed information
+hbond_table_detailed = False
+
+#: Sort HBond tables by the hydrogen bond type
+hbon_table_sort_type = False
