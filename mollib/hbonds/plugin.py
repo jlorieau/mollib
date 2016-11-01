@@ -9,6 +9,7 @@ from mollib.plugins import Plugin
 from mollib.hbonds import find_hbond_partners, classify_residues, settings
 from mollib.utils import MDTable, FormattedStr
 from hbond_table import HBondTable
+from rama_table import RamaTable
 
 
 class Hbonds(Plugin):
@@ -70,49 +71,7 @@ class Hbonds(Plugin):
         # structure units from hbonds.
         if getattr(args, 'rama', False):
             # Setup the table
-            table = MDTable('Residue', 'Phi (deg)', 'Psi (deg)',
-                            'Classification', 'E (kT) / Prob.')
+            table = RamaTable(molecule)
             table.title = ('Ramachandran angles '
                            'for {}'.format(molecule.name))
-
-            # Classify the residues based on their backbone amide hydrogen
-            # bonds
-            classify_residues(molecule)
-
-            # Populate the table with the ramachandran angles and secondary
-            # structure classifications.
-            energies = []
-            for residue in molecule.residues:
-                # Skip heteroatom chains
-                if '*' in residue.chain.id:
-                    continue
-
-                phi, psi = residue.ramachandran_angles
-                classification = getattr(residue, 'hbond_classification', '')
-                energy = getattr(residue, 'energy_ramachandran', '-')
-
-                # If the energy has a value (float) and it is above the energy
-                # cutoff, add its value to the table. Otherwise, just print
-                # a '-' character, if it is within acceptable ranges.
-                if isinstance(energy, float):
-                    if energy < mollib.core.settings.energy_cutoff_good:
-                        prob = exp(-1. * energy) * 100.
-                        E_prob = "{:>2.1f} / {:>4.1f}%".format(energy, prob)
-                        E_prob = FormattedStr(E_prob, 'green')
-                    elif energy < mollib.core.settings.energy_cutoff_warning:
-                        prob = exp(-1. * energy) * 100.
-                        E_prob = "{:>2.1f} / {:>4.1f}%".format(energy, prob)
-                        E_prob = FormattedStr(E_prob, 'yellow')
-
-                    else:
-                        prob = exp(-1. * energy) * 100.
-                        E_prob = "{:>2.1f} / {:>4.1f}%".format(energy, prob)
-                        E_prob = FormattedStr(E_prob, 'red')
-
-                table.add_row('{}.{}'.format(residue.chain.id, residue),
-                              "{:>6.1f}".format(phi or 0.),
-                              "{:>6.1f}".format(psi or 0.),
-                              classification,
-                              E_prob)
-
             print(table.content())
