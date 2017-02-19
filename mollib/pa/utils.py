@@ -4,7 +4,8 @@ from itertools import chain
 
 re_label = re.compile(r'(?P<subunit>[A-Z]+\.)?(?P<number>\d*)(?P<name>[A-Z]+)')
 
-
+# TODO: rename to interaction_label.     >>> interaction_key('13CA-HA#')
+#    ('A', 13, 'CA', 'A', 13, 'HA#')
 def tensor_str_to_key(string, default_subunit='A'):
     """Convert a tensor string into a tuple key.
 

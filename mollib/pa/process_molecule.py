@@ -1,7 +1,7 @@
 """
 Tools to process the dipolar and chemical shift tensors for a molecule.
 """
-from math import sqrt
+from math import sqrt, pi
 
 import numpy as np
 
@@ -28,6 +28,8 @@ def get_subclasses(cls):
 class Process(object):
     """Process molecules into dipolar and anisotropic chemical shift
     interactions for the SVD analysis.
+
+    The Process is a Chain-of-Responsibility pattern.
 
     Attributes
     ----------
@@ -115,7 +117,7 @@ class ProcessDipole(Process):
                 msg = "The gyromagnetic ratio for atom {} or {} is not specified."
                 raise PartialAlignmentException(msg.format(atom1, atom2))
 
-            dcc = -1. * 1.E-7 * 1.05457E-34 * g1 * g2
+            dcc = -1. * 1.E-7 * 1.05457E-34 * g1 * g2 / (2. * pi)
 
             self.dcc[(atom1.element, atom2.element)] = dcc
 
@@ -135,7 +137,7 @@ class ProcessDipole(Process):
                         2. * cos_x * cos_y,   # Cxy
                         2. * cos_x * cos_z,   # Cxz
                         2. * cos_y * cos_z))  # Cyz
-
+        print(dcc * r**-3 * 1.E30)
         # scale the array by the dipolar coupling. Convert from Angstroms to
         # meters
         arr *= dcc * r**-3 * 1.E30
@@ -204,5 +206,148 @@ class ProcessNHDipole(ProcessDipole):
 
         return self.magnetic_interactions
 
-class ProcessACS:
-    pass
+class ProcessACS(Process):
+
+
+    def process_chemical_shift(self, atom, ref_atom1, ref_atom2):
+        """Process the anisotropic chemical for the given atom.
+
+        Parameters
+        ----------
+        atom: :obj:`mollib.Atom`
+            The atom to calculate the chemical shift fot.
+        ref_atom: :obj:`mollib.Atom`
+            The reference atom. This is a bonded heavy atom that is needed
+            to locate the PAS in reference to atom.
+
+        Returns
+        -------
+        array: `numpy.array`
+            The array for the SVD of this dipole.
+        """
+        # # Calculate or retrieve cached the static dipolar coupling constant
+        # if not hasattr(self, 'dcc'):
+        #     self.dcc = {}
+        # if (atom1.element, atom2.element) not in self.dcc:
+        #     # Get the gyromagnetic ratios for the atoms, based on their elements.
+        #     g = settings.gamma  # set the gyromagnetic ratio
+        #
+        #     try:
+        #         g1 = g[atom1.element]
+        #         g2 = g[atom2.element]
+        #     except KeyError:
+        #         msg = "The gyromagnetic ratio for atom {} or {} is not specified."
+        #         raise PartialAlignmentException(msg.format(atom1, atom2))
+        #
+        #     dcc = -1. * 1.E-7 * 1.05457E-34 * g1 * g2
+        #
+        #     self.dcc[(atom1.element, atom2.element)] = dcc
+        #
+        # dcc = self.dcc[(atom1.element, atom2.element)]
+
+        # Now calculate the tensor orientations and directional cosines
+        vec1 = atom.pos - ref_atom1.pos
+        length = np.linalg.norm(vec1)
+        if length > 0.:
+            vec1 /= length
+
+        v = ref_atom1.pos - ref_atom2.pos
+        length = np.linalg.norm(v)
+        if length > 0.:
+            v /= length
+
+        vec2 = np.cross(vec1, v)
+        length = np.linalg.norm(vec2)
+        if length > 0.:
+            vec2 /= length
+
+        vec3 = np.cross(vec1, vec2)
+        length = np.linalg.norm(vec3)
+        if length > 0.:
+            vec3 /= length
+
+
+        vzz = vec2  # vec2
+        vyy = vec1  # vec1
+        vxx = vec3  # vec3
+
+
+        dzz = 5.8   #ppm
+        dyy = -5.8
+        dxx = 0.0
+
+        # Construct the array. Definition from J Biomol NMR (2010) 47:249-258.
+        # arr = np.array((((2. / 3.) * dxx * (vyy[0] ** 2 - vxx[0] ** 2) + # Cyy
+        #                  (2. / 3.) * dyy * (vyy[1] ** 2 - vxx[1] ** 2) +
+        #                  (2. / 3.) * dzz * (vyy[2] ** 2 - vxx[2] ** 2)),
+        #
+        #                 ((2. / 3.) * dxx * (vzz[0] ** 2 - vxx[0] ** 2) +  # Czz
+        #                  (2. / 3.) * dyy * (vzz[1] ** 2 - vxx[1] ** 2) +
+        #                  (2. / 3.) * dzz * (vzz[2] ** 2 - vxx[2] ** 2)),
+        #
+        #                 ((4. / 3.) * dxx * vxx[0] * vyy[0] +  # Cxy
+        #                  (4. / 3.) * dyy * vxx[1] * vyy[1] +
+        #                  (4. / 3.) * dzz * vxx[2] * vyy[2]),
+        #
+        #                 ((4. / 3.) * dxx * vxx[0] * vzz[0] +  # Cxz
+        #                  (4. / 3.) * dyy * vxx[1] * vzz[1] +
+        #                  (4. / 3.) * dzz * vxx[2] * vzz[2]),
+        #
+        #                 ((4. / 3.) * dxx * vyy[0] * vzz[0] +  # Cyz
+        #                  (4. / 3.) * dyy * vyy[1] * vzz[1] +
+        #                  (4. / 3.) * dzz * vyy[2] * vzz[2])))
+
+        arr = np.array((((2. / 3.) * dxx * (vxx[1] ** 2 - vxx[0] ** 2) +  # Cyy
+                         (2. / 3.) * dyy * (vyy[1] ** 2 - vyy[0] ** 2) +
+                         (2. / 3.) * dzz * (vzz[1] ** 2 - vzz[0] ** 2)),
+
+                        ((2. / 3.) * dxx * (vxx[2] ** 2 - vxx[0] ** 2) +  # Czz
+                         (2. / 3.) * dyy * (vyy[2] ** 2 - vyy[0] ** 2) +
+                         (2. / 3.) * dzz * (vzz[2] ** 2 - vzz[0] ** 2)),
+
+                        ((4. / 3.) * dxx * vxx[0] * vxx[1] +  # Cxy
+                         (4. / 3.) * dyy * vyy[0] * vyy[1] +
+                         (4. / 3.) * dzz * vzz[0] * vzz[1]),
+
+                        ((4. / 3.) * dxx * vxx[0] * vxx[2] +  # Cxz
+                         (4. / 3.) * dyy * vyy[0] * vyy[2] +
+                         (4. / 3.) * dzz * vzz[0] * vzz[2]),
+
+                        ((4. / 3.) * dxx * vxx[1] * vxx[2] +  # Cyz
+                         (4. / 3.) * dyy * vyy[1] * vyy[2] +
+                         (4. / 3.) * dzz * vzz[1] * vzz[2])))
+
+        return arr * 1000.
+
+class ProcessHACS(ProcessACS):
+    """Process the N-H dipoles (AX spin system) in the molecule."""
+
+    _run_automatically = True
+
+
+    def process(self, **kwargs):
+        """Process the H ACSs in the molecule(s)."""
+
+
+        for d, molecule in zip(self.magnetic_interactions, self.molecules):
+
+            for residue in molecule.residues:
+                if 'H' not in residue:
+                    continue
+
+                prev_residue = residue.prev_residue
+
+                if (prev_residue is None or
+                    'N' not in residue or
+                    'C' not in prev_residue):
+                    continue
+
+                H = residue['H']
+                N = residue['N']
+                C = prev_residue['C']
+
+                key = (residue.chain.id, residue.number, 'H')
+                arr = self.process_chemical_shift(H, N, C)
+                d[key] = arr
+
+        return self.magnetic_interactions
