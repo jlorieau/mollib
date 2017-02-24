@@ -3,9 +3,13 @@ These are utility functions for changing between interaction labels and label
 keys. String labels are useful for saving text files, while label keys are
 useful for identifying interaction relationships between atoms.
 """
+# TODO: Incorporate a '+' character. ex: 13CA-HA#+HB# or 13C-(HA#HB#)
+
 import re
 from string import digits
 from itertools import chain, product
+import logging
+
 from .ordered_set import OrderedSet
 
 
@@ -13,9 +17,6 @@ re_label = re.compile(r'(?P<subunit>[A-Z]+\.)?'
                       r'(?P<number>\d*)'
                       r'(?P<name>[A-Z0-9]+)'
                       r'(?P<wildcard>.?)')
-
-
-class ValidationError(Exception): pass
 
 
 def interaction_key(label, default_subunit='A',
@@ -230,14 +231,9 @@ def validate_label(label, *args, **kwargs):
 
     Returns
     -------
-    label: str
+    label: str or None
         A reformatted, unambiguous interaction label. ex: A.15N or 14N-H.
-
-    Raises
-    ------
-    ValidationError
-        If the label is poorly formatted or there is too little information
-        to be able to validate it.
+        None is returned if the label cannot be parsed.
 
     Examples
     --------
@@ -254,16 +250,14 @@ def validate_label(label, *args, **kwargs):
     >>> validate_label('35HB2')
     'A.35HB2'
     >>> validate_label('C')
-    Traceback (most recent call last):
-    ...
-    ValidationError: The label 'C' does not correspond to an interaction label.
     """
     try:
         key = interaction_key(label, *args, **kwargs)
         reformated_label = interaction_label(key, *args, **kwargs)
     except:
         msg = "The label '{}' does not correspond to an interaction label."
-        raise ValidationError(msg.format(label))
+        logging.error(msg.format(label))
+        return None
     return reformated_label
 
 
