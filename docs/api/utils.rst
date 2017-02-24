@@ -11,6 +11,12 @@ Markdown
     :members:
     :special-members:
 
+Interaction Labels and Keys
+===========================
+
+.. automodule:: mollib.utils.interactions
+    :members:
+
 Settings
 ========
 

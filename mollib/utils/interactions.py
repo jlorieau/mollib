@@ -1,18 +1,21 @@
 """
-These are utility functions for changing between string labels and label keys.
-String labels are useful for saving text files, while label keys are useful
-for identifying atoms, groups or atoms or other objects.
+These are utility functions for changing between interaction labels and label
+keys. String labels are useful for saving text files, while label keys are
+useful for identifying interaction relationships between atoms.
 """
 import re
 from string import digits
-from itertools import chain
+from itertools import chain, product
 from .ordered_set import OrderedSet
 
 
 re_label = re.compile(r'(?P<subunit>[A-Z]+\.)?'
                       r'(?P<number>\d*)'
-                      r'(?P<name>[A-Z]+)'
+                      r'(?P<name>[A-Z0-9]+)'
                       r'(?P<wildcard>.?)')
+
+
+class ValidationError(Exception): pass
 
 
 def interaction_key(label, default_subunit='A',
@@ -51,11 +54,13 @@ def interaction_key(label, default_subunit='A',
     >>> interaction_key('A.14H-13C')
     (('A', 14, 'H'), ('A', 13, 'C'))
     >>> interaction_key('B.18C')
-    ('B', 18, 'C')
+    (('B', 18, 'C'),)
     >>> interaction_key('C')
-    ('A', None, 'C')
+    (('A', None, 'C'),)
     >>> interaction_key('13CA-HA#')
     (('A', 13, 'CA'), ('A', 13, 'HA1', 'HA2', 'HA3'))
+    >>> interaction_key('35HB2')
+    (('A', 35, 'HB2'),)
     """
     # Split the string about the '-' character
     pieces = label.split('-')
@@ -99,11 +104,7 @@ def interaction_key(label, default_subunit='A',
         prev_residue_number = residue_number
         prev_subunit = subunit
 
-
-    if len(key) == 1:
-        return tuple(key[0])
-    else:
-        return tuple(key)
+    return tuple(key)
 
 
 def _convert_sublabel(wildcard_char, group_startswith,
@@ -168,7 +169,7 @@ def interaction_label(key, wildcard_char='#', group_startswith=('H',)):
 
     Examples
     --------
-    >>> interaction_label(('A', 13, 'C'))
+    >>> interaction_label((('A', 13, 'C'),))
     'A.13C'
     >>> interaction_label((('A', 14, 'N'), ('A', 14, 'H')))
     'A.14N-H'
@@ -183,21 +184,10 @@ def interaction_label(key, wildcard_char='#', group_startswith=('H',)):
     ...
     KeyError: "None cannot be in the key (('A', None, 'N'), ('A', 14, 'H'))"
     """
-    # Determine whether we have a multi key (i.e. a key that is a tuple of
-    # tuples) or just a key (i.e. a simple tuple of items)
-    multi_key = True if isinstance(key[0], tuple) else False
-
     # Check that None is not in the key
-    if None in key or (multi_key and None in chain(*key)):
+    # if None in key or (multi_key and None in chain(*key)):
+    if None in chain(*key):
         raise KeyError('None cannot be in the key {}'.format(key))
-
-    # If it's not a multi key, then simply format the label
-    if not multi_key:
-        subunit = key[0] + '.'
-        res_number = key[1]
-        atom_names = key[2:]
-        return _convert_sublabel(wildcard_char, group_startswith, subunit,
-                                 res_number, *atom_names)
 
     # In this case, it's a multi-key that refers to multiple atoms.
     # Keep track of the previous subunit and residue number so that these
@@ -230,5 +220,118 @@ def interaction_label(key, wildcard_char='#', group_startswith=('H',)):
     return '-'.join(string_list)
 
 
-def interaction_permutations(molecule, key_or_label):
-    pass
+def validate_label(label, *args, **kwargs):
+    """Reformat an interaction label so that it is unambiguous.
+
+    Parameters
+    ----------
+    label: str
+        An interaction label. ex: 15N or 14N-H.
+
+    Returns
+    -------
+    label: str
+        A reformatted, unambiguous interaction label. ex: A.15N or 14N-H.
+
+    Raises
+    ------
+    ValidationError
+        If the label is poorly formatted or there is too little information
+        to be able to validate it.
+
+    Examples
+    --------
+    >>> validate_label('14N-H')
+    'A.14N-H'
+    >>> validate_label('A.14H-13C')
+    'A.14H-13C'
+    >>> validate_label('A.14H-B.13C')
+    'A.14H-B.13C'
+    >>> validate_label('B.18C')
+    'B.18C'
+    >>> validate_label('13CA-HA#')
+    'A.13CA-HA#'
+    >>> validate_label('35HB2')
+    'A.35HB2'
+    >>> validate_label('C')
+    Traceback (most recent call last):
+    ...
+    ValidationError: The label 'C' does not correspond to an interaction label.
+    """
+    try:
+        key = interaction_key(label, *args, **kwargs)
+        reformated_label = interaction_label(key, *args, **kwargs)
+    except:
+        msg = "The label '{}' does not correspond to an interaction label."
+        raise ValidationError(msg.format(label))
+    return reformated_label
+
+
+def _key_to_atom(molecule, subunit, residue_number, atom_name):
+    """(Private) helper function to convert a key to an atom for the given
+    molecule."""
+    if (subunit in molecule and
+        residue_number in molecule[subunit] and
+        atom_name in molecule[subunit][residue_number]):
+        return molecule[subunit][residue_number][atom_name]
+    else:
+        return None
+
+
+def interaction_atoms(key_or_label, molecule):
+    """A list of atom combinations for atoms identified by the interaction key
+    or label.
+
+    Parameters
+    ----------
+    molecule: :obj:`mollib.Molecule`
+        A molecule from which combinations of atoms will be returned.
+    key_or_label: str or tuple
+        An interaction_label or interaction_key identifying atoms whose
+        combinations are returned.
+
+    Returns
+    -------
+    list of list of interaction atoms
+        A list of combinations of interacting atoms.
+
+    >>> from mollib import Molecule
+    >>> mol = Molecule('2MJB')
+    >>> interaction_atoms('13C', mol)
+    [[A.I13-C]]
+    >>> interaction_atoms('35HA#', mol)
+    [[A.G35-HA2], [A.G35-HA3]]
+    >>> interaction_atoms('14N-H', mol)
+    [[A.T14-N, A.T14-H]]
+    >>> interaction_atoms('A.14H-13C', mol)
+    [[A.T14-H, A.I13-C]]
+    >>> interaction_atoms('35CA-HA#', mol)
+    [[A.G35-CA, A.G35-HA2], [A.G35-CA, A.G35-HA3]]
+    >>> interaction_atoms('33CA-HA-HB#', mol)
+    [[A.K33-CA, A.K33-HA, A.K33-HB2], [A.K33-CA, A.K33-HA, A.K33-HB3]]
+
+    """
+    if isinstance(key_or_label, str):
+        key = interaction_key(key_or_label)
+    elif isinstance(key_or_label, tuple):
+        key = key_or_label
+    else:
+        msg = ("The key or label '{}' must either be an identifier key or label"
+               " string")
+        raise KeyError(msg.format(key_or_label))
+
+    # Prepare the combinations
+    item_lists = []
+    for item in key:
+        subunit = item[0]
+        res_number = item[1]
+        atom_names = item[2:]
+
+        item_lists.append([(subunit, res_number, i) for i in atom_names])
+
+    combs = product(*item_lists)
+
+    # Convert keys to atom instances.
+    return filter(lambda y: all(y),
+                  [map(lambda x: _key_to_atom(molecule, *x), i)
+                   for i in combs])
