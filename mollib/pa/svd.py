@@ -5,9 +5,6 @@ Functions to conduct the SVD on the RDCs and RACS.
 import numpy as np
 from scipy import linalg
 
-from .utils import tensor_str_to_key
-
-
 def Saupe_matrices(interaction_arrays, data):
     """Calculate the best-fit Saupe matrices for the given interaction_arrays
     and data.

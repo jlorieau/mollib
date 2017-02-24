@@ -3,8 +3,9 @@
 Read in RDC and RACS data from files.
 """
 import re
+
+from mollib.utils.interactions import validate_label
 from .data_types import RDC, RACS
-from .utils import tensor_str_to_key
 
 
 re_pa = re.compile(r'\s*'
@@ -74,10 +75,10 @@ def read_pa_string(string):
     ...
     ... 5C                112         1''')
     >>> for k, v in sorted(data.items()):
-    ...     print("{:<35} {}".format(k, v))
-    ('A', 5, 'C')                       racs(112.0±1.0)
-    (('A', 14, 'N'), ('A', 14, 'H'))    rdc(-14.5±0.1)
-    (('A', 15, 'N'), ('A', 15, 'H'))    rdc(3.5±0.0)
+    ...     print("{:<10} {}".format(k, v))
+    A.14N-H    rdc(-14.5±0.1)
+    A.15N-H    rdc(3.5±0.0)
+    A.5C       racs(112.0±1.0)
     """
     # Convert the string into a list of lines, if it isn't already.
     if not isinstance(string, list):
@@ -94,18 +95,21 @@ def read_pa_string(string):
         d = match.groupdict()
 
         # TODO: switch default error to values in the settings file.
-        interaction_key = tensor_str_to_key(d['interaction'])
+        interaction_key = validate_label(d['interaction'])
         value = float(d['value'])
         error = float(d['error'] if d['error'] else 0.0)
 
         # Add the Datum to the data list. If the interaction_label has a '-'
-        # character, then it is refering the multiple atoms and must be a
+        # character, then it is referring the multiple atoms and must be a
         # residual dipolar coupling (RDC). Otherwise, it's a residual
         # anisotropic chemical shift (RACS).
-        if len(interaction_key) == 2:
+        hyphen_count = interaction_key.count('-')
+        if hyphen_count == 1:
             data[interaction_key] = RDC(value=value, error=error)
-        else:
+        elif hyphen_count == 0:
             data[interaction_key] = RACS(value=value, error=error)
+        else:
+            continue
 
     return data
 
