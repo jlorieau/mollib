@@ -56,7 +56,7 @@ def convert(s):
     # All else fails, try just returning the string
     return str(s).strip()
 
-
+# TODO: Use the version from utils.iter_tools
 def grouper(n, iterable, fillvalue=None):
     "grouper(3, 'ABCDEFG', 'x') --> ABC DEF Gxx."
     args = [iter(iterable)] * n
