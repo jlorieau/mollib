@@ -60,9 +60,9 @@ def Saupe_matrices(interaction_arrays, data):
         w_inv[i] = 0. if np.isinf(w_inv[i]) else w_inv[i]
     w_inv = linalg.diagsvd(w_inv, w.shape[0], w.shape[0])
 
-    # Calculate the Saupe matrix
+    # Calculate the S matrix
     A_inv = np.dot(V.transpose(), np.dot(w_inv, U.transpose()))
-    Saupe = np.dot(A_inv, D)
+    S = np.dot(A_inv, D)
 
     # Calculate the A matrix for all the interactions in the interaction_dict.
     keys = {i for d in interaction_arrays for i in d.keys()}
@@ -74,7 +74,7 @@ def Saupe_matrices(interaction_arrays, data):
                 continue
             A.extend([interaction_dict[key]])
 
-    D_pred = np.dot(A, Saupe)
+    D_pred = np.dot(A, S)
 
     # Calculate the predicted data. It must be sorted the same way as the
     # interaction_dict
@@ -82,5 +82,23 @@ def Saupe_matrices(interaction_arrays, data):
     for key, D in zip(ordered_keys, D_pred):
         data_pred[key] = D
 
-    return Saupe, data_pred
+    # Break up the S matrix into individual Saupe matrices, Das and Rh
+    S_xyz = []
+    Da, Dr, Rh = [], [], []
+    for x in range(0, len(S), 5):
+        s = S[x:x + 5]
+        s_xyz = np.array([[-0.5 * (s[0] - s[1]), s[2], s[3], ],
+                         [s[2], -0.5 * (s[0] + s[1]), s[4]],
+                         [s[3], s[4], s[0]]])
+        s_xyz = linalg.eigvals(s_xyz).real
+        S_xyz.append(s_xyz)
+
+        xx, yy, zz = [i for i in sorted(abs(s_xyz))]
+        da = max(s_xyz) / 2. if max(s_xyz) == zz else min(s_xyz) / 2.
+        dr = (yy - xx) / 3.
+        Da.append(da)
+        Dr.append(dr)
+        Rh.append(dr / abs(da))
+
+    return data_pred, S_xyz, Da, Dr, Rh
 

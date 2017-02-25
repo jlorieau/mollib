@@ -1,4 +1,5 @@
 import unittest
+import re
 
 from mollib import Molecule
 from mollib.pa.process_molecule import Process
@@ -199,6 +200,15 @@ pna_rdc = """
 # """
 
 
+re_label_sort = re.compile(r'[A-Z]?\.?(\d+)(.+)')
+def sort_key(label):
+    m = re_label_sort.match(label)
+    if m:
+        groups = m.groups()
+        return (groups[1], int(groups[0]))
+    else:
+        return None
+
 class TestSVD(unittest.TestCase):
 
     def test_svd_ubiquitin_NH(self):
@@ -207,16 +217,20 @@ class TestSVD(unittest.TestCase):
         mol = Molecule('2MJB')
         process = Process(mol)
         dipole_arrays = process.process()
-        # process2 = ProcessHACS(mol,
-        #                     magnetic_interactions=process.magnetic_interactions)
 
         data = read_pa_string(pna_rdc)
 
-        saupe, data_pred = Saupe_matrices(dipole_arrays, data)
+        data_pred, S_xyz, Da, Dr, Rh = Saupe_matrices(dipole_arrays, data)
+
+        for i, j, k, l, in zip(S_xyz, Da, Dr, Rh):
+            print('S_xyz', i)
+            print('Da', j)
+            print('Dr', k)
+            print('Rh', l)
 
         rss = 0.
         count = 0
-        for label in sorted(data_pred):
+        for label in sorted(data_pred, key=sort_key):
             if label in data:
                 rss += (data[label].value - data_pred[label])**2
                 count += 1
