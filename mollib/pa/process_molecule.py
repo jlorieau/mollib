@@ -11,7 +11,6 @@ from mollib.utils.interactions import interaction_label, interaction_atoms
 from . import settings
 
 
-
 class Process(object):
     """Process molecules into dipolar and anisotropic chemical shift
     interactions for the SVD analysis.
@@ -108,7 +107,6 @@ class ProcessDipole(Process):
                 return None
 
             dcc = -1. * 1.E-7 * 1.05457E-34 * g1 * g2 / (2. * pi)
-
             self.dcc[(atom1.element, atom2.element)] = dcc
 
         dcc = self.dcc[(atom1.element, atom2.element)]
@@ -131,7 +129,6 @@ class ProcessDipole(Process):
         # scale the array by the dipolar coupling. Convert from Angstroms to
         # meters
         arr *= dcc * r**-3 * 1.E30
-
         return arr
 
     def process(self, labels=None, **kwargs):
@@ -162,12 +159,40 @@ class ProcessDipole(Process):
         if self._run_automatically:
             for molecule in self.molecules:
                 for residue in molecule.residues:
-                    for a1, a2 in settings.default_predicted_rdcs:
-                        if a1 in residue and a2 in residue:
-                            key = ((residue.chain.id, residue.number, a1),
-                                   (residue.chain.id, residue.number, a2))
-                            label = interaction_label(key)
-                            labels.add(label)
+                    for name1, name2 in settings.default_predicted_rdcs.keys():
+                        # Get the correct atoms.
+                        # 1. Check to see if the atom name is in this
+                        #    residue.
+                        # 2. Some of the atom names may include '-1' at the
+                        #    end (i.e. 'C-1'), which refers to an atom in the
+                        #    previous residue. Check to see if a previous
+                        #    residue is specified (not None), the retrieve the
+                        #    atom from the previous residue.
+                        if name1 in residue:
+                            a1 = residue[name1]
+                        elif (name1.endswith('-1') and
+                              residue.prev_residue is not None and
+                              name1[:-2] in residue.prev_residue):
+                            # Strip the last two characters from the name
+                            # because they're '-1'. i.e.: 'C-1' becomes 'C'
+                            a1 = residue.prev_residue[name1[:-2]]
+                        else:
+                            continue
+
+                        if name2 in residue:
+                            a2 = residue[name2]
+                        elif (name2.endswith('-1') and
+                              residue.prev_residue is not None and
+                              name2[:-2] in residue.prev_residue):
+                            a2 = residue.prev_residue[name2[:-2]]
+                        else:
+                            continue
+
+                        # The atoms exist. Create an interaction label
+                        key = ((a1.chain.id, a1.residue.number, a1.name),
+                               (a2.chain.id, a2.residue.number, a2.name))
+                        label = interaction_label(key)
+                        labels.add(label)
 
         for label in labels:
             # Find the dipole and procress
