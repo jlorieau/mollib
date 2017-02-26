@@ -67,7 +67,7 @@ Preprocessors Arguments
     ``--hydrogenate``
         Strip all hydrogen atoms and re-add hydrogens based on ideal geometry.
         More details on the current implementation can be found in the API
-        documentation :doc:`../api/hydrogens`.
+        documentation :doc:`../api/hydrogens/hydrogens`.
 
 
         .. note:: Adding two hydrogens to an sp2 heavy atom will label the

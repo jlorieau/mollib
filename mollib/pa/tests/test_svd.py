@@ -216,11 +216,12 @@ class TestSVD(unittest.TestCase):
 
         mol = Molecule('2MJB')
         process = Process(mol)
-        dipole_arrays = process.process()
+        magnetic_interactions = process.process()
 
         data = read_pa_string(pna_rdc)
 
-        data_pred, S_xyz, Da, Dr, Rh = Saupe_matrices(dipole_arrays, data)
+        data_pred, S_xyz, Da, Dr, Rh = Saupe_matrices(magnetic_interactions,
+                                                      data)
 
         for i, j, k, l, in zip(S_xyz, Da, Dr, Rh):
             print('S_xyz', i)

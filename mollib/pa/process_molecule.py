@@ -13,16 +13,17 @@ from . import settings
 
 class Process(object):
     """Process molecules into dipolar and anisotropic chemical shift
-    interactions for the SVD analysis.
+    interactions for the A-matrix in the SVD analysis.
 
     The Process is a Chain-of-Responsibility pattern.
 
     Attributes
     ----------
     magnetic_interactions: list of dicts
-        A list of magnetic interaction dicts, one for each molecule. Magnetic
-        interaction dicts have an (key) interaction string label
-        and a (value) 5x1 array for the interaction.
+        A list of magnetic interaction dicts, one for each molecule.
+        Magnetic interaction dicts have an (key) interaction string label
+        and a (value) with a tuple of the scaling constant and a 5x1 array
+        (the A-matrix components) for the interaction.
     molecules: list of :obj:`mollib.Molecule`
         A list of molecule objects.
     _run_automatically: bool
@@ -57,7 +58,6 @@ class Process(object):
             new_instance._run_automatically = self._run_automatically
             self._subclass_instances.append(new_instance)
 
-
     def process(self, **kwargs):
         """Process the magnetic interactions. The results are stored in the
         magnetic_interactions attribute and returned."""
@@ -87,8 +87,9 @@ class ProcessDipole(Process):
 
         Returns
         -------
-        array: `numpy.array`
-            The array for the SVD of this dipole.
+        value: (float, `numpy.array`)
+            A tuple with the scaling constant and the array for the SVD of this
+            dipole.
         """
         # Calculate or retrieve cached the static dipolar coupling constant
         if not hasattr(self, 'dcc'):
@@ -128,8 +129,9 @@ class ProcessDipole(Process):
 
         # scale the array by the dipolar coupling. Convert from Angstroms to
         # meters
-        arr *= dcc * r**-3 * 1.E30
-        return arr
+        scale = dcc * r**-3 * 1.E30
+        arr *= scale
+        return (scale, arr)
 
     def process(self, labels=None, **kwargs):
         """Process the dipoles identified by the tensor_keys.
@@ -207,11 +209,11 @@ class ProcessDipole(Process):
                     continue
 
                 for a1, a2 in atom_list:
-                    arr = self.process_dipole(a1, a2)
+                    scale, arr = self.process_dipole(a1, a2)
                     if label in d:
-                        d[label] = d[label] + arr
+                        d[label] = (d[label][0], d[label][1] + arr)
                     else:
-                        d[label] = arr
+                        d[label] = (scale, arr)
 
         return self.magnetic_interactions
 
