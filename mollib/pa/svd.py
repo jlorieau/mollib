@@ -6,7 +6,7 @@ import numpy as np
 from scipy import linalg
 
 from .analysis import calc_statistics
-from .data_readers import RDC, RACS
+from .utils import get_data_type
 
 
 def calc_pa_SVD(magnetic_interactions, data):
@@ -95,7 +95,7 @@ def calc_pa_SVD(magnetic_interactions, data):
     data_pred = {}
     for key, D in zip(ordered_keys, D_pred):
         # Determine whether the predicted data is an RDC or RACS
-        data_type = RDC if '-' in key else RACS
+        data_type = get_data_type(key)
         data_pred[key] = data_type(value=D, error=0.0)
 
     # Break up the S matrix into individual Saupe matrices, Das and Rh
