@@ -4,7 +4,9 @@ import re
 from mollib import Molecule
 from mollib.pa.process_molecule import Process
 from mollib.pa.data_readers import read_pa_string
-from mollib.pa.svd import Saupe_matrices
+from mollib.pa.svd import calc_pa_SVD
+from mollib.pa.analysis import calc_statistics
+from mollib.pa import settings
 
 
 pna_rdc = """
@@ -220,25 +222,51 @@ class TestSVD(unittest.TestCase):
 
         data = read_pa_string(pna_rdc)
 
-        data_pred, S_xyz, Da, Dr, Rh = Saupe_matrices(magnetic_interactions,
-                                                      data)
+        data_pred, Saupe_components, stats = calc_pa_SVD(magnetic_interactions,
+                                                         data)
 
-        for i, j, k, l, in zip(S_xyz, Da, Dr, Rh):
-            print('S_xyz', i)
-            print('Da', j)
-            print('Dr', k)
-            print('Rh', l)
+        print("{:.1f}%".format(stats['Q']*100.))
 
         rss = 0.
         count = 0
         for label in sorted(data_pred, key=sort_key):
             if label in data:
-                rss += (data[label].value - data_pred[label])**2
-                count += 1
                 fmt = "{:<10} {:5.1f} {:5.1f}"
-                print(fmt.format(label, data[label].value, data_pred[label]))
+                print(fmt.format(label, data[label].value,
+                                        data_pred[label].value))
             else:
                 fmt = "{:<10} {:5.1f}"
-                print(fmt.format(label, data_pred[label]))
-        rss /= count
-        print('RSS:', rss)
+                print(fmt.format(label, data_pred[label].value))
+
+    def test_stats(self):
+        """Test the calculation of the Q-factor."""
+        mol = Molecule('2MJB')
+
+        # Calculate the Q-factor first from the bond lengths
+        process = Process(mol)
+        settings.calculate_from_bonds = True
+        magnetic_interactions = process.process()
+
+        data = read_pa_string(pna_rdc)
+        data_pred, Saupe_components, stats1 = calc_pa_SVD(magnetic_interactions,
+                                                          data)
+
+        # The fit Q-factor should be better than 10%
+        self.assertLessEqual(stats1['Q'], 0.10)
+
+        # Now calculate it from static DCCs. This Q-factor should be different
+        # (yet still low)
+        process = Process(mol)
+        settings.calculate_from_bonds = False
+        magnetic_interactions = process.process()
+
+        data = read_pa_string(pna_rdc)
+        data_pred, Saupe_components, stats2 = calc_pa_SVD(magnetic_interactions,
+                                                          data)
+
+        # The fit Q-factor should be better than 10%
+        self.assertLessEqual(stats2['Q'], 0.10)
+
+        # The residual sum squared should be different between calculating the
+        # RDCs using bond lengths vs static values
+        self.assertNotEqual(stats1['RSS'], stats2['RSS'])

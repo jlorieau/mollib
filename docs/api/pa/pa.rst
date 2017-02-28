@@ -10,6 +10,7 @@ Partial Alignment Module
     :maxdepth: 2
 
     data_types
-    process_molecule
     data_readers
+    process_molecule
+    svd
     settings

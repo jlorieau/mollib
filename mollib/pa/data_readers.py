@@ -45,20 +45,26 @@ def read_pa_string(string):
     string: str or list of str
         Either a (multiline) string or a list of strings.
 
-    .. note:: The format of the file is as follows:
 
-        # Interaction   Value (Hz)   Error (optional)
-        14N-H           -14.5        0.1
-        15N-H             3.5
-        A.16N-H          -8.5        0.2  # larger error
+    .. note::
 
-        A.16H-A.15C       0.5        0.1
-        B.16H-B.15C       0.5        0.1
+        The format of the file is as follows:
 
-        # Residual anisotropic chemical shift data
-        # Interaction   Value (ppb)   Error (optional)
-        5C                112         1
-        6C               -250
+        ::
+
+            # Interaction   Value (Hz)   Error (optional)
+            14N-H           -14.5        0.1
+            15N-H             3.5
+            A.16N-H          -8.5        0.2  # larger error
+
+            A.16H-A.15C       0.5        0.1
+            B.16H-B.15C       0.5        0.1
+
+            # Residual anisotropic chemical shift data
+            # Interaction   Value (ppb)   Error (optional)
+            5C                112         1
+            6C               -250
+
 
     Returns
     -------

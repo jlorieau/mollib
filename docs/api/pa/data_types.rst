@@ -1,5 +1,8 @@
 Data Types
 ==========
 
-.. automodule:: mollib.pa.data_types
+.. autoclass:: mollib.pa.RDC
+    :members:
+
+.. autoclass:: mollib.pa.RACS
     :members:

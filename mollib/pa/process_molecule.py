@@ -21,11 +21,16 @@ class Process(object):
     ----------
     magnetic_interactions: list of dicts
         A list of magnetic interaction dicts, one for each molecule.
-        Magnetic interaction dicts have an (key) interaction string label
-        and a (value) with a tuple of the scaling constant and a 5x1 array
-        (the A-matrix components) for the interaction.
+
+        - Format: ``[dict_1, dict_2, ...]`` where dict_1, etc are the magnetic
+          interaction dicts for each molecule.
+        - **key**: The interaction label, i.e. '14N-H' (str)
+        - **value**: A tuple of the scaling constant and the 5x1 array of the
+          interaction for the dipolar or chemical shift/
+
     molecules: list of :obj:`mollib.Molecule`
         A list of molecule objects.
+
     _run_automatically: bool
         If True, then the process will be run automically when the Process
         parent class :meth:`process` is invoked.
@@ -60,7 +65,13 @@ class Process(object):
 
     def process(self, **kwargs):
         """Process the magnetic interactions. The results are stored in the
-        magnetic_interactions attribute and returned."""
+        magnetic_interactions attribute and returned.
+
+        Returns
+        -------
+        magnetic_interactions: list of dicts
+            A list of magnetic interaction dicts, one for each molecule.
+        """
 
         # Process all of the subclasses and store their results
         for instance in self._subclass_instances:
@@ -91,11 +102,20 @@ class ProcessDipole(Process):
             A tuple with the scaling constant and the array for the SVD of this
             dipole.
         """
+        # Find the dipole type. This is a tuple of the form.
+        dipole_type = (atom1.element, atom2.element)
+
+        # Make the order of atoms match those in the
+        # settings.default_predicted_rdcs by reversing the order if needed
+        if dipole_type[::-1] in settings.default_predicted_rdcs:
+            dipole_type = dipole_type[::-1]
+
         # Calculate or retrieve cached the static dipolar coupling constant
         if not hasattr(self, 'dcc'):
             self.dcc = {}
-        if (atom1.element, atom2.element) not in self.dcc:
-            # Get the gyromagnetic ratios for the atoms, based on their elements.
+        if dipole_type not in self.dcc:
+            # Get the gyromagnetic ratios for the atoms, based on their
+            # elements.
             g = settings.gamma  # set the gyromagnetic ratio
 
             try:
@@ -110,7 +130,7 @@ class ProcessDipole(Process):
             dcc = -1. * 1.E-7 * 1.05457E-34 * g1 * g2 / (2. * pi)
             self.dcc[(atom1.element, atom2.element)] = dcc
 
-        dcc = self.dcc[(atom1.element, atom2.element)]
+        dcc = self.dcc[dipole_type]
 
         # Now calculate the bond length and directional cosines
         x, y, z = atom2.pos - atom1.pos
@@ -127,9 +147,20 @@ class ProcessDipole(Process):
                         2. * cos_x * cos_z,   # Cxz
                         2. * cos_y * cos_z))  # Cyz
 
-        # scale the array by the dipolar coupling. Convert from Angstroms to
-        # meters
-        scale = dcc * r**-3 * 1.E30
+        # Scale the array by the dipolar coupling. Either the dipolar coupling
+        # constants from bond lengths and gyromagnetic ratios can be used
+        # or pre-calculated values for each dipolar coupling are used. However,
+        # pre-calculated values can only be used if they are available in
+        # settings.default_predicted_rdcs.
+        if (settings.calculate_from_bonds or
+            dipole_type not in settings.default_predicted_rdcs):
+            # Calculate from bonds
+            # Convert from Angstroms to meters
+            scale = dcc * r**-3 * 1.E30
+        else:
+            # Get the pre-calculated value
+            scale = settings.default_predicted_rdcs[dipole_type]
+
         arr *= scale
         return (scale, arr)
 
@@ -141,11 +172,10 @@ class ProcessDipole(Process):
         labels: list of str or None
             A list of interaction label strings. ex: 'A.14N-H'
 
-
         Returns
         -------
         magnetic_interactions: list of dicts
-            The updated magnetic_interactions
+            A list of magnetic interaction dicts, one for each molecule.
         """
 
         # Convert labels to a set, if it isn't already
@@ -217,30 +247,6 @@ class ProcessDipole(Process):
 
         return self.magnetic_interactions
 
-
-# class ProcessNHDipole(ProcessDipole):
-#     """Process the N-H dipoles (AX spin system) in the molecule."""
-#
-#     _run_automatically = True
-#
-#
-#     def process(self, **kwargs):
-#         """Process the NH dipoles in the molecule(s)."""
-#         keys = set()
-#
-#         # Formulate the keys
-#         for molecule in self.molecules:
-#             for residue in molecule.residues:
-#                 key = ((residue.chain.id, residue.number, 'N'),
-#                        (residue.chain.id, residue.number, 'H'))
-#                 label = interaction_label(key)
-#                 keys.add(label)
-#
-#         # Pass the keys to the parent process. Keys that don't correspond to
-#         # real atoms will be skipped
-#         ProcessDipole.process(self, tensor_keys=keys)
-#
-#         return self.magnetic_interactions
 
 # class ProcessACS(Process):
 #
