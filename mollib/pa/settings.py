@@ -9,7 +9,8 @@ calculate_from_bonds = True
 
 #: The default dipolar couplings and static dipolar coupling constants for
 #: common bonds in proteins. Values are calculated based on average calculated
-#: DCCs for 2MJB and scaled to an HN DCC of -11472Hz.
+#: DCCs for 2MJB and scaled to an HN DCC of -11472Hz. These values are used
+#: if ``calculate_from_bonds`` is False.
 default_predicted_rdcs = {('N', 'H'): 11472.,  # 1.02 A
                           ('CA', 'HA'): -21500.,
                           ('CA', 'HA2'): -21500.,

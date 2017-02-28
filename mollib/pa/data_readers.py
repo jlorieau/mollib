@@ -16,7 +16,7 @@ re_pa = re.compile(r'\s*'
                    r'(?P<error>[E\d\-\+\.]*)')
 
 
-def read_pa_data(filename):
+def read_pa_file(filename):
     """Read data from a partial alignment data file.
 
     Parameters
