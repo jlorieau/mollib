@@ -29,3 +29,8 @@ default_predicted_racs = {'H': {'dzz': -5.0,  # ppm
 optimize_to_interactions = (('N', 'H'),
                             ('CA', 'HA'),
                             )
+
+#: The alpha-critical values to identify warning or bad data points in terms
+#: of their deviations with respect to the best-fit SVD data.
+alpha_warning = 0.05
+alpha_bad = 0.01

@@ -2,11 +2,10 @@ import unittest
 import os
 
 from mollib import Molecule
-from mollib.pa.process_molecule import Process
-from mollib.pa.data_readers import read_pa_file
-from mollib.pa.svd import calc_pa_SVD
-from mollib.pa.utils import sort_key
+from mollib.pa import (Process, read_pa_file, calc_pa_SVD, report_tables,
+                       find_outliers, sort_key)
 from mollib.pa import settings
+from mollib.utils import FormattedStr
 
 
 class TestSVD(unittest.TestCase):
@@ -68,3 +67,44 @@ class TestSVD(unittest.TestCase):
         # The residual sum squared should be different between calculating the
         # RDCs using bond lengths vs static values
         self.assertNotEqual(stats1['RSS'], stats2['RSS'])
+
+    def test_outliers(self):
+        """Test the find_outliers function."""
+        # Load the molecule and process its interaction arrays.
+        mol = Molecule('2MJB')
+        process = Process(mol)
+        magnetic_interactions = process.process()
+
+        # Load the data
+        path = os.path.dirname(os.path.abspath(__file__))
+        data = read_pa_file(path + '/data/ubq_pna.pa')
+
+        data_pred, Saupe_components, stats = calc_pa_SVD(magnetic_interactions,
+                                                         data)
+
+        warning, bad = find_outliers(data, data_pred)
+
+        self.assertEqual(warning, ['A.11N-H'])
+        self.assertEqual(bad, [])
+
+    def test_report_tables(self):
+        """Test the formatting of the report tables for the SVD fits."""
+        # Disable string formatting to more easily match strings
+        FormattedStr.color_term = False
+
+        # Load the molecule and process its interaction arrays.
+        mol = Molecule('2MJB')
+        process = Process(mol)
+        magnetic_interactions = process.process()
+
+        # Load the data
+        path = os.path.dirname(os.path.abspath(__file__))
+        data = read_pa_file(path + '/data/ubq_pna.pa')
+
+        # Fit the data with a SVD
+        data_pred, Saupe_components, stats = calc_pa_SVD(magnetic_interactions,
+                                                         data)
+
+
+        # Generate the report tables
+        tables = report_tables(data, data_pred)

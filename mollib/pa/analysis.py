@@ -3,12 +3,13 @@ Analysis functions for observed and predicted RDCs/RACSs
 """
 from math import sqrt
 from collections import OrderedDict
+from itertools import groupby
 
-# class Summary(object):
-#     pass
-#
-# class Results(Summary):
-#     pass
+from numpy import std
+from scipy import stats
+
+from .utils import sort_key
+from . import settings
 
 
 def calc_statistics(magnetic_interactions, Saupe_components, data, predicted):
@@ -81,3 +82,105 @@ def calc_statistics(magnetic_interactions, Saupe_components, data, predicted):
     stats['count'] = count
 
     return stats
+
+
+def G_critical(N, alpha=0.05):
+    """Calculate the G-critical value (two-sided) for the given data count and
+    alpha value.
+
+    Parameters
+    ----------
+    N: int
+        The number of data points.
+    alpha: float
+        The alpha critical value.
+
+    Returns
+    -------
+    G: float
+        The two-sided Grubbs test critical value.
+
+    Examples
+    --------
+    >>> G = G_critical(10, 0.05)
+    >>> round(G, 2)
+    2.29
+    >>> G = G_critical(17, 0.05)
+    >>> round(G, 2)
+    2.62
+    >>> G = G_critical(40, 0.01)
+    >>> round(G, 2)
+    3.38
+    """
+    significance_level = alpha / (2. * N)
+    t = stats.t.isf(significance_level, N - 2)
+    return ((N - 1) / sqrt(N)) * (sqrt(t ** 2 / (N - 2 + t ** 2)))
+
+
+def find_outliers(data, predicted):
+    """Find data points that deviate from predicted values more than the others.
+
+    Outliers are identified from a two-sided Grubbs test, using the alpha values
+    (alpha_warning, alpha_bad) specified in the settings file.
+
+
+    Returns
+    -------
+    (warning, bad): tuple of lists
+        The lists of interaction labels for data points that are considered
+        either warning outliers or bad outliers.
+    """
+    # Group the data and predicted by RDC or RACS type.
+    # The sort_key will convert a label like '14N-H' into ('N-H', 14). To group
+    # the data into rdc and racs types, we will use the first item of this
+    # tuple to group the values.
+    data_groups = {k:list(g) for k, g in
+                   groupby(data, key=lambda x: sort_key(x)[0])}
+
+    # Keep track of the standard deviation for each group
+    stdev_dict = {}
+    count_dict = {}
+
+    # Calculate the standard deviation for each group
+    for group_name, labels in data_groups.items():
+        values = []
+        count = 0
+        for label in sorted(labels, key=sort_key):
+            if label in data and label in predicted:
+                deviation = data[label].value - predicted[label].value
+                values.append(deviation)
+                count += 1
+            else:
+                continue
+        stdev = std(values)
+        stdev_dict[group_name] = stdev
+        count_dict[group_name] = count
+
+    # Go back and find all values that are outside of the 'warning' and bad
+    # confidence interval
+    warning = []
+    bad = []
+    for group_name, labels in data_groups.items():
+        stdev = stdev_dict[group_name]
+        count = count_dict[group_name]
+
+        # Calculate the Grubbs test critical cutoffs
+        warning_cutoff = G_critical(count, settings.alpha_warning)
+        bad_cutoff = G_critical(count, settings.alpha_bad)
+
+        for label in sorted(labels, key=sort_key):
+            if label not in data or label not in predicted:
+                continue
+
+            deviation = data[label].value - predicted[label].value
+
+            # See if the deviation falls outside the 'warning' or 'bad'
+            # G-critical values
+            if abs(deviation/stdev) > bad_cutoff:
+                bad.append(label)
+            elif abs(deviation/stdev) > warning_cutoff:
+                warning.append(label)
+            else:
+                continue
+
+    return warning, bad
