@@ -26,18 +26,11 @@ class TestSVD(unittest.TestCase):
         data_pred, Saupe_components, stats = calc_pa_SVD(magnetic_interactions,
                                                          data)
 
-        print("{:.1f}%".format(stats['Q']*100.))
-
-        rss = 0.
-        count = 0
+        # Make sure all of the RDCs are within 6.0Hz
         for label in sorted(data_pred, key=sort_key):
             if label in data:
-                fmt = "{:<10} {:5.1f} {:5.1f}"
-                print(fmt.format(label, data[label].value,
-                                        data_pred[label].value))
-            else:
-                fmt = "{:<10} {:5.1f}"
-                print(fmt.format(label, data_pred[label].value))
+                self.assertLess(abs(data[label].value - data_pred[label].value),
+                                6.0)
 
     def test_stats(self):
         """Test the calculation of the Q-factor using PNA data."""

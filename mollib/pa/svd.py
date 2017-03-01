@@ -122,6 +122,6 @@ def calc_pa_SVD(magnetic_interactions, data):
     stats = calc_statistics(magnetic_interactions, Saupe_components, data,
                             data_pred)
 
-    return data_pred, Saupe_components, stats
+    return (data_pred, Saupe_components, stats)
 
 
