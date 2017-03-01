@@ -13,4 +13,5 @@ Partial Alignment Module
     data_readers
     process_molecule
     svd
+    analysis
     settings
