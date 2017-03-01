@@ -54,7 +54,7 @@ def print_lines(text_items, widths):
 class MDTable(object):
     """Renders a table in Markdown.
 
-    Parameters
+    Attributes
     ----------
     title: str, optional
         If specified, this attribute will be used as the table's title.
