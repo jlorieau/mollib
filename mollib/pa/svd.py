@@ -16,10 +16,11 @@ def calc_pa_SVD(magnetic_interactions, data):
     Parameters
     ----------
     magnetic_interactions: list of dicts
-        - A list of dicts, one for each molecule to be fit.
-          See :class:`mollib.pa.process_molecule.Process`.
+        A list of dicts, one for each molecule to be fit.
+        See :class:`mollib.pa.process_molecule.Process`.
 
     data: dict
+        The experimental/observed RDC and RACS data.
         - **key**: interaction labels (str)
         - **value**: :obj:`mollib.pa.RDC` or :obj:`mollib.pa.RACS` data values.
 
@@ -27,16 +28,17 @@ def calc_pa_SVD(magnetic_interactions, data):
     -------
     (data_pred, Saupe_components, stats): tuple
         - data_pred: dict
-             - **key**: interaction labels (str)
-             - **value**: :obj:`mollib.pa.RDC` or :obj:`mollib.pa.RACS` data
-               values.
+              The SVD predicted RDC and RACS data.
+              - **key**: interaction labels (str)
+              - **value**: :obj:`mollib.pa.RDC` or :obj:`mollib.pa.RACS` data
+                values.
         - Saupe_components: dict
-             - 'S_xyz': (list of arrays) The 3x1 Saupe matrix in x/y/z repr.
-             - 'Aa': (list) The degree of alignment.
-             - 'Ar': (list) The alignment rhombicity.
-             - 'Rh': (list) The rhombicity
+              - 'S_xyz': (list of arrays) The 3x1 Saupe matrix in x/y/z repr.
+              - 'Aa': (list) The degree of alignment.
+              - 'Ar': (list) The alignment rhombicity.
+              - 'Rh': (list) The rhombicity
         - stats: dict
-             - See :func:`calc_statistics`
+              - See :func:`calc_statistics`
     """
     assert(isinstance(magnetic_interactions, list))
 
