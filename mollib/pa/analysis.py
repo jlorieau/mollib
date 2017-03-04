@@ -121,7 +121,8 @@ def find_outliers(data, predicted):
     """Find data points that deviate from predicted values more than the others.
 
     Outliers are identified from a two-sided Grubbs test, using the alpha values
-    (alpha_warning, alpha_bad) specified in the settings file.
+    (alpha_warning, alpha_bad) specified in the settings file. Outliers are
+    only identified within each group of RDC or RACS.
 
 
     Returns

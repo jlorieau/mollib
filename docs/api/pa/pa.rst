@@ -14,4 +14,5 @@ Partial Alignment Module
     process_molecule
     svd
     analysis
+    reports
     settings

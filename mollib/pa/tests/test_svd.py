@@ -5,7 +5,7 @@ from mollib import Molecule
 from mollib.pa import (Process, read_pa_file, calc_pa_SVD, report_tables,
                        find_outliers, sort_key)
 from mollib.pa import settings
-from mollib.utils import FormattedStr
+from mollib.utils import FormattedStr, MDTable
 
 
 class TestSVD(unittest.TestCase):
@@ -105,6 +105,12 @@ class TestSVD(unittest.TestCase):
         data_pred, Saupe_components, stats = calc_pa_SVD(magnetic_interactions,
                                                          data)
 
-
         # Generate the report tables
         tables = report_tables(data, data_pred)
+
+        # Make sure the fit and predicted tables are present
+        for key in ('fit', 'N-C_pred', 'CA-HA_pred', 'N-H_pred', 'CA-C_pred'):
+            self.assertIn(key, tables)
+
+            table = tables[key]
+            self.assertIsInstance(table, MDTable)
