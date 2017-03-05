@@ -87,6 +87,18 @@ class TestSVD(unittest.TestCase):
         self.assertEqual(warning, ['A.11N-H'])
         self.assertEqual(bad, [])
 
+        # Load a second dataset with intentional outliers
+        path = os.path.dirname(os.path.abspath(__file__))
+        data = read_pa_file(path + '/data/ubq_bicelle_outliers.pa')
+
+        data_pred, Saupe_components, stats = calc_pa_SVD(magnetic_interactions,
+                                                         data)
+
+        warning, bad = find_outliers(data, data_pred)
+
+        self.assertEqual(warning, [])
+        self.assertEqual(bad, ['A.16N-H', 'A.32N-H'])
+
     def test_report_tables(self):
         """Test the formatting of the report tables for the SVD fits."""
         # Disable string formatting to more easily match strings
