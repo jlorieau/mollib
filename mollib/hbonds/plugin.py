@@ -2,8 +2,6 @@
 """
 The plugin for the hbond submodule.
 """
-from math import exp
-
 from mollib.plugins import Plugin
 from mollib.hbonds import find_hbond_partners, settings
 from .hbond_table import HBondTable

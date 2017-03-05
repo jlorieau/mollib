@@ -11,3 +11,10 @@ from .analysis import find_outliers, calc_statistics
 from .reports import report_tables
 from .utils import sort_key
 from . import settings
+
+# Load plugins
+from .plugin import PA
+pa = PA()
+
+from mollib.core import register_settings
+register_settings(settings)
