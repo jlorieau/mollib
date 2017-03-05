@@ -135,8 +135,9 @@ def find_outliers(data, predicted):
     # The sort_key will convert a label like '14N-H' into ('N-H', 14). To group
     # the data into rdc and racs types, we will use the first item of this
     # tuple to group the values.
+    keys_sorted = sorted(data, key=lambda x: sort_key(x)[0])
     data_groups = {k:list(g) for k, g in
-                   groupby(data, key=lambda x: sort_key(x)[0])}
+                   groupby(keys_sorted, key=lambda x: sort_key(x)[0])}
 
     # Keep track of the standard deviation for each group
     stdev_dict = {}
@@ -153,9 +154,17 @@ def find_outliers(data, predicted):
                 count += 1
             else:
                 continue
-        stdev = std(values)
-        stdev_dict[group_name] = stdev
-        count_dict[group_name] = count
+
+        # If no points were found for this group, then the stdev and count
+        # cannot be calculated.
+        if count <= 1:
+            stdev_dict[group_name] = None
+            count_dict[group_name] = None
+        # Otherwise process the stdev and count
+        else:
+            stdev = std(values)
+            stdev_dict[group_name] = stdev
+            count_dict[group_name] = count
 
     # Go back and find all values that are outside of the 'warning' and bad
     # confidence interval
@@ -164,6 +173,9 @@ def find_outliers(data, predicted):
     for group_name, labels in data_groups.items():
         stdev = stdev_dict[group_name]
         count = count_dict[group_name]
+
+        if stdev is None or count is None:
+            continue
 
         # Calculate the Grubbs test critical cutoffs
         warning_cutoff = G_critical(count, settings.alpha_warning)
@@ -174,7 +186,7 @@ def find_outliers(data, predicted):
                 continue
 
             deviation = data[label].value - predicted[label].value
-
+            
             # See if the deviation falls outside the 'warning' or 'bad'
             # G-critical values
             if abs(deviation/stdev) > bad_cutoff:
