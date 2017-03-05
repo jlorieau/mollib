@@ -9,6 +9,7 @@ from .analysis import calc_statistics
 from .utils import get_data_type
 
 
+#: TODO: incorporate errors
 def calc_pa_SVD(magnetic_interactions, data):
     """Calculate the best-fit Saupe matrices for the given magnetic interaction
     arrays and RDC/RACS data.
