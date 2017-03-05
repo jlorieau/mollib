@@ -39,7 +39,12 @@ class Hbonds(Plugin):
                        help=("Report the Ramachandran angles. Filters and "
                              "options are ignored."))
 
-    def process(self, molecule, args):
+    def process(self, molecules, args):
+        """Process the molecule."""
+        for molecule in molecules:
+            self.process_molecule(molecule, args)
+
+    def process_molecule(self, molecule, args):
         """Process the molecule by finding and reporting its hydrogen bonds.
         """
         if args.command == 'hbonds':

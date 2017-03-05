@@ -131,44 +131,44 @@ class Plugin(object):
         """
         return "(no help available)"
 
-    def preprocess(self, molecule, args):
-        """Preprocess the molecule.
+    def preprocess(self, molecules, args):
+        """Preprocess the molecules.
 
         Executed before process.
 
         Parameters
         ----------
-        molecule: :obj:`mollib.Molecule`
-            The molecule object to pre-process.
+        molecules: list of :obj:`mollib.Molecule` objects
+            The list of molecule objects to pre-process.
         args: :obj:`argparse.ArgumentParser`
             The ArgumentParser parsed arguments.
         """
         pass
 
-    def process(self, molecule, args):
-        """Process the given molecule.
+    def process(self, molecules, args):
+        """Process the given molecules.
 
         Subclasses implement this method to conduct operations on the molecule.
         The parent method does not need to be called.
 
         Parameters
         ----------
-        molecule: :obj:`mollib.Molecule`
-            The molecule object to process.
+        molecules: list of :obj:`mollib.Molecule` objects
+            The list of molecule objects to pre-process.
         args: :obj:`argparse.ArgumentParser`
             The ArgumentParser parsed arguments.
         """
         pass
 
-    def postprocess(self, molecule, args):
+    def postprocess(self, molecules, args):
         """Postprocess the molecule.
 
         Executed after process.
 
         Parameters
         ----------
-        molecule: :obj:`mollib.Molecule`
-            The molecule object to post-process.
+        molecules: list of :obj:`mollib.Molecule` objects
+            The list of molecule objects to pre-process.
         args: :obj:`argparse.ArgumentParser`
             The ArgumentParser parsed arguments.
         """

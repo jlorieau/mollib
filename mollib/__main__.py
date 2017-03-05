@@ -105,25 +105,19 @@ def main():
     active_plugins = plugin_manager.plugins()
 
     # Pre-process the molecules
-    for molecule in molecules:
-        for plugin in active_plugins:
-            logging.debug('Preprocessing ({}): {}'.format(molecule.name,
-                                                          plugin))
-            plugin.preprocess(molecule, args)
+    for plugin in active_plugins:
+        logging.debug('Preprocessing:{}'.format(plugin))
+        plugin.preprocess(molecules, args)
 
     # Process the molecules
-    for molecule in molecules:
-        for plugin in active_plugins:
-            logging.debug('Processing ({}): {}'.format(molecule.name,
-                                                       plugin))
-            plugin.process(molecule, args)
+    for plugin in active_plugins:
+        logging.debug('Processing: {}'.format(plugin))
+        plugin.process(molecules, args)
 
     # Post-process the molecules
-    for molecule in molecules:
-        for plugin in active_plugins:
-            logging.debug('Post-rocessing ({}): {}'.format(molecule.name,
-                                                           plugin))
-            plugin.postprocess(molecule, args)
+    for plugin in active_plugins:
+        logging.debug('Post-rocessing: {}'.format(plugin))
+        plugin.postprocess(molecules, args)
 
 if __name__ == "__main__":
     main()

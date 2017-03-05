@@ -104,9 +104,13 @@ class Measure(Plugin):
     def help(self):
         return "Measure geometries in molecules"
 
-    def process(self, molecule, args):
-        "Measure geometries in molecules."
+    def process(self, molecules, args):
+        """Measure geometries in molecules."""
+        for molecule in molecules:
+            self.process_molecule(molecule, args)
 
+    def process_molecule(self, molecule, args):
+        """Measure geometries in a given molecule."""
         if args.command == 'measure':
             if getattr(args, 'dist', False):
                 table = MDTable('Num', 'Atom 1', 'Atom 2', 'Dist. (A)')

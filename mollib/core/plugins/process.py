@@ -46,7 +46,12 @@ class Process(Plugin):
     def help(self):
         return "Process the structure"
 
-    def process(self, molecule, args):
+    def process(self, molecules, args):
+        """Process molecules."""
+        for molecule in molecules:
+            self.process_molecule(molecule, args)
+
+    def process_molecule(self, molecule, args):
         """Process the molecule.
 
         - list the molecule details
@@ -62,8 +67,13 @@ class Process(Plugin):
                 print(chain_msg.format(chain, chain.residue_size,
                                        chain.atom_size))
 
-    def postprocess(self, molecule, args):
-        """Postprocess the molecules.
+    def postprocess(self, molecules, args):
+        """Postprocess molecules"""
+        for molecule in molecules:
+            self.process_molecule(molecule, args)
+
+    def postprocess_molecule(self, molecule, args):
+        """Postprocess a molecule.
 
         - Writes the PDB file, if specified
         """
