@@ -2,6 +2,8 @@
 """
 Functions to conduct the SVD on the RDCs and RACS.
 """
+import logging
+
 import numpy as np
 from scipy import linalg
 
@@ -51,10 +53,13 @@ def calc_pa_SVD(magnetic_interactions, data):
     D = []
     for key in ordered_keys:
         for interaction_dict in magnetic_interactions:
+            # If the key isn't in the interaction_dict, then it is unknown
+            # how to process this interaction
             if key not in interaction_dict:
-                msg = ("The orientation for data point {} has not been "
-                       "calculated.")
-                raise Exception(msg.format(key))
+                msg = "Processing of data point '{}' is not implemented."
+                logging.error(msg.format(key))
+                continue
+
             scale, arr = interaction_dict[key]
             A.extend([arr,])
 
