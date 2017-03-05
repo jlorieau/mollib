@@ -11,7 +11,12 @@ from .analysis import calc_statistics
 from .utils import get_data_type
 
 
-#: TODO: incorporate errors
+#: A set of labels for which the analysis has not been implemented. We keep
+#: a set here so that the error message isn't printed multiple times by
+#: calc_pa_SVD
+not_implemented_errors = set()
+
+# TODO: incorporate errors
 def calc_pa_SVD(magnetic_interactions, data):
     """Calculate the best-fit Saupe matrices for the given magnetic interaction
     arrays and RDC/RACS data.
@@ -44,6 +49,7 @@ def calc_pa_SVD(magnetic_interactions, data):
               - See :func:`calc_statistics`
     """
     assert(isinstance(magnetic_interactions, list))
+    global not_implemented_errors
 
     # Make an ordered list of the keys
     ordered_keys = sorted(data.keys())
@@ -53,11 +59,13 @@ def calc_pa_SVD(magnetic_interactions, data):
     D = []
     for key in ordered_keys:
         for interaction_dict in magnetic_interactions:
-            # If the key isn't in the interaction_dict, then it is unknown
+            # If the key isn't in the interaction_dict, then it's not known
             # how to process this interaction
             if key not in interaction_dict:
-                msg = "Processing of data point '{}' is not implemented."
-                logging.error(msg.format(key))
+                if key not in not_implemented_errors:
+                    msg = "Processing of data point '{}' is not implemented."
+                    logging.error(msg.format(key))
+                    not_implemented_errors.add(key)
                 continue
 
             scale, arr = interaction_dict[key]

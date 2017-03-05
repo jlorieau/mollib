@@ -186,7 +186,7 @@ def find_outliers(data, predicted):
                 continue
 
             deviation = data[label].value - predicted[label].value
-            
+
             # See if the deviation falls outside the 'warning' or 'bad'
             # G-critical values
             if abs(deviation/stdev) > bad_cutoff:
