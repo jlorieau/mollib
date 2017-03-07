@@ -9,4 +9,5 @@ General utilities for rendering data to the console
 
     markdown
     interactions
+    tensors
     settings
