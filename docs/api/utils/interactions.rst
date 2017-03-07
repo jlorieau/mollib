@@ -1,5 +1,5 @@
-Interaction Labels and Keys
-===========================
+Interaction Utilities
+=====================
 
 .. automodule:: mollib.utils.interactions
     :members:
