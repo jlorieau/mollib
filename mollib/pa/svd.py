@@ -35,25 +35,20 @@ def get_error(label, data):
     error: float
         The interaction's error.
     """
-    assert label in data
-
     # Use the data point's error, if it's specified. (i.e. it's not None or
     # equal to zero.)
-    if data[label].error is not None and data[label].error != 0.0:
+    if (label in data and data[label].error is not None and
+        data[label].error != 0.0):
         return data[label].error
 
     # Otherwise calculate a default value
     interaction_type = sort_key(label)[0]
     if interaction_type in settings.default_error:
-        value = data[label].value
-        rel_error = settings.default_error[interaction_type]
-        return value * rel_error
+        return settings.default_error[interaction_type]
 
     interaction_type_rev = '-'.join(interaction_type.split('-')[::-1])
     if interaction_type_rev in settings.default_error:
-        value = data[label].value
-        rel_error = settings.default_error[interaction_type_rev]
-        return value * rel_error
+        return settings.default_error[interaction_type_rev]
 
     msg = "Error of type '{}' not found for '{}'"
     logging.error(msg.format(interaction_type, label))
@@ -113,14 +108,12 @@ def calc_pa_SVD(magnetic_interactions, data):
                     not_implemented_errors.add(key)
                 continue
 
-            scale, arr = interaction_dict[key]
-            A.extend([arr,])
-
             expt_value = data[key].value
             expt_error = get_error(key, data)
-            print(key, data[key], data[key].error == 0.0)
-            D.append(expt_value)
+            scale, arr = interaction_dict[key]
 
+            D.append(expt_value / expt_error)
+            A.extend([arr * scale / expt_error, ])
 
     # Create an array from the A and D matrices
     A = np.array(A)
@@ -148,7 +141,8 @@ def calc_pa_SVD(magnetic_interactions, data):
             if key not in interaction_dict:
                 continue
             scale, arr = interaction_dict[key]
-            A.extend([arr,])
+            expt_error = get_error(key, data)
+            A.extend([arr * scale / expt_error, ])
 
     D_pred = np.dot(A, S)
 
@@ -158,7 +152,9 @@ def calc_pa_SVD(magnetic_interactions, data):
     for key, D in zip(ordered_keys, D_pred):
         # Determine whether the predicted data is an RDC or RACS
         data_type = get_data_type(key)
-        data_pred[key] = data_type(value=D, error=0.0)
+        expt_error = get_error(key, data)
+        data_pred[key] = data_type(value=D * expt_error, error=0.0)
+
 
     # Break up the S matrix into individual Saupe matrices, Das and Rh
     Saupe_components = {}

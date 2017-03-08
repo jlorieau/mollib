@@ -20,18 +20,22 @@ default_predicted_rdcs = {('N', 'H'): 11472.,  # 1.02 A
                           ('CA', 'C'): -1880.
                           }
 
-default_predicted_racs = {'C': {'delta': -86.53,  # ppm
+default_predicted_racs = {'C': {'delta': -86.53 * 0.6,  # ppm
                                 'eta': 0.73,
-                                'alpha': -20.,     # degrees
+                                'alpha': -10.0,     # degrees
                                 'beta': 0.,
+                                'gamma': 0,
+                                'vec1': ('O', 'C'),
+                                'vec2': ('N+1', 'C'),
                                 'ref_atom1': 'O',
                                 'ref_atom2': 'N+1',
                                 }
                           }
-
-default_error = {'N-H':   0.01,
-                 'CA-HA': 0.01,
-                 'C': 0.01,}
+#: Default errors in absolute values
+default_error = {'N-H':   0.1,  # Hz
+                 'CA-HA': 0.4,  # Hz
+                 'C': 0.5,     # ppb
+                 }
 
 optimize_to_interactions = (('N', 'H'),
                             ('CA', 'HA'),

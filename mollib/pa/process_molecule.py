@@ -15,8 +15,8 @@ from . import settings
 
 
 CSAcomponents = namedtuple('CSAcomponents',
-                           'dzz dxx dyy delta eta alpha beta ref_atom1 '
-                           'ref_atom2')
+                           'dzz dxx dyy delta eta alpha beta gamma '
+                           'ref_atom1 ref_atom2')
 
 
 class Process(object):
@@ -169,7 +169,6 @@ class ProcessDipole(Process):
             # Get the pre-calculated value
             scale = settings.default_predicted_rdcs[dipole_type]
 
-        arr *= scale
         return (scale, arr)
 
     def process(self, labels=None, **kwargs):
@@ -277,7 +276,7 @@ class ProcessACS(Process):
 
         # Make sure the settings have all of the fiestin
         if any(map(lambda x: x not in tensor_dict,
-                   ('delta', 'eta', 'alpha', 'beta', 'ref_atom1',
+                   ('delta', 'eta', 'alpha', 'beta', 'gamma', 'ref_atom1',
                     'ref_atom2'))):
             return None
 
@@ -287,6 +286,7 @@ class ProcessACS(Process):
                             delta=tensor.delta, eta=tensor.eta,
                             alpha=tensor_dict['alpha'],
                             beta=tensor_dict['beta'],
+                            gamma=tensor_dict['gamma'],
                             ref_atom1=tensor_dict['ref_atom1'],
                             ref_atom2=tensor_dict['ref_atom2'])
         return csa
@@ -362,18 +362,22 @@ class ProcessACS(Process):
         vyy = vec1
         vxx = vec3
 
-        R_alpha = R(vzz, csa.alpha) # vzz
-        vyy = np.dot(R_alpha, vyy)  # vyy
-        vxx = np.dot(R_alpha, vxx)  # vxx
+        R_alpha = R(vzz, csa.alpha)
+        vyy = np.dot(R_alpha, vyy)
+        vxx = np.dot(R_alpha, vxx)
 
         R_beta = R(vyy, csa.beta)
         vzz = np.dot(R_beta, vzz)
         vxx = np.dot(R_beta, vxx)
 
+        R_gamma = R(vzz, csa.gamma)
+        vyy = np.dot(R_gamma, vyy)
+        vxx = np.dot(R_gamma, vxx)
+
         # Get the components of the tensor
-        dzz = csa.dzz
-        dyy = csa.dyy
-        dxx = csa.dxx
+        dzz = csa.dzz / csa.delta
+        dyy = csa.dyy / csa.delta
+        dxx = csa.dxx / csa.delta
 
         # Calculate the array
         arr = np.array((((2. / 3.) * dxx * (vxx[1] ** 2 - vxx[0] ** 2) +  # Cyy
@@ -396,7 +400,7 @@ class ProcessACS(Process):
                          (4. / 3.) * dyy * vyy[1] * vyy[2] +
                          (4. / 3.) * dzz * vzz[1] * vzz[2])))
 
-        return (csa.delta * 1000., arr * 1000.)
+        return (csa.delta * 1000., arr )
 
 
     def process(self, labels=None, **kwargs):

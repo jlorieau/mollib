@@ -26,6 +26,27 @@ def R_euler_zyz(alpha, beta, gamma):
 
 def R(axis, theta):
     """Generate the rotation matrix about the given axis.
+
+    This is a right-handed rotation.
+
+          z |
+            |
+            |
+            ------- y
+           /
+          /
+       x /
+
+    Examples
+    --------
+    >>> import numpy as np
+    >>> Rz = lambda theta: R([0., 0., 1], theta)
+    >>> map(lambda x: round(x, 1), np.dot(Rz(90.), [1., 0., 0.]))
+    [0.0, 1.0, 0.0]
+    >>> map(lambda x: round(x, 1), np.dot(Rz(90.), [0., 1., 0.]))
+    [-1.0, 0.0, 0.0]
+    >>> map(lambda x: round(x, 1), np.dot(Rz(90.), [0., 0., 1.]))
+    [0.0, 0.0, 1.0]
     """
     axis = np.asarray(axis)
     axis = axis / sqrt(np.dot(axis, axis))
@@ -36,3 +57,4 @@ def R(axis, theta):
     return np.array([[aa+bb-cc-dd, 2*(bc+ad), 2*(bd-ac)],
                      [2*(bc-ad), aa+cc-bb-dd, 2*(cd+ab)],
                      [2*(bd+ac), 2*(cd-ab), aa+dd-bb-cc]])
+
