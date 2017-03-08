@@ -2,13 +2,21 @@
 Tools to process the dipolar and chemical shift tensors for a molecule.
 """
 from math import sqrt, pi
+from collections import namedtuple
 import logging
 
 import numpy as np
 
 from mollib import Molecule
 from mollib.utils.interactions import interaction_label, interaction_atoms
+from mollib.utils.tensors import get_Haeberlen
+from mollib.utils.rotations import R
 from . import settings
+
+
+CSAcomponents = namedtuple('CSAcomponents',
+                           'dzz dxx dyy delta eta alpha beta ref_atom1 '
+                           'ref_atom2')
 
 
 class Process(object):
@@ -248,128 +256,210 @@ class ProcessDipole(Process):
         return self.magnetic_interactions
 
 
-# class ProcessACS(Process):
-#
-#     _run_automatically = False
-#
-#     def process_chemical_shift(self, atom, ref_atom1, ref_atom2):
-#         """Process the anisotropic chemical for the given atom.
-#
-#         Parameters
-#         ----------
-#         atom: :obj:`mollib.Atom`
-#             The atom to calculate the chemical shift fot.
-#         ref_atom: :obj:`mollib.Atom`
-#             The reference atom. This is a bonded heavy atom that is needed
-#             to locate the PAS in reference to atom.
-#
-#         Returns
-#         -------
-#         array: `numpy.array`
-#             The array for the SVD of this dipole.
-#         """
-#         # # Calculate or retrieve cached the static dipolar coupling constant
-#         # if not hasattr(self, 'dcc'):
-#         #     self.dcc = {}
-#         # if (atom1.element, atom2.element) not in self.dcc:
-#         #     # Get the gyromagnetic ratios for the atoms, based on their elements.
-#         #     g = settings.gamma  # set the gyromagnetic ratio
-#         #
-#         #     try:
-#         #         g1 = g[atom1.element]
-#         #         g2 = g[atom2.element]
-#         #     except KeyError:
-#         #         msg = "The gyromagnetic ratio for atom {} or {} is not specified."
-#         #         raise PartialAlignmentException(msg.format(atom1, atom2))
-#         #
-#         #     dcc = -1. * 1.E-7 * 1.05457E-34 * g1 * g2
-#         #
-#         #     self.dcc[(atom1.element, atom2.element)] = dcc
-#         #
-#         # dcc = self.dcc[(atom1.element, atom2.element)]
-#
-#         # Now calculate the tensor orientations and directional cosines
-#         vec1 = atom.pos - ref_atom1.pos
-#         length = np.linalg.norm(vec1)
-#         if length > 0.:
-#             vec1 /= length
-#
-#         v = ref_atom1.pos - ref_atom2.pos
-#         length = np.linalg.norm(v)
-#         if length > 0.:
-#             v /= length
-#
-#         vec2 = np.cross(vec1, v)
-#         length = np.linalg.norm(vec2)
-#         if length > 0.:
-#             vec2 /= length
-#
-#         vec3 = np.cross(vec1, vec2)
-#         length = np.linalg.norm(vec3)
-#         if length > 0.:
-#             vec3 /= length
-#
-#
-#         vzz = vec2  # vec2
-#         vyy = vec1  # vec1
-#         vxx = vec3  # vec3
-#
-#
-#         dzz = 5.8   #ppm
-#         dyy = -5.8
-#         dxx = 0.0
-#
-#         arr = np.array((((2. / 3.) * dxx * (vxx[1] ** 2 - vxx[0] ** 2) +  # Cyy
-#                          (2. / 3.) * dyy * (vyy[1] ** 2 - vyy[0] ** 2) +
-#                          (2. / 3.) * dzz * (vzz[1] ** 2 - vzz[0] ** 2)),
-#
-#                         ((2. / 3.) * dxx * (vxx[2] ** 2 - vxx[0] ** 2) +  # Czz
-#                          (2. / 3.) * dyy * (vyy[2] ** 2 - vyy[0] ** 2) +
-#                          (2. / 3.) * dzz * (vzz[2] ** 2 - vzz[0] ** 2)),
-#
-#                         ((4. / 3.) * dxx * vxx[0] * vxx[1] +  # Cxy
-#                          (4. / 3.) * dyy * vyy[0] * vyy[1] +
-#                          (4. / 3.) * dzz * vzz[0] * vzz[1]),
-#
-#                         ((4. / 3.) * dxx * vxx[0] * vxx[2] +  # Cxz
-#                          (4. / 3.) * dyy * vyy[0] * vyy[2] +
-#                          (4. / 3.) * dzz * vzz[0] * vzz[2]),
-#
-#                         ((4. / 3.) * dxx * vxx[1] * vxx[2] +  # Cyz
-#                          (4. / 3.) * dyy * vyy[1] * vyy[2] +
-#                          (4. / 3.) * dzz * vzz[1] * vzz[2])))
-#
-#         return arr * 1000.
-#
-# class ProcessHACS(ProcessACS):
-#     """Process the N-H dipoles (AX spin system) in the molecule."""
-#
-#     _run_automatically = True
-#
-#
-#     def process(self, **kwargs):
-#         """Process the H ACSs in the molecule(s)."""
-#
-#
-#         for d, molecule in zip(self.magnetic_interactions, self.molecules):
-#
-#             for residue in molecule.residues:
-#                 if 'H' not in residue:
-#                     continue
-#
-#                 prev_residue = residue.prev_residue
-#
-#                 if (prev_residue is None or
-#                     'N' not in residue or
-#                     'C' not in prev_residue):
-#                     continue
-#
-#                 H = residue['H']
-#                 N = residue['N']
-#                 C = prev_residue['C']
-#
-#                 key = interaction_label(residue.chain.id, residue.number, 'H')
-#                 arr = self.process_chemical_shift(H, N, C)
-#                 d[key] = arr
-#
-#         return self.magnetic_interactions
+class ProcessACS(Process):
+
+    def get_static_tensor(self, atom):
+        """Return the static tensor component dict for the given atom.
+
+        Parameters
+        ----------
+
+        Returns
+        -------
+        """
+        try:
+            name = atom.name
+            tensor_dict = settings.default_predicted_racs[name]
+        except KeyError:
+                msg = "A default CSA tensor for '{}' has not been specified"
+                logging.error(msg.format(atom))
+                return None
+
+        # Make sure the settings have all of the fiestin
+        if any(map(lambda x: x not in tensor_dict,
+                   ('delta', 'eta', 'alpha', 'beta', 'ref_atom1',
+                    'ref_atom2'))):
+            return None
+
+        # Return the CSA components
+        tensor = get_Haeberlen(**tensor_dict)
+        csa = CSAcomponents(dzz=tensor.dzz, dxx=tensor.dxx, dyy=tensor.dyy,
+                            delta=tensor.delta, eta=tensor.eta,
+                            alpha=tensor_dict['alpha'],
+                            beta=tensor_dict['beta'],
+                            ref_atom1=tensor_dict['ref_atom1'],
+                            ref_atom2=tensor_dict['ref_atom2'])
+        return csa
+
+    def process_chemical_shift(self, atom):
+        """Process the anisotropic chemical for the given atom.
+
+        Parameters
+        ----------
+        atom: :obj:`mollib.Atom`
+            The atom to calculate the chemical shift for.
+
+        Returns
+        -------
+        value: (float, `numpy.array`)
+            A tuple with the scaling constant and the array for the SVD of this
+            CSA.
+        """
+        # Get the CSA tensor components for this atom
+        csa = self.get_static_tensor(atom)
+        residue = atom.residue
+        if csa is None or residue is None:
+            return None
+
+        # get the reference atoms
+        name = csa.ref_atom1
+        if name.endswith('+1'):
+            if residue.next_residue is None:
+                return None
+            ref_atom1 = residue.next_residue[name[:-2]]
+        elif name.endswith('-1'):
+            if residue.prev_residue is None:
+                return None
+            ref_atom1 = residue.prev_residue[name[:-2]]
+        else:
+            ref_atom1 = residue[name]
+
+        name = csa.ref_atom2
+        if name.endswith('+1'):
+            if residue.next_residue is None:
+                return None
+            ref_atom2 = residue.next_residue[name[:-2]]
+        elif name.endswith('-1'):
+            if residue.prev_residue is None:
+                return None
+            ref_atom2 = residue.prev_residue[name[:-2]]
+        else:
+            ref_atom2 = residue[name]
+
+        # Now calculate the tensor orientations and directional cosines
+        vec1 = atom.pos - ref_atom1.pos
+        length = np.linalg.norm(vec1)
+        if length > 0.:
+            vec1 /= length
+
+        v = ref_atom1.pos - ref_atom2.pos
+        length = np.linalg.norm(v)
+        if length > 0.:
+            v /= length
+
+        vec2 = np.cross(vec1, v)
+        length = np.linalg.norm(vec2)
+        if length > 0.:
+            vec2 /= length
+
+        vec3 = np.cross(vec1, vec2)
+        length = np.linalg.norm(vec3)
+        if length > 0.:
+            vec3 /= length
+
+        # Compose the vectors and rotate them as needed
+        vzz = vec2
+        vyy = vec1
+        vxx = vec3
+
+        R_alpha = R(vzz, csa.alpha)
+        vyy = np.dot(R_alpha, vyy)
+        vxx = np.dot(R_alpha, vxx)
+
+        R_beta = R(vyy, csa.beta)
+        vzz = np.dot(R_beta, vzz)
+        vxx = np.dot(R_beta, vxx)
+
+        # Get the components of the tensor
+        dzz = csa.dzz
+        dyy = csa.dyy
+        dxx = csa.dxx
+
+        # Calculate the array
+        arr = np.array((((2. / 3.) * dxx * (vxx[1] ** 2 - vxx[0] ** 2) +  # Cyy
+                         (2. / 3.) * dyy * (vyy[1] ** 2 - vyy[0] ** 2) +
+                         (2. / 3.) * dzz * (vzz[1] ** 2 - vzz[0] ** 2)),
+
+                        ((2. / 3.) * dxx * (vxx[2] ** 2 - vxx[0] ** 2) +  # Czz
+                         (2. / 3.) * dyy * (vyy[2] ** 2 - vyy[0] ** 2) +
+                         (2. / 3.) * dzz * (vzz[2] ** 2 - vzz[0] ** 2)),
+
+                        ((4. / 3.) * dxx * vxx[0] * vxx[1] +  # Cxy
+                         (4. / 3.) * dyy * vyy[0] * vyy[1] +
+                         (4. / 3.) * dzz * vzz[0] * vzz[1]),
+
+                        ((4. / 3.) * dxx * vxx[0] * vxx[2] +  # Cxz
+                         (4. / 3.) * dyy * vyy[0] * vyy[2] +
+                         (4. / 3.) * dzz * vzz[0] * vzz[2]),
+
+                        ((4. / 3.) * dxx * vxx[1] * vxx[2] +  # Cyz
+                         (4. / 3.) * dyy * vyy[1] * vyy[2] +
+                         (4. / 3.) * dzz * vzz[1] * vzz[2])))
+
+        return (csa.delta * 1000., arr * 1000.)
+
+
+    def process(self, labels=None, **kwargs):
+        """Process the CSAs identified by the tensor_keys.
+
+        Parameters
+        ----------
+        labels: list of str or None
+            A list of interaction label strings. ex: 'A.14C'
+
+        Returns
+        -------
+        magnetic_interactions: list of dicts
+            A list of magnetic interaction dicts, one for each molecule.
+        """
+
+        # Convert labels to a set, if it isn't already
+        if isinstance(labels, list):
+            labels = set(labels)
+        elif isinstance(labels, set):
+            pass
+        else:
+            labels = set()
+
+        # If run_automically is specified as True, then it'll automatically
+        # add labels (and interactions) to calculate
+        if self._run_automatically:
+            for molecule in self.molecules:
+                for residue in molecule.residues:
+                    for name in settings.default_predicted_racs.keys():
+                        if name in residue:
+                            a1 = residue[name]
+                        else:
+                            continue
+
+                        # The atoms exist. Create an interaction label
+                        key = ((a1.chain.id, a1.residue.number, a1.name),)
+                        label = interaction_label(key)
+                        labels.add(label)
+
+        for label in labels:
+            # Find the csa and procress
+            for d, molecule in zip(self.magnetic_interactions, self.molecules):
+                # The following function gets the atoms for the given
+                # label and molecule
+                atom_list = interaction_atoms(label, molecule)
+
+                # Count the number of returned atoms. It should be 2. If it's
+                # wrong, no further processing can be done.
+                if len(atom_list) != 1:
+                    continue
+
+                atom = atom_list[0][0]
+                return_value = self.process_chemical_shift(atom)
+
+                if return_value is None:
+                    continue
+
+                scale, arr = return_value
+
+                if label in d:
+                    d[label] = (d[label][0], d[label][1] + arr)
+                else:
+                    d[label] = (scale, arr)
+
+        return self.magnetic_interactions

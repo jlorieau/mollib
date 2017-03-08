@@ -64,5 +64,6 @@ class PA(Plugin):
             tables = report_tables(data, data_pred)
             # tables['fit'].title = "Molecule fit"
 
+            print(stats)
             print(tables['fit'].content())
 

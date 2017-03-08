@@ -19,10 +19,12 @@ default_predicted_rdcs = {('N', 'H'): 11472.,  # 1.02 A
                           ('CA', 'C'): -1880.
                           }
 
-default_predicted_racs = {'H': {'dzz': -5.0,  # ppm
-                                'dxx': 0.0,
-                                'alpha': 0,
-                                'beta': 0,
+default_predicted_racs = {'C': {'delta': -86.53,  # ppm
+                                'eta': 0.73,
+                                'alpha': -12.5,     # degrees
+                                'beta': 0.,
+                                'ref_atom1': 'O',
+                                'ref_atom2': 'N+1',
                                 }
                           }
 
