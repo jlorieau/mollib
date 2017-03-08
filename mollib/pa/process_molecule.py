@@ -362,9 +362,9 @@ class ProcessACS(Process):
         vyy = vec1
         vxx = vec3
 
-        R_alpha = R(vzz, csa.alpha)
-        vyy = np.dot(R_alpha, vyy)
-        vxx = np.dot(R_alpha, vxx)
+        R_alpha = R(vzz, csa.alpha) # vzz
+        vyy = np.dot(R_alpha, vyy)  # vyy
+        vxx = np.dot(R_alpha, vxx)  # vxx
 
         R_beta = R(vyy, csa.beta)
         vzz = np.dot(R_beta, vzz)

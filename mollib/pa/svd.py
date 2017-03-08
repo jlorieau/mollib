@@ -8,13 +8,58 @@ import numpy as np
 from scipy import linalg
 
 from .analysis import calc_statistics
-from .utils import get_data_type
+from .utils import get_data_type, sort_key
+from . import settings
 
 
 #: A set of labels for which the analysis has not been implemented. We keep
 #: a set here so that the error message isn't printed multiple times by
 #: calc_pa_SVD
 not_implemented_errors = set()
+
+
+def get_error(label, data):
+    """Return the error for the given interaction.
+
+    Parameters
+    ----------
+    label: str
+        interaction label
+    data: dict
+        The experimental/observed RDC and RACS data.
+        - **key**: interaction labels (str)
+        - **value**: :obj:`mollib.pa.RDC` or :obj:`mollib.pa.RACS` data values.
+
+    Returns
+    -------
+    error: float
+        The interaction's error.
+    """
+    assert label in data
+
+    # Use the data point's error, if it's specified. (i.e. it's not None or
+    # equal to zero.)
+    if data[label].error is not None and data[label].error != 0.0:
+        return data[label].error
+
+    # Otherwise calculate a default value
+    interaction_type = sort_key(label)[0]
+    if interaction_type in settings.default_error:
+        value = data[label].value
+        rel_error = settings.default_error[interaction_type]
+        return value * rel_error
+
+    interaction_type_rev = '-'.join(interaction_type.split('-')[::-1])
+    if interaction_type_rev in settings.default_error:
+        value = data[label].value
+        rel_error = settings.default_error[interaction_type_rev]
+        return value * rel_error
+
+    msg = "Error of type '{}' not found for '{}'"
+    logging.error(msg.format(interaction_type, label))
+
+    return 1.0
+
 
 # TODO: incorporate errors
 def calc_pa_SVD(magnetic_interactions, data):
@@ -72,7 +117,8 @@ def calc_pa_SVD(magnetic_interactions, data):
             A.extend([arr,])
 
             expt_value = data[key].value
-            expt_error = data[key].error
+            expt_error = get_error(key, data)
+            print(key, data[key], data[key].error == 0.0)
             D.append(expt_value)
 
 

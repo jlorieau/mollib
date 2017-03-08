@@ -11,6 +11,7 @@ calculate_from_bonds = True
 #: common bonds in proteins. Values are calculated based on average calculated
 #: DCCs for 2MJB and scaled to an HN DCC of -11472Hz. These values are used
 #: if ``calculate_from_bonds`` is False.
+#: TODO: convert to 'N-H', 'CA-HA', 'N-C-1'
 default_predicted_rdcs = {('N', 'H'): 11472.,  # 1.02 A
                           ('CA', 'HA'): -21500.,
                           ('CA', 'HA2'): -21500.,
@@ -21,12 +22,16 @@ default_predicted_rdcs = {('N', 'H'): 11472.,  # 1.02 A
 
 default_predicted_racs = {'C': {'delta': -86.53,  # ppm
                                 'eta': 0.73,
-                                'alpha': -12.5,     # degrees
+                                'alpha': -20.,     # degrees
                                 'beta': 0.,
                                 'ref_atom1': 'O',
                                 'ref_atom2': 'N+1',
                                 }
                           }
+
+default_error = {'N-H':   0.01,
+                 'CA-HA': 0.01,
+                 'C': 0.01,}
 
 optimize_to_interactions = (('N', 'H'),
                             ('CA', 'HA'),
