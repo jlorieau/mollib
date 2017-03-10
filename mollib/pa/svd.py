@@ -50,7 +50,8 @@ def get_error(label, data):
     if interaction_type_rev in settings.default_error:
         return settings.default_error[interaction_type_rev]
 
-    msg = "Error of type '{}' not found for '{}'"
+    msg = ("The default error for the interaction type '{}' was not "
+           "found for '{}'")
     logging.error(msg.format(interaction_type, label))
 
     return 1.0

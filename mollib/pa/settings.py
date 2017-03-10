@@ -20,21 +20,39 @@ default_predicted_rdcs = {('N', 'H'): 11472.,  # 1.02 A
                           ('CA', 'C'): -1880.
                           }
 
-default_predicted_racs = {'C': {'delta': -86.53 * 0.6,  # ppm
-                                'eta': 0.73,
-                                'alpha': -10.0,     # degrees
-                                'beta': 0.,
-                                'gamma': 0,
-                                'vec1': ('O', 'C'),
-                                'vec2': ('N+1', 'C'),
-                                'ref_atom1': 'O',
-                                'ref_atom2': 'N+1',
-                                }
-                          }
+
+#: order - the xx/yy/zz component for the ref_atom1 - atom vector,
+#:         ref_atom2 - atom vector, and the final vector.
+default_predicted_racs = {
+    'C': {'delta': -86.53 * 0.595,  # ppm (Reduced anisotropy)
+          'eta': 0.63,
+          'alpha': -40.,     # degrees
+          'beta': 0.,
+          'gamma': 0.,
+          'ref_atom1': 'N+1',
+          'ref_atom2': 'O',
+          'order': 'yzx',  # yzx
+         },
+
+    'N': {'delta': 162.8, # * 0.595,  # ppm (Reduced anisotropy)
+          'eta': 0.16,
+          'alpha': -18.,     # degrees
+          'beta': 0.,
+          'gamma': 0.,
+          'ref_atom1': 'H',
+          'ref_atom2': 'CA',
+          'order': 'zyx', #'yzx',
+          'residue_types': {'ALA', 'TRP'},
+          },
+    }
+
 #: Default errors in absolute values
-default_error = {'N-H':   0.1,  # Hz
+default_error = {'N-H':   0.2,  # Hz
                  'CA-HA': 0.4,  # Hz
-                 'C': 0.5,     # ppb
+                 'N-C':   0.5,  # Hz
+                 'CA-C':  0.5,  # Hz
+                 'C':     0.5,  # ppb
+                 'N':     1.,  # ppb
                  }
 
 optimize_to_interactions = (('N', 'H'),

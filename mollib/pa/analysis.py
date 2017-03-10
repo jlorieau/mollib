@@ -11,7 +11,7 @@ from scipy import stats
 from .utils import sort_key
 from . import settings
 
-
+# TODO: Add groupwise statistics
 def calc_statistics(magnetic_interactions, Saupe_components, data, predicted):
     """Calculate the statistics between predicted and calculated RDCs and RACSs.
 
@@ -75,6 +75,7 @@ def calc_statistics(magnetic_interactions, Saupe_components, data, predicted):
                      (float(count) * (sum_Aa)**2 * (4. + 3. * sum_Rh**2) /5.))
     stats['R'] = stats['Q'] / sqrt(2.)
     stats['RSS'] = RSS
+    stats['RMSD'] = sqrt(RSS / (count - 1))
 
     for k,v in stats.items():
         stats[k] = round(v, 3)

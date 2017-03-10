@@ -1,9 +1,10 @@
 """
 Tools to process the dipolar and chemical shift tensors for a molecule.
 """
+import logging
+import re
 from math import sqrt, pi
 from collections import namedtuple
-import logging
 
 import numpy as np
 
@@ -16,7 +17,7 @@ from . import settings
 
 CSAcomponents = namedtuple('CSAcomponents',
                            'dzz dxx dyy delta eta alpha beta gamma '
-                           'ref_atom1 ref_atom2')
+                           'ref_atom1 ref_atom2 order')
 
 
 class Process(object):
@@ -255,6 +256,9 @@ class ProcessDipole(Process):
         return self.magnetic_interactions
 
 
+re_order = re.compile('(\+?\-?\w)')
+
+
 class ProcessACS(Process):
 
     def get_static_tensor(self, atom):
@@ -277,7 +281,7 @@ class ProcessACS(Process):
         # Make sure the settings have all of the fiestin
         if any(map(lambda x: x not in tensor_dict,
                    ('delta', 'eta', 'alpha', 'beta', 'gamma', 'ref_atom1',
-                    'ref_atom2'))):
+                    'ref_atom2', 'order'))):
             return None
 
         # Return the CSA components
@@ -288,7 +292,8 @@ class ProcessACS(Process):
                             beta=tensor_dict['beta'],
                             gamma=tensor_dict['gamma'],
                             ref_atom1=tensor_dict['ref_atom1'],
-                            ref_atom2=tensor_dict['ref_atom2'])
+                            ref_atom2=tensor_dict['ref_atom2'],
+                            order=tensor_dict['order'])
         return csa
 
     def process_chemical_shift(self, atom):
@@ -313,31 +318,49 @@ class ProcessACS(Process):
 
         # get the reference atoms
         name = csa.ref_atom1
-        if name.endswith('+1'):
-            if residue.next_residue is None:
+        if name.endswith('+1') or name.endswith('-1'):
+            # Get the residue (next or prev) for the reference atom.
+            ref_residue = (residue.next_residue if name.endswith('+1')
+                           else residue.prev_residue)
+
+            # Get the name of the atom for the ref atom.
+            # Remove the '+1' or '-1'.
+            ref_name = name[:-2]
+
+            # set the ref_atom1, if it exists
+            if ref_residue is not None and ref_name in ref_residue:
+                ref_atom1 = ref_residue[ref_name]
+            else:
                 return None
-            ref_atom1 = residue.next_residue[name[:-2]]
-        elif name.endswith('-1'):
-            if residue.prev_residue is None:
-                return None
-            ref_atom1 = residue.prev_residue[name[:-2]]
-        else:
+        elif name in residue:
+            # Otherwise get the atom from this residue
             ref_atom1 = residue[name]
+        else:
+            return None
 
         name = csa.ref_atom2
-        if name.endswith('+1'):
-            if residue.next_residue is None:
+        if name.endswith('+1') or name.endswith('-1'):
+            # Get the residue (next or prev) for the reference atom.
+            ref_residue = (residue.next_residue if name.endswith('+1')
+                           else residue.prev_residue)
+
+            # Get the name of the atom for the ref atom.
+            # Remove the '+1' or '-1'.
+            ref_name = name[:-2]
+
+            # set the ref_atom1, if it exists
+            if ref_residue is not None and ref_name in ref_residue:
+                ref_atom2 = ref_residue[ref_name]
+            else:
                 return None
-            ref_atom2 = residue.next_residue[name[:-2]]
-        elif name.endswith('-1'):
-            if residue.prev_residue is None:
-                return None
-            ref_atom2 = residue.prev_residue[name[:-2]]
-        else:
+        elif name in residue:
+            # Otherwise get the atom from this residue
             ref_atom2 = residue[name]
+        else:
+            return None
 
         # Now calculate the tensor orientations and directional cosines
-        vec1 = atom.pos - ref_atom1.pos
+        vec1 = ref_atom1.pos - atom.pos
         length = np.linalg.norm(vec1)
         if length > 0.:
             vec1 /= length
@@ -347,7 +370,7 @@ class ProcessACS(Process):
         if length > 0.:
             v /= length
 
-        vec2 = np.cross(vec1, v)
+        vec2 = np.cross(v, vec1)
         length = np.linalg.norm(vec2)
         if length > 0.:
             vec2 /= length
@@ -358,10 +381,34 @@ class ProcessACS(Process):
             vec3 /= length
 
         # Compose the vectors and rotate them as needed
-        vzz = vec2
-        vyy = vec1
-        vxx = vec3
+        # First order the vectors correctly. The order list is a list of
+        # 'x', 'y' and 'z' (or '-x', '-y' or '-z) do indicate the order of
+        # vectors vec1, vec2 and vec3 and whether these have to be reflected.
+        order = [i for i in re_order.split(csa.order) if i]
+        vectors = [vec1, vec2, vec3]
+        for count, item in enumerate(order):
+            if item == 'x':
+                vxx = vectors[count]
+            elif item == '-x':
+                vxx = -1. * vectors[count]
+            elif item == 'y':
+                vyy = vectors[count]
+            elif item == '-y':
+                vyy = -1. * vectors[count]
+            elif item == 'z':
+                vzz = vectors[count]
+            elif item == '-z':
+                vzz = -1. * vectors[count]
+            else:
+                msg = "Could not parse CSA tensor vector order component '{}'"
+                logging.error(msg.format(item))
+                return None
 
+        # vzz = vec1  # vec2
+        # vyy = vec2  # vec1
+        # vxx = vec3  # vec3
+
+        # Then rotate them as needed
         R_alpha = R(vzz, csa.alpha)
         vyy = np.dot(R_alpha, vyy)
         vxx = np.dot(R_alpha, vxx)
@@ -370,9 +417,9 @@ class ProcessACS(Process):
         vzz = np.dot(R_beta, vzz)
         vxx = np.dot(R_beta, vxx)
 
-        R_gamma = R(vzz, csa.gamma)
+        R_gamma = R(vxx, csa.gamma)
+        vzz = np.dot(R_gamma, vzz)
         vyy = np.dot(R_gamma, vyy)
-        vxx = np.dot(R_gamma, vxx)
 
         # Get the components of the tensor
         dzz = csa.dzz / csa.delta
