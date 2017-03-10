@@ -5,14 +5,14 @@ gamma = {'H': 267.513E6,
 
 #: Calculate dipolar couplings from bond lengths and gyromagnetic ratios. If
 #: this is False, the values in the default_predicted_rdcs are used.
-calculate_from_bonds = True
+calculate_from_bonds = False
 
 #: The default dipolar couplings and static dipolar coupling constants for
 #: common bonds in proteins. Values are calculated based on average calculated
 #: DCCs for 2MJB and scaled to an HN DCC of -11472Hz. These values are used
 #: if ``calculate_from_bonds`` is False.
 #: TODO: convert to 'N-H', 'CA-HA', 'N-C-1'
-default_predicted_rdcs = {('N', 'H'): 11472.,  # 1.02 A
+default_predicted_rdcs = {('N', 'H'): 10823., #11472.,  # 1.02 A
                           ('CA', 'HA'): -21500.,
                           ('CA', 'HA2'): -21500.,
                           ('CA', 'HA3'): -21500.,
@@ -21,37 +21,42 @@ default_predicted_rdcs = {('N', 'H'): 11472.,  # 1.02 A
                           }
 
 
-#: order - the xx/yy/zz component for the ref_atom1 - atom vector,
-#:         ref_atom2 - atom vector, and the final vector.
+#: order - the xx/yy/zz component order of the tensor.
+#:
+#:          1. The first component is colinear with the atom -- ref_atom1
+#:             vector
+#:          2. The second component is orthogonal to the
+#:             atom -- ref_atom1 -- ref_atom2 plane
+#:          3. The third component is orthogonal to the second two components.
 default_predicted_racs = {
-    'C': {'delta': -86.53 * 0.595,  # ppm (Reduced anisotropy)
+    'C': {'delta': -86.53 * 0.515,  # ppm (Reduced anisotropy)
           'eta': 0.63,
-          'alpha': -40.,     # degrees
+          'alpha': 40.,     # degrees
           'beta': 0.,
           'gamma': 0.,
           'ref_atom1': 'N+1',
           'ref_atom2': 'O',
-          'order': 'yzx',  # yzx
+          'order': 'xzy',
          },
 
-    'N': {'delta': 162.8, # * 0.595,  # ppm (Reduced anisotropy)
+    'N': {'delta': 108.53 * 0.4965, # ppm (Reduced anisotropy)
           'eta': 0.16,
-          'alpha': -18.,     # degrees
-          'beta': 0.,
+          'alpha': 0.,     # degrees
+          'beta': -20.,
           'gamma': 0.,
           'ref_atom1': 'H',
           'ref_atom2': 'CA',
-          'order': 'zyx', #'yzx',
+          'order': 'zyx',
           'residue_types': {'ALA', 'TRP'},
           },
     }
 
 #: Default errors in absolute values
-default_error = {'N-H':   0.2,  # Hz
+default_error = {'N-H':   1.,  # Hz
                  'CA-HA': 0.4,  # Hz
                  'N-C':   0.5,  # Hz
                  'CA-C':  0.5,  # Hz
-                 'C':     0.5,  # ppb
+                 'C':     1.,  # ppb
                  'N':     1.,  # ppb
                  }
 
