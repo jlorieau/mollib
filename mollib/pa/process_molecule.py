@@ -20,6 +20,10 @@ CSAcomponents = namedtuple('CSAcomponents',
                            'ref_atom1 ref_atom2 order')
 
 
+# A regex to process 'xyz' or 'x-yz' strings for a csa tensor vector order.
+re_order = re.compile('(\+?\-?\w)')
+
+
 class Process(object):
     """Process molecules into dipolar and anisotropic chemical shift
     interactions for the A-matrix in the SVD analysis.
@@ -170,7 +174,10 @@ class ProcessDipole(Process):
             # Get the pre-calculated value
             scale = settings.default_predicted_rdcs[dipole_type]
 
-        return (scale, arr)
+        # Return the scaling factor and the array. The scaling factor has to
+        # be multiplied by 2 because the RDC is measured from a splitting.
+        # ( J+D  - J  = D )
+        return (2. * scale, arr)
 
     def process(self, labels=None, **kwargs):
         """Process the dipoles identified by the tensor_keys.
@@ -254,9 +261,6 @@ class ProcessDipole(Process):
                         d[label] = (scale, arr)
 
         return self.magnetic_interactions
-
-
-re_order = re.compile('(\+?\-?\w)')
 
 
 class ProcessACS(Process):
@@ -447,8 +451,7 @@ class ProcessACS(Process):
                          (4. / 3.) * dyy * vyy[1] * vyy[2] +
                          (4. / 3.) * dzz * vzz[1] * vzz[2])))
 
-        return (csa.delta * 1000., arr )
-
+        return csa.delta * 1000., arr
 
     def process(self, labels=None, **kwargs):
         """Process the CSAs identified by the tensor_keys.

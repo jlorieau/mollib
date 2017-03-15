@@ -9,8 +9,9 @@ calculate_from_bonds = False
 
 #: The default dipolar couplings and static dipolar coupling constants for
 #: common bonds in proteins. Values are calculated based on average calculated
-#: DCCs for 2MJB and scaled to an HN DCC of -11472Hz. These values are used
-#: if ``calculate_from_bonds`` is False.
+#: DCCs for 2MJB and scaled to an HN DCC of -11472Hz. This is equal to the
+#: dipolar reduced anisotropy.
+#:  These values are used if ``calculate_from_bonds`` is False.
 #: TODO: convert to 'N-H', 'CA-HA', 'N-C-1'
 default_predicted_rdcs = {('N', 'H'): 10823., #11472.,  # 1.02 A
                           ('CA', 'HA'): -21500.,
@@ -29,7 +30,7 @@ default_predicted_rdcs = {('N', 'H'): 10823., #11472.,  # 1.02 A
 #:             atom -- ref_atom1 -- ref_atom2 plane
 #:          3. The third component is orthogonal to the second two components.
 default_predicted_racs = {
-    'C': {'delta': -86.53 * 0.515,  # ppm (Reduced anisotropy)
+    'C': {'delta': -86.53 * 1.03,  # ppm (Reduced anisotropy)
           'eta': 0.63,
           'alpha': 40.,     # degrees
           'beta': 0.,
@@ -37,9 +38,8 @@ default_predicted_racs = {
           'ref_atom1': 'N+1',
           'ref_atom2': 'O',
           'order': 'xzy',
-         },
-
-    'N': {'delta': 108.53 * 0.4965, # ppm (Reduced anisotropy)
+          },
+    'N': {'delta': 108.53 * 0.993,  # ppm (Reduced anisotropy)
           'eta': 0.16,
           'alpha': 0.,     # degrees
           'beta': -20.,
@@ -47,7 +47,6 @@ default_predicted_racs = {
           'ref_atom1': 'H',
           'ref_atom2': 'CA',
           'order': 'zyx',
-          'residue_types': {'ALA', 'TRP'},
           },
     }
 
