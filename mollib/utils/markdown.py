@@ -1,8 +1,6 @@
 """
 Utilities for rendering information in Markdown
 """
-
-#import textwrap
 from math import ceil
 
 from . import settings
@@ -219,3 +217,52 @@ class MDTable(object):
         if self.multiline:
             table += '-' * total_length + '\n'
         return table
+
+
+def dict_table(dictionary, sort_key=None):
+    """Renders a Markdown table for a dictionary.
+
+    Parameters
+    ----------
+    dictionary: dict
+        The dictionary to prepare in the table.
+    sort_key: function
+        If set, the dict keys will be sorted by the given sort function.
+
+    Returns
+    -------
+    table: :obj:`mollib.utils.MDTable`
+        The table generated from the dictionary.
+    """
+    # Determine the number of columns. One column for the keys, and one for
+    # each item in an iterable of the dict values
+    lengths = [len(v) if hasattr(v, '__len__') and not isinstance(v, str) else 1
+               for v in dictionary.values()]
+    no_cols = max(lengths) + 1
+
+    # Create the table with empty headers
+    table = MDTable(*['' for i in range(no_cols)])
+
+    # Get the dict keys to start populating the rows
+    if sort_key is not None:
+        keys = sorted(dictionary.keys(), key=sort_key)
+    else:
+        keys = dictionary.keys()
+
+    # Populate the rows
+    for key in keys:
+        values = dictionary[key]
+
+        # Fill the list of values to match the number of columns
+        if hasattr(values, '__len__') and not isinstance(values, str):
+            values = list(values) + [''] * (no_cols - len(values) - 1)
+        else:
+            values = [values,] + [''] * (no_cols - 2)
+
+        table.add_row(key, *values)
+
+    return table
+
+
+
+

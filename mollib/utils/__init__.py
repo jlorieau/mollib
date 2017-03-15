@@ -1,4 +1,4 @@
-from .markdown import MDTable
+from .markdown import MDTable, dict_table
 from .formatted_str import FormattedStr
 from .data_types import Datum
 from . import settings
