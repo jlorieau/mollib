@@ -86,33 +86,30 @@ Example:
 
 .. code-block:: python
 
-    def calc_pa_SVD(magnetic_interactions, data):
-        """Calculate the best-fit Saupe matrices for the given magnetic
-        interaction arrays and RDC/RACS data.
+    def calc_statistics(magnetic_interactions, Saupe_components, data, predicted):
+        """Calculate the statistics between predicted and calculated RDCs and
+        RACSs.
 
         Parameters
         ----------
         magnetic_interactions: list of dicts
             - A list of dicts, one for each molecule to be fit.
-              See :class:`mollib.pa.process_molecule.Process`.
-
+              See :class:`mollib.pa.process_molecule.Process`
+        Saupe_components: dict
+            See the output of :func:`mollib.pa.svd.calc_pa_SVD`
         data: dict
             - **key**: interaction labels (str)
             - **value**: :obj:`mollib.pa.RDC` or :obj:`mollib.pa.RACS` data
               values.
+        predicted: dict
+            - **key**: interaction labels (str)
+            - **value**: :obj:`mollib.pa.RDC` or :obj:`mollib.pa.RACS` data
+            values.
 
         Returns
         -------
-        (data_pred, Saupe_components, stats): tuple
-            - data_pred: dict
-                 - **key**: interaction labels (str)
-                 - **value**: :obj:`mollib.pa.RDC` or :obj:`mollib.pa.RACS` data
-                   values.
-            - Saupe_components: dict
-                 - 'S_xyz': (list of arrays) The 3x1 Saupe matrix in x/y/z repr.
-                 - 'Aa': (list) The degree of alignment.
-                 - 'Ar': (list) The alignment rhombicity.
-                 - 'Rh': (list) The rhombicity
-            - stats: dict
-                 - See :func:`calc_statistics`
+        stats: :obj:`collections.OrderedDict`
+            - 'Q': (float) the Q-factor of the fit
+            - 'R': (float) the R-factor of the fit
+            - 'RMS': (Hz/ppb) the root-mean square of the fit
         """

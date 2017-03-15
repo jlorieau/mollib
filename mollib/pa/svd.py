@@ -58,6 +58,7 @@ def get_error(label, data):
 
 
 # TODO: incorporate errors
+# TODO: calculate Da,max for RDC/RACS
 def calc_pa_SVD(magnetic_interactions, data):
     """Calculate the best-fit Saupe matrices for the given magnetic interaction
     arrays and RDC/RACS data.
@@ -109,6 +110,7 @@ def calc_pa_SVD(magnetic_interactions, data):
                     not_implemented_errors.add(key)
                 continue
 
+            # Get the experimental value and error
             expt_value = data[key].value
             expt_error = get_error(key, data)
             scale, arr = interaction_dict[key]
@@ -147,16 +149,6 @@ def calc_pa_SVD(magnetic_interactions, data):
 
     D_pred = np.dot(A, S)
 
-    # Calculate the predicted data. It must be sorted the same way as the
-    # interaction_dict
-    data_pred = {}
-    for key, D in zip(ordered_keys, D_pred):
-        # Determine whether the predicted data is an RDC or RACS
-        data_type = get_data_type(key)
-        expt_error = get_error(key, data)
-        data_pred[key] = data_type(value=D * expt_error, error=0.0)
-
-
     # Break up the S matrix into individual Saupe matrices, Das and Rh
     Saupe_components = {}
     for i in ('S_xyz', 'Aa', 'Ar', 'Rh'):
@@ -165,8 +157,8 @@ def calc_pa_SVD(magnetic_interactions, data):
     for x in range(0, len(S), 5):
         s = S[x:x + 5]
         s_xyz = np.array([[-0.5 * (s[0] - s[1]), s[2], s[3], ],
-                         [s[2], -0.5 * (s[0] + s[1]), s[4]],
-                         [s[3], s[4], s[0]]])
+                          [s[2], -0.5 * (s[0] + s[1]), s[4]],
+                          [s[3], s[4], s[0]]])
         s_xyz = linalg.eigvals(s_xyz).real
         Saupe_components['S_xyz'].append(s_xyz)
 
@@ -176,6 +168,16 @@ def calc_pa_SVD(magnetic_interactions, data):
         Saupe_components['Aa'].append(aa)
         Saupe_components['Ar'].append(ar)
         Saupe_components['Rh'].append(ar / abs(aa))
+
+    # Calculate the predicted data. It must be sorted the same way as the
+    # interaction_dict
+    data_pred = {}
+    for key, D in zip(ordered_keys, D_pred):
+        # Determine whether the predicted data is an RDC or RACS
+        data_type = get_data_type(key)
+        expt_error = get_error(key, data)
+        data_pred[key] = data_type(value=D * expt_error, error=0.0)
+
 
     # Calculate the statistics
     stats = calc_statistics(magnetic_interactions, Saupe_components, data,

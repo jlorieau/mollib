@@ -37,6 +37,7 @@ def read_pa_file(filename):
     return data
 
 
+# TODO: setup to ignore '#' lines
 def read_pa_string(string):
     """Read data from a partial alignment data string.
 
