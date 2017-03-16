@@ -9,7 +9,7 @@ from .data_types import RDC, RACS
 
 
 re_pa = re.compile(r'^\s*'
-                   r'(?P<interaction>[\w\-\.]+)'
+                   r'(?P<interaction>[\w\-\.]+#?)'
                    r'\s+'
                    r'(?P<value>[E\d\-\+\.]+)'
                    r'\s*'

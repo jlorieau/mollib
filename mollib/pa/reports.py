@@ -94,8 +94,8 @@ def report_tables(data, predicted=None):
             pred = round(pred , no_digits)
             deviation = round(abs(value - pred), no_digits)
         else:
-            pred = "-"
-            deviation = "-"
+            pred = "  -"
+            deviation = "  -"
 
         # Identify outlier points with either a warning (yellow) or as bad (red)
         # Also put an asterisk or exclamation mark next to the label's name
