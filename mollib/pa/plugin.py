@@ -10,7 +10,7 @@ from mollib.plugins import Plugin
 from .data_readers import read_pa_file
 from .process_molecule import Process
 from .svd import calc_pa_SVD
-from .reports import report_tables
+from .reports import report_tables, stats_table
 
 
 class PA(Plugin):
@@ -60,10 +60,12 @@ class PA(Plugin):
             (data_pred, Saupe_components,
              stats) = calc_pa_SVD(magnetic_interactions, data)
 
-            # Report the statistics
+            # Prepare a table of the observed and predicted data
             tables = report_tables(data, data_pred)
             # tables['fit'].title = "Molecule fit"
 
-            print(stats)
+            # Prepare a table of the stats
+            print(stats_table(stats).content())
+
             print(tables['fit'].content())
 

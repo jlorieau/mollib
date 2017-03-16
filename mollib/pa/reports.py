@@ -1,6 +1,6 @@
 from .utils import sort_key
 from .analysis import find_outliers
-from mollib.utils import MDTable, FormattedStr
+from mollib.utils import MDTable, dict_table, FormattedStr
 
 
 def center(number, rjust=4):
@@ -11,6 +11,23 @@ def center(number, rjust=4):
             if len(split) > 1 else split[0])
 
 
+def stats_table(stats, *args, **kwargs):
+    """Render a table for the statistics.
+
+    Parameters
+    ----------
+    stats: dict
+        A dict with the statistics from the SVD fit
+
+    Returns
+    -------
+    table: :obj:`mollib.utils.MDTable`
+        A table of the statistics
+    """
+    return dict_table(stats, *args, **kwargs)
+
+
+#: rename to datafit_tables
 def report_tables(data, predicted=None):
     """Produce the partial alignment report for the observed and predicted
     RDC and RACS values.
