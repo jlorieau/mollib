@@ -7,9 +7,10 @@ gamma = {'H': 267.513E6,
 #: this is False, the values in the default_predicted_rdcs are used.
 calculate_from_bonds = False
 
-#: The default dipolar couplings and static dipolar coupling constants for
-#: common bonds in proteins. Values are calculated based on average calculated
-#: DCCs for 2MJB and scaled to an HN DCC of -11472Hz. This is equal to the
+#: The default dipolar couplings calculated.
+#  The static dipolar coupling constants listed are for common bonds in
+#: proteins. Values are calculated based on average calculated DCCs for 2MJB
+#: and scaled to an HN DCC of -11472Hz. This is equal to the
 #: dipolar reduced anisotropy.
 #:  These values are used if ``calculate_from_bonds`` is False.
 #: TODO: convert to 'N-H', 'CA-HA', 'N-C-1'
@@ -17,6 +18,7 @@ default_predicted_rdcs = {('N', 'H'): 10823., #11472.,  # 1.02 A
                           ('CA', 'HA'): -21500.,
                           ('CA', 'HA2'): -21500.,
                           ('CA', 'HA3'): -21500.,
+                          ('CA', 'HA#'): -21500.,
                           ('N', 'C-1'): 1115.,
                           ('CA', 'C'): -1880.
                           }
