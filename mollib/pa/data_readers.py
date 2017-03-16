@@ -8,7 +8,7 @@ from mollib.utils.interactions import validate_label
 from .data_types import RDC, RACS
 
 
-re_pa = re.compile(r'\s*'
+re_pa = re.compile(r'^\s*'
                    r'(?P<interaction>[\w\-\.]+)'
                    r'\s+'
                    r'(?P<value>[E\d\-\+\.]+)'
@@ -37,7 +37,6 @@ def read_pa_file(filename):
     return data
 
 
-# TODO: setup to ignore '#' lines
 def read_pa_string(string):
     """Read data from a partial alignment data string.
 
