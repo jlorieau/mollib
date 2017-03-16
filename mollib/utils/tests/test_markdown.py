@@ -73,4 +73,5 @@ class TestMarkdown(unittest.TestCase):
                          "------- ---- -- ---\n"
                          "(1, 2)  1    2     \n"
                          "1       one        \n"
-                         "a       1    2  3  \n")
+                         "a       1    2  3  \n"
+                         "------- ---- -- ---\n")

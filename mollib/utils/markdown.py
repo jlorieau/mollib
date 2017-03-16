@@ -95,6 +95,13 @@ class MDTable(object):
         else:
             self.max_width = settings.default_table_max_width
 
+    @property
+    def empty_headers(self):
+        """True if the headers are all empty (i.e. equal to '')."""
+        stripped_headers = [i.stripped_str() if hasattr(i, 'stripped_str')
+                            else i
+                            for i in self.column_titles]
+        return all([i == '' for i in stripped_headers])
 
     def num_cols(self):
         "Return the number of columns in the table."
@@ -163,8 +170,8 @@ class MDTable(object):
 
                 largest_column_widths[0] = (index, new_width)
 
-                # Resort the largest_column_widths by index number, and copy over
-                # to the column widths
+                # Resort the largest_column_widths by index number, and copy
+                # over to the column widths
                 largest_column_widths = sorted(largest_column_widths,
                                                key= lambda i: i[1],
                                                reverse=True)
@@ -203,9 +210,10 @@ class MDTable(object):
         table += '\n'
 
         # Add header bottom bars
-        table += ''. join(['-' * (width-1)
+        broken_lines = ''. join(['-' * (width-1)
                            if count == 0 else ' ' + '-' * (width-1)
                            for count, width in enumerate(column_widths)])
+        table += broken_lines
         table += '-\n'
 
         # Add rows
@@ -213,9 +221,13 @@ class MDTable(object):
             table += print_lines(row, column_widths)
             table += ('\n\n' if self.multiline else '\n')
 
-        # Add bottom bar. Only needed for multiline tables
+        # Add bottom bar. Only needed for multiline tables or if the column
+        # headers are all empty
         if self.multiline:
             table += '-' * total_length + '\n'
+        elif self.empty_headers:
+            table += broken_lines
+            table += '-\n'
         return table
 
 
