@@ -71,15 +71,19 @@ def calc_statistics(magnetic_interactions, Saupe_components, data, predicted):
 
     # Calculate the stats: Q-factor, R-factor, RSS.
     # Round these numbers to remove insignificant digits
-    stats['Q'] = sqrt(RSS_scaled /
-                     (float(count) * (sum_Aa)**2 * (4. + 3. * sum_Rh**2) /5.))
-    stats['R'] = stats['Q'] / sqrt(2.)
-    stats['RSS'] = RSS
-    stats['RMSD'] = sqrt(RSS / (count - 1))
+    stats['Q-factor (%)'] = 100. *sqrt(RSS_scaled /
+                            (float(count) * (sum_Aa)**2 *
+                             (4. + 3. * sum_Rh**2) /5.))
+    stats['Q-factor (%)'] = round(stats['Q-factor (%)'], 1)
 
-    # Round the numbers
-    for k,v in stats.items():
-        stats[k] = round(v, 3)
+    stats['R-factor (%)'] = stats['Q-factor (%)'] / sqrt(2.)
+    stats['R-factor (%)'] = round(stats['R-factor (%)'], 1)
+
+    stats['RSS'] = RSS
+    stats['RSS'] = round(stats['RSS'], 1)
+
+    stats['RMSD'] = sqrt(RSS / (count - 1))
+    stats['RMSD'] = round(stats['RMSD'], 2)
 
     stats['count'] = count
 
