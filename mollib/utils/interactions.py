@@ -1,9 +1,33 @@
 """
-These are utility functions for changing between interaction labels and label
-keys. String labels are useful for saving text files, while label keys are
-useful for identifying interaction relationships between atoms.
+Interactions labels (strings) are labels used to define the interaction between
+atoms or groups of atoms. These utility functions are used to change between
+interaction labels, label keys and atom groups.
+
+Interaction labels have the following features:
+
+    - Each group of atoms is identified by a subunit (optional), a residue
+      number and an atom name.
+        - ex: 'A.13CA' is the CA atom of the 13th residue in subunit A.
+
+    - If the subunit is not specified, the subunit 'A' is assumed.
+
+    - Atom interactions are related to each other through a delimiter
+      (default: '-')
+        - ex: '14N-H' corresponds to the interaction between the N and H atoms
+          of residue 14 in subunit A.
+
+    - The basic '+1' and '-1' relative operators are supported to refer to next
+      and previous residues.
+        - ex: '13N-C-1' corresponds to the interaction between the N atom of
+          residue 13 and the C atom of residue 12. Alternative, '13C-12N' could
+          also be used.
+
+    - Wildcards are supported for atom names (default: '#')
+        - ex: '13CA-HA#' corresponds to the CA atom of residue 13 and the HA2
+          and HA3 atoms of residue 13.
 """
-# TODO: Incorporate a '+' character. ex: 13CA-HA#+HB# or 13C-(HA#HB#)
+# TODO: Add atom groups. ex: 35CA-(CG1CG2)
+# TODO: Move to an nmr module.
 
 import re
 from string import digits
@@ -12,11 +36,62 @@ import logging
 
 from .ordered_set import OrderedSet
 
-
+# Once an interaction label is split, this regex parses it into its atom
+# components, like subunit, residue number and atom name.
 re_label = re.compile(r'(?P<subunit>[A-Z]+\.)?'
                       r'(?P<number>\d*)'
                       r'(?P<name>[A-Z0-9]+)'
+                      r'(?P<rel>[\-\+]\d+)?'
                       r'(?P<wildcard>.?)')
+
+
+def split_interaction_label(label, delimiter='-'):
+    """Splits an interaction label into its component atom labels.
+
+
+    .. note:: This function is designed to use relative atom references, like
+              C-1 or N+1. These are used to reference atoms in previous or
+              subsequent residues, respectively.
+
+    Parameters
+    ----------
+    label: str
+        The string identifier for the interaction. ex: A.14N-H
+    delimiter: str
+        The delimeter used for separating atom references.
+
+    Returns
+    -------
+    pieces: list of str
+        A list of atom label pieces
+
+    Examples
+    --------
+    >>> split_interaction_label('14N-H')
+    ['14N', 'H']
+    >>> split_interaction_label('A.14H-13C')
+    ['A.14H', '13C']
+    >>> split_interaction_label('A.15N-16C-17H')
+    ['A.15N', '16C', '17H']
+    >>> split_interaction_label('A.14H-13C-N-1')
+    ['A.14H', '13C', 'N-1']
+    >>> split_interaction_label('A.14N-C-1')
+    ['A.14N', 'C-1']
+    >>> split_interaction_label('A.N+1-14C')
+    ['A.N+1', '14C']
+    """
+    # Break the label into pieces
+    pieces = label.split(delimiter)
+
+    # Join the string piece for which a piece is a number. (ex: 'C-1' becomes
+    # ['C', '1'] and should be joined back to 'C-1'
+    l = []
+    for count, item in enumerate(pieces):
+        if item.isdigit() and count > 0:
+            l[count - 1] = l[count - 1] + delimiter + item
+        else:
+            l.append(item)
+    return l
 
 
 def interaction_key(label, default_subunit='A',
@@ -62,9 +137,13 @@ def interaction_key(label, default_subunit='A',
     (('A', 13, 'CA'), ('A', 13, 'HA1', 'HA2', 'HA3'))
     >>> interaction_key('35HB2')
     (('A', 35, 'HB2'),)
+    >>> interaction_key('13N-C-1')
+    (('A', 13, 'N'), ('A', 12, 'C'))
+    >>> interaction_key('13C-N+1')
+    (('A', 13, 'C'), ('A', 14, 'N'))
     """
-    # Split the string about the '-' character
-    pieces = label.split('-')
+    # Split the string into atom labels
+    pieces = split_interaction_label(label)
     key = []
 
     # Parse each piece in terms of the residue number and atom name
@@ -84,12 +163,28 @@ def interaction_key(label, default_subunit='A',
         atom_name = groupdict['name']
         subunit = groupdict['subunit']
         subunit = subunit.strip('.') if subunit else prev_subunit
+        rel = groupdict['rel']
         wildcard = groupdict['wildcard']
 
         # If the residue number has not been specified (i.e. it is ''),
-        # then use the previous residue number even if it's equal to None
+        # then determine the residue number from the previous piece
         if not residue_number:
-            residue_number = prev_residue_number
+            # use the previous residue number, unless a relative (rel) label
+            # is specified like '-1' or '+1'
+            if rel:
+                msg = "Unable to parse relative residue identified in {}"
+                try:
+                    rel_int = int(rel)
+                except ValueError:
+                    logging.error(msg.format(label))
+                    continue
+                if prev_residue_number is None:
+                    logging.error(msg.format(label))
+                    continue
+                residue_number = prev_residue_number + rel_int
+            else:
+                residue_number = prev_residue_number
+
         else:
             # Otherwise convert it to an integer
             residue_number = int(residue_number)
@@ -250,6 +345,8 @@ def validate_label(label, *args, **kwargs):
     >>> validate_label('35HB2')
     'A.35HB2'
     >>> validate_label('C')
+    >>> validate_label('13N-C-1')
+    'A.13N-12C'
     """
     try:
         key = interaction_key(label, *args, **kwargs)
@@ -289,6 +386,8 @@ def interaction_atoms(key_or_label, molecule):
     list of list of interaction atoms
         A list of combinations of interacting atoms.
 
+    Examples
+    --------
     >>> from mollib import Molecule
     >>> mol = Molecule('2MJB')
     >>> interaction_atoms('13C', mol)
@@ -303,7 +402,8 @@ def interaction_atoms(key_or_label, molecule):
     [[A.G35-CA, A.G35-HA2], [A.G35-CA, A.G35-HA3]]
     >>> interaction_atoms('33CA-HA-HB#', mol)
     [[A.K33-CA, A.K33-HA, A.K33-HB2], [A.K33-CA, A.K33-HA, A.K33-HB3]]
-
+    >>> interaction_atoms('14N-C-1', mol)
+    [[A.T14-N, A.I13-C]]
     """
     if isinstance(key_or_label, str):
         key = interaction_key(key_or_label)
