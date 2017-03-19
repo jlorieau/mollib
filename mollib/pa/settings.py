@@ -12,15 +12,15 @@ calculate_from_bonds = False
 #: proteins. Values are calculated based on average calculated DCCs for 2MJB
 #: and scaled to an HN DCC of -11472Hz. This is equal to the
 #: dipolar reduced anisotropy.
-#:  These values are used if ``calculate_from_bonds`` is False.
-#: TODO: convert to 'N-H', 'CA-HA', 'N-C-1'
-default_predicted_rdcs = {('N', 'H'): 10823., #11472.,  # 1.02 A
-                          ('CA', 'HA'): -21500.,
-                          ('CA', 'HA2'): -21500.,
-                          ('CA', 'HA3'): -21500.,
-                          ('CA', 'HA#'): -21500.,
-                          ('N', 'C-1'): 1115.,
-                          ('CA', 'C'): -1880.
+#: These values are used if ``calculate_from_bonds`` is False.
+default_predicted_rdcs = {'N-H': 10823., #11472.,  # 1.02 A
+                          'NE1-HE1': 10823.,
+                          'CA-HA': -22300.,
+                          'CA-HA2': -22300.,
+                          'CA-HA3': -22300.,
+                          'CA-HA#': -22300.,
+                          'N-C-1': 1115.,
+                          'CA-C': -1880.
                           }
 
 
@@ -53,10 +53,11 @@ default_predicted_racs = {
     }
 
 #: Default errors in absolute values
-default_error = {'N-H':   1.,  # Hz
-                 'CA-HA': 0.4,  # Hz
+default_error = {'N-H':   0.2,  # Hz
+                 'CA-HA': 0.5,  # Hz
                  'N-C':   0.5,  # Hz
                  'CA-C':  0.5,  # Hz
+                 'NE-HE': 0.2,  # Hz
                  'C':     1.,  # ppb
                  'N':     1.,  # ppb
                  }

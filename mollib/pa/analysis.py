@@ -69,6 +69,18 @@ def calc_statistics(magnetic_interactions, Saupe_components, data, predicted):
 
         count += 1
 
+    # for rdc_type, static_value in settings.default_predicted_rdcs.items():
+    #     if rdc_type not in settings.default_error:
+    #         continue
+    #     error = settings.default_error[rdc_type]
+    #     print(rdc_type, static_value, static_value * 2 * sum_Aa, sum_Rh )
+
+    # Add statistics on the Saupe matrix
+    stats['Da H-N (Hz)'] = settings.default_predicted_rdcs['N-H'] * 2. * sum_Aa
+    stats['Da H-N (Hz)'] = round(stats['Da H-N (Hz)'], 2)
+    stats['Rh'] = sum_Rh
+    stats['Rh'] = round(stats['Rh'], 3)
+
     # Calculate the stats: Q-factor, R-factor, RSS.
     # Round these numbers to remove insignificant digits
     stats['Q-factor (%)'] = 100. *sqrt(RSS_scaled /
@@ -82,8 +94,8 @@ def calc_statistics(magnetic_interactions, Saupe_components, data, predicted):
     stats['RSS'] = RSS
     stats['RSS'] = round(stats['RSS'], 1)
 
-    stats['RMSD'] = sqrt(RSS / (count - 1))
-    stats['RMSD'] = round(stats['RMSD'], 2)
+    stats['RMS'] = sqrt(RSS / count )
+    stats['RMS'] = round(stats['RMS'], 2)
 
     stats['count'] = count
 

@@ -156,15 +156,21 @@ def calc_pa_SVD(magnetic_interactions, data):
 
     for x in range(0, len(S), 5):
         s = S[x:x + 5]
-        s_xyz = np.array([[-0.5 * (s[0] - s[1]), s[2], s[3], ],
-                          [s[2], -0.5 * (s[0] + s[1]), s[4]],
-                          [s[3], s[4], s[0]]])
+
+        # The order of the Saupe matrix components are:
+        # Cyy, Czz, Cxy, Cxz, Cyz
+        s_xyz = np.array([[-s[0]-s[1], s[2], s[3]],
+                          [s[2],         s[0], s[4]],
+                          [s[3],         s[4], s[1]]])
+
         s_xyz = linalg.eigvals(s_xyz).real
         Saupe_components['S_xyz'].append(s_xyz)
 
-        xx, yy, zz = [i for i in sorted(abs(s_xyz))]
-        aa = max(s_xyz) / 2. if max(s_xyz) == zz else min(s_xyz) / 2.
+        yy, xx, zz = sorted(s_xyz, key=lambda x: abs(x))
+
+        aa = zz / 2.
         ar = (yy - xx) / 3.
+
         Saupe_components['Aa'].append(aa)
         Saupe_components['Ar'].append(ar)
         Saupe_components['Rh'].append(ar / abs(aa))

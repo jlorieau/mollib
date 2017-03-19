@@ -116,16 +116,18 @@ class ProcessDipole(Process):
             dipole.
         """
         # Find the dipole type. This is a tuple of the form.
-        dipole_type = (atom1.element, atom2.element)
+        dipole_type = "-".join((atom1.name, atom2.name))
+        dipole_type_rev = "-".join((atom2.name, atom1.name))
 
         # Make the order of atoms match those in the
         # settings.default_predicted_rdcs by reversing the order if needed
-        if dipole_type[::-1] in settings.default_predicted_rdcs:
-            dipole_type = dipole_type[::-1]
+        if dipole_type_rev in settings.default_predicted_rdcs:
+            dipole_type = dipole_type_rev
 
         # Calculate or retrieve cached the static dipolar coupling constant
         if not hasattr(self, 'dcc'):
             self.dcc = {}
+
         if dipole_type not in self.dcc:
             # Get the gyromagnetic ratios for the atoms, based on their
             # elements.
@@ -141,7 +143,7 @@ class ProcessDipole(Process):
                 return None
 
             dcc = -1. * 1.E-7 * 1.05457E-34 * g1 * g2 / (2. * pi)
-            self.dcc[(atom1.element, atom2.element)] = dcc
+            self.dcc[dipole_type] = dcc
 
         dcc = self.dcc[dipole_type]
 
@@ -173,7 +175,6 @@ class ProcessDipole(Process):
         else:
             # Get the pre-calculated value
             scale = settings.default_predicted_rdcs[dipole_type]
-
         # Return the scaling factor and the array. The scaling factor has to
         # be multiplied by 2 because the RDC is measured from a splitting.
         # ( J+D  - J  = D )
@@ -206,39 +207,9 @@ class ProcessDipole(Process):
         if self._run_automatically:
             for molecule in self.molecules:
                 for residue in molecule.residues:
-                    for name1, name2 in settings.default_predicted_rdcs.keys():
-                        # Get the correct atoms.
-                        # 1. Check to see if the atom name is in this
-                        #    residue.
-                        # 2. Some of the atom names may include '-1' at the
-                        #    end (i.e. 'C-1'), which refers to an atom in the
-                        #    previous residue. Check to see if a previous
-                        #    residue is specified (not None), the retrieve the
-                        #    atom from the previous residue.
-                        if name1 in residue:
-                            a1 = residue[name1]
-                        elif (name1.endswith('-1') and
-                              residue.prev_residue is not None and
-                              name1[:-2] in residue.prev_residue):
-                            # Strip the last two characters from the name
-                            # because they're '-1'. i.e.: 'C-1' becomes 'C'
-                            a1 = residue.prev_residue[name1[:-2]]
-                        else:
-                            continue
-
-                        if name2 in residue:
-                            a2 = residue[name2]
-                        elif (name2.endswith('-1') and
-                              residue.prev_residue is not None and
-                              name2[:-2] in residue.prev_residue):
-                            a2 = residue.prev_residue[name2[:-2]]
-                        else:
-                            continue
-
-                        # The atoms exist. Create an interaction label
-                        key = ((a1.chain.id, a1.residue.number, a1.name),
-                               (a2.chain.id, a2.residue.number, a2.name))
-                        label = interaction_label(key)
+                    for sublabel in settings.default_predicted_rdcs.keys():
+                        label = "{}.{}".format(residue.chain.id, residue.number)
+                        label = label + sublabel
                         labels.add(label)
 
         for label in labels:
