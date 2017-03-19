@@ -9,7 +9,7 @@ import sys
 import os
 
 import mollib
-from . import __version__
+from __version__ import __project_name__
 from mollib.utils import FormattedStr
 from mollib.plugins import PluginManager
 from mollib.core import list_global_settings, load_settings
@@ -40,7 +40,7 @@ def list_settings():
 
 def main():
     # Setup the logger
-    fmt='{}: %(levelname)-8s %(message)s'.format(__version__.__project_name__)
+    fmt='{}: %(levelname)-8s %(message)s'.format(__project_name__)
     logging.basicConfig(format=fmt)
 
     # Load the argument parser and subparsers
