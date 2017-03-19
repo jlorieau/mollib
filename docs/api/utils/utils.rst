@@ -8,6 +8,7 @@ General utilities for rendering data to the console
     :maxdepth: 2
 
     markdown
+    files
     interactions
     tensors
     settings

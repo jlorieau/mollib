@@ -1,3 +1,7 @@
+"""
+Utility functions for checking, reading and writing files.
+"""
+
 import logging
 import os
 
@@ -7,8 +11,10 @@ from . import settings
 def check_file(filename, critical=True):
     """Check whether the filename exists.
 
-    Paramaters
+    Parameters
     ----------
+    filename: str
+        The name of the file to check.
     critical: bool (optional)
         If the existence of the file or path is critical to proceed, and the
         file doesn't exist, end the program execution.
