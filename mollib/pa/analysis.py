@@ -8,6 +8,8 @@ from itertools import groupby
 from numpy import std
 from scipy import stats
 
+from mollib.utils.ordered_set import OrderedSet
+from mollib.utils.numbers import round_sig
 from .utils import sort_key
 from . import settings
 
@@ -75,29 +77,51 @@ def calc_statistics(magnetic_interactions, Saupe_components, data, predicted):
     #     error = settings.default_error[rdc_type]
     #     print(rdc_type, static_value, static_value * 2 * sum_Aa, sum_Rh )
 
-    # Add statistics on the Saupe matrix
-    stats['Da H-N (Hz)'] = settings.default_predicted_rdcs['N-H'] * 2. * sum_Aa
-    stats['Da H-N (Hz)'] = round(stats['Da H-N (Hz)'], 2)
-    stats['Rh'] = sum_Rh
-    stats['Rh'] = round(stats['Rh'], 3)
-
     # Calculate the stats: Q-factor, R-factor, RSS.
     # Round these numbers to remove insignificant digits
-    stats['Q-factor (%)'] = 100. *sqrt(RSS_scaled /
-                            (float(count) * (sum_Aa)**2 *
-                             (4. + 3. * sum_Rh**2) /5.))
-    stats['Q-factor (%)'] = round(stats['Q-factor (%)'], 1)
+    Q = 100. * sqrt(RSS_scaled / (float(count) * (sum_Aa)**2 *
+                                  (4. + 3. * sum_Rh**2) / 5.))
+    R = Q / sqrt(2.)
+    RMS = sqrt(RSS / count)
 
-    stats['R-factor (%)'] = stats['Q-factor (%)'] / sqrt(2.)
-    stats['R-factor (%)'] = round(stats['R-factor (%)'], 1)
+    stats['Stats'] = OrderedDict()
+    stats['Stats']['Q (%)'] = round(Q, 1)
+    stats['Stats']['R (%)'] = round(R, 1)
+    stats['Stats']['RSS'] = round(RSS, 1)
+    stats['Stats']['RMS'] = round(RMS, 2)
+    stats['Stats']['count']= count
 
-    stats['RSS'] = RSS
-    stats['RSS'] = round(stats['RSS'], 1)
+    # Add statistics on each type interaction
+    # Get the different interaction statistics
+    sorted_keys = sorted(data.keys(), key=sort_key)
+    interactions = OrderedSet()
+    interactions.add('N-H')  # Add 'N-H' couplings default
+    interactions |= [k[0] for k in map(sort_key, sorted_keys)]
 
-    stats['RMS'] = sqrt(RSS / count )
-    stats['RMS'] = round(stats['RMS'], 2)
+    # Add basic stats for each type of interaction in the data
+    for interaction in interactions:
+        if interaction in settings.default_predicted_rdcs:
+            stats[interaction] = OrderedDict()
+            scale = settings.default_predicted_rdcs[interaction]
+            stats[interaction]['Da (Hz)'] = round(scale * 2 * sum_Aa, 1)
+            stats[interaction]['Rh'] = round(sum_Rh, 3)
+        elif interaction in settings.default_predicted_racs:
+            stats[interaction] = OrderedDict()
+            scale = settings.default_predicted_rdcs[interaction]
+            stats[interaction]['Da (ppm)'] = round(scale * sum_Aa, 1)
+            stats[interaction]['Rh'] = round(sum_Rh, 3)
+        else:
+            continue
 
-    stats['count'] = count
+    # Add statistics on the Saupe matrix
+    stats['Saupe'] = OrderedDict()
+    stats['Saupe']['Aa'] = sum(Saupe_components['Aa'])
+    stats['Saupe']['Ar'] = sum(Saupe_components['Ar'])
+    stats['Saupe']['Szz'] = Saupe_components['Szz']
+    stats['Saupe']['Syy'] = Saupe_components['Syy']
+    stats['Saupe']['Sxx'] = Saupe_components['Sxx']
+    for k,v in stats['Saupe'].items():
+        stats['Saupe'][k] = round_sig(v, 3)
 
     return stats
 

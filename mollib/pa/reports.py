@@ -1,14 +1,7 @@
 from .utils import sort_key
 from .analysis import find_outliers
 from mollib.utils import MDTable, dict_table, FormattedStr
-
-
-def center(number, rjust=4):
-    """Center a number string about the decimal."""
-    number = str(number)
-    split = number.split('.')
-    return (''.join((split[0].rjust(4), '.', split[1]))
-            if len(split) > 1 else split[0])
+from mollib.utils.numbers import center
 
 
 def stats_table(stats, *args, **kwargs):

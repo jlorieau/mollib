@@ -171,6 +171,10 @@ def calc_pa_SVD(magnetic_interactions, data):
         aa = zz / 2.
         ar = (yy - xx) / 3.
 
+        Saupe_components['Sxx'] = xx
+        Saupe_components['Syy'] = yy
+        Saupe_components['Szz'] = zz
+
         Saupe_components['Aa'].append(aa)
         Saupe_components['Ar'].append(ar)
         Saupe_components['Rh'].append(ar / abs(aa))

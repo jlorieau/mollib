@@ -267,9 +267,15 @@ def dict_table(dictionary, sort_key=None):
 
         # Fill the list of values to match the number of columns
         if hasattr(values, '__len__') and not isinstance(values, str):
+            # If the values are dicts, then use these to list the key/value
+            # pairs. Otherwise, just list the values themselves
+
+            if isinstance(values, dict):
+                values = ["{}: {}".format(k, v)
+                          for k,v in values.items()]
             values = list(values) + [''] * (no_cols - len(values) - 1)
         else:
-            values = [values,] + [''] * (no_cols - 2)
+            values = [values, ] + [''] * (no_cols - 2)
 
         table.add_row(key, *values)
 
