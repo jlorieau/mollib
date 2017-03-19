@@ -6,6 +6,7 @@ import os.path
 import logging
 
 from mollib.plugins import Plugin
+from mollib.utils.files import check_file
 
 from .data_readers import read_pa_file
 from .process_molecule import Process
@@ -43,10 +44,7 @@ class PA(Plugin):
             data = {}
             for data_filename in args.alignment[0]:
                 # verify that the file exists
-                if not os.path.isfile(data_filename):
-                    msg = "Filename '{}' does not exist."
-                    logging.error(msg.format(data_filename))
-                    continue
+                check_file(data_filename, critical=True)
 
                 # Read the data from the file
                 data_dict = read_pa_file(data_filename)
