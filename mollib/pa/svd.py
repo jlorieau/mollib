@@ -7,7 +7,7 @@ import logging
 import numpy as np
 from scipy import linalg
 
-from .analysis import calc_statistics
+from .analysis import calc_summary
 from .utils import get_data_type, sort_key
 from . import settings
 
@@ -189,9 +189,9 @@ def calc_pa_SVD(magnetic_interactions, data):
         data_pred[key] = data_type(value=D * expt_error, error=0.0)
 
 
-    # Calculate the statistics
-    stats = calc_statistics(magnetic_interactions, Saupe_components, data,
-                            data_pred)
+    # Calculate the summary statistics
+    stats = calc_summary(magnetic_interactions, Saupe_components, data,
+                         data_pred)
 
     return (data_pred, Saupe_components, stats)
 

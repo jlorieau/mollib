@@ -6,7 +6,7 @@ from collections import OrderedDict
 from itertools import groupby
 
 from numpy import std
-from scipy import stats
+import scipy.stats
 
 from mollib.utils.ordered_set import OrderedSet
 from mollib.utils.numbers import round_sig
@@ -14,8 +14,7 @@ from .utils import sort_key
 from . import settings
 
 
-# TODO: Add groupwise statistics, including average Das
-def calc_statistics(magnetic_interactions, Saupe_components, data, predicted):
+def calc_summary(magnetic_interactions, Saupe_components, data, predicted):
     """Calculate the statistics between predicted and calculated RDCs and RACSs.
 
     Parameters
@@ -155,7 +154,7 @@ def G_critical(N, alpha=0.05):
     3.38
     """
     significance_level = alpha / (2. * N)
-    t = stats.t.isf(significance_level, N - 2)
+    t = scipy.stats.t.isf(significance_level, N - 2)
     return ((N - 1) / sqrt(N)) * (sqrt(t ** 2 / (N - 2 + t ** 2)))
 
 
