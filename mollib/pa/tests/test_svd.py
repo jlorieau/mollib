@@ -49,7 +49,7 @@ class TestSVD(unittest.TestCase):
                                                           data)
 
         # The fit Q-factor should be better than 10%
-        self.assertLessEqual(stats1['Q-factor (%)'], 10.0)
+        self.assertLessEqual(stats1['Overall']['Q (%)'], 10.0)
 
         # Now calculate it from static DCCs. This Q-factor should be different
         # (yet still low)
@@ -62,11 +62,12 @@ class TestSVD(unittest.TestCase):
                                                           data)
 
         # The fit Q-factor should be better than 10%
-        self.assertLessEqual(stats2['Q-factor (%)'], 10.0)
+        self.assertLessEqual(stats2['Overall']['Q (%)'], 10.0)
 
-        # The residual sum squared should be different between calculating the
+        # The RMS should be different between calculating the
         # RDCs using bond lengths vs static values
-        self.assertNotEqual(stats1['RSS'], stats2['RSS'])
+        self.assertNotEqual(stats1['Overall']['RMS'],
+                            stats2['Overall']['RMS'])
 
     def test_outliers(self):
         """Test the find_outliers function."""
