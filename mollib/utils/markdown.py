@@ -192,14 +192,14 @@ class MDTable(object):
         # Format the table headers. All of the items are centered
         total_length = sum(column_widths)
 
-        # Prepare the talble for output
+        # Prepare the table for output
         table = ''
         # Add title, if present
         if isinstance(self.title, str):
             table += FormattedStr('Table: ', 'bold') + self.title + '\n'
 
-        # Add top bar. Only needed for multiline tables
-        if self.multiline:
+        # Add top bar. Only needed for multiline tables that have headers
+        if self.multiline and not self.empty_headers:
             table += '\n' + '-' * total_length + '\n'
         else:
             table += '\n'
