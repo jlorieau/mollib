@@ -178,7 +178,7 @@ class ProcessDipole(Process):
         # Return the scaling factor and the array. The scaling factor has to
         # be multiplied by 2 because the RDC is measured from a splitting.
         # ( J+D  - J  = D )
-        return (2. * scale, arr)
+        return (2. * scale, arr)  # TODO: Move to SVD and scale error too
 
     def process(self, labels=None, **kwargs):
         """Process the dipoles identified by the tensor_keys.
