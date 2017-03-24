@@ -10,7 +10,7 @@ import scipy.stats
 
 from mollib.utils.ordered_set import OrderedSet
 from mollib.utils.numbers import round_sig
-from .utils import sort_key
+from .utils import sort_key, interaction_type
 from . import settings
 
 
@@ -39,18 +39,18 @@ def calc_summary(magnetic_interactions, Saupe_components, data, predicted):
         - 'R': (float) the R-factor of the fit
         - 'RMS': (Hz/ppb) the root-mean square of the fit
     """
-    # Prepare variables to collect statistics
-    summary = OrderedDict()
-    RSS = 0.         # Residual Sum Squared
-    RSS_scaled = 0.  # Residual Sum Squared (scaled by DCC or RCSA)
-    count = 0        # Count of the number of data points.
-
     # Calculate the overal Aa and Ar from the sum of each structural component
     Aa = Saupe_components['Aa']
     Ar = Saupe_components['Ar']
     sum_Aa = sum(Aa)
     sum_Ar = sum(Ar)
     sum_Rh = sum_Ar/sum_Aa
+
+    # Prepare variables to collect statistics
+    summary = OrderedDict()
+    RSS = 0.  # Residual Sum Squared
+    RSS_scaled = 0.  # Residual Sum Squared (scaled by DCC or RCSA)
+    count = 0  # Count of the number of data points.
 
     # Loop over the data (observed values), and calculate the RSS with the
     # calculated values
@@ -75,12 +75,10 @@ def calc_summary(magnetic_interactions, Saupe_components, data, predicted):
     # Round these numbers to remove insignificant digits
     Q = 100. * sqrt(RSS_scaled / (float(count) * (sum_Aa)**2 *
                                   (4. + 3. * sum_Rh**2) / 5.))
-    R = Q / sqrt(2.)
     RMS = sqrt(RSS / count)
 
     summary['Overall'] = OrderedDict()
     summary['Overall']['Q (%)'] = round(Q, 1)
-    summary['Overall']['R (%)'] = round(R, 1)
     summary['Overall']['RSS'] = round(RSS, 1)
     summary['Overall']['RMS'] = round(RMS, 2)
     summary['Overall']['count']= count
@@ -90,27 +88,31 @@ def calc_summary(magnetic_interactions, Saupe_components, data, predicted):
     sorted_keys = sorted(data.keys(), key=sort_key)
     interactions = OrderedSet()
     interactions.add('N-H')  # Add 'N-H' couplings default
-    interactions |= [k[0] for k in map(sort_key, sorted_keys)]
+    interactions |= [k for k in map(interaction_type, sorted_keys)]
 
     # Add basic stats for each type of interaction in the data
-    summary['Da/Rh'] = OrderedDict()
     for interaction in interactions:
+        summary[interaction] = OrderedDict()
         if interaction in settings.default_predicted_rdcs:
-            label = interaction + ' (Hz)'
             scale = settings.default_predicted_rdcs[interaction]
-            summary['Da/Rh'][label] = round(scale * 2 * sum_Aa, 1)
+            summary[interaction]['Da (Hz)'] = round(scale * 2 * sum_Aa, 1)
+            summary[interaction]['Rh'] = round(sum_Rh, 3)
         elif interaction in settings.default_predicted_racs:
-            label = interaction + ' (ppb)'
             scale = settings.default_predicted_racs[interaction]['delta']
-            summary['Da/Rh'][label] = round(scale * 1000 * sum_Aa, 1)
+            summary[interaction]['Da (ppb)'] = round(scale * 1000 * sum_Aa, 1)
+            summary[interaction]['Rh'] = round(sum_Rh, 3)
         else:
             continue
-    summary['Da/Rh']['Rh'] = round(sum_Rh, 3)
 
     # Add statistics on the Saupe matrix and round to 4 sig figs
+    summary['Alignment'] = OrderedDict()
+    summary['Alignment']['Aa'] = sum(Saupe_components['Aa'])
+    summary['Alignment']['Ar'] = sum(Saupe_components['Ar'])
+
+    for k,v in summary['Alignment'].items():
+        summary['Alignment'][k] = round_sig(v, 4)
+
     summary['Saupe'] = OrderedDict()
-    summary['Saupe']['Aa'] = sum(Saupe_components['Aa'])
-    summary['Saupe']['Ar'] = sum(Saupe_components['Ar'])
     summary['Saupe']['Szz'] = Saupe_components['Szz']
     summary['Saupe']['Syy'] = Saupe_components['Syy']
     summary['Saupe']['Sxx'] = Saupe_components['Sxx']
