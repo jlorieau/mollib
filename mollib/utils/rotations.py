@@ -1,4 +1,9 @@
-from math import sin, cos, acos, atan2, pi, sqrt
+"""
+Utility function for generating rotation matrices, getting rotation angles and
+dealing with rotations.
+"""
+
+from math import sin, cos, atan2, pi, sqrt
 
 import numpy as np
 
