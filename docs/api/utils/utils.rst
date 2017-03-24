@@ -11,4 +11,5 @@ General utilities for rendering data to the console
     files
     interactions
     tensors
+    rotations
     settings
