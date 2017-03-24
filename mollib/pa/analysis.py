@@ -48,9 +48,9 @@ def calc_summary(magnetic_interactions, Saupe_components, data, predicted):
 
     # Prepare variables to collect statistics
     summary = OrderedDict()
-    RSS = 0.  # Residual Sum Squared
-    RSS_scaled = 0.  # Residual Sum Squared (scaled by DCC or RCSA)
-    count = 0  # Count of the number of data points.
+    RSS = {}  # Residual Sum Squared
+    RSS_scaled = {}  # Residual Sum Squared (scaled by DCC or RCSA)
+    count = {}  # Count of the number of data points.
 
     # Loop over the data (observed values), and calculate the RSS with the
     # calculated values
@@ -63,25 +63,44 @@ def calc_summary(magnetic_interactions, Saupe_components, data, predicted):
         if value is None:
             continue
 
+        # Get the value from the data
         scale, _ = value
 
+        # Identify the interaction type (str) for this data value
+        label = interaction_type(key)
+
+        # Calculate the overall and interaction_type specific statistics
         residual = (obs - calc)**2
-        RSS += residual
-        RSS_scaled += residual / scale**2
 
-        count += 1
+        # Calculate the overall RSS and interaction-specific RSS
+        RSS['Overall'] = RSS.setdefault('Overall', 0.0) + residual
+        RSS[label] = RSS.setdefault(label, 0.0) + residual
 
-    # Calculate the stats: Q-factor, R-factor, RSS.
-    # Round these numbers to remove insignificant digits
-    Q = 100. * sqrt(RSS_scaled / (float(count) * (sum_Aa)**2 *
-                                  (4. + 3. * sum_Rh**2) / 5.))
-    RMS = sqrt(RSS / count)
+        # Calculate the overall RSS_scaled and interaction-specific RSS
+        RSS_scaled['Overall'] = (RSS_scaled.setdefault('Overall', 0.0) +
+                                 residual / scale**2)
+        RSS_scaled[label] = (RSS_scaled.setdefault(label, 0.0) +
+                                 residual / scale**2)
 
+        # Add it to the overall and interaction-specific counts
+        count['Overall'] = count.setdefault('Overall', 0) + 1
+        count[label] = count.setdefault(label, 0) + 1
+
+    # Calculate the Overall and interaction-specific Q-factor and RMS.
+    Q = {}
+    RMS = {}
+    for key in RSS:
+        Q[key] = 100. * sqrt(RSS_scaled[key] / (float(count[key]) *
+                                                (sum_Aa)**2 *
+                                                (4. + 3. * sum_Rh**2) / 5.))
+        RMS[key] = sqrt(RSS[key] / float(count[key] - 1))
+
+    # Round these numbers to remove insignificant digits and add it to the
+    # summary (result) dict
     summary['Overall'] = OrderedDict()
-    summary['Overall']['Q (%)'] = round(Q, 1)
-    summary['Overall']['RSS'] = round(RSS, 1)
-    summary['Overall']['RMS'] = round(RMS, 2)
-    summary['Overall']['count']= count
+    summary['Overall']['Q (%)'] = round(Q['Overall'], 1)
+    summary['Overall']['RMS'] = round(RMS['Overall'], 2)
+    summary['Overall']['count']= count['Overall']
 
     # Add statistics on each type interaction
     # Get the different interaction statistics
@@ -93,6 +112,15 @@ def calc_summary(magnetic_interactions, Saupe_components, data, predicted):
     # Add basic stats for each type of interaction in the data
     for interaction in interactions:
         summary[interaction] = OrderedDict()
+
+        if interaction in Q:
+            summary[interaction]['Q (%)'] = round(Q[interaction], 1)
+        if interaction in RMS:
+            summary[interaction]['RMS'] = round(RMS[interaction], 2)
+        if interaction in count:
+            summary[interaction]['count'] = count[interaction]
+
+        # Now add the Da/Rh for each interaction type
         if interaction in settings.default_predicted_rdcs:
             scale = settings.default_predicted_rdcs[interaction]
             summary[interaction]['Da (Hz)'] = round(scale * 2 * sum_Aa, 1)
