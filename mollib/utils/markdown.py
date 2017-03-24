@@ -205,9 +205,9 @@ class MDTable(object):
             table += '\n'
 
         # Add headers
-        table += print_lines(self.column_titles, column_widths)
-
-        table += '\n'
+        if not self.empty_headers:
+            table += print_lines(self.column_titles, column_widths)
+            table += '\n'
 
         # Add header bottom bars
         broken_lines = ''. join(['-' * (width-1)
