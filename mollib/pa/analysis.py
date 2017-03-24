@@ -101,8 +101,8 @@ def calc_summary(magnetic_interactions, Saupe_components, data, predicted):
             summary[interaction]['Rh'] = round(sum_Rh, 3)
         elif interaction in settings.default_predicted_racs:
             summary[interaction] = OrderedDict()
-            scale = settings.default_predicted_rdcs[interaction]
-            summary[interaction]['Da (ppm)'] = round(scale * sum_Aa, 1)
+            scale = settings.default_predicted_racs[interaction]['delta']
+            summary[interaction]['Da (ppb)'] = round(scale * 1000 * sum_Aa, 1)
             summary[interaction]['Rh'] = round(sum_Rh, 3)
         else:
             continue
