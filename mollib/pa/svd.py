@@ -3,10 +3,12 @@
 Functions to conduct the SVD on the RDCs and RACS.
 """
 import logging
+from math import atan2, pi, sqrt
 
 import numpy as np
 from scipy import linalg
 
+from mollib.utils.rotations import euler_zyz
 from .analysis import calc_summary
 from .utils import get_data_type, sort_key
 from . import settings
@@ -57,8 +59,6 @@ def get_error(label, data):
     return 1.0
 
 
-# TODO: incorporate errors
-# TODO: calculate Da,max for RDC/RACS
 def calc_pa_SVD(magnetic_interactions, data):
     """Calculate the best-fit Saupe matrices for the given magnetic interaction
     arrays and RDC/RACS data.
@@ -87,6 +87,12 @@ def calc_pa_SVD(magnetic_interactions, data):
               - 'Aa': (list) The degree of alignment.
               - 'Ar': (list) The alignment rhombicity.
               - 'Rh': (list) The rhombicity
+              - 'alpha_z': (float) The ZYZ alpha angle (degrees) of the Saupe
+                 matrix
+              - 'beta_y': (float) The ZYZ beta angle (degrees) of the Saupe
+                 matrix
+              - 'gamma_z': (float) The ZYZ gamma angle (degrees) of the Saupe
+                 matrix
         - stats: dict
               - See :func:`calc_statistics`
     """
@@ -163,7 +169,17 @@ def calc_pa_SVD(magnetic_interactions, data):
                           [s[2],         s[0], s[4]],
                           [s[3],         s[4], s[1]]])
 
-        s_xyz = linalg.eigvals(s_xyz).real
+        # Conduct the eigen value decomposition
+        (eig_values, eig_vectors) = linalg.eig(s_xyz)
+
+        # Get the Saupe matrix angles
+        alpha, beta, gamma = euler_zyz(eig_vectors)
+        Saupe_components['alpha_z'] = alpha
+        Saupe_components['beta_y'] = beta
+        Saupe_components['gamma_z'] = gamma
+
+        # Get the Saupe matrix values
+        s_xyz = eig_values.real
         Saupe_components['S_xyz'].append(s_xyz)
 
         yy, xx, zz = sorted(s_xyz, key=lambda x: abs(x))

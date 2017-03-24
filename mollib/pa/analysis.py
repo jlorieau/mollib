@@ -14,6 +14,7 @@ from .utils import sort_key
 from . import settings
 
 
+#: add stats on Euler angles (and minimal degenerate)
 def calc_summary(magnetic_interactions, Saupe_components, data, predicted):
     """Calculate the statistics between predicted and calculated RDCs and RACSs.
 
@@ -33,13 +34,13 @@ def calc_summary(magnetic_interactions, Saupe_components, data, predicted):
 
     Returns
     -------
-    stats: :obj:`collections.OrderedDict`
+    summary: :obj:`collections.OrderedDict`
         - 'Q': (float) the Q-factor of the fit
         - 'R': (float) the R-factor of the fit
         - 'RMS': (Hz/ppb) the root-mean square of the fit
     """
     # Prepare variables to collect statistics
-    stats = OrderedDict()
+    summary = OrderedDict()
     RSS = 0.         # Residual Sum Squared
     RSS_scaled = 0.  # Residual Sum Squared (scaled by DCC or RCSA)
     count = 0        # Count of the number of data points.
@@ -70,12 +71,6 @@ def calc_summary(magnetic_interactions, Saupe_components, data, predicted):
 
         count += 1
 
-    # for rdc_type, static_value in settings.default_predicted_rdcs.items():
-    #     if rdc_type not in settings.default_error:
-    #         continue
-    #     error = settings.default_error[rdc_type]
-    #     print(rdc_type, static_value, static_value * 2 * sum_Aa, sum_Rh )
-
     # Calculate the stats: Q-factor, R-factor, RSS.
     # Round these numbers to remove insignificant digits
     Q = 100. * sqrt(RSS_scaled / (float(count) * (sum_Aa)**2 *
@@ -83,12 +78,12 @@ def calc_summary(magnetic_interactions, Saupe_components, data, predicted):
     R = Q / sqrt(2.)
     RMS = sqrt(RSS / count)
 
-    stats['Stats'] = OrderedDict()
-    stats['Stats']['Q (%)'] = round(Q, 1)
-    stats['Stats']['R (%)'] = round(R, 1)
-    stats['Stats']['RSS'] = round(RSS, 1)
-    stats['Stats']['RMS'] = round(RMS, 2)
-    stats['Stats']['count']= count
+    summary['Overall'] = OrderedDict()
+    summary['Overall']['Q (%)'] = round(Q, 1)
+    summary['Overall']['R (%)'] = round(R, 1)
+    summary['Overall']['RSS'] = round(RSS, 1)
+    summary['Overall']['RMS'] = round(RMS, 2)
+    summary['Overall']['count']= count
 
     # Add statistics on each type interaction
     # Get the different interaction statistics
@@ -100,29 +95,39 @@ def calc_summary(magnetic_interactions, Saupe_components, data, predicted):
     # Add basic stats for each type of interaction in the data
     for interaction in interactions:
         if interaction in settings.default_predicted_rdcs:
-            stats[interaction] = OrderedDict()
+            summary[interaction] = OrderedDict()
             scale = settings.default_predicted_rdcs[interaction]
-            stats[interaction]['Da (Hz)'] = round(scale * 2 * sum_Aa, 1)
-            stats[interaction]['Rh'] = round(sum_Rh, 3)
+            summary[interaction]['Da (Hz)'] = round(scale * 2 * sum_Aa, 1)
+            summary[interaction]['Rh'] = round(sum_Rh, 3)
         elif interaction in settings.default_predicted_racs:
-            stats[interaction] = OrderedDict()
+            summary[interaction] = OrderedDict()
             scale = settings.default_predicted_rdcs[interaction]
-            stats[interaction]['Da (ppm)'] = round(scale * sum_Aa, 1)
-            stats[interaction]['Rh'] = round(sum_Rh, 3)
+            summary[interaction]['Da (ppm)'] = round(scale * sum_Aa, 1)
+            summary[interaction]['Rh'] = round(sum_Rh, 3)
         else:
             continue
 
-    # Add statistics on the Saupe matrix
-    stats['Saupe'] = OrderedDict()
-    stats['Saupe']['Aa'] = sum(Saupe_components['Aa'])
-    stats['Saupe']['Ar'] = sum(Saupe_components['Ar'])
-    stats['Saupe']['Szz'] = Saupe_components['Szz']
-    stats['Saupe']['Syy'] = Saupe_components['Syy']
-    stats['Saupe']['Sxx'] = Saupe_components['Sxx']
-    for k,v in stats['Saupe'].items():
-        stats['Saupe'][k] = round_sig(v, 3)
+    # Add statistics on the Saupe matrix and round to 4 sig figs
+    summary['Saupe'] = OrderedDict()
+    summary['Saupe']['Aa'] = sum(Saupe_components['Aa'])
+    summary['Saupe']['Ar'] = sum(Saupe_components['Ar'])
+    summary['Saupe']['Szz'] = Saupe_components['Szz']
+    summary['Saupe']['Syy'] = Saupe_components['Syy']
+    summary['Saupe']['Sxx'] = Saupe_components['Sxx']
 
-    return stats
+    for k,v in summary['Saupe'].items():
+        summary['Saupe'][k] = round_sig(v, 4)
+
+    # Add statistics on the Saupe Orientation and round to 1 decimal
+    summary['Angles ZYZ (deg)'] = OrderedDict()
+    summary['Angles ZYZ (deg)']['alpha'] = Saupe_components['alpha_z']
+    summary['Angles ZYZ (deg)']['beta'] = Saupe_components['beta_y']
+    summary['Angles ZYZ (deg)']['gamma'] = Saupe_components['gamma_z']
+
+    for k,v in summary['Angles ZYZ (deg)'].items():
+        summary['Angles ZYZ (deg)'][k] = round(v, 1)
+
+    return summary
 
 
 def G_critical(N, alpha=0.05):
