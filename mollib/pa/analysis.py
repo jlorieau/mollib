@@ -93,19 +93,19 @@ def calc_summary(magnetic_interactions, Saupe_components, data, predicted):
     interactions |= [k[0] for k in map(sort_key, sorted_keys)]
 
     # Add basic stats for each type of interaction in the data
+    summary['Da/Rh'] = OrderedDict()
     for interaction in interactions:
         if interaction in settings.default_predicted_rdcs:
-            summary[interaction] = OrderedDict()
+            label = interaction + ' (Hz)'
             scale = settings.default_predicted_rdcs[interaction]
-            summary[interaction]['Da (Hz)'] = round(scale * 2 * sum_Aa, 1)
-            summary[interaction]['Rh'] = round(sum_Rh, 3)
+            summary['Da/Rh'][label] = round(scale * 2 * sum_Aa, 1)
         elif interaction in settings.default_predicted_racs:
-            summary[interaction] = OrderedDict()
+            label = interaction + ' (ppb)'
             scale = settings.default_predicted_racs[interaction]['delta']
-            summary[interaction]['Da (ppb)'] = round(scale * 1000 * sum_Aa, 1)
-            summary[interaction]['Rh'] = round(sum_Rh, 3)
+            summary['Da/Rh'][label] = round(scale * 1000 * sum_Aa, 1)
         else:
             continue
+    summary['Da/Rh']['Rh'] = round(sum_Rh, 3)
 
     # Add statistics on the Saupe matrix and round to 4 sig figs
     summary['Saupe'] = OrderedDict()
@@ -119,13 +119,13 @@ def calc_summary(magnetic_interactions, Saupe_components, data, predicted):
         summary['Saupe'][k] = round_sig(v, 4)
 
     # Add statistics on the Saupe Orientation and round to 1 decimal
-    summary['Angles ZYZ (deg)'] = OrderedDict()
-    summary['Angles ZYZ (deg)']['alpha'] = Saupe_components['alpha_z']
-    summary['Angles ZYZ (deg)']['beta'] = Saupe_components['beta_y']
-    summary['Angles ZYZ (deg)']['gamma'] = Saupe_components['gamma_z']
+    summary['Angles'] = OrderedDict()
+    summary['Angles']["Z (deg)"] = Saupe_components['alpha_z']
+    summary['Angles']["Y' (deg)"] = Saupe_components['beta_y']
+    summary['Angles']["Z'' (deg)"] = Saupe_components['gamma_z']
 
-    for k,v in summary['Angles ZYZ (deg)'].items():
-        summary['Angles ZYZ (deg)'][k] = round(v, 1)
+    for k,v in summary['Angles'].items():
+        summary['Angles'][k] = round(v, 1)
 
     return summary
 
