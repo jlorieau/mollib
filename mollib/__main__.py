@@ -38,10 +38,6 @@ def list_settings():
 
 
 def main():
-    # Setup the logger
-    fmt='{}: %(levelname)-8s %(message)s'.format('mollib')
-    logging.basicConfig(format=fmt)
-
     # Load the argument parser and subparsers
     parser = argparse.ArgumentParser(prog='mollib',
                                      description='A molecular processor')
@@ -91,7 +87,10 @@ def main():
 
     # Parse the commands
     args = parser.parse_args()
-    logging.basicConfig(level=args.loglevel)
+
+    # Setup the logger
+    fmt = '{}: %(levelname)-8s %(message)s'.format('mollib')
+    logging.basicConfig(format=fmt, level=args.loglevel)
     logging.debug(args)
 
     # Read in the configuration file(s)
