@@ -69,7 +69,7 @@ class TestMarkdown(unittest.TestCase):
         table = dict_table(d, sort_key=lambda x: str(x))
 
         self.assertEqual(table.content(),
-                         "\n\n"
+                         "\n"
                          "------- ---- -- ---\n"
                          "(1, 2)  1    2     \n"
                          "1       one        \n"
