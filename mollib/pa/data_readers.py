@@ -3,17 +3,30 @@
 Read in RDC and RACS data from files.
 """
 import re
+import logging
 
-from mollib.utils.interactions import validate_label
+from mollib.utils.interactions import validate_label, interaction_label
 from .data_types import RDC, RACS
 
 
 re_pa = re.compile(r'^\s*'
                    r'(?P<interaction>[\w\-\.]+#?)'
                    r'\s+'
-                   r'(?P<value>[E\d\-\+\.]+)'
+                   r'(?P<value>[eE\d\-\+\.]+)'
                    r'\s*'
-                   r'(?P<error>[E\d\-\+\.]*)')
+                   r'(?P<error>[eE\d\-\+\.]*)')
+
+
+re_dc = re.compile(r'^\s*'
+                   r'(?P<res_num1>\d+)'
+                   r'\s+[A-Z]{3}\s+'
+                   r'(?P<atom_name1>[A-Z0-9]+#?)'
+                   r'\s+'
+                   r'(?P<res_num2>\d+)'
+                   r'\s+[A-Z]{3}\s+'
+                   r'(?P<atom_name2>[A-Z0-9]+#?)'
+                   r'\s+'
+                   r'(?P<value>[eE\d\-\+\.]+)')
 
 
 def read_pa_file(filename):
@@ -31,9 +44,11 @@ def read_pa_file(filename):
         and the values are :obj:`RDC` or :obj:`RACS` datum objects.
     """
     data = {}
+
     with open(filename, 'r') as f:
         lines = list(f.readlines())
         data.update(read_pa_string(lines))
+        data.update(read_dc_string(lines))
     return data
 
 
@@ -99,8 +114,8 @@ def read_pa_string(string):
     # iterate over the matches and pull out the data.
     for match in matches:
         d = match.groupdict()
+        logging.debug("read_pa_string match: " + str(d))
 
-        # TODO: switch default error to values in the settings file.
         interaction_key = validate_label(d['interaction'])
         value = float(d['value'])
         error = float(d['error'] if d['error'] else 0.0)
@@ -118,4 +133,54 @@ def read_pa_string(string):
             continue
 
     return data
+
+
+def read_dc_string(string):
+    """Read data from a DC RDC data string.
+
+    Parameters
+    ----------
+    string: str or list of str
+        Either a (multiline) string or a list of strings.
+
+    Returns
+    -------
+    data: dict
+        A dict with the data. The keys are interaction keys
+        and the values are :obj:`RDC` datum objects.
+    """
+    # Convert the string into a list of lines, if it isn't already.
+    if not isinstance(string, list):
+        string = string.splitlines()
+
+    # Prepare the returned data list
+    data = {}
+
+    # Find all of the matches and produce a generator
+    matches = (m for l in string for m in [re_dc.search(l)] if m)
+
+    # iterate over the matches and pull out the data.
+    for match in matches:
+        d = match.groupdict()
+        logging.debug("read_dc_string match: " + str(d))
+
+        # Get the residue numbers and atom names
+        res_num1 = int(d['res_num1'])
+        res_num2 = int(d['res_num2'])
+        atom_name1 = d['atom_name1']
+        atom_name2 = d['atom_name2']
+        value = float(d['value'])
+
+        # Generation the interaction key
+        key = (('A', res_num1, atom_name1),
+               ('A', res_num2, atom_name2))
+
+        # Get the interaction label
+        interaction = interaction_label(key)
+
+        # Add it to the dict
+        data[interaction] = RDC(value=value)
+
+    return data
+
 
