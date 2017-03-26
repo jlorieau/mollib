@@ -9,6 +9,7 @@ docs/cli/output/*
 benchmarks/
 .idea
 .noseids
+.coverage
 build/
 output/*
 data/*
