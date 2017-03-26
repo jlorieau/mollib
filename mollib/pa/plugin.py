@@ -6,7 +6,7 @@ import os.path
 import logging
 
 from mollib.plugins import Plugin
-from mollib.utils.files import check_file
+from mollib.utils.checks import check_file, check_not_empty
 
 from .data_readers import read_pa_file
 from .process_molecule import Process
@@ -49,6 +49,10 @@ class PA(Plugin):
                 # Read the data from the file
                 data_dict = read_pa_file(data_filename)
                 data.update(data_dict)
+
+            # verify that there is data in the data dict
+            msg = "Could not find data in alignment files."
+            check_not_empty(data=data, msg=msg, critical=True)
 
             # Prepare the magnetic interactions for the molecules
             process = Process(molecules)
