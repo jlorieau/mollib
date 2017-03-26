@@ -80,9 +80,9 @@ def euler_zyz(R):
           [0, 360]
 
         .. note:: The Euler angles are subject to a gimbal lock in which the
-                  alpha and gamma angles become interdependent when beta is near
-                  0 degrees or 180 degrees. In this case, the azimuthal angle
-                  will be reported to alpha (and gamma=0 degrees).
+                  alpha and gamma angles become interdependent when beta is
+                  near 0 degrees . In this case, the azimuthal angle will be
+                  reported to alpha (and gamma=0 degrees).
 
     Examples
     --------
