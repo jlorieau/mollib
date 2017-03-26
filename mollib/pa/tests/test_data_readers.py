@@ -7,7 +7,7 @@ import os
 
 from mollib.pa.data_readers import read_pa_file
 
-
+# TODO: Test file reading for interactions with atom names that are backwards
 class TestDataReader(unittest.TestCase):
 
     def test_pa_file(self):
