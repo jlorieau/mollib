@@ -176,10 +176,11 @@ def read_dc_string(string):
                ('A', res_num2, atom_name2))
 
         # Get the interaction label
-        interaction = interaction_label(key)
+        label = interaction_label(key)
+        label = validate_label(label)
 
         # Add it to the dict
-        data[interaction] = RDC(value=value)
+        data[label] = RDC(value=value)
 
     return data
 
