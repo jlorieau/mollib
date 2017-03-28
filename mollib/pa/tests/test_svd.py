@@ -3,9 +3,10 @@ import os
 
 from mollib import Molecule
 from mollib.pa import (Process, read_pa_file, calc_pa_SVD, report_tables,
-                       find_outliers, sort_key)
+                       find_outliers)
 from mollib.pa import settings
 from mollib.utils import FormattedStr, MDTable
+from mollib.utils.interactions import sort_func
 
 
 class TestSVD(unittest.TestCase):
@@ -26,10 +27,40 @@ class TestSVD(unittest.TestCase):
                                                          data)
 
         # Make sure all of the RDCs are within 6.0Hz
-        for label in sorted(data_pred, key=sort_key):
+        for label in sorted(data_pred, key=sort_func):
             if label in data:
                 self.assertLess(abs(data[label].value - data_pred[label].value),
                                 6.0)
+
+    def test_svd_reverse(self):
+        """Tests the SVD of dipoles with atom names listed forward and in
+        reverse order."""
+
+        # Load the data
+        path = os.path.dirname(os.path.abspath(__file__))
+        data = read_pa_file(path + '/data/2kxa_sag.inp')
+
+        # Load the reverse data
+        data_rev = read_pa_file(path + '/data/2kxa_sag_rev.inp')
+
+        # Process the A-matrix of the molecule
+        mol = Molecule('2MJB')
+        process = Process(mol)
+        process_rev = Process(mol)
+
+        magnetic_interactions = process.process(labels=data.keys())
+        magnetic_interactions_rev = process_rev.process(label=data_rev.keys())
+
+        # Fit the data with a SVD
+        data_pred, _, stats = calc_pa_SVD(magnetic_interactions, data)
+        data_pred_rev, _, stats_rev = calc_pa_SVD(magnetic_interactions_rev,
+                                                  data)
+
+        # Make sure both match
+        self.assertEqual(stats['Overall']['Q (%)'],
+                         stats_rev['Overall']['Q (%)'])
+        self.assertEqual(stats['Overall']['count'],
+                         stats_rev['Overall']['count'])
 
     def test_stats(self):
         """Test the calculation of the Q-factor using PNA data."""
