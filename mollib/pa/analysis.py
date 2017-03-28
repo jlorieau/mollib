@@ -35,9 +35,21 @@ def calc_summary(magnetic_interactions, Saupe_components, data, predicted):
     Returns
     -------
     summary: :obj:`collections.OrderedDict`
-        - 'Q': (float) the Q-factor of the fit
-        - 'R': (float) the R-factor of the fit
-        - 'RMS': (Hz/ppb) the root-mean square of the fit
+        - **'Overall'**: Overall Statistics
+            - 'Q (%)': (float) The fit Q-factor in percentage
+            - 'RMS': (Hz/ppb) The root-mean square of the fit
+            - 'count': (int) The number of interactions fit
+        - **'Alignment'**: Details on the alignment tensor
+            - 'Aa': (float) The alignment tensor anisotropy
+            - 'Ar': (float) The alignment tensor rhobicity
+        - **'Saupe'**: Details on the Saupe matrix
+            - 'Szz': (float) The zz-component of the Saupe matrix
+            - 'Sxx': (float) The xx-component of the Saupe matrix
+            - 'Syy': (float) The yy-component of the Saupe matrix
+        - **'Angles'**: Alignment tensor orientation in Rose convention
+            - "Z (deg)": (degrees) The alignment alpha angle
+            - "Y' (deg)": (degrees) The alignment beta angle
+            - "Z'' (deg)": (degrees) The alignment gamma angle
     """
     # Calculate the overal Aa and Ar from the sum of each structural component
     Aa = Saupe_components['Aa']
