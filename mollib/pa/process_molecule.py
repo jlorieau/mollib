@@ -61,7 +61,7 @@ class Process(object):
         if isinstance(molecules, list):
             self.molecules = molecules
         elif isinstance(molecules, Molecule):
-            self.molecules = [molecules,]
+            self.molecules = [molecules, ]
 
         # initialize the magnetic_interactions attribute
         if isinstance(magnetic_interactions, list):
@@ -181,7 +181,7 @@ class ProcessDipole(Process):
         return (2. * scale, arr)  # TODO: Move to SVD and scale error too
 
     def process(self, labels=None, **kwargs):
-        """Process the dipoles identified by the tensor_keys.
+        """Process the dipoles identified by the interaction labels.
 
         Parameters
         ----------
@@ -202,7 +202,7 @@ class ProcessDipole(Process):
         else:
             labels = set()
 
-        # If run_automically is specified as True, then it'll automatically
+        # If run_automatically is specified as True, then it'll automatically
         # add labels (and interactions) to calculate
         if self._run_automatically:
             for molecule in self.molecules:
@@ -213,14 +213,14 @@ class ProcessDipole(Process):
                         labels.add(label)
 
         for label in labels:
-            # Find the dipole and procress
+            # Find the dipole and process
             for d, molecule in zip(self.magnetic_interactions, self.molecules):
                 # The following function gets the atoms for the given
                 # label and molecule
                 atom_list = interaction_atoms(label, molecule)
 
                 # Count the number of returned atoms. It should be 2. If it's
-                # wrong, no further processing can be done.
+                # not 2 (for a dipole), no further processing can be done.
                 if len(atom_list) < 1 or any([len(i) != 2 for i in atom_list]):
                     continue
 
@@ -446,7 +446,7 @@ class ProcessACS(Process):
         else:
             labels = set()
 
-        # If run_automically is specified as True, then it'll automatically
+        # If run_automatically is specified as True, then it'll automatically
         # add labels (and interactions) to calculate
         if self._run_automatically:
             for molecule in self.molecules:
@@ -469,9 +469,9 @@ class ProcessACS(Process):
                 # label and molecule
                 atom_list = interaction_atoms(label, molecule)
 
-                # Count the number of returned atoms. It should be 2. If it's
-                # wrong, no further processing can be done.
-                if len(atom_list) != 1:
+                # Count the number of returned atoms. It should be 1 for a CSA.
+                # If it's not, no further processing can be done.
+                if any([len(i) != 1 for i in atom_list]):
                     continue
 
                 atom = atom_list[0][0]
