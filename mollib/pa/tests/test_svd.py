@@ -49,18 +49,26 @@ class TestSVD(unittest.TestCase):
         process_rev = Process(mol)
 
         magnetic_interactions = process.process(labels=data.keys())
-        magnetic_interactions_rev = process_rev.process(label=data_rev.keys())
+        magnetic_interactions_rev = process_rev.process(labels=data_rev.keys())
 
         # Fit the data with a SVD
         data_pred, _, stats = calc_pa_SVD(magnetic_interactions, data)
         data_pred_rev, _, stats_rev = calc_pa_SVD(magnetic_interactions_rev,
-                                                  data)
+                                                  data_rev)
 
         # Make sure both match
         self.assertEqual(stats['Overall']['Q (%)'],
                          stats_rev['Overall']['Q (%)'])
         self.assertEqual(stats['Overall']['count'],
                          stats_rev['Overall']['count'])
+
+        # Make sure that only 'N-H' is in the stats dict, and not the reverse,
+        # 'H-N
+        for d in (stats, stats_rev):
+            print(d)
+            self.assertIn('N-H', d)
+            self.assertNotIn('H-N', d)
+
 
     def test_stats(self):
         """Test the calculation of the Q-factor using PNA data."""
