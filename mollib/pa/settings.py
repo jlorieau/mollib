@@ -67,3 +67,6 @@ optimize_to_interactions = (('N', 'H'),
 #: of their deviations with respect to the best-fit SVD data.
 alpha_warning = 0.05
 alpha_bad = 0.01
+
+#: Settings to enable individual fixers by default
+enable_signfixer = True

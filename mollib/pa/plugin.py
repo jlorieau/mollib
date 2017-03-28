@@ -11,7 +11,9 @@ from mollib.utils.checks import check_file, check_not_empty
 from .data_readers import read_pa_file
 from .process_molecule import Process
 from .svd import calc_pa_SVD
+from .fixers import Fixer
 from .reports import report_tables, stats_table
+from . import settings
 
 
 class PA(Plugin):
@@ -33,12 +35,24 @@ class PA(Plugin):
                        required=True,
                        help="Alignment file with RDC and RACS data")
 
-        p.add_argument('-p', '--pred',
-                       action='store_true',
-                       help="Report predicted RDCs and RACS")
+        # The following options can be turned off and on
+        fix_sign = p.add_mutually_exclusive_group()
+        fix_sign.add_argument('--fix-sign',
+                              action='store_true',
+                              help="Check and fix mistakes in RDC sign")
+        fix_sign.add_argument('--nofix-sign',
+                              action='store_true',
+                              help="Disable check in RDC sign")
 
     def process(self, molecules, args):
         """Process the SVD of molecules."""
+        # Setup the configuration options
+        if 'fix_sign' in args and args.fix_sign:
+            settings.enable_signfixer = True
+        if 'nofix_sign' in args and args.nofix_sign:
+            settings.enable_signfixer = False
+
+        # Process the partial alignment calculation
         if args.command == 'pa':
             # Get the alignment data
             data = {}
@@ -59,16 +73,48 @@ class PA(Plugin):
             process = Process(molecules)
             magnetic_interactions = process.process(labels=labels)
 
+            # Apply the fixers to see if the input data can be improved
+            fixer = Fixer(molecules)
+            data_fixed, fixes = fixer.fix(data)
+            data = data_fixed if data_fixed is not None else data
+
             # Conduct the SVD on the data
             (data_pred, Saupe_components,
              stats) = calc_pa_SVD(magnetic_interactions, data)
 
+            # Print the table of stats and fit values
+            table = stats_table(stats)
+
             # Prepare a table of the observed and predicted data
             tables = report_tables(data, data_pred)
-            # tables['fit'].title = "Molecule fit"
 
-            # Prepare a table of the stats
-            print(stats_table(stats).content())
+            if len(molecules) > 2:
+                # Make title for stats table
+                title = "Summary SVD Statistics for Molecules "
+                title += ", ".join([molecule.name for molecule in molecules])
+                table.title = title
+
+                # Make title for pred and calc table
+                title = "Observed and Predicted RDCs and RACS for Molecules "
+                title += ", ".join([molecule.name for molecule in molecules])
+                tables['fit'].title = title
+            else:
+                # Make title for stats table
+                title = "Summary SVD Statistics for Molecule "
+                title += molecules[0].name
+                table.title = title
+
+                # Make title for pred and calc table
+                title = "Observed and Predicted RDCs and RACS for Molecule "
+                title += molecules[0].name
+                tables['fit'].title = title
+
+            print(table.content())
 
             print(tables['fit'].content())
+
+            # Print out a list of the fixes
+            for fix in fixes:
+                print('* ' + fix)
+
 
