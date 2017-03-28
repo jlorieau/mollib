@@ -128,7 +128,7 @@ def sort_func(label):
     >>> sort_func('13C')
     ('C', 'A', 13)
     >>> sort_func('B.14N-13C')
-    ('N-C', 'B', 14)
+    ('C-N', 'B', 13)
     >>> sort_func('B.35CA-HA2')
     ('CA-HA', 'B', 35)
     """
@@ -179,6 +179,8 @@ def interaction_type(label, delimiter='-'):
     'N-C-1'
     >>> interaction_type('35N-34C')
     'N-C-1'
+    >>> interaction_type('34C-35N')
+    'C-N+1'
     """
     pieces = split_interaction_label(label, delimiter)
 
@@ -214,8 +216,17 @@ def interaction_type(label, delimiter='-'):
     return delimiter.join(processed)
 
 
+def _key_sorting_function(i):
+    """Function used to sort interaction keys."""
+    # The 'H' character is renamed to 'h' in the sort function to guarantee
+    # that protons are listed last in an interaction key.
+    name = i[2] if i[2][0] != 'H' else 'h' + i[2][1:]
+    return i[0], i[1], name
+
+
 def interaction_key(label, default_subunit='A',
-                    wildcard_char='#', wildtype_numbers=('1', '2', '3')):
+                    wildcard_char='#', wildtype_numbers=('1', '2', '3'),
+                    sort=True):
     """Convert an interaction label string into a tuple key.
 
     Keys either are simple keys with a tuple of (subunit, residue number,
@@ -235,6 +246,9 @@ def interaction_key(label, default_subunit='A',
     wildtype_numbers: tuple, optional
         The atom names to create in the key whenever a wildtype_char is
         encountered.
+    sort: bool, optional
+        If True, the key results will be sorted. This ensures that the order
+        of items are predictable.
 
     Returns
     -------
@@ -245,10 +259,12 @@ def interaction_key(label, default_subunit='A',
     --------
     >>> interaction_key('14N-H')
     (('A', 14, 'N'), ('A', 14, 'H'))
-    >>> interaction_key('14N--H')
+    >>> interaction_key('14N--H')  # Extra dashes are ignored
+    (('A', 14, 'N'), ('A', 14, 'H'))
+    >>> interaction_key('14H-N')  # The sort function orders the results
     (('A', 14, 'N'), ('A', 14, 'H'))
     >>> interaction_key('A.14H-13C')
-    (('A', 14, 'H'), ('A', 13, 'C'))
+    (('A', 13, 'C'), ('A', 14, 'H'))
     >>> interaction_key('B.18C')
     (('B', 18, 'C'),)
     >>> interaction_key('C')
@@ -258,7 +274,7 @@ def interaction_key(label, default_subunit='A',
     >>> interaction_key('35HB2')
     (('A', 35, 'HB2'),)
     >>> interaction_key('13N-C-1')
-    (('A', 13, 'N'), ('A', 12, 'C'))
+    (('A', 12, 'C'), ('A', 13, 'N'))
     >>> interaction_key('13C-N+1')
     (('A', 13, 'C'), ('A', 14, 'N'))
     """
@@ -320,7 +336,16 @@ def interaction_key(label, default_subunit='A',
         prev_residue_number = residue_number
         prev_subunit = subunit
 
-    return tuple(key)
+    # If specified, sort the results. Either way, then turn the results into a
+    # tuple to return
+    if sort:
+
+        key = sorted(key, key=_key_sorting_function)
+        key = tuple(key)
+    else:
+        key = tuple(key)
+
+    return key
 
 
 def _convert_sublabel(wildcard_char, group_startswith,
@@ -439,10 +464,16 @@ def interaction_label(key, wildcard_char='#', group_startswith=('H',)):
 def validate_label(label, *args, **kwargs):
     """Reformat an interaction label so that it is unambiguous.
 
+    .. note:: By default, this function will resort the order of items in the
+              label to guarantee a predictable order.
+
     Parameters
     ----------
     label: str
         An interaction label. ex: 15N or 14N-H.
+    key: bool, optional
+        If True, the key results will be sorted. This ensures that the order
+        of items are predictable.
 
     Returns
     -------
@@ -455,7 +486,7 @@ def validate_label(label, *args, **kwargs):
     >>> validate_label('14N-H')
     'A.14N-H'
     >>> validate_label('A.14H-13C')
-    'A.14H-13C'
+    'A.13C-14H'
     >>> validate_label('A.14H-B.13C')
     'A.14H-B.13C'
     >>> validate_label('B.18C')
@@ -466,7 +497,7 @@ def validate_label(label, *args, **kwargs):
     'A.35HB2'
     >>> validate_label('C')
     >>> validate_label('13N-C-1')
-    'A.13N-12C'
+    'A.12C-13N'
     """
     try:
         key = interaction_key(label, *args, **kwargs)
@@ -489,7 +520,7 @@ def _key_to_atom(molecule, subunit, residue_number, atom_name):
         return None
 
 
-def interaction_atoms(key_or_label, molecule):
+def interaction_atoms(key_or_label, molecule, sort=True):
     """A list of atom combinations for atoms identified by the interaction key
     or label.
 
@@ -500,6 +531,9 @@ def interaction_atoms(key_or_label, molecule):
     key_or_label: str or tuple
         An interaction_label or interaction_key identifying atoms whose
         combinations are returned.
+    sort: bool, optional
+        If True, the key results will be sorted. This ensures that the order
+        of items are predictable.
 
     Returns
     -------
@@ -517,16 +551,16 @@ def interaction_atoms(key_or_label, molecule):
     >>> interaction_atoms('14N-H', mol)
     [[A.T14-N, A.T14-H]]
     >>> interaction_atoms('A.14H-13C', mol)
-    [[A.T14-H, A.I13-C]]
+    [[A.I13-C, A.T14-H]]
     >>> interaction_atoms('35CA-HA#', mol)
     [[A.G35-CA, A.G35-HA2], [A.G35-CA, A.G35-HA3]]
     >>> interaction_atoms('33CA-HA-HB#', mol)
     [[A.K33-CA, A.K33-HA, A.K33-HB2], [A.K33-CA, A.K33-HA, A.K33-HB3]]
     >>> interaction_atoms('14N-C-1', mol)
-    [[A.T14-N, A.I13-C]]
+    [[A.I13-C, A.T14-N]]
     """
     if isinstance(key_or_label, str):
-        key = interaction_key(key_or_label)
+        key = interaction_key(key_or_label, sort=sort)
     elif isinstance(key_or_label, tuple):
         key = key_or_label
     else:
