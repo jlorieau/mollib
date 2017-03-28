@@ -16,9 +16,6 @@ calculate_from_bonds = False
 default_predicted_rdcs = {'N-H': 10823., #11472.,  # 1.02 A
                           'NE1-HE1': 10823.,
                           'CA-HA': -22300.,
-                          'CA-HA2': -22300.,
-                          'CA-HA3': -22300.,
-                          'CA-HA#': -22300.,
                           'N-C-1': 1115.,
                           'CA-C': -1880.
                           }
