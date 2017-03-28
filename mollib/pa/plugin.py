@@ -55,8 +55,9 @@ class PA(Plugin):
             check_not_empty(data=data, msg=msg, critical=True)
 
             # Prepare the magnetic interactions for the molecules
+            labels = data.keys()
             process = Process(molecules)
-            magnetic_interactions = process.process()
+            magnetic_interactions = process.process(labels=labels)
 
             # Conduct the SVD on the data
             (data_pred, Saupe_components,
