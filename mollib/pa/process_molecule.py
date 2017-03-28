@@ -235,6 +235,8 @@ class ProcessDipole(Process):
 
 
 class ProcessACS(Process):
+    """Process anisotropic chemical shift magnetic interactions.
+    """
 
     def get_static_tensor(self, atom):
         """Return the static tensor component dict for the given atom.
