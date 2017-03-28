@@ -157,6 +157,8 @@ def interaction_type(label, delimiter='-'):
     ----------
     label: str
         The string identifier for the interaction. ex: A.14N-H
+    delimiter: str
+        The delimiter used for separating atom references.
 
     Returns
     -------
@@ -178,7 +180,6 @@ def interaction_type(label, delimiter='-'):
     >>> interaction_type('35N-34C')
     'N-C-1'
     """
-    #return sort_func(label)[0]
     pieces = split_interaction_label(label, delimiter)
 
     # Pieces will have numbers and '#' characters in them. as long as these
