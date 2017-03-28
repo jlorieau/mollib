@@ -3,14 +3,14 @@
 Functions to conduct the SVD on the RDCs and RACS.
 """
 import logging
-from math import atan2, pi, sqrt
 
 import numpy as np
 from scipy import linalg
 
 from mollib.utils.rotations import euler_zyz
+from mollib.utils.interactions import sort_func
 from .analysis import calc_summary
-from .utils import get_data_type, sort_key
+from .utils import get_data_type
 from . import settings
 
 
@@ -44,7 +44,7 @@ def get_error(label, data):
         return data[label].error
 
     # Otherwise calculate a default value
-    interaction_type = sort_key(label)[0]
+    interaction_type = sort_func(label)[0]
     if interaction_type in settings.default_error:
         return settings.default_error[interaction_type]
 

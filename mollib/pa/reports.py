@@ -1,7 +1,7 @@
-from .utils import sort_key
 from .analysis import find_outliers
 from mollib.utils import MDTable, dict_table, FormattedStr
 from mollib.utils.numbers import center
+from mollib.utils.interactions import sort_func
 
 
 def stats_table(stats, *args, **kwargs):
@@ -65,7 +65,7 @@ def report_tables(data, predicted=None):
     warning, bad = find_outliers(data, predicted)
 
     # Iterate over the data and add the values to the table.
-    for label in sorted(data, key=sort_key):
+    for label in sorted(data, key=sort_func):
         # Get the fields
         interaction = label
         value = data[label].value
@@ -109,13 +109,13 @@ def report_tables(data, predicted=None):
                               FormattedStr(center(deviation), fmt))
 
     # Prepare tables for predicted values
-    predicted_interactions = set([sort_key(i)[2]
+    predicted_interactions = set([sort_func(i)[2]
                                   for i in predicted_copy.keys()])
 
     # Populate the table and rowsrows
-    for label in sorted(predicted_copy.keys(), key=sort_key):
+    for label in sorted(predicted_copy.keys(), key=sort_func):
         # Get the appropriate table
-        interaction_type = sort_key(label)[0]
+        interaction_type = sort_func(label)[0]
         table = tables.setdefault(interaction_type + '_pred',
                                   MDTable('Interaction', 'Predicted'))
 

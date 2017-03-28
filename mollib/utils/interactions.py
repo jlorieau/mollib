@@ -3,7 +3,7 @@ Interactions labels (strings) are labels used to define the interaction between
 atoms or groups of atoms. These utility functions are used to change between
 interaction labels, label keys and atom groups.
 
-Interaction labels have the following features:
+Interaction labels (str) have the following features:
 
     - Each group of atoms is identified by a subunit (optional), a residue
       number and an atom name.
@@ -25,16 +25,25 @@ Interaction labels have the following features:
     - Wildcards are supported for atom names (default: '#')
         - ex: '13CA-HA#' corresponds to the CA atom of residue 13 and the HA2
           and HA3 atoms of residue 13.
+
+Interaction types (str) have the following features:
+
+    - They correspond to a series of atom types without a stereospecific
+      assignment. ex: The interaction type for '14N-H' and '14H-N' is 'N-H'.
+      The interaction type for '35CA-HA', '14CA-HA2' and 'A.2HA-CA' is 'CA-HA'.
+
+    - They only use relative residue numbers. ex: The interaction type of
+      '35N-34C' is 'N-C-1'
 """
 # TODO: Add atom groups. ex: 35CA-(CG1CG2)
 # TODO: Move to an nmr module.
 
 import re
-from string import digits
-from itertools import chain, product
+from itertools import chain, product, permutations
 import logging
 
 from .ordered_set import OrderedSet
+
 
 # Once an interaction label is split, this regex parses it into its atom
 # components, like subunit, residue number and atom name.
@@ -43,6 +52,11 @@ re_label = re.compile(r'(?P<subunit>[A-Z]+\.)?'
                       r'(?P<name>[A-Z0-9]+)'
                       r'(?P<rel>[\-\+]\d+)?'
                       r'(?P<wildcard>.?)')
+
+
+def _strip_str(string, strip_chars):
+    """Strip the strip_chars from the given string."""
+    return ''.join([j for j in string if j not in strip_chars])
 
 
 def split_interaction_label(label, delimiter='-'):
@@ -58,7 +72,7 @@ def split_interaction_label(label, delimiter='-'):
     label: str
         The string identifier for the interaction. ex: A.14N-H
     delimiter: str
-        The delimeter used for separating atom references.
+        The delimiter used for separating atom references.
 
     Returns
     -------
@@ -92,6 +106,111 @@ def split_interaction_label(label, delimiter='-'):
         else:
             l.append(item)
     return l
+
+
+def sort_func(label):
+    """Generate a sort key for the given interaction_label.
+
+    Parameters
+    ----------
+    label: str
+        The string identifier for the interaction. ex: A.14N-H
+
+    Returns
+    -------
+    tuple
+        A tuple to be used to sort the interaction labels.
+
+    Examples
+    --------
+    >>> sort_func('14N-H')
+    ('N-H', 'A', 14)
+    >>> sort_func('13C')
+    ('C', 'A', 13)
+    >>> sort_func('B.14N-13C')
+    ('N-C', 'B', 14)
+    >>> sort_func('B.35CA-HA2')
+    ('CA-HA', 'B', 35)
+    """
+    # Generate a key from the label
+    key = interaction_key(label)
+
+    # The interaction type is from the atom names.  Strip numbers and '#' from
+    # the atom names.
+    atom_names = [_strip_str(i[2], '0123456789#') for i in key]
+    interaction_type = '-'.join(atom_names)
+
+    # Use the first atom's chain id residue number as the sort key.
+    chain_id = key[0][0]
+    res_number = key[0][1]
+
+    return interaction_type, chain_id, res_number
+
+
+def interaction_type(label, delimiter='-'):
+    """Generate the string for the interaction type of a given
+    interaction_label.
+
+    .. note:: interaction types use relative residue numbers (ex: 'N-C-1')
+
+    Parameters
+    ----------
+    label: str
+        The string identifier for the interaction. ex: A.14N-H
+
+    Returns
+    -------
+    interaction_type
+        A string for the interaction type.
+    delimiter: str
+        The delimiter used for separating atom references.
+
+    Examples
+    --------
+    >>> interaction_type('14N-H')
+    'N-H'
+    >>> interaction_type('13C')
+    'C'
+    >>> interaction_type('B.35CA-HA2')
+    'CA-HA'
+    >>> interaction_type('35N-C-1')
+    'N-C-1'
+    >>> interaction_type('35N-34C')
+    'N-C-1'
+    """
+    #return sort_func(label)[0]
+    pieces = split_interaction_label(label, delimiter)
+
+    # Pieces will have numbers and '#' characters in them. as long as these
+    # don't end in '-1' or '+2', then the numbers and pounts can be stripped.
+    processed = []
+    last_residue = None
+    for piece in pieces:
+        match = re_label.match(piece)
+        if not match:
+            continue
+        d = match.groupdict()
+
+        # Get the name and the relative identifier. Numbers should be stripped
+        # only from the name
+        name = _strip_str(d['name'], '0123456789#')
+        number = int(d['number']) if d['number'] else None
+
+        # See if there is a relative identifier
+        # Pull out the relative identifier, like '+1' or '-2'
+        rel = d['rel'] if isinstance(d['rel'], str) else ''
+
+        # Determine whether a relative residue number should be replaced to the
+        # atom name
+        if (last_residue is not None and number is not None and
+            last_residue != number):
+            relative_number = number - last_residue
+            rel = "{:+}".format(relative_number)
+        last_residue = number
+
+        processed.append(name + rel)
+
+    return delimiter.join(processed)
 
 
 def interaction_key(label, default_subunit='A',
@@ -221,7 +340,7 @@ def _convert_sublabel(wildcard_char, group_startswith,
     for group in group_startswith:
         # Count the number of atom_names that start with this group of
         # startswith character
-        count = len(filter(lambda x: x.startswith(group), atom_names))
+        count = len([x for x in atom_names if x.startswith(group)])
 
         # Only process further if there are two or more atom_names that
         # match the group
@@ -230,7 +349,7 @@ def _convert_sublabel(wildcard_char, group_startswith,
 
         # Convert the atom_names into groupings, using an ordered_set
         l = [(i if not i.startswith(group)
-              else i.translate(None, digits) + wildcard_char)
+              else _strip_str(i, '0123456789') + wildcard_char)
              for i in atom_names]
         atom_names_set = OrderedSet(l)
         atom_names = list(atom_names_set)
@@ -426,6 +545,80 @@ def interaction_atoms(key_or_label, molecule):
     combs = product(*item_lists)
 
     # Convert keys to atom instances.
-    return filter(lambda y: all(y),
-                  [map(lambda x: _key_to_atom(molecule, *x), i)
-                   for i in combs])
+    return [y for y in [[_key_to_atom(molecule, *x) for x in i]
+                        for i in combs] if all(y)]
+
+
+def get_dict_value(dictionary, label, delimiter='-', *args, **kwargs):
+    """Return the value from the dictionary (grouped by interaction type) that
+    matches the given interaction label string.
+
+    This function is needed because the interaction label may be ordered
+    differently than the interaction type in a dictionary. For example, the
+    'A.14N-H' and 'A.14H-N' labels are both of the 'N-H' interaction type.
+
+    Parameters
+    ----------
+    dictionary: dict
+        The dictionary to get the value from.
+        - **key**: The interaction type string. (ex: 'N-H' or 'CA-HA')
+        - **value**: The value to return
+    label: str
+        The string identifier for the interaction. ex: A.14N-H
+    delimiter: str
+        The delimeter used for separating atom references.
+    *args, **kwargs (optional):
+        If specified a default argument, then this will be returned if the key
+        isn't found. Otherwise a ValueError exception is raised.
+
+    Raises
+    ------
+    ValueError
+        If a default is not specified, then a ValueError is raised if the
+        interaction type key is not found in the dictionary.
+
+    Examples
+    --------
+    >>> get_dict_value({'N-H': 13.5}, '14N-H')
+    13.5
+    >>> get_dict_value({'N-H': 13.5}, '14H-N')
+    13.5
+    >>> get_dict_value({'CA-HA': 4.5}, '14N-H')
+    Traceback (most recent call last):
+    ...
+    ValueError: Could not find the interaction 'N-H' in the given dictionary
+    >>> get_dict_value({'CA-HA': 4.5}, '14N-H', default='default')
+    'default'
+    >>> get_dict_value({'N-C-1': 3}, '14N-C-1')
+    3
+    """
+    # Get the interaction type.
+    int_type = interaction_type(label, delimiter)  # ex: '14N-H' -> 'N-H'
+
+    # We use the split_interaction label here so that relative atom numbers,
+    # like 'N-C-1', aren't split. ex: 'N-C-1' -> ['N', 'C-1']
+    pieces = split_interaction_label(int_type, delimiter)
+
+    # Get all of the permutations of interaction types.
+    # ex: 'N-H' -> ['N-H', 'H-N']
+    key_permutations = [delimiter.join(i) for i in permutations(pieces)]
+
+    # See if one of the permutations matches a key in the dict.
+    for key in key_permutations:
+        if key in dictionary:
+            return dictionary[key]
+
+    # At this point, the key wasn't found, so either return a default value or
+    # raise an exception
+    if len(args) > 0:
+        return args[0]
+    elif 'default' in kwargs:
+        return kwargs['default']
+    else:
+        msg = "Could not find the interaction '{}' in the given dictionary"
+        raise ValueError(msg.format(int_type))
+
+
+
+
+

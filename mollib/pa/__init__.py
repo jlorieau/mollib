@@ -9,7 +9,6 @@ from .data_readers import read_pa_file
 from .svd import calc_pa_SVD
 from .analysis import find_outliers, calc_summary
 from .reports import report_tables
-from .utils import sort_key
 from . import settings
 
 # Load plugins

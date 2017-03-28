@@ -10,7 +10,7 @@ import scipy.stats
 
 from mollib.utils.ordered_set import OrderedSet
 from mollib.utils.numbers import round_sig
-from .utils import sort_key, interaction_type
+from mollib.utils.interactions import sort_func, interaction_type
 from . import settings
 
 
@@ -104,7 +104,7 @@ def calc_summary(magnetic_interactions, Saupe_components, data, predicted):
 
     # Add statistics on each type interaction
     # Get the different interaction statistics
-    sorted_keys = sorted(data.keys(), key=sort_key)
+    sorted_keys = sorted(data.keys(), key=sort_func)
     interactions = OrderedSet()
     interactions.add('N-H')  # Add 'N-H' couplings default
     interactions |= [k for k in map(interaction_type, sorted_keys)]
@@ -208,12 +208,12 @@ def find_outliers(data, predicted):
         either warning outliers or bad outliers.
     """
     # Group the data and predicted by RDC or RACS type.
-    # The sort_key will convert a label like '14N-H' into ('N-H', 14). To group
+    # The sort_func will convert a label like '14N-H' into ('N-H', 14). To group
     # the data into rdc and racs types, we will use the first item of this
     # tuple to group the values.
-    keys_sorted = sorted(data, key=lambda x: sort_key(x)[0])
+    keys_sorted = sorted(data, key=lambda x: sort_func(x)[0])
     data_groups = {k:list(g) for k, g in
-                   groupby(keys_sorted, key=lambda x: sort_key(x)[0])}
+                   groupby(keys_sorted, key=lambda x: sort_func(x)[0])}
 
     # Keep track of the standard deviation for each group
     stdev_dict = {}
@@ -223,7 +223,7 @@ def find_outliers(data, predicted):
     for group_name, labels in data_groups.items():
         values = []
         count = 0
-        for label in sorted(labels, key=sort_key):
+        for label in sorted(labels, key=sort_func):
             if label in data and label in predicted:
                 deviation = data[label].value - predicted[label].value
                 values.append(deviation)
@@ -257,7 +257,7 @@ def find_outliers(data, predicted):
         warning_cutoff = G_critical(count, settings.alpha_warning)
         bad_cutoff = G_critical(count, settings.alpha_bad)
 
-        for label in sorted(labels, key=sort_key):
+        for label in sorted(labels, key=sort_func):
             if label not in data or label not in predicted:
                 continue
 
