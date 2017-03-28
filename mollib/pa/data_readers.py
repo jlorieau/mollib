@@ -84,8 +84,9 @@ def read_pa_string(string):
     Returns
     -------
     data: dict
-        A dict with the data. The keys are interaction keys
-        and the values are :obj:`RDC` or :obj:`RACS` datum objects.
+        A dict with the data. 
+        - **key**: interaction labels (str). ex: '14N-H'
+        - **value**: RDC or RACS datum objects (:obj:`RDC` :obj:`RACS`)
 
     Examples
     --------
@@ -146,8 +147,9 @@ def read_dc_string(string):
     Returns
     -------
     data: dict
-        A dict with the data. The keys are interaction keys
-        and the values are :obj:`RDC` datum objects.
+        A dict with the data. 
+        - **key**: interaction labels (str). ex: '14N-H'
+        - **value**: RDC  datum objects (:obj:`RDC`)
     """
     # Convert the string into a list of lines, if it isn't already.
     if not isinstance(string, list):
