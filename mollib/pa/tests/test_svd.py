@@ -161,7 +161,7 @@ class TestSVD(unittest.TestCase):
         tables = report_tables(data, data_pred)
 
         # Make sure the fit and predicted tables are present
-        for key in ('fit', 'N-C_pred', 'CA-HA_pred', 'N-H_pred', 'CA-C_pred'):
+        for key in ('fit', 'C-N_pred', 'CA-HA_pred', 'N-H_pred', 'C-CA_pred'):
             self.assertIn(key, tables)
 
             table = tables[key]
