@@ -469,9 +469,11 @@ class ProcessACS(Process):
                 # label and molecule
                 atom_list = interaction_atoms(label, molecule)
 
-                # Count the number of returned atoms. It should be 1 for a CSA.
+                # Count the number of returned atoms. There should be atoms
+                # returned to process further. The atoms lists shoud also each
+                # have 1 item (1 atom) for a CSA interaction.
                 # If it's not, no further processing can be done.
-                if any([len(i) != 1 for i in atom_list]):
+                if len(atom_list) < 1 or any([len(i) != 1 for i in atom_list]):
                     continue
 
                 atom = atom_list[0][0]
