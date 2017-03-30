@@ -212,3 +212,4 @@ def calc_pa_SVD(magnetic_interactions, data):
     return (data_pred, Saupe_components, stats)
 
 
+# TODO: Implement DA running average to find dynamics (blocks of 10)

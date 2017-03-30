@@ -1,6 +1,8 @@
 """
-Utilities to check conditions and print helpful messages. These are useful for
-reporting checks to the CLI.
+Utilities to check conditions and print helpful messages. 
+
+These are useful for reporting checks to the CLI, and they should only be used
+in CLI functions and classes themselves.
 """
 
 import logging
