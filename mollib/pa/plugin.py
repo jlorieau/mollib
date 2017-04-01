@@ -39,10 +39,20 @@ class PA(Plugin):
         fix_sign = p.add_mutually_exclusive_group()
         fix_sign.add_argument('--fix-sign',
                               action='store_true',
-                              help="Check and fix mistakes in RDC sign")
+                              help="Check and fix mistakes in RDC and RACS "
+                                   "sign")
         fix_sign.add_argument('--nofix-sign',
                               action='store_true',
-                              help="Disable check in RDC sign")
+                              help="Disable check in RDC and RACS sign")
+
+        # The following options can be turned off and on
+        fix_outliers = p.add_mutually_exclusive_group()
+        fix_outliers.add_argument('--fix-outliers',
+                              action='store_true',
+                              help="Fit without outliers")
+        fix_outliers.add_argument('--nofix-outliers',
+                              action='store_true',
+                              help="Disable fitting without outliers")
 
     def process(self, molecules, args):
         """Process the SVD of molecules."""
@@ -51,6 +61,10 @@ class PA(Plugin):
             settings.enable_signfixer = True
         if 'nofix_sign' in args and args.nofix_sign:
             settings.enable_signfixer = False
+        if 'fix_outliers' in args and args.fix_outliers:
+            settings.enable_outlierfixer = True
+        if 'nofix_outliers' in args and args.nofix_outliers:
+            settings.enable_outlierfixer = False
 
         # Process the partial alignment calculation
         if args.command == 'pa':

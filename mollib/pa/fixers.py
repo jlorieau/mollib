@@ -7,6 +7,7 @@ from mollib import Molecule
 from mollib.utils.interactions import interaction_type
 from .process_molecule import Process
 from .svd import calc_pa_SVD
+from .analysis import find_outliers
 from . import settings
 
 class Fixer(object):
@@ -20,9 +21,12 @@ class Fixer(object):
         A list of molecule objects.
     enabled: bool
         If True, then the Fixer will be executed.
+    order: int
+        The order in which to execute the fixer.
     """
 
     enabled = False
+    order = 0
 
     def __init__(self, molecules):
 
@@ -34,7 +38,8 @@ class Fixer(object):
 
         # Init subclasses
         self._subclass_instances = []
-        for sub_cls in self.__class__.__subclasses__():
+        for sub_cls in sorted(self.__class__.__subclasses__(),
+                              key=lambda x: x.order):
             new_instance = sub_cls(molecules)
             self._subclass_instances.append(new_instance)
 
@@ -57,9 +62,10 @@ class Fixer(object):
         
         Returns
         -------
-        RMS, Q: float
+        RMS, Q, data_pred: float, float, dict
             - **RMS**: The root-mean-square deviation of the fit.
             - **Q**: The fit Q-factor (in percent)
+            - **data_pred**: The predicted data dictionary.
         """
         # Prepare the magnetic interactions for the molecules
         labels = data.keys()
@@ -70,7 +76,7 @@ class Fixer(object):
         (data_pred, Saupe_components,
          stats) = calc_pa_SVD(magnetic_interactions, data)
 
-        return stats['Overall']['RMS'], stats['Overall']['Q (%)']
+        return stats['Overall']['RMS'], stats['Overall']['Q (%)'], data_pred
 
     def fix(self, data):
         """Fix the data to improve the SVD fit.
@@ -113,13 +119,15 @@ class Fixer(object):
 class SignFixer(Fixer):
     """Fix the sign of RDCs and RACS"""
 
+    order = 10
+
     def fix(self, data):
         # Prepare the fixed message
         msg = ("Inverting the sign of '{}' interactions improved the overall "
                "Q-factor from {:.1f}% to {:.1f}%.")
 
         # Get the reference RMS
-        RMS_ref, Q_ref = self.fit(data)
+        RMS_ref, Q_ref, data_pred = self.fit(data)
 
         # Setup the fixed data and fixes return values
         data_fixed = None
@@ -145,7 +153,7 @@ class SignFixer(Fixer):
                     v.value *= -1.0
 
             # Calculate the updated fit
-            new_RMS, new_Q = self.fit(data_copy)
+            new_RMS, new_Q, data_pred = self.fit(data_copy)
 
             # See if it's an improvement. If it is, keep it.
             if new_RMS < RMS_ref:
@@ -167,7 +175,7 @@ class SignFixer(Fixer):
                     v.value *= -1.0
 
             # Calculate the updated fit
-            new_RMS, new_Q = self.fit(data_copy)
+            new_RMS, new_Q, data_pred = self.fit(data_copy)
 
             # See if it's an improvement. If it is, keep it.
             if new_RMS < RMS_ref:
@@ -177,3 +185,52 @@ class SignFixer(Fixer):
 
         return data_fixed, fixes
 
+
+class OutlierFixer(Fixer):
+    """Removes outliers from the data."""
+
+    order = 20
+
+    def fix(self, data):
+        # Prepare the fixed message
+        msg = ("Removing outlier data points {} improved the overall Q-factor "
+               "from {:.1f}% to {:.1f}%.")
+
+        # Get the reference RMS
+        RMS_ref, Q_ref, data_pred = self.fit(data)
+
+        # Setup the fixed data and fixes return values
+        data_fixed = None
+        fixes = []
+
+        warning, bad = find_outliers(data, data_pred)
+
+        # See if there are any outliers
+        if len(warning) > 0 or len(bad) > 0:
+            # Copy the data and remove the outliers
+            data_copy = self.copy_data(data)
+            data_copy = {k: v for k,v in data_copy.items()
+                         if k not in warning and k not in bad}
+
+            # Recalculate the fit
+            new_RMS, new_Q, new_data_pred = self.fit(data_copy)
+
+            # See if it's an improvement
+            if new_RMS < RMS_ref:
+                outliers = ", ".join(bad + warning)
+                fixes.append(msg.format(outliers, Q_ref, new_Q))
+                data_fixed = data_copy
+
+        return data_fixed, fixes
+
+
+# Not Implemented: This will not be implement until more CSA datasets are
+# produced and available
+# class CSAOptimizer(Fixer):
+#     """Optimize the CSA tensor parameters."""
+
+
+class SplitFixer(Fixer):
+    """Splits the dataset into contiguous pieces and fits them individually.
+    """
+    pass
