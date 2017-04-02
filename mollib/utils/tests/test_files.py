@@ -18,7 +18,7 @@ class TestFileUtil(unittest.TestCase):
         # Remove the directory after the test
         shutil.rmtree(self.tempdir)
 
-    def test_write(self):
+    def test_write_ascii(self):
         """Test the write_file function."""
         txt = "Test text in temp file."
         test_path = os.path.join(self.tempdir, 'tmp.txt')
