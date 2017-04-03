@@ -26,12 +26,6 @@ class Process(Plugin):
                                 help=("(required) The filename(s) or PDB "
                                       "identifier(s) of the structure(s)"))
 
-            # Output filename
-            subparser.add_argument('-o', '--out',
-                                action='append', nargs='*', required=False,
-                                type=str, metavar='filename',
-                                help="The output filename(s) for the structure(s)")
-
             # Config filename
             subparser.add_argument('-c', '--config',
                                 nargs=1, required=False, type=str,
@@ -42,6 +36,15 @@ class Process(Plugin):
             subparser.add_argument('-l', '--list',
                                 action='store_true',
                                 help='List details on the molecule(s)')
+
+        # Add the output file option only to the process parser
+        subparser = self.command_subparsers['process']
+
+        subparser.add_argument('-o', '--out',
+                               action='append', nargs='*', required=False,
+                               type=str, metavar='filename',
+                               help="The output filename(s) for the "
+                                    "structure(s)")
 
     def help(self):
         return "Process the structure"
