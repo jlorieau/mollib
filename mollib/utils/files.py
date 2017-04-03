@@ -2,27 +2,42 @@
 Utility functions for reading and writing files.
 """
 import os
+import tempfile
 
 from . import settings
+from .exceptions import ParameterError
 
 
-def write_file(filepath, text, temporary=False, overwrite=None):
+def write_file(text, filepath=None, temporary=False, overwrite=None):
     """Write to an ASCII file.
     
     Parameters
-    ----------
-    filepath: str
-        The path (optional) and filename of the file to write to. If the path
-        directory doesn't exist, it will be created.
+    ----------  
     text: str
         The text to write to the file
+    filepath: str (optional)
+        The path and filename of the file to write to. If the path
+        directory doesn't exist, it will be created. Either the filepath or the
+        temporary argument should be specified.
     temporary: bool (optional)
+        Write to a temporary file. Either the filepath or temporary should be
+        specified
     
     overwrite: bool (optional)
         If True, the file will be overwritten if it exists.
         If False, a number for a non-existent filename will be appended after
         the base filename. ex: "text.txt" will become "text.1.txt".
     """
+    # Check the pass parameters to make sure they're consisten
+    if filepath is not None and not temporary:
+        pass  # Use the filepath as is
+    elif filepath is None and temporary:
+        _, filepath = tempfile.mkstemp()
+    else:
+        msg = ("write_file: either a filepath must be specified of temporary "
+               "must be True--not both.")
+        raise ParameterError(msg)
+
     # If the overwrite option is not specified, get its value from the settings
     if overwrite is None:
         overwrite = settings.overwrite_files
