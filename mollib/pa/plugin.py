@@ -7,6 +7,7 @@ import logging
 
 from mollib.plugins import Plugin
 from mollib.utils.checks import check_file, check_not_empty
+from mollib.utils.files import write_file
 
 from .data_readers import read_pa_file
 from .process_molecule import Process
@@ -33,7 +34,13 @@ class PA(Plugin):
         p.add_argument('-a', '--alignment',
                        action='append', nargs='+',
                        required=True,
-                       help="Alignment file with RDC and RACS data")
+                       help="(required) Alignment file with RDC and RACS data")
+
+        # Allow for the optional output of the results to a file
+        p.add_argument('-o', '--out',
+                       action='store', required=False,
+                       type=str, metavar='filename',
+                       help="The output filename for the reports")
 
         # The following options can be turned off and on
         fix_sign = p.add_mutually_exclusive_group()
@@ -53,6 +60,7 @@ class PA(Plugin):
         fix_outliers.add_argument('--nofix-outliers',
                               action='store_true',
                               help="Disable fitting without outliers")
+
 
     def process(self, molecules, args):
         """Process the SVD of molecules."""
@@ -123,12 +131,17 @@ class PA(Plugin):
                 title += molecules[0].name
                 tables['fit'].title = title
 
-            print(table.content())
+            # Prepare the standard output
+            output = '\n'.join((table.content(),
+                                tables['fit'].content(),)
+                               )
+            if fixes:
+                output += '\n'
+                output += '\n'.join(['* ' + fix for fix in fixes])
 
-            print(tables['fit'].content())
-
-            # Print out a list of the fixes
-            for fix in fixes:
-                print('* ' + fix)
-
+            # Print or write the report(s)
+            if args.out:
+                write_file(output, args.out)
+            else:
+                print(output)
 
