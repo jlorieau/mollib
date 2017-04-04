@@ -8,7 +8,9 @@ import textwrap
 
 from . import term
 
-re_ansi = re.compile(r'\x1b\[\d+m')
+
+re_ansi = re.compile(r'(\x9B|\x1B\[)[0-?]*[ -\/]*[@-~]')
+
 
 def wrap(string, *args, **kwargs):
     "A text wrapper than properly works with str and FormattedStr objects."
@@ -24,6 +26,7 @@ def wrap(string, *args, **kwargs):
         return stripped_strings
     else:
         return textwrap.wrap(string, *args, **kwargs)
+
 
 class FormattedStr(str):
     """A formatted string.
