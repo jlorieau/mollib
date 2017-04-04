@@ -3,7 +3,7 @@
 default_table_max_width = 120
 
 #: When writing files, overwrite them if they already exist.
-overwrite_files = False
+overwrite_files = True
 
 #: If files are not overwritten, the create new versions up to the following
 #: number

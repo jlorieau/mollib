@@ -4,8 +4,9 @@ Utility functions for reading and writing files.
 import os
 import tempfile
 
-from . import settings
+from .formatted_str import FormattedStr
 from .exceptions import ParameterError
+from . import settings
 
 
 def write_file(text, filepath=None, temporary=False, overwrite=None):
@@ -78,6 +79,10 @@ def write_file(text, filepath=None, temporary=False, overwrite=None):
 
     # At this point, we are allowed to write to the basepath and filename
     new_filepath = os.path.join(basepath, filename)
+
+    # Prepare the string to write. If it's a formatted string, then strip it
+    # of its formatting.
+    text = FormattedStr(text).stripped_str()
 
     with open(new_filepath, 'w') as f:
         f.write(text)
