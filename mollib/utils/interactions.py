@@ -312,10 +312,10 @@ def interaction_key(label, default_subunit='A',
                 try:
                     rel_int = int(rel)
                 except ValueError:
-                    logging.error(msg.format(label))
+                    logging.info(msg.format(label))
                     continue
                 if prev_residue_number is None:
-                    logging.error(msg.format(label))
+                    logging.info(msg.format(label))
                     continue
                 residue_number = prev_residue_number + rel_int
             else:
