@@ -54,7 +54,7 @@ def get_error(label, data):
 
     msg = ("The default error for the interaction type '{}' was not "
            "found for '{}'")
-    logging.error(msg.format(interaction_type, label))
+    logging.info(msg.format(interaction_type, label))
 
     return 1.0
 
