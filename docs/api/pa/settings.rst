@@ -1,5 +1,7 @@
 Settings
 ========
 
-.. automodule:: mollib.pa.settings
-    :members:
+**mollib/pa/settings.py**
+
+.. literalinclude:: /../mollib/pa/settings.py
+    :language: python

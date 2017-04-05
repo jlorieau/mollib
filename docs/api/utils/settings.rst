@@ -1,5 +1,7 @@
 Settings
 ========
 
-.. automodule:: mollib.utils.settings
-    :members:
+**mollib/utils/settings.py**
+
+.. literalinclude:: /../mollib/utils/settings.py
+    :language: python

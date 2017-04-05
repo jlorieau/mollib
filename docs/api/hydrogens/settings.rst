@@ -1,5 +1,8 @@
 Settings
 ========
 
-.. automodule:: mollib.hydrogens.settings
-    :members:
+**mollib/hydrogens/settings.py**
+
+.. literalinclude:: /../mollib/hydrogens/settings.py
+    :language: python
+

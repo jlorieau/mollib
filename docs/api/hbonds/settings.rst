@@ -1,5 +1,7 @@
 Settings
 ========
 
-.. automodule:: mollib.hbonds.settings
-    :members:
+**mollib/hbonds/settings.py**
+
+.. literalinclude:: /../mollib/hbonds/settings.py
+    :language: python
