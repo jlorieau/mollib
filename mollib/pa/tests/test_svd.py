@@ -1,5 +1,6 @@
 import unittest
 import os
+import glob
 
 from mollib import Molecule
 from mollib.pa import (Process, read_pa_file, calc_pa_SVD, report_tables,
@@ -69,6 +70,45 @@ class TestSVD(unittest.TestCase):
             self.assertIn('N-H', d)
             self.assertNotIn('H-N', d)
 
+    def test_svd_ubiquitin_RDC_RACS(self):
+        """Test the SVD of ubiquitin with the H-N RDCs and C, N and H RACS from
+        Cornilescu JACS 2000."""
+
+        # Load the data
+        path = os.path.dirname(os.path.abspath(__file__))
+        data = {}
+        for filename in glob.glob(path + '/data/ubq_bicelle_*.pa'):
+
+            returned_data = read_pa_file(filename)
+            data.update(returned_data)
+
+        # Process the A-matrix of the molecule
+        mol = Molecule('2MJB')
+        process = Process(mol)
+        magnetic_interactions = process.process(labels=data.keys())
+
+        # Fit the data with a SVD
+        data_pred, _, stats = calc_pa_SVD(magnetic_interactions, data)
+
+        # Check that the fit stats are reasonable
+        self.assertEqual(stats['Overall']['count'], 252)
+        self.assertLessEqual(stats['Overall']['Q (%)'], 30.)
+
+        self.assertEqual(stats['N-H']['count'], 63)
+        self.assertLessEqual(stats['N-H']['Q (%)'], 15.)
+        self.assertLessEqual(stats['N-H']['RMS'], 2.0)
+
+        self.assertEqual(stats['C']['count'], 63)
+        self.assertLessEqual(stats['C']['Q (%)'], 18.)
+        self.assertLessEqual(stats['C']['RMS'], 9.8)
+
+        self.assertEqual(stats['N']['count'], 63)
+        self.assertLessEqual(stats['N']['Q (%)'], 17.)
+        self.assertLessEqual(stats['N']['RMS'], 11.5)
+
+        self.assertEqual(stats['H']['count'], 63)
+        self.assertLessEqual(stats['H']['Q (%)'], 45.)
+        self.assertLessEqual(stats['H']['RMS'], 1.6)
 
     def test_stats(self):
         """Test the calculation of the Q-factor using PNA data."""
