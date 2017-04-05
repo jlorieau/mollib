@@ -73,7 +73,7 @@ class Process(Plugin):
     def postprocess(self, molecules, args):
         """Postprocess molecules"""
         for molecule in molecules:
-            self.process_molecule(molecule, args)
+            self.postprocess_molecule(molecule, args)
 
     def postprocess_molecule(self, molecule, args):
         """Postprocess a molecule.
