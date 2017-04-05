@@ -21,13 +21,23 @@ default_predicted_rdcs = {'N-H': 10823., #11472.,  # 1.02 A
                           }
 
 
+#: The default RACS tensor values of various nuclei in proteins.
 #: order - the xx/yy/zz component order of the tensor.
 #:
 #:          1. The first component is colinear with the atom -- ref_atom1
 #:             vector
+#:
 #:          2. The second component is orthogonal to the
 #:             atom -- ref_atom1 -- ref_atom2 plane
+#:
 #:          3. The third component is orthogonal to the second two components.
+#:
+#:          4. Tensor rotations conducted with the Z-Y-X convention for the
+#:             alpha, beta and gamma angles, respectively.
+#:
+#:  See the following reference for tensor conventions and values: Cornilescu
+#:  et al. JACS 2000, 122, 10143.
+
 default_predicted_racs = {
     # The Carbonyl CSA. This convention places the x-axis (s11) near the,
     # C-N bond and the z-axis (s33) orthogonal to the O-C-N plane.
@@ -40,24 +50,26 @@ default_predicted_racs = {
           'ref_atom2': 'O',
           'order': 'xzy',
           },
+
     # The Nitrogen CSA. This convention places the z-axis (s11) near the H-N
     # bond, and the y-axis (s22) orthogonal to the H-N-CA plane.
     'N': {'delta': 108.53 * 0.993,  # ppm (Reduced anisotropy)
           'eta': 0.16,
           'alpha': 0.,              # degrees
           'beta': -20.,             # degrees
-          'gamma': 0.,
+          'gamma': 0.,              # degrees
           'ref_atom1': 'H',
           'ref_atom2': 'CA',
           'order': 'zyx',
           },
+
     # The amide H CSA. This convention places the z-axis (s33) near the H-N
     # bond, and the y-axis x-axis (s11) orthogonal to the H-N-C plane.
-    'H': {'delta': -5.93,  # ppm (Reduced anisotropy)
+    'H': {'delta': -5.93,           # ppm (Reduced anisotropy)
           'eta': 1.00,
           'alpha': 0.,              # degrees
           'beta': 0.,               # degrees
-          'gamma': 0.,              # degrees
+          'gamma': -7.,              # degrees
           'ref_atom1': 'N',
           'ref_atom2': 'C-1',
           'order': 'zxy',
