@@ -29,23 +29,38 @@ default_predicted_rdcs = {'N-H': 10823., #11472.,  # 1.02 A
 #:             atom -- ref_atom1 -- ref_atom2 plane
 #:          3. The third component is orthogonal to the second two components.
 default_predicted_racs = {
+    # The Carbonyl CSA. This convention places the x-axis (s11) near the,
+    # C-N bond and the z-axis (s33) orthogonal to the O-C-N plane.
     'C': {'delta': -86.53 * 1.03,  # ppm (Reduced anisotropy)
           'eta': 0.63,
-          'alpha': 40.,     # degrees
-          'beta': 0.,
-          'gamma': 0.,
+          'alpha': 40.,            # degrees
+          'beta': 0.,              # degrees
+          'gamma': 0.,             # degrees
           'ref_atom1': 'N+1',
           'ref_atom2': 'O',
           'order': 'xzy',
           },
+    # The Nitrogen CSA. This convention places the z-axis (s11) near the H-N
+    # bond, and the y-axis (s22) orthogonal to the H-N-CA plane.
     'N': {'delta': 108.53 * 0.993,  # ppm (Reduced anisotropy)
           'eta': 0.16,
-          'alpha': 0.,     # degrees
-          'beta': -20.,
+          'alpha': 0.,              # degrees
+          'beta': -20.,             # degrees
           'gamma': 0.,
           'ref_atom1': 'H',
           'ref_atom2': 'CA',
           'order': 'zyx',
+          },
+    # The amide H CSA. This convention places the z-axis (s33) near the H-N
+    # bond, and the y-axis x-axis (s11) orthogonal to the H-N-C plane.
+    'H': {'delta': -5.93,  # ppm (Reduced anisotropy)
+          'eta': 1.00,
+          'alpha': 0.,              # degrees
+          'beta': 0.,               # degrees
+          'gamma': 0.,              # degrees
+          'ref_atom1': 'N',
+          'ref_atom2': 'C-1',
+          'order': 'zxy',
           },
     }
 
@@ -57,6 +72,7 @@ default_error = {'N-H':   0.2,  # Hz
                  'NE-HE': 0.2,  # Hz
                  'C':     1.,  # ppb
                  'N':     1.,  # ppb
+                 'H':     5.,  # ppb
                  }
 
 optimize_to_interactions = (('N', 'H'),
