@@ -107,15 +107,6 @@ def calc_pa_SVD(magnetic_interactions, data):
     D = []
 
     for key in ordered_keys:
-        # # If the key isn't in the interaction_dict, then it's not known
-        # # how to process this interaction
-        # if key not in interaction_dict:
-        #     if key not in not_implemented_errors:
-        #         msg = "Processing of data point '{}' is not implemented."
-        #         logging.error(msg.format(key))
-        #         not_implemented_errors.add(key)
-        #     continue
-
         # Get the experimental value and error
         expt_value = data[key].value
         expt_error = get_error(key, data)
@@ -156,12 +147,34 @@ def calc_pa_SVD(magnetic_interactions, data):
     A_inv = np.dot(V.transpose(), np.dot(w_inv, U.transpose()))
     S = np.dot(A_inv, D)
 
-    # Calculate the predicted dipolar couplings. It must be sorted the same way
-    # as the D and A matrices
-    D_pred = np.dot(A, S)
+    # Calculate the predicted RDCs and RACSs. This is done by calculating
+    # a new A-matrix, including interactions not in the data.
+    keys_pred = {i for d in magnetic_interactions for i in d.keys()}
     data_pred = {}
+    A_pred = []
 
-    for key, D in zip(ordered_keys, D_pred):
+    for key in keys_pred:
+        expt_error = get_error(key, data)
+        A_line = []
+        for interaction_dict in magnetic_interactions:
+            # Check to see if the interaction has been processed.
+            if key not in interaction_dict:
+                if key not in not_implemented_errors:
+                    msg = ("Processing of data point '{}' is not "
+                           "implemented.")
+                    logging.error(msg.format(key))
+                    not_implemented_errors.add(key)
+                continue
+
+            scale, arr = interaction_dict[key]
+            A_line.extend(arr * scale / expt_error)
+
+        A_pred.append(A_line)
+
+    D_pred = np.dot(A_pred, S)
+
+    # Copy the predicted RDC and RACS values to the data_pred dict.
+    for key, D in zip(keys_pred, D_pred):
         # Determine whether the predicted data is an RDC or RACS
         data_type = get_data_type(key)
         expt_error = get_error(key, data)

@@ -71,7 +71,6 @@ def report_tables(data, predicted=None):
         value = data[label].value
         error = data[label].error if data[label].error else '-'
 
-
         # Find the number of digits in the observed value so that the predicted
         # values (and deviations) can be rounded to the same precision
         split = str(value).split('.')
