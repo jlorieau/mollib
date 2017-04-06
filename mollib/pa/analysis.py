@@ -134,18 +134,6 @@ def calc_summary(magnetic_interactions, Saupe_components, data, predicted):
         if interaction in count:
             summary[interaction]['count'] = count[interaction]
 
-        # Now add the Da/Rh for each interaction type
-        if interaction in settings.default_predicted_rdcs:
-            scale = settings.default_predicted_rdcs[interaction]
-            summary[interaction]['Da (Hz)'] = round(scale * 2 * sum_Aa, 1)
-            summary[interaction]['Rh'] = round(sum_Rh, 3)
-        elif interaction in settings.default_predicted_racs:
-            scale = settings.default_predicted_racs[interaction]['delta']
-            summary[interaction]['Da (ppb)'] = round(scale * 1000 * sum_Aa, 1)
-            summary[interaction]['Rh'] = round(sum_Rh, 3)
-        else:
-            continue
-
     # Add statistics on the Saupe matrix and round to 4 sig figs.
     summary['Alignment'] = OrderedDict()
     summary['Alignment']['Aa'] = sum_Aa
@@ -154,10 +142,11 @@ def calc_summary(magnetic_interactions, Saupe_components, data, predicted):
     for k,v in summary['Alignment'].items():
         summary['Alignment'][k] = round_sig(v, 4)
 
-    # Put in statistics on the Saupe matrix. There is (potentially) one entry
-    # for each molecule/conformer identifier.
+    # Put in statistics on the Saupe matrix and the alignment Da/Rh.
+    # There is (potentially) one entry for each molecule/conformer identifier.
     no_molecules = len([i for i in Saupe_components.keys()
                         if i.startswith('Szz')])
+
     if no_molecules > 1:
         # In this case, there are multiple molecules conformers. An entry for
         # each must be created. Get the molecular identifiers for each,
@@ -169,6 +158,32 @@ def calc_summary(magnetic_interactions, Saupe_components, data, predicted):
         # just an empty string
         ids = ['',]
 
+    # Now add the Da/Rh for each interaction type
+    for interaction in interactions:
+        for id_ in sorted(ids):
+            if interaction + id_ not in summary:
+                summary[interaction + id_] = OrderedDict()
+
+            Aa = Saupe_components['Aa' + id_]
+            Rh = Saupe_components['Rh' + id_]
+
+            if interaction in settings.default_predicted_rdcs:
+                scale = settings.default_predicted_rdcs[interaction]
+                Da = scale * 2 * Aa
+
+                summary[interaction + id_]['Da' + id_ + ' (Hz)'] = round(Da, 1)
+                summary[interaction + id_]['Rh'] = round(Rh, 3)
+
+            elif interaction in settings.default_predicted_racs:
+                scale = settings.default_predicted_racs[interaction]['delta']
+                Da = scale * Aa
+
+                summary[interaction + id_]['Da' + id_ + ' (ppb)'] = round(Da, 1)
+                summary[interaction + id_]['Rh'] = round(Rh, 3)
+            else:
+                continue
+
+    # Prepare statistics on the Saupe matrices
     for id_ in sorted(ids):
         summary['Saupe' + id_] = OrderedDict()
         summary['Saupe' + id_]['Szz'] = Saupe_components['Szz' + id_]
@@ -179,7 +194,8 @@ def calc_summary(magnetic_interactions, Saupe_components, data, predicted):
         for k, v in summary['Saupe' + id_].items():
             summary['Saupe' + id_][k] = round_sig(v, 4)
 
-        # Add statistics on the Saupe Orientation and round to 1 decimal
+    # Prepare statistics on the Saupe matrix angles
+    for id_ in sorted(ids):
         summary['Angles' + id_] = OrderedDict()
         summary['Angles' + id_]["Z (deg)"] = Saupe_components['alpha_z'
                                                               + id_]
