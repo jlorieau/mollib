@@ -8,6 +8,7 @@ import logging
 from mollib.plugins import Plugin
 from mollib.utils.checks import check_file, check_not_empty
 from mollib.utils.files import write_file
+from mollib.utils.text import word_list
 
 from .data_readers import read_pa_file
 from .process_molecule import Process
@@ -113,12 +114,12 @@ class PA(Plugin):
             if len(molecules) > 2:
                 # Make title for stats table
                 title = "Summary SVD Statistics for Molecules "
-                title += ", ".join([molecule.name for molecule in molecules])
+                title += word_list([m.name for m in molecules])
                 table.title = title
 
                 # Make title for pred and calc table
                 title = "Observed and Predicted RDCs and RACS for Molecules "
-                title += ", ".join([molecule.name for molecule in molecules])
+                title += word_list([m.name for m in molecules])
                 tables['fit'].title = title
             else:
                 # Make title for stats table
