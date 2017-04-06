@@ -105,24 +105,39 @@ def calc_pa_SVD(magnetic_interactions, data):
     # Construct the A and D matrices
     A = []
     D = []
+
     for key in ordered_keys:
+        # # If the key isn't in the interaction_dict, then it's not known
+        # # how to process this interaction
+        # if key not in interaction_dict:
+        #     if key not in not_implemented_errors:
+        #         msg = "Processing of data point '{}' is not implemented."
+        #         logging.error(msg.format(key))
+        #         not_implemented_errors.add(key)
+        #     continue
+
+        # Get the experimental value and error
+        expt_value = data[key].value
+        expt_error = get_error(key, data)
+
+        D.append(expt_value / expt_error)
+
+        # Construct the A-matrix
+        A_line = []
         for interaction_dict in magnetic_interactions:
-            # If the key isn't in the interaction_dict, then it's not known
-            # how to process this interaction
+            # Check to see if the interaction has been processed.
             if key not in interaction_dict:
                 if key not in not_implemented_errors:
-                    msg = "Processing of data point '{}' is not implemented."
-                    logging.error(msg.format(key))
-                    not_implemented_errors.add(key)
+                        msg = ("Processing of data point '{}' is not "
+                               "implemented.")
+                        logging.error(msg.format(key))
+                        not_implemented_errors.add(key)
                 continue
 
-            # Get the experimental value and error
-            expt_value = data[key].value
-            expt_error = get_error(key, data)
             scale, arr = interaction_dict[key]
+            A_line.extend(arr * scale / expt_error)
 
-            D.append(expt_value / expt_error)
-            A.extend([arr * scale / expt_error, ])
+        A.append(A_line)
 
     # Create an array from the A and D matrices
     A = np.array(A)
@@ -141,24 +156,32 @@ def calc_pa_SVD(magnetic_interactions, data):
     A_inv = np.dot(V.transpose(), np.dot(w_inv, U.transpose()))
     S = np.dot(A_inv, D)
 
-    # Calculate the A matrix for all the interactions in the interaction_dict.
-    keys = {i for d in magnetic_interactions for i in d.keys()}
-    ordered_keys = sorted(keys)
-    A = []
-    for key in ordered_keys:
-        for interaction_dict in magnetic_interactions:
-            if key not in interaction_dict:
-                continue
-            scale, arr = interaction_dict[key]
-            expt_error = get_error(key, data)
-            A.extend([arr * scale / expt_error, ])
-
+    # Calculate the predicted dipolar couplings. It must be sorted the same way
+    # as the D and A matrices
     D_pred = np.dot(A, S)
+    data_pred = {}
 
-    # Break up the S matrix into individual Saupe matrices, Das and Rh
+    for key, D in zip(ordered_keys, D_pred):
+        # Determine whether the predicted data is an RDC or RACS
+        data_type = get_data_type(key)
+        expt_error = get_error(key, data)
+        data_pred[key] = data_type(value=D * expt_error, error=expt_error)
+
+    # Break up the S matrix into individual Saupe matrices, Das and Rh. There
+    # is one Saupe matrix for each molecule
+    if len(magnetic_interactions) > 1:
+        # This is the case for many molecules being fit
+        molecule_number = range(1, len(magnetic_interactions) + 1)
+    else:
+        # This is the case for one molecule being fit.
+        molecule_number = [None,]
+    
     Saupe_components = {}
-    for i in ('S_xyz', 'Aa', 'Ar', 'Rh'):
-        Saupe_components[i] = []
+    if len(magnetic_interactions) > 1:
+
+    else:
+        for i in ('S_xyz', 'Aa', 'Ar', 'Rh'):
+            Saupe_components[i] = []
 
     for x in range(0, len(S), 5):
         s = S[x:x + 5]
@@ -194,16 +217,6 @@ def calc_pa_SVD(magnetic_interactions, data):
         Saupe_components['Aa'].append(aa)
         Saupe_components['Ar'].append(ar)
         Saupe_components['Rh'].append(ar / abs(aa))
-
-    # Calculate the predicted data. It must be sorted the same way as the
-    # interaction_dict
-    data_pred = {}
-    for key, D in zip(ordered_keys, D_pred):
-        # Determine whether the predicted data is an RDC or RACS
-        data_type = get_data_type(key)
-        expt_error = get_error(key, data)
-        data_pred[key] = data_type(value=D * expt_error, error=0.0)
-
 
     # Calculate the summary statistics
     stats = calc_summary(magnetic_interactions, Saupe_components, data,
