@@ -45,7 +45,7 @@ class TestSVD(unittest.TestCase):
         data_rev = read_pa_file(path + '/data/2kxa_sag_rev.inp')
 
         # Process the A-matrix of the molecule
-        mol = Molecule('2MJB')
+        mol = Molecule('2KXA')
         process = Process(mol)
         process_rev = Process(mol)
 
@@ -66,7 +66,6 @@ class TestSVD(unittest.TestCase):
         # Make sure that only 'N-H' is in the stats dict, and not the reverse,
         # 'H-N
         for d in (stats, stats_rev):
-            print(d)
             self.assertIn('N-H', d)
             self.assertNotIn('H-N', d)
 
