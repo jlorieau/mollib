@@ -14,7 +14,8 @@ from mollib.utils.interactions import sort_func, interaction_type
 from . import settings
 
 
-#: add stats on Euler angles (and minimal degenerate)
+# TODO: This function should be split into smaller functions, possibly a
+# chain-of-command object pattern
 def calc_summary(magnetic_interactions, Saupe_components, data, predicted):
     """Calculate the statistics between predicted and calculated RDCs and RACSs.
 
@@ -51,9 +52,10 @@ def calc_summary(magnetic_interactions, Saupe_components, data, predicted):
             - "Y' (deg)": (degrees) The alignment beta angle
             - "Z'' (deg)": (degrees) The alignment gamma angle
     """
-    # Calculate the overal Aa and Ar from the sum of each structural component
-    Aa = Saupe_components['Aa']
-    Ar = Saupe_components['Ar']
+    # Calculate the overal Aa and Ar from the sum of each molecule/conformer
+    Aa = [v for k, v in Saupe_components.items() if k.startswith('Aa')]
+    Ar = [v for k, v in Saupe_components.items() if k.startswith('Ar')]
+
     sum_Aa = sum(Aa)
     sum_Ar = sum(Ar)
     sum_Rh = sum_Ar/sum_Aa
@@ -71,12 +73,12 @@ def calc_summary(magnetic_interactions, Saupe_components, data, predicted):
             continue
         obs = data[key].value
         calc = predicted[key].value
-        value = next(i[key] for i in magnetic_interactions if key in i)
-        if value is None:
+        Aarray = next(i[key] for i in magnetic_interactions if key in i)
+        if Aarray is None:
             continue
 
         # Get the value from the data
-        scale, _ = value
+        scale, _ = Aarray
 
         # Identify the interaction type (str) for this data value
         label = interaction_type(key)
@@ -92,7 +94,7 @@ def calc_summary(magnetic_interactions, Saupe_components, data, predicted):
         RSS_scaled['Overall'] = (RSS_scaled.setdefault('Overall', 0.0) +
                                  residual / scale**2)
         RSS_scaled[label] = (RSS_scaled.setdefault(label, 0.0) +
-                                 residual / scale**2)
+                             residual / scale**2)
 
         # Add it to the overall and interaction-specific counts
         count['Overall'] = count.setdefault('Overall', 0) + 1
@@ -144,30 +146,50 @@ def calc_summary(magnetic_interactions, Saupe_components, data, predicted):
         else:
             continue
 
-    # Add statistics on the Saupe matrix and round to 4 sig figs
+    # Add statistics on the Saupe matrix and round to 4 sig figs.
     summary['Alignment'] = OrderedDict()
-    summary['Alignment']['Aa'] = sum(Saupe_components['Aa'])
-    summary['Alignment']['Ar'] = sum(Saupe_components['Ar'])
+    summary['Alignment']['Aa'] = sum_Aa
+    summary['Alignment']['Ar'] = sum_Ar
 
     for k,v in summary['Alignment'].items():
         summary['Alignment'][k] = round_sig(v, 4)
 
-    summary['Saupe'] = OrderedDict()
-    summary['Saupe']['Szz'] = Saupe_components['Szz']
-    summary['Saupe']['Syy'] = Saupe_components['Syy']
-    summary['Saupe']['Sxx'] = Saupe_components['Sxx']
+    # Put in statistics on the Saupe matrix. There is (potentially) one entry
+    # for each molecule/conformer identifier.
+    no_molecules = len([i for i in Saupe_components.keys()
+                        if i.startswith('Szz')])
+    if no_molecules > 1:
+        # In this case, there are multiple molecules conformers. An entry for
+        # each must be created. Get the molecular identifiers for each,
+        # extracting. These are, for example, ' (1)', ' (2)' and so on.
+        ids = [i[3:] for i in Saupe_components.keys()
+               if i.startswith('Szz')]
+    else:
+        # Otherwise there is just one molecule. The id for the molecule is
+        # just an empty string
+        ids = ['',]
 
-    for k,v in summary['Saupe'].items():
-        summary['Saupe'][k] = round_sig(v, 4)
+    for id_ in sorted(ids):
+        summary['Saupe' + id_] = OrderedDict()
+        summary['Saupe' + id_]['Szz'] = Saupe_components['Szz' + id_]
+        summary['Saupe' + id_]['Syy'] = Saupe_components['Syy' + id_]
+        summary['Saupe' + id_]['Sxx'] = Saupe_components['Sxx' + id_]
 
-    # Add statistics on the Saupe Orientation and round to 1 decimal
-    summary['Angles'] = OrderedDict()
-    summary['Angles']["Z (deg)"] = Saupe_components['alpha_z']
-    summary['Angles']["Y' (deg)"] = Saupe_components['beta_y']
-    summary['Angles']["Z'' (deg)"] = Saupe_components['gamma_z']
+        # Round the numbers
+        for k, v in summary['Saupe' + id_].items():
+            summary['Saupe' + id_][k] = round_sig(v, 4)
 
-    for k,v in summary['Angles'].items():
-        summary['Angles'][k] = round(v, 1)
+        # Add statistics on the Saupe Orientation and round to 1 decimal
+        summary['Angles' + id_] = OrderedDict()
+        summary['Angles' + id_]["Z (deg)"] = Saupe_components['alpha_z'
+                                                              + id_]
+        summary['Angles' + id_]["Y' (deg)"] = Saupe_components['beta_y'
+                                                               + id_]
+        summary['Angles' + id_]["Z'' (deg)"] = Saupe_components['gamma_z'
+                                                                + id_]
+
+        for k, v in summary['Angles' + id_].items():
+            summary['Angles' + id_][k] = round(v, 1)
 
     return summary
 

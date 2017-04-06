@@ -175,48 +175,50 @@ def calc_pa_SVD(magnetic_interactions, data):
     else:
         # This is the case for one molecule being fit.
         molecule_number = [None,]
-    
+
+    # Conduct the S-matrix calculations for each molecule:
     Saupe_components = {}
-    if len(magnetic_interactions) > 1:
+    for i in molecule_number:
+        # Contruct the molecular identifier. This is empty ('') if there's one
+        # molecule, or it's (1), (2), ... if there are multiple molecules
+        id_ = ' ({})'.format(i) if i is not None else ''
 
-    else:
-        for i in ('S_xyz', 'Aa', 'Ar', 'Rh'):
-            Saupe_components[i] = []
-
-    for x in range(0, len(S), 5):
-        s = S[x:x + 5]
+        if i is None:
+            s = S
+        else:
+            s = S[(i-1) * 5: (i-1) * 5 + 5]
 
         # The order of the Saupe matrix components are:
         # Cyy, Czz, Cxy, Cxz, Cyz
-        s_xyz = np.array([[-s[0]-s[1], s[2], s[3]],
+        s_xyz = np.array([[-s[0] - s[1], s[2], s[3]],
                           [s[2],         s[0], s[4]],
                           [s[3],         s[4], s[1]]])
 
         # Conduct the eigen value decomposition
-        (eig_values, eig_vectors) = linalg.eig(s_xyz)
+        eig_values, eig_vectors = linalg.eig(s_xyz)
 
         # Get the Saupe matrix angles
         alpha, beta, gamma = euler_zyz(eig_vectors)
-        Saupe_components['alpha_z'] = alpha
-        Saupe_components['beta_y'] = beta
-        Saupe_components['gamma_z'] = gamma
+        Saupe_components['alpha_z' + id_] = alpha
+        Saupe_components['beta_y' + id_] = beta
+        Saupe_components['gamma_z' + id_] = gamma
 
         # Get the Saupe matrix values
         s_xyz = eig_values.real
-        Saupe_components['S_xyz'].append(s_xyz)
+        Saupe_components['S_xyz' + id_] = s_xyz
 
         yy, xx, zz = sorted(s_xyz, key=lambda x: abs(x))
 
         aa = zz / 2.
         ar = (yy - xx) / 3.
 
-        Saupe_components['Sxx'] = xx
-        Saupe_components['Syy'] = yy
-        Saupe_components['Szz'] = zz
+        Saupe_components['Sxx' + id_] = xx
+        Saupe_components['Syy' + id_] = yy
+        Saupe_components['Szz' + id_] = zz
 
-        Saupe_components['Aa'].append(aa)
-        Saupe_components['Ar'].append(ar)
-        Saupe_components['Rh'].append(ar / abs(aa))
+        Saupe_components['Aa' + id_] = aa
+        Saupe_components['Ar' + id_] = ar
+        Saupe_components['Rh' + id_] = ar / abs(aa)
 
     # Calculate the summary statistics
     stats = calc_summary(magnetic_interactions, Saupe_components, data,
