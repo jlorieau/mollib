@@ -31,5 +31,5 @@ class TestDataReader(unittest.TestCase):
         self.assertEqual(len(data), 42)
 
         # Check one RDC of each interaction type
-        self.assertEqual(data['A.3N-H'].value, 10.5)
+        self.assertEqual(data['A.3N-H'].value, -10.5)
         self.assertEqual(data['A.1CA-HA#'].value, -8.3)
