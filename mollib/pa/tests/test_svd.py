@@ -57,9 +57,11 @@ class TestSVD(unittest.TestCase):
         data_pred_rev, _, stats_rev = calc_pa_SVD(magnetic_interactions_rev,
                                                   data_rev)
 
-        # Make sure both match
+        # Make sure both match and that the Q-factors are better than 15%
         self.assertEqual(stats['Overall']['Q (%)'],
                          stats_rev['Overall']['Q (%)'])
+        self.assertLessEqual(stats['Overall']['Q (%)'], 15.0)
+        self.assertLessEqual(stats_rev['Overall']['Q (%)'], 15.0)
         self.assertEqual(stats['Overall']['count'],
                          stats_rev['Overall']['count'])
 
