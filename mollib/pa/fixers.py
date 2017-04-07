@@ -99,13 +99,16 @@ class Fixer(object):
             A list of strings of the fixes conducted to generate data_fixed.
         """
         data_fixed = None
+        data_returned = None
         fixes = []
         # Process all of the subclasses and store their results
         for instance in self._subclass_instances:
             if not instance.enabled:
                 continue
             data_fixed = data_fixed if data_fixed is not None else data
-            data_fixed, f = instance.fix(data_fixed)
+            data_returned, f = instance.fix(data_fixed)
+            data_fixed = (data_returned if data_returned is not None
+                          else data_fixed)
             fixes += f
 
         return data_fixed, fixes
