@@ -16,22 +16,8 @@ Arguments
         The file(s) with the RDC and RACS alignment data. These can be in
         either of the following formats:
 
-        - The pa format. ex:
+        - The pa format. See :ref:`pa_format`
 
-        ::
-
-            # Interaction   Value (Hz)   Error (optional)
-            14N-H           -14.5        0.1
-            15N-H             3.5
-            A.16N-H          -8.5        0.2  # larger error
-
-            A.16H-A.15C       0.5        0.1
-            B.16H-B.15C       0.5        0.1
-
-            # Residual anisotropic chemical shift data
-            # Interaction   Value (ppb)   Error (optional)
-            5C                112         1
-            6C               -250
 
         - NMRPipe's DC format.
 
@@ -49,10 +35,48 @@ Arguments
     ``--fix-outliers`` / ``--nofix-outliers``
         (Optional) Check to see if there are outliers for each type of
         interaction. A warning outlier and a bad outlier are defined by those
-        that give an $alpha$-critical cutoff of 95% and 99%, respectively,
+        that give an alpha-critical cutoff of 95% and 99%, respectively,
         using a Grubbs test. If outliers are found, these will be removed from
-        the fit and thereported statistics. By default, outliers are not
+        the fit and the reported statistics. By default, outliers are not
         removed.
+
+.. _pa_format:
+
+Partial Alignment Data File Format
+----------------------------------
+
+The file format has the following features:
+
+1. The interaction labels for dipolar interactions refer to two atoms (ex:
+   14N-H) and the interaction label for CSA interactions refer to one atom.
+
+2. For dipolar interactions, redundant residue numbers and chain identifiers
+   are not needed. For example, '14N-H' and '14N-14H' refer to the same dipole.
+
+3. If the chain identifier is not specified, then the subunit 'A' is assumed.
+
+4. Relative residue numbers are allowed. For example, '14N-C-1' is the same as
+   the '14N-13C' dipole.
+
+5. Errors are optional. If the error is not specified, a default value from
+   the settings is used.
+
+The partial alignment RDC and RACS data file has the following format:
+
+::
+
+    # Interaction   Value (Hz)   Error (optional)
+    14N-H           -14.5        0.1
+    15N-H             3.5
+    A.16N-H          -8.5        0.2  # larger error
+
+    A.16H-A.15C       0.5        0.1
+    B.16H-B.15C       0.5        0.1
+
+    # Residual anisotropic chemical shift data
+    # Interaction   Value (ppb)   Error (optional)
+    5C                112         1
+    6C               -250
 
 Examples
 --------
