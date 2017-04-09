@@ -17,7 +17,8 @@ The ``hbonds`` command has the following features:
       torsion angles. This prevents the misclassification of 310-helices and
       beta turns as well as isolated i+3, i+4 and i+5 hydrogen bonds.
 
-    **Usage**
+Usage
+-----
 
     .. include:: output/cli_hbonds_help.html
 
@@ -25,11 +26,6 @@ The ``hbonds`` command has the following features:
     .. note:: If the molecule does not have hydrogens, this command will need
               to be run with the ``--hydrogenate`` parameter. See the
               :ref:`hydrogenate <hydrogenate>` option.
-
-
-    **Examples**
-
-    .. include:: output/cli_hbonds_i_2KXA.html
 
 Arguments
 ---------
@@ -46,3 +42,9 @@ Arguments
     ``--sort-type``
         Sort the hydrogen bonds by classification type, like beta-sheet or
         alpha-helix.
+
+
+Examples
+--------
+
+    .. include:: output/cli_hbonds_i_2KXA.html
