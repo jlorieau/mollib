@@ -1,6 +1,5 @@
-=====================
-Commandline Interface
-=====================
+Command Line Interface
+======================
 The command line interface includes all of the mollib functions for processing
 molecules.
 
@@ -38,7 +37,6 @@ molecules.
 
         .. include:: output/cli_list-settings.html
 
-********
 Commands
 ********
 
@@ -52,8 +50,8 @@ mollib plugins are installed.
     process
     measure
     hbonds
+    pa
 
-********
 Settings
 ********
 

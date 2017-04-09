@@ -6,12 +6,22 @@ div.body {
   max-width: 1000px;
 }
 
+div.body h1 {
+  background: None;
+  padding: 0;
+  font-size: 160%;
+}
+
 div.body h2 {
-  background: #e0ecf9;
+  background: None;
+  padding: 0;
+  font-size: 120%;
 }
 
 div.body h3 {
-  background: #eaf1f7;
+  background: None;
+  padding: 0;
+  font-size: 100%;
 }
 
 div.related {
