@@ -30,18 +30,18 @@ Usage
 Arguments
 ---------
 
-    ``--aliphatic`` (optional)
-        Include aliphatic hydrogen bonds in the results. The acceptor-donor
-        atom cutoff distances are elongated to 3.0 A, and carbon atoms are
-        allowed in hydrogen bond donor dipoles.
+    ``--aliphatic``
+        (Optional) Include aliphatic hydrogen bonds in the results. The
+        acceptor-donoratom cutoff distances are elongated to 3.0 A, and carbon
+        atoms are allowed in hydrogen bond donor dipoles.
 
-    ``--detailed`` (optional)
-        Present a detailed report on the geometries of hydrogen bonds. Does not
-        include classification information.
+    ``--detailed``
+        (Optional) Present a detailed report on the geometries of hydrogen
+        bonds. Does not include classification information.
 
-    ``--sort-type`` (optional)
-        Sort the hydrogen bonds by classification type, like beta-sheet or
-        alpha-helix.
+    ``--sort-type``
+        (Optional) Sort the hydrogen bonds by classification type, like
+        beta-sheet or alpha-helix.
 
 
 Examples

@@ -35,23 +35,24 @@ Arguments
 
         - NMRPipe's DC format.
 
-    ``-o`` / ``--out`` (optional)
-        The filename for the output report. The output report is rendered in
-        Markdown.
+    ``-o`` / ``--out``
+        (Optional) The filename for the output report. The output report is
+        rendered in Markdown.
 
-    ``--fix-sign`` / ``--nofix-sign`` (optional)
-        Check to see if the sign of RDCs or RACSs of the same type need to be
-        inverted to get a better fit. This operation is useful for automatically
-        fixing the sign of couplings when the absolute value of the \|J+D\|-
-        and \|J\|-couplings are measured. By default, the sign of couplings are
-        checked and fixed.
+    ``--fix-sign`` / ``--nofix-sign``
+        (Optional) Check to see if the sign of RDCs or RACSs of the same type
+        need to be inverted to get a better fit. This operation is useful for
+        automatically fixing the sign of couplings when the absolute value of
+        the \|J+D\|- and \|J\|-couplings are measured. By default, the sign of
+        couplings are checked and fixed.
 
-    ``--fix-outliers`` / ``--nofix-outliers`` (optional)
-        Check to see if there are outliers for each type of interaction. A
-        warning outlier and a bad outlier are defined by those that give an
-        $alpha$-critical cutoff of 95% and 99%, respectively, using a Grubbs
-        test. If outliers are found, these will be removed from the fit and the
-        reported statistics. By default, outliers are not removed.
+    ``--fix-outliers`` / ``--nofix-outliers``
+        (Optional) Check to see if there are outliers for each type of
+        interaction. A warning outlier and a bad outlier are defined by those
+        that give an $alpha$-critical cutoff of 95% and 99%, respectively,
+        using a Grubbs test. If outliers are found, these will be removed from
+        the fit and thereported statistics. By default, outliers are not
+        removed.
 
 Examples
 --------
