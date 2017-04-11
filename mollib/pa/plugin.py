@@ -111,7 +111,7 @@ class PA(Plugin):
             # Prepare a table of the observed and predicted data
             tables = report_tables(data, data_pred)
 
-            if len(molecules) > 2:
+            if len(molecules) > 1:
                 # Make title for stats table
                 title = "Summary SVD Statistics for Molecules "
                 title += word_list([m.name for m in molecules])
