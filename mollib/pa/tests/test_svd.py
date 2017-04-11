@@ -111,6 +111,35 @@ class TestSVD(unittest.TestCase):
         self.assertLessEqual(stats['H']['Q (%)'], 45.)
         self.assertLessEqual(stats['H']['RMS'], 1.6)
 
+    def test_multi_conformer(self):
+        """Test the SVD of a multiconformer refinement with 2LWA."""
+
+        # Load the molecules
+        path = os.path.dirname(os.path.abspath(__file__))
+        mol1 = Molecule(path + '/data/2lwa_struc-a.pdb')
+        mol2 = Molecule(path + '/data/2lwa_struc-b.pdb')
+        mol3 = Molecule(path + '/data/2lwa_struc-c.pdb')
+
+        # Load the data
+        data = read_pa_file(path + '/data/2lwa.inp')
+
+        # Flip the sign of N-H couplings
+        for k, v in data.items():
+            if k.endswith('N-H'):
+                v.value *= -1.
+
+        # Process the A-matrix of the molecule
+        process = Process([mol1, mol2, mol3])
+        magnetic_interactions = process.process(labels=data.keys())
+
+        # Fit the data with a SVD
+        data_pred, _, stats = calc_pa_SVD(magnetic_interactions, data)
+
+        # Check the statistics
+        self.assertLessEqual(stats['N-H']['Q (%)'], 15.)
+        self.assertLessEqual(stats['CA-HA']['Q (%)'], 20.)
+
+
     def test_stats(self):
         """Test the calculation of the Q-factor using PNA data."""
         mol = Molecule('2MJB')
