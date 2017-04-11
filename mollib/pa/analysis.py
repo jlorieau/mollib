@@ -176,7 +176,7 @@ def calc_summary(magnetic_interactions, Saupe_components, data, predicted):
 
             elif interaction in settings.default_predicted_racs:
                 scale = settings.default_predicted_racs[interaction]['delta']
-                Da = scale * Aa
+                Da = scale * Aa * 1000.  # Convert from ppm to ppb
 
                 summary[interaction + id_]['Da' + id_ + ' (ppb)'] = round(Da, 1)
                 summary[interaction + id_]['Rh'] = round(Rh, 3)
