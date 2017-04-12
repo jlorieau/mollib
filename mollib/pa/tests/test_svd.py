@@ -3,6 +3,7 @@ import os
 import glob
 
 from mollib import Molecule
+from mollib.hydrogens import add_hydrogens
 from mollib.pa import (Process, read_pa_file, calc_pa_SVD, report_tables,
                        find_outliers)
 from mollib.pa import settings
@@ -138,6 +139,90 @@ class TestSVD(unittest.TestCase):
         # Check the statistics
         self.assertLessEqual(stats['N-H']['Q (%)'], 15.)
         self.assertLessEqual(stats['CA-HA']['Q (%)'], 20.)
+
+
+    def test_multi_conformer_same_structure(self):
+        """Test the fit of multiple conformers of the same structure.
+        
+        This test is used to see if the Saupe matrix and Q-factor values are
+        comparable between the single structure fit and the multi-structure
+        fit. However, the exact same structure cannot be used in the SVD, as
+        this produces undefined weights. Therefore, we will use two similar
+        ubiquitin structures: 2MJB and 1UBQ. The 1UBQ structure fits 
+        (relatively) poorly to the RDC/RACS data, so its Da is much smaller
+        than that of 2MJB, which was refined against RDCs/RACSs.
+        """
+        # Load the molecules. 1UBQ has to be hydrogenated
+        mol_2mjb = Molecule('2MJB')
+        mol_1ubq = Molecule('1UBQ')
+        add_hydrogens(mol_1ubq, strip=True)
+
+        # Load the data
+        path = os.path.dirname(os.path.abspath(__file__))
+        data = read_pa_file(path + '/data/ubq_bicelle_hn-c.pa')
+
+        # Process the A-matrix for 2MJB and 2MJB+1UBQ
+        process_2mjb = Process(mol_2mjb)
+        magnetic_interactions_2mjb = process_2mjb.process(labels=data.keys())
+
+        process_both = Process([mol_2mjb, mol_1ubq])
+        magnetic_interactions_both = process_both.process(labels=data.keys())
+
+        # Conduct the SVD for each
+        _, _, stats_2mjb = calc_pa_SVD(magnetic_interactions_2mjb, data)
+        _, _, stats_both = calc_pa_SVD(magnetic_interactions_both, data)
+
+        # Compare the statistics and the Saupe matrices for both. The 2MJB
+        # structure is the first structure in the two structure (both) SVD fit.
+        # First, both should have reasonable Q-factors
+        self.assertLessEqual(stats_2mjb['Overall']['Q (%)'],
+                             15.0)
+        self.assertLessEqual(stats_both['Overall']['Q (%)'],
+                             17.0)
+
+        # In the SVD of both, the Da for 2MJB should be much larger than 1UBQ
+        self.assertGreaterEqual(abs(stats_2mjb['N-H']['Da (Hz)']),
+                                12.0)
+        self.assertGreaterEqual(abs(stats_both['N-H (1)']['Da (1) (Hz)']),
+                                12.0)
+        self.assertLessEqual(abs(stats_both['N-H (2)']['Da (2) (Hz)']),
+                             2.5)
+
+        # The Da should be within 5% for the 2MJB SVD and the 2MJB
+        # structure of the SVD with both structures
+        Da_1 = stats_2mjb['N-H']['Da (Hz)']
+        Da_2 = stats_both['N-H (1)']['Da (1) (Hz)']
+        Da_diff = (Da_1 - Da_2) * 2. / (Da_1 + Da_2)
+        self.assertLessEqual(abs(Da_diff), 0.05)
+
+        # The Rh should be within 12%
+        Rh_1 = stats_2mjb['N-H']['Rh']
+        Rh_2 = stats_both['N-H (1)']['Rh']
+        Rh_diff = (Rh_1 - Rh_2) * 2. / (Rh_1 + Rh_2)
+        self.assertLessEqual(abs(Rh_diff), 0.12)
+
+        # The Saupe matrix should be within 7.5% as well. However, the smallest
+        # component has a relatively large error, so these are compared to the
+        # largest component (Szz)
+        Szz = stats_2mjb['Saupe']['Szz']
+        msg = "The '{}' parameters are {} {} ({}% different)"
+        for parameter in ('Szz', 'Sxx', 'Syy'):
+            value1 = stats_2mjb['Saupe'][parameter]
+            value2 = stats_both['Saupe (1)'][parameter]
+            value_diff = (value1 - value2) / Szz
+            self.assertLessEqual(abs(value_diff), 0.075,
+                                 msg.format(parameter, value1, value2,
+                                            value_diff * 100.))
+
+        # The angles should be within 10 degrees as well.
+        msg = "The '{}' parameters are {} {} ({} different)"
+        for parameter in ("Z (deg)", "Y' (deg)" , "Z'' (deg)"):
+            value1 = stats_2mjb['Angles'][parameter]
+            value2 = stats_both['Angles (1)'][parameter]
+            value_diff = (value1 - value2)
+            self.assertLessEqual(abs(value_diff), 10.,
+                                 msg.format(parameter, value1, value2,
+                                            value_diff))
 
 
     def test_stats(self):
