@@ -1,5 +1,5 @@
-Partial Alignment
-=================
+pa - Partial Alignment
+======================
 The ``pa`` command is used to fit residual dipolar couplings (RDCs) and residual
 anisotropic chemical shifts (RACSs, sometimes known as RCSAs) from partially
 aligned samples using NMR.
