@@ -224,7 +224,6 @@ class TestSVD(unittest.TestCase):
                                  msg.format(parameter, value1, value2,
                                             value_diff))
 
-
     def test_stats(self):
         """Test the calculation of the Q-factor using PNA data."""
         mol = Molecule('2MJB')
@@ -316,7 +315,7 @@ class TestSVD(unittest.TestCase):
         tables = report_tables(data, data_pred)
 
         # Make sure the fit and predicted tables are present
-        for key in ('fit', 'C-N_pred', 'CA-HA_pred', 'N-H_pred', 'C-CA_pred'):
+        for key in ('fit', 'pred'):
             self.assertIn(key, tables)
 
             table = tables[key]
