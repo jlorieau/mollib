@@ -80,13 +80,17 @@ class Process(Plugin):
 
         - Writes the PDB file, if specified
         """
+        # Do nothing if it's not the process command
+        if args.command != 'process':
+            return None
+
         # Do nothing if no output filename was given
         if getattr(args, 'out', None) is None:
             return None
 
         # Get the corresponding filename
         output_filename = [o for i,o in zip(args.i[0], args.out[0])
-                           if i==molecule.identifier]
+                           if i == molecule.identifier]
 
         if len(output_filename) < 1:
             msg = "No output filename was specificed for {}."
