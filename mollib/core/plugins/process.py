@@ -80,29 +80,27 @@ class Process(Plugin):
 
         - Writes the PDB file, if specified
         """
-        # Do nothing if it's not the process command
-        if args.command != 'process':
-            return None
+        # Only do these operations if the selected command is 'process'
+        if args.command == 'process':
+            # Do nothing if no output filename was given
+            if getattr(args, 'out', None) is None:
+                return None
 
-        # Do nothing if no output filename was given
-        if getattr(args, 'out', None) is None:
-            return None
+            # Get the corresponding filename
+            output_filename = [o for i,o in zip(args.i[0], args.out[0])
+                               if i == molecule.identifier]
 
-        # Get the corresponding filename
-        output_filename = [o for i,o in zip(args.i[0], args.out[0])
-                           if i == molecule.identifier]
+            if len(output_filename) < 1:
+                msg = "No output filename was specificed for {}."
+                logging.error(msg.format(molecule.identifier))
+                return None
 
-        if len(output_filename) < 1:
-            msg = "No output filename was specificed for {}."
-            logging.error(msg.format(molecule.identifier))
-            return None
+            # Write the file.
+            output_filename = output_filename[0]
+            msg = "Writing ({}) to {}."
+            logging.debug(msg.format(molecule.name, output_filename))
 
-        # Write the file.
-        output_filename = output_filename[0]
-        msg = "Writing ({}) to {}."
-        logging.debug(msg.format(molecule.name, output_filename))
-
-        molecule.write_pdb(output_filename)
+            molecule.write_pdb(output_filename)
 
     def selected(self, args):
         "This plugin is always active."
