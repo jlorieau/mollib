@@ -133,16 +133,17 @@ class PA(Plugin):
                 tables['fit'].title = title
 
             # Prepare the standard output
-            output = '\n'.join((table.content(),
-                                tables['fit'].content(),)
-                               )
+            summary = table.content()
+            output = tables['fit'].content()
+
             if fixes:
                 output += '\n'
                 output += '\n'.join(['* ' + fix for fix in fixes])
 
             # Print or write the report(s)
+            print(summary)
             if args.out:
-                write_file(output, args.out)
+                write_file('\n'.join((summary, output)), args.out)
             else:
                 print(output)
 
