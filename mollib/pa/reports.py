@@ -111,13 +111,10 @@ def report_tables(data, predicted=None):
     predicted_interactions = set([sort_func(i)[2]
                                   for i in predicted_copy.keys()])
 
-    # Populate the table and rowsrows
+    # Populate the table and rows for the predicted data
+    tables['pred'] = MDTable('Interaction', 'Predicted')
+    table = tables['pred']
     for label in sorted(predicted_copy.keys(), key=sort_func):
-        # Get the appropriate table
-        interaction_type = sort_func(label)[0]
-        table = tables.setdefault(interaction_type + '_pred',
-                                  MDTable('Interaction', 'Predicted'))
-
         # Get the fields
         value = round(predicted_copy[label].value, 2)
 

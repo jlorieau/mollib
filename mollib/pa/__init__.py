@@ -17,3 +17,5 @@ pa = PA()
 
 from mollib.core import register_settings
 register_settings(settings)
+
+# TODO: read and fetch mr files from the pdb

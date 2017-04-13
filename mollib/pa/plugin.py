@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 """
-The plugin for the hbond submodule.
+The plugin for the pa submodule.
 """
 import os.path
-import logging
 
 from mollib.plugins import Plugin
 from mollib.utils.checks import check_file, check_not_empty
@@ -41,10 +40,19 @@ class PA(Plugin):
         p.add_argument('-o', '--out',
                        action='store', required=False,
                        type=str, metavar='filename',
-                       help="The output filename for the reports")
+                       help="The output filename for the reports of the fit "
+                            "data.")
+
+        p.add_argument('-p', '--pred',
+                       action='store', required=False,
+                       type=str, metavar='filename',
+                       help='The output filename for the report of the ' 
+                            'back-calculated RDCs and RACSs that are not in '
+                            'the experimental data.')
 
         # The following options can be turned off and on
-        fix_sign = p.add_mutually_exclusive_group()
+        fixers = p.add_argument_group("Fixer options")
+        fix_sign = fixers.add_mutually_exclusive_group()
         fix_sign.add_argument('--fix-sign',
                               action='store_true',
                               help="Check and fix mistakes in RDC and RACS "
@@ -54,7 +62,7 @@ class PA(Plugin):
                               help="Disable check in RDC and RACS sign")
 
         # The following options can be turned off and on
-        fix_outliers = p.add_mutually_exclusive_group()
+        fix_outliers = fixers.add_mutually_exclusive_group()
         fix_outliers.add_argument('--fix-outliers',
                               action='store_true',
                               help="Fit without outliers")
@@ -62,6 +70,12 @@ class PA(Plugin):
                               action='store_true',
                               help="Disable fitting without outliers")
 
+    def preprocess(self, molecules, args):
+        """Conduct argument checks."""
+        # The --out and --pred filenames cannot be the same
+        if args.out and args.out == args.pred:
+            # Add '_pred' to the output filename
+            args.pred = '_pred'.join(os.path.splitext(args.out))
 
     def process(self, molecules, args):
         """Process the SVD of molecules."""
@@ -105,7 +119,7 @@ class PA(Plugin):
             (data_pred, Saupe_components,
              stats) = calc_pa_SVD(magnetic_interactions, data)
 
-            # Print the table of stats and fit values
+            # Prepare table of stats and fit values
             table = stats_table(stats)
 
             # Prepare a table of the observed and predicted data
@@ -117,20 +131,30 @@ class PA(Plugin):
                 title += word_list([m.name for m in molecules])
                 table.title = title
 
-                # Make title for pred and calc table
+                # Make title for the fit data table
                 title = "Observed and Predicted RDCs and RACS for Molecules "
                 title += word_list([m.name for m in molecules])
                 tables['fit'].title = title
+
+                # Make title for the back-calculated predicted data
+                title = "Back-calculated RDCs and RACS for Molecules "
+                title += word_list([m.name for m in molecules])
+                tables['pred'].title = title
             else:
                 # Make title for stats table
                 title = "Summary SVD Statistics for Molecule "
                 title += molecules[0].name
                 table.title = title
 
-                # Make title for pred and calc table
+                # Make title for the fit data table
                 title = "Observed and Predicted RDCs and RACS for Molecule "
                 title += molecules[0].name
                 tables['fit'].title = title
+
+                # Make title for the back-calculated predicted data
+                title = "Back-calculated RDCs and RACS for Molecule "
+                title += molecules[0].name
+                tables['pred'].title = title
 
             # Prepare the standard output
             summary = table.content()
@@ -146,4 +170,8 @@ class PA(Plugin):
                 write_file('\n'.join((summary, output)), args.out)
             else:
                 print(output)
+
+            # Write the predicted data
+            if args.pred:
+                write_file(tables['pred'].content(), args.pred)
 
