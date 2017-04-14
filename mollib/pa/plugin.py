@@ -33,7 +33,7 @@ class PA(Plugin):
 
         p.add_argument('-a', '--alignment',
                        action='append', nargs='+',
-                       required=True,
+                       required=True, metavar='filename',
                        help="(required) Alignment file with RDC and RACS data")
 
         # Allow for the optional output of the results to a file
