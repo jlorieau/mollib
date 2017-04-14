@@ -60,7 +60,8 @@ Settings
     .. literalinclude:: /../mollib/core/settings.py
         :caption: [settings]
 
-    The ``utils.settings`` impact how the data are presented.
+    The ``utils.settings`` impact how general functions behave and how the data
+    are presented.
 
     .. literalinclude:: /../mollib/utils/settings.py
         :caption: [utils.settings]
@@ -77,8 +78,15 @@ Settings
     .. literalinclude:: /../mollib/hbonds/settings.py
         :caption: [hbonds.settings]
 
+    The ``pa.settings`` impact how partial alignment (RDC and RACS) data are
+    fit.
+
+    .. literalinclude:: /../mollib/pa/settings.py
+        :caption: [pa.settings]
+
     The following options only impact the creation of mollib datasets through
     the ``build_data`` setup command.
 
     .. literalinclude:: /../mollib/statistics/settings.py
         :caption: [statistics.settings]
+
