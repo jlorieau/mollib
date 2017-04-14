@@ -63,18 +63,6 @@ def grouper(n, iterable, fillvalue=None):
     return zip_longest(*args, fillvalue=fillvalue)
 
 
-def clear_cache():
-    """Clears the temporary cache for mollib."""
-    temp_path = os.path.join(tempfile.gettempdir(), 'mollib')
-    for filename in os.listdir(temp_path):
-        filepath = os.path.join(temp_path, filename)
-        try:
-            if os.path.isfile(filepath):
-                os.unlink(filepath)
-        except Exception as e:
-            raise e
-
-
 def group_by_2(iterable):
     """Group the items of iterable into a list of tuples of 2 items
 
