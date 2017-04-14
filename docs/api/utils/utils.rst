@@ -10,6 +10,7 @@ General utilities for rendering data to the console
     checks
     markdown
     files
+    net
     interactions
     tensors
     rotations

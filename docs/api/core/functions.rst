@@ -20,5 +20,3 @@ Functions
 .. autofunction:: measure_dihedral
 
 .. autofunction:: measure_dihedrals
-
-.. autofunction:: clear_cache
