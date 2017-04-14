@@ -38,7 +38,8 @@ class Measure(Plugin):
         "Process the parser for the 'measure' command."
         subparser = self.command_subparsers['measure']
 
-        group = subparser.add_mutually_exclusive_group(required=False)
+        group = subparser.add_argument_group('measurement options')
+        group = group.add_mutually_exclusive_group(required=False)
 
         group.add_argument('-d', '--dist', nargs=2, required=False,
                            metavar='atom', type=str,
@@ -65,9 +66,7 @@ class Measure(Plugin):
                                  "within the specified distance. "
                                  "ex: 31:33-N 5"))
 
-        # Add options for the output
-        options = subparser.add_argument_group(title='options')
-        options.add_argument('--stats',
+        group.add_argument('--stats',
                              required=False, action='store_true',
                              help=("Report statistics on the reported "
                                    "measurements."))

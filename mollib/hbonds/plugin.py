@@ -22,17 +22,26 @@ class Hbonds(Plugin):
         "Process the parser for the 'hbonds' command."
         p = self.command_subparsers['hbonds']
 
-        p.add_argument('--aliphatic',
-                       action='store_true',
-                       help="Includes aliphatic hydrogen bonds")
-        p.add_argument('--detailed',
-                       action='store_true',
-                       help="Report detailed information on hydrogen bonds.")
-        p.add_argument('--sort-type',
-                       action='store_true',
-                       help='Sort hydrogen bonds by type')
+        group = p.add_argument_group('hbond options')
+
+        group.add_argument('--aliphatic',
+                          action='store_true',
+                           help="Includes aliphatic hydrogen bonds")
+        group.add_argument('--detailed',
+                           action='store_true',
+                           help="Report detailed information on hydrogen bonds.")
+        group.add_argument('--sort-type',
+                           action='store_true',
+                           help='Sort hydrogen bonds by type')
 
         p = self.command_subparsers['measure']
+
+        # Find the 'measure' group and add the --rama option
+        group = None
+        for ag in p._action_groups:
+            if ag.title.startswith('measure'):
+                group = ag
+        p = group if group is not None else p
 
         p.add_argument('--rama',
                        action='store_true',

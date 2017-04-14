@@ -51,7 +51,7 @@ class PA(Plugin):
                             'the experimental data.')
 
         # The following options can be turned off and on
-        fixers = p.add_argument_group("Fixer options")
+        fixers = p.add_argument_group("fixer options")
         fix_sign = fixers.add_mutually_exclusive_group()
         fix_sign.add_argument('--fix-sign',
                               action='store_true',
@@ -69,6 +69,10 @@ class PA(Plugin):
         fix_outliers.add_argument('--nofix-outliers',
                               action='store_true',
                               help="Disable fitting without outliers")
+
+    def help(self):
+        return ("Singular Value Decomposition of partially aligned NMR data "
+                "(RDCs and RACSs)")
 
     def preprocess(self, molecules, args):
         """Conduct argument checks."""

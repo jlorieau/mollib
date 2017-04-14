@@ -18,6 +18,11 @@ class Process(Plugin):
         "Process the parser for the 'process' command."
         # Add the following commands to all subparsers
         for subparser in self.command_subparsers.values():
+            # Rename 'optional arguments' to 'arguments
+            for ag in subparser._action_groups:
+                if ag.title == 'optional arguments':
+                    ag.title = 'arguments'
+
             # Input filename or identifier
             subparser.add_argument('-i', '--in', dest='i',
                                 action='append', nargs='+', required=True,
