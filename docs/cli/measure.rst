@@ -1,7 +1,7 @@
 .. _measure-command:
 
-Measure Command
-===============
+measure
+=======
 The ``measure`` command is used for measuring geometries in molecules.
 All of the options and preprocessors available from the :ref:`process-command`
 are also available.

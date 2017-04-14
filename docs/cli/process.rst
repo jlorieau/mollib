@@ -1,7 +1,7 @@
 .. _process-command:
 
-Process Command
-===============
+process
+=======
 The ``process`` command is the main command for processing, reading and writing
 files. All of the options and preprocessors available in ``process`` are
 available to other commands.
