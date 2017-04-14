@@ -14,12 +14,12 @@ The molecule object.
 import re
 import weakref
 import logging
-import tempfile
 import gzip
 from itertools import chain as ichain
 from itertools import count
 from collections import OrderedDict
 from math import cos, sin, pi
+import os.path
 
 import numpy as np
 
@@ -28,14 +28,8 @@ from .residue import Residue
 from .chain import Chain
 from .topology import topology
 from .utils import grouper
+from mollib.utils.net import get_or_fetch
 from . import settings
-
-try:
-    from urllib.request import urlretrieve
-except ImportError:
-    from urllib import urlretrieve
-
-import os.path
 
 
 class Molecule(dict):
@@ -677,7 +671,6 @@ class Molecule(dict):
             if OXT is not None:
                 OXT.topology.update(['C','HXT'])
 
-
         # This part sets the connectivities listed under self.connections
         # Collect atom numbers and their respective atoms
         atom_numbers = []
@@ -989,16 +982,12 @@ class Molecule(dict):
             If a cached version is available, use that instead of downloading
             the file.
         """
-        url = 'http://files.rcsb.org/download/{}.pdb.gz'.format(pdb_code)
-        temp_path = os.path.join(tempfile.gettempdir(), 'mollib')
-        if not os.path.exists(temp_path):
-            os.makedirs(temp_path)
-
-        path = os.path.join(temp_path, pdb_code) + '.pdb.gz'
-
-        if not os.path.isfile(path) or not load_cached:
-            urlretrieve(url, path)
-        self.read_pdb(path)
+        temp_path = get_or_fetch(pdb_code, extensions='pdb.gz',
+                                 urls=settings.pdb_urls)
+        if temp_path is None:
+            msg = "The identifier or file '{}' could not be found."
+            raise IOError(msg.format(pdb_code))
+        self.read_pdb(temp_path)
 
     _re_atom = re.compile((r"(?P<type>ATOM  |HETATM)"
                             "(?P<number>[\s\d]{5}) "
