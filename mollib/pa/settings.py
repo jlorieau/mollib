@@ -87,10 +87,6 @@ default_error = {'N-H':   0.2,  # Hz
                  'H':     5.,  # ppb
                  }
 
-optimize_to_interactions = (('N', 'H'),
-                            ('CA', 'HA'),
-                            )
-
 #: The alpha-critical values to identify warning or bad data points in terms
 #: of their deviations with respect to the best-fit SVD data.
 alpha_warning = 0.05
