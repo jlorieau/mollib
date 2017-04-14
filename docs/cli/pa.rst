@@ -18,12 +18,15 @@ Arguments
 
         - The pa format. See :ref:`pa_format`
 
-
         - NMRPipe's DC format.
 
     ``-o`` / ``--out``
         (Optional) The filename for the output report. The output report is
         rendered in Markdown.
+
+    ``-p`` / ``--pred``
+        (Optional) The filename for the back-calculated RDCs and RACS from the
+        SVD fit. The output report is rendered in Markdown.
 
     ``--fix-sign`` / ``--nofix-sign``
         (Optional) Check to see if the sign of RDCs or RACSs of the same type
