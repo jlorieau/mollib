@@ -4,29 +4,10 @@ Read in RDC and RACS data from files.
 """
 import re
 import logging
+import gzip
 
 from mollib.utils.interactions import validate_label, interaction_label
 from .data_types import RDC, RACS
-
-
-re_pa = re.compile(r'^\s*'
-                   r'(?P<interaction>[\w\-\.]+#?)'
-                   r'\s+'
-                   r'(?P<value>[eE\d\-\+\.]+)'
-                   r'\s*'
-                   r'(?P<error>[eE\d\-\+\.]*)')
-
-
-re_dc = re.compile(r'^\s*'
-                   r'(?P<res_num1>\d+)'
-                   r'\s+[A-Z]{3}\s+'
-                   r'(?P<atom_name1>[A-Z0-9]+#?)'
-                   r'\s+'
-                   r'(?P<res_num2>\d+)'
-                   r'\s+[A-Z]{3}\s+'
-                   r'(?P<atom_name2>[A-Z0-9]+#?)'
-                   r'\s+'
-                   r'(?P<value>[eE\d\-\+\.]+)')
 
 
 def read_pa_file(filename):
@@ -35,7 +16,7 @@ def read_pa_file(filename):
     Parameters
     ----------
     filename: str
-        The filename to read the data from.
+        The filename to read the data from. The file can be a gzipped file.
 
     Returns
     -------
@@ -45,11 +26,37 @@ def read_pa_file(filename):
     """
     data = {}
 
-    with open(filename, 'r') as f:
-        lines = list(f.readlines())
-        data.update(read_pa_string(lines))
-        data.update(read_dc_string(lines))
+    if filename.endswith('.gz'):
+        with gzip.open(filename) as f:
+            string = f.read()
+    else:
+        with open(filename) as f:
+            string = f.read()
+
+    retrieved_data = read_pa_string(string)
+    data.update(retrieved_data)
+
+    # If reading the file as a pa string didn't work, try the DC file
+    # format instead
+    if len(retrieved_data) == 0:
+        retrieved_data = read_dc_string(string)
+        data.update(retrieved_data)
+
+    # If reading the file as a DC file format didn't work, try the mr file
+    # format instead
+    if len(retrieved_data) == 0:
+        retrieved_data = read_mr_string(string)
+        data.update(retrieved_data)
+
     return data
+
+
+re_pa = re.compile(r'^\s*'
+                   r'(?P<interaction>[\w\-\.]+#?)'
+                   r'\s+'
+                   r'(?P<value>[eE\d\-\+\.]+)'
+                   r'\s*'
+                   r'(?P<error>[eE\d\-\+\.]*)')
 
 
 def read_pa_string(string):
@@ -136,6 +143,18 @@ def read_pa_string(string):
     return data
 
 
+re_dc = re.compile(r'^\s*'
+                   r'(?P<res_num1>\d+)'
+                   r'\s+[A-Z]{3}\s+'
+                   r'(?P<atom_name1>[A-Z0-9]+#?)'
+                   r'\s+'
+                   r'(?P<res_num2>\d+)'
+                   r'\s+[A-Z]{3}\s+'
+                   r'(?P<atom_name2>[A-Z0-9]+#?)'
+                   r'\s+'
+                   r'(?P<value>[eE\d\-\+\.]+)')
+
+
 def read_dc_string(string):
     """Read data from a DC RDC data string.
 
@@ -183,6 +202,106 @@ def read_dc_string(string):
 
         # Add it to the dict
         data[label] = RDC(value=value)
+
+    return data
+
+
+re_mr = re.compile(r'assign'
+                   r'\s*'
+                   r'\(\s*resid\s*(?P<coord_num>\d+)[\s\w]+OO\)'
+                   r'(?:\n[\s\w]*\([\w\s]+[XYZ]\s*\))+'
+                   r'(?:\n[\s\w]*\([a-zA-Z\s]+'
+                       r'(?P<res_i>\d+)[a-z\s]+'
+                       r'(?P<name_i>[A-Z0-9\#]+)\s*\))?'
+                   r'\s*'
+                   r'(?P<value_i>[\d\.\-eE]+)?'
+                   r'(?:\n[\s\w]*\([a-zA-Z\s]+'
+                       r'(?P<res_j>\d+)[a-z\s]+'
+                       r'(?P<name_j>[A-Z0-9\#]+)\s*\))'
+                   r'\s*'
+                   r'(?P<value_j>[\d\.\-eE]+)?',
+                   re.MULTILINE)
+
+
+def read_mr_string(string, coordinate_num=None):
+    """Read data from a mr data string.
+
+    .. note:: The current version only supports the 'A' subunit.
+
+    Parameters
+    ----------
+    string: str 
+        A multiline string.
+
+    Returns
+    -------
+    data: dict
+        A dict with the data. 
+        - **key**: interaction labels (str). ex: '14N-H'
+        - **value**: RDC  datum objects (:obj:`RDC`)
+    """
+    # Prepare the returned data list
+    data = {}
+    data_keys = {}
+
+    # Find all of the matches and produce a generator
+    matches = re_mr.finditer(string)
+
+    # iterate over the matches and pull out the data.
+    for match in matches:
+        d = match.groupdict()
+        logging.debug("read_mr_string match: " + str(d))
+
+        # Get the residue numbers and atom names
+        coord_num = d['coord_num']
+        res_i = int(d['res_i'])
+        name_i = d['name_i']
+        res_j = int(d['res_j'])
+        name_j = d['name_j']
+        value = float(d['value_j'])
+
+        # Only collect data with the matching coordinate_num (if one has been
+        # specified either in the function parameters or in a previous
+        # iteration of the loop)
+        if coord_num != coordinate_num:
+            if coordinate_num is None:
+                coordinate_num = coord_num
+            else:
+                continue
+
+        # if res_i/name_i are None then this is a CSA value. Generate the key
+        # and data type
+        if res_i is None:
+            key = (('A', res_j, name_j),)
+            data_type = RACS
+        else:
+            key = (('A', res_i, name_i), ('A', res_j, name_j))
+            data_type = RDC
+
+        # Add it to the dict
+        data_keys[key] = data_type(value=value)
+
+    # Convert the data_keys, which is identified by key tuples, to labels. This
+    # is done separately so that incorrect atom names, like 'HN', can be
+    # converted to standard PDB format, i.e. 'H'.
+
+    for key, value in data_keys.items():
+        new_key = []
+        # Check to see if any atom names are
+        for subunit, res_num, atom_name in key:
+            if atom_name == 'HN':
+                atom_name = 'H'
+            if atom_name == 'HA1':
+                atom_name = 'HA3'
+            new_key.append((subunit, res_num, atom_name))
+
+        new_key = tuple(new_key)
+
+        # Get the interaction label
+        label = interaction_label(new_key)
+        label = validate_label(label)
+
+        data[label] = value
 
     return data
 

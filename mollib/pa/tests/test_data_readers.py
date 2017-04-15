@@ -33,3 +33,15 @@ class TestDataReader(unittest.TestCase):
         # Check one RDC of each interaction type
         self.assertEqual(data['A.3N-H'].value, -10.5)
         self.assertEqual(data['A.1CA-HA#'].value, -8.3)
+
+    def test_mr_file(self):
+        """Test the reading for the MR format used in the PDB."""
+
+        # This dataset has 58 RDCs
+        path = os.path.dirname(os.path.abspath(__file__))
+        data = read_pa_file(path + '/data/2kxa.mr.gz')
+        self.assertEqual(len(data), 58)
+
+        # Check one RDC of each interaction type
+        self.assertEqual(data['A.3N-H'].value, 10.5)
+        self.assertEqual(data['A.18CA-HA'].value, -17.9)
