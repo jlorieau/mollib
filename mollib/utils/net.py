@@ -10,7 +10,8 @@ except ImportError:
     from urllib import URLopener
 
 
-def get_or_fetch(identifier, extensions=None, urls=None, load_cached=True):
+def get_or_fetch(identifier, extensions=None, urls=None, load_cached=True,
+                 critical=True):
     """Retrieve a local file path, either from the specified path of from a
     local copy retrieved from the internet.
     
@@ -25,6 +26,9 @@ def get_or_fetch(identifier, extensions=None, urls=None, load_cached=True):
         The urls to try, in order, for the files to download.
     load_cached: bool (optional)
         If True, the path of a cached file will be used if it's available.
+    critical: bool (optional)
+        If True, then a file not found is considered a critical problem and
+        will cause the program to exit.
     
     Returns
     -------
@@ -43,6 +47,10 @@ def get_or_fetch(identifier, extensions=None, urls=None, load_cached=True):
     >>> temp_path is None
     True
     """
+    # Setup the message in case the file was not found
+    msg = ("Could not find file or identifier '{}'. A suitable file must be"
+           "specified to continue.")
+
     # See if the file exists at the path already. If it does, return this
     # path
     if os.path.isfile(identifier):
@@ -51,6 +59,9 @@ def get_or_fetch(identifier, extensions=None, urls=None, load_cached=True):
     # If the extensions and url aren't specified, then there's nothing else
     # that can be done: the file cannot be found. Return none
     if extensions is None or urls is None:
+        if critical:
+            print(msg.format(identifier))
+            exit()
         return None
 
     # Convert urls and extensions to iterators
@@ -96,7 +107,13 @@ def get_or_fetch(identifier, extensions=None, urls=None, load_cached=True):
             return temp_path
 
     # If a temporary file was not produced, then the file couldn't be
-    # found locally or retrieved from the web. In this case, return None
+    # found locally or retrieved from the web.
+
+    if critical:
+        print(msg.format(identifier))
+        exit()
+
+    # In this case, return None
     return None
 
 

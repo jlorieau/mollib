@@ -8,6 +8,7 @@ from mollib.plugins import Plugin
 from mollib.utils.checks import check_file, check_not_empty
 from mollib.utils.files import write_file
 from mollib.utils.text import word_list
+from mollib.utils.net import get_or_fetch
 
 from .data_readers import read_pa_file
 from .process_molecule import Process
@@ -33,8 +34,9 @@ class PA(Plugin):
 
         p.add_argument('-a', '--alignment',
                        action='append', nargs='+',
-                       required=True, metavar='filename',
-                       help="(required) Alignment file with RDC and RACS data")
+                       required=True, metavar='id/filename',
+                       help="(required) Alignment file or identifer with RDC "
+                            "and RACS data")
 
         # Allow for the optional output of the results to a file
         p.add_argument('-o', '--out',
@@ -99,10 +101,12 @@ class PA(Plugin):
             data = {}
             for data_filename in args.alignment[0]:
                 # verify that the file exists
-                check_file(data_filename, critical=True)
+                file_path = get_or_fetch(data_filename, extensions='mr.gz',
+                                         urls=settings.mr_urls,
+                                         critical=True)
 
                 # Read the data from the file
-                data_dict = read_pa_file(data_filename)
+                data_dict = read_pa_file(file_path)
                 data.update(data_dict)
 
             # verify that there is data in the data dict

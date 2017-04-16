@@ -95,3 +95,7 @@ alpha_bad = 0.01
 #: Settings to enable individual fixers by default
 enable_signfixer = True
 enable_outlierfixer = False
+
+#: urls to download mr files
+mr_urls = ('https://files.rcsb.org/download/',)
+
