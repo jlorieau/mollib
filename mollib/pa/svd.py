@@ -9,15 +9,10 @@ from scipy import linalg
 
 from mollib.utils.rotations import euler_zyz
 from mollib.utils.interactions import sort_func
+from . import logs
 from .analysis import calc_summary
 from .utils import get_data_type
 from . import settings
-
-
-#: A set of labels for which the analysis has not been implemented. We keep
-#: a set here so that the error message isn't printed multiple times by
-#: calc_pa_SVD
-not_implemented_errors = set()
 
 
 def get_error(label, data):
@@ -97,7 +92,6 @@ def calc_pa_SVD(magnetic_interactions, data):
               - See :func:`calc_statistics`
     """
     assert(isinstance(magnetic_interactions, list))
-    global not_implemented_errors
 
     # Make an ordered list of the keys
     ordered_keys = sorted(data.keys())
@@ -116,11 +110,11 @@ def calc_pa_SVD(magnetic_interactions, data):
         for interaction_dict in magnetic_interactions:
             # Check to see if the interaction has been processed.
             if key not in interaction_dict:
-                if key not in not_implemented_errors:
+                if key not in logs.errors:
                         msg = ("Processing of data point '{}' is not "
                                "implemented.")
                         logging.error(msg.format(key))
-                        not_implemented_errors.add(key)
+                        logs.errors.add(key)
                 continue
 
             scale, arr = interaction_dict[key]
@@ -158,11 +152,12 @@ def calc_pa_SVD(magnetic_interactions, data):
         for interaction_dict in magnetic_interactions:
             # Check to see if the interaction has been processed.
             if key not in interaction_dict:
-                if key not in not_implemented_errors:
+                if key not in logs.errors:
                     msg = ("Processing of data point '{}' is not "
                            "implemented.")
-                    logging.error(msg.format(key))
-                    not_implemented_errors.add(key)
+                    msg = msg.format(key)
+                    logging.error(msg)
+                    logs.errors.add(key)
                 continue
 
             scale, arr = interaction_dict[key]

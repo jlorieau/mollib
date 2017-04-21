@@ -12,6 +12,7 @@ from mollib import Molecule
 from mollib.utils.interactions import interaction_label, interaction_atoms
 from mollib.utils.tensors import get_Haeberlen
 from mollib.utils.rotations import R
+from . import logs
 from . import settings
 
 
@@ -142,7 +143,10 @@ class ProcessDipole(Process):
             except KeyError:
                 msg = ("The gyromagnetic ratio for atom {} or {} is not "
                        "specified.")
-                logging.error(msg.format(atom1, atom2))
+                msg = msg.format(atom1, atom2)
+                if msg not in logs.errors:
+                    logging.error(msg)
+                    logs.errors.add(msg)
                 return None
 
             dcc = -1. * 1.E-7 * 1.05457E-34 * g1 * g2 / (2. * pi)
@@ -199,7 +203,7 @@ class ProcessDipole(Process):
             # scaling constant should be set to the H-C coupling constant
             # scaled by the order parameter
             if len(h_atoms1) == 3 or len(h_atoms2) == 3:
-                scale = settings.default_predicted_rdcs['CA-HA']
+                scale = settings.default_predicted_rdcs['C-H']
                 scale *= settings.methyl_order_parameter
 
         # Return the scaling factor and the array. The scaling factor has to
@@ -284,7 +288,10 @@ class ProcessACS(Process):
             tensor_dict = settings.default_predicted_racs[name]
         except KeyError:
                 msg = "A default CSA tensor for '{}' has not been specified"
-                logging.error(msg.format(atom))
+                msg = msg.format(atom)
+                if msg not in logs.errors:
+                    logging.error(msg)
+                    logs.errors.add(msg)
                 return None
 
         # Make sure the settings have all of the fiestin
@@ -410,7 +417,10 @@ class ProcessACS(Process):
                 vzz = -1. * vectors[count]
             else:
                 msg = "Could not parse CSA tensor vector order component '{}'"
-                logging.error(msg.format(item))
+                msg = msg.format(item)
+                if msg not in logs.errors:
+                    logging.error(msg)
+                    logs.errors.add(msg)
                 return None
 
         # vzz = vec1  # vec2
