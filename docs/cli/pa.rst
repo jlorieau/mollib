@@ -29,8 +29,8 @@ Arguments
         SVD fit. The output report is rendered in Markdown.
 
     ``--project-methyls``
-        (Optional) Use the C-C bond RDC values as methyl ¹H-¹³C RDCs. This is
-        the convention followed by X-plor NIH. By default, this is disabled.
+        (Optional) Use the C-C bond RDC values for the methyl ¹H-¹³C RDCs. This
+        is the convention followed by X-plor NIH. By default, this is disabled.
 
 Fixer Arguments
 ^^^^^^^^^^^^^^^
