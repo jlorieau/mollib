@@ -84,7 +84,7 @@ def report_tables(data, predicted=None):
         if label in predicted_copy:
             pred = predicted_copy.pop(label).value
             pred = round(pred , no_digits)
-            deviation = round(abs(value - pred), no_digits)
+            deviation = round(value - pred, no_digits)
         else:
             pred = "  -"
             deviation = "  -"
