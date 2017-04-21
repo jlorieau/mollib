@@ -28,6 +28,13 @@ Arguments
         (Optional) The filename for the back-calculated RDCs and RACS from the
         SVD fit. The output report is rendered in Markdown.
 
+    ``--project-methyls``
+        (Optional) Use the C-C bond RDC values as methyl ¹H-¹³C RDCs. This is
+        the convention followed by X-plor NIH. By default, this is disabled.
+
+Fixer Arguments
+^^^^^^^^^^^^^^^
+
     ``--fix-sign`` / ``--nofix-sign``
         (Optional) Check to see if the sign of RDCs or RACSs of the same type
         need to be inverted to get a better fit. This operation is useful for
@@ -84,3 +91,7 @@ The partial alignment RDC and RACS data file has the following format:
 Examples
 --------
 
+    The following example fits the deposited RDCs for the hemagglutin fusion
+    peptide structure (``-a 2KXA``) to the deposited NMR structure (``-i 2KXA``).
+
+    .. include:: output/cli_pa_i_2KXA_a_2KXA.html

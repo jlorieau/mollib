@@ -18,6 +18,8 @@ from .reports import report_tables, stats_table
 from . import settings
 
 
+# TODO: add '--exclude' option to remove couplings from data
+# TDOO: add '--set' option to select RDC datasets
 class PA(Plugin):
     """The core plugin to offer the 'pa' command."""
 
@@ -51,6 +53,12 @@ class PA(Plugin):
                        help='The output filename for the report of the ' 
                             'back-calculated RDCs and RACSs that are not in '
                             'the experimental data.')
+
+        p.add_argument('--project-methyls',
+                       action='store_true',
+                       help='Fit methyl RDCs by projecting their values on the '
+                            'corresponding C-C bond, as used by Xplor-NIH')
+
 
         # The following options can be turned off and on
         fixers = p.add_argument_group("fixer options")
@@ -86,6 +94,8 @@ class PA(Plugin):
     def process(self, molecules, args):
         """Process the SVD of molecules."""
         # Setup the configuration options
+        if 'project_methyls' in args and args.project_methyls:
+            settings.project_methyls = True
         if 'fix_sign' in args and args.fix_sign:
             settings.enable_signfixer = True
         if 'nofix_sign' in args and args.nofix_sign:

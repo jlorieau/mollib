@@ -422,3 +422,4 @@ process_cmd("mollib hbonds --help")
 process_cmd("mollib hbonds -i 2KXA")
 
 process_cmd("mollib pa --help")
+process_cmd("mollib pa -i 2KXA -a 2KXA")

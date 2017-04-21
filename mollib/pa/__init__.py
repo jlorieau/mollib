@@ -18,4 +18,6 @@ pa = PA()
 from mollib.core import register_settings
 register_settings(settings)
 
-# TODO: read and fetch mr files from the pdb
+
+# TODO: add --set option to select an RDC dataset
+# TODO: make errors show only once.

@@ -111,9 +111,12 @@ class ProcessDipole(Process):
 
         Returns
         -------
-        value: (float, `numpy.array`)
-            A tuple with the scaling constant and the array for the SVD of this
-            dipole.
+        value: (float, `numpy.array`) or None
+            - A tuple with the scaling constant and the array for the SVD of
+              this dipole.
+            - None is returned if the dipole could not be calculated. This can
+              happen, for example, if one or both of the gyromagnetic ratios
+              could not be found 
         """
         # Find the dipole type. This is a tuple of the form.
         dipole_type = "-".join((atom1.name, atom2.name))
@@ -175,6 +178,30 @@ class ProcessDipole(Process):
         else:
             # Get the pre-calculated value
             scale = settings.default_predicted_rdcs[dipole_type]
+
+        # See if the dipole represents a methyl group, in which case it should
+        # be scaled down by the order parameter if the project_methyls option
+        # is True
+        if (settings.project_methyls and atom1.element == 'C' and
+            atom2.element == 'C'):
+
+            c1 = atom1
+            c2 = atom2
+
+            # Count the number of 'H' atoms for each carbon to see if one is
+            # a methyl group
+            bonded1 = c1.bonded_atoms(sorted=False)
+            h_atoms1 = [i for i in bonded1 if i.element == 'H']
+            bonded2 = c2.bonded_atoms(sorted=False)
+            h_atoms2 = [i for i in bonded2 if i.element == 'H']
+
+            # If there are 3 bonded hydrogen atoms (i.e. a methyl group), the
+            # scaling constant should be set to the H-C coupling constant
+            # scaled by the order parameter
+            if len(h_atoms1) == 3 or len(h_atoms2) == 3:
+                scale = settings.default_predicted_rdcs['CA-HA']
+                scale *= settings.methyl_order_parameter
+
         # Return the scaling factor and the array. The scaling factor has to
         # be multiplied by 2 because the RDC is measured from a splitting.
         # ( J+D  - J  = D )
@@ -224,8 +251,13 @@ class ProcessDipole(Process):
                 if len(atom_list) < 1 or any([len(i) != 2 for i in atom_list]):
                     continue
 
+                # Process each dipole in the atom_list
                 for a1, a2 in atom_list:
-                    scale, arr = self.process_dipole(a1, a2)
+                    return_value = self.process_dipole(a1, a2)
+                    if return_value is None:
+                        continue
+                    scale, arr = return_value
+
                     if label in d:
                         d[label] = (d[label][0], d[label][1] + arr)
                     else:

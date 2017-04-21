@@ -87,15 +87,25 @@ default_error = {'N-H':   0.2,  # Hz
                  'H':     5.,  # ppb
                  }
 
-#: The alpha-critical values to identify warning or bad data points in terms
-#: of their deviations with respect to the best-fit SVD data.
-alpha_warning = 0.05
-alpha_bad = 0.01
+#: urls to download mr files
+mr_urls = ('https://files.rcsb.org/download/',)
+
+#: Xplor-NIH incorporates C-H methyl RDCs by projecting them on the associated
+#: carbon-carbon bond. If the data uses this convention, then set this setting
+#: to True. This convention, however, occludes the use of C-C RDCs, like the
+#: CA-CB coupling of an ALA, and it is not set by default.
+project_methyls = False
+
+#: The order parameter to use for methyl groups
+methyl_order_parameter = 1.0
 
 #: Settings to enable individual fixers by default
 enable_signfixer = True
 enable_outlierfixer = False
 
-#: urls to download mr files
-mr_urls = ('https://files.rcsb.org/download/',)
+#: The alpha-critical values to identify warning or bad data points in terms
+#: of their deviations with respect to the best-fit SVD data.
+alpha_warning = 0.05
+alpha_bad = 0.01
+
 

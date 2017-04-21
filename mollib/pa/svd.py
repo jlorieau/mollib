@@ -111,8 +111,6 @@ def calc_pa_SVD(magnetic_interactions, data):
         expt_value = data[key].value
         expt_error = get_error(key, data)
 
-        D.append(expt_value / expt_error)
-
         # Construct the A-matrix
         A_line = []
         for interaction_dict in magnetic_interactions:
@@ -127,8 +125,9 @@ def calc_pa_SVD(magnetic_interactions, data):
 
             scale, arr = interaction_dict[key]
             A_line.extend(arr * scale / expt_error)
-
-        A.append(A_line)
+        if A_line:
+            A.append(A_line)
+            D.append(expt_value / expt_error)
 
     # Create an array from the A and D matrices
     A = np.array(A)

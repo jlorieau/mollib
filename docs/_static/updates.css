@@ -20,7 +20,7 @@ div.body h2 {
 
 div.body h3 {
   background: None;
-  padding: 0;
+  padding: 0px 0px 0px 15px;
   font-size: 100%;
 }
 
