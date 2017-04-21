@@ -105,16 +105,20 @@ def calc_summary(magnetic_interactions, Saupe_components, data, predicted):
     RMS = {}
     for key in RSS:
         Q[key] = 100. * sqrt(RSS_scaled[key] / (float(count[key]) *
-                                                (sum_Aa)**2 *
+                                                sum_Aa ** 2 *
                                                 (4. + 3. * sum_Rh**2) / 5.))
-        RMS[key] = sqrt(RSS[key] / float(count[key] - 1))
+
+        if count[key] > 1:
+            RMS[key] = sqrt(RSS[key] / float(count[key] - 1))
+        else:
+            RMS[key] = '-'
 
     # Round these numbers to remove insignificant digits and add it to the
     # summary (result) dict
     summary['Overall'] = OrderedDict()
     summary['Overall']['Q (%)'] = round(Q['Overall'], 1)
     summary['Overall']['RMS'] = round(RMS['Overall'], 2)
-    summary['Overall']['count']= count['Overall']
+    summary['Overall']['count'] = count['Overall']
 
     # Add statistics on each type interaction
     # Get the different interaction statistics
@@ -130,7 +134,10 @@ def calc_summary(magnetic_interactions, Saupe_components, data, predicted):
         if interaction in Q:
             summary[interaction]['Q (%)'] = round(Q[interaction], 1)
         if interaction in RMS:
-            summary[interaction]['RMS'] = round(RMS[interaction], 2)
+            summary[interaction]['RMS'] = (round(RMS[interaction], 2)
+                                           if isinstance(RMS[interaction],
+                                                         float)
+                                           else '-')
         if interaction in count:
             summary[interaction]['count'] = count[interaction]
 
