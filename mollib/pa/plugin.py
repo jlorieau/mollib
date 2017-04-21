@@ -59,9 +59,8 @@ class PA(Plugin):
                        help='Fit methyl RDCs by projecting their values on the '
                             'corresponding C-C bond, as used by Xplor-NIH')
 
-
         # The following options can be turned off and on
-        fixers = p.add_argument_group("fixer options")
+        fixers = p.add_argument_group("fixer arguments")
         fix_sign = fixers.add_mutually_exclusive_group()
         fix_sign.add_argument('--fix-sign',
                               action='store_true',
