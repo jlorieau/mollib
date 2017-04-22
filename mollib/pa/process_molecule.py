@@ -100,8 +100,12 @@ class ProcessDipole(Process):
     """Process dipole-dipole magnetic interactions.
     """
 
-    def get_dcc(self, atom1, atom2):
-        """Return the dipolar coupling constant between atom1 and atom2.
+    def __init__(self, *args, **kwargs):
+        self._pre_factors = {}
+        super(ProcessDipole, self).__init__(*args, **kwargs)
+
+    def get_dcc(self, atom1, atom2, distance=None):
+        """Return the dipolar coupling constant (dcc) between atom1 and atom2.
         
         Parameters
         ----------
@@ -109,14 +113,73 @@ class ProcessDipole(Process):
             The first atom.
         atom2: :obj:`mollib.Atom`
             The second atom.
-
+        distance: float (optional)
+            If specified, use the given distance (in A) between atom1 and
+            atom2 in calculating the dc.
+            
         Returns
         -------
         float or None
             The dipolar coupling constant (in Hz), if it was found.
             None if a dipolar coupling constant could not be calculated.
         """
-        pass
+        # Try first to see if it's a methyl group
+        if settings.project_methyls:
+            methyl_atom = self.which_methyl(atom1, atom2)
+            if methyl_atom is not None:
+                return (settings.default_predicted_rdcs['C-H'] *
+                        settings.methyl_order_parameter)
+
+        # At this point, no methyl was found. First, determine the type of
+        # dipolar coupling.
+        dipole_type = "-".join((atom1.name, atom2.name))
+        dipole_type_rev = "-".join((atom2.name, atom1.name))
+
+        # Reverse the order, if needed
+        if dipole_type_rev in settings.default_predicted_rdcs:
+            dipole_type = dipole_type_rev
+
+        # Next, if pre-calculated scaling constants are allowed, see if one of
+        # these is available
+        if (not settings.calculate_from_bonds and
+           dipole_type in settings.default_predicted_rdcs):
+            return settings.default_predicted_rdcs[dipole_type]
+
+        # Now, either the dipolar coupling should be calculated from bond
+        # lengths or the value was not available in the pre-calculated values.
+        # First, the dipolar pre-factor from the gyromagnetic ratio should be
+        # calculated.
+        if dipole_type not in self._pre_factors:
+            # Get the gyromagnetic ratios for the atoms, based on their
+            # elements.
+            g = settings.gamma  # set the gyromagnetic ratio
+
+            g1 = g[atom1.element] if atom1.element in g else None
+            g2 = g[atom2.element] if atom2.element in g else None
+
+            # Produce an error message if one of the gyromagnetic ratios
+            # could not be found
+            for g, atom in ((g1, atom1), (g2, atom2)):
+                if g is not None:
+                    continue
+                msg = "The gyromagnetic ratio for atom {} is not specified."
+                msg = msg.format(atom)
+                if msg not in logs.errors:
+                    logging.error(msg)
+                    logs.errors.add(msg)
+                return None
+
+            pre_factor = -1. * 1.E-7 * 1.05457E-34 * g1 * g2 / (2. * pi)
+            self._pre_factors[dipole_type] = pre_factor
+
+        pre_factor = self._pre_factors[dipole_type]
+
+        # Calculate the inter-atomic distance if needed
+        if distance is None:
+            x, y, z = atom2.pos - atom1.pos
+            distance = sqrt(x * x + y * y + z * z)
+
+        return pre_factor * distance ** -3 * 1.E30
 
     def which_methyl(self, atom1, atom2):
         """Determine whether one of the atoms corresponds to the carbon of a
@@ -148,7 +211,7 @@ class ProcessDipole(Process):
             if len(h_atoms) == 3:
                 return atom
 
-        # At this point, no methyl was found.
+        # No methyl atom was found.
         return None
 
     def process_dipole(self, atom1, atom2):
@@ -170,52 +233,7 @@ class ProcessDipole(Process):
               happen, for example, if one or both of the gyromagnetic ratios
               could not be found 
         """
-        scale = None  # The scaling constant for the interaction
-
-        # Find the dipole type. This is a tuple of the form.
-        dipole_type = "-".join((atom1.name, atom2.name))
-        dipole_type_rev = "-".join((atom2.name, atom1.name))
-
-        # Make the order of atoms match those in the
-        # settings.default_predicted_rdcs by reversing the order if needed
-        if dipole_type_rev in settings.default_predicted_rdcs:
-            dipole_type = dipole_type_rev
-
-        # See if the dipole represents a methyl group and whether the
-        # project_methyl option is True. In this case, the scaling constant
-        # can be set directly.
-        if settings.project_methyls:
-            methyl_atom = self.which_methyl(atom1, atom2)
-            if methyl_atom is not None:
-                scale = settings.default_predicted_rdcs['C-H']
-                scale *= settings.methyl_order_parameter
-
-        # Otherwise, the scaling constant has to be calculated.
-        # Calculate or retrieve cached the static dipolar coupling constant
-        if not hasattr(self, 'dcc'):
-            self.dcc = {}
-
-        if scale is None and dipole_type not in self.dcc:
-            # Get the gyromagnetic ratios for the atoms, based on their
-            # elements.
-            g = settings.gamma  # set the gyromagnetic ratio
-
-            try:
-                g1 = g[atom1.element]
-                g2 = g[atom2.element]
-            except KeyError:
-                msg = ("The gyromagnetic ratio for atom {} or {} is not "
-                       "specified.")
-                msg = msg.format(atom1, atom2)
-                if msg not in logs.errors:
-                    logging.error(msg)
-                    logs.errors.add(msg)
-                return None
-
-            dcc = -1. * 1.E-7 * 1.05457E-34 * g1 * g2 / (2. * pi)
-            self.dcc[dipole_type] = dcc
-
-        # Now calculate the bond length and directional cosines
+        # Calculate the bond length and directional cosines
         x, y, z = atom2.pos - atom1.pos
 
         r = sqrt(x * x + y * y + z * z)
@@ -230,21 +248,10 @@ class ProcessDipole(Process):
                         2. * cos_x * cos_z,   # Cxz
                         2. * cos_y * cos_z))  # Cyz
 
-        # Calculate the scale for the the array of the dipolar coupling. Either
-        # the dipolar coupling constants from bond lengths and gyromagnetic
-        # ratios can be used or pre-calculated values for each dipolar coupling
-        # are used. However, pre-calculated values can only be used if they are
-        # available in settings.default_predicted_rdcs.
+        # Calculate the scale for the the array of the dipolar coupling.
+        scale = self.get_dcc(atom1, atom2, r)
         if scale is None:
-            if (settings.calculate_from_bonds or
-                dipole_type not in settings.default_predicted_rdcs):
-                # Calculate from bonds
-                # Convert from Angstroms to meters
-                dcc = self.dcc[dipole_type]
-                scale = dcc * r**-3 * 1.E30
-            else:
-                # Get the pre-calculated value
-                scale = settings.default_predicted_rdcs[dipole_type]
+            return None
 
         # Return the scaling factor and the array. The scaling factor has to
         # be multiplied by 2 because the RDC is measured from a splitting.
