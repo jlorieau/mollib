@@ -101,7 +101,7 @@ class PA(Plugin):
         # Setup the configuration options
         if 'project_methyls' in args and args.project_methyls:
             settings.project_methyls = True
-        if 'methyl_scale' in args:
+        if 'methyl_scale' in args and args.methyl_scale is not None:
             settings.methyl_order_parameter = args.methyl_scale
         if 'fix_sign' in args and args.fix_sign:
             settings.enable_signfixer = True
