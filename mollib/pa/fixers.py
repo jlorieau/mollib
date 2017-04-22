@@ -188,11 +188,15 @@ class SignFixer(Fixer):
 
         return data_fixed, fixes
 
+# Not Implemented
+# class StereoFixer(Fixer):
+#     order = 20
+
 
 class OutlierFixer(Fixer):
     """Removes outliers from the data."""
 
-    order = 20
+    order = 100
 
     def fix(self, data):
         # Prepare the fixed message

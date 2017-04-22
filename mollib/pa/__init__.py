@@ -20,4 +20,5 @@ register_settings(settings)
 
 
 # TODO: add --set option to select an RDC dataset
-# TODO: make errors show only once.
+# TODO: check the 'mr' file for 2OED
+# TODO: write test for 2MJB '.mr' file
