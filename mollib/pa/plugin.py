@@ -59,6 +59,12 @@ class PA(Plugin):
                        help='Fit methyl RDCs by projecting their values on the '
                             'corresponding C-C bond, as used by Xplor-NIH')
 
+        p.add_argument('--methyl-scale',
+                       action='store', required=False,
+                       type=float, metavar='number',
+                       help='The order parameter to use in scaling the methyl '
+                            'RDCs.')
+
         # The following options can be turned off and on
         fixers = p.add_argument_group("fixer arguments")
         fix_sign = fixers.add_mutually_exclusive_group()
@@ -95,6 +101,8 @@ class PA(Plugin):
         # Setup the configuration options
         if 'project_methyls' in args and args.project_methyls:
             settings.project_methyls = True
+        if 'methyl_scale' in args:
+            settings.methyl_order_parameter = args.methyl_scale
         if 'fix_sign' in args and args.fix_sign:
             settings.enable_signfixer = True
         if 'nofix_sign' in args and args.nofix_sign:
