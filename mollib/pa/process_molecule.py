@@ -127,7 +127,7 @@ class ProcessDipole(Process):
         if settings.project_methyls:
             methyl_atom = self.which_methyl(atom1, atom2)
             if methyl_atom is not None:
-                return (settings.default_predicted_rdcs['C-H'] *
+                return (settings.default_predicted_rdcs['CA-HA'] *
                         settings.methyl_order_parameter)
 
         # At this point, no methyl was found. First, determine the type of
