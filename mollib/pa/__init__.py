@@ -22,3 +22,4 @@ register_settings(settings)
 # TODO: add --set option to select an RDC dataset
 # TODO: check the 'mr' file for 2OED
 # TODO: write test for 2MJB '.mr' file
+# TODO: add --summary option to only output summary (no data).
