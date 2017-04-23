@@ -103,7 +103,8 @@ Examples
     The following example fits the deposited RDCs for the first alignment
     dataset of ubiquitin (``-a 2MJB``) to the deposited NMR structure
     (``-i 2MJB``). The RDCs for methyl groups are projected onto the
-    corresponding C-C bonds.
+    corresponding C-C bonds (``--project-methyls``) and outliers are removed
+    from the fit (``--fix-outliers``).
 
     .. include:: output/cli_pa_i_2MJB_a_2MJB_fix-outliers_project-methyls_summary.html
 
