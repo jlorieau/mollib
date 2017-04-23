@@ -35,6 +35,12 @@ Arguments
         (Optional) Use the C-C bond RDC values for the methyl ¹H-¹³C RDCs. This
         is the convention followed by X-plor NIH. By default, this is disabled.
 
+    ``--methyl-scale``
+        (Optional) The scaling constant to use in fitting the methyl RDCs. This
+        scaling may be needed if the contribution of the C3-rotational motion
+        was not accounted for in the reported RDCs. By default, this value is
+        1.0.
+
 Fixer Arguments
 ^^^^^^^^^^^^^^^
 
