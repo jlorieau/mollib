@@ -2,7 +2,7 @@ from setuptools import setup, find_packages, Extension
 import numpy as np
 
 # Get the version number and package information
-exec(open('mollib/__version__.py').read())
+version = __import__('mollib').__version__
 
 # Setup Cython, if available
 try:
@@ -21,10 +21,10 @@ if use_cython:
     extensions = cythonize('**/*.pyx')
 
 
-setup(name=__project_name__,
-      version=__version__,
+setup(name='mollib',
+      version=version,
       license='GPL V2',
-      author= __author__,
+      author='Justin L Lorieau',
       description='A Python package to read molecular structures',
       install_requires=['numpy', 'scipy'],
       include_package_data = True,
