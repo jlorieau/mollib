@@ -37,7 +37,7 @@ class PA(Plugin):
         p.add_argument('-a', '--alignment',
                        action='append', nargs='+',
                        required=True, metavar='id/filename',
-                       help="(required) Alignment file or identifer with RDC "
+                       help="(required) Alignment file or identifier with RDC "
                             "and RACS data")
 
         # Allow for the optional output of the results to a file
@@ -53,6 +53,11 @@ class PA(Plugin):
                        help='The output filename for the report of the ' 
                             'back-calculated RDCs and RACSs that are not in '
                             'the experimental data.')
+
+        p.add_argument('--summary',
+                       action='store_true',
+                       required=False,
+                       help="Only display the fit summary")
 
         p.add_argument('--project-methyls',
                        action='store_true',
@@ -193,7 +198,7 @@ class PA(Plugin):
             print(summary)
             if args.out:
                 write_file('\n'.join((summary, output)), args.out)
-            else:
+            elif not args.summary:
                 print(output)
 
             # Write the predicted data
