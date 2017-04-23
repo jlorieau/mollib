@@ -424,3 +424,5 @@ if 'cli' in sys.argv:
 
     process_cmd("mollib pa --help")
     process_cmd("mollib pa -i 2KXA -a 2KXA")
+    process_cmd("mollib pa -i 2MJB -a 2MJB --fix-outliers --project-methyls --summary")
+    process_cmd("mollib pa -i 1UBQ -a 2MJB  --fix-outliers --project-methyls --hydrogenate --summary")
