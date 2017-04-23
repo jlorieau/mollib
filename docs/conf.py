@@ -404,22 +404,23 @@ def process_cmd(string):
                      args=' '.join(args[1:]), args_name=args_name)
     os.system(cmd)
 
-process_cmd("mollib --help")
-process_cmd("mollib --list-plugins")
-process_cmd("mollib --list-settings")
+if 'cli' in sys.argv:
+    process_cmd("mollib --help")
+    process_cmd("mollib --list-plugins")
+    process_cmd("mollib --list-settings")
 
-process_cmd("mollib process --help")
+    process_cmd("mollib process --help")
 
-process_cmd("mollib measure --help")
-process_cmd("mollib measure -i 2MUV -d A:D.20:21-CA A:D.20:21-CA --exclude-intra --exclude-intra-chain")
-process_cmd("mollib measure -i 2MUV -d 23:49-HA 23:49-H --only-delta 3 --stats")
-process_cmd("mollib measure -i 2KXA 2LWA -d A:C.5-HA A:C.21-H --only-intra-chain")
-process_cmd("mollib measure -i 2MJB -a 20:30-C 20:30-N 20:30-H --only-bonded")
-process_cmd("mollib measure -i 2KXA -dih 2:6-C 2:6-N 2:6-CA 2:6-C --only-bonded --stats")
-process_cmd("mollib measure -i 2KXA --rama")
+    process_cmd("mollib measure --help")
+    process_cmd("mollib measure -i 2MUV -d A:D.20:21-CA A:D.20:21-CA --exclude-intra --exclude-intra-chain")
+    process_cmd("mollib measure -i 2MUV -d 23:49-HA 23:49-H --only-delta 3 --stats")
+    process_cmd("mollib measure -i 2KXA 2LWA -d A:C.5-HA A:C.21-H --only-intra-chain")
+    process_cmd("mollib measure -i 2MJB -a 20:30-C 20:30-N 20:30-H --only-bonded")
+    process_cmd("mollib measure -i 2KXA -dih 2:6-C 2:6-N 2:6-CA 2:6-C --only-bonded --stats")
+    process_cmd("mollib measure -i 2KXA --rama")
 
-process_cmd("mollib hbonds --help")
-process_cmd("mollib hbonds -i 2KXA")
+    process_cmd("mollib hbonds --help")
+    process_cmd("mollib hbonds -i 2KXA")
 
-process_cmd("mollib pa --help")
-process_cmd("mollib pa -i 2KXA -a 2KXA")
+    process_cmd("mollib pa --help")
+    process_cmd("mollib pa -i 2KXA -a 2KXA")
