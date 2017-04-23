@@ -94,22 +94,22 @@ The partial alignment RDC and RACS data file has the following format:
 Examples
 --------
 
-    The following example fits the deposited RDCs for the hemagglutin fusion
-    peptide structure (``-a 2KXA``) to the deposited NMR structure
-    (``-i 2KXA``).
+The following example fits the deposited RDCs for the hemagglutin fusion
+peptide structure (``-a 2KXA``) to the deposited NMR structure
+(``-i 2KXA``).
 
     .. include:: output/cli_pa_i_2KXA_a_2KXA.html
 
-    The following example fits the deposited RDCs for the first alignment
-    dataset of ubiquitin (``-a 2MJB``) to the deposited NMR structure
-    (``-i 2MJB``). The RDCs for methyl groups are projected onto the
-    corresponding C-C bonds (``--project-methyls``) and outliers are removed
-    from the fit (``--fix-outliers``).
+The following example fits the deposited RDCs for the first alignment
+dataset of ubiquitin (``-a 2MJB``) to the deposited NMR structure
+(``-i 2MJB``). The RDCs for methyl groups are projected onto the
+corresponding C-C bonds (``--project-methyls``) and outliers are removed
+from the fit (``--fix-outliers``).
 
     .. include:: output/cli_pa_i_2MJB_a_2MJB_fix-outliers_project-methyls_summary.html
 
-    Likewise, the crystal structure of ubiquitin (``-i 1UBQ``) can be used in
-    the fit. In this case, the structure is missing hydrogen atoms, and these
-    must be added (``--hydrogenate``).
+Likewise, the crystal structure of ubiquitin (``-i 1UBQ``) can be used in
+the fit. In this case, the structure is missing hydrogen atoms, and these
+must be added (``--hydrogenate``).
 
     .. include:: output/cli_pa_i_1UBQ_a_2MJB_fix-outliers_project-methyls_hydrogenate_summary.html
