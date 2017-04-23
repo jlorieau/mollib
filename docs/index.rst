@@ -1,5 +1,5 @@
 ######################
-MolLib's documentation
+mollib's documentation
 ######################
 
 
