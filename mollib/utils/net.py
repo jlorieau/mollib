@@ -43,12 +43,13 @@ def get_or_fetch(identifier, extensions=None, urls=None, load_cached=True,
     >>> temp_path is not None
     True
     >>> # Try to retrieve a file that doesn't exist. None is returned.
-    >>> temp_path = get_or_fetch('index2', 'html', 'http://www.google222.com/')
+    >>> temp_path = get_or_fetch('21312', 'html', 'http://www.glg222.com/',
+    ...                          critical=False)
     >>> temp_path is None
     True
     """
     # Setup the message in case the file was not found
-    msg = ("Could not find file or identifier '{}'. A suitable file must be"
+    msg = ("Could not find file or identifier '{}'. A suitable file must be "
            "specified to continue.")
 
     # See if the file exists at the path already. If it does, return this
@@ -99,7 +100,7 @@ def get_or_fetch(identifier, extensions=None, urls=None, load_cached=True,
             opener = URLopener()
             try:
                 opener.retrieve('/'.join((url, filename)), temp_path)
-            except IOError:
+            except:
                 continue
 
             # At this point, the url was successful retrieved. Return its
