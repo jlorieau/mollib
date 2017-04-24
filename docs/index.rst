@@ -55,6 +55,7 @@ Indices and tables
 
    cli/cli
    api/api
+   releases/releases
    develop
 
 
