@@ -1,6 +1,6 @@
-.. _hbonds_command:
+.. _hbonds-command:
 
-hbonds - Hydrogen Bonds
+hbonds - hydrogen bonds
 =======================
 The ``hbonds`` command detects and reports hydrogen bonds in molecules.
 The ``hbonds`` command has the following features:

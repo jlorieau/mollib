@@ -28,9 +28,10 @@ and analyzing molecular structures.
 process
 ^^^^^^^
 
-- The ``process`` plugin is used to read molecular structures and modify them.
+- The :ref:`process-command` plugin is used to read molecular structures and
+  modify them.
 
-- The ``process`` plugin currently supports the loading of protein databank
+- Currently supports the loading of protein databank
   (PDB) files as well as the fetching and caching of PDB files from the
   internet.
 
@@ -43,8 +44,8 @@ process
 measure
 ^^^^^^^
 
-- The ``measure`` plugin is used to measure interatomic distances, angles and
-  dihedrals in molecules.
+- The :ref:`measure-command` plugin is used to measure interatomic distances,
+  angles and dihedrals in molecules.
 
 - Statistical summaries of measurements are available with the ``--stats``
   option.
@@ -64,8 +65,8 @@ measure
 hbonds
 ^^^^^^
 
-- The ``hbonds`` plugin is used to measure and rate amide and aliphatic
-  hydrogen bonds in structures.
+- The :ref:`hbonds <hbonds-command>` plugin is used to measure and rate amide
+  and aliphatic hydrogen bonds in structures.
 
 - Hydrogen bonds are classified based on backbone torsion (Ramachandran)
   angles and the acceptor-donor position in the primary sequence.
@@ -82,9 +83,9 @@ hbonds
 pa
 ^^
 
-- The partial alignment (``pa``) plugin is used to fit residual dipolar coupling
-  (RDC) and residual chemical shift anisotropy (RACS) data of biomolecules using
-  a Singular Value Decomposition (SVD).
+- The :ref:`pa <pa-command>` (partial alignment) plugin is used to fit residual
+  dipolar coupling (RDC) and residual chemical shift anisotropy (RACS) data of
+  biomolecules using a Singular Value Decomposition (SVD).
 
 - Supports the refinement of sum couplings, like those of methylenes, with the
   ``#`` wildcard operator. ex: 'CA-HA#'
