@@ -10,6 +10,16 @@ div.body a:hover {
   border-bottom: 1px dotted #e32e00;
 }
 
+div.body a.headerlink {
+  background-color: transparent;
+  border-bottom: none;
+}
+
+div.body a.headerlink:hover {
+  background-color: transparent;
+  border-bottom: none;
+}
+
 div.body hr {
   border: none;
   height: 1px;
