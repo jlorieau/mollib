@@ -1,3 +1,26 @@
+div.body a {
+  color: #731b00;
+  text-decoration: none;
+  border-bottom: 1px dotted #731b00;
+}
+
+div.body a:hover {
+  color: #e32e00;
+  text-decoration: none;
+  border-bottom: 1px dotted #e32e00;
+}
+
+div.body hr {
+  border: none;
+  height: 1px;
+  background-color: #dbefff;
+}
+
+div.body pre {
+  background-color: #fcfcfc;
+  border-radius: 2px;
+}
+
 div.body {
   max-width: 1000px;
   font-size: 1.1em;
@@ -6,18 +29,21 @@ div.body {
 div.body h1 {
   background: None;
   padding: 0;
+  color: #12446d;
   font-size: 160%;
 }
 
 div.body h2 {
   background: None;
   padding: 0;
+  color: #1a65a2;
   font-size: 120%;
 }
 
 div.body h3 {
   background: None;
   padding: 0px 0px 0px 15px;
+  color: #247ec7;
   font-size: 100%;
 }
 
@@ -60,6 +86,9 @@ div.related {
   background: #fdfdda;
 }
 
+.toctree-wrapper.compound li {
+  padding-bottom: 2px;
+}
 
 colgroup {
   width: 65px;
