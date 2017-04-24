@@ -1,8 +1,10 @@
 Mollib 1.0 release notes
 ========================
 
+*Apr 24, 2017*
+
 Version 1.0 of mollib is the first release. This page documents the changes
-and features available in this version
+and features available in this version.
 
 Compatibility
 -------------
@@ -21,6 +23,8 @@ CLI Features
 The command-line interface (CLI) includes a series of plugins for processing
 and analyzing molecular structures.
 
+--------
+
 process
 ^^^^^^^
 
@@ -33,6 +37,8 @@ process
 - The hydrogens plugin (``--hydrogenate``) is included to strip and replace
   hydrogen atoms in a molecule. The topology of protein molecules are included
   and the ``CONECT`` topologies in PDB files are supported.
+
+--------
 
 measure
 ^^^^^^^
@@ -53,6 +59,8 @@ measure
   resolutions between 0.5-1.6Å‚ observed R-factors better than 0.25 and free
   R-factors better than 0.30.)
 
+--------
+
 hbonds
 ^^^^^^
 
@@ -68,6 +76,8 @@ hbonds
   added with the hydrogens plugin. (Unique structures with resolutions between
   0.5-1.6Å‚ observed R-factors better than 0.25 and free R-factors better than
   0.30.)
+
+--------
 
 pa
 ^^
@@ -87,7 +97,7 @@ pa
 - Identifies outliers based on Grubbs tests.
 
 - Includes 'fixers' to find and fix errors in the sign of RDCs and RACS as
-  well as to exclude outliers.
+  well as the exclusion of outliers.
 
 - Reads data from mollib partial alignment files (``.pa``), NMRPipe DC input
   files and magnetic resonance data in Xplor-NIH format.
@@ -97,3 +107,14 @@ pa
 
 - Currently includes CSA tensor data for the backbone H, C, and N atoms of
   proteins. Other nuclei can be easily integrated through a settings file.
+
+- Supports methyl RDC data that have been projected onto C-C (or S-C) bonds,
+  as used in Xplor-NIH.
+
+- Weights the contribution of RDCs and RACS based on relative errors. If errors
+  are not specified, default errors are used from the settings.
+
+- Pre-calculated dipolar couplings can be used from the settings, or dipolar
+  couplings can be calculated from the bond lengths and gyromagnetic ratios
+  of the spins from an interaction.
+
