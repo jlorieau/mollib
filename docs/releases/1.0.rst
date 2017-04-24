@@ -118,3 +118,5 @@ pa
   couplings can be calculated from the bond lengths and gyromagnetic ratios
   of the spins from an interaction.
 
+- Interactions are identified using an abbreviated syntax. For example,
+  ``14N-H``, ``A.14N-H``, ``14N-14H`` and ``14N-C-1`` are all valid identifiers.
