@@ -161,6 +161,7 @@ class SignFixer(Fixer):
             # See if it's an improvement. If it is, keep it.
             if new_RMS < RMS_ref:
                 fixes.append(msg.format('N-H', Q_ref, new_Q))
+                Q_ref = new_Q
                 RMS_ref = new_RMS
                 data_fixed = data_copy
 
@@ -183,6 +184,7 @@ class SignFixer(Fixer):
             # See if it's an improvement. If it is, keep it.
             if new_RMS < RMS_ref:
                 fixes.append(msg.format(int_type, Q_ref, new_Q))
+                Q_ref = new_Q
                 RMS_ref = new_RMS
                 data_fixed = data_copy
 
