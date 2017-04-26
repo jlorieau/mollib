@@ -189,19 +189,22 @@ class PA(Plugin):
             # Prepare the standard output
             summary = table.content()
             output = tables['fit'].content()
-
-            if fixes:
-                output += '\n'
-                output += '\n'.join(['* ' + fix for fix in fixes])
+            fixes_output = '\n'.join(['* ' + fix for fix in fixes])
 
             # Print or write the report(s)
             print(summary)
             if args.out:
+                output += fixes_output
                 write_file('\n'.join((summary, output)), args.out)
             elif not args.summary:
                 print(output)
 
+            if fixes:
+                print(fixes_output)
+
             # Write the predicted data
             if args.pred:
                 write_file(tables['pred'].content(), args.pred)
+
+
 
