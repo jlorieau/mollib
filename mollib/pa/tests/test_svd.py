@@ -230,38 +230,33 @@ class TestSVD(unittest.TestCase):
         # Load the molecule
         mol = Molecule('2MJB')
 
-        # Load the data
-        path = os.path.dirname(os.path.abspath(__file__))
-        data = read_pa_file(path + '/data/2mjb.mr')
-
         # For this dataset, the methyls have to be projected
         old_setting = settings.project_methyls
         settings.project_methyls = True
 
-        # The sign of RDCs with 'N' nuclei must be fixed.
-        # Setup the fixer
-        fixer = SignFixer(mol)
+        # Load the data
+        for set_id, count in zip(range(4), (480, 450, 235, 110)):
+            path = os.path.dirname(os.path.abspath(__file__))
+            data = read_pa_file(path + '/data/2mjb.mr', set_id)
 
-        # The data needs to have the N-H RDCs flipped in sign
-        data_fixed, fixes = fixer.fix(data)
-        print(fixes)
-        # Process the A-matrix for 2MJB and 2MJB+1UBQ
-        process = Process(mol)
-        magnetic_interactions = process.process(labels=data_fixed.keys())
+            # The sign of RDCs with 'N' nuclei must be fixed.
+            # Setup the fixer
+            fixer = SignFixer(mol)
 
-        # Conduct the SVD for each
-        _, _, stats = calc_pa_SVD(magnetic_interactions, data_fixed)
+            # The data needs to have the N-H RDCs flipped in sign
+            data_fixed, fixes = fixer.fix(data)
+            print(fixes)
+            # Process the A-matrix for 2MJB and 2MJB+1UBQ
+            process = Process(mol)
+            magnetic_interactions = process.process(labels=data_fixed.keys())
 
-        # Assert that the Q-factors are reasonable
-        self.assertLessEqual(stats['Overall']['Q (%)'], 26.0)
-        self.assertGreaterEqual(stats['Overall']['count'], 480)
+            # Conduct the SVD for each
+            _, _, stats = calc_pa_SVD(magnetic_interactions, data_fixed)
 
-        self.assertLessEqual(stats['N-H']['Q (%)'], 7.0)
-        self.assertGreaterEqual(stats['N-H']['count'], 60)
-        self.assertAlmostEqual(stats['N-H']['Da (Hz)'], 9.1, 1)
-
-        self.assertLessEqual(stats['CA-HA']['Q (%)'], 15.0)
-        self.assertGreaterEqual(stats['CA-HA']['count'], 60)
+            # Assert that the Q-factors are reasonable
+            self.assertLessEqual(stats['Overall']['Q (%)'], 30.0)
+            self.assertGreaterEqual(stats['Overall']['count'], count)
+            self.assertLessEqual(stats['N-H']['Q (%)'], 10.0)
 
         # Reset the methyl projection setting
         settings.project_methyls = old_setting

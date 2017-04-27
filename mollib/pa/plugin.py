@@ -59,6 +59,12 @@ class PA(Plugin):
                        required=False,
                        help="Only display the fit summary")
 
+        p.add_argument('--set',
+                       action='store', required=False,
+                       metavar='id',
+                       help='If multiple datasets are available, this option'
+                            'specifies which dataset to use.')
+
         p.add_argument('--project-methyls',
                        action='store_true',
                        help='Fit methyl RDCs by projecting their values on the '
@@ -117,6 +123,9 @@ class PA(Plugin):
         if 'nofix_outliers' in args and args.nofix_outliers:
             settings.enable_outlierfixer = False
 
+        # If specified, get the identifier for the dataset to use.
+        set_id = args.set if 'set' in args else None
+
         # Process the partial alignment calculation
         if args.command == 'pa':
             # Get the alignment data
@@ -127,12 +136,12 @@ class PA(Plugin):
                                          urls=settings.mr_urls,
                                          critical=True)
 
-                # Read the data from the file
-                data_dict = read_pa_file(file_path)
+                # Read the data from the file.
+                data_dict = read_pa_file(file_path, set_id)
                 data.update(data_dict)
 
             # verify that there is data in the data dict
-            msg = "Could not find data in alignment files."
+            msg = "Could not find data in alignment data."
             check_not_empty(data=data, msg=msg, critical=True)
 
             # Prepare the magnetic interactions for the molecules

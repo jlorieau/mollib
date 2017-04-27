@@ -5,12 +5,91 @@ Read in RDC and RACS data from files.
 import re
 import logging
 import gzip
+from collections import OrderedDict
 
 from mollib.utils.interactions import validate_label, interaction_label
 from .data_types import RDC, RACS
+from . import logs
 
 
-def read_pa_file(filename):
+def get_data(data_sets, set_id=None):
+    """Return the specified data set from multiple sets of data.
+    
+    Parameters
+    ----------
+    data_set: :obj:`collections.OrderedDict` or dict
+        The data sets (one or multiple) to retrieve a single data from.
+        If a single data set is passed, then it will be returned, unchanged.
+    set_id: str (optional)
+        If specified, the data set matching the given set_id will be returned.
+        The set_id can either be a string of the set_id or a number for the
+        set number to return, starting from '0'.
+        If not specified, the first data set will be returned
+    
+    Returns
+    -------
+    data: dict or None
+        The selected dataset, or None if not found.
+        
+    Examples
+    --------
+    >>> from collections import OrderedDict
+    >>> data_sets = OrderedDict((('A', {'14N-H': 1}), ('B', {'14N-H': 2})))
+    >>> get_data(data_sets)
+    {'14N-H': 1}
+    >>> get_data(data_sets, 'B')
+    {'14N-H': 2}
+    >>> get_data(data_sets, 1)
+    {'14N-H': 2}
+    >>> get_data(data_sets['B'])
+    {'14N-H': 2}
+    """
+    # Directly retrieve the dataset, if specified
+    if set_id is not None:
+        if set_id in data_sets:
+            return data_sets[set_id]
+
+        # Try to see if the set_id can be converted to a number that can be
+        # used to access the set
+        if isinstance(set_id, int):
+            pass
+        elif isinstance(set_id, str) and set_id.isdigit():
+            set_id = int(set_id)
+        else:
+            msg = "Could not parse data set id '{}'".format(set_id)
+            if msg not in logs.errors:
+                logging.error(msg)
+                logs.errors.add(msg)
+            return None
+
+        # The set_id is not an integer. Let's see if it corresponds to a key
+        # in the key array
+        keys = data_sets.keys()
+
+        if set_id < len(keys):
+            key = keys[set_id]
+            return data_sets[key]
+
+        # The set_id could not be parsed into a useful value to retrieve the
+        # data set. Return None. (i.e. not found)
+        msg = "Could not find data set '{}'".format(set_id)
+        if msg not in logs.errors:
+            logging.error(msg)
+            logs.errors.add(msg)
+        return None
+
+    # At this point, no set_id key was specified. Just return the first
+    # dataset.
+    key = data_sets.keys()[0]
+
+    # Return the item if its a dict, (i.e. a data set), otherwise, just
+    # return the data_sets itself.
+    if isinstance(data_sets[key], dict):
+        return data_sets[key]
+    else:
+        return data_sets
+
+def read_pa_file(filename, set_id=None):
     """Read data from a partial alignment data file.
 
     Parameters
@@ -45,8 +124,9 @@ def read_pa_file(filename):
     # If reading the file as a DC file format didn't work, try the mr file
     # format instead
     if len(retrieved_data) == 0:
-        retrieved_data = read_mr_string(string)
-        data.update(retrieved_data)
+        retrieved_data = read_mr_string(string, set_id)
+        if retrieved_data is not None:
+            data.update(retrieved_data)
 
     return data
 
@@ -223,7 +303,7 @@ re_mr = re.compile(r'assign'
                    re.MULTILINE)
 
 
-def read_mr_string(string, coordinate_num=None):
+def read_mr_string(string, set_id=None):
     """Read data from a mr data string.
 
     .. note:: The current version only supports the 'A' subunit.
@@ -232,6 +312,8 @@ def read_mr_string(string, coordinate_num=None):
     ----------
     string: str 
         A multiline string.
+    set_id: str (optional)
+        See :func:`get_data`.
 
     Returns
     -------
@@ -241,7 +323,7 @@ def read_mr_string(string, coordinate_num=None):
         - **value**: RDC  datum objects (:obj:`RDC`)
     """
     # Prepare the returned data list
-    data = {}
+    data_sets = OrderedDict()
     data_keys = {}
 
     # Find all of the matches and produce a generator
@@ -260,15 +342,6 @@ def read_mr_string(string, coordinate_num=None):
         name_j = d['name_j']
         value = float(d['value_j'])
 
-        # Only collect data with the matching coordinate_num (if one has been
-        # specified either in the function parameters or in a previous
-        # iteration of the loop)
-        if coord_num != coordinate_num:
-            if coordinate_num is None:
-                coordinate_num = coord_num
-            else:
-                continue
-
         # if res_i/name_i are None then this is a CSA value. Generate the key
         # and data type
         if res_i is None:
@@ -278,31 +351,23 @@ def read_mr_string(string, coordinate_num=None):
             key = (('A', res_i, name_i), ('A', res_j, name_j))
             data_type = RDC
 
-        # Add it to the dict
-        data_keys[key] = data_type(value=value)
-
-    # Convert the data_keys, which is identified by key tuples, to labels. This
-    # is done separately so that incorrect atom names, like 'HN', can be
-    # converted to standard PDB format, i.e. 'H'.
-
-    for key, value in data_keys.items():
+        # Convert the key, which is a tuple into and interaction label. This
+        # is done separately so that incorrect atom names, like 'HN', can be
+        # converted to standard PDB format, i.e. 'H'.
         new_key = []
-        # Check to see if any atom names are
         for subunit, res_num, atom_name in key:
             if atom_name == 'HN':
                 atom_name = 'H'
             if atom_name == 'HA1':
                 atom_name = 'HA3'
             new_key.append((subunit, res_num, atom_name))
-
         new_key = tuple(new_key)
-
-        # Get the interaction label
         label = interaction_label(new_key)
         label = validate_label(label)
 
-        data[label] = value
+        # Add it to the dict
+        data = data_sets.setdefault(coord_num, {})
+        data[label] = data_type(value=value)
 
-    return data
-
-
+    # Return only the data set specified
+    return get_data(data_sets, set_id)
