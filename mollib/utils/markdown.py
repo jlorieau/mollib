@@ -95,7 +95,7 @@ class MDTable(object):
         if term.terminal and term.columns is not None:
             self.max_width = term.columns
         else:
-            self.max_width = settings.default_table_max_width
+            self.max_width = settings.default_max_width
 
     @property
     def empty_headers(self):

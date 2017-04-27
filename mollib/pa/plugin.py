@@ -3,12 +3,14 @@
 The plugin for the pa submodule.
 """
 import os.path
+from textwrap import TextWrapper
 
 from mollib.plugins import Plugin
 from mollib.utils.checks import check_file, check_not_empty
 from mollib.utils.files import write_file
 from mollib.utils.text import word_list
 from mollib.utils.net import get_or_fetch
+import mollib.utils.settings as utils_settings
 
 from .data_readers import read_pa_file
 from .process_molecule import Process
@@ -198,7 +200,20 @@ class PA(Plugin):
             # Prepare the standard output
             summary = table.content()
             output = tables['fit'].content()
-            fixes_output = '\n'.join(['* ' + fix for fix in fixes])
+
+            # Prepare and format the fixes listing
+            if fixes:
+                # Setup the text wrapper so that the lines of fixes do not
+                # exceed the set maximum number of columns.
+                wrapper = TextWrapper()
+                wrapper.initial_indent = '* '
+                wrapper.subsequent_indent = '  '
+                wrapper.width = utils_settings.default_max_width
+
+                fixes_wrapped = ['\n'.join(wrapper.wrap(fix)) for fix in fixes]
+                fixes_output = '\n'.join(fixes_wrapped)
+            else:
+                fixes_output = ''
 
             # Print or write the report(s)
             print(summary)
