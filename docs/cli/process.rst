@@ -40,27 +40,8 @@ Arguments
         and atoms. This option is helpful in determining selections in
         :ref:`atom-selectors`.
 
-Configuration Files
--------------------
-
-Mollib will check for a ``.mollibrc`` configuration file and a configuration
-file passed with the ``-c`` ``filename`` / ``--config`` ``filename``
-commandline argument for configuration parameters.
-
-Configuration files customize mollib's behavior from default values. If a
-``.mollibrc`` file is present and a configuration file is specified in the
-commandline, the commandline configuration file will take precedence for
-parameters that are mentioned in both.
-
-The following is an example configuration file. Note that only the parameters
-that need to be changed can be specified in the file.
-
-.. literalinclude:: ../../examples/setup.cfg
-    :caption: setup.cfg
-
-
 Preprocessors Arguments
------------------------
+^^^^^^^^^^^^^^^^^^^^^^^
 
 .. _hydrogenate:
 
@@ -79,3 +60,22 @@ Preprocessors Arguments
                   the pro-R hydrogen 'H2' and the pro-S hydrogen 'H3'. Some
                   exceptions in proteins exist. By default, the JBNMR 12, 1-23
                   (1998) convention is followed.
+
+
+Configuration Files
+-------------------
+
+Mollib will check for a ``.mollibrc`` configuration file and a configuration
+file passed with the ``-c`` ``filename`` / ``--config`` ``filename``
+commandline argument for configuration parameters.
+
+Configuration files customize mollib's behavior from default values. If a
+``.mollibrc`` file is present and a configuration file is specified in the
+commandline, the commandline configuration file will take precedence for
+parameters that are mentioned in both.
+
+The following is an example configuration file. Note that only the parameters
+that need to be changed can be specified in the file.
+
+.. literalinclude:: ../../examples/setup.cfg
+    :caption: setup.cfg
