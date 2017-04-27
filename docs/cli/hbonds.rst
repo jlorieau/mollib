@@ -47,4 +47,7 @@ Arguments
 Examples
 --------
 
-    .. include:: output/cli_hbonds_i_2KXA.html
+In this example, the hemagglutinin fusion peptide structure (pdb: 2KXA) is
+downloaded, and its amide hydrogen bonds are reported.
+
+.. include:: output/cli_hbonds_i_2KXA.html
