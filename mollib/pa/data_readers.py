@@ -7,7 +7,8 @@ import logging
 import gzip
 from collections import OrderedDict
 
-from mollib.utils.interactions import validate_label, interaction_label
+from mollib.utils.interactions import (validate_label, interaction_label,
+                                       _re_interaction)
 from .data_types import RDC, RACS
 from . import logs
 
@@ -89,6 +90,7 @@ def get_data(data_sets, set_id=None):
     else:
         return data_sets
 
+
 def read_pa_file(filename, set_id=None):
     """Read data from a partial alignment data file.
 
@@ -131,12 +133,12 @@ def read_pa_file(filename, set_id=None):
     return data
 
 
-re_pa = re.compile(r'^\s*'
+re_pa = re.compile(r'^\s*' 
                    r'(?P<interaction>[\w\-\.]+#?)'
                    r'\s+'
-                   r'(?P<value>[eE\d\-\+\.]+)'
+                   r'(?P<value>[\d\-\+\.]+[eE]?[\d\-\+]*)'
                    r'\s*'
-                   r'(?P<error>[eE\d\-\+\.]*)')
+                   r'(?P<error>[\d\-\+\.]*[eE]?[\d\-\+]*)')
 
 
 def read_pa_string(string):
@@ -232,7 +234,7 @@ re_dc = re.compile(r'^\s*'
                    r'\s+[A-Z]{3}\s+'
                    r'(?P<atom_name2>[A-Z0-9]+#?)'
                    r'\s+'
-                   r'(?P<value>[eE\d\-\+\.]+)')
+                   r'(?P<value>[\d\-\+\.]+[eE]?[\d\-\+]*)')
 
 
 def read_dc_string(string):
@@ -294,12 +296,12 @@ re_mr = re.compile(r'assign'
                        r'(?P<res_i>\d+)[a-z\s]+'
                        r'(?P<name_i>[A-Z0-9\#]+)\s*\))?'
                    r'\s*'
-                   r'(?P<value_i>[\d\.\-eE]+)?'
+                   r'(?P<value_i>[\d\-\+\.]+[eE]?[\d\-\+]*)?'
                    r'(?:\n[\s\w]*\([a-zA-Z\s]+'
                        r'(?P<res_j>\d+)[a-z\s]+'
                        r'(?P<name_j>[A-Z0-9\#]+)\s*\))'
                    r'\s*'
-                   r'(?P<value_j>[\d\.\-eE]+)?',
+                   r'(?P<value_j>[\d\-\+\.]+[eE]?[\d\-\+]*)?',
                    re.MULTILINE)
 
 
