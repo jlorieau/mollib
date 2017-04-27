@@ -81,7 +81,7 @@ Filters
 Arguments
 ---------
 
-    ``-d`` ``atom`` ``atom`` / ``--dist`` ``atom`` ``atom``
+    ``-d`` / ``--dist`` ``atom`` ``atom``
         Measure the distance (in Angstroms) between two atoms.
 
         Multiple atom pairs can used. ex: ``-d 31-N 31-CA -d 32-N 33-CA``

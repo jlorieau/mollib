@@ -11,7 +11,7 @@ available to other commands.
 Arguments
 ---------
 
-    ``-i`` ``id/filename`` / ``--in`` ``id/filename``
+    ``-i`` / ``--in`` ``id/filename``
         **(required)** The listing of one or more structural identifiers
         (ex: PDB file identifiers) or filenames.
 
@@ -21,7 +21,7 @@ Arguments
         Multiple input identifiers and filename can be used simultaneously to
         process multiple files.
 
-    ``-o`` ``filename`` / ``--out`` ``filename``
+    ``-o`` / ``--out`` ``filename``
         The output filename(s).
 
         Structure files that are written have passed through the mollib parser and
@@ -32,7 +32,7 @@ Arguments
         Multiple output filenames can be used, and these will be matched
         to the corresponding entries in the input filenames or identifiers.
 
-    ``-c`` ``filename`` / ``--config`` ``filename``
+    ``-c`` / ``--config`` ``filename``
         The configuration file.
 
     ``-l`` / ``--list``
