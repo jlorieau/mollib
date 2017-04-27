@@ -47,11 +47,18 @@ from .ordered_set import OrderedSet
 
 # Once an interaction label is split, this regex parses it into its atom
 # components, like subunit, residue number and atom name.
-re_label = re.compile(r'(?P<subunit>[A-Z]+\.)?'
-                      r'(?P<number>\d*)'
-                      r'(?P<name>[A-Z0-9]+)'
-                      r'(?P<rel>[\-\+]\d+)?'
-                      r'(?P<wildcard>.?)')
+re_label_str = (r'(?P<subunit>[A-Z]+\.)?'
+                r'(?P<number>\d*)'
+                r'(?P<name>[A-Z0-9]+)'
+                r'(?P<rel>[\-\+]\d+)?'
+                r'(?P<wildcard>.?)')
+re_label = re.compile(re_label_str)
+
+
+#: The following is a regex to match interaction labels
+re_interaction_str = (r'(?P<interaction>([A-Z]+\.)?'
+                      r'(\d+[A-Z]+\d*\#?)'
+                      r'(\-([A-Z]+\.)?[A-Z\d\-\+]+\#?)*)')
 
 
 def _strip_str(string, strip_chars):

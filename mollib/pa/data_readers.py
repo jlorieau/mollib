@@ -8,7 +8,7 @@ import gzip
 from collections import OrderedDict
 
 from mollib.utils.interactions import (validate_label, interaction_label,
-                                       _re_interaction)
+                                       re_interaction_str)
 from .data_types import RDC, RACS
 from . import logs
 
@@ -80,8 +80,11 @@ def get_data(data_sets, set_id=None):
         return None
 
     # At this point, no set_id key was specified. Just return the first
-    # dataset.
-    key = data_sets.keys()[0]
+    # dataset, if available.
+    keys = data_sets.keys()
+    if len(keys) == 0:
+        return None
+    key = keys[0]
 
     # Return the item if its a dict, (i.e. a data set), otherwise, just
     # return the data_sets itself.
@@ -133,8 +136,8 @@ def read_pa_file(filename, set_id=None):
     return data
 
 
-re_pa = re.compile(r'^\s*' 
-                   r'(?P<interaction>[\w\-\.]+#?)'
+re_pa = re.compile(r'^\s*' +
+                   re_interaction_str +
                    r'\s+'
                    r'(?P<value>[\d\-\+\.]+[eE]?[\d\-\+]*)'
                    r'\s*'
