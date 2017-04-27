@@ -14,7 +14,7 @@ Usage
 Arguments
 ---------
 
-    ``-a`` / ``--alignment``
+    ``-a`` / ``--alignment`` ``filename``
         The file(s) with the RDC and RACS alignment data. These can be in
         either of the following formats:
 
@@ -22,22 +22,31 @@ Arguments
 
         - NMRPipe's DC format.
 
-    ``-o`` / ``--out``
+    ``-o`` / ``--out`` ``filename``
         (Optional) The filename for the output report. The output report is
         rendered in Markdown.
 
-    ``-p`` / ``--pred``
+    ``-p`` / ``--pred`` ``filename``
         (Optional) The filename for the back-calculated RDCs and RACS from the
         SVD fit. The output report is rendered in Markdown.
 
     ``--summary``
         (Optional) Only display the fit summary.
 
+    ``--set`` ``id``
+        (Optional) Use the given data set, if multiple data sets are available.
+        This option is useful with ``.mr`` data from PDB, which may contain
+        mulitple alignment data sets from multiple alignment media. Sets can
+        be selected from their alignment tensor value (ex: 500, 501, etc) or
+        from their position within the data file, starting with 0. (ex: 0 for
+        the first dataset, 1, for the second dataset and so on.)
+
+
     ``--project-methyls``
         (Optional) Use the C-C bond RDC values for the methyl ¹H-¹³C RDCs. This
         is the convention followed by X-plor NIH. By default, this is disabled.
 
-    ``--methyl-scale``
+    ``--methyl-scale`` ``number``
         (Optional) The scaling constant to use in fitting the methyl RDCs. This
         scaling may be needed if the contribution of the C3-rotational motion
         was not accounted for in the reported RDCs. By default, this value is
@@ -106,7 +115,7 @@ The following example fits the deposited RDCs for the hemagglutin fusion
 peptide structure (``-a 2KXA``) to the deposited NMR structure
 (``-i 2KXA``).
 
-    .. include:: output/cli_pa_i_2KXA_a_2KXA.html
+.. include:: output/cli_pa_i_2KXA_a_2KXA.html
 
 The following example fits the deposited RDCs for the first alignment
 dataset of ubiquitin (``-a 2MJB``) to the deposited NMR structure
@@ -114,10 +123,10 @@ dataset of ubiquitin (``-a 2MJB``) to the deposited NMR structure
 corresponding C-C bonds (``--project-methyls``) and outliers are removed
 from the fit (``--fix-outliers``).
 
-    .. include:: output/cli_pa_i_2MJB_a_2MJB_fix-outliers_project-methyls_summary.html
+.. include:: output/cli_pa_i_2MJB_a_2MJB_fix-outliers_project-methyls_summary.html
 
 Likewise, the crystal structure of ubiquitin (``-i 1UBQ``) can be used in
 the fit. In this case, the structure is missing hydrogen atoms, and these
 must be added (``--hydrogenate``).
 
-    .. include:: output/cli_pa_i_1UBQ_a_2MJB_fix-outliers_project-methyls_hydrogenate_summary.html
+.. include:: output/cli_pa_i_1UBQ_a_2MJB_fix-outliers_project-methyls_hydrogenate_summary.html
