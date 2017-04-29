@@ -245,7 +245,7 @@ html_show_copyright = True
 # html_search_scorer = 'scorer.js'
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'MolLibdoc'
+htmlhelp_basename = 'mollibdoc'
 
 # -- Options for LaTeX output ---------------------------------------------
 
@@ -271,7 +271,9 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'MolLib.tex', u'MolLib Documentation',
+#    (master_doc, 'mollib.tex', u'Mollib Documentation',
+#     u'Justin L Lorieau', 'manual'),
+    ('cli/cli', 'mollib_cli.tex', u'Mollib Command Line Interface Documentation',
      u'Justin L Lorieau', 'manual'),
 ]
 
@@ -313,7 +315,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'mollib', u'MolLib Documentation',
+    (master_doc, 'mollib', u'Mollib Documentation',
      [author], 1)
 ]
 

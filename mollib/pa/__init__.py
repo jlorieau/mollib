@@ -18,4 +18,4 @@ pa = PA()
 from mollib.core import register_settings
 register_settings(settings)
 
-# TODO: check the 'mr' file for 2OED
+# TODO: add fixer for methyl groups
