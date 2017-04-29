@@ -104,7 +104,7 @@ pa
   files and magnetic resonance data in Xplor-NIH format.
 
 - Supports the automatic fetching of magnetic resonance data from the PDB.
-  (i.e. ``.mr`` files)
+  (i.e. ``.mr`` files) However, only residue numbers are read in at this time.
 
 - Currently includes CSA tensor data for the backbone H, C, and N atoms of
   proteins. Other nuclei can be easily integrated through a settings file.
