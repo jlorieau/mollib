@@ -18,6 +18,11 @@ class Process(Plugin):
         "Process the parser for the 'process' command."
         # Add the following commands to all subparsers
         for subparser in self.command_subparsers.values():
+            # Rename 'optional arguments' to 'arguments
+            for ag in subparser._action_groups:
+                if ag.title == 'optional arguments':
+                    ag.title = 'arguments'
+
             # Input filename or identifier
             subparser.add_argument('-i', '--in', dest='i',
                                 action='append', nargs='+', required=True,
@@ -25,12 +30,6 @@ class Process(Plugin):
                                 metavar='id/filename',
                                 help=("(required) The filename(s) or PDB "
                                       "identifier(s) of the structure(s)"))
-
-            # Output filename
-            subparser.add_argument('-o', '--out',
-                                action='append', nargs='*', required=False,
-                                type=str, metavar='filename',
-                                help="The output filename(s) for the structure(s)")
 
             # Config filename
             subparser.add_argument('-c', '--config',
@@ -43,10 +42,24 @@ class Process(Plugin):
                                 action='store_true',
                                 help='List details on the molecule(s)')
 
+        # Add the output file option only to the process parser
+        subparser = self.command_subparsers['process']
+
+        subparser.add_argument('-o', '--out',
+                               action='append', nargs='*', required=False,
+                               type=str, metavar='filename',
+                               help="The output filename(s) for the "
+                                    "structure(s)")
+
     def help(self):
         return "Process the structure"
 
-    def process(self, molecule, args):
+    def process(self, molecules, args):
+        """Process molecules."""
+        for molecule in molecules:
+            self.process_molecule(molecule, args)
+
+    def process_molecule(self, molecule, args):
         """Process the molecule.
 
         - list the molecule details
@@ -62,30 +75,37 @@ class Process(Plugin):
                 print(chain_msg.format(chain, chain.residue_size,
                                        chain.atom_size))
 
-    def postprocess(self, molecule, args):
-        """Postprocess the molecules.
+    def postprocess(self, molecules, args):
+        """Postprocess molecules"""
+        for molecule in molecules:
+            self.postprocess_molecule(molecule, args)
+
+    def postprocess_molecule(self, molecule, args):
+        """Postprocess a molecule.
 
         - Writes the PDB file, if specified
         """
-        # Do nothing if no output filename was given
-        if getattr(args, 'out', None) is None:
-            return None
+        # Only do these operations if the selected command is 'process'
+        if args.command == 'process':
+            # Do nothing if no output filename was given
+            if getattr(args, 'out', None) is None:
+                return None
 
-        # Get the corresponding filename
-        output_filename = [o for i,o in zip(args.i[0], args.out[0])
-                           if i==molecule.identifier]
+            # Get the corresponding filename
+            output_filename = [o for i,o in zip(args.i[0], args.out[0])
+                               if i == molecule.identifier]
 
-        if len(output_filename) < 1:
-            msg = "No output filename was specificed for {}."
-            logging.error(msg.format(molecule.identifier))
-            return None
+            if len(output_filename) < 1:
+                msg = "No output filename was specificed for {}."
+                logging.error(msg.format(molecule.identifier))
+                return None
 
-        # Write the file.
-        output_filename = output_filename[0]
-        msg = "Writing ({}) to {}."
-        logging.debug(msg.format(molecule.name, output_filename))
+            # Write the file.
+            output_filename = output_filename[0]
+            msg = "Writing ({}) to {}."
+            logging.debug(msg.format(molecule.name, output_filename))
 
-        molecule.write_pdb(output_filename)
+            molecule.write_pdb(output_filename)
 
     def selected(self, args):
         "This plugin is always active."

@@ -1,7 +1,7 @@
-.. _hbonds_command:
+.. _hbonds-command:
 
-Hbonds Command
-==============
+hbonds - hydrogen bonds
+=======================
 The ``hbonds`` command detects and reports hydrogen bonds in molecules.
 The ``hbonds`` command has the following features:
 
@@ -17,7 +17,8 @@ The ``hbonds`` command has the following features:
       torsion angles. This prevents the misclassification of 310-helices and
       beta turns as well as isolated i+3, i+4 and i+5 hydrogen bonds.
 
-    **Usage**
+Usage
+-----
 
     .. include:: output/cli_hbonds_help.html
 
@@ -26,23 +27,27 @@ The ``hbonds`` command has the following features:
               to be run with the ``--hydrogenate`` parameter. See the
               :ref:`hydrogenate <hydrogenate>` option.
 
-
-    **Examples**
-
-    .. include:: output/cli_hbonds_i_2KXA.html
-
 Arguments
 ---------
 
     ``--aliphatic``
-        Include aliphatic hydrogen bonds in the results. The acceptor-donor
-        atom cutoff distances are elongated to 3.0 A, and carbon atoms are
-        allowed in hydrogen bond donor dipoles.
+        (Optional) Include aliphatic hydrogen bonds in the results. The
+        acceptor-donoratom cutoff distances are elongated to 3.0 A, and carbon
+        atoms are allowed in hydrogen bond donor dipoles.
 
     ``--detailed``
-        Present a detailed report on the geometries of hydrogen bonds. Does not
-        include classification information.
+        (Optional) Present a detailed report on the geometries of hydrogen
+        bonds. Does not include classification information.
 
     ``--sort-type``
-        Sort the hydrogen bonds by classification type, like beta-sheet or
-        alpha-helix.
+        (Optional) Sort the hydrogen bonds by classification type, like
+        beta-sheet or alpha-helix.
+
+
+Examples
+--------
+
+In this example, the hemagglutinin fusion peptide structure (pdb: 2KXA) is
+downloaded, and its amide hydrogen bonds are reported.
+
+.. include:: output/cli_hbonds_i_2KXA.html

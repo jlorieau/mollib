@@ -1,0 +1,126 @@
+Mollib 1.0 release notes
+========================
+
+*Apr 24, 2017*
+
+Version 1.0 of mollib is the first release. This page documents the changes
+and features available in this version.
+
+Compatibility
+-------------
+
+Mollib ver 1.0 is compatible with Python 2.7 and 3.3+.
+
+Requirements
+------------
+
+- numpy
+- scipy
+
+CLI Features
+------------
+
+The command-line interface (CLI) includes a series of plugins for processing
+and analyzing molecular structures.
+
+--------
+
+process
+^^^^^^^
+
+- The :ref:`process-command` plugin is used to read molecular structures and
+  modify them.
+
+- Currently supports the loading of protein databank
+  (PDB) files as well as the fetching and caching of PDB files from the
+  internet.
+
+- The hydrogens plugin (``--hydrogenate``) is included to strip and replace
+  hydrogen atoms in a molecule. The topology of protein molecules are included
+  and the ``CONECT`` topologies in PDB files are supported.
+
+--------
+
+measure
+^^^^^^^
+
+- The :ref:`measure-command` plugin is used to measure interatomic distances,
+  angles and dihedrals in molecules.
+
+- Statistical summaries of measurements are available with the ``--stats``
+  option.
+
+- Ramachandran angles are calculated with the ``--rama`` option. The
+  Ramachandran angles include secondary structure assignments based on the
+  backbone dihedral angles and hydrogen bonding pattern, like DSSP.
+
+- Statistics on the frequency of the observed Ramachandran angles for the given
+  secondary structure type are provided. Statistics are calculated from the
+  highest resolution structures from the PDB. (Unique structures with
+  resolutions between 0.5-1.6Å‚ observed R-factors better than 0.25 and free
+  R-factors better than 0.30.)
+
+--------
+
+hbonds
+^^^^^^
+
+- The :ref:`hbonds <hbonds-command>` plugin is used to measure and rate amide
+  and aliphatic hydrogen bonds in structures.
+
+- Hydrogen bonds are classified based on backbone torsion (Ramachandran)
+  angles and the acceptor-donor position in the primary sequence.
+
+- Statistics on the frequency of observed hydrogen bonds, based on their
+  interatomic distances and angles, are provided. Statistics are calculated
+  from the highest resolution structures from the PDB, where hydrogens were
+  added with the hydrogens plugin. (Unique structures with resolutions between
+  0.5-1.6Å‚ observed R-factors better than 0.25 and free R-factors better than
+  0.30.)
+
+--------
+
+pa
+^^
+
+- The :ref:`pa <pa-command>` (partial alignment) plugin is used to fit residual
+  dipolar coupling (RDC) and residual chemical shift anisotropy (RACS) data of
+  biomolecules using a Singular Value Decomposition (SVD).
+
+- Supports the refinement of sum couplings, like those of methylenes, with the
+  ``#`` wildcard operator. ex: 'CA-HA#'
+
+- Supports the refinement of multiple molecular structures simultaneously with
+  one dataset.
+
+- Includes detailed statistics on the fit for each type of interaction.
+
+- Identifies outliers based on Grubbs tests.
+
+- Includes 'fixers' to find and fix errors in the sign of RDCs and RACS as
+  well as the exclusion of outliers.
+
+- Reads data from mollib partial alignment files (``.pa``), NMRPipe DC input
+  files and magnetic resonance data in Xplor-NIH format.
+
+- Supports the automatic fetching of magnetic resonance data from the PDB.
+  (i.e. ``.mr`` files) However, only residue numbers are read in at this time.
+
+- Currently includes CSA tensor data for the backbone H, C, and N atoms of
+  proteins. Other nuclei can be easily integrated through a settings file.
+
+- Supports methyl RDC data that have been projected onto C-C (or S-C) bonds,
+  as used in Xplor-NIH.
+
+- Weights the contribution of RDCs and RACS based on relative errors. If errors
+  are not specified, default errors are used from the settings.
+
+- Pre-calculated dipolar couplings can be used from the settings, or dipolar
+  couplings can be calculated from the bond lengths and gyromagnetic ratios
+  of the spins from an interaction.
+
+- Interactions are identified using an abbreviated syntax. For example,
+  ``14N-H``, ``A.14N-H``, ``14N-14H`` and ``14N-C-1`` are all valid identifiers.
+
+- Alignment files with multiple alignment media datasets can be selected with
+  the ``--set`` option.

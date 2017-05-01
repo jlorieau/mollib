@@ -53,7 +53,7 @@ class HBondTable(MDTable):
 
 
         # Add rows to the table for the hbonds
-        for count, hb in enumerate(self.hbonds):
+        for count, hb in enumerate(self.hbonds, 1):
             donor = hb.donor
             acceptor = hb.acceptor
             classification = ('{}/{}'.format(hb.minor_classification,

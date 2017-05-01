@@ -1,13 +1,13 @@
 """
 Utilities for rendering information in Markdown
 """
-
-#import textwrap
 from math import ceil
 
 from . import settings
 from . import term
 from .formatted_str import FormattedStr, wrap
+
+# TODO: add function to wrap bullet points
 
 
 def print_lines(text_items, widths):
@@ -54,7 +54,7 @@ def print_lines(text_items, widths):
 class MDTable(object):
     """Renders a table in Markdown.
 
-    Parameters
+    Attributes
     ----------
     title: str, optional
         If specified, this attribute will be used as the table's title.
@@ -95,8 +95,15 @@ class MDTable(object):
         if term.terminal and term.columns is not None:
             self.max_width = term.columns
         else:
-            self.max_width = settings.default_table_max_width
+            self.max_width = settings.default_max_width
 
+    @property
+    def empty_headers(self):
+        """True if the headers are all empty (i.e. equal to '')."""
+        stripped_headers = [i.stripped_str() if hasattr(i, 'stripped_str')
+                            else i
+                            for i in self.column_titles]
+        return all([i == '' for i in stripped_headers])
 
     def num_cols(self):
         "Return the number of columns in the table."
@@ -165,8 +172,8 @@ class MDTable(object):
 
                 largest_column_widths[0] = (index, new_width)
 
-                # Resort the largest_column_widths by index number, and copy over
-                # to the column widths
+                # Resort the largest_column_widths by index number, and copy
+                # over to the column widths
                 largest_column_widths = sorted(largest_column_widths,
                                                key= lambda i: i[1],
                                                reverse=True)
@@ -187,27 +194,28 @@ class MDTable(object):
         # Format the table headers. All of the items are centered
         total_length = sum(column_widths)
 
-        # Prepare the talble for output
+        # Prepare the table for output
         table = ''
         # Add title, if present
         if isinstance(self.title, str):
             table += FormattedStr('Table: ', 'bold') + self.title + '\n'
 
-        # Add top bar. Only needed for multiline tables
-        if self.multiline:
+        # Add top bar. Only needed for multiline tables that have headers
+        if self.multiline and not self.empty_headers:
             table += '\n' + '-' * total_length + '\n'
         else:
             table += '\n'
 
         # Add headers
-        table += print_lines(self.column_titles, column_widths)
-
-        table += '\n'
+        if not self.empty_headers:
+            table += print_lines(self.column_titles, column_widths)
+            table += '\n'
 
         # Add header bottom bars
-        table += ''. join(['-' * (width-1)
+        broken_lines = ''. join(['-' * (width-1)
                            if count == 0 else ' ' + '-' * (width-1)
                            for count, width in enumerate(column_widths)])
+        table += broken_lines
         table += '-\n'
 
         # Add rows
@@ -215,7 +223,66 @@ class MDTable(object):
             table += print_lines(row, column_widths)
             table += ('\n\n' if self.multiline else '\n')
 
-        # Add bottom bar. Only needed for multiline tables
+        # Add bottom bar. Only needed for multiline tables or if the column
+        # headers are all empty
         if self.multiline:
             table += '-' * total_length + '\n'
+        elif self.empty_headers:
+            table += broken_lines
+            table += '-\n'
         return table
+
+
+def dict_table(dictionary, sort_key=None):
+    """Renders a Markdown table for a dictionary.
+
+    Parameters
+    ----------
+    dictionary: dict
+        The dictionary to prepare in the table.
+    sort_key: function
+        If set, the dict keys will be sorted by the given sort function.
+
+    Returns
+    -------
+    table: :obj:`mollib.utils.MDTable`
+        The table generated from the dictionary.
+    """
+    # Determine the number of columns. One column for the keys, and one for
+    # each item in an iterable of the dict values
+    lengths = [len(v) if hasattr(v, '__len__') and not isinstance(v, str) else 1
+               for v in dictionary.values()]
+    no_cols = max(lengths) + 1
+
+    # Create the table with empty headers
+    table = MDTable(*['' for i in range(no_cols)])
+
+    # Get the dict keys to start populating the rows
+    if sort_key is not None:
+        keys = sorted(dictionary.keys(), key=sort_key)
+    else:
+        keys = dictionary.keys()
+
+    # Populate the rows
+    for key in keys:
+        values = dictionary[key]
+
+        # Fill the list of values to match the number of columns
+        if hasattr(values, '__len__') and not isinstance(values, str):
+            # If the values are dicts, then use these to list the key/value
+            # pairs. Otherwise, just list the values themselves
+
+            if isinstance(values, dict):
+                values = ["{}: {}".format(k, v)
+                          for k,v in values.items()]
+            values = list(values) + [''] * (no_cols - len(values) - 1)
+        else:
+            values = [values, ] + [''] * (no_cols - 2)
+
+        table.add_row(key, *values)
+
+    return table
+
+
+
+

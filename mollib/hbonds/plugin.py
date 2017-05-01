@@ -2,8 +2,6 @@
 """
 The plugin for the hbond submodule.
 """
-from math import exp
-
 from mollib.plugins import Plugin
 from mollib.hbonds import find_hbond_partners, settings
 from .hbond_table import HBondTable
@@ -24,24 +22,38 @@ class Hbonds(Plugin):
         "Process the parser for the 'hbonds' command."
         p = self.command_subparsers['hbonds']
 
-        p.add_argument('--aliphatic',
-                       action='store_true',
-                       help="Includes aliphatic hydrogen bonds")
-        p.add_argument('--detailed',
-                       action='store_true',
-                       help="Report detailed information on hydrogen bonds.")
-        p.add_argument('--sort-type',
-                       action='store_true',
-                       help='Sort hydrogen bonds by type')
+        group = p.add_argument_group('hbond options')
+
+        group.add_argument('--aliphatic',
+                          action='store_true',
+                           help="Includes aliphatic hydrogen bonds")
+        group.add_argument('--detailed',
+                           action='store_true',
+                           help="Report detailed information on hydrogen bonds.")
+        group.add_argument('--sort-type',
+                           action='store_true',
+                           help='Sort hydrogen bonds by type')
 
         p = self.command_subparsers['measure']
+
+        # Find the 'measure' group and add the --rama option
+        group = None
+        for ag in p._action_groups:
+            if ag.title.startswith('measure'):
+                group = ag
+        p = group if group is not None else p
 
         p.add_argument('--rama',
                        action='store_true',
                        help=("Report the Ramachandran angles. Filters and "
                              "options are ignored."))
 
-    def process(self, molecule, args):
+    def process(self, molecules, args):
+        """Process the molecule."""
+        for molecule in molecules:
+            self.process_molecule(molecule, args)
+
+    def process_molecule(self, molecule, args):
         """Process the molecule by finding and reporting its hydrogen bonds.
         """
         if args.command == 'hbonds':

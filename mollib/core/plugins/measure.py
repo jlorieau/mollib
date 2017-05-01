@@ -38,39 +38,41 @@ class Measure(Plugin):
         "Process the parser for the 'measure' command."
         subparser = self.command_subparsers['measure']
 
-        group = subparser.add_mutually_exclusive_group(required=False)
+        measure_group = subparser.add_argument_group('measurement options')
 
-        group.add_argument('-d', '--dist', nargs=2, required=False,
-                           metavar='atom', type=str,
-                           action='append',
-                           help=("Measure distances between 2 atom selections."
-                                 "ex: 31-N 32-CA"))
+        # The following options can only be used one at a time (i.e. they're
+        # mutually exclusive
+        exc_group = measure_group.add_mutually_exclusive_group(required=False)
 
-        group.add_argument('-a', '--angle', nargs=3, required=False,
-                           metavar='atom', type=str,
-                           action='append',
-                           help=("Measure angles between 3 atom selections."
-                                 "ex: 31-N 31-CA 31-C"))
+        exc_group.add_argument('-d', '--dist', nargs=2, required=False,
+                               metavar='atom', type=str,
+                               action='append',
+                               help="Measure distances between 2 atom "
+                                    "selections. ex: 31-N 32-CA")
 
-        group.add_argument('-dih', '--dihedral', nargs=4, required=False,
-                           metavar='atom', type=str,
-                           action='append',
-                           help=("Measure dihedral angles between 4 atom "
-                                 "selections. ex: 31-N 31-CA 31-C 32-N"))
+        exc_group.add_argument('-a', '--angle', nargs=3, required=False,
+                               metavar='atom', type=str,
+                               action='append',
+                               help="Measure angles between 3 atom selections."
+                                    "ex: 31-N 31-CA 31-C")
 
-        group.add_argument('-w', '--within', nargs=2, required=False,
-                           metavar='atom', type=str,
-                           action='append',
-                           help=("Measure all distances from atom selection to "
-                                 "within the specified distance. "
-                                 "ex: 31:33-N 5"))
+        exc_group.add_argument('-dih', '--dihedral', nargs=4, required=False,
+                               metavar='atom', type=str,
+                               action='append',
+                               help="Measure dihedral angles between 4 atom "
+                                    "selections. ex: 31-N 31-CA 31-C 32-N")
 
-        # Add options for the output
-        options = subparser.add_argument_group(title='options')
-        options.add_argument('--stats',
-                             required=False, action='store_true',
-                             help=("Report statistics on the reported "
-                                   "measurements."))
+        exc_group.add_argument('-w', '--within', nargs=2, required=False,
+                               metavar='atom', type=str,
+                               action='append',
+                               help="Measure all distances from atom selection "
+                                    "to within the specified distance. "
+                                    "ex: 31:33-N 5")
+
+        measure_group.add_argument('--stats',
+                                   required=False, action='store_true',
+                                   help="Report statistics on the reported "
+                                        "measurements.")
 
         # Arguments to filter the results
         filters = subparser.add_argument_group(title='filters')
@@ -104,9 +106,13 @@ class Measure(Plugin):
     def help(self):
         return "Measure geometries in molecules"
 
-    def process(self, molecule, args):
-        "Measure geometries in molecules."
+    def process(self, molecules, args):
+        """Measure geometries in molecules."""
+        for molecule in molecules:
+            self.process_molecule(molecule, args)
 
+    def process_molecule(self, molecule, args):
+        """Measure geometries in a given molecule."""
         if args.command == 'measure':
             if getattr(args, 'dist', False):
                 table = MDTable('Num', 'Atom 1', 'Atom 2', 'Dist. (A)')

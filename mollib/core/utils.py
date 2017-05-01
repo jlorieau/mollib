@@ -56,23 +56,11 @@ def convert(s):
     # All else fails, try just returning the string
     return str(s).strip()
 
-
+# TODO: Use the version from utils.iter_tools
 def grouper(n, iterable, fillvalue=None):
     "grouper(3, 'ABCDEFG', 'x') --> ABC DEF Gxx."
     args = [iter(iterable)] * n
     return zip_longest(*args, fillvalue=fillvalue)
-
-
-def clear_cache():
-    """Clears the temporary cache for mollib."""
-    temp_path = os.path.join(tempfile.gettempdir(), 'mollib')
-    for filename in os.listdir(temp_path):
-        filepath = os.path.join(temp_path, filename)
-        try:
-            if os.path.isfile(filepath):
-                os.unlink(filepath)
-        except Exception as e:
-            raise e
 
 
 def group_by_2(iterable):

@@ -1,7 +1,7 @@
 .. _process-command:
 
-Process Command
-===============
+process
+=======
 The ``process`` command is the main command for processing, reading and writing
 files. All of the options and preprocessors available in ``process`` are
 available to other commands.
@@ -11,7 +11,7 @@ available to other commands.
 Arguments
 ---------
 
-    ``-i`` ``id/filename`` / ``--in`` ``id/filename``
+    ``-i`` / ``--in`` ``id/filename``
         **(required)** The listing of one or more structural identifiers
         (ex: PDB file identifiers) or filenames.
 
@@ -21,7 +21,7 @@ Arguments
         Multiple input identifiers and filename can be used simultaneously to
         process multiple files.
 
-    ``-o`` ``filename`` / ``--out`` ``filename``
+    ``-o`` / ``--out`` ``filename``
         The output filename(s).
 
         Structure files that are written have passed through the mollib parser and
@@ -32,13 +32,35 @@ Arguments
         Multiple output filenames can be used, and these will be matched
         to the corresponding entries in the input filenames or identifiers.
 
-    ``-c`` ``filename`` / ``--config`` ``filename``
+    ``-c`` / ``--config`` ``filename``
         The configuration file.
 
     ``-l`` / ``--list``
         List details on the molecule, including the number of chains, residues
         and atoms. This option is helpful in determining selections in
         :ref:`atom-selectors`.
+
+Preprocessors Arguments
+^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _hydrogenate:
+
+    ``--hydrogenate``
+        Strip all hydrogen atoms and re-add hydrogens based on ideal geometry.
+        More details on the current implementation can be found in the API
+        documentation :doc:`../api/hydrogens/hydrogens`.
+
+
+        .. note:: Adding two hydrogens to an sp2 heavy atom will label the
+                  E-hydrogen 'H1' and the Z-hydrogen 'H2'. This situation
+                  happens with the HD2 hydrogens of asparagine residues, for
+                  example.
+
+        .. note:: Adding two hydrogens to an sp3 heavy atom will label
+                  the pro-R hydrogen 'H2' and the pro-S hydrogen 'H3'. Some
+                  exceptions in proteins exist. By default, the JBNMR 12, 1-23
+                  (1998) convention is followed.
+
 
 Configuration Files
 -------------------
@@ -57,25 +79,3 @@ that need to be changed can be specified in the file.
 
 .. literalinclude:: ../../examples/setup.cfg
     :caption: setup.cfg
-
-
-Preprocessors Arguments
------------------------
-
-.. _hydrogenate:
-
-    ``--hydrogenate``
-        Strip all hydrogen atoms and re-add hydrogens based on ideal geometry.
-        More details on the current implementation can be found in the API
-        documentation :doc:`../api/hydrogens`.
-
-
-        .. note:: Adding two hydrogens to an sp2 heavy atom will label the
-                  E-hydrogen 'H1' and the Z-hydrogen 'H2'. This situation
-                  happens with the HD2 hydrogens of asparagine residues, for
-                  example.
-
-        .. note:: Adding two hydrogens to an sp3 heavy atom will label
-                  the pro-R hydrogen 'H2' and the pro-S hydrogen 'H3'. Some
-                  exceptions in proteins exist. By default, the JBNMR 12, 1-23
-                  (1998) convention is followed.

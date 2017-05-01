@@ -12,7 +12,7 @@ re_atom = re.compile(r'\s*(?P<molecule>[A-Z0-9]{1,4})\.'
                      r'-'
                      r'(?P<atom_name>\w+)\s*')
 
-
+# TODO: Fix atom labels to remove the '-' character. See interaction_labels
 def sorted_atom_list(atom_seq):
     """Sort the atoms in the given sequence into a list by stereochemical
     priority.

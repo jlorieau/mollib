@@ -87,7 +87,10 @@ def main():
 
     # Parse the commands
     args = parser.parse_args()
-    logging.basicConfig(level=args.loglevel)
+
+    # Setup the logger
+    fmt = '{}: %(levelname)-8s %(message)s'.format('mollib')
+    logging.basicConfig(format=fmt, level=args.loglevel)
     logging.debug(args)
 
     # Read in the configuration file(s)
@@ -105,25 +108,19 @@ def main():
     active_plugins = plugin_manager.plugins()
 
     # Pre-process the molecules
-    for molecule in molecules:
-        for plugin in active_plugins:
-            logging.debug('Preprocessing ({}): {}'.format(molecule.name,
-                                                          plugin))
-            plugin.preprocess(molecule, args)
+    for plugin in active_plugins:
+        logging.debug('Preprocessing:{}'.format(plugin))
+        plugin.preprocess(molecules, args)
 
     # Process the molecules
-    for molecule in molecules:
-        for plugin in active_plugins:
-            logging.debug('Processing ({}): {}'.format(molecule.name,
-                                                       plugin))
-            plugin.process(molecule, args)
+    for plugin in active_plugins:
+        logging.debug('Processing: {}'.format(plugin))
+        plugin.process(molecules, args)
 
     # Post-process the molecules
-    for molecule in molecules:
-        for plugin in active_plugins:
-            logging.debug('Post-rocessing ({}): {}'.format(molecule.name,
-                                                           plugin))
-            plugin.postprocess(molecule, args)
+    for plugin in active_plugins:
+        logging.debug('Post-rocessing: {}'.format(plugin))
+        plugin.postprocess(molecules, args)
 
 if __name__ == "__main__":
     main()

@@ -24,7 +24,9 @@ The following are instructions for locally developing a branch of mollib.
 
     .. code-block:: shell-session
 
-        python setup.py build_data
+        make clean
+        make cli
+        make html
 
     .. note:: You will need to have ``sphinx``, ``sphinxcontrib-napoleon``
               installed.
@@ -75,3 +77,41 @@ file for the plugin:
 
     from mollib.core import register_settings
     register_settings(settings)
+
+****************
+Docstring Format
+****************
+
+Docstrings follow the numpy style.
+
+Example:
+
+.. code-block:: python
+
+    def calc_statistics(magnetic_interactions, Saupe_components, data, predicted):
+        """Calculate the statistics between predicted and calculated RDCs and
+        RACSs.
+
+        Parameters
+        ----------
+        magnetic_interactions: list of dicts
+            - A list of dicts, one for each molecule to be fit.
+              See :class:`mollib.pa.process_molecule.Process`
+        Saupe_components: dict
+            See the output of :func:`mollib.pa.svd.calc_pa_SVD`
+        data: dict
+            - **key**: interaction labels (str)
+            - **value**: :obj:`mollib.pa.RDC` or :obj:`mollib.pa.RACS` data
+              values.
+        predicted: dict
+            - **key**: interaction labels (str)
+            - **value**: :obj:`mollib.pa.RDC` or :obj:`mollib.pa.RACS` data
+            values.
+
+        Returns
+        -------
+        stats: :obj:`collections.OrderedDict`
+            - 'Q': (float) the Q-factor of the fit
+            - 'R': (float) the R-factor of the fit
+            - 'RMS': (Hz/ppb) the root-mean square of the fit
+        """

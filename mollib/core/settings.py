@@ -37,3 +37,6 @@ hbond_dataset_path = 'data/hbondstatistics/'
 energy_cutoff_good    = 3.4  # Within 96.6% of observed values
 energy_cutoff_warning = 5.4  # Within 99.5% of observed values
 energy_cutoff_bad     = 20.0 # Only observed < 0.5% of the time.
+
+#: urls to download PDB files
+pdb_urls = ('https://files.rcsb.org/download/',)

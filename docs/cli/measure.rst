@@ -1,7 +1,7 @@
 .. _measure-command:
 
-Measure Command
-===============
+measure
+=======
 The ``measure`` command is used for measuring geometries in molecules.
 All of the options and preprocessors available from the :ref:`process-command`
 are also available.
@@ -81,7 +81,7 @@ Filters
 Arguments
 ---------
 
-    ``-d`` ``atom`` ``atom`` / ``--dist`` ``atom`` ``atom``
+    ``-d`` / ``--dist`` ``atom`` ``atom``
         Measure the distance (in Angstroms) between two atoms.
 
         Multiple atom pairs can used. ex: ``-d 31-N 31-CA -d 32-N 33-CA``

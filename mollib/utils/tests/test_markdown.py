@@ -1,6 +1,6 @@
 import unittest
 
-from mollib.utils import MDTable, FormattedStr
+from mollib.utils import MDTable, dict_table, FormattedStr
 
 
 class TestMarkdown(unittest.TestCase):
@@ -8,7 +8,7 @@ class TestMarkdown(unittest.TestCase):
     maxDiff = None
 
     def test_MDTable(self):
-        "Tests the Markdown table rendering."
+        """Tests the Markdown table rendering."""
 
         # Disable string formatting to more easily match strings
         FormattedStr.color_term = False
@@ -55,3 +55,23 @@ class TestMarkdown(unittest.TestCase):
                           "\n"
                           "----------------------------------------\n"
                           ))
+
+    def test_dict_table(self):
+        """Test the dict_table function."""
+        # Disable string formatting to more easily match strings
+        FormattedStr.color_term = False
+
+        d = {1: 'one',
+             'a': [1, 2, 3],
+             (1, 2): (1, 2),
+             }
+
+        table = dict_table(d, sort_key=lambda x: str(x))
+
+        self.assertEqual(table.content(),
+                         "\n"
+                         "------- ---- -- ---\n"
+                         "(1, 2)  1    2     \n"
+                         "1       one        \n"
+                         "a       1    2  3  \n"
+                         "------- ---- -- ---\n")

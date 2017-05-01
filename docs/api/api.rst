@@ -2,12 +2,14 @@
 API Documentation
 #################
 
+.. automodule:: mollib.core
 
 .. toctree::
     :maxdepth: 2
 
-    core
-    plugins
-    hydrogens
-    hbonds
-    utils
+    core/core
+    plugins/plugins
+    hydrogens/hydrogens
+    hbonds/hbonds
+    pa/pa
+    utils/utils

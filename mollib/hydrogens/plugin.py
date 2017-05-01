@@ -24,7 +24,12 @@ class Hydrogenate(Plugin):
                                 help=("Strip hydrogens and re-add them before "
                                       "analysis"))
 
-    def preprocess(self, molecule, args):
+    def preprocess(self, molecules, args):
+        """Preprocess molecules"""
+        for molecule in molecules:
+            self.preprocess_molecule(molecule, args)
+
+    def preprocess_molecule(self, molecule, args):
         """Preprocess the molecule by adding hydrogens to it.
         """
         if getattr(args, 'hydrogenate', False):
