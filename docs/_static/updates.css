@@ -1,3 +1,17 @@
+div.sphinxsidebar {
+  font-size: 0.8em;
+}
+
+div.body {
+  max-width: 1000px;
+  font-size: 1.1em;
+}
+
+div.body pre {
+  background-color: #fcfcfc;
+  border-radius: 2px;
+}
+
 div.body a {
   color: #731b00;
   text-decoration: none;
@@ -24,16 +38,6 @@ div.body hr {
   border: none;
   height: 1px;
   background-color: #dbefff;
-}
-
-div.body pre {
-  background-color: #fcfcfc;
-  border-radius: 2px;
-}
-
-div.body {
-  max-width: 1000px;
-  font-size: 1.1em;
 }
 
 div.body h1 {
