@@ -39,9 +39,9 @@ mass and atomic position of :obj:`Atom` `CA` in residue 2:
 
 >>> atom = mol['A'][2]['CA']
 >>> print("Atom {} has a {:.2f} Da mass.".format(atom, atom.mass))
-Atom A.Q2-CA has a 12.01 Da mass.
+Atom A.Q2.CA has a 12.01 Da mass.
 >>> print("{} is located at {}, {}, {} A".format(atom, *atom.pos))
-A.Q2-CA is located at -3.086, -11.321, -1.361 A
+A.Q2.CA is located at -3.086, -11.321, -1.361 A
 
 
 Or properties of the entire molecule may be calculated.

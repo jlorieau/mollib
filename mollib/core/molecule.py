@@ -215,11 +215,10 @@ class Molecule(dict):
         return len(list(self.atoms))
 
     _selector = re.compile(r'\s*'
-                           '(?P<chains>[A-Z]\*?:?[A-Z]?\*?)?'
-                           '\.?'
+                           '((?P<chains>[A-Z]+\*?:?[A-Z]*\*?)\.)?'
                            '(?P<res_nums>\d+:?\d*)'
-                           '-'
-                           '(?P<atom_name>\w+)\s*')
+                           '\.?'
+                           '(?P<atom_name>[A-Z]+\d*)\s*')
 
     def get_atoms(self, *selectors):
         """Return atoms matches the given locator names.
@@ -247,14 +246,14 @@ class Molecule(dict):
         --------
         >>> from mollib import Molecule
         >>> mol = Molecule('2MUV')
-        >>> mol.get_atoms('A.22-CA', '26-CB')
-        [A.S22-CA, A.L26-CB]
+        >>> mol.get_atoms('A.22.CA', '26.CB')
+        [A.S22.CA, A.L26.CB]
         >>> mol.get_atoms('A.335-CA')  # doesn't exist
         []
-        >>> mol.get_atoms('A.22:26-CA')
-        [A.S22-CA, A.S23-CA, A.D24-CA, A.P25-CA, A.L26-CA]
-        >>> mol.get_atoms('A:D.22-CA')
-        [A.S22-CA, B.S22-CA, C.S22-CA, D.S22-CA]
+        >>> mol.get_atoms('A.22:26.CA')
+        [A.S22.CA, A.S23.CA, A.D24.CA, A.P25.CA, A.L26.CA]
+        >>> mol.get_atoms('A:D.22.CA')
+        [A.S22.CA, B.S22.CA, C.S22.CA, D.S22.CA]
         """
         # TODO: Add first and last residue selectors. (f:l)
         atoms = []
@@ -323,7 +322,7 @@ class Molecule(dict):
         category: str
             The category of the parameter. ex: 'hydrogens'
         name: str
-            The name of the parameter. ex: 'A.Q61-CA'
+            The name of the parameter. ex: 'A.Q61.CA'
 
         Returns
         -------
@@ -351,7 +350,7 @@ class Molecule(dict):
         category: str
             The category of the parameter.
         name: str
-            The name of the parameter. ex: 'A.Q61-CA'
+            The name of the parameter. ex: 'A.Q61.CA'
         value:
             The value of the parameter
 
@@ -400,6 +399,7 @@ class Molecule(dict):
         .. note:: This function invalidates the caches without
                   'preserve_cache_wb_rotation'
         """
+        # TODO: Use the rotation function in the utils
         # Invalidate the caches
         self.clear_cache(scope='wb_rotation')
 
@@ -520,12 +520,12 @@ class Molecule(dict):
         >>> print('{:.2f}, {:.2f}'.format(mol.mass, mol['A'][3].mass))
         2445.07, 147.19
         >>> sorted(mol['A'][3]['CA'].bonded_atoms())
-        [A.F3-C, A.F3-CB, A.F3-HA, A.F3-N]
+        [A.F3.C, A.F3.CB, A.F3.HA, A.F3.N]
         >>> mol.del_atom(mol['A'][3]['N'])
         >>> print('{:.2f}, {:.2f}'.format(mol.mass, mol['A'][3].mass))
         2431.06, 133.18
         >>> sorted(mol['A'][3]['CA'].bonded_atoms())
-        [A.F3-C, A.F3-CB, A.F3-HA]
+        [A.F3.C, A.F3.CB, A.F3.HA]
         """
         # Invalidate the caches
         self.clear_cache(scope='del_atoms')
