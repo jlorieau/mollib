@@ -23,7 +23,6 @@ Category: 'Structural Features'
 """
 # TODO: work with the residue ionization groups
 # TODO: Add framework to modify ideal hydrogen geometries
-# TODO: work with topology of HETATMS
 
 import logging
 from math import sqrt, cos, sin, pi
@@ -203,7 +202,6 @@ def add_hydrogen_to_atom(atom, number_hydrogens=None):
                               if not i.startswith('H')])
 
     if atom.element == 'O' and number_hydrogens == 1:
-        # TODO this does not work for sp3 oxygens
         add_one_sp3_h(atom, settings.bond_length['O-H'])
     elif atom.element == 'N':
         if number_hydrogens == 1:

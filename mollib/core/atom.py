@@ -287,8 +287,6 @@ class Atom(Primitive):
         >>> sorted(C22['SG'].topology)  # disulfide bridge
         ['2PTN:A.C157.SG', 'CB']
         """
-        # TODO: Add Molecule functionality for cystein bridges
-        # TODO: Add Molecule functionality to set first and last atom.
         if hasattr(self, '_topology'):
             return self._topology
         try:
