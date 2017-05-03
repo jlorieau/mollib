@@ -8,7 +8,7 @@ gamma = {'H': 267.513E6,
 calculate_from_bonds = False
 
 #: The default dipolar couplings calculated.
-#  The static dipolar coupling constants listed are for common bonds in
+#: The static dipolar coupling constants listed are for common bonds in
 #: proteins. Values are calculated based on average calculated DCCs for 2MJB
 #: and scaled to an HN DCC of -11472Hz. This is equal to the
 #: dipolar reduced anisotropy.
@@ -65,7 +65,7 @@ default_predicted_racs = {
           },
 
     # The amide H CSA. This convention places the z-axis (s33) near the H-N
-    # bond, and the y-axis x-axis (s11) orthogonal to the H-N-C plane.
+    # bond, and the x-axis (s11) orthogonal to the H-N-C plane.
     'H': {'delta': -5.93,           # ppm (Reduced anisotropy)
           'eta': 1.00,
           'alpha': 0.,              # degrees
@@ -104,8 +104,9 @@ methyl_order_parameter = 1.0
 enable_signfixer = True
 enable_outlierfixer = False
 
-#: The alpha-critical values to identify warning or bad data points in terms
-#: of their deviations with respect to the best-fit SVD data.
+#: The alpha-critical values for the Grubbs test of outliers. These are used to
+#: identify warning or bad data points in terms of their deviations with
+#: respect to the best-fit SVD data.
 alpha_warning = 0.05
 alpha_bad = 0.01
 
