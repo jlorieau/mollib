@@ -1,4 +1,3 @@
-###########
 Development
 ###########
 
@@ -53,7 +52,46 @@ are reflected in the global script.
 
         python setup.py develop --uninstall
 
-**************
+Building Platform Packages
+**************************
+
+Platform specific distributions are needed because mollib includes C extensions
+written in Cython. These extension must be compiled using a compiler for each
+type of operating system.
+
+The build and install distribution packages, the following packages are needed:
+
+    - `Cython 0.25+ <http://cython.org>`_
+
+Linux Distributions (Python Wheels)
+===================================
+
+    Compile and build a Python wheel package.
+
+    .. code-block:: shell-session
+
+        python setup.py bdist_wheel
+
+    The Python wheel can be installed using
+    `pip <https://pypi.python.org/pypi/pip>`_.
+
+    .. code-block:: shell-session
+
+        sudo pip install <package_file.whl>
+
+Mac OS X Distributions (mpkg)
+=============================
+
+    Compile and build a Mac OS X package (``.mpkg``) file.
+
+    .. code-block:: shell-session
+
+        python setup.py bdist_mpkg
+
+    The ``.mpkg`` file can be installed by dragging it into the Applications
+    folder.
+
+
 Adding Plugins
 **************
 
@@ -78,7 +116,6 @@ file for the plugin:
     from mollib.core import register_settings
     register_settings(settings)
 
-****************
 Docstring Format
 ****************
 

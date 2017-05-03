@@ -151,7 +151,7 @@ def within_distance(atom, cutoff, elements='', exclude_intraresidue=False):
     >>> from mollib.core import Molecule, within_distance
     >>> mol = Molecule('2KXA')
     >>> within_distance(mol['A'][5]['CA'], cutoff=2.0)
-    [A.A5-CB, A.A5-C, A.A5-N, A.A5-HA]
+    [A.A5.CB, A.A5.C, A.A5.N, A.A5.HA]
 
     """
 
@@ -288,19 +288,19 @@ def measure_distances(molecule, selector1, selector2,
     >>> from mollib.core import Molecule, measure_distances
     >>> mol = Molecule('2MUV')
     >>> kwargs = {'residue_delta': 0, 'only_intra': True}
-    >>> dists = measure_distances(mol, '23:25-N', '23:25-CA', **kwargs)
+    >>> dists = measure_distances(mol, '23:25.N', '23:25.CA', **kwargs)
     >>> for i in dists: print(i)
-    (A.S23-N, A.S23-CA, 1.46)
-    (A.D24-N, A.D24-CA, 1.45)
-    (A.P25-N, A.P25-CA, 1.49)
-    >>> dists = measure_distances(mol, 'A:C.23-N', 'A:C.23-N')
+    (A.S23.N, A.S23.CA, 1.46)
+    (A.D24.N, A.D24.CA, 1.45)
+    (A.P25.N, A.P25.CA, 1.49)
+    >>> dists = measure_distances(mol, 'A:C.23.N', 'A:C.23.N')
     >>> for i in dists: print(i)
-    (A.S23-N, B.S23-N, 11.23)
-    (A.S23-N, C.S23-N, 15.49)
-    (B.S23-N, C.S23-N, 11.04)
-    >>> dists = measure_distances(mol, '23-N', '24-N', exclude_intra=True)
+    (A.S23.N, B.S23.N, 11.23)
+    (A.S23.N, C.S23.N, 15.49)
+    (B.S23.N, C.S23.N, 11.04)
+    >>> dists = measure_distances(mol, '23.N', '24.N', exclude_intra=True)
     >>> for i in dists: print(i)
-    (A.S23-N, A.D24-N, 3.45)
+    (A.S23.N, A.D24.N, 3.45)
 
     """
     # Returned dict
@@ -374,19 +374,19 @@ def measure_angles(molecule, selector1, selector2, selector3,
     --------
     >>> from mollib.core import Molecule, measure_angles
     >>> mol = Molecule('2KXA')
-    >>> ang = measure_angles(mol, '3:5-N', '3:5-CA', '3:5-C', only_intra=True)
+    >>> ang = measure_angles(mol, '3:5.N', '3:5.CA', '3:5.C', only_intra=True)
     >>> for i in ang: print(i)
-    (A.F3-N, A.F3-CA, A.F3-C, 110.7)
-    (A.G4-N, A.G4-CA, A.G4-C, 110.9)
-    (A.A5-N, A.A5-CA, A.A5-C, 110.7)
+    (A.F3.N, A.F3.CA, A.F3.C, 110.7)
+    (A.G4.N, A.G4.CA, A.G4.C, 110.9)
+    (A.A5.N, A.A5.CA, A.A5.C, 110.7)
     >>> kwargs = {'residue_delta': 1, 'bonded': True}
-    >>> ang = measure_angles(mol, '3:8-C', '3:8-N', '3:8-CA', **kwargs)
+    >>> ang = measure_angles(mol, '3:8.C', '3:8.N', '3:8.CA', **kwargs)
     >>> for i in ang: print(i)
-    (A.F3-C, A.G4-N, A.G4-CA, 120.8)
-    (A.G4-C, A.A5-N, A.A5-CA, 121.5)
-    (A.A5-C, A.I6-N, A.I6-CA, 120.7)
-    (A.I6-C, A.A7-N, A.A7-CA, 121.2)
-    (A.A7-C, A.G8-N, A.G8-CA, 120.9)
+    (A.F3.C, A.G4.N, A.G4.CA, 120.8)
+    (A.G4.C, A.A5.N, A.A5.CA, 121.5)
+    (A.A5.C, A.I6.N, A.I6.CA, 120.7)
+    (A.I6.C, A.A7.N, A.A7.CA, 121.2)
+    (A.A7.C, A.G8.N, A.G8.CA, 120.9)
 
     """
     # Returned dict
@@ -465,12 +465,12 @@ def measure_dihedrals(molecule, selector1, selector2, selector3, selector4,
     --------
     >>> from mollib.core import Molecule, measure_dihedrals
     >>> mol = Molecule('2KXA')
-    >>> args = ('3:5-C', '3:5-N', '3:5-CA', '3:5-C')
+    >>> args = ('3:5.C', '3:5.N', '3:5.CA', '3:5.C')
     >>> kwargs = {'bonded': True}
     >>> dihs = measure_dihedrals(mol, *args, **kwargs)
     >>> for i in dihs: print(i)
-    (A.F3-C, A.G4-N, A.G4-CA, A.G4-C, -57.2)
-    (A.G4-C, A.A5-N, A.A5-CA, A.A5-C, -68.4)
+    (A.F3.C, A.G4.N, A.G4.CA, A.G4.C, -57.2)
+    (A.G4.C, A.A5.N, A.A5.CA, A.A5.C, -68.4)
 
     """
     # Returned dict

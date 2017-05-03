@@ -1,10 +1,11 @@
 .. _pa-command:
 
-pa - partial alignment
-======================
+``pa`` command
+==============
 The ``pa`` command is used to fit residual dipolar couplings (RDCs) and residual
 anisotropic chemical shifts (RACSs, sometimes known as RCSAs) from *partially
-aligned* samples using NMR.
+aligned* samples using NMR. The output table entries are colored for warning
+outliers (yellow) and bad outliers (red).
 
 Usage
 -----
@@ -18,7 +19,7 @@ Arguments
         The file(s) with the RDC and RACS alignment data. These can be in
         either of the following formats:
 
-        - The pa format. See :ref:`pa_format`
+        - The pa format. See :ref:`pa_format`.
 
         - NMRPipe's DC format.
 
@@ -40,7 +41,7 @@ Arguments
 
     ``--set`` ``id``
         (Optional) Use the given data set, if multiple data sets are available.
-        This option is useful with ``.mr`` data from PDB, which may contain
+        This option is useful with ``.mr`` data from the PDB, which may contain
         mulitple alignment data sets from multiple alignment media. Sets can
         be selected from their alignment tensor value (ex: 500, 501, etc) or
         from their position within the data file, starting with 0. (ex: 0 for
@@ -64,16 +65,15 @@ Fixer Arguments
         (Optional) Check to see if the sign of RDCs or RACSs of the same type
         need to be inverted to get a better fit. This operation is useful for
         automatically fixing the sign of couplings when the absolute value of
-        the \|J+D\|- and \|J\|-couplings are measured. By default, the sign of
-        couplings are checked and fixed.
+        the \|J+D\|- and \|J\|-couplings are measured. By default, this fixer
+        is **on**.
 
     ``--fix-outliers`` / ``--nofix-outliers``
         (Optional) Check to see if there are outliers for each type of
         interaction. A warning outlier and a bad outlier are defined by those
         that give an alpha-critical cutoff of 95% and 99%, respectively,
         using a Grubbs test. If outliers are found, these will be removed from
-        the fit and the reported statistics. By default, outliers are not
-        removed.
+        the fit and the reported statistics. By default, this fixer is **off**.
 
 .. _pa_format:
 
@@ -118,20 +118,21 @@ Examples
 
 The following example fits the deposited RDCs for the hemagglutin fusion
 peptide structure (``-a 2KXA``) to the deposited NMR structure
-(``-i 2KXA``).
+(``-i 2KXA``). The output table entries are colored for warning outliers
+(yellow) and bad outliers (red).
 
 .. include:: output/cli_pa_i_2KXA_a_2KXA.html
 
 The following example fits the deposited RDCs for the first alignment
-dataset of ubiquitin (``-a 2MJB``) to the deposited NMR structure
+(``--set 0``) dataset of ubiquitin (``-a 2MJB``) to the deposited NMR structure
 (``-i 2MJB``). The RDCs for methyl groups are projected onto the
 corresponding C-C bonds (``--project-methyls``) and outliers are removed
 from the fit (``--fix-outliers``).
 
-.. include:: output/cli_pa_i_2MJB_a_2MJB_fix-outliers_project-methyls_summary.html
+.. include:: output/cli_pa_i_2MJB_a_2MJB_set_0_fix-outliers_project-methyls_summary.html
 
 Likewise, the crystal structure of ubiquitin (``-i 1UBQ``) can be used in
 the fit. In this case, the structure is missing hydrogen atoms, and these
 must be added (``--hydrogenate``).
 
-.. include:: output/cli_pa_i_1UBQ_a_2MJB_fix-outliers_project-methyls_hydrogenate_summary.html
+.. include:: output/cli_pa_i_1UBQ_a_2MJB_set_0_fix-outliers_project-methyls_hydrogenate_summary.html

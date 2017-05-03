@@ -1,7 +1,7 @@
 .. _process-command:
 
-process
-=======
+``process`` command
+===================
 The ``process`` command is the main command for processing, reading and writing
 files. All of the options and preprocessors available in ``process`` are
 available to other commands.
@@ -18,8 +18,8 @@ Arguments
         If the structure could not be found locally, a copy will be
         downloaded and cached for further analysis.
 
-        Multiple input identifiers and filename can be used simultaneously to
-        process multiple files.
+        Multiple input identifiers and filenamed can be used to process multiple
+        files simultaneously.
 
     ``-o`` / ``--out`` ``filename``
         The output filename(s).
@@ -33,7 +33,8 @@ Arguments
         to the corresponding entries in the input filenames or identifiers.
 
     ``-c`` / ``--config`` ``filename``
-        The configuration file.
+        The configuration file. See :ref:`Configuration
+        files <configuration-files>` for more details.
 
     ``-l`` / ``--list``
         List details on the molecule, including the number of chains, residues
@@ -62,20 +63,4 @@ Preprocessors Arguments
                   (1998) convention is followed.
 
 
-Configuration Files
--------------------
 
-Mollib will check for a ``.mollibrc`` configuration file and a configuration
-file passed with the ``-c`` ``filename`` / ``--config`` ``filename``
-commandline argument for configuration parameters.
-
-Configuration files customize mollib's behavior from default values. If a
-``.mollibrc`` file is present and a configuration file is specified in the
-commandline, the commandline configuration file will take precedence for
-parameters that are mentioned in both.
-
-The following is an example configuration file. Note that only the parameters
-that need to be changed can be specified in the file.
-
-.. literalinclude:: ../../examples/setup.cfg
-    :caption: setup.cfg

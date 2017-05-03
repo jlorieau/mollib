@@ -4,15 +4,23 @@ from .primitives import Primitive
 from .topology import *
 
 
-# A regex to match the atom fullname
-re_atom = re.compile(r'\s*(?P<molecule>[A-Z0-9]{1,4})\.'
-                     r'(?P<chain_id>[A-Z]{1,3})\.'
-                     r'(?P<residue_letter>[A-Z])'
-                     r'(?P<residue_number>\d+)'
-                     r'-'
-                     r'(?P<atom_name>\w+)\s*')
+#: The regex to match the atom fullname.
+re_atom_str = (r'\s*((?P<molecule>[A-Z0-9]{1,4})\:)?'  # Optional
+               r'((?P<chain_id>[A-Z]{1,3})\.)?'        # Optional
+               r'(?P<residue_letter>[A-Z])?'           # Optional
+               r'(?P<residue_number>\d+)'
+               r'\.?'                                  # Optional
+               r'(?P<atom_name>[A-Z]+\d*)\s*')
+# re_atom_str = (r'^\s*((?P<molecule>[A-Z0-9]{1,4})\:)?'  # Optional
+#                r'((?P<chain_id>[A-Z]{1,3})\.)?'        # Optional
+#                r'(?P<residue_letter>[A-Z])?'           # Optional
+#                r'(?P<residue_number>\d+)'
+#                r'\.?'                                  # Optional
+#                r'(?P<atom_name>\w+)\s*$')
 
-# TODO: Fix atom labels to remove the '-' character. See interaction_labels
+re_atom = re.compile(re_atom_str)
+
+
 def sorted_atom_list(atom_seq):
     """Sort the atoms in the given sequence into a list by stereochemical
     priority.
@@ -20,7 +28,7 @@ def sorted_atom_list(atom_seq):
     Parameters
     ----------
     atom_seq : sequence
-        A sequence type of (unsorted) :obj:`atom` objects.
+        A sequence type of (unsorted) :obj:`Atom` objects.
 
     Returns
     -------
@@ -39,10 +47,10 @@ def sorted_atom_list(atom_seq):
     >>> mol = Molecule('2MJB')
     >>> I3 = mol['A'][3]
     >>> sorted_atom_list(I3['CA'].bonded_atoms())
-    [A.I3-N, A.I3-C, A.I3-CB, A.I3-HA]
+    [A.I3.N, A.I3.C, A.I3.CB, A.I3.HA]
     >>> R42 = mol['A'][42]
     >>> sorted_atom_list(R42['CZ'].bonded_atoms())
-    [A.R42-NE, A.R42-NH2, A.R42-NH1]
+    [A.R42.NE, A.R42.NH2, A.R42.NH1]
     """
     # First find the masses of all atoms. These will be used to sort
     # the atoms
@@ -118,6 +126,16 @@ class Atom(Primitive):
 
     .. note:: Atom objects support array access to the pos `numpy.array`.
               Items 0, 1, 2 correspond to the pos[0], pos[1] and pos[2].
+              
+    .. note:: Atom labels can take on a variety of values. The molecule name,
+              chain id and residue letter are optional. The residue number and
+              atom name are required.
+              
+              The following are valid labels:
+                  - 2KXA:A.G16.HA2
+                  - 2KXA:A.G16HA2
+                  - A.G16HA2
+                  - 16HA2
     """
 
     # These are the required field. 'pos' (position)is the coordinate position
@@ -147,13 +165,12 @@ class Atom(Primitive):
         if self.chain:
             repr += "{}.".format(self.chain)
         if self.residue:
-            repr += "{}-".format(self.residue)
+            repr += "{}.".format(self.residue)
         repr += self.name
         self._repr = repr
         return repr
 
     def __lt__(self, other):
-        # TODO: add chain comparisons
         return self.fullname.__lt__(other.fullname)
 
     def __le__(self, other):
@@ -192,12 +209,12 @@ class Atom(Primitive):
         >>> from mollib import Molecule
         >>> mol = Molecule('2KXA')
         >>> mol['A'][16]['CA'].fullname
-        '2KXA.A.G16-CA'
+        '2KXA:A.G16.CA'
         """
         if not hasattr(self, '_fullname'):
             molecule_name = (self.molecule.name
                              if self.molecule is not None else '')
-            self._fullname = '.'.join((molecule_name, self.__repr__()))
+            self._fullname = ':'.join((molecule_name, self.__repr__()))
         return self._fullname
 
     @property
@@ -245,8 +262,8 @@ class Atom(Primitive):
             bonded to this :obj:`atom`.
 
 
-        .. note:: :obj:`atoms` from the preceding residue are terminated with
-                  '-1' and :obj:`atoms` from the proceeding residue are
+        .. note:: :obj:`Atom` objects from the preceding residue are terminated 
+                  with '-1' and :obj:`atoms` from the proceeding residue are
                   terminated with '+1'.
 
         .. note:: The topology is a set, and can be modified using the standard
@@ -268,10 +285,8 @@ class Atom(Primitive):
         >>> sorted(C22['N'].topology)
         ['C-1', 'CA', 'H']
         >>> sorted(C22['SG'].topology)  # disulfide bridge
-        ['2PTN.A.C157-SG', 'CB']
+        ['2PTN:A.C157.SG', 'CB']
         """
-        # TODO: Add Molecule functionality for cystein bridges
-        # TODO: Add Molecule functionality to set first and last atom.
         if hasattr(self, '_topology'):
             return self._topology
         try:
@@ -308,7 +323,7 @@ class Atom(Primitive):
         ['C', 'C-1', 'CA', 'H']
         >>> G18['N'].add_to_topology(mol['A'][16]['N'])
         >>> sorted(G18['N'].topology)
-        ['2PTN.A.I16-N', 'C', 'C-1', 'CA', 'H']
+        ['2PTN:A.I16.N', 'C', 'C-1', 'CA', 'H']
         """
         # If the residues are the same, simply add the atom's name
         if (self.residue is not None and atom.residue is not None and
@@ -458,11 +473,11 @@ class Atom(Primitive):
         >>> mol = Molecule('2PTN')
         >>> C22 = mol['A'][22]
         >>> C22['C'].bonded_atoms(sorted=True)
-        [A.C22-O, A.G23-N, A.C22-CA]
+        [A.C22.O, A.G23.N, A.C22.CA]
         >>> C22['SG'].bonded_atoms(sorted=True)  # disulfide bridge
-        [A.C157-SG, A.C22-CB]
+        [A.C157.SG, A.C22.CB]
         >>> C22['SG'].bonded_atoms(sorted=True, longrange=True)
-        [A.C157-SG]
+        [A.C157.SG]
         """
         bonded = set()
         for name in self.topology:
@@ -545,9 +560,9 @@ class Atom(Primitive):
         >>> mol = Molecule('2PTN')
         >>> C22 = mol['A'][22]
         >>> C22['CA'].bonded_heavy_atoms(sorted=True)
-        [A.C22-N, A.C22-CB, A.C22-C]
+        [A.C22.N, A.C22.CB, A.C22.C]
         >>> C22['SG'].bonded_heavy_atoms(longrange=True)
-        [A.C157-SG]
+        [A.C157.SG]
         """
         bonded = [a for a in self.bonded_atoms(sorted, longrange)
                   if not a.element == 'H' or a.element == 'D']

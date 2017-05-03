@@ -205,9 +205,9 @@ class TestMolecule(unittest.TestCase):
         for i,j in pairs:
             # Test the atom topologies
             self.assertEqual(mol['A'][i]['SG'].topology,
-                             {'2PTN.A.C{}-SG'.format(j), 'CB'})
+                             {'2PTN:A.C{}.SG'.format(j), 'CB'})
             self.assertEqual(mol['A'][j]['SG'].topology,
-                             {'2PTN.A.C{}-SG'.format(i), 'CB'})
+                             {'2PTN:A.C{}.SG'.format(i), 'CB'})
 
         check_topology(mol)
 

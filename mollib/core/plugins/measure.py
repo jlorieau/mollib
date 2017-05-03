@@ -27,6 +27,7 @@ def round_to_sigs(value, error):
     return (round(value, sigs), round(error, sigs))
 
 
+# TODO: Implement the '--within' option.
 class Measure(Plugin):
     """The core plugin to offer the 'measure' command."""
 
@@ -48,26 +49,26 @@ class Measure(Plugin):
                                metavar='atom', type=str,
                                action='append',
                                help="Measure distances between 2 atom "
-                                    "selections. ex: 31-N 32-CA")
+                                    "selections. ex: 31.N 32.CA")
 
         exc_group.add_argument('-a', '--angle', nargs=3, required=False,
                                metavar='atom', type=str,
                                action='append',
-                               help="Measure angles between 3 atom selections."
-                                    "ex: 31-N 31-CA 31-C")
+                               help="Measure angles between 3 atom selections. "
+                                    "ex: 31.N 31.CA 31.C")
 
         exc_group.add_argument('-dih', '--dihedral', nargs=4, required=False,
                                metavar='atom', type=str,
                                action='append',
                                help="Measure dihedral angles between 4 atom "
-                                    "selections. ex: 31-N 31-CA 31-C 32-N")
+                                    "selections. ex: 31.N 31.CA 31.C 32.N")
 
         exc_group.add_argument('-w', '--within', nargs=2, required=False,
                                metavar='atom', type=str,
                                action='append',
                                help="Measure all distances from atom selection "
                                     "to within the specified distance. "
-                                    "ex: 31:33-N 5")
+                                    "ex: 31:33.N 5")
 
         measure_group.add_argument('--stats',
                                    required=False, action='store_true',

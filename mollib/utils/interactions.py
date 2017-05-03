@@ -552,19 +552,19 @@ def interaction_atoms(key_or_label, molecule, sort=True):
     >>> from mollib import Molecule
     >>> mol = Molecule('2MJB')
     >>> interaction_atoms('13C', mol)
-    [[A.I13-C]]
+    [[A.I13.C]]
     >>> interaction_atoms('35HA#', mol)
-    [[A.G35-HA2], [A.G35-HA3]]
+    [[A.G35.HA2], [A.G35.HA3]]
     >>> interaction_atoms('14N-H', mol)
-    [[A.T14-N, A.T14-H]]
+    [[A.T14.N, A.T14.H]]
     >>> interaction_atoms('A.14H-13C', mol)
-    [[A.I13-C, A.T14-H]]
+    [[A.I13.C, A.T14.H]]
     >>> interaction_atoms('35CA-HA#', mol)
-    [[A.G35-CA, A.G35-HA2], [A.G35-CA, A.G35-HA3]]
+    [[A.G35.CA, A.G35.HA2], [A.G35.CA, A.G35.HA3]]
     >>> interaction_atoms('33CA-HA-HB#', mol)
-    [[A.K33-CA, A.K33-HA, A.K33-HB2], [A.K33-CA, A.K33-HA, A.K33-HB3]]
+    [[A.K33.CA, A.K33.HA, A.K33.HB2], [A.K33.CA, A.K33.HA, A.K33.HB3]]
     >>> interaction_atoms('14N-C-1', mol)
-    [[A.I13-C, A.T14-N]]
+    [[A.I13.C, A.T14.N]]
     """
     if isinstance(key_or_label, str):
         key = interaction_key(key_or_label, sort=sort)

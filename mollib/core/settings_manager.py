@@ -84,8 +84,6 @@ def import_settings(config, section, settings_dict):
     .. note:: Any settings with the string 'path' in it will have the root
               path appended to it.
     """
-    # TODO: add string type validation
-
     # Get the root path for the application
     root_path = os.path.abspath(os.path.dirname(__file__))
 
@@ -105,7 +103,7 @@ def import_settings(config, section, settings_dict):
 
         # Load the configuration, if is is specified)
         if (config and config.has_option(section, parameter) and
-            not callable(value)):
+           not callable(value)):
 
             # Check the parameter value's type and convert accordingly
             # These must match. If they don't an error is raise, and we

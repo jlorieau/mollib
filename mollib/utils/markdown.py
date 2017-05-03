@@ -7,8 +7,6 @@ from . import settings
 from . import term
 from .formatted_str import FormattedStr, wrap
 
-# TODO: add function to wrap bullet points
-
 
 def print_lines(text_items, widths):
     """Given the unwrapped text_items, print them to fit in the given widths
