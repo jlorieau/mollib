@@ -1,99 +1,29 @@
 ---
-title: MolLib for Python
+title: Mollib for Python
 author: Justin L Lorieau
 tags:
     - software
 ---
+Mollib is a *unified* command-line program and Python library for the
+validation, quality analysis and manipulation of molecular structures with an
+emphasis on biophysical analysis. Mollib is built on a plugin framework to
+easily add new tools to manipulate and analyze structures and data, which can
+then be *combined* and *cross-validated*.
 
-# Overview
+It includes tools for:
 
-MolLib is a simple Python module for manipulation biomolecular structures.
-
+- The :ref:`processing <process-command>` and protonation of
+  molecules.
+- The analysis of :ref:`hydrogen bonds <hbonds-command>` and hydrogen bond
+  quality compared to the highest-resolution PDB structures. Hydrogen bonds
+  are classified based on their acceptor-donor residues and Ramachandran
+  angles
+- The :ref:`measurement <measure-command>` of geometries within molecules
+  as well as the reporting and classification of Ramachandran angles.
+- The analysis :ref:`partial alignment <pa-command>` data with residual dipolar
+  coupling (RDC) and residual anisotropic chemical shift (RACS, a.k.a RCSA)
+  data.
+  
 - Github: <https://github.com/jlorieau/mollib>
 
-- Download: [mollib.py](https://raw.githubusercontent.com/
-jlorieau/mollib/master/mollib.py)
-
-## Features
-
-- Common manipulations of biomolecules for biophysics, like translation, Euler
-  rotations
-- *Easily extendable* data types (Atom, Residue, Chain, Molecule) through object
-  inheritance to add functionality and data to base objects.
-- Loading, fetching and writing PDB files
-
-## Releases
-
-- v1.3: 20160728. Initial release with Python 2 and Python 3 compatibility.
-  [v1.3.tar.gz](https://github.com/jlorieau/mollib/archive/v1.3.tar.gz)
-  [v1.3.zip](https://github.com/jlorieau/mollib/archive/v1.3.zip)
-
 # Documentation
-
-## Example - Loading and Manipulating Molecules
-
-~~~ python
->>> mol=Molecule('2OED')
->>> print mol
-Molecule:    1 chains, 56 residues, 862 atoms.
->>> print mol['A'][1], mol['A'][1].atom_size,
-M1 19
->>> print mol['A'][2]['CA'], mol['A'][2]['CA'].mass
-Q2-CA 12.01
->>> print mol.mass, 'Da'
-6206.75 Da
->>> print "({:.3f}, {:.3f}, {:.3f})".format(*mol.center_of_mass)
-(0.133, -0.347, -0.002)
->>> mol.rotate_zyz(0,90,0)
->>> mol.write_pdb('2OED_mollib.pdb')
-~~~
-
-## Methods (iterators)
-
-Molecule.residues
-: Returns an iterator for all residues in the molecule
-
-Molecule.atoms
-: Returns an iterator for all atoms in the molecule
-
-
-## Methods (accessor)
-
-Molecule.chain_size
-: Returns the number of chains in the biomolecule
-
-Molecule.residue_size
-: Returns the number of residues in the biomolecule
-
-Molecule.atom_size
-: Return the number of atoms in the biomolecule
-
-Molecule.mass
-: Return the mass (in Da) of the biomolecule
-
-Molecule.center_of_mass
-: Returns the center of mass vector of the biomolecule
-
-## Methods (mutator)
-
-Molecule.center()
-: Centers the molecule at the center of mass.
-
-Molecule.rotate_zyz(alpha, beta, gamma)
-: Rotates the molecule using Euler Z-Y-Z angles (degrees)
-
-## Methods (file)
-
-Molecule.write_pdb(filename)
-: Write the molecule in PDB format to the specified filename/path
-
-Molecule.read_pdb(filename)
-: Reads the PDB filename/path into the current molecule
-
-Molecule.fetch\_pdb(pdb\_code)
-: Fetches and caches (to /tmp) the PDB file for the specified pdb_code
-
-~~~ python
->>> print "({:.3f}, {:.3f}, {:.3f})".format(*mol.center_of_mass)
-(0.133, -0.347, -0.002)
-~~~
