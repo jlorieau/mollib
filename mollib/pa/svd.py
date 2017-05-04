@@ -225,7 +225,7 @@ def calc_pa_SVD(magnetic_interactions, data):
 
         Saupe_components['Aa' + id_] = aa
         Saupe_components['Ar' + id_] = ar
-        Saupe_components['Rh' + id_] = ar / abs(aa)
+        Saupe_components['Rh' + id_] = ar / aa
 
     # Calculate the summary statistics
     stats = calc_summary(magnetic_interactions, Saupe_components, data,
