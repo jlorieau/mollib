@@ -68,7 +68,7 @@ class Process(Plugin):
                   conducted elsewhere. Also, the file is written as the last
                   operation.
         """
-        if getattr(args, 'list', False):
+        if getattr(args, 'l', False):
             print(molecule)
             chain_msg = '\tChain {:<3}: {:>4} residues, {:>4} atoms.'
             for chain in molecule.chains:
