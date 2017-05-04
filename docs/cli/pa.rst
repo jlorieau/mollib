@@ -39,6 +39,10 @@ Arguments
     ``--summary``
         (Optional) Only display the fit summary.
 
+    ``--exclude`` ``interactions-types``
+        (Optional) Exclude one or more interactions types. ex: ``--exclude
+        N-H CA-HA`` will exclude all N-H and CA-HA RDCs.
+
     ``--set`` ``id``
         (Optional) Use the given data set, if multiple data sets are available.
         This option is useful with ``.mr`` data from the PDB, which may contain
@@ -46,7 +50,6 @@ Arguments
         be selected from their alignment tensor value (ex: 500, 501, etc) or
         from their position within the data file, starting with 0. (ex: 0 for
         the first dataset, 1, for the second dataset and so on.)
-
 
     ``--project-methyls``
         (Optional) Use the C-C bond RDC values for the methyl ¹H-¹³C RDCs. This
@@ -98,7 +101,7 @@ The file format has the following features:
 
 The partial alignment RDC and RACS data file has the following format:
 
-::
+.. code-block:: none
 
     # Interaction   Value (Hz)   Error (optional)
     14N-H           -14.5        0.1
@@ -130,6 +133,11 @@ corresponding C-C bonds (``--project-methyls``) and outliers are removed
 from the fit (``--fix-outliers``).
 
 .. include:: output/cli_pa_i_2MJB_a_2MJB_set_0_fix-outliers_project-methyls_summary.html
+
+This example is the same as the last one, however 'CE-HE', 'CD-HD' and 'CE-SD'
+RDCs are excluded (``--exclude``) from the fit.
+
+.. include:: output/cli_pa_i_2MJB_a_2MJB_set_0_exclude_CE-HE_CD-HD_CE-SD_fix-outliers_project-methyls_summary.html
 
 Likewise, the crystal structure of ubiquitin (``-i 1UBQ``) can be used in
 the fit. In this case, the structure is missing hydrogen atoms, and these

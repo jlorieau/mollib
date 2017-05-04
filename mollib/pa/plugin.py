@@ -6,10 +6,11 @@ import os.path
 from textwrap import TextWrapper
 
 from mollib.plugins import Plugin
-from mollib.utils.checks import check_file, check_not_empty
+from mollib.utils.checks import check_not_empty
 from mollib.utils.files import write_file
 from mollib.utils.text import word_list
 from mollib.utils.net import get_or_fetch
+from mollib.utils.interactions import interaction_type
 import mollib.utils.settings as utils_settings
 
 from .data_readers import read_pa_file
@@ -66,6 +67,12 @@ class PA(Plugin):
                        metavar='id',
                        help='If multiple datasets are available, this option'
                             'specifies which dataset to use.')
+
+        p.add_argument('--exclude',
+                       action='store', required=False, nargs='*',
+                       metavar='interaction-type',
+                       help='Exclude one or more interactions of the following '
+                            'type(s). ex: N-H or CE-HE')
 
         p.add_argument('--project-methyls',
                        action='store_true',
@@ -141,6 +148,11 @@ class PA(Plugin):
                 # Read the data from the file.
                 data_dict = read_pa_file(file_path, set_id)
                 data.update(data_dict)
+
+            # If excluded interactions are specified, remove these.
+            if args.exclude:
+                data = {k:v for k, v in data.items()
+                        if interaction_type(k) not in args.exclude}
 
             # verify that there is data in the data dict
             msg = "Could not find data in alignment data."
