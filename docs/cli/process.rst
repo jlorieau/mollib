@@ -36,7 +36,7 @@ Arguments
         The configuration file. See :ref:`Configuration
         files <configuration-files>` for more details.
 
-    ``-l`` / ``--list``
+    ``-l``
         List details on the molecule, including the number of chains, residues
         and atoms. This option is helpful in determining selections in
         :ref:`atom-selectors`.

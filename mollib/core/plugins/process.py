@@ -38,7 +38,7 @@ class Process(Plugin):
                                 help="The configuration filename")
 
             # List molecule details
-            subparser.add_argument('-l', '--list',
+            subparser.add_argument('-l',
                                 action='store_true',
                                 help='List details on the molecule(s)')
 
