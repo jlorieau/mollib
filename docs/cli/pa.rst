@@ -25,8 +25,7 @@ Arguments
 
         - Magnetic resonance data files (``.mr``) submitted to the PDB. This
           function supports the automatic fetching and caching of magnetic
-          resonance data files. However, only residue numbers are currently
-          supported. (Not chain ids)
+          resonance data files.
 
     ``-o`` / ``--out`` ``filename``
         (Optional) The filename for the output report. The output report is
