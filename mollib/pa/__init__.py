@@ -18,4 +18,5 @@ pa = PA()
 from mollib.core import register_settings
 register_settings(settings)
 
+# TODO: Implement a format flag to select the '-a' format
 # TODO: add fixer for methyl groups
