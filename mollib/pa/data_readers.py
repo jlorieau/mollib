@@ -94,6 +94,7 @@ def get_data(data_sets, set_id=None):
         return data_sets
 
 
+# Structures known to not work: 2LZF (CYANA)
 def read_pa_file(filename, set_id=None):
     """Read data from a partial alignment data file.
 
@@ -117,22 +118,32 @@ def read_pa_file(filename, set_id=None):
         with open(filename) as f:
             string = f.read()
 
-    retrieved_data = read_pa_string(string)
-    data.update(retrieved_data)
+    # The objective here is to read from the most specific to the least
+    # specific. First start with '.mr' data format.
+    retrieved_data = read_mr_string(string, set_id)
 
-    # If reading the file as a pa string didn't work, try the DC file
-    # format instead
-    if len(retrieved_data) == 0:
-        retrieved_data = read_dc_string(string)
+    # Update the data dict if data was found
+    if retrieved_data is not None and len(retrieved_data) > 0:
         data.update(retrieved_data)
+        return data
 
-    # If reading the file as a DC file format didn't work, try the mr file
-    # format instead
-    if len(retrieved_data) == 0:
-        retrieved_data = read_mr_string(string, set_id)
-        if retrieved_data is not None:
-            data.update(retrieved_data)
+    # If that didn't work, try .pa data format
+    retrieved_data = read_pa_string(string)
 
+    # Update the data dict if data was found
+    if retrieved_data is not None and len(retrieved_data) > 0:
+        data.update(retrieved_data)
+        return data
+
+    # Now try NMRPipe DC file data format
+    retrieved_data = read_dc_string(string)
+
+    # Update the data dict if data was found
+    if retrieved_data is not None and len(retrieved_data) > 0:
+        data.update(retrieved_data)
+        return data
+
+    # If nothing else, return the empty dataset
     return data
 
 
@@ -277,7 +288,7 @@ def read_dc_string(string):
         atom_name2 = d['atom_name2']
         value = float(d['value'])
 
-        # Generation the interaction key
+        # Generate the interaction key
         key = (('A', res_num1, atom_name1),
                ('A', res_num2, atom_name2))
 
@@ -293,14 +304,16 @@ def read_dc_string(string):
 
 re_mr = re.compile(r'assign'
                    r'\s*'
-                   r'\(\s*resid?\s*(?P<coord_num>\d+)[\s\w]+OO\s*\)\s*'
-                   r'(?:\n[\s\w]*\([\w\s]+[XYZ]\s*\)\s*)+'
-                   r'(?:\n[\s\w]*\([\w\s]+?'
+                   r'\([\s\w]*?resid?\s*(?P<coord_num>\d+)[\s\w]+OO\s*\)\s*'
+                   r'(?:\n[\s\w]*\([\w\s]+[XYZ]\s*\)\s*){3}'
+                   r'(\n[\s\w]*\(\s*'
+                       r'(?:segid?\s+(?P<chain_i>[A-Z])\s+)?[\s\w]*?'
                        r'resid?\s+(?P<res_i>\d+)[a-z\s]+?'
                        r'name\s+(?P<name_i>[A-Z0-9\#]+)\s*\))?'
                    r'\s*'
                    r'(?P<value_i>[\d\-\+\.]+[eE]?[\d\-\+]*)?'
-                   r'(?:\n[\s\w]*\([\w\s]+?'
+                   r'(\n[\s\w]*\(\s*'
+                       r'(?:segid?\s+(?P<chain_j>[A-Z])\s+)?[\s\w]*?'
                        r'resid?\s*(?P<res_j>\d+)[a-z\s]+?'
                        r'name\s+(?P<name_j>[A-Z0-9\#]+)\s*\))'
                    r'\s*'
@@ -308,6 +321,7 @@ re_mr = re.compile(r'assign'
                    re.MULTILINE)
 
 
+# TODO: fix reading of 5T1N
 def read_mr_string(string, set_id=None):
     """Read data from a mr data string.
 
@@ -341,19 +355,26 @@ def read_mr_string(string, set_id=None):
 
         # Get the residue numbers and atom names
         coord_num = d['coord_num']
-        res_i = int(d['res_i'])
+        chain_i = d['chain_i'] if d['chain_i'] is not None else 'A'
+        res_i = int(d['res_i']) if d['res_i'] is not None else None
         name_i = d['name_i']
-        res_j = int(d['res_j'])
+
+        chain_j = d['chain_j'] if d['chain_j'] is not None else 'A'
+        res_j = int(d['res_j']) if d['res_j'] is not None else None
         name_j = d['name_j']
-        value = float(d['value_j'])
+        value = float(d['value_j']) if d['value_j'] is not None else None
+
+        # Either one or the other residue must be specified as well as a value
+        if (res_i is None and res_j is None) or value is None:
+            continue
 
         # if res_i/name_i are None then this is a CSA value. Generate the key
         # and data type
         if res_i is None:
-            key = (('A', res_j, name_j),)
+            key = ((chain_j, res_j, name_j),)
             data_type = RACS
         else:
-            key = (('A', res_i, name_i), ('A', res_j, name_j))
+            key = ((chain_i, res_i, name_i), (chain_j, res_j, name_j))
             data_type = RDC
 
         # Convert the key, which is a tuple into and interaction label. This
