@@ -94,14 +94,23 @@ def get_data(data_sets, set_id=None):
         return data_sets
 
 
-# Structures known to not work: 2LZF (CYANA)
-def read_pa_file(filename, set_id=None):
+# Structures known to not work: 2LZF (CYANA), 2LT9 (CYANA)
+def read_pa_file(filename, set_id=None, ignore_ext=False):
     """Read data from a partial alignment data file.
 
     Parameters
     ----------
     filename: str
         The filename to read the data from. The file can be a gzipped file.
+    set_id: str (optional)
+        If specified, the data set matching the given set_id will be returned.
+        The set_id can either be a string of the set_id or a number for the
+        set number to return, starting from '0'.
+        If not specified, the first data set will be returned
+    ignore_ext: bool (optional)
+        If True, all the parsers will be attempted for the file. Otherwise,
+        the only specific parsers will be attempted. So far, this only works
+        with '.mr' and '.mr.gz' files.
 
     Returns
     -------
@@ -127,7 +136,13 @@ def read_pa_file(filename, set_id=None):
         data.update(retrieved_data)
         return data
 
-    # If that didn't work, try .pa data format
+    # If it's a .mr or .mr.gz file and ignore_ext is False, then no other
+    # parsers should be attempted
+    if not ignore_ext and (filename.endswith('mr') or
+                           filename.endswith('.mr.gz')):
+        return data
+
+    # Now, try the next parser. Try the .pa data format
     retrieved_data = read_pa_string(string)
 
     # Update the data dict if data was found
@@ -135,7 +150,8 @@ def read_pa_file(filename, set_id=None):
         data.update(retrieved_data)
         return data
 
-    # Now try NMRPipe DC file data format
+    # Now try NMRPipe DC file data format. This format is promiscuous and may
+    # match inadvertantly.
     retrieved_data = read_dc_string(string)
 
     # Update the data dict if data was found
