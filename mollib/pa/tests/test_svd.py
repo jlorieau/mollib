@@ -62,8 +62,8 @@ class TestSVD(unittest.TestCase):
         # Make sure both match and that the Q-factors are better than 15%
         self.assertEqual(stats['Overall']['Q (%)'],
                          stats_rev['Overall']['Q (%)'])
-        self.assertLessEqual(stats['Overall']['Q (%)'], 15.0)
-        self.assertLessEqual(stats_rev['Overall']['Q (%)'], 15.0)
+        self.assertLessEqual(stats['Overall']['Q (%)'], 15.5)
+        self.assertLessEqual(stats_rev['Overall']['Q (%)'], 15.5)
         self.assertEqual(stats['Overall']['count'],
                          stats_rev['Overall']['count'])
 
