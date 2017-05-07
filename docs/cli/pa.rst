@@ -77,6 +77,11 @@ Fixer Arguments
         using a Grubbs test. If outliers are found, these will be removed from
         the fit and the reported statistics. By default, this fixer is **off**.
 
+    ``--fix-nh-scale`` / ``--nofix-nh-scale``
+        (Optional) Check to see if RDCs and RACSs have been scaled to match the
+        magnitude of N-H RDCs. If they have, scale them back down to their
+        original values. By default, this fixer is **off**.
+
 .. _pa_format:
 
 Partial Alignment Data File Format
