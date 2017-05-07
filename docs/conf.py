@@ -258,26 +258,29 @@ latex_elements = {
      #
      # 'papersize': 'letterpaper',
 
+    'classoptions': ',openany,oneside',
+
      # The font size ('10pt', '11pt' or '12pt').
      #
      # 'pointsize': '10pt',
 
      # Additional stuff for the LaTeX preamble.
      #
-     # 'preamble': '',
+     'preamble': ("\definecolor{olivegreen}{RGB}{60, 128, 49}\n"
+                  "\definecolor{darkyellow}{RGB}{202, 214, 41}\n"),
 
      # Latex figure (float) alignment
      #
      # 'figure_align': 'htbp',
+
 }
 
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-#    (master_doc, 'mollib.tex', u'Mollib Documentation',
-#     u'Justin L Lorieau', 'manual'),
-    ('cli/cli', 'mollib_cli.tex', u'Mollib Command Line Interface Documentation',
+    ('cli/cli', 'mollib_cli.tex',
+     u'Mollib Command Line Interface Documentation',
      u'Justin L Lorieau', 'manual'),
 ]
 
@@ -289,7 +292,7 @@ latex_documents = [
 # For "manual" documents, if this is true, then toplevel headings are parts,
 # not chapters.
 #
-# latex_use_parts = False
+latex_use_parts = False
 
 # If true, show page references after internal links.
 #
@@ -376,18 +379,22 @@ def process_cmd(string):
     cmd = ("echo '{shell_cmd}' "
             "> cli/output/cli_{args_name}.txt\n")
 
-    cmd += ("echo '.. raw:: html\n\n'"
-           "> cli/output/cli_{args_name}.html\n")
-
     cmd += ("cd ..&&"
             "FORCE_COLOR=TRUE python {progname} {args}"
-            ">> docs/cli/output/cli_{args_name}.txt\n")
+            ">> docs/cli/output/cli_{args_name}.txt\n"
+            "cd docs\n")
 
-    cmd += ("pygmentize -l shell-session -f html docs/cli/output/cli_{args_name}.txt"
-            "|sed 's/^/    /g' >> docs/cli/output/cli_{args_name}.html\n")
+    # Process the html component
+    cmd += ("echo '.. only:: html\n\n.. raw:: html\n'"
+            "> cli/output/cli_{args_name}.html\n")
+
+
+
+    cmd += ("pygmentize -l shell-session -f html cli/output/cli_{args_name}.txt"
+            "|sed 's/^/    /g' >> cli/output/cli_{args_name}.html\n")
 
     # Replace ANSI colors
-    cmd += ("cat -e docs/cli/output/cli_{args_name}.html"
+    cmd += ("cat -e cli/output/cli_{args_name}.html"
             "|sed 's/\$$//g'"  # Remove $ at the end of lines
             "|sed 's/\^\[\[1m/<font style=\"font-weight:bold;\">/g'"
             "|sed 's/\^\[\[22m/<\/font>/g'"
@@ -398,13 +405,47 @@ def process_cmd(string):
             "|sed 's/\^\[\[95m/<font color=\"magenta\">/g'"
             "|sed 's/\^\[\[96m/<font color=\"cyan\">/g'"
             "|sed 's/\^\[\[0m/<\/font>/g'"
-            ">docs/cli/output/cli_{args_name}.tmp\n")
+            ">cli/output/cli_{args_name}.tmp\n")
 
-    cmd += ("mv docs/cli/output/cli_{args_name}.tmp docs/cli/output/cli_{args_name}.html\n")
-    cmd += ("rm docs/cli/output/cli_{args_name}.txt\n")
+    cmd += ("mv cli/output/cli_{args_name}.tmp "
+            "cli/output/cli_{args_name}.rst\n")
 
+    # Process the latex component
+    cmd += ("echo '\n.. only:: latex\n\n"
+            ".. raw:: latex\n\n"
+            "    \\\\begin{{sphinxVerbatim}}"
+            "[commandchars=\\\\\\\\\\\\{{\\\\}},"  # [commandchars=\\\{\}]
+            "fontsize=\\\\footnotesize]"  # fontsize=\small  
+            "'"
+            "> cli/output/cli_{args_name}.tex\n")
+
+    cmd += ("cat -e cli/output/cli_{args_name}.txt"
+            "|sed 's/^/    /g'"  # Add a tab at the start of every line
+            "|sed 's/\$$//g'"  # Remove $ at the end of lines
+            "|sed 's/--/-{{-}}/g'"  # Preserve --
+            "|sed 's/\^\[\[1m/\\\\textbf{{/g'"
+            "|sed 's/\^\[\[22m/}}/g'"
+            "|sed 's/\^\[\[91m/\\\\color{{red}}{{/g'"
+            "|sed 's/\^\[\[92m/\\\\color{{olivegreen}}{{/g'"
+            "|sed 's/\^\[\[33m/\\\\color{{darkyellow}}{{/g'"
+            "|sed 's/\^\[\[94m/\\\\color{{blue}}{{/g'"
+            "|sed 's/\^\[\[95m/\\\\color{{magenta}}{{/g'"
+            "|sed 's/\^\[\[96m/\\\\color{{cyan}}{{/g'"
+            "|sed 's/\^\[\[0m/}}/g'"
+            ">>cli/output/cli_{args_name}.tex\n")
+
+    #cmd += ("echo '\n    \\\\end{{sphinxVerbatim}}\n\\\\\\\\\n'"
+    cmd += ("echo '    \\\\end{{sphinxVerbatim}}\n {{}} \n'"
+            ">>cli/output/cli_{args_name}.tex\n")
+
+    cmd += ("cat cli/output/cli_{args_name}.tex "
+            ">> cli/output/cli_{args_name}.rst\n")
+
+    # Clean up
+    cmd += ("rm cli/output/*.txt cli/output/*.tex cli/output/*.html\n")
     cmd = cmd.format(shell_cmd=shell_cmd, progname=progname,
                      args=' '.join(args[1:]), args_name=args_name)
+
     os.system(cmd)
 
 if 'cli' in sys.argv:

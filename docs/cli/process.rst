@@ -6,7 +6,7 @@ The ``process`` command is the main command for processing, reading and writing
 files. All of the options and preprocessors available in ``process`` are
 available to other commands.
 
-    .. include:: output/cli_process_help.html
+    .. include:: output/cli_process_help.rst
 
 Arguments
 ---------

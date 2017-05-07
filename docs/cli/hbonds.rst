@@ -19,7 +19,7 @@ The ``hbonds`` command has the following features:
 Usage
 -----
 
-    .. include:: output/cli_hbonds_help.html
+    .. include:: output/cli_hbonds_help.rst
 
 
     .. note:: If the molecule does not have hydrogens, this command will need
@@ -49,4 +49,4 @@ Examples
 In this example, the hemagglutinin fusion peptide structure (pdb: 2KXA) is
 downloaded, and its amide hydrogen bonds are reported.
 
-.. include:: output/cli_hbonds_i_2KXA.html
+.. include:: output/cli_hbonds_i_2KXA.rst

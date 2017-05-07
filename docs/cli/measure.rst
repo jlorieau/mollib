@@ -6,7 +6,7 @@ The ``measure`` command is used for measuring geometries in molecules.
 All of the options and preprocessors available from the :ref:`process-command`
 are also available.
 
-    .. include:: output/cli_measure_help.html
+    .. include:: output/cli_measure_help.rst
 
 Atom Selectors and Filters
 --------------------------
@@ -94,13 +94,13 @@ Arguments
         residues 23-49 of 2MUV, the homotetrametic influenza M2 channel. Include
         statistics on the measured distances.
 
-        .. include:: output/cli_measure_i_2MUV_d_23:49.HA_23:49.H_only-delta_3_stats.html
+        .. include:: output/cli_measure_i_2MUV_d_23:49.HA_23:49.H_only-delta_3_stats.rst
 
         Measure CA-CA distances between residue 20-21 for chains 'A', 'B', 'C'
         and 'D' of 2MUV--excluding same residue distances and same chain
         distances.
 
-        .. include:: output/cli_measure_i_2MUV_d_A:D.20:21.CA_A:D.20:21.CA_exclude-intra_exclude-intra-chain.html
+        .. include:: output/cli_measure_i_2MUV_d_A:D.20:21.CA_A:D.20:21.CA_exclude-intra_exclude-intra-chain.rst
 
         Compare the distance between the HA of residue 5 and the H of residue
         21 for two different structures, 2KXA and 2LWA. The 2KXA structure
@@ -110,7 +110,7 @@ Arguments
         of the HAfp-G8A mutant with a closed structure (chain 'A'), a
         semi-closed structure (chain 'B') and an open structure (chain 'C').
 
-        .. include:: output/cli_measure_i_2KXA_2LWA_d_A:C.5.HA_A:C.21.H_only-intra-chain.html
+        .. include:: output/cli_measure_i_2KXA_2LWA_d_A:C.5.HA_A:C.21.H_only-intra-chain.rst
 
     ``-a`` / ``--angle``
         Measure the angle (in degrees) between three atoms.
@@ -126,7 +126,7 @@ Arguments
         Measure the angle of the bonded 'C-1'--'N'--'H' atoms for residues
         20-30 from the ubiquitin structure 2MJB.
 
-        .. include:: output/cli_measure_i_2MJB_a_20:30.C_20:30.N_20:30.H_only-bonded.html
+        .. include:: output/cli_measure_i_2MJB_a_20:30.C_20:30.N_20:30.H_only-bonded.rst
 
     ``-dih`` / ``--dihedral``
         Measure the dihedral angle (in degrees) between four atoms.
@@ -143,7 +143,7 @@ Arguments
 
         **Examples**
 
-        .. include:: output/cli_measure_i_2KXA_dih_2:6.C_2:6.N_2:6.CA_2:6.C_only-bonded_stats.html
+        .. include:: output/cli_measure_i_2KXA_dih_2:6.C_2:6.N_2:6.CA_2:6.C_only-bonded_stats.rst
 
     ``--stats``
         Report the average and standard deviation of all measured values. This
@@ -170,4 +170,4 @@ Arguments
         Measure the Ramachandran :math:`\phi` and :math:`\psi` angles for the
         hemagglutinin fusion peptide structure 2KXA.
 
-        .. include:: output/cli_measure_i_2KXA_rama.html
+        .. include:: output/cli_measure_i_2KXA_rama.rst
