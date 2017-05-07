@@ -10,6 +10,7 @@ from .svd import calc_pa_SVD
 from .analysis import find_outliers
 from . import settings
 
+
 class Fixer(object):
     """Fix mistakes in the input data and fit parameters for a SVD fit.
 
@@ -159,7 +160,7 @@ class SignFixer(Fixer):
             new_RMS, new_Q, data_pred = self.fit(data_copy)
 
             # See if it's an improvement. If it is, keep it.
-            if new_RMS < RMS_ref:
+            if new_Q < Q_ref:
                 fixes.append(msg.format('N-H', Q_ref, new_Q))
                 Q_ref = new_Q
                 RMS_ref = new_RMS
@@ -182,13 +183,81 @@ class SignFixer(Fixer):
             new_RMS, new_Q, data_pred = self.fit(data_copy)
 
             # See if it's an improvement. If it is, keep it.
-            if new_RMS < RMS_ref:
+            if new_Q < Q_ref:
                 fixes.append(msg.format(int_type, Q_ref, new_Q))
                 Q_ref = new_Q
                 RMS_ref = new_RMS
                 data_fixed = data_copy
 
         return data_fixed, fixes
+
+
+class NHScaleFixer(Fixer):
+    """Fix the RDCs of couplings that have been scaled to match the magnitude
+    of NH couplings. 
+    All of the RDCs for a given interaction type are scaled together."""
+
+    order = 30
+
+    def fix(self, data):
+        # Prepare the fixed message
+        msg = ("Re-scaling the '{}' couplings from N-H values improved the "
+               "overall Q-factor from {:.1f}% to {:.1f}%.")
+
+        # Get the reference RMS
+        RMS_ref, Q_ref, data_pred = self.fit(data)
+
+        # Setup the fixed data and fixes return values
+        data_fixed = None
+        fixes = []
+
+        # Get the difference interaction types for the data. We will not
+        # rescale the 'N-H' interactions, so these can be removed.
+        interaction_types = {interaction_type(i) for i in data.keys()}
+        interaction_types -= {'N-H', 'H-N'}
+
+        # Calculate the A-matrix for all of the interactions. This is done to
+        # get the default scaling constant for each interaction type.
+        labels = data.keys()
+        process = Process(self.molecules)
+        magnetic_interactions = process.process(labels=labels)
+        amatrix = magnetic_interactions[0]  # only need the first molecule
+
+        # Process the interaction types. These must be processed
+        # sequentially
+        for int_type in interaction_types:
+            # Copy the dataset and try scaling the signs altogether
+            data_copy = (self.copy_data(data_fixed) if data_fixed is not None
+                         else self.copy_data(data))
+
+            # Scale all of the values for the given interaction type
+            for k, v in data_copy.items():
+                k_type = interaction_type(k)  # get the interaction type of k
+                if k_type == int_type and k in amatrix:
+                    scale, _ = amatrix[k]
+
+                    # The scale includes the factor of 2 needed for RDCs,
+                    # whereas the default_predicted_rdcs['N-H'] value does not.
+                    # For this reason, the denominator is multiplied by 2.
+                    # The absolute value is taken here because this should not
+                    # change the sign of the RDC/RACS
+                    # TODO: move factor of 2 in the scale to the SVD calculation
+                    cnst = abs(scale /
+                               (settings.default_predicted_rdcs['N-H'] * 2.))
+                    v.value *= cnst
+
+            # Calculate the updated fit
+            new_RMS, new_Q, data_pred = self.fit(data_copy)
+
+            # See if it's an improvement. If it is, keep it.
+            if new_Q < Q_ref:
+                fixes.append(msg.format(int_type, Q_ref, new_Q))
+                Q_ref = new_Q
+                RMS_ref = new_RMS
+                data_fixed = data_copy
+
+        return data_fixed, fixes
+
 
 # Not Implemented
 # class StereoFixer(Fixer):
@@ -225,7 +294,7 @@ class OutlierFixer(Fixer):
             new_RMS, new_Q, new_data_pred = self.fit(data_copy)
 
             # See if it's an improvement
-            if new_RMS < RMS_ref:
+            if new_Q < Q_ref:
                 outliers = ", ".join(bad + warning)
                 fixes.append(msg.format(outliers, Q_ref, new_Q))
                 data_fixed = data_copy

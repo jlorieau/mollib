@@ -85,7 +85,6 @@ class PA(Plugin):
                        help='The order parameter to use in scaling the methyl '
                             'RDCs.')
 
-        # The following options can be turned off and on
         fixers = p.add_argument_group("fixer arguments")
         fix_sign = fixers.add_mutually_exclusive_group()
         fix_sign.add_argument('--fix-sign',
@@ -95,6 +94,15 @@ class PA(Plugin):
         fix_sign.add_argument('--nofix-sign',
                               action='store_true',
                               help="Disable check in RDC and RACS sign")
+
+        fix_nh_scale = fixers.add_mutually_exclusive_group()
+        fix_nh_scale.add_argument('--fix-nh-scale',
+                                  action='store_true',
+                                  help="Check and rescale couplings that "
+                                       "were scaled to the N-H RDC.")
+        fix_nh_scale.add_argument('--nofix-nh-scale',
+                                  action='store_true',
+                                  help="Disable N-H rescaling of couplings.")
 
         # The following options can be turned off and on
         fix_outliers = fixers.add_mutually_exclusive_group()
@@ -127,6 +135,10 @@ class PA(Plugin):
             settings.enable_signfixer = True
         if 'nofix_sign' in args and args.nofix_sign:
             settings.enable_signfixer = False
+        if 'fix_nh_scale' in args and args.fix_nh_scale:
+            settings.enable_nhscalefixer = True
+        if 'nofix_nh_scale' in args and args.nofix_nh_scale:
+            settings.enable_nhscalefixer = False
         if 'fix_outliers' in args and args.fix_outliers:
             settings.enable_outlierfixer = True
         if 'nofix_outliers' in args and args.nofix_outliers:

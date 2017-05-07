@@ -5,7 +5,7 @@ import unittest
 import os
 
 from mollib import Molecule
-from mollib.pa.fixers import SignFixer, OutlierFixer
+from mollib.pa.fixers import SignFixer, OutlierFixer, NHScaleFixer
 from mollib.pa.data_readers import read_pa_file
 
 
@@ -28,6 +28,11 @@ class TestFixers(unittest.TestCase):
         data_fixed, fixes = fixer.fix(data_ref)
         self.assertEqual(len(fixes), 1)
 
+        # Check to see if the overall Q-factor is good
+        RMS, Q, data_pred = fixer.fit(data_fixed)
+
+        self.assertLessEqual(Q, 15.0)
+
         # Now test a dataset that does not need sign flipping
         mol = Molecule('2MJB')
 
@@ -41,6 +46,34 @@ class TestFixers(unittest.TestCase):
         # The data does not need to be fixed.
         data_fixed, fixes = fixer.fix(data_ref)
         self.assertEqual(len(fixes), 0)
+
+    def test_nhscalefixer(self):
+        """Test the NHScaleFixer."""
+
+        # Load the molecule
+        mol = Molecule('2LCK')
+
+        # Load the sign-inverted data
+        path = os.path.dirname(os.path.abspath(__file__))
+        data_ref = read_pa_file(path + '/data/2LCK.mr.gz')
+
+        # First, the sign of the N-H RDCs must be fixed. Setup the fixer.
+        fixer = SignFixer(mol)
+
+        # The data does not need to be fixed.
+        data_fixed, fixes = fixer.fix(data_ref)
+
+        # Setup the fixer
+        fixer = NHScaleFixer(mol)
+
+        # The data needs to have the CA-C and C-N+1 RDCs scaled
+        data_fixed, fixes = fixer.fix(data_fixed)
+        self.assertEqual(len(fixes), 2)
+
+        # Check to see if the overall Q-factor is good
+        RMS, Q, data_pred = fixer.fit(data_fixed)
+
+        self.assertLessEqual(Q, 15.0)
 
     def test_outlierfixer(self):
         """Test the OutlierFixer"""

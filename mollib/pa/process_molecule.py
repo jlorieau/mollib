@@ -9,7 +9,8 @@ from collections import namedtuple
 import numpy as np
 
 from mollib import Molecule
-from mollib.utils.interactions import interaction_label, interaction_atoms
+from mollib.utils.interactions import (interaction_label, interaction_atoms,
+                                       interaction_type)
 from mollib.utils.tensors import get_Haeberlen
 from mollib.utils.rotations import R
 from . import logs
@@ -96,6 +97,8 @@ class Process(object):
         return self.magnetic_interactions
 
 
+# TODO: Add tests for calculating the scaling factor from bonds or
+#  pre-calculated values.
 class ProcessDipole(Process):
     """Process dipole-dipole magnetic interactions.
     """
@@ -104,11 +107,13 @@ class ProcessDipole(Process):
         self._pre_factors = {}
         super(ProcessDipole, self).__init__(*args, **kwargs)
 
-    def get_dcc(self, atom1, atom2, distance=None):
+    def get_dcc(self, label, atom1, atom2, distance=None):
         """Return the dipolar coupling constant (dcc) between atom1 and atom2.
         
         Parameters
         ----------
+        label: str
+            The interaction label.
         atom1: :obj:`mollib.Atom`
             The first atom.
         atom2: :obj:`mollib.Atom`
@@ -132,12 +137,7 @@ class ProcessDipole(Process):
 
         # At this point, no methyl was found. First, determine the type of
         # dipolar coupling.
-        dipole_type = "-".join((atom1.name, atom2.name))
-        dipole_type_rev = "-".join((atom2.name, atom1.name))
-
-        # Reverse the order, if needed
-        if dipole_type_rev in settings.default_predicted_rdcs:
-            dipole_type = dipole_type_rev
+        dipole_type = interaction_type(label)
 
         # Next, if pre-calculated scaling constants are allowed, see if one of
         # these is available
@@ -214,11 +214,13 @@ class ProcessDipole(Process):
         # No methyl atom was found.
         return None
 
-    def process_dipole(self, atom1, atom2):
+    def process_dipole(self, label, atom1, atom2):
         """Process the dipole for the two given atoms.
 
         Parameters
         ----------
+        label: str
+            The interaction label.
         atom1: :obj:`mollib.Atom`
             The first atom.
         atom2: :obj:`mollib.Atom`
@@ -249,7 +251,7 @@ class ProcessDipole(Process):
                         2. * cos_y * cos_z))  # Cyz
 
         # Calculate the scale for the the array of the dipolar coupling.
-        scale = self.get_dcc(atom1, atom2, r)
+        scale = self.get_dcc(label, atom1, atom2, r)
         if scale is None:
             return None
 
@@ -304,7 +306,7 @@ class ProcessDipole(Process):
 
                 # Process each dipole in the atom_list
                 for a1, a2 in atom_list:
-                    return_value = self.process_dipole(a1, a2)
+                    return_value = self.process_dipole(label, a1, a2)
                     if return_value is None:
                         continue
                     scale, arr = return_value
