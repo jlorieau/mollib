@@ -119,10 +119,12 @@ class PA(Plugin):
 
     def preprocess(self, molecules, args):
         """Conduct argument checks."""
-        # The --out and --pred filenames cannot be the same
-        if getattr(args, 'out', False) and args.out == args.pred:
-            # Add '_pred' to the output filename
-            args.pred = '_pred'.join(os.path.splitext(args.out))
+        # The --out and --pred filenames cannot be the same when using the 'pa'
+        # subcommand
+        if args.command == 'pa':
+            if getattr(args, 'out', False) and args.out == args.pred:
+                # Add '_pred' to the output filename
+                args.pred = '_pred'.join(os.path.splitext(args.out))
 
     def process(self, molecules, args):
         """Process the SVD of molecules."""
