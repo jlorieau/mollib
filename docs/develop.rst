@@ -23,9 +23,7 @@ The following are instructions for locally developing a branch of mollib.
 
     .. code-block:: shell-session
 
-        make clean
-        make cli
-        make html
+        make docs
 
     .. note:: You will need to have ``sphinx``, ``sphinxcontrib-napoleon``
               installed.
