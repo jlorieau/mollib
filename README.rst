@@ -25,5 +25,3 @@ It includes tools for:
   data.
   
 - Github: <https://github.com/jlorieau/mollib>
-
-# Documentation
