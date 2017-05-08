@@ -9,11 +9,13 @@ div.sphinxsidebar {
 div.body {
   max-width: 1000px;
   font-size: 1.1em;
+  margin-left: 15px;
 }
 
 div.body pre {
   background-color: #fcfcfc;
   border-radius: 2px;
+  margin-left: 15px;
 }
 
 div.body a {
@@ -60,7 +62,8 @@ div.body h2 {
 
 div.body h3 {
   background: None;
-  padding: 0px 0px 0px 15px;
+  padding: 0px;
+  margin-left: 10px;
   color: #247ec7;
   font-size: 100%;
 }
@@ -69,10 +72,26 @@ div.body li {
   padding-bottom: 2px;
 }
 
+div.body p {
+  margin-left: 10px;
+}
+
+div.body dl {
+  margin-left: 15px;
+}
+
 div.related {
-  max-width: 1290px;
+  max-width: 1305px;
   background: #1e69a8;
   font-size: 1.0em;
+}
+
+div.note {
+  margin-left: 10px;
+}
+
+div.code-block-caption {
+  margin-left: 15px;
 }
 
 .class dt {

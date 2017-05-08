@@ -16,37 +16,40 @@ The ``hbonds`` command has the following features:
   torsion angles. This prevents the misclassification of 310-helices and
   beta turns as well as isolated i+3, i+4 and i+5 hydrogen bonds.
 
-Usage
------
-
-    .. include:: output/cli_hbonds_help.rst
+.. include:: output/cli_hbonds_help.rst
 
 
-    .. note:: If the molecule does not have hydrogens, this command will need
-              to be run with the ``--hydrogenate`` parameter. See the
-              :ref:`hydrogenate <hydrogenate>` option.
+.. note:: If the molecule does not have hydrogens, this command will need
+          to be run with the ``--hydrogenate`` parameter. See the
+          :ref:`hydrogenate <hydrogenate>` option.
 
 Arguments
 ---------
 
-    ``--aliphatic``
-        (Optional) Include aliphatic hydrogen bonds in the results. The
-        acceptor-donor atom cutoff distances are elongated to 3.0 A, and carbon
-        atoms are allowed in hydrogen bond donor dipoles.
+``--aliphatic``
+    (Optional) Include aliphatic hydrogen bonds in the results. The
+    acceptor-donor atom cutoff distances are elongated to 3.0 A, and carbon
+    atoms are allowed in hydrogen bond donor dipoles.
 
-    ``--detailed``
-        (Optional) Present a detailed report on the geometries of hydrogen
-        bonds. The detailed table does not include classification information.
+``--detailed``
+    (Optional) Present a detailed report on the geometries of hydrogen
+    bonds. The detailed table does not include classification information.
 
-    ``--sort-type``
-        (Optional) Sort the hydrogen bonds by classification type, like
-        beta-sheet or alpha-helix.
+``--sort-type``
+    (Optional) Sort the hydrogen bonds by classification type, like
+    beta-sheet or alpha-helix.
 
 
 Examples
 --------
 
-In this example, the hemagglutinin fusion peptide structure (pdb: 2KXA) is
+In this example, the hemagglutinin fusion peptide structure (``-i 2KXA``) is
 downloaded, and its amide hydrogen bonds are reported.
 
 .. include:: output/cli_hbonds_i_2KXA.rst
+
+This example downloads a crystal structure of ubiquitin (``-i 1UBQ``), adds
+hydrogens to the structure and shows part (``|head -n15``) of its amide
+hydrogen bond report.
+
+.. include:: output/cli_hbonds_i_1UBQ_hydrogenate_head_n15.rst

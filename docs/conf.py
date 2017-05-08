@@ -95,6 +95,10 @@ language = None
 # This patterns also effect to html_static_path and html_extra_path
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 
+# The API documentation is not included in the user PDF manual
+if 'tags' in locals() and tags.has('latex'):
+    exclude_patterns += ['**/api*', '**/releases*', 'develop*']
+
 # The reST default role (used for this markup: `text`) to use for all
 # documents.
 #
@@ -258,16 +262,24 @@ latex_elements = {
      #
      # 'papersize': 'letterpaper',
 
-    'classoptions': ',openany,oneside',
+     'classoptions': ',openany,oneside',
 
      # The font size ('10pt', '11pt' or '12pt').
      #
-     # 'pointsize': '10pt',
+     # 'pointsize': '11pt',
 
      # Additional stuff for the LaTeX preamble.
      #
-     'preamble': ("\definecolor{olivegreen}{RGB}{60, 128, 49}\n"
-                  "\definecolor{darkyellow}{RGB}{202, 214, 41}\n"),
+     'preamble': (
+         "\definecolor{olivegreen}{RGB}{60, 128, 49}\n"
+         "\definecolor{darkyellow}{RGB}{202, 214, 41}\n"
+         "\definecolor{darkorange}{RGB}{198,  93,  9}\n"
+         "\sphinxDeclareColorOption{VerbatimBorderColor}{{rgb}{0.5,0.5,0.5}}\n"
+         "\sphinxDeclareColorOption{VerbatimColor}"
+            "{{rgb}{0.985,0.985,0.985}}\n"
+         "\\fvset{fontsize=\\footnotesize}\n"
+         "\\sphinxverbatimsep=6pt\n"
+         "\\sphinxshadowsize=15pt\n"),
 
      # Latex figure (float) alignment
      #
@@ -279,8 +291,8 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    ('cli/cli', 'mollib_cli.tex',
-     u'Mollib Command Line Interface Documentation',
+    ('index', 'mollib.tex',
+     u'Mollib Documentation',
      u'Justin L Lorieau', 'manual'),
 ]
 
@@ -367,12 +379,12 @@ def setup(app):
 
 # Get the CLI output text
 def process_cmd(string):
+    # Process the command. Split the arguments and strip '-' and '|' characters
     args = string.split()
     progname = args[0]
-    args_name = '_'.join([i.strip('-') for i in args[1:]])
+    args_name = '_'.join([i.strip('-').replace('|', '_') for i in args[1:]])
     shell_cmd = "user@host$ {cmd}".format(cmd=string)
     shell_cmd = " \\\n> ".join(textwrap.wrap(shell_cmd, 78))
-
 
     # Prepare the CLI output file.
     print(shell_cmd)
@@ -387,8 +399,6 @@ def process_cmd(string):
     # Process the html component
     cmd += ("echo '.. only:: html\n\n.. raw:: html\n'"
             "> cli/output/cli_{args_name}.html\n")
-
-
 
     cmd += ("pygmentize -l shell-session -f html cli/output/cli_{args_name}.txt"
             "|sed 's/^/    /g' >> cli/output/cli_{args_name}.html\n")
@@ -414,23 +424,26 @@ def process_cmd(string):
     cmd += ("echo '\n.. only:: latex\n\n"
             ".. raw:: latex\n\n"
             "    \\\\begin{{sphinxVerbatim}}"
-            "[commandchars=\\\\\\\\\\\\{{\\\\}},"  # [commandchars=\\\{\}]
-            "fontsize=\\\\footnotesize]"  # fontsize=\small  
+            "[commandchars=\\\\\\\\\\\\{{\\\\}},"  # [commandchars=\\\{\},
+            "fontsize=\\\\footnotesize]"  # fontsize=\footnotesize,
             "'"
             "> cli/output/cli_{args_name}.tex\n")
 
     cmd += ("cat -e cli/output/cli_{args_name}.txt"
+            "|sed 's/user@host\$/\\\\textcolor{{darkorange}}"
+                "{{\\\\textbf{{user@host$}}}}/g'"  # highlight the term prompt
             "|sed 's/^/    /g'"  # Add a tab at the start of every line
+            "|sed 's/^   //g'" # Strip leading spaces
             "|sed 's/\$$//g'"  # Remove $ at the end of lines
             "|sed 's/--/-{{-}}/g'"  # Preserve --
             "|sed 's/\^\[\[1m/\\\\textbf{{/g'"
             "|sed 's/\^\[\[22m/}}/g'"
-            "|sed 's/\^\[\[91m/\\\\color{{red}}{{/g'"
-            "|sed 's/\^\[\[92m/\\\\color{{olivegreen}}{{/g'"
-            "|sed 's/\^\[\[33m/\\\\color{{darkyellow}}{{/g'"
-            "|sed 's/\^\[\[94m/\\\\color{{blue}}{{/g'"
-            "|sed 's/\^\[\[95m/\\\\color{{magenta}}{{/g'"
-            "|sed 's/\^\[\[96m/\\\\color{{cyan}}{{/g'"
+            "|sed 's/\^\[\[91m/\\\\textcolor{{red}}{{/g'"
+            "|sed 's/\^\[\[92m/\\\\textcolor{{olivegreen}}{{/g'"
+            "|sed 's/\^\[\[33m/\\\\textcolor{{darkyellow}}{{/g'"
+            "|sed 's/\^\[\[94m/\\\\textcolor{{blue}}{{/g'"
+            "|sed 's/\^\[\[95m/\\\\textcolor{{magenta}}{{/g'"
+            "|sed 's/\^\[\[96m/\\\\textcolor{{cyan}}{{/g'"
             "|sed 's/\^\[\[0m/}}/g'"
             ">>cli/output/cli_{args_name}.tex\n")
 
@@ -454,6 +467,7 @@ if 'cli' in sys.argv:
     process_cmd("mollib --list-settings")
 
     process_cmd("mollib process --help")
+    process_cmd("mollib process -i 1UBQ -o 1UBQ_H.pdb --hydrogenate")
 
     process_cmd("mollib measure --help")
     process_cmd("mollib measure -i 2MUV -d A:D.20:21.CA A:D.20:21.CA --exclude-intra --exclude-intra-chain")
@@ -465,9 +479,13 @@ if 'cli' in sys.argv:
 
     process_cmd("mollib hbonds --help")
     process_cmd("mollib hbonds -i 2KXA")
+    process_cmd("mollib hbonds -i 1UBQ --hydrogenate|head -n15")
 
     process_cmd("mollib pa --help")
     process_cmd("mollib pa -i 2KXA -a 2KXA")
     process_cmd("mollib pa -i 2MJB -a 2MJB --set 0 --fix-outliers --project-methyls --summary")
     process_cmd("mollib pa -i 2MJB -a 2MJB --set 0 --exclude CE-HE CD-HD CE-SD --fix-outliers --project-methyls --summary")
     process_cmd("mollib pa -i 1UBQ -a 2MJB --set 0 --fix-outliers --project-methyls --hydrogenate --summary")
+
+    # cleanup
+    os.system("rm ../1UBQ_H.pdb")
