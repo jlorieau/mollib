@@ -7,6 +7,7 @@ import logging
 from mollib.plugins import Plugin
 
 
+# TODO: add option to specify the --pH
 class Process(Plugin):
     """The core plugin to offer the 'process' command."""
 
