@@ -1,5 +1,15 @@
 from setuptools import setup, find_packages, Extension
-import numpy as np
+
+# Setup numpy include directory.
+# install crashes if scipy is installed in the setup_requires
+setup_requires = []
+try:
+    import numpy as np
+    include_dirs = [np.get_include(), ]
+except ImportError:
+    # Numpy is not available. It has to be added to the setup_requires
+    setup_requires.append('numpy')
+    include_dirs = []
 
 
 # Setup Cython, if available
@@ -69,8 +79,8 @@ setup(name='mollib',
       include_package_data=True,
       packages=find_packages(),
       platforms='any',
+      setup_requires=setup_requires,
       install_requires=['numpy', 'scipy'],
-      tests_requires=['nose>=1.0'],
       test_suite='nose.collector',
       scripts=['bin/mollib'],
       entry_points={
@@ -82,6 +92,6 @@ setup(name='mollib',
           ],
       },
       ext_modules=extensions,
-      include_dirs=[np.get_include()],
+      include_dirs=include_dirs,
       classifiers=classifiers,
       )
