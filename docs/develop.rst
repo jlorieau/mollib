@@ -8,47 +8,47 @@ The following are instructions for locally developing a branch of mollib.
 2. **Build Cython Extensions**. The Cython and C extensions can be compiled in
    place.
 
-    ..  code-block:: shell-session
+..  code-block:: shell-session
 
-        python setup.py build_ext --inplace
+    make inplace
 
 3. **Build Datasets** Build and compute the datasets. This may take a few hours.
 
-    .. code-block:: shell-session
+.. code-block:: shell-session
 
-        python setup.py build_data
+    python setup.py build_data
 
 4. **Build Documentation** Build the documentation in html format under
    ``docs/``
 
-    .. code-block:: shell-session
+.. code-block:: shell-session
 
-        make docs
+    make docs
 
-    .. note:: You will need to have ``sphinx``, ``sphinxcontrib-napoleon``
-              installed.
+.. note:: You will need to have ``sphinx``, ``sphinxcontrib-napoleon``
+          installed.
 
 5. **Test the Build** Run the package's tests.
 
-    .. code-block:: shell-session
+.. code-block:: shell-session
 
-        python setup.py nosetests
+    python setup.py nosetests
 
-    .. note:: You will need ``nosetests`` to run the tests.
+.. note:: You will need ``nosetests`` to run the tests.
 
 6. **Install in Developer Mode**. Install the package in developer mode. This
 adds the package's source path to the python path. Edits to the source path
 are reflected in the global script.
 
-    .. code-block:: shell-session
+.. code-block:: shell-session
 
-        python setup.py develop
+    make develop
 
-    If you'd like to uninstall the develop mode, use the following command.
+If you'd like to uninstall the develop mode, use the following command.
 
-    .. code-block:: shell-session
+.. code-block:: shell-session
 
-        python setup.py develop --uninstall
+    python setup.py develop --uninstall
 
 Building Platform Packages
 **************************
