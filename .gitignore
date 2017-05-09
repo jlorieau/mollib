@@ -13,3 +13,4 @@ benchmarks/
 build/
 output/*
 .DS_Store
+.ipynb_checkpoints
