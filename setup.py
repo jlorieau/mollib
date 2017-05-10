@@ -1,4 +1,6 @@
 from setuptools import setup, find_packages, Extension
+from distutils.command.build_ext import build_ext
+import pkg_resources
 
 
 # Setup numpy include directory.
@@ -37,6 +39,30 @@ else:
     for c_file in c_files:
         extensions.append(Extension(c_file.strip('.c').replace('/', '.'),
                                     [c_file, ]))
+
+
+# Setup a custom builder to add compilation include directories
+class custom_build_ext(build_ext):
+
+    # def build_extensions(self):
+    #     numpy_incl = pkg_resources.resource_filename('numpy', 'core/include')
+    #
+    #     # Add the number header files to the extension includes
+    #     for ext in self.extensions:
+    #         if (hasattr(ext, 'include_dirs')
+    #            and numpy_incl not in ext.include_dirs):
+    #             ext.include_dirs.append(numpy_incl)
+    #     build_ext.build_extensions(self)
+
+    def run(self):
+        # Import numpy here, only when headers are needed
+        import numpy
+
+        # Add numpy headers to include_dirs
+        self.include_dirs.append(numpy.get_include())
+
+        # Call original build_ext command
+        build_ext.run(self)
 
 
 # Get the version number and package information.
@@ -100,5 +126,6 @@ setup(name='mollib',
       },
       ext_modules=extensions,
       include_dirs=include_dirs,
+      cmdclass={'build_ext': custom_build_ext},
       classifiers=classifiers,
       )

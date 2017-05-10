@@ -5,6 +5,12 @@ PYTHON ?= python
 inplace:
 	$(PYTHON) setup.py build_ext --inplace
 
+test: inplace
+	nosetests
+
+testfull: clean
+	tox
+
 develop: clean inplace
 	$(PYTHON) setup.py develop
 
@@ -13,6 +19,7 @@ clean:
 	find . -name '*.pyo' -exec rm -f {} +
 	find . -name '*~' -exec rm -f {} +
 	find . -name '*.so' -exec rm -f {} +
+	rm -rf .tox
 	$(MAKE) -C docs clean
 
 docs:
