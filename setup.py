@@ -1,5 +1,22 @@
 from setuptools import setup, find_packages, Extension
-import numpy as np
+
+
+# Setup numpy include directory.
+# 1. The script will not add 'numpy' to the setup_requires list, if it
+#    is already installed.
+# 2. Once it is installed, then the numpy include dir is added to the
+#    include_dirs. This include_dirs is needed to compile the cython
+#    extensions.
+# 3. Finally, the install crashes if scipy is listed in the setup_requires.
+#    It should be in the install_requires list, however.
+setup_requires = []
+try:
+    import numpy as np
+    include_dirs = [np.get_include(), ]
+except ImportError:
+    # Numpy is not available. It has to be added to the setup_requires
+    setup_requires.append('numpy')
+    include_dirs = []
 
 
 # Setup Cython, if available
@@ -28,7 +45,7 @@ else:
 # package will lead to an ImportError. This approach circumvents this problem.
 __version__ = None  # This is a version string
 VERSION = None  # This is a 5-item version tuple
-execfile('mollib/__version__.py')  # The following loads __version__/VERSION
+exec(open("./mollib/__version__.py").read())
 
 
 # Organize classifiers
@@ -69,8 +86,8 @@ setup(name='mollib',
       include_package_data=True,
       packages=find_packages(),
       platforms='any',
-      install_requires=['numpy', 'scipy'],
-      tests_requires=['nose>=1.0'],
+      setup_requires=setup_requires,
+      install_requires=['numpy', 'scipy', 'configparser'],
       test_suite='nose.collector',
       scripts=['bin/mollib'],
       entry_points={
@@ -82,6 +99,6 @@ setup(name='mollib',
           ],
       },
       ext_modules=extensions,
-      include_dirs=[np.get_include()],
+      include_dirs=include_dirs,
       classifiers=classifiers,
       )

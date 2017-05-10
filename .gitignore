@@ -12,6 +12,8 @@ benchmarks/
 .coverage
 build/
 output/*
-data/*
 .DS_Store
-*.npz
+.ipynb_checkpoints
+
+# tox testing tool
+.tox

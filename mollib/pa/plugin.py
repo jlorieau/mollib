@@ -6,10 +6,11 @@ import os.path
 from textwrap import TextWrapper
 
 from mollib.plugins import Plugin
-from mollib.utils.checks import check_file, check_not_empty
+from mollib.utils.checks import check_not_empty
 from mollib.utils.files import write_file
 from mollib.utils.text import word_list
 from mollib.utils.net import get_or_fetch
+from mollib.utils.interactions import interaction_type
 import mollib.utils.settings as utils_settings
 
 from .data_readers import read_pa_file
@@ -67,6 +68,12 @@ class PA(Plugin):
                        help='If multiple datasets are available, this option'
                             'specifies which dataset to use.')
 
+        p.add_argument('--exclude',
+                       action='store', required=False, nargs='*',
+                       metavar='interaction-type',
+                       help='Exclude one or more interactions of the following '
+                            'type(s). ex: N-H or CE-HE')
+
         p.add_argument('--project-methyls',
                        action='store_true',
                        help='Fit methyl RDCs by projecting their values on the '
@@ -78,7 +85,6 @@ class PA(Plugin):
                        help='The order parameter to use in scaling the methyl '
                             'RDCs.')
 
-        # The following options can be turned off and on
         fixers = p.add_argument_group("fixer arguments")
         fix_sign = fixers.add_mutually_exclusive_group()
         fix_sign.add_argument('--fix-sign',
@@ -88,6 +94,15 @@ class PA(Plugin):
         fix_sign.add_argument('--nofix-sign',
                               action='store_true',
                               help="Disable check in RDC and RACS sign")
+
+        fix_nh_scale = fixers.add_mutually_exclusive_group()
+        fix_nh_scale.add_argument('--fix-nh-scale',
+                                  action='store_true',
+                                  help="Check and rescale couplings that "
+                                       "were scaled to the N-H RDC.")
+        fix_nh_scale.add_argument('--nofix-nh-scale',
+                                  action='store_true',
+                                  help="Disable N-H rescaling of couplings.")
 
         # The following options can be turned off and on
         fix_outliers = fixers.add_mutually_exclusive_group()
@@ -104,10 +119,12 @@ class PA(Plugin):
 
     def preprocess(self, molecules, args):
         """Conduct argument checks."""
-        # The --out and --pred filenames cannot be the same
-        if getattr(args, 'out', False) and args.out == args.pred:
-            # Add '_pred' to the output filename
-            args.pred = '_pred'.join(os.path.splitext(args.out))
+        # The --out and --pred filenames cannot be the same when using the 'pa'
+        # subcommand
+        if args.command == 'pa':
+            if getattr(args, 'out', False) and args.out == args.pred:
+                # Add '_pred' to the output filename
+                args.pred = '_pred'.join(os.path.splitext(args.out))
 
     def process(self, molecules, args):
         """Process the SVD of molecules."""
@@ -120,6 +137,10 @@ class PA(Plugin):
             settings.enable_signfixer = True
         if 'nofix_sign' in args and args.nofix_sign:
             settings.enable_signfixer = False
+        if 'fix_nh_scale' in args and args.fix_nh_scale:
+            settings.enable_nhscalefixer = True
+        if 'nofix_nh_scale' in args and args.nofix_nh_scale:
+            settings.enable_nhscalefixer = False
         if 'fix_outliers' in args and args.fix_outliers:
             settings.enable_outlierfixer = True
         if 'nofix_outliers' in args and args.nofix_outliers:
@@ -141,6 +162,11 @@ class PA(Plugin):
                 # Read the data from the file.
                 data_dict = read_pa_file(file_path, set_id)
                 data.update(data_dict)
+
+            # If excluded interactions are specified, remove these.
+            if args.exclude:
+                data = {k:v for k, v in data.items()
+                        if interaction_type(k) not in args.exclude}
 
             # verify that there is data in the data dict
             msg = "Could not find data in alignment data."

@@ -1,3 +1,4 @@
+######################
 mollib's documentation
 ######################
 
@@ -8,7 +9,7 @@ emphasis on biophysical analysis. Mollib is built on a plugin framework to
 easily add new tools to manipulate and analyze structures and data, which can
 then be *combined* and *cross-validated*.
 
-It includes tools for:
+Mollib includes tools for:
 
 - The :ref:`processing <process-command>` and protonation of
   molecules.
@@ -18,12 +19,12 @@ It includes tools for:
   angles
 - The :ref:`measurement <measure-command>` of geometries within molecules
   as well as the reporting and classification of Ramachandran angles.
-- The analysis :ref:`partial alignment <pa-command>` data with residual dipolar
-  coupling (RDC) and residual anisotropic chemical shift (RACS, a.k.a RCSA)
-  data.
+- The analysis of :ref:`partial alignment <pa-command>` data with residual
+  dipolar coupling (RDC) and residual anisotropic chemical shift (RACS, a.k.a
+  RCSA) data.
 
-Installation
-============
+
+.. rubric:: Installation
 
 **Github**: https://github.com/jlorieau/mollib
 
@@ -31,9 +32,9 @@ Installation
 `mollib-1.3.tar.gz <https://github.com/jlorieau/mollib/archive/v1.3.tar.gz>`_
 
 
+.. only:: html
 
-Indices and tables
-==================
+    .. rubric:: Table of Contents
 
 .. toctree::
    :maxdepth: 2
@@ -43,7 +44,9 @@ Indices and tables
    develop
    releases/releases
 
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+.. only:: html
+
+   * :ref:`genindex`
+   * :ref:`modindex`
+   * :ref:`search`
 

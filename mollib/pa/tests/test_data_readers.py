@@ -65,13 +65,16 @@ class TestDataReader(unittest.TestCase):
 
         d = match.groupdict()
         self.assertEqual(d['coord_num'], '500')
+        self.assertIsNone(d['chain_i'])
         self.assertEqual(d['res_i'], '2')
         self.assertEqual(d['name_i'], 'N')
+        self.assertIsNone(d['chain_j'])
         self.assertEqual(d['res_j'], '2')
         self.assertEqual(d['name_j'], 'HN')
         self.assertEqual(d['value_j'], '-8.1700')
 
-        # The following comes from 2oed.mr
+        # The following comes from 2oed.mr. The chain id is not one character
+        # so it isn't read in.
         format2 = """
         assign (               resi 501 and name  OO  )
                (               resi 501 and name  Z   )
@@ -85,11 +88,37 @@ class TestDataReader(unittest.TestCase):
         match = re_mr.search(format2)
         self.assertIsNotNone(match)
 
-        d = match.groupdict(); print(d)
+        d = match.groupdict()
         self.assertEqual(d['coord_num'], '501')
+        self.assertIsNone(d['chain_i'])
         self.assertEqual(d['res_i'], '4')
         self.assertEqual(d['name_i'], 'C')
+        self.assertIsNone(d['chain_j'])
         self.assertEqual(d['res_j'], '4')
         self.assertEqual(d['name_j'], 'CA')
         self.assertEqual(d['value_j'], '-0.906')
 
+        # The following comes from 2M6Z. The segid is 1 character, so it
+        # gets read in properly.
+        format3 = """
+        assign ( segid CHA9 and resid 600  and name OO)
+               ( segid CHA9 and resid 600  and name Z )
+               ( segid CHA9 and resid 600  and name X )
+               ( segid CHA9 and resid 600  and name Y )
+               ( segid A and resid   6 and name N  )
+               ( segid A and resid   6 and name HN )   -12.890      0.369
+        """
+
+        # Check that the string matched and was properly parsed
+        match = re_mr.search(format3)
+        self.assertIsNotNone(match)
+
+        d = match.groupdict()
+        self.assertEqual(d['coord_num'], '600')
+        self.assertEqual(d['chain_i'], 'A')
+        self.assertEqual(d['res_i'], '6')
+        self.assertEqual(d['name_i'], 'N')
+        self.assertEqual(d['chain_j'], 'A')
+        self.assertEqual(d['res_j'], '6')
+        self.assertEqual(d['name_j'], 'HN')
+        self.assertEqual(d['value_j'], '-12.890')

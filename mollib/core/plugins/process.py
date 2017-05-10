@@ -7,6 +7,7 @@ import logging
 from mollib.plugins import Plugin
 
 
+# TODO: add option to specify the --pH
 class Process(Plugin):
     """The core plugin to offer the 'process' command."""
 
@@ -38,7 +39,7 @@ class Process(Plugin):
                                 help="The configuration filename")
 
             # List molecule details
-            subparser.add_argument('-l', '--list',
+            subparser.add_argument('-l',
                                 action='store_true',
                                 help='List details on the molecule(s)')
 
@@ -68,7 +69,7 @@ class Process(Plugin):
                   conducted elsewhere. Also, the file is written as the last
                   operation.
         """
-        if getattr(args, 'list', False):
+        if getattr(args, 'l', False):
             print(molecule)
             chain_msg = '\tChain {:<3}: {:>4} residues, {:>4} atoms.'
             for chain in molecule.chains:

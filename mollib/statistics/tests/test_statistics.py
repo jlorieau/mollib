@@ -17,7 +17,7 @@ class TestStatistics(unittest.TestCase):
 
         # Make sure the output filenames are correct and correspond to real
         # paths
-        filename =  stats.get_measurement_filename()
+        filename = stats.get_measurement_filename()
         path, filename = os.path.split(filename)
         self.assertTrue(os.path.isdir(path))
 

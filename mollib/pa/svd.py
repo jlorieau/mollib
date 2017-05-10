@@ -38,7 +38,7 @@ def get_error(label, data):
         data[label].error != 0.0):
         return data[label].error
 
-    # Otherwise calculate a default value
+    # Otherwise fetch a default value
     interaction_type = sort_func(label)[0]
     if interaction_type in settings.default_error:
         return settings.default_error[interaction_type]
@@ -46,6 +46,12 @@ def get_error(label, data):
     interaction_type_rev = '-'.join(interaction_type.split('-')[::-1])
     if interaction_type_rev in settings.default_error:
         return settings.default_error[interaction_type_rev]
+
+    # Finally, see if there's a default value for the bond type.
+    # The bond_type converts 'CA-CB' into 'C-C'
+    bond_type = '-'.join([i[0] for i in interaction_type.split('-')])
+    if bond_type in settings.default_error:
+        return settings.default_error[bond_type]
 
     msg = ("The default error for the interaction type '{}' was not "
            "found for '{}'")
@@ -109,7 +115,7 @@ def calc_pa_SVD(magnetic_interactions, data):
         A_line = []
         for interaction_dict in magnetic_interactions:
             # Check to see if the interaction has been processed.
-            if key not in interaction_dict:
+            if key not in interaction_dict.keys():
                 if key not in logs.errors:
                         msg = ("Processing of data point '{}' is not "
                                "implemented.")
@@ -225,7 +231,7 @@ def calc_pa_SVD(magnetic_interactions, data):
 
         Saupe_components['Aa' + id_] = aa
         Saupe_components['Ar' + id_] = ar
-        Saupe_components['Rh' + id_] = ar / abs(aa)
+        Saupe_components['Rh' + id_] = ar / aa
 
     # Calculate the summary statistics
     stats = calc_summary(magnetic_interactions, Saupe_components, data,

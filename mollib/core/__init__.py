@@ -73,3 +73,4 @@ from .molecule import Molecule
 from .residue import Residue
 from .utils import *
 
+# TODO: add a '--model' option to select models other than the first.

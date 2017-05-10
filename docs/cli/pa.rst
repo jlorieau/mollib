@@ -7,73 +7,77 @@ anisotropic chemical shifts (RACSs, sometimes known as RCSAs) from *partially
 aligned* samples using NMR. The output table entries are colored for warning
 outliers (yellow) and bad outliers (red).
 
-Usage
------
-
-    .. include:: output/cli_pa_help.html
+.. include:: output/cli_pa_help.rst
 
 Arguments
 ---------
 
-    ``-a`` / ``--alignment`` ``filename``
-        The file(s) with the RDC and RACS alignment data. These can be in
-        either of the following formats:
+``-a`` / ``--alignment`` ``filename``
+    The file(s) with the RDC and RACS alignment data. These can be in
+    either of the following formats:
 
-        - The pa format. See :ref:`pa_format`.
+    - The pa format. See :ref:`pa_format`.
 
-        - NMRPipe's DC format.
+    - NMRPipe's DC format.
 
-        - Magnetic resonance data files (``.mr``) submitted to the PDB. This
-          function supports the automatic fetching and caching of magnetic
-          resonance data files. However, only residue numbers are currently
-          supported. (Not chain ids)
+    - Magnetic resonance data files (``.mr``) submitted to the PDB. This
+      function supports the automatic fetching and caching of magnetic
+      resonance data files.
 
-    ``-o`` / ``--out`` ``filename``
-        (Optional) The filename for the output report. The output report is
-        rendered in Markdown.
+``-o`` / ``--out`` ``filename``
+    (Optional) The filename for the output report. The output report is
+    rendered in Markdown.
 
-    ``-p`` / ``--pred`` ``filename``
-        (Optional) The filename for the back-calculated RDCs and RACS from the
-        SVD fit. The output report is rendered in Markdown.
+``-p`` / ``--pred`` ``filename``
+    (Optional) The filename for the back-calculated RDCs and RACS from the
+    SVD fit. The output report is rendered in Markdown.
 
-    ``--summary``
-        (Optional) Only display the fit summary.
+``--summary``
+    (Optional) Only display the fit summary.
 
-    ``--set`` ``id``
-        (Optional) Use the given data set, if multiple data sets are available.
-        This option is useful with ``.mr`` data from the PDB, which may contain
-        mulitple alignment data sets from multiple alignment media. Sets can
-        be selected from their alignment tensor value (ex: 500, 501, etc) or
-        from their position within the data file, starting with 0. (ex: 0 for
-        the first dataset, 1, for the second dataset and so on.)
+``--exclude`` ``interactions-types``
+    (Optional) Exclude one or more interactions types. ex: ``--exclude
+    N-H CA-HA`` will exclude all N-H and CA-HA RDCs.
 
+``--set`` ``id``
+    (Optional) Use the given data set, if multiple data sets are available.
+    This option is useful with ``.mr`` data from the PDB, which may contain
+    mulitple alignment data sets from multiple alignment media. Sets can
+    be selected from their alignment tensor value (ex: 500, 501, etc) or
+    from their position within the data file, starting with 0. (ex: 0 for
+    the first dataset, 1, for the second dataset and so on.)
 
-    ``--project-methyls``
-        (Optional) Use the C-C bond RDC values for the methyl ¹H-¹³C RDCs. This
-        is the convention followed by X-plor NIH. By default, this is disabled.
+``--project-methyls``
+    (Optional) Use the C-C bond RDC values for the methyl ¹H-¹³C RDCs. This
+    is the convention followed by X-plor NIH. By default, this is disabled.
 
-    ``--methyl-scale`` ``number``
-        (Optional) The scaling constant to use in fitting the methyl RDCs. This
-        scaling may be needed if the contribution of the C3-rotational motion
-        was not accounted for in the reported RDCs. By default, this value is
-        1.0.
+``--methyl-scale`` ``number``
+    (Optional) The scaling constant to use in fitting the methyl RDCs. This
+    scaling may be needed if the contribution of the C3-rotational motion
+    was not accounted for in the reported RDCs. By default, this value is
+    1.0.
 
 Fixer Arguments
 ^^^^^^^^^^^^^^^
 
-    ``--fix-sign`` / ``--nofix-sign``
-        (Optional) Check to see if the sign of RDCs or RACSs of the same type
-        need to be inverted to get a better fit. This operation is useful for
-        automatically fixing the sign of couplings when the absolute value of
-        the \|J+D\|- and \|J\|-couplings are measured. By default, this fixer
-        is **on**.
+``--fix-sign`` / ``--nofix-sign``
+    (Optional) Check to see if the sign of RDCs or RACSs of the same type
+    need to be inverted to get a better fit. This operation is useful for
+    automatically fixing the sign of couplings when the absolute value of
+    the \|J+D\|- and \|J\|-couplings are measured. By default, this fixer
+    is **on**.
 
-    ``--fix-outliers`` / ``--nofix-outliers``
-        (Optional) Check to see if there are outliers for each type of
-        interaction. A warning outlier and a bad outlier are defined by those
-        that give an alpha-critical cutoff of 95% and 99%, respectively,
-        using a Grubbs test. If outliers are found, these will be removed from
-        the fit and the reported statistics. By default, this fixer is **off**.
+``--fix-outliers`` / ``--nofix-outliers``
+    (Optional) Check to see if there are outliers for each type of
+    interaction. A warning outlier and a bad outlier are defined by those
+    that give an alpha-critical cutoff of 95% and 99%, respectively,
+    using a Grubbs test. If outliers are found, these will be removed from
+    the fit and the reported statistics. By default, this fixer is **off**.
+
+``--fix-nh-scale`` / ``--nofix-nh-scale``
+    (Optional) Check to see if RDCs and RACSs have been scaled to match the
+    magnitude of N-H RDCs. If they have, scale them back down to their
+    original values. By default, this fixer is **off**.
 
 .. _pa_format:
 
@@ -98,7 +102,7 @@ The file format has the following features:
 
 The partial alignment RDC and RACS data file has the following format:
 
-::
+.. code-block:: none
 
     # Interaction   Value (Hz)   Error (optional)
     14N-H           -14.5        0.1
@@ -121,7 +125,7 @@ peptide structure (``-a 2KXA``) to the deposited NMR structure
 (``-i 2KXA``). The output table entries are colored for warning outliers
 (yellow) and bad outliers (red).
 
-.. include:: output/cli_pa_i_2KXA_a_2KXA.html
+.. include:: output/cli_pa_i_2KXA_a_2KXA.rst
 
 The following example fits the deposited RDCs for the first alignment
 (``--set 0``) dataset of ubiquitin (``-a 2MJB``) to the deposited NMR structure
@@ -129,10 +133,15 @@ The following example fits the deposited RDCs for the first alignment
 corresponding C-C bonds (``--project-methyls``) and outliers are removed
 from the fit (``--fix-outliers``).
 
-.. include:: output/cli_pa_i_2MJB_a_2MJB_set_0_fix-outliers_project-methyls_summary.html
+.. include:: output/cli_pa_i_2MJB_a_2MJB_set_0_fix-outliers_project-methyls_summary.rst
+
+This example is the same as the last one, however 'CE-HE', 'CD-HD' and 'CE-SD'
+RDCs are excluded (``--exclude``) from the fit.
+
+.. include:: output/cli_pa_i_2MJB_a_2MJB_set_0_exclude_CE-HE_CD-HD_CE-SD_fix-outliers_project-methyls_summary.rst
 
 Likewise, the crystal structure of ubiquitin (``-i 1UBQ``) can be used in
 the fit. In this case, the structure is missing hydrogen atoms, and these
 must be added (``--hydrogenate``).
 
-.. include:: output/cli_pa_i_1UBQ_a_2MJB_set_0_fix-outliers_project-methyls_hydrogenate_summary.html
+.. include:: output/cli_pa_i_1UBQ_a_2MJB_set_0_fix-outliers_project-methyls_hydrogenate_summary.rst

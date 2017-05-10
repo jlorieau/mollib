@@ -18,7 +18,7 @@ def get_data(data_sets, set_id=None):
     
     Parameters
     ----------
-    data_set: :obj:`collections.OrderedDict` or dict
+    data_sets: :obj:`collections.OrderedDict` or dict
         The data sets (one or multiple) to retrieve a single data from.
         If a single data set is passed, then it will be returned, unchanged.
     set_id: str (optional)
@@ -54,7 +54,8 @@ def get_data(data_sets, set_id=None):
         # used to access the set
         if isinstance(set_id, int):
             pass
-        elif isinstance(set_id, str) and set_id.isdigit():
+        elif ((isinstance(set_id, str) or isinstance(set_id, unicode)) and
+              set_id.isdigit()):
             set_id = int(set_id)
         else:
             msg = "Could not parse data set id '{}'".format(set_id)
@@ -65,7 +66,7 @@ def get_data(data_sets, set_id=None):
 
         # The set_id is not an integer. Let's see if it corresponds to a key
         # in the key array
-        keys = data_sets.keys()
+        keys = list(data_sets.keys())
 
         if set_id < len(keys):
             key = keys[set_id]
@@ -81,7 +82,7 @@ def get_data(data_sets, set_id=None):
 
     # At this point, no set_id key was specified. Just return the first
     # dataset, if available.
-    keys = data_sets.keys()
+    keys = list(data_sets.keys())
     if len(keys) == 0:
         return None
     key = keys[0]
@@ -94,13 +95,23 @@ def get_data(data_sets, set_id=None):
         return data_sets
 
 
-def read_pa_file(filename, set_id=None):
+# Structures known to not work: 2LZF (CYANA), 2LT9 (CYANA)
+def read_pa_file(filename, set_id=None, ignore_ext=False):
     """Read data from a partial alignment data file.
 
     Parameters
     ----------
     filename: str
         The filename to read the data from. The file can be a gzipped file.
+    set_id: str (optional)
+        If specified, the data set matching the given set_id will be returned.
+        The set_id can either be a string of the set_id or a number for the
+        set number to return, starting from '0'.
+        If not specified, the first data set will be returned
+    ignore_ext: bool (optional)
+        If True, all the parsers will be attempted for the file. Otherwise,
+        the only specific parsers will be attempted. So far, this only works
+        with '.mr' and '.mr.gz' files.
 
     Returns
     -------
@@ -110,6 +121,7 @@ def read_pa_file(filename, set_id=None):
     """
     data = {}
 
+    # Read in the filename to a string
     if filename.endswith('.gz'):
         with gzip.open(filename) as f:
             string = f.read()
@@ -117,22 +129,44 @@ def read_pa_file(filename, set_id=None):
         with open(filename) as f:
             string = f.read()
 
-    retrieved_data = read_pa_string(string)
-    data.update(retrieved_data)
+    # Convert the string, if it's in bytes, to a text string. This is needed
+    # for Python 3 compatibility.
+    if type(string) == bytes:
+        string = string.decode('latin-1')
 
-    # If reading the file as a pa string didn't work, try the DC file
-    # format instead
-    if len(retrieved_data) == 0:
-        retrieved_data = read_dc_string(string)
+    # The objective here is to read from the most specific to the least
+    # specific. First start with '.mr' data format.
+    retrieved_data = read_mr_string(string, set_id)
+
+    # Update the data dict if data was found
+    if retrieved_data is not None and len(retrieved_data) > 0:
         data.update(retrieved_data)
+        return data
 
-    # If reading the file as a DC file format didn't work, try the mr file
-    # format instead
-    if len(retrieved_data) == 0:
-        retrieved_data = read_mr_string(string, set_id)
-        if retrieved_data is not None:
-            data.update(retrieved_data)
+    # If it's a .mr or .mr.gz file and ignore_ext is False, then no other
+    # parsers should be attempted
+    if not ignore_ext and (filename.endswith('mr') or
+                           filename.endswith('.mr.gz')):
+        return data
 
+    # Now, try the next parser. Try the .pa data format
+    retrieved_data = read_pa_string(string)
+
+    # Update the data dict if data was found
+    if retrieved_data is not None and len(retrieved_data) > 0:
+        data.update(retrieved_data)
+        return data
+
+    # Now try NMRPipe DC file data format. This format is promiscuous and may
+    # match inadvertantly.
+    retrieved_data = read_dc_string(string)
+
+    # Update the data dict if data was found
+    if retrieved_data is not None and len(retrieved_data) > 0:
+        data.update(retrieved_data)
+        return data
+
+    # If nothing else, return the empty dataset
     return data
 
 
@@ -277,7 +311,7 @@ def read_dc_string(string):
         atom_name2 = d['atom_name2']
         value = float(d['value'])
 
-        # Generation the interaction key
+        # Generate the interaction key
         key = (('A', res_num1, atom_name1),
                ('A', res_num2, atom_name2))
 
@@ -293,14 +327,16 @@ def read_dc_string(string):
 
 re_mr = re.compile(r'assign'
                    r'\s*'
-                   r'\(\s*resid?\s*(?P<coord_num>\d+)[\s\w]+OO\s*\)\s*'
-                   r'(?:\n[\s\w]*\([\w\s]+[XYZ]\s*\)\s*)+'
-                   r'(?:\n[\s\w]*\([\w\s]+?'
+                   r'\([\s\w]*?resid?\s*(?P<coord_num>\d+)[\s\w]+OO\s*\)\s*'
+                   r'(?:\n[\s\w]*\([\w\s]+[XYZ]\s*\)\s*){3}'
+                   r'(\n[\s\w]*\(\s*'
+                       r'(?:segid?\s+(?P<chain_i>[A-Z])\s+)?[\s\w]*?'
                        r'resid?\s+(?P<res_i>\d+)[a-z\s]+?'
                        r'name\s+(?P<name_i>[A-Z0-9\#]+)\s*\))?'
                    r'\s*'
                    r'(?P<value_i>[\d\-\+\.]+[eE]?[\d\-\+]*)?'
-                   r'(?:\n[\s\w]*\([\w\s]+?'
+                   r'(\n[\s\w]*\(\s*'
+                       r'(?:segid?\s+(?P<chain_j>[A-Z])\s+)?[\s\w]*?'
                        r'resid?\s*(?P<res_j>\d+)[a-z\s]+?'
                        r'name\s+(?P<name_j>[A-Z0-9\#]+)\s*\))'
                    r'\s*'
@@ -308,6 +344,7 @@ re_mr = re.compile(r'assign'
                    re.MULTILINE)
 
 
+# TODO: fix reading of 5T1N
 def read_mr_string(string, set_id=None):
     """Read data from a mr data string.
 
@@ -341,19 +378,26 @@ def read_mr_string(string, set_id=None):
 
         # Get the residue numbers and atom names
         coord_num = d['coord_num']
-        res_i = int(d['res_i'])
+        chain_i = d['chain_i'] if d['chain_i'] is not None else 'A'
+        res_i = int(d['res_i']) if d['res_i'] is not None else None
         name_i = d['name_i']
-        res_j = int(d['res_j'])
+
+        chain_j = d['chain_j'] if d['chain_j'] is not None else 'A'
+        res_j = int(d['res_j']) if d['res_j'] is not None else None
         name_j = d['name_j']
-        value = float(d['value_j'])
+        value = float(d['value_j']) if d['value_j'] is not None else None
+
+        # Either one or the other residue must be specified as well as a value
+        if (res_i is None and res_j is None) or value is None:
+            continue
 
         # if res_i/name_i are None then this is a CSA value. Generate the key
         # and data type
         if res_i is None:
-            key = (('A', res_j, name_j),)
+            key = ((chain_j, res_j, name_j),)
             data_type = RACS
         else:
-            key = (('A', res_i, name_i), ('A', res_j, name_j))
+            key = ((chain_i, res_i, name_i), (chain_j, res_j, name_j))
             data_type = RDC
 
         # Convert the key, which is a tuple into and interaction label. This
