@@ -8,10 +8,10 @@ from mollib.core import register_settings, import_settings, load_settings
 from mollib.core import settings
 
 class TestSettings(unittest.TestCase):
-    "Tests the settings functions."
+    """Tests the settings functions."""
 
     def test_import_settings(self):
-        "Tests the basic settings import functionality of import_settings."
+        """Tests the basic settings import functionality of import_settings."""
 
         # Make a fake settings module using a class
         class Settings(object):
@@ -92,7 +92,7 @@ class TestSettings(unittest.TestCase):
 
 
     def test_import_config(self):
-        "Tests the load_settings function."
+        """Tests the load_settings function."""
 
         # Check default values in the core settings
         func_ref = register_settings
