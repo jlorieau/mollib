@@ -87,7 +87,6 @@ class Process(object):
         magnetic_interactions: list of dicts
             A list of magnetic interaction dicts, one for each molecule.
         """
-
         # Process all of the subclasses and store their results
         for instance in self._subclass_instances:
             result_list = instance.process(**kwargs)
@@ -273,12 +272,11 @@ class ProcessDipole(Process):
         magnetic_interactions: list of dicts
             A list of magnetic interaction dicts, one for each molecule.
         """
-
         # Convert labels to a set, if it isn't already
-        if isinstance(labels, list):
-            labels = set(labels)
-        elif isinstance(labels, set):
+        if isinstance(labels, set):
             pass
+        elif hasattr(labels, '__iter__'):
+            labels = set(labels)
         else:
             labels = set()
 

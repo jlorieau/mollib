@@ -91,7 +91,7 @@ class MDTable(object):
         self.title = None
 
         if term.terminal and term.columns is not None:
-            self.max_width = term.columns
+            self.max_width = int(term.columns)
         else:
             self.max_width = settings.default_max_width
 

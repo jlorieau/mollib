@@ -83,8 +83,10 @@ default_predicted_racs = {
 default_error = {'N-H':   0.2,  # Hz
                  'CA-HA': 0.5,  # Hz
                  'N-C':   0.5,  # Hz
-                 'CA-C':  0.5,  # Hz
+                 'CA-C':  0.5,  # HZ
                  'NE-HE': 0.2,  # Hz
+                 'C-C':   0.5,  # Hz (bond type)
+                 'C-H':   1.0,  # Hz (bond type)
                  'C':     1.,  # ppb
                  'N':     1.,  # ppb
                  'H':     5.,  # ppb

@@ -566,7 +566,7 @@ def interaction_atoms(key_or_label, molecule, sort=True):
     >>> interaction_atoms('14N-C-1', mol)
     [[A.I13.C, A.T14.N]]
     """
-    if isinstance(key_or_label, str):
+    if isinstance(key_or_label, str) or isinstance(key_or_label, unicode):
         key = interaction_key(key_or_label, sort=sort)
     elif isinstance(key_or_label, tuple):
         key = key_or_label

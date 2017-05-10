@@ -18,7 +18,7 @@ def get_data(data_sets, set_id=None):
     
     Parameters
     ----------
-    data_set: :obj:`collections.OrderedDict` or dict
+    data_sets: :obj:`collections.OrderedDict` or dict
         The data sets (one or multiple) to retrieve a single data from.
         If a single data set is passed, then it will be returned, unchanged.
     set_id: str (optional)
@@ -54,7 +54,8 @@ def get_data(data_sets, set_id=None):
         # used to access the set
         if isinstance(set_id, int):
             pass
-        elif isinstance(set_id, str) and set_id.isdigit():
+        elif ((isinstance(set_id, str) or isinstance(set_id, unicode)) and
+              set_id.isdigit()):
             set_id = int(set_id)
         else:
             msg = "Could not parse data set id '{}'".format(set_id)
@@ -65,7 +66,7 @@ def get_data(data_sets, set_id=None):
 
         # The set_id is not an integer. Let's see if it corresponds to a key
         # in the key array
-        keys = data_sets.keys()
+        keys = list(data_sets.keys())
 
         if set_id < len(keys):
             key = keys[set_id]
@@ -81,7 +82,7 @@ def get_data(data_sets, set_id=None):
 
     # At this point, no set_id key was specified. Just return the first
     # dataset, if available.
-    keys = data_sets.keys()
+    keys = list(data_sets.keys())
     if len(keys) == 0:
         return None
     key = keys[0]
@@ -120,12 +121,18 @@ def read_pa_file(filename, set_id=None, ignore_ext=False):
     """
     data = {}
 
+    # Read in the filename to a string
     if filename.endswith('.gz'):
         with gzip.open(filename) as f:
             string = f.read()
     else:
         with open(filename) as f:
             string = f.read()
+
+    # Convert the string, if it's in bytes, to a text string. This is needed
+    # for Python 3 compatibility.
+    if type(string) == bytes:
+        string = string.decode('latin-1')
 
     # The objective here is to read from the most specific to the least
     # specific. First start with '.mr' data format.

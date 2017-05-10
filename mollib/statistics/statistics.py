@@ -16,7 +16,7 @@ try:
 except ImportError:
     pass
 
-from mollib import Molecule
+from mollib import Molecule, __path__ as module_path
 from mollib.core import settings, load_settings
 
 class Statistics(object):
@@ -36,9 +36,13 @@ class Statistics(object):
     """
 
     def __init__(self, *filenames):
+        # Set the data paths
+        self.abs_path = module_path[0]
+        self.data_path = os.path.join(self.abs_path, settings.dataset_path)
+
         # Find all of the files that contain identifiers.
         filenames = set(filenames)
-        settings_filenames = [os.path.join(settings.dataset_path, i)
+        settings_filenames = [os.path.join(self.data_path, i)
                               for i in settings.model_molecule_identifiers]
         filenames.add(*settings_filenames)
 
@@ -47,9 +51,6 @@ class Statistics(object):
 
         # Read in the molecule identifiers
         self.read_identifiers()
-
-        # Set the data paths
-        self.data_path = settings.dataset_path
 
     def read_identifiers(self):
         """Read in the list of identifiers from the molecule files."""
