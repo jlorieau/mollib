@@ -271,18 +271,18 @@ latex_elements = {
 
      # Additional stuff for the LaTeX preamble.
      #
-     'preamble': (
-         "\definecolor{olivegreen}{RGB}{60, 128, 49}\n"
-         "\definecolor{darkyellow}{RGB}{202, 214, 41}\n"
-         "\definecolor{darkorange}{RGB}{198,  93,  9}\n"
-         "\sphinxDeclareColorOption{VerbatimBorderColor}{{rgb}{0.5,0.5,0.5}}\n"
-         "\sphinxDeclareColorOption{VerbatimColor}"
-            "{{rgb}{0.985,0.985,0.985}}\n"
-         "\\fvset{fontsize=\\footnotesize}\n"
-         "\\sphinxverbatimsep=6pt\n"
-         "\\sphinxshadowsize=15pt\n"
-         "\\usepackage{enumitem}\n"
-         "\\setlistdepth{99}\n"),
+     'preamble': r'''
+         \definecolor{olivegreen}{RGB}{60, 128, 49}
+         \definecolor{darkyellow}{RGB}{202, 214, 41}
+         \definecolor{darkorange}{RGB}{198,  93,  9}
+         \sphinxDeclareColorOption{VerbatimBorderColor}{{rgb}{0.5,0.5,0.5}}
+         \sphinxDeclareColorOption{VerbatimColor}{{rgb}{0.985,0.985,0.985}}
+         \fvset{fontsize=\footnotesize}
+         \sphinxverbatimsep=6pt
+         \sphinxshadowsize=15pt
+         \usepackage{enumitem}
+         \setlistdepth{99}
+         \setlist{labelsep=0.5em}'''
 
      # Latex figure (float) alignment
      #
