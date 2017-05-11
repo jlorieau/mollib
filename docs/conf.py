@@ -95,10 +95,6 @@ language = None
 # This patterns also effect to html_static_path and html_extra_path
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 
-# The API documentation is not included in the user PDF manual
-if 'tags' in locals() and tags.has('latex'):
-    exclude_patterns += ['**/api*', '**/releases*', 'develop*']
-
 # The reST default role (used for this markup: `text`) to use for all
 # documents.
 #
@@ -264,6 +260,11 @@ latex_elements = {
 
      'classoptions': ',openany,oneside',
 
+     'fontpkg': r'''
+        \usepackage{times}
+        \usepackage{inconsolata}
+      ''',
+
      # The font size ('10pt', '11pt' or '12pt').
      #
      # 'pointsize': '11pt',
@@ -279,13 +280,20 @@ latex_elements = {
             "{{rgb}{0.985,0.985,0.985}}\n"
          "\\fvset{fontsize=\\footnotesize}\n"
          "\\sphinxverbatimsep=6pt\n"
-         "\\sphinxshadowsize=15pt\n"),
+         "\\sphinxshadowsize=15pt\n"
+         "\\usepackage{enumitem}\n"
+         "\\setlistdepth{99}\n"),
 
      # Latex figure (float) alignment
      #
      # 'figure_align': 'htbp',
 
 }
+
+# The API documentation is not included in the user PDF manual
+if 'tags' in locals() and tags.has('latex'):
+    exclude_patterns += ['**/releases*',]
+    # exclude_patterns += ['**/api*', '**/releases*', 'develop*']
 
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title,

@@ -32,9 +32,16 @@ The following are instructions for locally developing a branch of mollib.
 
 .. code-block:: shell-session
 
-    python setup.py nosetests
+    make test
 
 .. note:: You will need ``nosetests`` to run the tests.
+
+Alternatively, mollib can be tested against multiple platforms using
+`https://tox.readthedocs.io/en/latest/ <tox>`_.
+
+.. code-block:: shell-session
+
+    make test
 
 6. **Install in Developer Mode**. Install the package in developer mode. This
 adds the package's source path to the python path. Edits to the source path
