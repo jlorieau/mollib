@@ -68,7 +68,7 @@ author = 'Justin L Lorieau'
 # package will lead to an ImportError. This approach circumvents this problem.
 __version__ = None  # This is a version string
 VERSION = None  # This is a 5-item version tuple
-exec(open("./mollib/__version__.py").read())
+exec(open("../mollib/__version__.py").read())
 
 # The full version, including alpha/beta/rc tags.
 release = __version__
