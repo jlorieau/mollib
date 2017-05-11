@@ -8,7 +8,7 @@ inplace:
 test: inplace
 	nosetests
 
-testfull: clean
+testall: clean
 	tox
 
 develop: clean inplace
@@ -22,7 +22,7 @@ clean:
 	rm -rf .tox
 	$(MAKE) -C docs clean
 
-docs:
+docs: inplace
 	$(MAKE) -C docs cli html latexpdf
 	@echo "\033[92m\n\nBuild successful!\033[0m"
 	@echo "\033[92mView the html docs at docs/_build/html/index.html.\033[0m"
