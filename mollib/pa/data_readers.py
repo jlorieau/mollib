@@ -8,7 +8,7 @@ import gzip
 from collections import OrderedDict
 
 from mollib.utils.interactions import (validate_label, interaction_label,
-                                       re_interaction_str)
+                                       _re_interaction_str)
 from .data_types import RDC, RACS
 from . import logs
 
@@ -170,8 +170,8 @@ def read_pa_file(filename, set_id=None, ignore_ext=False):
     return data
 
 
-re_pa = re.compile(r'^\s*' +
-                   re_interaction_str +
+_re_pa = re.compile(r'^\s*' +
+                    _re_interaction_str +
                    r'\s+'
                    r'(?P<value>[\d\-\+\.]+[eE]?[\d\-\+]*)'
                    r'\s*'
@@ -236,7 +236,7 @@ def read_pa_string(string):
     data = {}
 
     # Find all of the matches and produce a generator
-    matches = (m for l in string for m in [re_pa.search(l)] if m)
+    matches = (m for l in string for m in [_re_pa.search(l)] if m)
 
     # iterate over the matches and pull out the data.
     for match in matches:
@@ -262,7 +262,7 @@ def read_pa_string(string):
     return data
 
 
-re_dc = re.compile(r'^\s*'
+_re_dc = re.compile(r'^\s*'
                    r'(?P<res_num1>\d+)'
                    r'\s+[A-Z]{3}\s+'
                    r'(?P<atom_name1>[A-Z0-9]+#?)'
@@ -297,7 +297,7 @@ def read_dc_string(string):
     data = {}
 
     # Find all of the matches and produce a generator
-    matches = (m for l in string for m in [re_dc.search(l)] if m)
+    matches = (m for l in string for m in [_re_dc.search(l)] if m)
 
     # iterate over the matches and pull out the data.
     for match in matches:
@@ -325,7 +325,7 @@ def read_dc_string(string):
     return data
 
 
-re_mr = re.compile(r'assign'
+_re_mr = re.compile(r'assign'
                    r'\s*'
                    r'\([\s\w]*?resid?\s*(?P<coord_num>\d+)[\s\w]+OO\s*\)\s*'
                    r'(?:\n[\s\w]*\([\w\s]+[XYZ]\s*\)\s*){3}'
@@ -341,7 +341,7 @@ re_mr = re.compile(r'assign'
                        r'name\s+(?P<name_j>[A-Z0-9\#]+)\s*\))'
                    r'\s*'
                    r'(?P<value_j>[\d\-\+\.]+[eE]?[\d\-\+]*)?',
-                   re.MULTILINE)
+                    re.MULTILINE)
 
 
 # TODO: fix reading of 5T1N
@@ -369,7 +369,7 @@ def read_mr_string(string, set_id=None):
     data_keys = {}
 
     # Find all of the matches and produce a generator
-    matches = re_mr.finditer(string)
+    matches = _re_mr.finditer(string)
 
     # iterate over the matches and pull out the data.
     for match in matches:
