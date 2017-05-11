@@ -8,54 +8,54 @@ The following are instructions for locally developing a branch of mollib.
 2. **Build Cython Extensions**. The Cython and C extensions can be compiled in
    place.
 
-..  code-block:: shell-session
+    ..  code-block:: shell-session
 
-    make inplace
+        make inplace
 
 3. **Build Datasets** Build and compute the datasets. This may take a few hours.
 
-.. code-block:: shell-session
+    .. code-block:: shell-session
 
-    python setup.py build_data
+        python setup.py build_data
 
 4. **Build Documentation** Build the documentation in html format under
    ``docs/``
 
-.. code-block:: shell-session
+    .. code-block:: shell-session
 
-    make docs
+        make docs
 
-.. note:: You will need to have ``sphinx``, ``sphinxcontrib-napoleon``
-          installed.
+    .. note:: You will need to have ``sphinx``, ``sphinxcontrib-napoleon``
+              installed.
 
 5. **Test the Build** Run the package's tests.
 
-.. code-block:: shell-session
+    .. code-block:: shell-session
 
-    make test
+        make test
 
-.. note:: You will need ``nosetests`` to run the tests.
+    .. note:: You will need ``nosetests`` to run the tests.
 
 Alternatively, mollib can be tested against multiple platforms using
 `https://tox.readthedocs.io/en/latest/ <tox>`_.
 
-.. code-block:: shell-session
+    .. code-block:: shell-session
 
-    make test
+        make test
 
 6. **Install in Developer Mode**. Install the package in developer mode. This
 adds the package's source path to the python path. Edits to the source path
 are reflected in the global script.
 
-.. code-block:: shell-session
+    .. code-block:: shell-session
 
-    make develop
+        make develop
 
 If you'd like to uninstall the develop mode, use the following command.
 
-.. code-block:: shell-session
+    .. code-block:: shell-session
 
-    python setup.py develop --uninstall
+        python setup.py develop --uninstall
 
 Building Platform Packages
 **************************
@@ -106,20 +106,20 @@ registration of the plugin's settings or both.
 To register a plugin, add the following to the root ``__init__.py`` file for
 the plugin:
 
-.. code-block:: python
+    .. code-block:: python
 
-    from .plugin import PluginClass
-    plugin = PluginClass()
+        from .plugin import PluginClass
+        plugin = PluginClass()
 
 To register a plugin's settings, add the following to the root ``__init__.py``
 file for the plugin:
 
-.. code-block:: python
+    .. code-block:: python
 
-    from . import settings
+        from . import settings
 
-    from mollib.core import register_settings
-    register_settings(settings)
+        from mollib.core import register_settings
+        register_settings(settings)
 
 Docstring Format
 ****************
