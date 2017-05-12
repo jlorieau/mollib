@@ -1,6 +1,5 @@
 from setuptools import setup, find_packages, Extension
 from distutils.command.build_ext import build_ext
-import pkg_resources
 
 
 # Setup numpy include directory.
@@ -43,16 +42,6 @@ else:
 
 # Setup a custom builder to add compilation include directories
 class custom_build_ext(build_ext):
-
-    # def build_extensions(self):
-    #     numpy_incl = pkg_resources.resource_filename('numpy', 'core/include')
-    #
-    #     # Add the number header files to the extension includes
-    #     for ext in self.extensions:
-    #         if (hasattr(ext, 'include_dirs')
-    #            and numpy_incl not in ext.include_dirs):
-    #             ext.include_dirs.append(numpy_incl)
-    #     build_ext.build_extensions(self)
 
     def run(self):
         # Import numpy here, only when headers are needed
