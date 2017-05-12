@@ -90,7 +90,8 @@ else:
 classifiers += [
           'Intended Audience :: Science/Research',
           'License :: OSI Approved :: GNU General Public License v3 (GPLv3)',
-          'Operating System :: OS Independent',
+          'Operating System :: MacOS :: MacOS X',
+          'Operating System :: POSIX :: Linux',
           'Programming Language :: C',
           'Programming Language :: Python',
           'Programming Language :: Python :: 2.7',
