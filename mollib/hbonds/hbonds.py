@@ -167,7 +167,7 @@ def find_dipoles(molecule, donor1_elements=None, donor2_elements=None,
     # specified in the function parameters,  and it splits the atom elements at
     # the '|' character.
     donor1_elements  = (donor1_elements if donor1_elements is not None
-                       else settings.donor1_elements)
+                        else settings.donor1_elements)
     donor2_elements = (donor2_elements if donor2_elements is not None
                        else settings.donor2_elements)
     acceptor1_elements = (acceptor1_elements if acceptor1_elements is not None
@@ -317,7 +317,6 @@ def dipole_angles(donor_dipole, acceptor_dipole):
 
     theta = acos(np.dot(a1d1, z)) * 180. / pi
     phi = atan2(np.dot(a1d1, y), np.dot(a1d1, x)) * 180. / pi
-
 
     returned_dict["theta"] = round(theta, 1)
     returned_dict["phi"] = round(phi, 1)
