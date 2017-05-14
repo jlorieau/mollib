@@ -282,7 +282,8 @@ latex_elements = {
          \sphinxshadowsize=15pt
          \usepackage{enumitem}
          \setlistdepth{99}
-         \setlist{labelsep=0.5em}'''
+         \setlist{labelsep=0.5em}
+         '''
 
      # Latex figure (float) alignment
      #

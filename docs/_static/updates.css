@@ -78,6 +78,19 @@ div.body p {
 
 div.body dl {
   margin-left: 15px;
+  font-size: 0.9em;
+}
+
+div.body dt {
+  font-weight: 600;
+}
+
+div.body p.admonition-title {
+  margin: 0px;
+}
+
+div.note {
+  font-size: 0.9em;
 }
 
 div.related {
@@ -93,6 +106,30 @@ div.note {
 div.code-block-caption {
   margin-left: 15px;
 }
+
+div.figure {
+  display: table;
+}
+
+div.figure p {
+    font-size: 0.8em;
+}
+
+div.figure a {
+    border-bottom: none;
+}
+
+div.figure p.caption {
+  display: table-caption;
+  caption-side: bottom;
+  text-align: left;
+  padding: 0px;
+  margin: 0px;
+}
+
+/*div.figure.align-right {*/
+  /*margin-left: 0px;*/
+/*}*/
 
 .class dt {
   background: #f7dab9;
