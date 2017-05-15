@@ -1,22 +1,23 @@
-.PHONY: inplace clean docs
+.PHONY: inplace clean docs test test-all build-data develop clean-data help docs
+.DEFAULT_GOAL := help
 
 PYTHON ?= python
 
-inplace:
+inplace: ## Build extensions in place
 	$(PYTHON) setup.py build_ext --inplace -f
 
-test: inplace
+test: inplace  ## Test the package with the current python version
 	pip install 'nose>=1.3'
 	nosetests
 
-test-all: clean
+test-all: clean  ## Test the package with multiple python environments using tox
 	pip install 'tox>=2.7'
 	tox
 
-develop: inplace
+develop: inplace  ## Prepare the package for active development
 	$(PYTHON) setup.py develop
 
-clean:
+clean:  ## Clean compiled package files, docs and test files
 	find . -name '*.pyc' -exec rm -f {} +
 	find . -name '*.pyo' -exec rm -f {} +
 	find . -name '*~' -exec rm -f {} +
@@ -24,14 +25,14 @@ clean:
 	rm -rf .tox
 	$(MAKE) -C docs clean
 
-build-data: inplace
+build-data: inplace  ## Build the datasets
 	pip install 'tqdm>=4.8'
 	python setup.py build_data
 
-clean-data:
+clean-data:  ## Clean the datasets
 	find mollib/data/*statistics/ -type f -exec rm -f {} +
 
-docs: develop
+docs: develop  ## Build the documentation
 	pip install 'Sphinx>=1.5'
 	pip install 'sphinxcontrib-napoleon2>=1.0'
 	$(MAKE) -C docs cli html latexpdf
@@ -39,5 +40,11 @@ docs: develop
 	@echo "\033[92mView the html docs at docs/_build/html/index.html.\033[0m"
 	@echo "\033[92mView the pdf docs docs/_build/latex/.\n\033[0m"
 
+install:  ## Install mollib
+	python setup.py install
+
 #publish
 # pip install 'twine>=1.5.0'
+
+help:  ## Print this help message
+	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
