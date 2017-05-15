@@ -9,7 +9,7 @@ test: inplace
 	pip install 'nose>=1.3'
 	nosetests
 
-testall: clean
+test-all: clean
 	pip install 'tox>=2.7'
 	tox
 
@@ -24,11 +24,11 @@ clean:
 	rm -rf .tox
 	$(MAKE) -C docs clean
 
-builddata: inplace
+build-data: inplace
 	pip install 'tqdm>=4.8'
 	python setup.py build_data
 
-cleandata:
+clean-data:
 	find mollib/data/*statistics/ -type f -exec rm -f {} +
 
 docs: develop
