@@ -8,3 +8,5 @@ hbonds = Hbonds()
 
 from mollib.core import register_settings
 register_settings(settings)
+
+# TODO: add the '-o' option for printing reports.
