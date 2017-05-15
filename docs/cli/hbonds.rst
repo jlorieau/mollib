@@ -93,7 +93,7 @@ is defined by the distance of the d1a1 vector (:math:`d_{d1a1}`), the
     formed between the acceptor a1 and a2 atoms.
 
 :math:`\phi` angle (in degrees)
-    The angle between the d1a1 vector and the x- axis of the acceptor dipole
+    The angle between the d1a1 vector and the x-axis of the acceptor dipole
     plane. The acceptor dipole plane is defined by the the acceptor dipole atoms
     and the next heaviest atom bound to atom a2.
 
@@ -102,7 +102,7 @@ Energy and Probabilities
 
 The reported probabilities are determined from a histogram of the
 :math:`d_{d1a1}` distance, the :math:`\theta` angle and the :math:`\phi` angle
-compared to a set of *ca.* 10,000 high-resolution crystal structures in the
+compared to a set of *ca.* 11,300 high-resolution crystal structures in the
 PDB. A high probability indicates that the measured hydrogen bond geometries
 are observed frequently in high-resolution structures. Conversely, a low
 probability indicates that a particular hydrogen bond geometry is rarely seen in
@@ -115,7 +115,7 @@ Boltzmann inversion.
 .. math::
     E(\Omega) = -kT ln[P(\Omega)]
 
-TThe energy (in units of kT) is calculated from the Boltzmann constant and
+The energy (in units of kT) is calculated from the Boltzmann constant and
 temperature (:math:`kT`) and the probability of finding the specific
 configuration, :math:`\Omega`. The configuration, in this case, is defined by
 the :math:`d_{d1a1}` distance, the :math:`\theta` angle and the :math:`\phi`
