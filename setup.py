@@ -117,5 +117,6 @@ setup(name='mollib',
       ext_modules=extensions,
       include_dirs=include_dirs,
       cmdclass={'build_ext': custom_build_ext},
+      zip_safe=False,
       classifiers=classifiers,
       )
