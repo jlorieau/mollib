@@ -16,7 +16,7 @@ The following are instructions for locally developing a branch of mollib.
 
     .. code-block:: shell-session
 
-        python setup.py build_data
+        make build-data
 
 4. **Build Documentation** Build the documentation in html format under
    ``docs/``
@@ -41,7 +41,7 @@ Alternatively, mollib can be tested against multiple platforms using
 
     .. code-block:: shell-session
 
-        make test
+        make test-all
 
 6. **Install in Developer Mode**. Install the package in developer mode. This
 adds the package's source path to the python path. Edits to the source path
@@ -56,6 +56,14 @@ If you'd like to uninstall the develop mode, use the following command.
     .. code-block:: shell-session
 
         python setup.py develop --uninstall
+
+Makefile Options
+================
+
+The ```make``` command contains a number of commands to setup and develop
+mollib.
+
+    .. include:: cli/output/make_help.rst
 
 Building Platform Packages
 **************************

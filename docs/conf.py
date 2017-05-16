@@ -398,36 +398,38 @@ def process_cmd(string):
     # Prepare the CLI output file.
     print(shell_cmd)
     cmd = ("echo '{shell_cmd}' "
-            "> cli/output/cli_{args_name}.txt\n")
+            "> cli/output/{progname}_{args_name}.txt\n")
 
     cmd += ("cd ..&&"
-            "FORCE_COLOR=TRUE python {progname} {args}"
-            ">> docs/cli/output/cli_{args_name}.txt\n"
+            "FORCE_COLOR=TRUE {progname} {args}"
+            ">> docs/cli/output/{progname}_{args_name}.txt\n"
             "cd docs\n")
 
     # Process the html component
     cmd += ("echo '.. only:: html\n\n.. raw:: html\n'"
-            "> cli/output/cli_{args_name}.html\n")
+            "> cli/output/{progname}_{args_name}.html\n")
 
-    cmd += ("pygmentize -l shell-session -f html cli/output/cli_{args_name}.txt"
-            "|sed 's/^/    /g' >> cli/output/cli_{args_name}.html\n")
+    cmd += ("pygmentize -l shell-session -f html "
+            "cli/output/{progname}_{args_name}.txt"
+            "|sed 's/^/    /g' >> cli/output/{progname}_{args_name}.html\n")
 
     # Replace ANSI colors
-    cmd += ("cat -e cli/output/cli_{args_name}.html"
+    cmd += ("cat -e cli/output/{progname}_{args_name}.html"
             "|sed 's/\$$//g'"  # Remove $ at the end of lines
             "|sed 's/\^\[\[1m/<font style=\"font-weight:bold;\">/g'"
             "|sed 's/\^\[\[22m/<\/font>/g'"
+            "|sed 's/\^\[\[36m/<font color=\"#008b8b\">/g'"  # cyan
             "|sed 's/\^\[\[91m/<font color=\"red\">/g'"
             "|sed 's/\^\[\[92m/<font color=\"green\">/g'"
             "|sed 's/\^\[\[33m/<font color=\"#abb51f\">/g'"
             "|sed 's/\^\[\[94m/<font color=\"blue\">/g'"
             "|sed 's/\^\[\[95m/<font color=\"magenta\">/g'"
-            "|sed 's/\^\[\[96m/<font color=\"cyan\">/g'"
+            "|sed 's/\^\[\[96m/<font color=\"#008b8b\">/g'"  # cyan
             "|sed 's/\^\[\[0m/<\/font>/g'"
-            ">cli/output/cli_{args_name}.tmp\n")
+            ">cli/output/{progname}_{args_name}.tmp\n")
 
-    cmd += ("mv cli/output/cli_{args_name}.tmp "
-            "cli/output/cli_{args_name}.rst\n")
+    cmd += ("mv cli/output/{progname}_{args_name}.tmp "
+            "cli/output/{progname}_{args_name}.rst\n")
 
     # Process the latex component
     cmd += ("echo '\n.. only:: latex\n\n"
@@ -436,9 +438,9 @@ def process_cmd(string):
             "[commandchars=\\\\\\\\\\\\{{\\\\}},"  # [commandchars=\\\{\},
             "fontsize=\\\\footnotesize]"  # fontsize=\footnotesize,
             "'"
-            "> cli/output/cli_{args_name}.tex\n")
+            "> cli/output/{progname}_{args_name}.tex\n")
 
-    cmd += ("cat -e cli/output/cli_{args_name}.txt"
+    cmd += ("cat -e cli/output/{progname}_{args_name}.txt"
             "|sed 's/user@host\$/\\\\textcolor{{darkorange}}"
                 "{{\\\\textbf{{user@host$}}}}/g'"  # highlight the term prompt
             "|sed 's/^/    /g'"  # Add a tab at the start of every line
@@ -447,6 +449,7 @@ def process_cmd(string):
             "|sed 's/--/-{{-}}/g'"  # Preserve --
             "|sed 's/\^\[\[1m/\\\\textbf{{/g'"
             "|sed 's/\^\[\[22m/}}/g'"
+            "|sed 's/\^\[\[36m/\\\\textcolor{{cyan}}{{/g'"
             "|sed 's/\^\[\[91m/\\\\textcolor{{red}}{{/g'"
             "|sed 's/\^\[\[92m/\\\\textcolor{{olivegreen}}{{/g'"
             "|sed 's/\^\[\[33m/\\\\textcolor{{darkyellow}}{{/g'"
@@ -454,14 +457,14 @@ def process_cmd(string):
             "|sed 's/\^\[\[95m/\\\\textcolor{{magenta}}{{/g'"
             "|sed 's/\^\[\[96m/\\\\textcolor{{cyan}}{{/g'"
             "|sed 's/\^\[\[0m/}}/g'"
-            ">>cli/output/cli_{args_name}.tex\n")
+            ">>cli/output/{progname}_{args_name}.tex\n")
 
     #cmd += ("echo '\n    \\\\end{{sphinxVerbatim}}\n\\\\\\\\\n'"
     cmd += ("echo '    \\\\end{{sphinxVerbatim}}\n {{}} \n'"
-            ">>cli/output/cli_{args_name}.tex\n")
+            ">>cli/output/{progname}_{args_name}.tex\n")
 
-    cmd += ("cat cli/output/cli_{args_name}.tex "
-            ">> cli/output/cli_{args_name}.rst\n")
+    cmd += ("cat cli/output/{progname}_{args_name}.tex "
+            ">> cli/output/{progname}_{args_name}.rst\n")
 
     # Clean up
     cmd += ("rm cli/output/*.txt cli/output/*.tex cli/output/*.html\n")
@@ -471,6 +474,8 @@ def process_cmd(string):
     os.system(cmd)
 
 if 'cli' in sys.argv:
+    process_cmd("make help")
+
     process_cmd("mollib --help")
     process_cmd("mollib --list-plugins")
     process_cmd("mollib --list-settings")
