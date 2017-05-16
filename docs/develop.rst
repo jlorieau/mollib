@@ -66,7 +66,7 @@ mollib.
     .. include:: cli/output/make_help.rst
 
 Building Platform Packages
-**************************
+==========================
 
 Platform specific distributions are needed because mollib includes C extensions
 written in Cython. These extension must be compiled using a compiler for each
@@ -77,7 +77,7 @@ The build and install distribution packages, the following packages are needed:
     - `Cython 0.25+ <http://cython.org>`_
 
 Linux Distributions (Python Wheels)
-===================================
+***********************************
 
     Compile and build a Python wheel package.
 
@@ -93,7 +93,7 @@ Linux Distributions (Python Wheels)
         sudo pip install <package_file.whl>
 
 Mac OS X Distributions (mpkg)
-=============================
+*****************************
 
     Compile and build a Mac OS X package (``.mpkg``) file.
 
@@ -106,7 +106,7 @@ Mac OS X Distributions (mpkg)
 
 
 Adding Plugins
-**************
+==============
 
 Adding plugin modules may require the registration of the plugin, the
 registration of the plugin's settings or both.
@@ -130,7 +130,7 @@ file for the plugin:
         register_settings(settings)
 
 Docstring Format
-****************
+================
 
 Docstrings follow the numpy style.
 
