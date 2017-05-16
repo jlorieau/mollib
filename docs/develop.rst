@@ -60,7 +60,7 @@ If you'd like to uninstall the develop mode, use the following command.
 Makefile Options
 ================
 
-The ```make``` command contains a number of commands to setup and develop
+The ``make`` command contains a number of commands to setup and develop
 mollib.
 
     .. include:: cli/output/make_help.rst
