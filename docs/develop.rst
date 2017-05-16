@@ -36,22 +36,22 @@ The following are instructions for locally developing a branch of mollib.
 
     .. note:: You will need ``nosetests`` to run the tests.
 
-Alternatively, mollib can be tested against multiple platforms using
-`https://tox.readthedocs.io/en/latest/ <tox>`_.
+    Alternatively, mollib can be tested against multiple platforms using
+    `tox <https://tox.readthedocs.io/en/latest/>`_.
 
     .. code-block:: shell-session
 
         $ make test-all
 
 6. **Install in Developer Mode**. Install the package in developer mode. This
-adds the package's source path to the python path. Edits to the source path
-are reflected in the global script.
+   adds the package's source path to the python path. Edits to the source path
+   are reflected in the global script.
 
     .. code-block:: shell-session
 
         $ make develop
 
-If you'd like to uninstall the develop mode, use the following command.
+    If you'd like to uninstall the develop mode, use the following command.
 
     .. code-block:: shell-session
 
