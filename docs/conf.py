@@ -392,7 +392,7 @@ def process_cmd(string):
     args = string.split()
     progname = args[0]
     args_name = '_'.join([i.strip('-').replace('|', '_') for i in args[1:]])
-    shell_cmd = "user@host$ {cmd}".format(cmd=string)
+    shell_cmd = "$ {cmd}".format(cmd=string)
     shell_cmd = " \\\n> ".join(textwrap.wrap(shell_cmd, 78))
 
     # Prepare the CLI output file.

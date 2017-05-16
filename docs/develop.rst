@@ -10,20 +10,20 @@ The following are instructions for locally developing a branch of mollib.
 
     ..  code-block:: shell-session
 
-        make inplace
+        $ make inplace
 
 3. **Build Datasets** Build and compute the datasets. This may take a few hours.
 
     .. code-block:: shell-session
 
-        make build-data
+        $ make build-data
 
 4. **Build Documentation** Build the documentation in html format under
    ``docs/``
 
     .. code-block:: shell-session
 
-        make docs
+        $ make docs
 
     .. note:: You will need to have ``sphinx``, ``sphinxcontrib-napoleon``
               installed.
@@ -32,7 +32,7 @@ The following are instructions for locally developing a branch of mollib.
 
     .. code-block:: shell-session
 
-        make test
+        $ make test
 
     .. note:: You will need ``nosetests`` to run the tests.
 
@@ -41,7 +41,7 @@ Alternatively, mollib can be tested against multiple platforms using
 
     .. code-block:: shell-session
 
-        make test-all
+        $ make test-all
 
 6. **Install in Developer Mode**. Install the package in developer mode. This
 adds the package's source path to the python path. Edits to the source path
@@ -49,13 +49,13 @@ are reflected in the global script.
 
     .. code-block:: shell-session
 
-        make develop
+        $ make develop
 
 If you'd like to uninstall the develop mode, use the following command.
 
     .. code-block:: shell-session
 
-        python setup.py develop --uninstall
+        $ python setup.py develop --uninstall
 
 Makefile Options
 ================
@@ -83,14 +83,14 @@ Linux Distributions (Python Wheels)
 
     .. code-block:: shell-session
 
-        python setup.py bdist_wheel
+        $ python setup.py bdist_wheel
 
     The Python wheel can be installed using
     `pip <https://pypi.python.org/pypi/pip>`_.
 
     .. code-block:: shell-session
 
-        sudo pip install <package_file.whl>
+        $ sudo pip install <package_file.whl>
 
 Mac OS X Distributions (mpkg)
 *****************************
@@ -99,7 +99,7 @@ Mac OS X Distributions (mpkg)
 
     .. code-block:: shell-session
 
-        python setup.py bdist_mpkg
+        $ python setup.py bdist_mpkg
 
     The ``.mpkg`` file can be installed by dragging it into the Applications
     folder.
