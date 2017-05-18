@@ -39,7 +39,7 @@ helix_phi = (-170., 0.)
 helix_psi = (-100., 55.)
 
 # Phi torsion angle range (in degrees) for beta-sheet. (Generously allowed)
-beta_phi = (-200.,-25.)
+beta_phi = (-200., -25.)
 
 # Psi torsion angle range (in degrees) for beta-sheet. (Generously allowed)
 beta_psi = (45., 220.)
