@@ -180,3 +180,45 @@ Measure the Ramachandran :math:`\phi` and :math:`\psi` angles for the
 hemagglutinin fusion peptide structure 2KXA.
 
 .. include:: output/mollib_measure_i_2KXA_rama.rst
+
+Approach to Secondary Structure Assignments
+-------------------------------------------
+
+:math:`\beta` Turns
+~~~~~~~~~~~~~~~~~~~
+
+Turns are defined by a hydrogen bond between residues 'i' and 'i+4' as well as
+the backbone torsion angles for residues 'i+1' and 'i+2'. The turn type is
+based on the torsion angles of the 'i+1' and 'i+2' residues.
+
+===== ================== ================== ================== ==================
+Type  :math:`\phi_{i+1}` :math:`\psi_{i+1}` :math:`\phi_{i+2}` :math:`\psi_{i+2}`
+===== ================== ================== ================== ==================
+I     −60°	              −30°	            −90°	           0°
+I'     60°	               30°	             90°	           0°
+II    −60°	              120°	             80°	           0°
+II'    60°	             −120°	            −80°	           0°
+===== ================== ================== ================== ==================
+
+Assignments of the turn residues 'i+1' and 'i+2' are made. However, since
+the torsion angles of the terminal residues--specifically :math:`\phi` of
+residue 'i' and :math:`\psi` of residue 'i+4'--are flexible, these are not
+included in the assignment.
+
+Helices
+~~~~~~~
+
+Sheets
+~~~~~~
+
+Sheets are first identified by finding hydrogen bonds between residues with
+sheet torsion angles. This process identifies most sheet residues. However, for
+strands on the edges of sheets, every second amino acid may not form an
+internal hydrogen bond.
+
+To accurately identify sheet strands, mollib will find groups of sheet hydrogen
+bonds, then it will evaluate whether the residues are in a checkered pattern and
+whether the previous or subsequent residues have sheet backbone torsion angles.
+Thereafter, it will assign all residues in the group to a sheet classification,
+if no other classification has already been made.
+

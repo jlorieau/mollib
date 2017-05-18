@@ -12,6 +12,60 @@ from .hbonds import find_hbond_partners
 from . import settings
 
 
+# TODO: This file should be split into another plugin, rama
+
+
+def _group_runs(l, tolerance=2):
+    """Generator to group contiguous chain ids and numbers in a list (l) with 
+    a tolerance for  skipped numbers.
+    
+    Adapted from stackoverflow #21142231.
+    
+    Examples
+    --------
+    >>> g = _group_runs([('A', 2), ('A', 3), ('A', 4), 
+    ...                  ('A', 8), ('A', 10), ('A', 12 )])
+    >>> list(g)
+    [[('A', 2), ('A', 3), ('A', 4)], [('A', 8), ('A', 10), ('A', 12)]]
+    >>> g = _group_runs([('A', 2), ('A', 3), ('A', 4), 
+    ...                  ('B', 4), ('B', 5), ('B', 6 )])
+    >>> list(g)
+    [[('A', 2), ('A', 3), ('A', 4)], [('B', 4), ('B', 5), ('B', 6)]]
+    >>> list(_group_runs([]))
+    []
+    """
+    # Sorting is needed to properly group items
+    l = sorted(l)
+
+    out = []
+
+    if l:
+        last_chain = l[0][0]
+        last_item = l[0][1]
+        for i, j in l:
+            if j - last_item > tolerance or i != last_chain:
+                yield out
+                out = []
+            out.append((i, j))
+            last_item = j
+            last_chain = i
+        yield out
+
+
+def _is_sheet(residue):
+    """Return true if the residue's Ramachandran angles fall within sheet 
+    values."""
+    phi, psi = residue.ramachandran_angles
+    if phi is None or psi is None:
+        return False
+
+    # Determine if the phi/psi angles are within a sheet range.
+    phi_min, phi_max = settings.beta_phi
+    psi_min, psi_max = settings.beta_psi
+
+    return phi_min <= phi <= phi_max and psi_min <= psi <= psi_max
+
+
 def classify_residues(molecule):
     """Classify the residues of a molecule based on their backbone-
     backbone amide hydrogen bonds.
@@ -34,9 +88,13 @@ def classify_residues(molecule):
     add_hydrogens(molecule)
     hbonds = find_hbond_partners(molecule)
 
+    # Keep track of groups of classifications, like turns
+    turns = {settings.minor_beta_turnI, settings.minor_beta_turnII,
+             settings.minor_beta_turnIp, settings.minor_beta_turnIIp}
+
     # Assign the residue secondary structure based on the hbond
     # classifications
-    classification = {}  # {residue.number: classification}
+    classification = {}  # {(chain.id, residue.number): classification}
     for hbond in hbonds:
         # Only classify based on backbone-backbone amide hydrogen bonds
         if hbond.major_classification != settings.major_bb_bb_amide:
@@ -46,23 +104,54 @@ def classify_residues(molecule):
         # of the acceptor and donor dipoles.
         try:
             donor_res = hbond.donor.atom2.residue
+            donor_chain = donor_res.chain.id
             acceptor_res = hbond.acceptor.atom2.residue
+            acceptor_chain = acceptor_res.chain.id
         except AttributeError:
+            continue
+
+        # Get the hydrogen bond type. The hbond minor classification represents
+        # the secondary structure type, like 'sheet'.
+        minor_class = hbond.minor_classification
+        minor_modifier = ''
+
+        # Isolated hydrogen bonds contain no secondary structure assignment
+        # information
+        if minor_class in settings.minor_isolated:
+            continue
+
+        # Turns are treated specially. If the hbond is for a turn, then in
+        # addition to the i and i+3 residues being labeled as turn, so should
+        # the i+1 and i+2
+        if minor_class in turns:
+            res_i = min(donor_res.number, acceptor_res.number)
+            res_j = max(donor_res.number, acceptor_res.number)
+
+            # Get the chain id for the donor and acceptor residues
+            if donor_chain != acceptor_chain:
+                continue
+            chain = donor_chain
+
+            # Assign the residues i+1 and i+2 in the turn as turn residues.
+            residue_nums = range(res_i + 1, res_j)
+            for i in residue_nums:
+                classification[(chain, i)] = (minor_class, minor_modifier)
             continue
 
         # Assign both the donor and acceptor residues
         for count, res in enumerate((donor_res, acceptor_res)):
+            # Get the chain id for the donor and acceptor residues
+            if donor_chain != acceptor_chain:
+                continue
+            chain = donor_chain
 
-            minor_class = hbond.minor_classification
-            minor_modifier = ''
-
-            # Some modifiers do not pertain to the donor
+            # Some minor modifiers do not pertain to the donor
             # residue, where count==0, like the N-terminal residues of
             # helices
             if count == 1 and hbond.minor_modifier == settings.minor_N:
                 minor_modifier = hbond.minor_modifier
 
-            # Some modifiers do not pertain to the acceptor
+            # Some minor modifiers do not pertain to the acceptor
             # residue, where count==0, like the C-terminal residues of
             # helices
             if count == 0 and hbond.minor_modifier == settings.minor_C:
@@ -71,19 +160,62 @@ def classify_residues(molecule):
             # If the residue is already assigned and it isn't 'isolated'
             # then skip it
             if (res.number in classification and
-                classification[res.number][0] != settings.minor_isolated):
+                classification[(chain, res.number)][0] !=
+               settings.minor_isolated):
                 continue
 
-            classification[res.number] = (minor_class, minor_modifier)
+            classification[(chain, res.number)] = (minor_class, minor_modifier)
+
+    # Fill in the classifications. Some classification, like sheets, may pertain
+    # to all residues within a contiguous block of sheet residues.
+    sheet_types = {settings.minor_beta}
+    sheet_residues = [k for k, v in classification.items()
+                      if v[0] in sheet_types]
+
+    # Find the contiguous sheet residue numbers and assign sheet residues
+    for group in _group_runs(sheet_residues, tolerance=2):
+        if len(group) == 0 :
+            continue
+
+        # Determine the first and last residue in the sheet group
+        first_chain, first_res_num = group[0]
+        last_chain, last_res_num = group[-1]
+
+        # Skip if the sheet consists of residues from different chains
+        if first_chain != last_chain:
+            continue
+
+        # Go through the residues in the group, and make sure they are sheets
+        # Start with the residue before the last_chain, and the residue after
+        # the first chain.
+        for i in range(first_res_num - 1, last_res_num + 2):
+            try:
+                residue = molecule[first_chain][i]
+            except KeyError:
+                continue
+
+            # Determine whether the residue counts as a beta sheet
+            if not _is_sheet(residue):
+                continue
+
+            # Overwrite existing classifications, if it hasn't be assigned yet.
+            key = (first_chain, i)
+            if key not in classification:
+                classification[key] = (settings.minor_beta, '')
 
     # Classify the residues. The classification dict has been populated
     # {residue.number(int): classification(str}
     # Now use it to classify the residues
     for residue in molecule.residues:
-        res_class = classification.get(residue.number, ('',''))
+        try:
+            chain = residue.chain.id
+            res_num = residue.number
+        except AttributeError:
+            continue
 
-        residue.hbond_classification = res_class[0]
-        residue.hbond_modifier = res_class[1]
+        res_class = classification.get((chain, res_num), ('', ''))
+
+        residue.classification = res_class
 
         # Add the ramachandran energy attribute to the residue
         add_energy_ramachandran(residue)
@@ -140,18 +272,23 @@ def add_energy_ramachandran(residue):
 
             energy_ramachandran_datasets[name] = (phi_1d, psi_1d, energy_2d)
 
-        # The 'No Hydrogen Bonds' hbond_classification is the same as the ''
-        # classification above
-        if 'No hydrogen bonds' in energy_ramachandran_datasets:
-            v = energy_ramachandran_datasets['No hydrogen bonds']
-            energy_ramachandran_datasets[''] = v
-
     # Get the energy for this residue's classification
-    res_class = getattr(residue, 'hbond_classification', '')
+    classification = residue.classification
+    if (classification is None or
+        not classification[0] or
+       classification[0] == mollib.hbonds.settings.minor_isolated):
+
+        # The 'No Hydrogen Bonds' and 'isolated' classification is the same as
+        # the 'No classification'
+        res_class = 'No classification'
+        modifier = ''
+    else:
+        res_class = (classification[0] if classification is not None
+                     else 'No classification')
+        modifier = classification[1] if classification is not None else ''
 
     # Some energies are classified by hbond_classification and hbond_modifier.
     # These have the name of both, separated by '__'
-    modifier = getattr(residue, 'hbond_modifier', '')
     full_res_class = '__'.join((res_class, modifier))
 
     if residue.name == 'GLY' and 'Gly' in energy_ramachandran_datasets:
@@ -171,12 +308,10 @@ def add_energy_ramachandran(residue):
         # hbond_classification
         phi_1d, psi_1d, energy_2d = energy_ramachandran_datasets[res_class]
         residue.ramachandran_dataset = res_class
-
-    elif '' in energy_ramachandran_datasets:
-        # Finally try to use the dataset for not hydrogen bonds.
-        phi_1d, psi_1d, energy_2d = energy_ramachandran_datasets['']
-        residue.ramachandran_dataset = 'No hydrogen bonds'
-
+    elif 'No classification' in energy_ramachandran_datasets:
+        (phi_1d, psi_1d,
+         energy_2d) = energy_ramachandran_datasets['No classification']
+        residue.ramachandran_dataset = 'No classification'
     else:
         return None
 
@@ -207,15 +342,5 @@ def add_energy_ramachandran(residue):
         print(msg.format(phi, psi))
         raise e
 
-    # If avaliable, assign the overall energy too.
-
     # Assign the energy
     residue.energy_ramachandran = energy
-
-
-
-
-
-
-
-

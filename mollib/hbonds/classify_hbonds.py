@@ -11,7 +11,6 @@ from . import settings as s
 import mollib.core.settings
 
 
-
 def within_range(value, value_range, wrap=None):
     """Test whether the value is within the range tuple.
 
@@ -43,7 +42,8 @@ def within_range(value, value_range, wrap=None):
         return any((value_range[0] <= value <= value_range[1],
                     value_range[0] <= (value + wrap) <= value_range[1],
                     value_range[0] <= (value - wrap) <= value_range[1],))
-    return (value_range[0] <= value <= value_range[1])
+    return value_range[0] <= value <= value_range[1]
+
 
 def classify_major(hbond):
     """Mark the major classification of hbonds.
@@ -96,6 +96,7 @@ def classify_major(hbond):
         return True
     else:
         return False
+
 
 def classify_minor(hbond):
     """Mark the minor classification of hbonds.
@@ -150,9 +151,12 @@ def classify_minor(hbond):
         phi = [a[0] for a in phi_psi]
         psi = [a[1] for a in phi_psi]
 
-        # Check the 310-helix
+        # Check the 310-helix. The phi or residue 'i' and the psi of residue
+        # i3 do not factor in the assignment
+        # if (all(within_range(a, s.helix_phi) for a in phi[1:]) and
+        #     all(within_range(a, s.helix_psi) for a in psi[:-1])):
         if (all(within_range(a, s.helix_phi) for a in phi) and
-            all(within_range(a, s.helix_psi) for a in psi)):
+           all(within_range(a, s.helix_psi) for a in psi)):
             hbond.minor_classification = s.minor_310
             return True
 
@@ -186,9 +190,12 @@ def classify_minor(hbond):
         phi = [a[0] for a in phi_psi]
         psi = [a[1] for a in phi_psi]
 
-        # Check the 310-helix
+        # Check the alpha-helix. The phi or residue 'i' and the psi of residue
+        # i4 do not factor in the assignment
+        # if (all(within_range(a, s.helix_phi) for a in phi[1:]) and
+        #     all(within_range(a, s.helix_psi) for a in psi[:-1])):
         if (all(within_range(a, s.helix_phi) for a in phi) and
-            all(within_range(a, s.helix_psi) for a in psi)):
+           all(within_range(a, s.helix_psi) for a in psi)):
             hbond.minor_classification = s.minor_alpha
             return True
 
@@ -204,9 +211,12 @@ def classify_minor(hbond):
         phi = [a[0] for a in phi_psi]
         psi = [a[1] for a in phi_psi]
 
-        # Check the 310-helix
+        # Check the pi-helix. The phi or residue 'i' and the psi of residue
+        # i5 do not factor in the assignment
+        # if (all(within_range(a, s.helix_phi) for a in phi[1:]) and
+        #     all(within_range(a, s.helix_psi) for a in psi[:-1])):
         if (all(within_range(a, s.helix_phi) for a in phi) and
-            all(within_range(a, s.helix_psi) for a in psi)):
+           all(within_range(a, s.helix_psi) for a in psi)):
             hbond.minor_classification = s.minor_pi
             return True
 

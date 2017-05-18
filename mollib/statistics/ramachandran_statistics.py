@@ -47,23 +47,30 @@ class RamachandranStatistics(Statistics):
             phi_psi = residue.ramachandran_angles
 
             if residue.name == 'GLY':
-                hbond_classification = 'Gly'
+                major_classification = 'Gly'
+                minor_classification = ''
             else:
-                hbond_classification = getattr(residue, 'hbond_classification',
-                                               'No hydrogen bonds')
-                hbond_classification = ('No hydrogen bonds' if
-                                        hbond_classification == '' else
-                                        hbond_classification)
+                classification = residue.classification
 
-            hbond_modifier = getattr(residue, 'hbond_modifier', '')
+                # Group unclassified and isolated hydrogen bond residues
+                # together under 'No classification'. Otherwise just group them
+                # by their classification.
+                if (classification is None or
+                    not classification[0] or
+                    classification[0] == mollib.hbonds.settings.minor_isolated):
+                    major_classification = 'No classification'
+                    minor_classification = ''
+                else:
+                    major_classification = classification[0]
+                    minor_classification = classification[1]
 
             # None values are not saved
             if all(i is not None for i in phi_psi):
                 # Save the classification
 
-                name = (hbond_classification if not hbond_modifier else
-                        '__'.join((hbond_classification, hbond_modifier)))
-                measure_dict.setdefault(name,list()).append(phi_psi)
+                name = (major_classification if not minor_classification else
+                        '__'.join((major_classification, minor_classification)))
+                measure_dict.setdefault(name, list()).append(phi_psi)
 
         return measure_dict
 

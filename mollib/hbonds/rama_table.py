@@ -38,12 +38,16 @@ class RamaTable(MDTable):
                 continue
 
             phi, psi = residue.ramachandran_angles
-            classification = getattr(residue, 'hbond_classification', '')
+            classification = residue.classification
+            classification = (classification[0] if classification is not None
+                              else '')
+
             energy = getattr(residue, 'energy_ramachandran', '-')
 
             # If the energy has a value (float) and it is above the energy
             # cutoff, add its value to the table. Otherwise, just print
             # a '-' character, if it is within acceptable ranges.
+            E_prob = ""
             if isinstance(energy, float):
                 prob = exp(-1. * energy) * 100.
                 E_prob = "{:>2.1f} / {:>4.1f}%".format(energy, prob)

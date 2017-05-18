@@ -85,6 +85,20 @@ div.body dt {
   font-weight: 600;
 }
 
+div.body thead {
+  background: #3684c5;
+  color: #ffffff;
+}
+
+div.body th,td {
+  padding: 5px;
+  border-bottom: 1px solid #dddddd;
+}
+
+div.body tr.row-even {
+  background: #f5f5f5;
+}
+
 div.body p.admonition-title {
   margin: 0px;
 }
