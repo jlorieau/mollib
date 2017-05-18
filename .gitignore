@@ -10,6 +10,7 @@ benchmarks/
 .idea
 .noseids
 .coverage
+.cache
 build/
 output/*
 .DS_Store
