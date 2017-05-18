@@ -18,3 +18,7 @@ output/*
 
 # tox testing tool
 .tox
+
+# Analysis images
+analysis/*/*.png
+analysis/*/*.svg
