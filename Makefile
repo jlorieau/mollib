@@ -32,9 +32,15 @@ build-data: inplace  ## Build the datasets
 clean-data:  ## Clean the datasets
 	find mollib/data/*statistics/ -type f -exec rm -f {} +
 
-docs: develop  ## Build the documentation
+build-analysis: build-data  ## Conduct the analysis of datasets
+	pip install 'matplotlib>=2.0'
+	cd analysis/datasets
+	python ./ramachandran
+
+docs: develop build-analysis  ## Build the documentation
 	pip install 'Sphinx>=1.5'
 	pip install 'sphinxcontrib-napoleon2>=1.0'
+	find analysis/ -name "*lowres.png" -exec cp '{}' docs/cli/img/ \;
 	$(MAKE) -C docs cli html latexpdf
 	@echo "\033[92m\n\nBuild successful!\033[0m"
 	@echo "\033[92mView the html docs at docs/_build/html/index.html.\033[0m"

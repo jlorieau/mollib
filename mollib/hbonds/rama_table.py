@@ -3,6 +3,7 @@ from math import exp
 import mollib.core.settings
 from mollib.utils import MDTable, FormattedStr
 from .classify_secondary_structure import classify_residues
+from . import settings
 
 
 class RamaTable(MDTable):
@@ -26,9 +27,13 @@ class RamaTable(MDTable):
         # Classify the residue secondary structure
         classify_residues(molecule)
 
-        # Setup the table
-        cols = ('Residue', 'Phi (deg)', 'Psi (deg)',
-                'Classification', 'E (kT) / Prob.')
+        # Setup the table. If detailed, include extra information
+        if settings.rama_table_detailed:
+            cols = ('Residue', 'Phi (deg)', 'Psi (deg)', 'Classification',
+                    'Minor', 'E (kT) / Prob.')
+        else:
+            cols = ('Residue', 'Phi (deg)', 'Psi (deg)', 'Classification',
+                    'E (kT) / Prob.')
         super(RamaTable, self).__init__(*cols)
 
         # Add the rows
@@ -39,8 +44,12 @@ class RamaTable(MDTable):
 
             phi, psi = residue.ramachandran_angles
             classification = residue.classification
-            classification = (classification[0] if classification is not None
-                              else '')
+            if isinstance(classification, tuple) and len(classification) >= 2:
+                major_classification = classification[0]
+                minor_classification = classification[1]
+            else:
+                major_classification = ''
+                minor_classification = ''
 
             energy = getattr(residue, 'energy_ramachandran', '-')
 
@@ -59,9 +68,17 @@ class RamaTable(MDTable):
                 else:
                     E_prob = FormattedStr(E_prob, 'red')
 
-            self.add_row('{}.{}'.format(residue.chain.id, residue),
-                         "{:>6.1f}".format(phi or 0.),
-                         "{:>6.1f}".format(psi or 0.),
-                         classification,
-                         E_prob)
+            if settings.rama_table_detailed:
+                self.add_row('{}.{}'.format(residue.chain.id, residue),
+                             "{:>6.1f}".format(phi or 0.),
+                             "{:>6.1f}".format(psi or 0.),
+                             major_classification,
+                             minor_classification,
+                             E_prob)
+            else:
+                self.add_row('{}.{}'.format(residue.chain.id, residue),
+                             "{:>6.1f}".format(phi or 0.),
+                             "{:>6.1f}".format(psi or 0.),
+                             major_classification,
+                             E_prob)
 

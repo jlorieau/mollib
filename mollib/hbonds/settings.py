@@ -159,8 +159,14 @@ minor_C = 'C-term'
 #: Minor classification for glycines
 minor_gly = 'Gly'
 
+#: Fill residue assignment gaps
+fill_gaps = True
+
 #: Render HBond tables with detailed information
 hbond_table_detailed = False
 
 #: Sort HBond tables by the hydrogen bond type
 hbond_table_sort_type = False
+
+#: Render the Rama table with detailed information, including minor assignments
+rama_table_detailed = True
