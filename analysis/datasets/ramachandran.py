@@ -20,6 +20,13 @@ annotation_fontsize = 7
 
 matplotlib.rc('text', usetex=False)
 matplotlib.rc('font', family='sans-serif')
+matplotlib.rc('axes', linewidth=0.5)
+
+for i in ('xtick', 'ytick'):
+    matplotlib.rcParams[i + '.major.size'] = 2.0
+    matplotlib.rcParams[i + '.major.width'] = 0.75
+    matplotlib.rcParams[i + '.minor.size'] = 1.0
+    matplotlib.rcParams[i + '.minor.width'] = 0.5
 
 # import the dataset
 filename = '../../mollib/data/ramachandranstatistics/measurements.tar'
