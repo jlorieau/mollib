@@ -18,9 +18,8 @@ axes_font = 'Arial'
 label_fontsize = 8  # font size of the tick labels
 annotation_fontsize = 7
 
-matplotlib.rc('text', usetex=True)
+matplotlib.rc('text', usetex=False)
 matplotlib.rc('font', family='sans-serif')
-matplotlib.rcParams['font.sans-serif'] = ['Arial', 'DejaVu Sans']
 
 # import the dataset
 filename = '../../mollib/data/ramachandranstatistics/measurements.tar'
@@ -81,8 +80,8 @@ labels = (('Overall', plt.cm.plasma, (0.95, 0.01)),
           ('type I turn', plt.cm.Reds_r, (0.95, 0.01)),
           ('type II turn', plt.cm.Reds_r, (0.95, 0.01)),
           ("type I' turn", plt.cm.Reds_r, (0.95, 0.01)),
-          ("type II' turn", plt.cm.Reds_r, (0.95, 0.01)),
-          ('Gly', plt.cm.Greys_r, None),
+          ("type II' turn", plt.cm.Reds_r, (0.95, 0.89)),
+          ('Gly', plt.cm.Greys_r, (0.95, 0.70)),
           ('No classification', plt.cm.Greys_r, (0.95, 0.01)),
           )
 
@@ -96,6 +95,7 @@ def grouper(n, iterable, fillvalue=None):
 subfigure_groups = list(grouper(4, labels))
 
 
+# Make rows of plots
 for row, subfigure_labels in enumerate(subfigure_groups, 1):
     f, axarr = plt.subplots(nrows=1, ncols=len(subfigure_labels), sharey=True,
                             figsize=figsize)
@@ -113,7 +113,7 @@ for row, subfigure_labels in enumerate(subfigure_groups, 1):
             continue
         label, cmap, annot_xy = values
 
-        # Prepare the data
+        # Prepare the data and create 2d histograms
         phi_psi = results[label]
         x, y = zip(*phi_psi)
 
@@ -130,25 +130,17 @@ for row, subfigure_labels in enumerate(subfigure_groups, 1):
         levels = np.arange(0.0, 5.1, 1.0)
 
         # Set the title and x-axis label
-        title = (label.encode('string-escape')
-                      .replace('__', ' ')
+        title = (label.replace('__', ' ')
                       .replace('alpha', "$\\alpha$")
                       .replace('pi', "$\\pi$")
                       .replace("\\'", "'")
                       .replace('No', 'no'))
-        # subtitle = r"{\scriptsize (N=" + "{:,.0f}".format(N) + ")}"
-        # title = title + r' ' + subtitle
-
-        if annot_xy is not None:
-            axarr[count].text(annot_xy[0], annot_xy[1], "N={:,.0f}".format(N),
-                              verticalalignment='bottom',
-                              horizontalalignment='right',
-                              transform=axarr[count].transAxes,
-                              fontsize=annotation_fontsize)
 
         axarr[count].set_title(title,
                                size=title_fontsize,
                                fontname=title_font)
+
+        # Set the x-axis label
         axarr[count].set_xlabel(r'$\phi$ (deg)', fontsize=axes_fontsize,
                                 fontname=axes_font)
 
@@ -166,11 +158,20 @@ for row, subfigure_labels in enumerate(subfigure_groups, 1):
         for label in labels:
             label.set_fontname(axes_font)
 
+        # Annotate the number of measurements on the plot
+        if annot_xy is not None:
+            axarr[count].text(annot_xy[0], annot_xy[1],
+                              "N={:,.0f}".format(N),
+                              verticalalignment='bottom',
+                              horizontalalignment='right',
+                              transform=axarr[count].transAxes,
+                              fontsize=annotation_fontsize)
+
+        # Create the 2d contour plot
         axarr[count].contourf(x[:-1], y[:-1], hist2d, levels, cmap=cmap)
 
+    # Save the figures
     plt.savefig('ramachandran_countour_{}.png'.format(row), format='PNG',
                 dpi=1200, bbox_inches='tight', pad_inches=0.05)
     plt.savefig('ramachandran_countour_{}.svg'.format(row), format='SVG',
                 bbox_inches='tight', pad_inches=0.05)
-
-
