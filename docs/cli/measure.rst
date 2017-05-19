@@ -222,3 +222,10 @@ whether the previous or subsequent residues have sheet backbone torsion angles.
 Thereafter, it will assign all residues in the group to a sheet classification,
 if no other classification has already been made.
 
+Potential of Mean Force Plots
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. image:: img/ramachandran_countour_1_lowres.png
+.. image:: img/ramachandran_countour_2_lowres.png
+.. image:: img/ramachandran_countour_3_lowres.png
+.. image:: img/ramachandran_countour_4_lowres.png
