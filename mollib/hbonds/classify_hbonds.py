@@ -11,6 +11,7 @@ from . import settings as s
 import mollib.core.settings
 
 
+# TODO: Rename hydrogen bond categories to type, major, minor.
 def within_range(value, value_range, wrap=None):
     """Test whether the value is within the range tuple.
 
