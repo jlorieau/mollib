@@ -194,10 +194,10 @@ based on the torsion angles of the 'i+1' and 'i+2' residues.
 ===== ================== ================== ================== ==================
 Type  :math:`\phi_{i+1}` :math:`\psi_{i+1}` :math:`\phi_{i+2}` :math:`\psi_{i+2}`
 ===== ================== ================== ================== ==================
-I     :math:`-60`         :math:`-30`       :math:`-90`        :math:`0`
-I'    :math:`60`          :math:`30`        :math:`90`         :math:`0`
-II    :math:`-60`         :math:`120`       :math:`80`         :math:`0`
-II'   :math:`60`          :math:`-120`      :math:`-80`        :math:`0`
+I     -60º                -30º              -90º               0º
+I'     60º                 30º               90º               0º
+II    -60º                120º               80º               0º
+II'    60º               -120º              -80º               0º
 ===== ================== ================== ================== ==================
 
 Assignments of the turn residues 'i+1' and 'i+2' are made. However, since
@@ -221,6 +221,9 @@ bonds, then it will evaluate whether the residues are in a checkered pattern and
 whether the previous or subsequent residues have sheet backbone torsion angles.
 Thereafter, it will assign all residues in the group to a sheet classification,
 if no other classification has already been made.
+
+Gaps
+~~~~
 
 Potential of Mean Force Plots
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

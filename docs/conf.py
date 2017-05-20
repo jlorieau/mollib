@@ -283,6 +283,7 @@ latex_elements = {
          \usepackage{enumitem}
          \setlistdepth{99}
          \setlist{labelsep=0.5em}
+         \DeclareUnicodeCharacter{2212}{-}
          '''
 
      # Latex figure (float) alignment
