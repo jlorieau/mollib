@@ -120,18 +120,22 @@ def classify_residues(molecule):
 
             classification[(chain, res.number)] = (minor_class, minor_modifier)
 
-    # Fill in the classifications. Some classification, like sheets, may pertain
-    # to all residues within a contiguous block of sheet residues.
-    sheet_types = {settings.minor_beta}
-    sheet_residues = [k for k, v in classification.items()
-                      if v[0] in sheet_types]
-
-    # Find the contiguous sheet residue numbers and assign sheet residues
+    # Find the contiguous blocks of secondary structure elements from the
+    # hydrogen bonds and fill in gaps in the primary sequence
     if settings.fill_gaps:
         # Fill gaps for beta-strands and sheets
         fill_gaps(molecule, classification, settings.minor_beta, _is_sheet,
-                  extend_terminii=True, gap_tolerance=1,
-                  overwrite_assignments=False)
+                  extend_terminii=True, label_N_term=1, label_C_term=1,
+                  gap_tolerance=2, overwrite_assignments=False)
+
+        # 310-helices are typically 4-5 residues long. For a 4-residue
+        # 310-helix, the i and i+3 residues are hydrogen bonded and labeled as
+        # 310-helix--but the i+1/i+2 are not. This will fill in that gap
+        fill_gaps(molecule, classification, settings.minor_310, _is_helix,
+                  extend_terminii=False, label_N_term=0, label_C_term=0,
+                  gap_tolerance=3, overwrite_assignments=False)
+
+        # TODO: add gap filling for pi-helices and potentiall alpha-helices.
 
     # Classify the residues. The classification dict has been populated
     # {residue.number(int): classification(str}
@@ -277,8 +281,8 @@ def add_energy_ramachandran(residue):
 
 
 def fill_gaps(molecule, classifications, classification_type, dihedral_test,
-              extend_terminii=False, label_terminii=False, gap_tolerance=1,
-              overwrite_assignments=False):
+              extend_terminii=False, label_N_term=0, label_C_term=0,
+              gap_tolerance=1, overwrite_assignments=False):
     """
     Fill gaps in the classifications dict assignments.
     
@@ -309,9 +313,12 @@ def fill_gaps(molecule, classifications, classification_type, dihedral_test,
         If True, the previous and subsequence residues of each contiguous
         stretch of residue classification will be checked to see if they fall
         within the dihedral angle range as well.
-    label_terminii: bool (optional)
-        If True, the minor classification of the first and last residues of a
-        contiguous stretch will be labeled 'N-term' or 'C-term', respectively.
+    label_N_term: int (optional)
+        Label the first 'N' number of residues in the contiguous block as 
+        'N-term'
+    label_C_term: int (optional)
+        Label the last 'N' number of residues in the contiguous block as 
+        'C-term'
     gap_tolerance: int (optional)
         The assignment of contiguous stretches of a secondary structure 
         assignment will tolerate this number of 'gaps' in the residue numbers.
@@ -363,8 +370,13 @@ def fill_gaps(molecule, classifications, classification_type, dihedral_test,
             residue_numbers = range(first, last + 1)
 
         # Go through the residue numbers and see if they should be added to the
-        # contiguous stretch of secondary structure assignments
-        for i in residue_numbers:
+        # contiguous stretch of secondary structure assignments. We first
+        # make a contiguous_keys list for the residues that belong to the
+        # contiguous stretch. These will subsequently be assigned to the
+        # classification
+
+        contiguous_keys = []
+        for count, i in enumerate(residue_numbers):
             # If needed, check to see if the residue falls within the dihedral
             # angle ranges with the dihedral_test function.
             if dihedral_test is not None:
@@ -375,14 +387,37 @@ def fill_gaps(molecule, classifications, classification_type, dihedral_test,
                 if not dihedral_test(residue):
                     continue
 
-            # At this point, the residue can be assigned. First see if it's
-            # already been assigned and whether the assignment can be
-            # overwritten
+            # At this point, the residue can be assigned.
             key = (first_chain, i)
-            if key not in classifications or overwrite_assignments:
-                major_classification = classification_type
+            contiguous_keys.append(key)
 
-                classifications[key] = (major_classification, '')
+        # Now go through the contiguous_keys and assign them to the
+        # classifications. This has to be done separately so that the 'N-term'
+        # and 'C-term' modifiers are properly assigned
+        major_classification = classification_type
+        for count, key in enumerate(contiguous_keys):
+            current_classification = classifications.get(key, None)
+
+            # Determine whether the 'N-term' or 'C-term' should be labeled
+            if count < label_N_term:
+                minor_classification = 'N-term'
+            elif count >= len(contiguous_keys) - label_C_term:
+                minor_classification = 'C-term'
+            else:
+                minor_classification = ''
+
+            # If the current_classification is not assigned (i.e. it is None)
+            # or overwrite_assignments is True, write the classification
+            # assignment
+            if current_classification is None or overwrite_assignments:
+                classifications[key] = (major_classification,
+                                        minor_classification)
+            # Otherwise, write the minor_classification only if the major
+            # classification for the current_classification is the same
+            elif current_classification[0] == major_classification:
+                classifications[key] = (major_classification,
+                                        minor_classification)
+            # Otherwise do nothing
 
 
 def _group_runs(l, tolerance=2):
@@ -432,5 +467,19 @@ def _is_sheet(residue):
     # Determine if the phi/psi angles are within a sheet range.
     phi_min, phi_max = settings.beta_phi
     psi_min, psi_max = settings.beta_psi
+
+    return phi_min <= phi <= phi_max and psi_min <= psi <= psi_max
+
+
+def _is_helix(residue):
+    """Return true if the residue's Ramachandran angles fall within helical 
+    values."""
+    phi, psi = residue.ramachandran_angles
+    if phi is None or psi is None:
+        return False
+
+    # Determine if the phi/psi angles are within a sheet range.
+    phi_min, phi_max = settings.helix_phi
+    psi_min, psi_max = settings.helix_psi
 
     return phi_min <= phi <= phi_max and psi_min <= psi <= psi_max
