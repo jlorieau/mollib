@@ -1,5 +1,7 @@
 """
-Classify residues based on hydrogen bonds.
+Classify residues based on hydrogen bonds. Additionally, there is a fill_gap
+function that is used to identify contiguous secondary structure units that may
+not have hydrogen bonds with all residues.
 """
 import glob
 import os
@@ -12,9 +14,6 @@ from .hbonds import find_hbond_partners
 from . import settings
 
 
-# TODO: This file should be split into another plugin, rama
-# TODO: make fill_gap, with the option of extending the terminii and labeling
-# them as C- or N-term (sheets)
 # TODO: Make 'Gly' classification
 
 
@@ -25,12 +24,12 @@ def classify_residues(molecule):
     Parameters
     ----------
     molecule: :obj:`mollib.Molecule`
-        The molecule whose residues are to be classified. The residues gain
-        the following attributes:
-
-        - `hbond_classification` with a 'str' to the hbond classification.
-        - `hbond_modifier` with a 'str' to the hbond minor classification
-           modifier.
+        The molecule whose residues are to be classified. 
+        
+        .. note:: The residue objects (:obj:`mollib.Residue`) has the 
+            :attr:`classification` tuple assigned.
+        
+            - (`major_classification`, `minor_classification`)
 
     skip_energy: bool, optional
         If True, the ramachandran energy will not be calculated.
@@ -155,7 +154,7 @@ def classify_residues(molecule):
         add_energy_ramachandran(residue)
 
 
-#: The Ramachandran energy datasets
+# The cached Ramachandran energy datasets
 energy_ramachandran_datasets = None
 
 
@@ -168,14 +167,13 @@ def add_energy_ramachandran(residue):
     Parameters
     ----------
     residue: :obj:`mollib.Residue`
-        The residue gains the following attributes:
+        The residue gains the following attributes
 
-    Added Residues Attributes
-    -------------------------
-    energy_ramachandran: float
-        The Ramachandran energy (in kT)
-    ramachandran_dataset: str
-        The name of the dataset used for the Ramachandran energy.
+        .. note:: The following attributes are added to the residue:
+        
+            - energy_ramachandran (float). The Ramachandran energy (in kT)  
+            - ramachandran_dataset (str). The name of the dataset used for the 
+              Ramachandran energy.
     """
     global energy_ramachandran_datasets
 
@@ -283,8 +281,7 @@ def add_energy_ramachandran(residue):
 def fill_gaps(molecule, classifications, classification_type, dihedral_test,
               extend_terminii=False, label_N_term=0, label_C_term=0,
               gap_tolerance=1, overwrite_assignments=False):
-    """
-    Fill gaps in the classifications dict assignments.
+    """Fill gaps in the classifications dict assignments.
     
     Gaps occur in the secondary structure assignment from hydrogen bonds, for 
     example, with beta-strands on the edges of beta sheets. This function finds
@@ -298,9 +295,10 @@ def fill_gaps(molecule, classifications, classification_type, dihedral_test,
         The molecule object to classify the secondary structure elements.
     classifications: dict
         A dict with the classifications.
-        - **key**: (chain.id, residue.number). ex: ('A', 31)
-        - **value**: (major_classification, minor_classification).
-          ex: ('alpha-helix', 'N-term')
+        
+            - **key**: (chain.id, residue.number). ex: ('A', 31)
+            - **value**: (major_classification, minor_classification).
+              ex: ('alpha-helix', 'N-term')
     classification_type: str
         The name of the classification type to check. ex: 'alpha-helix'
     dihedral_test: function or None
@@ -309,23 +307,23 @@ def fill_gaps(molecule, classifications, classification_type, dihedral_test,
           'classification_type'.
         - If None is specified, then the dihedral angles of residues will not
           be tested.
-    extend_terminii: bool or int (optional)
+    extend_terminii: bool or int, optional
         If True, the previous and subsequence residues of each contiguous
         stretch of residue classification will be checked to see if they fall
         within the dihedral angle range as well.
-    label_N_term: int (optional)
+    label_N_term: int, optional
         Label the first 'N' number of residues in the contiguous block as 
         'N-term'
-    label_C_term: int (optional)
+    label_C_term: int, optional
         Label the last 'N' number of residues in the contiguous block as 
         'C-term'
-    gap_tolerance: int (optional)
+    gap_tolerance: int, optional
         The assignment of contiguous stretches of a secondary structure 
         assignment will tolerate this number of 'gaps' in the residue numbers.
         For a gap_toleranace of 1 and a checked sheet assignment, the following
         group 'E E E E' will be treated as a single contiguous block of sheet
         assignments.
-    overwrite_assignments: bool (optional)
+    overwrite_assignments: bool, optional
         If True, classification assignments will be overwritten, if an
         assignments has already been made for a given residue.
 

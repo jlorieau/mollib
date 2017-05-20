@@ -134,7 +134,8 @@ Docstring Format
 
 Docstrings follow the numpy style.
 
-Example:
+Example 1
+*********
 
 .. code-block:: python
 
@@ -164,4 +165,64 @@ Example:
             - 'Q': (float) the Q-factor of the fit
             - 'R': (float) the R-factor of the fit
             - 'RMS': (Hz/ppb) the root-mean square of the fit
+        """
+
+Example 2
+*********
+
+.. code-block:: python
+
+    def fill_gaps(molecule, classifications, classification_type, dihedral_test,
+                  extend_terminii=False, label_N_term=0, label_C_term=0,
+                  gap_tolerance=1, overwrite_assignments=False):
+        """Fill gaps in the classifications dict assignments.
+
+        Gaps occur in the secondary structure assignment from hydrogen bonds,
+        for example, with beta-strands on the edges of beta sheets. This
+        function finds stretches of secondary structure assignments, it checks
+        the dihedral angles and fills in gaps in the stretches. For a sheet:
+        'E E E E' becomes 'EEEEEEE'.
+
+        Parameters
+        ----------
+        molecule: :obj:`mollib.Molecule`
+            The molecule object to classify the secondary structure elements.
+        classifications: dict
+            A dict with the classifications.
+
+                - **key**: (chain.id, residue.number). ex: ('A', 31)
+                - **value**: (major_classification, minor_classification).
+                  ex: ('alpha-helix', 'N-term')
+        classification_type: str
+            The name of the classification type to check. ex: 'alpha-helix'
+        dihedral_test: function or None
+            - A test function that takes a :obj:`mollib.Residue` and returns
+              True if the residue's dihedral angles are within range for the
+              'classification_type'.
+            - If None is specified, then the dihedral angles of residues will
+              not be tested.
+        extend_terminii: bool or int (optional)
+            If True, the previous and subsequence residues of each contiguous
+            stretch of residue classification will be checked to see if they fall
+            within the dihedral angle range as well.
+        label_N_term: int (optional)
+            Label the first 'N' number of residues in the contiguous block as
+            'N-term'
+        label_C_term: int (optional)
+            Label the last 'N' number of residues in the contiguous block as
+            'C-term'
+        gap_tolerance: int (optional)
+            The assignment of contiguous stretches of a secondary structure
+            assignment will tolerate this number of 'gaps' in the residue
+            numbers.
+            For a gap_toleranace of 1 and a checked sheet assignment, the
+            following group 'E E E E' will be treated as a single contiguous
+            block of sheetassignments.
+        overwrite_assignments: bool (optional)
+            If True, classification assignments will be overwritten, if an
+            assignments has already been made for a given residue.
+
+        Returns
+        -------
+        None
         """

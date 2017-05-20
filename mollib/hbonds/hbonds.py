@@ -11,13 +11,12 @@ The current implementation:
   amide torsion angles.
 - The classification algorithm is more conservative than DSSP in assigning
   helices. In our implementation, all the torsion angles in the helix must
-  have helical torsion angles. This avoids the mistaken characterization of
-  turns as helices, like the beta-turn at P37-Q40 in ubiquitin (2MJB).
+  have helical torsion angles.
 
-Written Molecule Parameters
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Category: 'Structural Features'
-    hbonds: list of :obj:`HydrogenBond` objects
+
+.. note:: The `hbonds` attribute is added to the 'Structural Features' of the
+          molecule (:obj:`mollib.Molecule`). the `hbonds` are a list of hbond
+          objects (:obj:`mollib.hbond.hbond.HydrogenBond`)
 """
 
 from collections import namedtuple
@@ -137,7 +136,7 @@ def find_dipoles(molecule, donor1_elements=None, donor2_elements=None,
     donor1_elements: str, optional
         The string for the elements for the donor1 atom. The '|' string is
         supported. ex: 'HA|H'
-    donor2_elements: str: optional
+    donor2_elements: str, optional
         The string for the elements for the donor2 atom.
     acceptor1_elements: str, optional
         The string for the elements for the acceptor1 atom.
@@ -147,8 +146,9 @@ def find_dipoles(molecule, donor1_elements=None, donor2_elements=None,
     Returns
     -------
     Two lists of :obj:`Dipole` objects
-        list1: donor dipole set
-        list2: acceptor dipole set
+    
+        - list1. Donor dipole set
+        - list2. Acceptor dipole set
 
     Examples
     --------
@@ -225,14 +225,12 @@ def dipole_distances(donor_dipole, acceptor_dipole):
         The hydrogen bond acceptor dipole
     Returns
     -------
-    dict
+    distance_dict: dict
         A dict with the labels (keys) and distances (values). The keys are
         formatted as a1 for acceptor1 or d2 for donor2.
 
-        ex: {'d1a1': 3.86,
-             'd2a1': 3.22,
-             'd1a2': 2.10,
-             'd2a2': 2.80,}
+        - **keys**: dipole label (str). ex: 'd1a1', 'd2a1', 'd1a2' and 'd2a2'
+        - **values**: distance in A (float). ex: 3.86, 3.22, 2.10 and 2.80.
 
     Examples
     --------
@@ -274,10 +272,12 @@ def dipole_angles(donor_dipole, acceptor_dipole):
 
     Returns
     -------
-    dict
+    angle_dict: dict
         A dict with the labels (keys) and angles (values). The keys are
-        formatted using the following labels:
-        - theta: a2-a1-d1 angle
+        formatted using the following labels.
+
+        - **keys**: dipole label (str). ex: 'theta', 'phi'
+        - **values**: angle in deg (float). ex: 168.6, 35.8
 
     Examples
     --------
@@ -337,7 +337,7 @@ def find_hbond_partners(molecule, donor1_elements=None, donor2_elements=None,
     donor1_elements: str, optional
         The string for the elements for the donor1 atom. The '|' string is
         supported. ex: 'HA|H'
-    donor2_elements: str: optional
+    donor2_elements: str, optional
         The string for the elements for the donor2 atom.
     acceptor1_elements: str, optional
         The string for the elements for the acceptor1 atom.

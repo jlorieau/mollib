@@ -10,12 +10,12 @@ class HBondTable(MDTable):
 
     Attributes
     ----------
-    :hbonds: list of :obj:`mollib.hbonds.HydrogenBond`
+    hbonds: list of :obj:`mollib.hbonds.HydrogenBond`
         The list of hydrogen bonds.
-    :detailed: bool, optional
+    detailed: bool, optional
         If specified in the settings or the constructor, a detailed HBond
         table will be rendered
-    :sort_type: bool, optional
+    sort_type: bool, optional
         If specified, the hbonds will be sorted by type in the table.
     """
     hbonds = None

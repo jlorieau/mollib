@@ -11,12 +11,12 @@ class RamaTable(MDTable):
 
     Attributes
     ----------
-    :molecule: :obj:`mollib.core.Molecule`
+    molecule: :obj:`mollib.core.Molecule`
         The molecule to create the Ramachandran table for.
 
 
-    .. note: The Rama table is created in the hbond module because the residue
-             secondary structures are assigned based on their hydrogen bonds.
+    .. note:: The Rama table is created in the hbond module because the residue
+              secondary structures are assigned based on their hydrogen bonds.
     """
 
     molecule = None

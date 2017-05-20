@@ -316,7 +316,7 @@ def classify_hbonds(hbonds):
     classify_groups(hbonds)
 
 
-#: The Hbond energy datasets
+# The cached Hbond energy datasets
 energy_hbond_datasets = None
 
 
@@ -328,15 +328,14 @@ def add_energy_hbonds(hbond):
 
     Parameters
     ----------
-    residue: :obj:`mollib.hbonds.HydrogenBond`
-        The hydrogenbond gains the following attributes:
+    hbond: :obj:`mollib.hbonds.HydrogenBond`
+        The hydrogen bond gains the following attributes:
 
-    Added Residues Attributes
-    -------------------------
-    energy_hbond: float
-        The Hbond energy (in kT)
-    hbond_dataset: str
-        The name of the dataset used for the Hbond energy.
+        .. note:: The following attributes are added the the hbond object
+    
+            - energy_hbond (float). The Hbond energy (in kT)
+            - hbond_dataset (str). The name of the dataset used for the Hbond 
+              energy.
     """
     global energy_hbond_datasets
 
