@@ -132,14 +132,68 @@ file for the plugin:
 Docstring Format
 ================
 
-Docstrings follow the numpy style.
+Docstrings follow the numpy style. There are a few additional guidelines:
+
+    1. ``dict`` parameters and return values should list the expected
+       keys/values
+
+      a. ``dict`` parameters should list the key and value types using 'key' and
+         'value' in bold. If known, the object type should be listed after the
+         description.
+
+        .. code:: raw
+
+            - **key**: interaction label, str
+
+      b. ``dict`` return values should either list the key/value pairs, or list
+         specific keys and values.
+
+        .. code:: raw
+
+            - 'Q (%)': The fit Q-factor in percentage, float
+
+    2. *Sublists* should have a new line before the sublisting.
+
+        .. code:: raw
+
+           - 'Overall': Overall Statistics, :obj:`collections.OrderedDict`
+
+              - 'Q (%)': The fit Q-factor in percentage, float
+              - 'RMS': The root-mean square of the fit (Hz/ppb), float
+              - 'count': The number of interactions fit, int
+
+    3. *Sublists* that follow a paragraph listing in a parameter should not be
+       indented with respect to the paragraph.
+
+        .. code:: raw
+
+            angles: dict
+                A dict of the angles between atoms that define the hydrogen
+                bond.
+
+                - **key**: tuple of three :obj:`Atom` objects
+                - **value**: the angle (in deg) between the :obj:`Atom` objects
+
+    4. *args* and *kwargs* args are listed separately and as optional
+       parameters.
+
+        .. code:: raw
+
+            Parameters
+            ----------
+            args: tuple, optional
+                If specified a default argument, then this will be returned if
+                the key isn't found. Otherwise a ValueError exception is raised.
+            kwargs: dict, optional
+                If specified a default argument, then this will be returned if
+                the key isn't found. Otherwise a ValueError exception is raised.
 
 Example 1
 *********
 
 .. code-block:: python
 
-    def calc_statistics(magnetic_interactions, Saupe_components, data, predicted):
+   def calc_summary(magnetic_interactions, Saupe_components, data, predicted):
         """Calculate the statistics between predicted and calculated RDCs and
         RACSs.
 
@@ -151,20 +205,42 @@ Example 1
         Saupe_components: dict
             See the output of :func:`mollib.pa.svd.calc_pa_SVD`
         data: dict
-            - **key**: interaction labels (str)
+            - **key**: interaction labels, str
             - **value**: :obj:`mollib.pa.RDC` or :obj:`mollib.pa.RACS` data
               values.
         predicted: dict
-            - **key**: interaction labels (str)
+            - **key**: interaction labels, str
             - **value**: :obj:`mollib.pa.RDC` or :obj:`mollib.pa.RACS` data
-            values.
+              values.
 
         Returns
         -------
-        stats: :obj:`collections.OrderedDict`
-            - 'Q': (float) the Q-factor of the fit
-            - 'R': (float) the R-factor of the fit
-            - 'RMS': (Hz/ppb) the root-mean square of the fit
+        summary: :obj:`collections.OrderedDict`
+
+            - 'Overall': Overall Statistics, :obj:`collections.OrderedDict`
+
+              - 'Q (%)': The fit Q-factor in percentage, float
+              - 'RMS': The root-mean square of the fit (Hz/ppb), float
+              - 'count': The number of interactions fit, int
+
+            - 'Alignment': Details on the alignment tensor,
+              :obj:`collections.OrderedDict`
+
+              - 'Aa': The alignment tensor anisotropy, float
+              - 'Ar': The alignment tensor rhobicity, float
+
+            - 'Saupe': Details on the Saupe matrix, :obj:`collections.OrderedDict`
+
+              - 'Szz': The zz-component of the Saupe matrix, float
+              - 'Sxx': The xx-component of the Saupe matrix, float
+              - 'Syy': The yy-component of the Saupe matrix, float
+
+            - 'Angles': Alignment tensor orientation in Rose convention,
+              :obj:`collections.OrderedDict`
+
+              - "Z (deg)": The alignment alpha angle (deg), float
+              - "Y' (deg)": The alignment beta angle (deg), float
+              - "Z'' (deg)": The alignment gamma angle (deg), float
         """
 
 Example 2
@@ -190,9 +266,9 @@ Example 2
         classifications: dict
             A dict with the classifications.
 
-                - **key**: (chain.id, residue.number). ex: ('A', 31)
-                - **value**: (major_classification, minor_classification).
-                  ex: ('alpha-helix', 'N-term')
+              - **key**: (chain.id, residue.number). ex: ('A', 31)
+              - **value**: (major_classification, minor_classification).
+                ex: ('alpha-helix', 'N-term')
         classification_type: str
             The name of the classification type to check. ex: 'alpha-helix'
         dihedral_test: function or None
@@ -201,24 +277,24 @@ Example 2
               'classification_type'.
             - If None is specified, then the dihedral angles of residues will
               not be tested.
-        extend_terminii: bool or int (optional)
+        extend_terminii: bool or int, optional
             If True, the previous and subsequence residues of each contiguous
             stretch of residue classification will be checked to see if they fall
             within the dihedral angle range as well.
         label_N_term: int (optional)
             Label the first 'N' number of residues in the contiguous block as
             'N-term'
-        label_C_term: int (optional)
+        label_C_term: int, optional
             Label the last 'N' number of residues in the contiguous block as
             'C-term'
-        gap_tolerance: int (optional)
+        gap_tolerance: int, optional
             The assignment of contiguous stretches of a secondary structure
             assignment will tolerate this number of 'gaps' in the residue
             numbers.
             For a gap_toleranace of 1 and a checked sheet assignment, the
             following group 'E E E E' will be treated as a single contiguous
             block of sheetassignments.
-        overwrite_assignments: bool (optional)
+        overwrite_assignments: bool, optional
             If True, classification assignments will be overwritten, if an
             assignments has already been made for a given residue.
 

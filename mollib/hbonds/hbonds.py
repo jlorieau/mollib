@@ -67,12 +67,14 @@ class HydrogenBond(object):
         The classification (minor) modifier. ex: 'N-term' or 'parallel'
     distances: dict
         A dict of the distances between atoms that define the hydrogen bond.
-        - key: tuple of two :obj:`Atom` objects
-        - value: the distance (in A) between the :obj:`Atom` objects
+        
+        - **key**: tuple of two :obj:`Atom` objects
+        - **value**: the distance (in A) between the :obj:`Atom` objects
     angles: dict
         A dict of the angles between atoms that define the hydrogen bond.
-        - key: tuple of three :obj:`Atom` objects
-        - value: the angle (in deg) between the :obj:`Atom` objects
+        
+        - **key**: tuple of three :obj:`Atom` objects
+        - **value**: the angle (in deg) between the :obj:`Atom` objects
     """
 
     donor = None
@@ -145,8 +147,7 @@ def find_dipoles(molecule, donor1_elements=None, donor2_elements=None,
 
     Returns
     -------
-    Two lists of :obj:`Dipole` objects
-    
+    list1, list2
         - list1. Donor dipole set
         - list2. Acceptor dipole set
 
@@ -229,8 +230,8 @@ def dipole_distances(donor_dipole, acceptor_dipole):
         A dict with the labels (keys) and distances (values). The keys are
         formatted as a1 for acceptor1 or d2 for donor2.
 
-        - **keys**: dipole label (str). ex: 'd1a1', 'd2a1', 'd1a2' and 'd2a2'
-        - **values**: distance in A (float). ex: 3.86, 3.22, 2.10 and 2.80.
+          - **keys**: dipole label (str). ex: 'd1a1', 'd2a1', 'd1a2' and 'd2a2'
+          - **values**: distance in A (float). ex: 3.86, 3.22, 2.10 and 2.80.
 
     Examples
     --------
@@ -276,8 +277,8 @@ def dipole_angles(donor_dipole, acceptor_dipole):
         A dict with the labels (keys) and angles (values). The keys are
         formatted using the following labels.
 
-        - **keys**: dipole label (str). ex: 'theta', 'phi'
-        - **values**: angle in deg (float). ex: 168.6, 35.8
+          - **keys**: dipole label (str). ex: 'theta', 'phi'
+          - **values**: angle in deg (float). ex: 168.6, 35.8
 
     Examples
     --------

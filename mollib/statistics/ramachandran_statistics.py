@@ -14,7 +14,8 @@ from . import settings
 
 
 class RamachandranStatistics(Statistics):
-    """Collect statistics on Ramachandran angles.
+    """Collect statistics on Ramachandran angles. A subclass of the
+    :class:`mollib.statistics.statistics.Statistics` class.
     """
 
     def __init__(self, *args, **kwargs):
@@ -24,13 +25,18 @@ class RamachandranStatistics(Statistics):
     def process_measurement(self, molecule):
         """Process the molecule and return the Ramachandran angle statistics.
 
+        Parameters
+        ----------
+        molecule: :obj:`mollib.Molecule`
+            The molecule to process.
+
         Returns
         -------
         measurement_dict: dict
             The dict produced by :meth:`process_measurement`.
 
-            - key: residue classification (str)
-            - value: list of tuples of phi-psi angles [(float, float),]
+            - **key**: residue classification, str
+            - **value**: list of tuples of phi-psi angles, [(float, float),]
         """
         molecule = super(RamachandranStatistics,
                          self).process_measurement(molecule)
@@ -88,8 +94,8 @@ class RamachandranStatistics(Statistics):
         measurement_dict: dict
             The dict produced by :meth:`process_measurement`.
 
-            - key: molecule identifier (str)
-            - value: list of tuples of phi-psi angles [(float, float),]
+            - **key**: molecule identifier, str
+            - **value**: list of tuples of phi-psi angles, [(float, float),]
         """
         super(RamachandranStatistics, self).process_data(measurement_dict)
 

@@ -72,11 +72,11 @@ def euler_zyz(R):
     angles: tuple
         The alpha, beta and gamma angles of the rotation.
 
-        - alpha: The first rotation angle, about the z-axis (in degrees).
+        - 'alpha': The first rotation angle, about the z-axis (in degrees).
           [0, 360]
-        - beta: The second rotation angle, about the new y-axis (in degrees).
+        - 'beta': The second rotation angle, about the new y-axis (in degrees).
           [0, 180]
-        - gamma: The third rotation angle, about the new z-axis (in degrees).
+        - 'gamma: The third rotation angle, about the new z-axis (in degrees).
           [0, 360]
 
         .. note:: The Euler angles are subject to a gimbal lock in which the

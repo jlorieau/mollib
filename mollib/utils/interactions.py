@@ -1,39 +1,43 @@
 """
-Interactions labels (strings) are labels used to define the interaction between
+Interactions labels (str) are labels used to define the interaction between
 atoms or groups of atoms. These utility functions are used to change between
 interaction labels, label keys and atom groups.
 
 Interaction labels (str) have the following features:
 
-    - Each group of atoms is identified by a subunit (optional), a residue
-      number and an atom name.
-        - ex: 'A.13CA' is the CA atom of the 13th residue in subunit A.
+- Each group of atoms is identified by a subunit (optional), a residue
+  number and an atom name.
+  
+  - ex: 'A.13CA' is the CA atom of the 13th residue in subunit A.
 
-    - If the subunit is not specified, the subunit 'A' is assumed.
+- If the subunit is not specified, the subunit 'A' is assumed.
 
-    - Atom interactions are related to each other through a delimiter
-      (default: '-')
-        - ex: '14N-H' corresponds to the interaction between the N and H atoms
-          of residue 14 in subunit A.
+- Atom interactions are related to each other through a delimiter
+  (default: '-')
+  
+  - ex: '14N-H' corresponds to the interaction between the N and H atoms
+    of residue 14 in subunit A.
 
-    - The basic '+1' and '-1' relative operators are supported to refer to next
-      and previous residues.
-        - ex: '13N-C-1' corresponds to the interaction between the N atom of
-          residue 13 and the C atom of residue 12. Alternative, '13C-12N' could
-          also be used.
+- The basic '+1' and '-1' relative operators are supported to refer to next
+  and previous residues.
+  
+  - ex: '13N-C-1' corresponds to the interaction between the N atom of
+    residue 13 and the C atom of residue 12. Alternative, '13C-12N' could
+    also be used.
 
-    - Wildcards are supported for atom names (default: '#')
-        - ex: '13CA-HA#' corresponds to the CA atom of residue 13 and the HA2
-          and HA3 atoms of residue 13.
+- Wildcards are supported for atom names (default: '#')
+
+  - ex: '13CA-HA#' corresponds to the CA atom of residue 13 and the HA2
+    and HA3 atoms of residue 13.
 
 Interaction types (str) have the following features:
 
-    - They correspond to a series of atom types without a stereospecific
-      assignment. ex: The interaction type for '14N-H' and '14H-N' is 'N-H'.
-      The interaction type for '35CA-HA', '14CA-HA2' and 'A.2HA-CA' is 'CA-HA'.
+- They correspond to a series of atom types without a stereospecific
+  assignment. ex: The interaction type for '14N-H' and '14H-N' is 'N-H'.
+  The interaction type for '35CA-HA', '14CA-HA2' and 'A.2HA-CA' is 'CA-HA'.
 
-    - They only use relative residue numbers. ex: The interaction type of
-      '35N-34C' is 'N-C-1'
+- They only use relative residue numbers. ex: The interaction type of
+  '35N-34C' is 'N-C-1'
 """
 # TODO: Add atom groups. ex: 35CA-(CG1CG2)
 # TODO: Move to an nmr module.
@@ -603,13 +607,17 @@ def get_dict_value(dictionary, label, delimiter='-', *args, **kwargs):
     ----------
     dictionary: dict
         The dictionary to get the value from.
+        
         - **key**: The interaction type string. (ex: 'N-H' or 'CA-HA')
         - **value**: The value to return
     label: str
         The string identifier for the interaction. ex: A.14N-H
     delimiter: str
         The delimeter used for separating atom references.
-    *args, **kwargs (optional):
+    args: tuple, optional
+        If specified a default argument, then this will be returned if the key
+        isn't found. Otherwise a ValueError exception is raised.
+    kwargs: dict, optional
         If specified a default argument, then this will be returned if the key
         isn't found. Otherwise a ValueError exception is raised.
 

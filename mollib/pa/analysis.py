@@ -17,7 +17,8 @@ from . import settings
 # TODO: This function should be split into smaller functions, possibly a
 # chain-of-command object pattern
 def calc_summary(magnetic_interactions, Saupe_components, data, predicted):
-    """Calculate the statistics between predicted and calculated RDCs and RACSs.
+    """Calculate the statistics between predicted and calculated RDCs and
+    RACSs.
 
     Parameters
     ----------
@@ -27,30 +28,42 @@ def calc_summary(magnetic_interactions, Saupe_components, data, predicted):
     Saupe_components: dict
         See the output of :func:`mollib.pa.svd.calc_pa_SVD`
     data: dict
-        - **key**: interaction labels (str)
-        - **value**: :obj:`mollib.pa.RDC` or :obj:`mollib.pa.RACS` data values.
+        - **key**: interaction labels, str
+        - **value**: :obj:`mollib.pa.RDC` or :obj:`mollib.pa.RACS` data
+          values.
     predicted: dict
-        - **key**: interaction labels (str)
-        - **value**: :obj:`mollib.pa.RDC` or :obj:`mollib.pa.RACS` data values.
+        - **key**: interaction labels, str
+        - **value**: :obj:`mollib.pa.RDC` or :obj:`mollib.pa.RACS` data
+          values.
 
     Returns
     -------
     summary: :obj:`collections.OrderedDict`
-        - **'Overall'**: Overall Statistics
-            - 'Q (%)': (float) The fit Q-factor in percentage
-            - 'RMS': (Hz/ppb) The root-mean square of the fit
-            - 'count': (int) The number of interactions fit
-        - **'Alignment'**: Details on the alignment tensor
-            - 'Aa': (float) The alignment tensor anisotropy
-            - 'Ar': (float) The alignment tensor rhobicity
-        - **'Saupe'**: Details on the Saupe matrix
-            - 'Szz': (float) The zz-component of the Saupe matrix
-            - 'Sxx': (float) The xx-component of the Saupe matrix
-            - 'Syy': (float) The yy-component of the Saupe matrix
-        - **'Angles'**: Alignment tensor orientation in Rose convention
-            - "Z (deg)": (degrees) The alignment alpha angle
-            - "Y' (deg)": (degrees) The alignment beta angle
-            - "Z'' (deg)": (degrees) The alignment gamma angle
+
+        - 'Overall': Overall Statistics, :obj:`collections.OrderedDict`
+
+          - 'Q (%)': The fit Q-factor in percentage, float
+          - 'RMS': The root-mean square of the fit (Hz/ppb), float
+          - 'count': The number of interactions fit, int
+
+        - 'Alignment': Details on the alignment tensor,
+          :obj:`collections.OrderedDict`
+
+          - 'Aa': The alignment tensor anisotropy, float
+          - 'Ar': The alignment tensor rhobicity, float
+
+        - 'Saupe': Details on the Saupe matrix, :obj:`collections.OrderedDict`
+
+          - 'Szz': The zz-component of the Saupe matrix, float
+          - 'Sxx': The xx-component of the Saupe matrix, float
+          - 'Syy': The yy-component of the Saupe matrix, float
+
+        - 'Angles': Alignment tensor orientation in Rose convention,
+          :obj:`collections.OrderedDict`
+
+          - "Z (deg)": The alignment alpha angle (deg), float
+          - "Y' (deg)": The alignment beta angle (deg), float
+          - "Z'' (deg)": The alignment gamma angle (deg), float
     """
     # Calculate the overal Aa and Ar from the sum of each molecule/conformer
     Aa = [v for k, v in Saupe_components.items() if k.startswith('Aa')]

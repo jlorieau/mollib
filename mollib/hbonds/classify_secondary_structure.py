@@ -29,7 +29,7 @@ def classify_residues(molecule):
         .. note:: The residue objects (:obj:`mollib.Residue`) has the 
             :attr:`classification` tuple assigned.
         
-            - (`major_classification`, `minor_classification`)
+            - 'classification': (`major_classification`, `minor_classification`)
 
     skip_energy: bool, optional
         If True, the ramachandran energy will not be calculated.
@@ -171,9 +171,9 @@ def add_energy_ramachandran(residue):
 
         .. note:: The following attributes are added to the residue:
         
-            - energy_ramachandran (float). The Ramachandran energy (in kT)  
-            - ramachandran_dataset (str). The name of the dataset used for the 
-              Ramachandran energy.
+            - 'energy_ramachandran': The Ramachandran energy (in kT), float  
+            - 'ramachandran_dataset': The name of the dataset used for the 
+              Ramachandran energy, str
     """
     global energy_ramachandran_datasets
 
@@ -296,9 +296,9 @@ def fill_gaps(molecule, classifications, classification_type, dihedral_test,
     classifications: dict
         A dict with the classifications.
         
-            - **key**: (chain.id, residue.number). ex: ('A', 31)
-            - **value**: (major_classification, minor_classification).
-              ex: ('alpha-helix', 'N-term')
+          - **key**: (chain.id, residue.number). ex: ('A', 31)
+          - **value**: (major_classification, minor_classification).
+            ex: ('alpha-helix', 'N-term')
     classification_type: str
         The name of the classification type to check. ex: 'alpha-helix'
     dihedral_test: function or None

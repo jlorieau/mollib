@@ -17,7 +17,7 @@ def within_range(value, value_range, wrap=None):
 
     Parameters
     ----------
-    value: float or in
+    value: float or int
         The value to test
     value_range: tuple
         The tuple for the min/max range of values to test within
@@ -250,7 +250,7 @@ def group_hbonds(hbonds):
 
     Parameters
     ----------
-    hbonds:  hbonds: list of :obj:`mollib.hbonds.HydrogenBond`
+    hbonds:  list of :obj:`mollib.hbonds.HydrogenBond`
         Hydrogen bonds to classify.
 
     Returns
@@ -333,9 +333,9 @@ def add_energy_hbonds(hbond):
 
         .. note:: The following attributes are added the the hbond object
     
-            - energy_hbond (float). The Hbond energy (in kT)
-            - hbond_dataset (str). The name of the dataset used for the Hbond 
-              energy.
+            - 'energy_hbond': The Hbond energy (in kT), float
+            - 'hbond_dataset': The name of the dataset used for the Hbond 
+              energy, str
     """
     global energy_hbond_datasets
 

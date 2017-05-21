@@ -13,7 +13,8 @@ from mollib.hbonds import find_hbond_partners
 
 
 class HbondStatistics(Statistics):
-    """Collect statistics on hydrogen bonds.
+    """Collect statistics on hydrogen bonds. A subclass of the
+    :class:`mollib.statistics.statistics.Statistics` class.
     """
 
     def __init__(self, *args, **kwargs):
@@ -23,20 +24,23 @@ class HbondStatistics(Statistics):
     def process_measurement(self, molecule):
         """Process the molecule and return the Hbond statistics.
 
+        Parameters
+        ----------
+        molecule: :obj:`mollib.Molecule`
+            The molecule to process.
+
         Returns
         -------
         measurement_dict: dict
-            The dict produced by :meth:`process_measurement`.
+            The measurement dict.
 
-            - key: tuple of str
-              (major_classification, minor_classification, minor_modifier)
-            - value: list of dicts
-              {'distances': {'a1d1': float,
-                             'a1d2': float,
-                             'a2d1': float,
-                             'a2d2': float}
-               'angles' : {'theta': float,
-                           'phi': float}
+            - **key**: classification (major_classification, 
+              minor_classification, minor_modifier), tuple of str
+            - **value**: list of dicts
+            
+              - 'distances': {'a1d1': float, 'a1d2': float, 'a2d1': float,
+                'a2d2': float}
+              - 'angles': {'theta': float, 'phi': float}
         """
         molecule = super(HbondStatistics, self).process_measurement(molecule)
 
@@ -73,9 +77,9 @@ class HbondStatistics(Statistics):
         Parameters
         ----------
         measurement_dict: dict
-            - key: molecule identifier (str)
-            - value: data dict
-              see output from :meth:`process_measurements`
+            - **key**: molecule identifier, str
+            - **value**: data dict. see output from 
+              :meth:`process_measurements`
         """
         super(HbondStatistics, self).process_data(measurement_dict)
 

@@ -93,8 +93,10 @@ class Fixer(object):
         -------
         data_fixed: dict or None
             A dict with the data. 
+            
             - **key**: interaction labels (str). ex: '14N-H'
             - **value**: RDC or RACS datum objects (:obj:`RDC` :obj:`RACS`)
+            
             None is returned if none of the fixes worked
         fixes: list or str
             A list of strings of the fixes conducted to generate data_fixed.
@@ -195,7 +197,9 @@ class SignFixer(Fixer):
 class NHScaleFixer(Fixer):
     """Fix the RDCs of couplings that have been scaled to match the magnitude
     of NH couplings. 
-    All of the RDCs for a given interaction type are scaled together."""
+    
+    All of the RDCs for a given interaction type are scaled together.
+    """
 
     order = 30
 

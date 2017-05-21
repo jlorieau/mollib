@@ -784,11 +784,11 @@ class Molecule(dict):
 
         Parameters
         ----------
-        skip_for_TER: bool (optional)
+        skip_for_TER: bool, optional
 
-        Since the self.connections list depends on
-        atom numbers, it is reset.
 
+        .. note:: Since the self.connections list depends on atom numbers, 
+                  it is reset.
 
         .. note:: This function invalidates caches for objects without the
                   attribute or key 'preserve_cache_renumber_atoms'.
