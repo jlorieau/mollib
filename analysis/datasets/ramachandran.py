@@ -183,6 +183,6 @@ for row, subfigure_labels in enumerate(subfigure_groups, 1):
     plt.savefig('ramachandran_countour_{}.png'.format(row), format='PNG',
                 dpi=1200, bbox_inches='tight', pad_inches=0.05)
     plt.savefig('ramachandran_countour_{}_lowres.png'.format(row), format='PNG',
-                dpi=140, bbox_inches='tight', pad_inches=0.02)
+                dpi=220, bbox_inches='tight', pad_inches=0.02)
     plt.savefig('ramachandran_countour_{}.svg'.format(row), format='SVG',
                 bbox_inches='tight', pad_inches=0.05)

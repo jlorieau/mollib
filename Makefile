@@ -36,6 +36,7 @@ build-analysis: build-data  ## Conduct the analysis of datasets
 	pip install 'matplotlib>=2.0'
 	cd analysis/datasets
 	python ./ramachandran
+	find analysis/ -name "*lowres.png" -exec cp '{}' docs/cli/img/ \;
 
 docs: develop build-analysis  ## Build the documentation
 	pip install 'Sphinx>=1.5'
