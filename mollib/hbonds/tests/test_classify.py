@@ -7,7 +7,7 @@ import os
 
 from mollib.core import Molecule, load_settings
 import mollib.core.settings
-from mollib.hbonds import classify_residues
+from mollib.hbonds import classify_residues, find_hbond_partners
 
 
 class TestHbondClassify(unittest.TestCase):
@@ -62,6 +62,20 @@ class TestHbondClassify(unittest.TestCase):
 
                 self.assertEqual(actual_classification, test_classification,
                                  msg=residue_msg)
+
+    def test_energy_hbond(self):
+        """Test the assignment of hydrogen bond energies."""
+        # Load the molecule
+        mol = Molecule('2KXA')
+
+        # Find hydrogen bonds and classify them
+        hbonds = find_hbond_partners(mol)
+
+        # Assert that all of the hbonds have an energy associated and that these
+        # are float numbers
+        for hbond in hbonds:
+            self.assertTrue(hasattr(hbond, 'energy_hbond'))
+            self.assertTrue(hbond.energy_hbond)
 
     def test_energy_ramachandran(self):
         """Test the 'energy_ramachandran` property of residues, set by
