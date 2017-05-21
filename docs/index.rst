@@ -42,8 +42,8 @@ Mollib includes tools for:
    :maxdepth: 2
 
    cli/cli
-   develop
    releases/releases
+   develop
    api/api
 
 .. only:: html
