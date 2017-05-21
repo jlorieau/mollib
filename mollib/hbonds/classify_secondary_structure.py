@@ -40,15 +40,15 @@ def classify_residues(molecule):
     hbonds = find_hbond_partners(molecule)
 
     # Keep track of groups of classifications, like turns
-    turns = {settings.minor_beta_turnI, settings.minor_beta_turnII,
-             settings.minor_beta_turnIp, settings.minor_beta_turnIIp}
+    turns = {settings.major_beta_turnI, settings.major_beta_turnII,
+             settings.major_beta_turnIp, settings.major_beta_turnIIp}
 
     # Assign the residue secondary structure based on the hbond
     # classifications
     classification = {}  # {(chain.id, residue.number): classification}
     for hbond in hbonds:
         # Only classify based on backbone-backbone amide hydrogen bonds
-        if hbond.major_classification != settings.major_bb_bb_amide:
+        if hbond.type_classification != settings.type_bb_bb_amide:
             continue
 
         # Classify based on the residue identity for the atom2 (heavy atom)
@@ -61,19 +61,19 @@ def classify_residues(molecule):
         except AttributeError:
             continue
 
-        # Get the hydrogen bond type. The hbond minor classification represents
-        # the secondary structure type, like 'sheet'.
-        minor_class = hbond.minor_classification
+        # Get the hydrogen bond major classification. The hbond major
+        # classification represents the secondary structure type, like 'sheet'.
+        major_class = hbond.major_classification
 
         # Isolated hydrogen bonds contain no secondary structure assignment
         # information. Skip these.
-        if minor_class in settings.minor_isolated:
+        if major_class in settings.major_isolated:
             continue
 
         # Turns are treated specially. If the hbond is for a turn, residues
         # i+1 and i+2 shouuld be labeled as a turn (even though the i/i+4 is
         # hydrogen bond)
-        if minor_class in turns:
+        if major_class in turns:
             res_i = min(donor_res.number, acceptor_res.number)
             res_j = max(donor_res.number, acceptor_res.number)
 
@@ -85,52 +85,52 @@ def classify_residues(molecule):
             # Assign the residues i+1 and i+2 in the turn as turn residues.
             residue_nums = range(res_i + 1, res_j)
             for i in residue_nums:
-                classification[(chain, i)] = (minor_class, '')
+                classification[(chain, i)] = (major_class, '')
             continue
 
         # Assign both the donor and acceptor residues
         for count, res in enumerate((donor_res, acceptor_res)):
-            # Reset the minor modifier to nothing
-            minor_modifier = ''
+            # Reset the minor classification to nothing
+            minor_class = ''
 
             # Get the chain id for the donor and acceptor residues
             if donor_chain != acceptor_chain:
                 continue
             chain = donor_chain
 
-            # Some minor modifiers do not pertain to the donor
+            # Some minor classifications do not pertain to the donor
             # residue, where count==0, like the N-terminal residues of
             # helices
-            if count == 1 and hbond.minor_modifier == settings.minor_N:
-                minor_modifier = hbond.minor_modifier
+            if count == 1 and hbond.minor_classification == settings.minor_N:
+                minor_class = hbond.minor_classification
 
-            # Some minor modifiers do not pertain to the acceptor
+            # Some minor classifications do not pertain to the acceptor
             # residue, where count==0, like the C-terminal residues of
             # helices
-            if count == 0 and hbond.minor_modifier == settings.minor_C:
-                minor_modifier = hbond.minor_modifier
+            if count == 0 and hbond.minor_classification == settings.minor_C:
+                minor_class = hbond.minor_classification
 
             # If the residue is already assigned and it isn't 'isolated'
             # then skip it
             if (res.number in classification and
                 classification[(chain, res.number)][0] !=
-               settings.minor_isolated):
+               settings.major_isolated):
                 continue
 
-            classification[(chain, res.number)] = (minor_class, minor_modifier)
+            classification[(chain, res.number)] = (major_class, minor_class)
 
     # Find the contiguous blocks of secondary structure elements from the
     # hydrogen bonds and fill in gaps in the primary sequence
     if settings.fill_gaps:
         # Fill gaps for beta-strands and sheets
-        fill_gaps(molecule, classification, settings.minor_beta, _is_sheet,
+        fill_gaps(molecule, classification, settings.major_beta, _is_sheet,
                   extend_terminii=True, label_N_term=1, label_C_term=1,
                   gap_tolerance=2, overwrite_assignments=False)
 
         # 310-helices are typically 4-5 residues long. For a 4-residue
         # 310-helix, the i and i+3 residues are hydrogen bonded and labeled as
         # 310-helix--but the i+1/i+2 are not. This will fill in that gap
-        fill_gaps(molecule, classification, settings.minor_310, _is_helix,
+        fill_gaps(molecule, classification, settings.major_310, _is_helix,
                   extend_terminii=False, label_N_term=0, label_C_term=0,
                   gap_tolerance=3, overwrite_assignments=False)
 
@@ -208,20 +208,20 @@ def add_energy_ramachandran(residue):
     classification = residue.classification
     if (classification is None or
         not classification[0] or
-       classification[0] == mollib.hbonds.settings.minor_isolated):
+       classification[0] == mollib.hbonds.settings.major_isolated):
 
         # The 'No Hydrogen Bonds' and 'isolated' classification is the same as
         # the 'No classification'
         res_class = 'No classification'
-        modifier = ''
+        minor_class = ''
     else:
         res_class = (classification[0] if classification is not None
                      else 'No classification')
-        modifier = classification[1] if classification is not None else ''
+        minor_class = classification[1] if classification is not None else ''
 
     # Some energies are classified by hbond_classification and hbond_modifier.
     # These have the name of both, separated by '__'
-    full_res_class = '__'.join((res_class, modifier))
+    full_res_class = '__'.join((res_class, minor_class))
 
     if residue.name == 'GLY' and 'Gly' in energy_ramachandran_datasets:
         # Glycines are treated specially because they are more flexible in
@@ -297,10 +297,10 @@ def fill_gaps(molecule, classifications, classification_type, dihedral_test,
         A dict with the classifications.
         
           - **key**: (chain.id, residue.number). ex: ('A', 31)
-          - **value**: (major_classification, minor_classification).
+          - **value**: (major_classification, major_classification).
             ex: ('alpha-helix', 'N-term')
     classification_type: str
-        The name of the classification type to check. ex: 'alpha-helix'
+        The name of the major classification to check. ex: 'alpha-helix'
     dihedral_test: function or None
         - A test function that takes a :obj:`mollib.Residue` and returns True
           if the residue's dihedral angles are within range for the 
@@ -410,7 +410,7 @@ def fill_gaps(molecule, classifications, classification_type, dihedral_test,
             if current_classification is None or overwrite_assignments:
                 classifications[key] = (major_classification,
                                         minor_classification)
-            # Otherwise, write the minor_classification only if the major
+            # Otherwise, write the major_classification only if the major
             # classification for the current_classification is the same
             elif current_classification[0] == major_classification:
                 classifications[key] = (major_classification,

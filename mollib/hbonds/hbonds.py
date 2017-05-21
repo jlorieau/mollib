@@ -58,12 +58,11 @@ class HydrogenBond(object):
         The donor dipole of the hydrogen bond.
     acceptor: :obj:`Dipole`
         The acceptor dipole of the hydrogen bond.
+    type_classification: str
+        The hydrogen bond type. ex: 'bb-bb_amide'
     major_classification: str
-        The classification (major) of the hydrogen bond. ex: 'backbone amide'
-        or 'backbone aliphatic'
-    minor_classification: str
         The classification (minor) of the hydrogen bond. ex: 'alpha-helix'
-    minor_modifier: str, optional
+    minor_classification: str, optional
         The classification (minor) modifier. ex: 'N-term' or 'parallel'
     distances: dict
         A dict of the distances between atoms that define the hydrogen bond.
@@ -79,9 +78,9 @@ class HydrogenBond(object):
 
     donor = None
     acceptor = None
+    type_classification = ''
     major_classification = ''
     minor_classification = ''
-    minor_modifier = ''
     distances = None
     angles = None
 
@@ -100,10 +99,10 @@ class HydrogenBond(object):
         "The long representation of the HydrogenBond."
         s = self.short_repr()
 
-        if self.major_classification:
-            s += "{major}".format(major=self.major_classification)
+        if self.type_classification:
+            s += "{type}".format(type=self.type_classification)
         if self.minor_classification:
-            s += " ({minor})".format(minor=self.minor_classification)
+            s += " ({major})".format(major=self.major_classification)
         s += ": "
         s = s.ljust(35)  # Even the classification column
 

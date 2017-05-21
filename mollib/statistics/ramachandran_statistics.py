@@ -63,7 +63,7 @@ class RamachandranStatistics(Statistics):
                 # by their classification.
                 if (classification is None or
                     not classification[0] or
-                    classification[0] == mollib.hbonds.settings.minor_isolated):
+                    classification[0] == mollib.hbonds.settings.major_isolated):
                     major_classification = 'No classification'
                     minor_classification = ''
                 else:

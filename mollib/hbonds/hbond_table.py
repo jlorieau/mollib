@@ -42,7 +42,6 @@ class HBondTable(MDTable):
         else:
             self.hbonds = hbonds
 
-
         # Setup the table headers and parent table
         if self.detailed:
             cols = ('Num', 'Donor', 'Acceptor', 'Parameter', 'Value')
@@ -51,16 +50,15 @@ class HBondTable(MDTable):
                     'E (kT) / Prob.')
         super(HBondTable, self).__init__(*cols)
 
-
         # Add rows to the table for the hbonds
         for count, hb in enumerate(self.hbonds, 1):
             donor = hb.donor
             acceptor = hb.acceptor
-            classification = ('{}/{}'.format(hb.minor_classification,
-                                             hb.minor_modifier)
-                              if hb.minor_modifier else
-                              '{}'.format(hb.minor_classification))
-            classification = "{} ({})".format(hb.major_classification,
+            classification = ('{}/{}'.format(hb.major_classification,
+                                             hb.minor_classification)
+                              if hb.minor_classification else
+                              '{}'.format(hb.major_classification))
+            classification = "{} ({})".format(hb.type_classification,
                                               classification)
             energy = getattr(hb, 'energy_hbond', '-')
             if isinstance(energy, float):

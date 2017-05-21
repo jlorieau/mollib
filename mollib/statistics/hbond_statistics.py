@@ -34,8 +34,8 @@ class HbondStatistics(Statistics):
         measurement_dict: dict
             The measurement dict.
 
-            - **key**: classification (major_classification, 
-              minor_classification, minor_modifier), tuple of str
+            - **key**: classification (type_classification, 
+              major_classification, minor_classification), tuple of str
             - **value**: list of dicts
             
               - 'distances': {'a1d1': float, 'a1d2': float, 'a2d1': float,
@@ -53,11 +53,11 @@ class HbondStatistics(Statistics):
 
         for hbond in hbonds:
             # Create the dict key from the major_classification,
-            # minor_classification and minor_modifier. These have to be
+            # major_classification and minor_classification. These have to be
             # put together into a string so that json can dumps the dict.
-            key = (hbond.major_classification,
-                   hbond.minor_classification,
-                   hbond.minor_modifier)
+            key = (hbond.type_classification,
+                   hbond.major_classification,
+                   hbond.minor_classification)
             key = '__'.join(key)
             values_list = measure_dict.setdefault(key, list())
 
