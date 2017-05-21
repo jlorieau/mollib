@@ -229,10 +229,6 @@ Potential of Mean Force Plots
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. image:: img/ramachandran_countour_1_lowres.png
-    :height: 140pt
 .. image:: img/ramachandran_countour_2_lowres.png
-    :height: 140pt
 .. image:: img/ramachandran_countour_3_lowres.png
-    :height: 140pt
 .. image:: img/ramachandran_countour_4_lowres.png
-    :height: 140pt

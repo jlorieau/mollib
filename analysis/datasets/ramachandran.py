@@ -118,7 +118,7 @@ for row, subfigure_labels in enumerate(subfigure_groups, 1):
         # Skip empty plots
         if values is None:
             axarr[count].axis('off')
-            axarr[count].set_visible(False)
+            # axarr[count].set_visible(False)
             continue
         label, cmap, annot_xy = values
 
