@@ -150,13 +150,13 @@ major_pi = 'pi-helix'
 #: Major classification name for isolated hydrogen bonds
 major_isolated = 'isolated'
 
-#: Minor classification modifier for the N-terminal residues
+#: Minor classification name for the N-terminal residues
 minor_N = 'N-term'
 
 #: Minor classification name for the C-terminal residues of alpha-helices
 minor_C = 'C-term'
 
-#: Minor classification for glycines
+#: Minor classification name for glycines
 minor_gly = 'Gly'
 
 #: Fill residue assignment gaps

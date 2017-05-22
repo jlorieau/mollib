@@ -220,13 +220,52 @@ To accurately identify sheet strands, mollib will find groups of sheet hydrogen
 bonds, then it will evaluate whether the residues are in a checkered pattern and
 whether the previous or subsequent residues have sheet backbone torsion angles.
 Thereafter, it will assign all residues in the group to a sheet classification,
-if no other classification has already been made.
+if no other classification has already been made. See :ref:`fill gaps
+<measure-fill-gaps>` for details.
 
-Gaps
-~~~~
+
+.. _measure-fill-gaps:
+
+Fill Gaps
+~~~~~~~~~
+
+Secondary structure assignments are made based on hydrogen bonds. In some cases,
+such as the edge strands of sheets or short 310-helices, residues within a
+contiguous block are not assigned because they do not form an internal hydrogen
+bond. Fill gaps will find contiguous blocks of secondary structure units, test
+the dihedral of residues within that block, and make an assignment of the whole
+block.
+
+A checkered sheet assignment ('E E E E E'), for example with become a fill block
+assignment ('EEEEEEEEE'). 310-helices are another example in which the 'i' and
+'i+3' residues are hydrogen bonded, yet the 'i+1' and 'i+2' residues are not. In
+this case, the gap will be filled by assigning residues 'i' through 'i+3' as
+310-helix, if all four residues have helical dihedral angles.
+
+By default, filling gaps will not overwrite secondary structure assignments for
+residues that already have an assignment.
 
 Potential of Mean Force Plots
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The backbone dihedral probabilities and energies are calculated from potential
+of mean force plots for each type of secondary structure. It is calculated from
+the probability of finding a particular set of dihedral angles in a group of
+high-resolution structures. A high probability indicates that the measured
+dihedral angles are observed frequently in high-resolution structures.
+Conversely, a low probability indicates that a particular set of dihedral angles
+is rarely seen in high-resolution structures. These are typically colored in
+yellow (relatively rare) or red (very rare).
+
+The energies represent a potential of mean force (PMF) calculated from a
+Boltzmann inversion.
+
+.. math::
+    E(\Omega) = -kT ln[P(\Omega)]
+
+The energy is zero when a set of dihedrals angles is optimal for a given type
+of secondary structure classification. The following are the energy plots for
+each secondary structure classification.
 
 .. image:: img/ramachandran_countour_1_lowres.png
 .. image:: img/ramachandran_countour_2_lowres.png
