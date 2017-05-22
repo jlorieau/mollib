@@ -76,6 +76,10 @@ class Residue(dict):
         self.name = name  # full name, MET
         self.letter = self.one_letter_codes.get(self.name, 'X')  # letter code
         self.number = number
+
+        # Lazily calculated variables
+        self._classification = None
+
         super(Residue, self).__init__(*args, **kwargs)
 
     def __repr__(self):
@@ -183,6 +187,27 @@ class Residue(dict):
                 continue
             angles[item] = measure_dihedral(a, b, c, d)
         return angles
+
+    @property
+    def classification(self):
+        """The secondary structure classification for this residue.
+        
+        The classification is a 2-member tuple of strings with the major
+        classification (ex: 'alpha-helix') and the minor classification
+        ('N-term')
+        
+        Returns
+        -------
+        tuple or None
+            The classification tuple or,
+            None, if a classification has not yet been assigned.
+        """
+        return self._classification
+
+    @classification.setter
+    def classification(self, value):
+        assert isinstance(value, tuple) and len(value) > 0
+        self._classification = value
 
     @property
     def ionizeable_groups(self):

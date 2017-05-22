@@ -11,13 +11,12 @@ The current implementation:
   amide torsion angles.
 - The classification algorithm is more conservative than DSSP in assigning
   helices. In our implementation, all the torsion angles in the helix must
-  have helical torsion angles. This avoids the mistaken characterization of
-  turns as helices, like the beta-turn at P37-Q40 in ubiquitin (2MJB).
+  have helical torsion angles.
 
-Written Molecule Parameters
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Category: 'Structural Features'
-    hbonds: list of :obj:`HydrogenBond` objects
+
+.. note:: The `hbonds` attribute is added to the 'Structural Features' of the
+          molecule (:obj:`mollib.Molecule`). the `hbonds` are a list of hbond
+          objects (:obj:`mollib.hbond.hbond.HydrogenBond`)
 """
 
 from collections import namedtuple
@@ -59,28 +58,29 @@ class HydrogenBond(object):
         The donor dipole of the hydrogen bond.
     acceptor: :obj:`Dipole`
         The acceptor dipole of the hydrogen bond.
+    type_classification: str
+        The hydrogen bond type. ex: 'bb-bb_amide'
     major_classification: str
-        The classification (major) of the hydrogen bond. ex: 'backbone amide'
-        or 'backbone aliphatic'
-    minor_classification: str
         The classification (minor) of the hydrogen bond. ex: 'alpha-helix'
-    minor_modifier: str, optional
+    minor_classification: str, optional
         The classification (minor) modifier. ex: 'N-term' or 'parallel'
     distances: dict
         A dict of the distances between atoms that define the hydrogen bond.
-        - key: tuple of two :obj:`Atom` objects
-        - value: the distance (in A) between the :obj:`Atom` objects
+        
+        - **key**: tuple of two :obj:`Atom` objects
+        - **value**: the distance (in A) between the :obj:`Atom` objects
     angles: dict
         A dict of the angles between atoms that define the hydrogen bond.
-        - key: tuple of three :obj:`Atom` objects
-        - value: the angle (in deg) between the :obj:`Atom` objects
+        
+        - **key**: tuple of three :obj:`Atom` objects
+        - **value**: the angle (in deg) between the :obj:`Atom` objects
     """
 
     donor = None
     acceptor = None
+    type_classification = ''
     major_classification = ''
     minor_classification = ''
-    minor_modifier = ''
     distances = None
     angles = None
 
@@ -99,10 +99,10 @@ class HydrogenBond(object):
         "The long representation of the HydrogenBond."
         s = self.short_repr()
 
-        if self.major_classification:
-            s += "{major}".format(major=self.major_classification)
+        if self.type_classification:
+            s += "{type}".format(type=self.type_classification)
         if self.minor_classification:
-            s += " ({minor})".format(minor=self.minor_classification)
+            s += " ({major})".format(major=self.major_classification)
         s += ": "
         s = s.ljust(35)  # Even the classification column
 
@@ -137,7 +137,7 @@ def find_dipoles(molecule, donor1_elements=None, donor2_elements=None,
     donor1_elements: str, optional
         The string for the elements for the donor1 atom. The '|' string is
         supported. ex: 'HA|H'
-    donor2_elements: str: optional
+    donor2_elements: str, optional
         The string for the elements for the donor2 atom.
     acceptor1_elements: str, optional
         The string for the elements for the acceptor1 atom.
@@ -146,9 +146,9 @@ def find_dipoles(molecule, donor1_elements=None, donor2_elements=None,
 
     Returns
     -------
-    Two lists of :obj:`Dipole` objects
-        list1: donor dipole set
-        list2: acceptor dipole set
+    list1, list2
+        - list1. Donor dipole set
+        - list2. Acceptor dipole set
 
     Examples
     --------
@@ -167,7 +167,7 @@ def find_dipoles(molecule, donor1_elements=None, donor2_elements=None,
     # specified in the function parameters,  and it splits the atom elements at
     # the '|' character.
     donor1_elements  = (donor1_elements if donor1_elements is not None
-                       else settings.donor1_elements)
+                        else settings.donor1_elements)
     donor2_elements = (donor2_elements if donor2_elements is not None
                        else settings.donor2_elements)
     acceptor1_elements = (acceptor1_elements if acceptor1_elements is not None
@@ -225,14 +225,12 @@ def dipole_distances(donor_dipole, acceptor_dipole):
         The hydrogen bond acceptor dipole
     Returns
     -------
-    dict
+    distance_dict: dict
         A dict with the labels (keys) and distances (values). The keys are
         formatted as a1 for acceptor1 or d2 for donor2.
 
-        ex: {'d1a1': 3.86,
-             'd2a1': 3.22,
-             'd1a2': 2.10,
-             'd2a2': 2.80,}
+          - **keys**: dipole label (str). ex: 'd1a1', 'd2a1', 'd1a2' and 'd2a2'
+          - **values**: distance in A (float). ex: 3.86, 3.22, 2.10 and 2.80.
 
     Examples
     --------
@@ -274,10 +272,12 @@ def dipole_angles(donor_dipole, acceptor_dipole):
 
     Returns
     -------
-    dict
+    angle_dict: dict
         A dict with the labels (keys) and angles (values). The keys are
-        formatted using the following labels:
-        - theta: a2-a1-d1 angle
+        formatted using the following labels.
+
+          - **keys**: dipole label (str). ex: 'theta', 'phi'
+          - **values**: angle in deg (float). ex: 168.6, 35.8
 
     Examples
     --------
@@ -318,7 +318,6 @@ def dipole_angles(donor_dipole, acceptor_dipole):
     theta = acos(np.dot(a1d1, z)) * 180. / pi
     phi = atan2(np.dot(a1d1, y), np.dot(a1d1, x)) * 180. / pi
 
-
     returned_dict["theta"] = round(theta, 1)
     returned_dict["phi"] = round(phi, 1)
 
@@ -338,7 +337,7 @@ def find_hbond_partners(molecule, donor1_elements=None, donor2_elements=None,
     donor1_elements: str, optional
         The string for the elements for the donor1 atom. The '|' string is
         supported. ex: 'HA|H'
-    donor2_elements: str: optional
+    donor2_elements: str, optional
         The string for the elements for the donor2 atom.
     acceptor1_elements: str, optional
         The string for the elements for the acceptor1 atom.

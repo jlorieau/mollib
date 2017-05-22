@@ -7,7 +7,7 @@ anisotropic chemical shifts (RACSs, sometimes known as RCSAs) from *partially
 aligned* samples using NMR. The output table entries are colored for warning
 outliers (yellow) and bad outliers (red).
 
-.. include:: output/cli_pa_help.rst
+.. include:: output/mollib_pa_help.rst
 
 Arguments
 ---------
@@ -125,7 +125,7 @@ peptide structure (``-a 2KXA``) to the deposited NMR structure
 (``-i 2KXA``). The output table entries are colored for warning outliers
 (yellow) and bad outliers (red).
 
-.. include:: output/cli_pa_i_2KXA_a_2KXA.rst
+.. include:: output/mollib_pa_i_2KXA_a_2KXA.rst
 
 The following example fits the deposited RDCs for the first alignment
 (``--set 0``) dataset of ubiquitin (``-a 2MJB``) to the deposited NMR structure
@@ -133,15 +133,15 @@ The following example fits the deposited RDCs for the first alignment
 corresponding C-C bonds (``--project-methyls``) and outliers are removed
 from the fit (``--fix-outliers``).
 
-.. include:: output/cli_pa_i_2MJB_a_2MJB_set_0_fix-outliers_project-methyls_summary.rst
+.. include:: output/mollib_pa_i_2MJB_a_2MJB_set_0_fix-outliers_project-methyls_summary.rst
 
 This example is the same as the last one, however 'CE-HE', 'CD-HD' and 'CE-SD'
 RDCs are excluded (``--exclude``) from the fit.
 
-.. include:: output/cli_pa_i_2MJB_a_2MJB_set_0_exclude_CE-HE_CD-HD_CE-SD_fix-outliers_project-methyls_summary.rst
+.. include:: output/mollib_pa_i_2MJB_a_2MJB_set_0_exclude_CE-HE_CD-HD_CE-SD_fix-outliers_project-methyls_summary.rst
 
 Likewise, the crystal structure of ubiquitin (``-i 1UBQ``) can be used in
 the fit. In this case, the structure is missing hydrogen atoms, and these
 must be added (``--hydrogenate``).
 
-.. include:: output/cli_pa_i_1UBQ_a_2MJB_set_0_fix-outliers_project-methyls_hydrogenate_summary.rst
+.. include:: output/mollib_pa_i_1UBQ_a_2MJB_set_0_fix-outliers_project-methyls_hydrogenate_summary.rst

@@ -6,7 +6,7 @@ The ``measure`` command is used for measuring geometries in molecules.
 All of the options and preprocessors available from the :ref:`process-command`
 are also available.
 
-.. include:: output/cli_measure_help.rst
+.. include:: output/mollib_measure_help.rst
 
 Arguments
 ---------
@@ -129,8 +129,6 @@ Filters
               Combining the ``--only-bonded`` filter with other filters,
               like ``--only-delta 1``, can significantly speed up searches.
 
-
-
 Examples
 --------
 
@@ -141,13 +139,13 @@ Measure :math:`\alpha`-helical HA-H distances in chain 'A' for
 residues 23-49 of 2MUV, the homotetrametic influenza M2 channel. Include
 statistics on the measured distances.
 
-.. include:: output/cli_measure_i_2MUV_d_23:49.HA_23:49.H_only-delta_3_stats.rst
+.. include:: output/mollib_measure_i_2MUV_d_23:49.HA_23:49.H_only-delta_3_stats.rst
 
 Measure CA-CA distances between residue 20-21 for chains 'A', 'B', 'C'
 and 'D' of 2MUV--excluding same residue distances and same chain
 distances.
 
-.. include:: output/cli_measure_i_2MUV_d_A:D.20:21.CA_A:D.20:21.CA_exclude-intra_exclude-intra-chain.rst
+.. include:: output/mollib_measure_i_2MUV_d_A:D.20:21.CA_A:D.20:21.CA_exclude-intra_exclude-intra-chain.rst
 
 Compare the distance between the HA of residue 5 and the H of residue
 21 for two different structures, 2KXA and 2LWA. The 2KXA structure
@@ -157,7 +155,7 @@ promixity. The 2LWA structure represents the conformational ensemble
 of the HAfp-G8A mutant with a closed structure (chain 'A'), a
 semi-closed structure (chain 'B') and an open structure (chain 'C').
 
-.. include:: output/cli_measure_i_2KXA_2LWA_d_A:C.5.HA_A:C.21.H_only-intra-chain.rst
+.. include:: output/mollib_measure_i_2KXA_2LWA_d_A:C.5.HA_A:C.21.H_only-intra-chain.rst
 
 Measuring Angles
 ~~~~~~~~~~~~~~~~
@@ -165,7 +163,7 @@ Measuring Angles
 Measure the angle of the bonded 'C-1'--'N'--'H' atoms for residues
 20-30 from the ubiquitin structure 2MJB.
 
-.. include:: output/cli_measure_i_2MJB_a_20:30.C_20:30.N_20:30.H_only-bonded.rst
+.. include:: output/mollib_measure_i_2MJB_a_20:30.C_20:30.N_20:30.H_only-bonded.rst
 
 Measuring Dihedrals
 ~~~~~~~~~~~~~~~~~~~
@@ -173,7 +171,7 @@ Measuring Dihedrals
 The following example measures the :math:`\phi` angle for residues 2-6 of the
 hemagglutinin fusion peptide domain (2KXA).
 
-.. include:: output/cli_measure_i_2KXA_dih_2:6.C_2:6.N_2:6.CA_2:6.C_only-bonded_stats.rst
+.. include:: output/mollib_measure_i_2KXA_dih_2:6.C_2:6.N_2:6.CA_2:6.C_only-bonded_stats.rst
 
 Ramachandran Angles
 ~~~~~~~~~~~~~~~~~~~
@@ -181,4 +179,95 @@ Ramachandran Angles
 Measure the Ramachandran :math:`\phi` and :math:`\psi` angles for the
 hemagglutinin fusion peptide structure 2KXA.
 
-.. include:: output/cli_measure_i_2KXA_rama.rst
+.. include:: output/mollib_measure_i_2KXA_rama.rst
+
+Approach to Secondary Structure Assignments
+-------------------------------------------
+
+:math:`\beta` Turns
+~~~~~~~~~~~~~~~~~~~
+
+Turns are defined by a hydrogen bond between residues 'i' and 'i+4' as well as
+the backbone torsion angles for residues 'i+1' and 'i+2'. The turn type is
+based on the torsion angles of the 'i+1' and 'i+2' residues.
+
+===== ================== ================== ================== ==================
+Type  :math:`\phi_{i+1}` :math:`\psi_{i+1}` :math:`\phi_{i+2}` :math:`\psi_{i+2}`
+===== ================== ================== ================== ==================
+I     -60º                -30º              -90º               0º
+I'     60º                 30º               90º               0º
+II    -60º                120º               80º               0º
+II'    60º               -120º              -80º               0º
+===== ================== ================== ================== ==================
+
+Assignments of the turn residues 'i+1' and 'i+2' are made. However, since
+the torsion angles of the terminal residues--specifically :math:`\phi` of
+residue 'i' and :math:`\psi` of residue 'i+4'--are flexible, these are not
+included in the assignment.
+
+Helices
+~~~~~~~
+
+Sheets
+~~~~~~
+
+Sheets are first identified by finding hydrogen bonds between residues with
+sheet torsion angles. This process identifies most sheet residues. However, for
+strands on the edges of sheets, every second amino acid may not form an
+internal hydrogen bond.
+
+To accurately identify sheet strands, mollib will find groups of sheet hydrogen
+bonds, then it will evaluate whether the residues are in a checkered pattern and
+whether the previous or subsequent residues have sheet backbone torsion angles.
+Thereafter, it will assign all residues in the group to a sheet classification,
+if no other classification has already been made. See :ref:`fill gaps
+<measure-fill-gaps>` for details.
+
+
+.. _measure-fill-gaps:
+
+Fill Gaps
+~~~~~~~~~
+
+Secondary structure assignments are made based on hydrogen bonds. In some cases,
+such as the edge strands of sheets or short 310-helices, residues within a
+contiguous block are not assigned because they do not form an internal hydrogen
+bond. Fill gaps will find contiguous blocks of secondary structure units, test
+the dihedral of residues within that block, and make an assignment of the whole
+block.
+
+A checkered sheet assignment ('E E E E E'), for example with become a fill block
+assignment ('EEEEEEEEE'). 310-helices are another example in which the 'i' and
+'i+3' residues are hydrogen bonded, yet the 'i+1' and 'i+2' residues are not. In
+this case, the gap will be filled by assigning residues 'i' through 'i+3' as
+310-helix, if all four residues have helical dihedral angles.
+
+By default, filling gaps will not overwrite secondary structure assignments for
+residues that already have an assignment.
+
+Potential of Mean Force Plots
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The backbone dihedral probabilities and energies are calculated from potential
+of mean force plots for each type of secondary structure. It is calculated from
+the probability of finding a particular set of dihedral angles in a group of
+high-resolution structures. A high probability indicates that the measured
+dihedral angles are observed frequently in high-resolution structures.
+Conversely, a low probability indicates that a particular set of dihedral angles
+is rarely seen in high-resolution structures. These are typically colored in
+yellow (relatively rare) or red (very rare).
+
+The energies represent a potential of mean force (PMF) calculated from a
+Boltzmann inversion.
+
+.. math::
+    E(\Omega) = -kT ln[P(\Omega)]
+
+The energy is zero when a set of dihedrals angles is optimal for a given type
+of secondary structure classification. The following are the energy plots for
+each secondary structure classification.
+
+.. image:: img/ramachandran_countour_1_lowres.png
+.. image:: img/ramachandran_countour_2_lowres.png
+.. image:: img/ramachandran_countour_3_lowres.png
+.. image:: img/ramachandran_countour_4_lowres.png

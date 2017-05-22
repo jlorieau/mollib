@@ -4,7 +4,7 @@ Overview
 The command line interface includes all of mollib's functions for processing
 and analyzing molecules and molecular data.
 
-.. include:: output/cli_help.rst
+.. include:: output/mollib_help.rst
 
 
 ``-h`` / ``--help``
@@ -28,13 +28,13 @@ and analyzing molecules and molecular data.
 ``--list-plugins``
     Display a list of installed and enabled plugins.
 
-    .. include:: output/cli_list-plugins.rst
+    .. include:: output/mollib_list-plugins.rst
 
 ``--list-settings``
     Display a list of the settings sections that will be interpreted from
     configuration files.
 
-    .. include:: output/cli_list-settings.rst
+    .. include:: output/mollib_list-settings.rst
 
 .. _configuration-files:
 

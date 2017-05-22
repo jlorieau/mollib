@@ -68,7 +68,7 @@ author = 'Justin L Lorieau'
 # package will lead to an ImportError. This approach circumvents this problem.
 __version__ = None  # This is a version string
 VERSION = None  # This is a 5-item version tuple
-exec(open("./mollib/__version__.py").read())
+exec(open("../mollib/__version__.py").read())
 
 # The full version, including alpha/beta/rc tags.
 release = __version__
@@ -94,10 +94,6 @@ language = None
 # directories to ignore when looking for source files.
 # This patterns also effect to html_static_path and html_extra_path
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
-
-# The API documentation is not included in the user PDF manual
-if 'tags' in locals() and tags.has('latex'):
-    exclude_patterns += ['**/api*', '**/releases*', 'develop*']
 
 # The reST default role (used for this markup: `text`) to use for all
 # documents.
@@ -194,7 +190,8 @@ html_static_path = ['_static']
 # Custom sidebar templates, maps document names to template names.
 #
 # html_sidebars = {}
-html_sidebars = { '**': ['globaltoc.html', 'relations.html', 'sourcelink.html', 'searchbox.html'], }
+html_sidebars = { '**': ['globaltoc.html', 'relations.html', 'sourcelink.html',
+                         'searchbox.html'], }
 
 # Additional templates that should be rendered to pages, maps page names to
 # template names.
@@ -264,28 +261,42 @@ latex_elements = {
 
      'classoptions': ',openany,oneside',
 
+     'fontpkg': r'''
+        \usepackage{times}
+        \usepackage{inconsolata}
+      ''',
+
      # The font size ('10pt', '11pt' or '12pt').
      #
      # 'pointsize': '11pt',
 
      # Additional stuff for the LaTeX preamble.
      #
-     'preamble': (
-         "\definecolor{olivegreen}{RGB}{60, 128, 49}\n"
-         "\definecolor{darkyellow}{RGB}{202, 214, 41}\n"
-         "\definecolor{darkorange}{RGB}{198,  93,  9}\n"
-         "\sphinxDeclareColorOption{VerbatimBorderColor}{{rgb}{0.5,0.5,0.5}}\n"
-         "\sphinxDeclareColorOption{VerbatimColor}"
-            "{{rgb}{0.985,0.985,0.985}}\n"
-         "\\fvset{fontsize=\\footnotesize}\n"
-         "\\sphinxverbatimsep=6pt\n"
-         "\\sphinxshadowsize=15pt\n"),
+     'preamble': r'''
+         \definecolor{olivegreen}{RGB}{60, 128, 49}
+         \definecolor{darkyellow}{RGB}{202, 214, 41}
+         \definecolor{darkorange}{RGB}{198,  93,  9}
+         \sphinxDeclareColorOption{VerbatimBorderColor}{{rgb}{0.5,0.5,0.5}}
+         \sphinxDeclareColorOption{VerbatimColor}{{rgb}{0.985,0.985,0.985}}
+         \fvset{fontsize=\footnotesize}
+         \sphinxverbatimsep=6pt
+         \sphinxshadowsize=15pt
+         \usepackage{enumitem}
+         \setlistdepth{99}
+         \setlist{labelsep=0.5em}
+         \DeclareUnicodeCharacter{2212}{-}
+         '''
 
      # Latex figure (float) alignment
      #
      # 'figure_align': 'htbp',
 
 }
+
+# The API documentation is not included in the user PDF manual
+if 'tags' in locals() and tags.has('latex'):
+    exclude_patterns += ['**/releases*',]
+    # exclude_patterns += ['**/api*', '**/releases*', 'develop*']
 
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title,
@@ -383,42 +394,44 @@ def process_cmd(string):
     args = string.split()
     progname = args[0]
     args_name = '_'.join([i.strip('-').replace('|', '_') for i in args[1:]])
-    shell_cmd = "user@host$ {cmd}".format(cmd=string)
+    shell_cmd = "$ {cmd}".format(cmd=string)
     shell_cmd = " \\\n> ".join(textwrap.wrap(shell_cmd, 78))
 
     # Prepare the CLI output file.
     print(shell_cmd)
     cmd = ("echo '{shell_cmd}' "
-            "> cli/output/cli_{args_name}.txt\n")
+            "> cli/output/{progname}_{args_name}.txt\n")
 
     cmd += ("cd ..&&"
-            "FORCE_COLOR=TRUE python {progname} {args}"
-            ">> docs/cli/output/cli_{args_name}.txt\n"
+            "FORCE_COLOR=TRUE {progname} {args}"
+            ">> docs/cli/output/{progname}_{args_name}.txt\n"
             "cd docs\n")
 
     # Process the html component
     cmd += ("echo '.. only:: html\n\n.. raw:: html\n'"
-            "> cli/output/cli_{args_name}.html\n")
+            "> cli/output/{progname}_{args_name}.html\n")
 
-    cmd += ("pygmentize -l shell-session -f html cli/output/cli_{args_name}.txt"
-            "|sed 's/^/    /g' >> cli/output/cli_{args_name}.html\n")
+    cmd += ("pygmentize -l shell-session -f html "
+            "cli/output/{progname}_{args_name}.txt"
+            "|sed 's/^/    /g' >> cli/output/{progname}_{args_name}.html\n")
 
     # Replace ANSI colors
-    cmd += ("cat -e cli/output/cli_{args_name}.html"
+    cmd += ("cat -e cli/output/{progname}_{args_name}.html"
             "|sed 's/\$$//g'"  # Remove $ at the end of lines
             "|sed 's/\^\[\[1m/<font style=\"font-weight:bold;\">/g'"
             "|sed 's/\^\[\[22m/<\/font>/g'"
+            "|sed 's/\^\[\[36m/<font color=\"#008b8b\">/g'"  # cyan
             "|sed 's/\^\[\[91m/<font color=\"red\">/g'"
             "|sed 's/\^\[\[92m/<font color=\"green\">/g'"
             "|sed 's/\^\[\[33m/<font color=\"#abb51f\">/g'"
             "|sed 's/\^\[\[94m/<font color=\"blue\">/g'"
             "|sed 's/\^\[\[95m/<font color=\"magenta\">/g'"
-            "|sed 's/\^\[\[96m/<font color=\"cyan\">/g'"
+            "|sed 's/\^\[\[96m/<font color=\"#008b8b\">/g'"  # cyan
             "|sed 's/\^\[\[0m/<\/font>/g'"
-            ">cli/output/cli_{args_name}.tmp\n")
+            ">cli/output/{progname}_{args_name}.tmp\n")
 
-    cmd += ("mv cli/output/cli_{args_name}.tmp "
-            "cli/output/cli_{args_name}.rst\n")
+    cmd += ("mv cli/output/{progname}_{args_name}.tmp "
+            "cli/output/{progname}_{args_name}.rst\n")
 
     # Process the latex component
     cmd += ("echo '\n.. only:: latex\n\n"
@@ -427,9 +440,9 @@ def process_cmd(string):
             "[commandchars=\\\\\\\\\\\\{{\\\\}},"  # [commandchars=\\\{\},
             "fontsize=\\\\footnotesize]"  # fontsize=\footnotesize,
             "'"
-            "> cli/output/cli_{args_name}.tex\n")
+            "> cli/output/{progname}_{args_name}.tex\n")
 
-    cmd += ("cat -e cli/output/cli_{args_name}.txt"
+    cmd += ("cat -e cli/output/{progname}_{args_name}.txt"
             "|sed 's/user@host\$/\\\\textcolor{{darkorange}}"
                 "{{\\\\textbf{{user@host$}}}}/g'"  # highlight the term prompt
             "|sed 's/^/    /g'"  # Add a tab at the start of every line
@@ -438,6 +451,7 @@ def process_cmd(string):
             "|sed 's/--/-{{-}}/g'"  # Preserve --
             "|sed 's/\^\[\[1m/\\\\textbf{{/g'"
             "|sed 's/\^\[\[22m/}}/g'"
+            "|sed 's/\^\[\[36m/\\\\textcolor{{cyan}}{{/g'"
             "|sed 's/\^\[\[91m/\\\\textcolor{{red}}{{/g'"
             "|sed 's/\^\[\[92m/\\\\textcolor{{olivegreen}}{{/g'"
             "|sed 's/\^\[\[33m/\\\\textcolor{{darkyellow}}{{/g'"
@@ -445,14 +459,14 @@ def process_cmd(string):
             "|sed 's/\^\[\[95m/\\\\textcolor{{magenta}}{{/g'"
             "|sed 's/\^\[\[96m/\\\\textcolor{{cyan}}{{/g'"
             "|sed 's/\^\[\[0m/}}/g'"
-            ">>cli/output/cli_{args_name}.tex\n")
+            ">>cli/output/{progname}_{args_name}.tex\n")
 
     #cmd += ("echo '\n    \\\\end{{sphinxVerbatim}}\n\\\\\\\\\n'"
     cmd += ("echo '    \\\\end{{sphinxVerbatim}}\n {{}} \n'"
-            ">>cli/output/cli_{args_name}.tex\n")
+            ">>cli/output/{progname}_{args_name}.tex\n")
 
-    cmd += ("cat cli/output/cli_{args_name}.tex "
-            ">> cli/output/cli_{args_name}.rst\n")
+    cmd += ("cat cli/output/{progname}_{args_name}.tex "
+            ">> cli/output/{progname}_{args_name}.rst\n")
 
     # Clean up
     cmd += ("rm cli/output/*.txt cli/output/*.tex cli/output/*.html\n")
@@ -462,6 +476,8 @@ def process_cmd(string):
     os.system(cmd)
 
 if 'cli' in sys.argv:
+    process_cmd("make help")
+
     process_cmd("mollib --help")
     process_cmd("mollib --list-plugins")
     process_cmd("mollib --list-settings")

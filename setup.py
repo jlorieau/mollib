@@ -1,4 +1,5 @@
 from setuptools import setup, find_packages, Extension
+from distutils.command.build_ext import build_ext
 
 
 # Setup numpy include directory.
@@ -39,6 +40,20 @@ else:
                                     [c_file, ]))
 
 
+# Setup a custom builder to add compilation include directories
+class custom_build_ext(build_ext):
+
+    def run(self):
+        # Import numpy here, only when headers are needed
+        import numpy
+
+        # Add numpy headers to include_dirs
+        self.include_dirs.append(numpy.get_include())
+
+        # Call original build_ext command
+        build_ext.run(self)
+
+
 # Get the version number and package information.
 # The __version__.py file is executed so that the mollib package is not loaded.
 # At this point, the C/C++ extensions may not be built, and loading the mollib
@@ -64,7 +79,8 @@ else:
 classifiers += [
           'Intended Audience :: Science/Research',
           'License :: OSI Approved :: GNU General Public License v3 (GPLv3)',
-          'Operating System :: OS Independent',
+          'Operating System :: MacOS :: MacOS X',
+          'Operating System :: POSIX :: Linux',
           'Programming Language :: C',
           'Programming Language :: Python',
           'Programming Language :: Python :: 2.7',
@@ -100,5 +116,7 @@ setup(name='mollib',
       },
       ext_modules=extensions,
       include_dirs=include_dirs,
+      cmdclass={'build_ext': custom_build_ext},
+      zip_safe=False,
       classifiers=classifiers,
       )

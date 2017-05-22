@@ -39,7 +39,7 @@ helix_phi = (-170., 0.)
 helix_psi = (-100., 55.)
 
 # Phi torsion angle range (in degrees) for beta-sheet. (Generously allowed)
-beta_phi = (-200.,-25.)
+beta_phi = (-200., -25.)
 
 # Psi torsion angle range (in degrees) for beta-sheet. (Generously allowed)
 beta_psi = (45., 220.)
@@ -73,94 +73,100 @@ beta_turn_i2_psi = {'turnI':   (-50., 50.),
                     'turnIIp': (-50., 50.)
                     }
 
-#: Major classification name for backbone-backbone (bb-bb) amide hydrogen
+#: Classification type name for backbone-backbone (bb-bb) amide hydrogen
 #: bonds
-major_bb_bb_amide = 'bb-bb amide'
+type_bb_bb_amide = 'bb-bb amide'
 
-#: Major classification name for backbone-sidechain (sc-bb) amide hydrogen
+#: Classification type name for backbone-sidechain (sc-bb) amide hydrogen
 #: bonds
-major_bb_sc_amide = 'bb-sc amide'
+type_bb_sc_amide = 'bb-sc amide'
 
-#: Major classification name for sidechain-backbone (sc-bb) amide hydrogen
+#: Classification type name for sidechain-backbone (sc-bb) amide hydrogen
 #: bonds
-major_sc_bb_amide = 'sc-bb amide'
+type_sc_bb_amide = 'sc-bb amide'
 
-#: Major classification name for sidechain-sidechain (sc-sc) amide hydrogen
+#: Classification type name for sidechain-sidechain (sc-sc) amide hydrogen
 #: bonds
-major_sc_sc_amide = 'sc-sc amide'
+type_sc_sc_amide = 'sc-sc amide'
 
-#: Major classification name for backbone-backbone (bb-bb) aliphatic hydrogen
+#: Classification type name for backbone-backbone (bb-bb) aliphatic hydrogen
 #: bonds
-major_bb_bb_aliphatic = 'bb-bb aliph.'
+type_bb_bb_aliphatic = 'bb-bb aliph.'
 
-#: Major classification name for backbone-sidechain (bb-sc) aliphatic hydrogen
+#: Classification type name for backbone-sidechain (bb-sc) aliphatic hydrogen
 #: bonds
-major_bb_sc_aliphatic = 'bb-sc aliph.'
+type_bb_sc_aliphatic = 'bb-sc aliph.'
 
-#: Major classification name for sidechain-backbone (sc-bb) aliphatic hydrogen
+#: Classification type name for sidechain-backbone (sc-bb) aliphatic hydrogen
 #: bonds
-major_sc_bb_aliphatic = 'sc-bb aliph.'
+type_sc_bb_aliphatic = 'sc-bb aliph.'
 
-#: Major classification name for backbone-backbone (sc-sc) aliphatic hydrogen
+#: Classification type name for backbone-backbone (sc-sc) aliphatic hydrogen
 #: bonds
-major_sc_sc_aliphatic = 'sc-sc aliph.'
+type_sc_sc_aliphatic = 'sc-sc aliph.'
 
-#: Major classification name for backbone-backbone (bb-sc) hydroxyl hydrogen
+#: Classification type name for backbone-backbone (bb-sc) hydroxyl hydrogen
 #: bonds
-major_bb_sc_hydroxyl = 'bb-sc hydroxyl'
+type_bb_sc_hydroxyl = 'bb-sc hydroxyl'
 
-#: Major classification name for sidechain-backbone (sc-bb) hydroxyl hydrogen
+#: Classification type name for sidechain-backbone (sc-bb) hydroxyl hydrogen
 #: bonds
-major_sc_bb_hydroxyl = 'sc-bb hydroxyl'
+type_sc_bb_hydroxyl = 'sc-bb hydroxyl'
 
-#: Major classification name for sidechain-sidechain (sc-sc) hydroxyl hydrogen
+#: Classification type name for sidechain-sidechain (sc-sc) hydroxyl hydrogen
 #: bonds
-major_sc_sc_hydroxyl = 'sc-sc hydroxyl'
+type_sc_sc_hydroxyl = 'sc-sc hydroxyl'
 
-#: Minor classification name for type I turns
-minor_beta_turnI = "type I turn"
+#: Major classification name for type I turns
+major_beta_turnI = "type I turn"
 
-#: Minor classification name for type II turns
-minor_beta_turnII = "type II turn"
+#: Major classification name for type II turns
+major_beta_turnII = "type II turn"
 
-#: Minor classification name for type I' turns
-minor_beta_turnIp = "type I' turn"
+#: Major classification name for type I' turns
+major_beta_turnIp = "type I' turn"
 
-#: Minor classification name for type II' turns
-minor_beta_turnIIp = "type II' turn"
+#: Major classification name for type II' turns
+major_beta_turnIIp = "type II' turn"
 
-#: Minor classification name for sheets
-minor_beta = 'sheet'
+#: Major classification name for sheets
+major_beta = 'sheet'
 
-#: Minor classification name for anti-parallel beta-sheets
-minor_beta_anti = 'sheet, anti-parallel'
+#: Major classification name for anti-parallel beta-sheets
+major_beta_anti = 'sheet, anti-parallel'
 
-#: Minor classification name for parallel beta-sheets
-minor_beta_par = 'sheet, parallel'
+#: Major classification name for parallel beta-sheets
+major_beta_par = 'sheet, parallel'
 
-#: Minor classification name for 310-helices
-minor_310 = '310-helix'
+#: Major classification name for 310-helices
+major_310 = '310-helix'
 
-#: Minor classification name for alpha-helices
-minor_alpha = 'alpha-helix'
+#: Major classification name for alpha-helices
+major_alpha = 'alpha-helix'
 
-#: Minor classification name for pi-helices
-minor_pi = 'pi-helix'
+#: Major classification name for pi-helices
+major_pi = 'pi-helix'
 
-#: Minor classification name for isolated hydrogen bonds
-minor_isolated = 'isolated'
+#: Major classification name for isolated hydrogen bonds
+major_isolated = 'isolated'
 
-#: Minor classification modifier for the N-terminal residues
+#: Minor classification name for the N-terminal residues
 minor_N = 'N-term'
 
 #: Minor classification name for the C-terminal residues of alpha-helices
 minor_C = 'C-term'
 
-#: Minor classification for glycines
+#: Minor classification name for glycines
 minor_gly = 'Gly'
+
+#: Fill residue assignment gaps
+fill_gaps = True
 
 #: Render HBond tables with detailed information
 hbond_table_detailed = False
 
 #: Sort HBond tables by the hydrogen bond type
 hbond_table_sort_type = False
+
+#: Render the Rama table with detailed information, including minor assignments
+rama_table_detailed = True

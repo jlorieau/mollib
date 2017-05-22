@@ -7,7 +7,7 @@ import os
 
 from mollib.core import Molecule, load_settings
 import mollib.core.settings
-from mollib.hbonds import classify_residues
+from mollib.hbonds import classify_residues, find_hbond_partners
 
 
 class TestHbondClassify(unittest.TestCase):
@@ -20,45 +20,62 @@ class TestHbondClassify(unittest.TestCase):
         "Tests the residue classification from hbonds for specific molecule"
 
         # Hemagglutinin fusion peptide
-        answer_key = {'2KXA': {1:  ('isolated', ''),
-                               2:  ('alpha-helix', 'N-term'),
-                               3:  ('alpha-helix', 'N-term'),
-                               4:  ('alpha-helix', ''),
-                               5:  ('alpha-helix', ''),
-                               6:  ('alpha-helix', ''),
-                               7:  ('alpha-helix', ''),
-                               8:  ('alpha-helix', ''),
-                               9:  ('alpha-helix', ''),
-                               10: ('alpha-helix', ''),
-                               11: ('alpha-helix', 'C-term'),
-                               12: ('alpha-helix', 'C-term'),
-                               13: ('isolated', ''),
-                               14: ('alpha-helix', 'N-term'),
-                               15: ('alpha-helix', 'N-term'),
-                               16: ('alpha-helix', ''),
-                               17: ('alpha-helix', ''),
-                               18: ('alpha-helix', ''),
-                               19: ('alpha-helix', ''),
-                               20: ('alpha-helix', ''),
-                               21: ('alpha-helix', 'C-term'),
-                               22: ('alpha-helix', 'C-term'),
-                               23: ('isolated', ''),
-                               24: ('isolated', ''),
+        answer_key = {'2KXA': {1:  '',
+                               2:  'alpha-helix',
+                               3:  'alpha-helix',
+                               4:  'alpha-helix',
+                               5:  'alpha-helix',
+                               6:  'alpha-helix',
+                               7:  'alpha-helix',
+                               8:  'alpha-helix',
+                               9:  'alpha-helix',
+                               10: 'alpha-helix',
+                               11: 'alpha-helix',
+                               12: 'alpha-helix',
+                               13: '',
+                               14: 'alpha-helix',
+                               15: 'alpha-helix',
+                               16: 'alpha-helix',
+                               17: 'alpha-helix',
+                               18: 'alpha-helix',
+                               19: 'alpha-helix',
+                               20: 'alpha-helix',
+                               21: 'alpha-helix',
+                               22: 'alpha-helix',
+                               23: '',
+                               24: '',
                                }
                       }
+
+        msg = "Residue {} is assigned as '{}', but the test has '{}' assigned"
 
         for identifier, class_dict in answer_key.items():
             mol = Molecule(identifier)
             classify_residues(mol)
 
             for residue in mol.residues:
-                items = class_dict[residue.number]
-                hbond_classification, hbond_modifier = items
-                print(residue, residue.hbond_classification, residue.hbond_modifier)
-                self.assertEqual(residue.hbond_classification,
-                                 hbond_classification)
-                self.assertEqual(residue.hbond_modifier,
-                                 hbond_modifier)
+                test_classification = class_dict[residue.number]
+                actual_classification = residue.classification[0]
+
+                residue_msg = msg.format(residue, actual_classification,
+                                         test_classification)
+
+                self.assertEqual(actual_classification, test_classification,
+                                 msg=residue_msg)
+
+    def test_energy_hbond(self):
+        """Test the assignment of hydrogen bond energies."""
+        # Load the molecule
+        mol = Molecule('2KXA')
+
+        # Find hydrogen bonds and classify them
+        hbonds = find_hbond_partners(mol)
+
+        # Assert that all of the hbonds have an energy associated and that these
+        # are float numbers
+        for hbond in hbonds:
+            self.assertTrue(hasattr(hbond, 'energy_hbond'))
+            self.assertTrue(hbond.energy_hbond)
 
     def test_energy_ramachandran(self):
         """Test the 'energy_ramachandran` property of residues, set by

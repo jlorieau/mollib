@@ -75,6 +75,7 @@ class Plugin(object):
         A dict containing the command names (key) and the comand subparsers
         (value). Access this dict to add arguments to specific commands
 
+
     .. note:: Preprocessor and postprocessor plugins should have an order
               lower than 0 and should access the 'process' parent parser.
               Analysis methods should have an order between

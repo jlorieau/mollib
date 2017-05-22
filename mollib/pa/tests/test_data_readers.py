@@ -5,7 +5,7 @@ Tests for the data reader functions.
 import unittest
 import os
 
-from mollib.pa.data_readers import read_pa_file, re_mr
+from mollib.pa.data_readers import read_pa_file, _re_mr
 
 # TODO: Test file reading for interactions with atom names that are backwards
 class TestDataReader(unittest.TestCase):
@@ -60,7 +60,7 @@ class TestDataReader(unittest.TestCase):
         """
 
         # Check that the string matched and was properly parsed
-        match = re_mr.search(format1)
+        match = _re_mr.search(format1)
         self.assertIsNotNone(match)
 
         d = match.groupdict()
@@ -85,7 +85,7 @@ class TestDataReader(unittest.TestCase):
         """
 
         # Check that the string matched and was properly parsed
-        match = re_mr.search(format2)
+        match = _re_mr.search(format2)
         self.assertIsNotNone(match)
 
         d = match.groupdict()
@@ -110,7 +110,7 @@ class TestDataReader(unittest.TestCase):
         """
 
         # Check that the string matched and was properly parsed
-        match = re_mr.search(format3)
+        match = _re_mr.search(format3)
         self.assertIsNotNone(match)
 
         d = match.groupdict()

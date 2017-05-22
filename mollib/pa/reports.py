@@ -29,10 +29,12 @@ def report_tables(data, predicted=None):
     ----------
     data: dict
         The experimental/observed RDC and RACS data.
+        
         - **key**: interaction labels (str)
         - **value**: :obj:`mollib.pa.RDC` or :obj:`mollib.pa.RACS` data values.
     predicted: dict (optional)
         The SVD predicted RDC and RACS data.
+        
         - **key**: interaction labels (str)
         - **value**: :obj:`mollib.pa.RDC` or :obj:`mollib.pa.RACS` predicted
           values.
@@ -42,11 +44,13 @@ def report_tables(data, predicted=None):
     tables: dict
         A dict with the tables:
             - **keys**
-                - 'fit': the fit table
-                - 'xx_pred': the predicted data table. ex: 'N-H_pred',
-                  'CA-HA_pred'
+            
+              - 'fit': the fit table
+              - 'xx_pred': the predicted data table. ex: 'N-H_pred',
+                'CA-HA_pred'
             - **values**
-                - The `mollib.utils.markdown.MDTable` objects.
+            
+              - The `mollib.utils.markdown.MDTable` objects.
     """
     if predicted is None:
         predicted = dict()

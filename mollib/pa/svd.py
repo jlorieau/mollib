@@ -24,7 +24,8 @@ def get_error(label, data):
         interaction label
     data: dict
         The experimental/observed RDC and RACS data.
-        - **key**: interaction labels (str)
+        
+        - **key**: interaction labels, str
         - **value**: :obj:`mollib.pa.RDC` or :obj:`mollib.pa.RACS` data values.
 
     Returns
@@ -72,30 +73,34 @@ def calc_pa_SVD(magnetic_interactions, data):
 
     data: dict
         The experimental/observed RDC and RACS data.
-        - **key**: interaction labels (str)
+        
+        - **key**: interaction labels, str
         - **value**: :obj:`mollib.pa.RDC` or :obj:`mollib.pa.RACS` data values.
 
     Returns
     -------
     (data_pred, Saupe_components, stats): tuple
+    
         - data_pred: dict
-              The SVD predicted RDC and RACS data.
-              - **key**: interaction labels (str)
-              - **value**: :obj:`mollib.pa.RDC` or :obj:`mollib.pa.RACS` data
-                values.
+    
+          - The SVD predicted RDC and RACS data.
+          - **key**: interaction labels (str)
+          - **value**: :obj:`mollib.pa.RDC` or :obj:`mollib.pa.RACS` data
+            values.
+            
         - Saupe_components: dict
-              - 'S_xyz': (list of arrays) The 3x1 Saupe matrix in x/y/z repr.
-              - 'Aa': (list) The degree of alignment.
-              - 'Ar': (list) The alignment rhombicity.
-              - 'Rh': (list) The rhombicity
-              - 'alpha_z': (float) The ZYZ alpha angle (degrees) of the Saupe
-                 matrix
-              - 'beta_y': (float) The ZYZ beta angle (degrees) of the Saupe
-                 matrix
-              - 'gamma_z': (float) The ZYZ gamma angle (degrees) of the Saupe
-                 matrix
+        
+          - 'S_xyz': The 3x1 Saupe matrix in x/y/z repr, list of arrays
+          - 'Aa': The degree of alignment, list
+          - 'Ar': The alignment rhombicity, list
+          - 'Rh': The rhombicity, list
+          - 'alpha_z': The ZYZ alpha angle (deg) of the Saupe matrix, float
+          - 'beta_y': The ZYZ beta angle (deg) of the Saupe matrix, float
+          - 'gamma_z': The ZYZ gamma angle (degrees) of the Saupe matrix, float
+             
         - stats: dict
-              - See :func:`calc_statistics`
+        
+          - See :func:`calc_statistics`
     """
     assert(isinstance(magnetic_interactions, list))
 

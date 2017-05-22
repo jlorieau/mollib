@@ -17,12 +17,14 @@ class TestHydrogenBonds(unittest.TestCase):
         """Tests the detection of hbonds in a large protein.
 
         .. note:: This test takes about 38.43s. The cProfile bottlenecks are:
+
                   - 16.134s : mollib.core.vector_length
                   - 8.200s  : mollib.hbonds.dipole_distances
                   - 7.663s  : mollib.core.calc_vector
                   - 2.861s  : mollib.core.measure_distance
 
                   The following optimizations had the following test times:
+
                   - 23.4s   : convert vector_length, calc_vector to cython
                   - 21.2s   : optimize vector_length in cython
                   -  5.1s   : cythonize measure_distance and cut down the

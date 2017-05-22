@@ -80,7 +80,7 @@ class Statistics(object):
 
         Returns
         -------
-        :obj:`Molecule`
+        :obj:`mollib.Molecule`
             (parent class) The molecule to process. Subclasses should call this
             parent class method to get the molecule.
         dict
@@ -102,8 +102,8 @@ class Statistics(object):
             Collected processed values from :meth:`process_measurement`.
             These are organized as follows:
 
-            - key: identifier (str) of the molecule
-            - value: measurement data for that molecule.
+            - **key**: identifier of the molecule, str
+            - **value**: measurement data for that molecule, dict
         """
         msg = "Processing measurements for {}."
         print(msg.format(self.__class__.__name__))

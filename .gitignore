@@ -1,19 +1,27 @@
-*.pdf
+# System and build files
+.DS_Store
 *.pyc
 *.so
 *.egg-info
 *.tar
+*~
+build/
+dist/
+
+# IDE and temporary tests
+.idea
+.tox
+.cache
+.coverage
+.noseids
 nosetests.json
+
+# Sphinx
 docs/_build/*
 docs/cli/output/*
-benchmarks/
-.idea
-.noseids
-.coverage
-build/
-output/*
-.DS_Store
-.ipynb_checkpoints
 
-# tox testing tool
-.tox
+# Analysis files and images
+analysis/*/*.png
+analysis/*/*.svg
+benchmarks/
+.ipynb_checkpoints

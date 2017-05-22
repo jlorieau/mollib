@@ -26,11 +26,13 @@ Mollib includes tools for:
 
 .. rubric:: Installation
 
-**Github**: https://github.com/jlorieau/mollib
+.. code:: shell
 
-**Download**: `mollib-1.3.zip <https://github.com/jlorieau/mollib/archive/v1.3.zip>`_
-`mollib-1.3.tar.gz <https://github.com/jlorieau/mollib/archive/v1.3.tar.gz>`_
+    $ pip install mollib
 
+.. note:: Python and pip may not be installed. You may need to
+          `download <https://www.python.org/downloads/>`_ and install
+          Python first.
 
 .. only:: html
 
@@ -40,9 +42,9 @@ Mollib includes tools for:
    :maxdepth: 2
 
    cli/cli
-   api/api
-   develop
    releases/releases
+   develop
+   api/api
 
 .. only:: html
 

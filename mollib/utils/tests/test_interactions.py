@@ -4,7 +4,7 @@ Tests for the interaction label utility functions.
 import unittest
 import re
 
-from mollib.utils.interactions import re_interaction_str
+from mollib.utils.interactions import _re_interaction_str
 
 
 class TestInteractions(unittest.TestCase):
@@ -12,7 +12,7 @@ class TestInteractions(unittest.TestCase):
     def test_interaction_regex(self):
         """Test the regex matching of interaction labels."""
 
-        re_interaction = re.compile(re_interaction_str)
+        re_interaction = re.compile(_re_interaction_str)
 
         # The following regexes should match
         good_labels = ('14N-H',

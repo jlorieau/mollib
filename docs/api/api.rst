@@ -12,4 +12,5 @@ API Documentation
     hydrogens/hydrogens
     hbonds/hbonds
     pa/pa
+    statistics/statistics
     utils/utils

@@ -1,5 +1,7 @@
 """
-Classify residues based on hydrogen bonds.
+Classify residues based on hydrogen bonds. Additionally, there is a fill_gap
+function that is used to identify contiguous secondary structure units that may
+not have hydrogen bonds with all residues.
 """
 import glob
 import os
@@ -12,6 +14,9 @@ from .hbonds import find_hbond_partners
 from . import settings
 
 
+# TODO: Make 'Gly' classification
+
+
 def classify_residues(molecule):
     """Classify the residues of a molecule based on their backbone-
     backbone amide hydrogen bonds.
@@ -19,12 +24,12 @@ def classify_residues(molecule):
     Parameters
     ----------
     molecule: :obj:`mollib.Molecule`
-        The molecule whose residues are to be classified. The residues gain
-        the following attributes:
-
-        - `hbond_classification` with a 'str' to the hbond classification.
-        - `hbond_modifier` with a 'str' to the hbond minor classification
-           modifier.
+        The molecule whose residues are to be classified. 
+        
+        .. note:: The residue objects (:obj:`mollib.Residue`) has the 
+            :attr:`classification` tuple assigned.
+        
+            - 'classification': (`major_classification`, `minor_classification`)
 
     skip_energy: bool, optional
         If True, the ramachandran energy will not be calculated.
@@ -34,62 +39,122 @@ def classify_residues(molecule):
     add_hydrogens(molecule)
     hbonds = find_hbond_partners(molecule)
 
+    # Keep track of groups of classifications, like turns
+    turns = {settings.major_beta_turnI, settings.major_beta_turnII,
+             settings.major_beta_turnIp, settings.major_beta_turnIIp}
+
     # Assign the residue secondary structure based on the hbond
     # classifications
-    classification = {}  # {residue.number: classification}
+    classification = {}  # {(chain.id, residue.number): classification}
     for hbond in hbonds:
         # Only classify based on backbone-backbone amide hydrogen bonds
-        if hbond.major_classification != settings.major_bb_bb_amide:
+        if hbond.type_classification != settings.type_bb_bb_amide:
             continue
 
         # Classify based on the residue identity for the atom2 (heavy atom)
         # of the acceptor and donor dipoles.
         try:
             donor_res = hbond.donor.atom2.residue
+            donor_chain = donor_res.chain.id
             acceptor_res = hbond.acceptor.atom2.residue
+            acceptor_chain = acceptor_res.chain.id
         except AttributeError:
+            continue
+
+        # Get the hydrogen bond major classification. The hbond major
+        # classification represents the secondary structure type, like 'sheet'.
+        major_class = hbond.major_classification
+
+        # Isolated hydrogen bonds contain no secondary structure assignment
+        # information. Skip these.
+        if major_class in settings.major_isolated:
+            continue
+
+        # Turns are treated specially. If the hbond is for a turn, residues
+        # i+1 and i+2 shouuld be labeled as a turn (even though the i/i+4 is
+        # hydrogen bond)
+        if major_class in turns:
+            res_i = min(donor_res.number, acceptor_res.number)
+            res_j = max(donor_res.number, acceptor_res.number)
+
+            # Get the chain id for the donor and acceptor residues
+            if donor_chain != acceptor_chain:
+                continue
+            chain = donor_chain
+
+            # Assign the residues i+1 and i+2 in the turn as turn residues.
+            residue_nums = range(res_i + 1, res_j)
+            for i in residue_nums:
+                classification[(chain, i)] = (major_class, '')
             continue
 
         # Assign both the donor and acceptor residues
         for count, res in enumerate((donor_res, acceptor_res)):
+            # Reset the minor classification to nothing
+            minor_class = ''
 
-            minor_class = hbond.minor_classification
-            minor_modifier = ''
+            # Get the chain id for the donor and acceptor residues
+            if donor_chain != acceptor_chain:
+                continue
+            chain = donor_chain
 
-            # Some modifiers do not pertain to the donor
+            # Some minor classifications do not pertain to the donor
             # residue, where count==0, like the N-terminal residues of
             # helices
-            if count == 1 and hbond.minor_modifier == settings.minor_N:
-                minor_modifier = hbond.minor_modifier
+            if count == 1 and hbond.minor_classification == settings.minor_N:
+                minor_class = hbond.minor_classification
 
-            # Some modifiers do not pertain to the acceptor
+            # Some minor classifications do not pertain to the acceptor
             # residue, where count==0, like the C-terminal residues of
             # helices
-            if count == 0 and hbond.minor_modifier == settings.minor_C:
-                minor_modifier = hbond.minor_modifier
+            if count == 0 and hbond.minor_classification == settings.minor_C:
+                minor_class = hbond.minor_classification
 
             # If the residue is already assigned and it isn't 'isolated'
             # then skip it
             if (res.number in classification and
-                classification[res.number][0] != settings.minor_isolated):
+                classification[(chain, res.number)][0] !=
+               settings.major_isolated):
                 continue
 
-            classification[res.number] = (minor_class, minor_modifier)
+            classification[(chain, res.number)] = (major_class, minor_class)
+
+    # Find the contiguous blocks of secondary structure elements from the
+    # hydrogen bonds and fill in gaps in the primary sequence
+    if settings.fill_gaps:
+        # Fill gaps for beta-strands and sheets
+        fill_gaps(molecule, classification, settings.major_beta, _is_sheet,
+                  extend_terminii=True, label_N_term=1, label_C_term=1,
+                  gap_tolerance=2, overwrite_assignments=False)
+
+        # 310-helices are typically 4-5 residues long. For a 4-residue
+        # 310-helix, the i and i+3 residues are hydrogen bonded and labeled as
+        # 310-helix--but the i+1/i+2 are not. This will fill in that gap
+        fill_gaps(molecule, classification, settings.major_310, _is_helix,
+                  extend_terminii=False, label_N_term=0, label_C_term=0,
+                  gap_tolerance=3, overwrite_assignments=False)
+
+        # TODO: add gap filling for pi-helices and potentiall alpha-helices.
 
     # Classify the residues. The classification dict has been populated
     # {residue.number(int): classification(str}
     # Now use it to classify the residues
     for residue in molecule.residues:
-        res_class = classification.get(residue.number, ('',''))
+        try:
+            chain = residue.chain.id
+            res_num = residue.number
+        except AttributeError:
+            continue
 
-        residue.hbond_classification = res_class[0]
-        residue.hbond_modifier = res_class[1]
+        res_class = classification.get((chain, res_num), ('', ''))
+
+        residue.classification = res_class
 
         # Add the ramachandran energy attribute to the residue
         add_energy_ramachandran(residue)
 
 
-#: The Ramachandran energy datasets
+# The cached Ramachandran energy datasets
 energy_ramachandran_datasets = None
 
 
@@ -102,14 +167,13 @@ def add_energy_ramachandran(residue):
     Parameters
     ----------
     residue: :obj:`mollib.Residue`
-        The residue gains the following attributes:
+        The residue gains the following attributes
 
-    Added Residues Attributes
-    -------------------------
-    energy_ramachandran: float
-        The Ramachandran energy (in kT)
-    ramachandran_dataset: str
-        The name of the dataset used for the Ramachandran energy.
+        .. note:: The following attributes are added to the residue:
+        
+            - 'energy_ramachandran': The Ramachandran energy (in kT), float  
+            - 'ramachandran_dataset': The name of the dataset used for the 
+              Ramachandran energy, str
     """
     global energy_ramachandran_datasets
 
@@ -140,19 +204,24 @@ def add_energy_ramachandran(residue):
 
             energy_ramachandran_datasets[name] = (phi_1d, psi_1d, energy_2d)
 
-        # The 'No Hydrogen Bonds' hbond_classification is the same as the ''
-        # classification above
-        if 'No hydrogen bonds' in energy_ramachandran_datasets:
-            v = energy_ramachandran_datasets['No hydrogen bonds']
-            energy_ramachandran_datasets[''] = v
-
     # Get the energy for this residue's classification
-    res_class = getattr(residue, 'hbond_classification', '')
+    classification = residue.classification
+    if (classification is None or
+        not classification[0] or
+       classification[0] == mollib.hbonds.settings.major_isolated):
+
+        # The 'No Hydrogen Bonds' and 'isolated' classification is the same as
+        # the 'No classification'
+        res_class = 'No classification'
+        minor_class = ''
+    else:
+        res_class = (classification[0] if classification is not None
+                     else 'No classification')
+        minor_class = classification[1] if classification is not None else ''
 
     # Some energies are classified by hbond_classification and hbond_modifier.
     # These have the name of both, separated by '__'
-    modifier = getattr(residue, 'hbond_modifier', '')
-    full_res_class = '__'.join((res_class, modifier))
+    full_res_class = '__'.join((res_class, minor_class))
 
     if residue.name == 'GLY' and 'Gly' in energy_ramachandran_datasets:
         # Glycines are treated specially because they are more flexible in
@@ -171,12 +240,10 @@ def add_energy_ramachandran(residue):
         # hbond_classification
         phi_1d, psi_1d, energy_2d = energy_ramachandran_datasets[res_class]
         residue.ramachandran_dataset = res_class
-
-    elif '' in energy_ramachandran_datasets:
-        # Finally try to use the dataset for not hydrogen bonds.
-        phi_1d, psi_1d, energy_2d = energy_ramachandran_datasets['']
-        residue.ramachandran_dataset = 'No hydrogen bonds'
-
+    elif 'No classification' in energy_ramachandran_datasets:
+        (phi_1d, psi_1d,
+         energy_2d) = energy_ramachandran_datasets['No classification']
+        residue.ramachandran_dataset = 'No classification'
     else:
         return None
 
@@ -207,15 +274,210 @@ def add_energy_ramachandran(residue):
         print(msg.format(phi, psi))
         raise e
 
-    # If avaliable, assign the overall energy too.
-
     # Assign the energy
     residue.energy_ramachandran = energy
 
 
+def fill_gaps(molecule, classifications, classification_type, dihedral_test,
+              extend_terminii=False, label_N_term=0, label_C_term=0,
+              gap_tolerance=1, overwrite_assignments=False):
+    """Fill gaps in the classifications dict assignments.
+    
+    Gaps occur in the secondary structure assignment from hydrogen bonds, for 
+    example, with beta-strands on the edges of beta sheets. This function finds
+    stretches of secondary structure assignments, it checks the dihedral angles
+    and fills in gaps in the stretches. For a sheet: 'E E E E' becomes 
+    'EEEEEEE'.
+    
+    Parameters
+    ----------
+    molecule: :obj:`mollib.Molecule`
+        The molecule object to classify the secondary structure elements.
+    classifications: dict
+        A dict with the classifications.
+        
+          - **key**: (chain.id, residue.number). ex: ('A', 31)
+          - **value**: (major_classification, major_classification).
+            ex: ('alpha-helix', 'N-term')
+    classification_type: str
+        The name of the major classification to check. ex: 'alpha-helix'
+    dihedral_test: function or None
+        - A test function that takes a :obj:`mollib.Residue` and returns True
+          if the residue's dihedral angles are within range for the 
+          'classification_type'.
+        - If None is specified, then the dihedral angles of residues will not
+          be tested.
+    extend_terminii: bool or int, optional
+        If True, the previous and subsequence residues of each contiguous
+        stretch of residue classification will be checked to see if they fall
+        within the dihedral angle range as well.
+    label_N_term: int, optional
+        Label the first 'N' number of residues in the contiguous block as 
+        'N-term'
+    label_C_term: int, optional
+        Label the last 'N' number of residues in the contiguous block as 
+        'C-term'
+    gap_tolerance: int, optional
+        The assignment of contiguous stretches of a secondary structure 
+        assignment will tolerate this number of 'gaps' in the residue numbers.
+        For a gap_toleranace of 1 and a checked sheet assignment, the following
+        group 'E E E E' will be treated as a single contiguous block of sheet
+        assignments.
+    overwrite_assignments: bool, optional
+        If True, classification assignments will be overwritten, if an
+        assignments has already been made for a given residue.
+
+    Returns
+    -------
+    None
+    """
+    # Filter the classifications (keys) that match the classification_type
+    filtered_keys = [k for k, v in classifications.items()
+                     if v[0] == classification_type]
+
+    # Group the keys by contiguous blocks
+    groups = _group_runs(filtered_keys, tolerance=gap_tolerance)
+
+    # Go through the groups and make the secondary structure classification
+    # assignments
+    for group in groups:
+        # If the group has no items, skip it
+        if len(group) == 0:
+            continue
+
+        # Determine the chain id and first and last residue of the group
+        first_chain, first_res_num = group[0]
+        last_chain, last_res_num = group[-1]
+
+        # If the residues do not belong to the same chain, then there is a
+        # bug in the assignment of the contiguous block
+        assert first_chain == last_chain
+
+        # Determine the contiguous residue numbers (for the given chain)
+        # to evaluate whether they are part of the classification_type
+        first = min(first_res_num, last_res_num)
+        last = max(first_res_num, last_res_num)
+
+        if extend_terminii:
+            # If extend terminii, check the previous and subsequence residues
+            # as well as part of the secondary structure element
+            residue_numbers = range(first - 1, last + 2)
+        else:
+            # Otherwise, check all residues between the first and last residues
+            # (inclusive)
+            residue_numbers = range(first, last + 1)
+
+        # Go through the residue numbers and see if they should be added to the
+        # contiguous stretch of secondary structure assignments. We first
+        # make a contiguous_keys list for the residues that belong to the
+        # contiguous stretch. These will subsequently be assigned to the
+        # classification
+
+        contiguous_keys = []
+        for count, i in enumerate(residue_numbers):
+            # If needed, check to see if the residue falls within the dihedral
+            # angle ranges with the dihedral_test function.
+            if dihedral_test is not None:
+                try:
+                    residue = molecule[first_chain][i]
+                except KeyError:
+                    continue
+                if not dihedral_test(residue):
+                    continue
+
+            # At this point, the residue can be assigned.
+            key = (first_chain, i)
+            contiguous_keys.append(key)
+
+        # Now go through the contiguous_keys and assign them to the
+        # classifications. This has to be done separately so that the 'N-term'
+        # and 'C-term' modifiers are properly assigned
+        major_classification = classification_type
+        for count, key in enumerate(contiguous_keys):
+            current_classification = classifications.get(key, None)
+
+            # Determine whether the 'N-term' or 'C-term' should be labeled
+            if count < label_N_term:
+                minor_classification = 'N-term'
+            elif count >= len(contiguous_keys) - label_C_term:
+                minor_classification = 'C-term'
+            else:
+                minor_classification = ''
+
+            # If the current_classification is not assigned (i.e. it is None)
+            # or overwrite_assignments is True, write the classification
+            # assignment
+            if current_classification is None or overwrite_assignments:
+                classifications[key] = (major_classification,
+                                        minor_classification)
+            # Otherwise, write the major_classification only if the major
+            # classification for the current_classification is the same
+            elif current_classification[0] == major_classification:
+                classifications[key] = (major_classification,
+                                        minor_classification)
+            # Otherwise do nothing
 
 
+def _group_runs(l, tolerance=2):
+    """Generator to group contiguous chain ids and numbers in a list (l) with 
+    a tolerance for  skipped numbers.
+
+    Adapted from stackoverflow #21142231.
+
+    Examples
+    --------
+    >>> g = _group_runs([('A', 2), ('A', 3), ('A', 4), 
+    ...                  ('A', 8), ('A', 10), ('A', 12 )])
+    >>> list(g)
+    [[('A', 2), ('A', 3), ('A', 4)], [('A', 8), ('A', 10), ('A', 12)]]
+    >>> g = _group_runs([('A', 2), ('A', 3), ('A', 4), 
+    ...                  ('B', 4), ('B', 5), ('B', 6 )])
+    >>> list(g)
+    [[('A', 2), ('A', 3), ('A', 4)], [('B', 4), ('B', 5), ('B', 6)]]
+    >>> list(_group_runs([]))
+    []
+    """
+    # Sorting is needed to properly group items
+    l = sorted(l)
+
+    out = []
+
+    if l:
+        last_chain = l[0][0]
+        last_item = l[0][1]
+        for i, j in l:
+            if j - last_item > tolerance or i != last_chain:
+                yield out
+                out = []
+            out.append((i, j))
+            last_item = j
+            last_chain = i
+        yield out
 
 
+def _is_sheet(residue):
+    """Return true if the residue's Ramachandran angles fall within sheet 
+    values."""
+    phi, psi = residue.ramachandran_angles
+    if phi is None or psi is None:
+        return False
+
+    # Determine if the phi/psi angles are within a sheet range.
+    phi_min, phi_max = settings.beta_phi
+    psi_min, psi_max = settings.beta_psi
+
+    return phi_min <= phi <= phi_max and psi_min <= psi <= psi_max
 
 
+def _is_helix(residue):
+    """Return true if the residue's Ramachandran angles fall within helical 
+    values."""
+    phi, psi = residue.ramachandran_angles
+    if phi is None or psi is None:
+        return False
+
+    # Determine if the phi/psi angles are within a sheet range.
+    phi_min, phi_max = settings.helix_phi
+    psi_min, psi_max = settings.helix_psi
+
+    return phi_min <= phi <= phi_max and psi_min <= psi <= psi_max

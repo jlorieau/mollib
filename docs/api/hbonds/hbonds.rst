@@ -2,12 +2,15 @@
 Hbonds Module
 *************
 
-.. automodule:: mollib.hbonds.hbonds
+.. _hbonds-implementation:
+
+.. automodule:: mollib.hbonds
 
 .. toctree::
     :maxdepth: 2
 
-    classes
+    find_hbonds
+    classify_hbonds
+    classify_secondary_structure
+    tables
     settings
-
-
