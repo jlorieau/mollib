@@ -7,44 +7,49 @@ import os
 
 from mollib.core import Molecule, load_settings
 import mollib.core.settings
-from mollib.hbonds import classify_residues, find_hbond_partners
+from mollib.hbonds import classify_residues, find_hbond_partners, settings
+
+
+def convert_dssp(string):
+    """Convert a DSSP classification (like) string into a classification
+    dict that can be used in tests.
+    
+    Parameters
+    ----------
+    string: str
+        The DSSP (like) string.
+    """
+    answer_key = {' ': '',
+                  'E': settings.major_beta,
+                  'H': settings.major_alpha,
+                  'G': settings.major_310,
+                  'I': settings.major_pi,
+                  'a': settings.major_beta_turnI,
+                  'b': settings.major_beta_turnIp,
+                  'c': settings.major_beta_turnII,
+                  'd': settings.major_beta_turnIIp,
+                  }
+
+    return {count: answer_key[k] for count, k in enumerate(string, 1)}
 
 
 class TestHbondClassify(unittest.TestCase):
 
     def setUp(self):
-        "Load the settings."
+        """Load the settings."""
         load_settings()
 
     def test_classify_residues(self):
         "Tests the residue classification from hbonds for specific molecule"
 
-        # Hemagglutinin fusion peptide
-        answer_key = {'2KXA': {1:  '',
-                               2:  'alpha-helix',
-                               3:  'alpha-helix',
-                               4:  'alpha-helix',
-                               5:  'alpha-helix',
-                               6:  'alpha-helix',
-                               7:  'alpha-helix',
-                               8:  'alpha-helix',
-                               9:  'alpha-helix',
-                               10: 'alpha-helix',
-                               11: 'alpha-helix',
-                               12: 'alpha-helix',
-                               13: '',
-                               14: 'alpha-helix',
-                               15: 'alpha-helix',
-                               16: 'alpha-helix',
-                               17: 'alpha-helix',
-                               18: 'alpha-helix',
-                               19: 'alpha-helix',
-                               20: 'alpha-helix',
-                               21: 'alpha-helix',
-                               22: 'alpha-helix',
-                               23: '',
-                               24: '',
-                               }
+
+        answer_key = {
+            # Hemagglutinin fusion peptide
+            '2KXA': convert_dssp(' HHHHHHHHHHH HHHHHHHHH  '),
+
+            # Ubiquitin crystal structure
+            '1UBQ': convert_dssp(' EEEEEEaa EEEEEE  aa  HHHHHHHHHHHH   aa '
+                                 'EEEEEbb EEEaa  GGGG   ccEEEEEEE     ')
                       }
 
         msg = "Residue {} is assigned as '{}', but the test has '{}' assigned"
@@ -54,6 +59,10 @@ class TestHbondClassify(unittest.TestCase):
             classify_residues(mol)
 
             for residue in mol.residues:
+                # Skip HETATM molecules
+                if '*' in residue.chain.id:
+                    continue
+
                 test_classification = class_dict[residue.number]
                 actual_classification = residue.classification[0]
 
