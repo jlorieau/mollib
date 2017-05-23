@@ -23,7 +23,6 @@ def write_file(text, filepath=None, temporary=False, overwrite=None):
     temporary: bool (optional)
         Write to a temporary file. Either the filepath or temporary should be
         specified
-    
     overwrite: bool (optional)
         If True, the file will be overwritten if it exists.
         If False, a number for a non-existent filename will be appended after
