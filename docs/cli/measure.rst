@@ -208,6 +208,12 @@ included in the assignment.
 Helices
 ~~~~~~~
 
+Helices consist of stretches of hydrogen bonded residues with helical dihedrals.
+3:sub:`10`-helices are typically short, with one or more 'i'-'i+3'hydrogen
+bonds, and these can be mischaracterized as turns (type I turns). In this case,
+mollib checks that all residues in the helix ('i' through 'i+3') have helical
+dihedral angles.
+
 Sheets
 ~~~~~~
 
@@ -223,7 +229,6 @@ Thereafter, it will assign all residues in the group to a sheet classification,
 if no other classification has already been made. See :ref:`fill gaps
 <measure-fill-gaps>` for details.
 
-
 .. _measure-fill-gaps:
 
 Fill Gaps
@@ -232,15 +237,16 @@ Fill Gaps
 Secondary structure assignments are made based on hydrogen bonds. In some cases,
 such as the edge strands of sheets or short 310-helices, residues within a
 contiguous block are not assigned because they do not form an internal hydrogen
-bond. Fill gaps will find contiguous blocks of secondary structure units, test
-the dihedral of residues within that block, and make an assignment of the whole
-block.
+bond. The ``fill_gaps`` function will find contiguous blocks of secondary
+structure units, test the dihedral of residues within that block, and make an
+assignment of the whole block.
 
-A checkered sheet assignment ('E E E E E'), for example with become a fill block
-assignment ('EEEEEEEEE'). 310-helices are another example in which the 'i' and
-'i+3' residues are hydrogen bonded, yet the 'i+1' and 'i+2' residues are not. In
-this case, the gap will be filled by assigning residues 'i' through 'i+3' as
-310-helix, if all four residues have helical dihedral angles.
+For example, ``fill_gaps`` will assign a checkered sheet assignment ('E E E E
+E') to a contiguous ß-strand ('EEEEEEEEE') if all residues in the block
+have ß-strand backbone dihedral angles. 310-helices are another example in
+which the 'i' and 'i+3' residues are hydrogen bonded, yet the 'i+1' and 'i+2'
+residues are not. In this case, the gap will be filled by assigning residues 'i'
+through 'i+3' as 310-helix, if all four residues have helical dihedral angles.
 
 By default, filling gaps will not overwrite secondary structure assignments for
 residues that already have an assignment.

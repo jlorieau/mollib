@@ -122,17 +122,39 @@ def classify_residues(molecule):
     # Find the contiguous blocks of secondary structure elements from the
     # hydrogen bonds and fill in gaps in the primary sequence
     if settings.fill_gaps:
-        # Fill gaps for beta-strands and sheets
-        fill_gaps(molecule, classification, settings.major_beta, _is_sheet,
-                  extend_terminii=True, label_N_term=1, label_C_term=1,
-                  gap_tolerance=2, overwrite_assignments=False)
+        # Determine whether existing assignments should be overwritten
+        overwrite_assignments = settings.fill_gaps_overwrite
 
-        # 310-helices are typically 4-5 residues long. For a 4-residue
-        # 310-helix, the i and i+3 residues are hydrogen bonded and labeled as
-        # 310-helix--but the i+1/i+2 are not. This will fill in that gap
-        fill_gaps(molecule, classification, settings.major_310, _is_helix,
-                  extend_terminii=False, label_N_term=0, label_C_term=0,
-                  gap_tolerance=3, overwrite_assignments=False)
+        if settings.fill_gaps_beta:
+            # Fill gaps for beta-strands and sheets
+            overwrite_assignments = settings.fill_gaps_overwrite
+
+            # Get the parameters to fill the gaps
+            kwargs = {'extend_termini': settings.fill_gaps_beta_extend_termini,
+                      'label_N_term': settings.fill_gaps_beta_label_N_term,
+                      'label_C_term': settings.fill_gaps_beta_label_C_term,
+                      'gap_tolerance': settings.fill_gaps_beta_gap_tolerance,
+                      'overwrite_assignments': overwrite_assignments,
+                      }
+
+            fill_gaps(molecule, classification, settings.major_beta, _is_sheet,
+                      **kwargs)
+
+        if settings.fill_gaps_310:
+            # 310-helices are typically 4-5 residues long. For a 4-residue
+            # 310-helix, the i and i+3 residues are hydrogen bonded and labeled
+            # as 310-helix--but the i+1/i+2 are not. This will fill in that gap
+
+            # Get the parameters to fill the gaps
+            kwargs = {'extend_termini': settings.fill_gaps_310_extend_termini,
+                      'label_N_term': settings.fill_gaps_310_label_N_term,
+                      'label_C_term': settings.fill_gaps_310_label_C_term,
+                      'gap_tolerance': settings.fill_gaps_310_gap_tolerance,
+                      'overwrite_assignments': overwrite_assignments,
+                      }
+
+            fill_gaps(molecule, classification, settings.major_310, _is_helix,
+                      **kwargs)
 
         # TODO: add gap filling for pi-helices and potentiall alpha-helices.
 
@@ -279,7 +301,7 @@ def add_energy_ramachandran(residue):
 
 
 def fill_gaps(molecule, classifications, classification_type, dihedral_test,
-              extend_terminii=False, label_N_term=0, label_C_term=0,
+              extend_termini=False, label_N_term=0, label_C_term=0,
               gap_tolerance=1, overwrite_assignments=False):
     """Fill gaps in the classifications dict assignments.
     
@@ -307,7 +329,7 @@ def fill_gaps(molecule, classifications, classification_type, dihedral_test,
           'classification_type'.
         - If None is specified, then the dihedral angles of residues will not
           be tested.
-    extend_terminii: bool or int, optional
+    extend_termini: bool or int, optional
         If True, the previous and subsequence residues of each contiguous
         stretch of residue classification will be checked to see if they fall
         within the dihedral angle range as well.
@@ -358,7 +380,7 @@ def fill_gaps(molecule, classifications, classification_type, dihedral_test,
         first = min(first_res_num, last_res_num)
         last = max(first_res_num, last_res_num)
 
-        if extend_terminii:
+        if extend_termini:
             # If extend terminii, check the previous and subsequence residues
             # as well as part of the secondary structure element
             residue_numbers = range(first - 1, last + 2)

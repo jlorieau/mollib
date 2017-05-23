@@ -1,3 +1,6 @@
+# Hydrogen Bond Definitions
+# -------------------------
+
 #: Element selector string for the hydrogen bond donor atom1. The OR
 #: operator, '|', is supported.
 #:
@@ -31,6 +34,10 @@ hbond_distance_cutoff = {'d1a1': (1.5, 3.0),
 hbond_angle_cutoff = {'theta': (110., 180.),
                        'phi': (-180., 180.)
                       }
+
+
+# Dihedral Angle Ranges
+# ---------------------
 
 # Phi torsion angle range (in degrees) for helices. (Generously allowed)
 helix_phi = (-170., 0.)
@@ -72,6 +79,10 @@ beta_turn_i2_psi = {'turnI':   (-50., 50.),
                     'turnIp':  (-50., 50.),
                     'turnIIp': (-50., 50.)
                     }
+
+
+# Classification names
+# --------------------
 
 #: Classification type name for backbone-backbone (bb-bb) amide hydrogen
 #: bonds
@@ -159,8 +170,52 @@ minor_C = 'C-term'
 #: Minor classification name for glycines
 minor_gly = 'Gly'
 
+
+# Fill Gaps
+# ---------
+
 #: Fill residue assignment gaps
 fill_gaps = True
+
+#: Fill residue assignment gaps in beta-strands.
+fill_gaps_beta = True
+
+#: Fill residue assignment gaps in 310-helices
+fill_gaps_310 = True
+
+#: fill_gap: Overwrite classification assignments, if an assignment has already
+#: been made
+fill_gaps_overwrite = False
+
+#: fill_gap: Check the previous and subsequent residues in a contiguous
+#: beta-sheet assignment
+fill_gaps_beta_extend_termini = True
+
+#: fill_gap: Label the 'minor' classification of the specified number of N- or
+#: C-terminal residues as 'N-term' or 'C-term'
+fill_gaps_beta_label_N_term = 1
+fill_gaps_beta_label_C_term = 1
+
+#: fill_gap: Only fill gaps in beta-sheets that are as large as the following
+#: number
+fill_gaps_beta_gap_tolerance = 2
+
+#: fill_gap: Check the previous and subsequent residues in a contiguous
+#: 310 assignment
+fill_gaps_310_extend_termini = False
+
+#: fill_gap: Label the 'minor' classification of the specified number of N- or
+#: C-terminal residues as 'N-term' or 'C-term'
+fill_gaps_310_label_N_term = 0
+fill_gaps_310_label_C_term = 0
+
+#: fill_gap: Only fill gaps in 310-helices that are as large as the following
+#: number
+fill_gaps_310_gap_tolerance = 3
+
+
+# Tables
+# ------
 
 #: Render HBond tables with detailed information
 hbond_table_detailed = False
