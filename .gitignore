@@ -12,7 +12,7 @@ dist/
 .idea
 .tox
 .cache
-.coverage
+.coverage**
 .noseids
 nosetests.json
 
