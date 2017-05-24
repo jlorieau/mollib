@@ -4,10 +4,14 @@ Utility functions to access files from the internet.
 
 import os
 import tempfile
+import shutil
+import logging
 try:
     from urllib.request import URLopener
 except ImportError:
     from urllib import URLopener
+
+from . import settings
 
 
 def get_or_fetch(identifier, extensions=None, urls=None, load_cached=True,
@@ -55,6 +59,10 @@ def get_or_fetch(identifier, extensions=None, urls=None, load_cached=True,
     # See if the file exists at the path already. If it does, return this
     # path
     if os.path.isfile(identifier):
+        # See if a local copy should be saved
+        _save_locally(identifier)
+
+        # Return the identifier filename
         return identifier
 
     # If the extensions and url aren't specified, then there's nothing else
@@ -90,6 +98,10 @@ def get_or_fetch(identifier, extensions=None, urls=None, load_cached=True,
 
         # See if a cached version exists and whether it should be returned
         if load_cached and os.path.isfile(temp_path):
+            # See if a local copy should be saved
+            _save_locally(temp_path)
+
+            # Return the cached copy
             return temp_path
 
         # The file isn't available, try retrieving it. Go through the possible
@@ -103,8 +115,12 @@ def get_or_fetch(identifier, extensions=None, urls=None, load_cached=True,
             except:
                 continue
 
-            # At this point, the url was successful retrieved. Return its
-            # local locations
+            # At this point, the url was successful retrieved.
+
+            # See if a local copy should be saved
+            _save_locally(temp_path)
+
+            # Return its local locations
             return temp_path
 
     # If a temporary file was not produced, then the file couldn't be
@@ -117,6 +133,30 @@ def get_or_fetch(identifier, extensions=None, urls=None, load_cached=True,
     # In this case, return None
     return None
 
+
+def _save_locally(filepath):
+    """Saves the file locally, if specified in the settings, and logs 
+    information on the saved file.
+    
+    Parameters
+    ----------
+    filepath: str
+        The path of the cached file to save locally.
+    
+    Returns
+    -------
+    bool
+        True if the file was saved locally, False otherwise.
+    """
+    if settings.save_fetched_files_locally:
+        filename = os.path.basename(filepath)
+        msg = "Saving file '{}' to the current directory."
+        logging.info(msg.format(filename))
+
+        # copy the file locally
+        shutil.copy2(filepath, '.')
+        return True
+    return False
 
 def clear_cache():
     """Clears the temporary cache for mollib."""

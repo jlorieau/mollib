@@ -36,6 +36,9 @@ Arguments
     The configuration file. See :ref:`Configuration
     files <configuration-files>` for more details.
 
+``-s`` / ``--save``
+    Save fetched files from the internet to the local directory.
+
 ``-l``
     List details on the molecule, including the number of chains, residues
     and atoms. This option is helpful in determining selections in

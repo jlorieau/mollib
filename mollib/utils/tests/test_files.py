@@ -9,6 +9,12 @@ import os
 from mollib.utils.files import write_file
 
 
+# TODO: Add tests for get_or_fetch
+# pytest
+# def test_function(tmpdir):
+# tmpdir is a unique-per-test-function invocation temporary directory
+
+
 class TestFileUtil(unittest.TestCase):
     def setUp(self):
         # Create a temporary directory

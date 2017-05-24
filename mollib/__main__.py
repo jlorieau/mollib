@@ -12,6 +12,8 @@ import mollib
 from mollib.utils import FormattedStr
 from mollib.plugins import PluginManager
 from mollib.core import list_global_settings, load_settings
+import mollib.utils.settings
+
 
 try:
     import configparser
@@ -87,6 +89,10 @@ def main():
 
     # Parse the commands
     args = parser.parse_args()
+
+    # Set special flags that need to be set before processing molecules
+    if args.save:
+        mollib.utils.settings.save_fetched_files_locally = True
 
     # Setup the logger
     fmt = '{}: %(levelname)-8s %(message)s'.format('mollib')

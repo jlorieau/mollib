@@ -26,22 +26,28 @@ class Process(Plugin):
 
             # Input filename or identifier
             subparser.add_argument('-i', '--in', dest='i',
-                                action='append', nargs='+', required=True,
-                                type=str,
-                                metavar='id/filename',
-                                help=("(required) The filename(s) or PDB "
-                                      "identifier(s) of the structure(s)"))
+                                   action='append', nargs='+', required=True,
+                                   type=str,
+                                   metavar='id/filename',
+                                   help=("(required) The filename(s) or PDB "
+                                         "identifier(s) of the structure(s)"))
 
             # Config filename
             subparser.add_argument('-c', '--config',
-                                nargs=1, required=False, type=str,
-                                metavar='filename',
-                                help="The configuration filename")
+                                   nargs=1, required=False, type=str,
+                                   metavar='filename',
+                                   help="The configuration filename")
 
             # List molecule details
             subparser.add_argument('-l',
-                                action='store_true',
-                                help='List details on the molecule(s)')
+                                   action='store_true',
+                                   help='List details on the molecule(s)')
+
+            # Save fetched files locally
+            subparser.add_argument('-s', '--save',
+                                   action='store_true',
+                                   help='Save fetched files to the local '
+                                        'directory.')
 
         # Add the output file option only to the process parser
         subparser = self.command_subparsers['process']
@@ -109,5 +115,5 @@ class Process(Plugin):
             molecule.write_pdb(output_filename)
 
     def selected(self, args):
-        "This plugin is always active."
+        """This plugin is always active."""
         return True
