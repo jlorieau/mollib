@@ -38,7 +38,7 @@ build-analysis: build-data  ## Conduct the analysis of datasets
 	python ./ramachandran
 	find analysis/ -name "*lowres.png" -exec cp '{}' docs/cli/img/ \;
 
-docs: develop build-analysis  ## Build the documentation
+docs: develop  ## Build the documentation
 	pip install 'Sphinx>=1.5'
 	pip install 'sphinxcontrib-napoleon2>=1.0'
 	find analysis/ -name "*lowres.png" -exec cp '{}' docs/cli/img/ \;

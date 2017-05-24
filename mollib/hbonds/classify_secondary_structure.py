@@ -88,7 +88,9 @@ def classify_residues(molecule):
                 classification[(chain, i)] = (major_class, '')
             continue
 
-        # Assign both the donor and acceptor residues
+        # Assign both the donor and acceptor residues. This code block assigns
+        # the major_classification of residues. The minor_classification is
+        # later labeled by the assign_block function.
         for count, res in enumerate((donor_res, acceptor_res)):
             # Reset the minor classification to nothing
             minor_class = ''
@@ -98,17 +100,17 @@ def classify_residues(molecule):
                 continue
             chain = donor_chain
 
-            # Some minor classifications do not pertain to the donor
-            # residue, where count==0, like the N-terminal residues of
-            # helices
-            if count == 1 and hbond.minor_classification == settings.minor_N:
-                minor_class = hbond.minor_classification
-
-            # Some minor classifications do not pertain to the acceptor
-            # residue, where count==0, like the C-terminal residues of
-            # helices
-            if count == 0 and hbond.minor_classification == settings.minor_C:
-                minor_class = hbond.minor_classification
+            # # Some minor classifications do not pertain to the donor
+            # # residue, where count==0, like the N-terminal residues of
+            # # helices
+            # if count == 1 and hbond.minor_classification == settings.minor_N:
+            #     minor_class = hbond.minor_classification
+            #
+            # # Some minor classifications do not pertain to the acceptor
+            # # residue, where count==0, like the C-terminal residues of
+            # # helices
+            # if count == 0 and hbond.minor_classification == settings.minor_C:
+            #     minor_class = hbond.minor_classification
 
             # If the residue is already assigned and it isn't 'isolated'
             # then skip it
@@ -121,40 +123,55 @@ def classify_residues(molecule):
 
     # Find the contiguous blocks of secondary structure elements from the
     # hydrogen bonds and fill in gaps in the primary sequence
-    if settings.fill_gaps:
+    if settings.assign_blocks:
         # Determine whether existing assignments should be overwritten
-        overwrite_assignments = settings.fill_gaps_overwrite
+        overwrite_assignments = settings.assign_blocks_overwrite
 
-        if settings.fill_gaps_beta:
-            # Fill gaps for beta-strands and sheets
-            overwrite_assignments = settings.fill_gaps_overwrite
-
-            # Get the parameters to fill the gaps
-            kwargs = {'extend_termini': settings.fill_gaps_beta_extend_termini,
-                      'label_N_term': settings.fill_gaps_beta_label_N_term,
-                      'label_C_term': settings.fill_gaps_beta_label_C_term,
-                      'gap_tolerance': settings.fill_gaps_beta_gap_tolerance,
-                      'overwrite_assignments': overwrite_assignments,
+        # Assign blocks for alpha-helices
+        if settings.assign_blocks_alpha:
+            #  Get the parameters to fill the gaps
+            kwargs = {
+                'extend_termini': settings.assign_blocks_alpha_extend_termini,
+                'label_N_term': settings.assign_blocks_alpha_label_N_term,
+                'label_C_term': settings.assign_blocks_alpha_label_C_term,
+                'gap_tolerance': settings.assign_blocks_alpha_gap_tolerance,
+                'overwrite_assignments': overwrite_assignments,
                       }
 
-            fill_gaps(molecule, classification, settings.major_beta, _is_sheet,
-                      **kwargs)
+            assign_blocks(molecule, classification, settings.major_alpha,
+                          _is_helix, **kwargs)
 
-        if settings.fill_gaps_310:
+        # Assign blocks and fill gaps and  for beta-strands and sheets
+        if settings.assign_blocks_beta:
+            # Get the parameters to fill the gaps
+            kwargs = {
+                'extend_termini': settings.assign_blocks_beta_extend_termini,
+                'label_N_term': settings.assign_blocks_beta_label_N_term,
+                'label_C_term': settings.assign_blocks_beta_label_C_term,
+                'gap_tolerance': settings.assign_blocks_beta_gap_tolerance,
+                'overwrite_assignments': overwrite_assignments,
+                      }
+
+            assign_blocks(molecule, classification, settings.major_beta,
+                          _is_sheet, **kwargs)
+
+        # Assign blocks and fill gaps for 310-helices
+        if settings.assign_blocks_310:
             # 310-helices are typically 4-5 residues long. For a 4-residue
             # 310-helix, the i and i+3 residues are hydrogen bonded and labeled
             # as 310-helix--but the i+1/i+2 are not. This will fill in that gap
 
             # Get the parameters to fill the gaps
-            kwargs = {'extend_termini': settings.fill_gaps_310_extend_termini,
-                      'label_N_term': settings.fill_gaps_310_label_N_term,
-                      'label_C_term': settings.fill_gaps_310_label_C_term,
-                      'gap_tolerance': settings.fill_gaps_310_gap_tolerance,
-                      'overwrite_assignments': overwrite_assignments,
+            kwargs = {
+                'extend_termini': settings.assign_blocks_310_extend_termini,
+                'label_N_term': settings.assign_blocks_310_label_N_term,
+                'label_C_term': settings.assign_blocks_310_label_C_term,
+                'gap_tolerance': settings.assign_blocks_310_gap_tolerance,
+                'overwrite_assignments': overwrite_assignments,
                       }
 
-            fill_gaps(molecule, classification, settings.major_310, _is_helix,
-                      **kwargs)
+            assign_blocks(molecule, classification, settings.major_310,
+                          _is_helix, **kwargs)
 
         # TODO: add gap filling for pi-helices and potentiall alpha-helices.
 
@@ -300,10 +317,14 @@ def add_energy_ramachandran(residue):
     residue.energy_ramachandran = energy
 
 
-def fill_gaps(molecule, classifications, classification_type, dihedral_test,
-              extend_termini=False, label_N_term=0, label_C_term=0,
-              gap_tolerance=1, overwrite_assignments=False):
-    """Fill gaps in the classifications dict assignments.
+def assign_blocks(molecule, classifications, classification_type, dihedral_test,
+                  extend_termini=False, label_N_term=0, label_C_term=0,
+                  gap_tolerance=1, overwrite_assignments=False):
+    """Assign blocks of secondary structure units, including those with gaps.
+    A secondary structure block consists of a contiguous series of residues with
+    the same secondary structure major_classification.
+    
+    This function also assigns the minor 'N-term' and 'C-term' classifications.
     
     Gaps occur in the secondary structure assignment from hydrogen bonds, for 
     example, with beta-strands on the edges of beta sheets. This function finds
@@ -329,7 +350,7 @@ def fill_gaps(molecule, classifications, classification_type, dihedral_test,
           'classification_type'.
         - If None is specified, then the dihedral angles of residues will not
           be tested.
-    extend_termini: bool or int, optional
+    extend_termini: bool, optional
         If True, the previous and subsequence residues of each contiguous
         stretch of residue classification will be checked to see if they fall
         within the dihedral angle range as well.
@@ -342,9 +363,9 @@ def fill_gaps(molecule, classifications, classification_type, dihedral_test,
     gap_tolerance: int, optional
         The assignment of contiguous stretches of a secondary structure 
         assignment will tolerate this number of 'gaps' in the residue numbers.
-        For a gap_toleranace of 1 and a checked sheet assignment, the following
+        For a gap_toleranace of 2 and a checked sheet assignment, the following
         group 'E E E E' will be treated as a single contiguous block of sheet
-        assignments.
+        assignments. gap_tolerance should be greater than 0.
     overwrite_assignments: bool, optional
         If True, classification assignments will be overwritten, if an
         assignments has already been made for a given residue.
@@ -353,6 +374,8 @@ def fill_gaps(molecule, classifications, classification_type, dihedral_test,
     -------
     None
     """
+    assert gap_tolerance > 0
+
     # Filter the classifications (keys) that match the classification_type
     filtered_keys = [k for k, v in classifications.items()
                      if v[0] == classification_type]

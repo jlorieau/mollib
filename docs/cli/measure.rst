@@ -211,8 +211,7 @@ Helices
 Helices consist of stretches of hydrogen bonded residues with helical dihedrals.
 3:sub:`10`-helices are typically short, with one or more 'i'-'i+3'hydrogen
 bonds, and these can be mischaracterized as turns (type I turns). In this case,
-mollib checks that all residues in the helix ('i' through 'i+3') have helical
-dihedral angles.
+mollib checks that all residues in the helix have helical dihedral angles.
 
 Sheets
 ~~~~~~
@@ -226,33 +225,38 @@ To accurately identify sheet strands, mollib will find groups of sheet hydrogen
 bonds, then it will evaluate whether the residues are in a checkered pattern and
 whether the previous or subsequent residues have sheet backbone torsion angles.
 Thereafter, it will assign all residues in the group to a sheet classification,
-if no other classification has already been made. See :ref:`fill gaps
-<measure-fill-gaps>` for details.
+if no other classification has already been made. See :ref:`assign blocks
+<measure-assign-blocks>` for details.
 
-.. _measure-fill-gaps:
+.. _measure-assign-blocks:
 
-Fill Gaps
-~~~~~~~~~
+Assign Blocks
+~~~~~~~~~~~~~
 
 Secondary structure assignments are made based on hydrogen bonds. In some cases,
 such as the edge strands of sheets or short 310-helices, residues within a
 contiguous block are not assigned because they do not form an internal hydrogen
-bond. The ``fill_gaps`` function will find contiguous blocks of secondary
-structure units, test the dihedral of residues within that block, and make an
-assignment of the whole block.
+bond. Mollib assign contiguous blocks of residues with the same secondary
+structure by testing the dihedral of residues within that block and filling gaps
+in assignment.
 
-For example, ``fill_gaps`` will assign a checkered sheet assignment ('E E E E
-E') to a contiguous ß-strand ('EEEEEEEEE') if all residues in the block
-have ß-strand backbone dihedral angles. 310-helices are another example in
-which the 'i' and 'i+3' residues are hydrogen bonded, yet the 'i+1' and 'i+2'
-residues are not. In this case, the gap will be filled by assigning residues 'i'
-through 'i+3' as 310-helix, if all four residues have helical dihedral angles.
+For example, a checkered sheet assignment ('E E E E E') will be assigned as a
+single contiguous ß-strand ('EEEEEEEEE') if all residues in the block have
+ß-strand backbone dihedral angles. 310-helices are another example in which the
+'i' and 'i+3' residues are hydrogen bonded, yet the 'i+1' and 'i+2' residues are
+not. In this case, the gap will be filled by assigning residues 'i' through
+'i+3' as 310-helix, if all four residues have helical dihedral angles.
 
-By default, filling gaps will not overwrite secondary structure assignments for
-residues that already have an assignment.
+Additionally, assigning blocks will label the minor classification of N- and
+C-terminal residues for certain secondary structure blocks, depending on the
+settings.
 
-Potential of Mean Force Plots
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.. note:: The identification of the 'N-term' and 'C-term' minor classifications
+          are done separately for residues and hydrogen bonds. These assignments
+          may be different between residues and hydrogen bonds.
+
+Energy Maps
+~~~~~~~~~~~
 
 The backbone dihedral probabilities and energies are calculated from potential
 of mean force plots for each type of secondary structure. It is calculated from

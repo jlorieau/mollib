@@ -171,47 +171,66 @@ minor_C = 'C-term'
 minor_gly = 'Gly'
 
 
-# Fill Gaps
-# ---------
+# Assign Blocks
+# -------------
 
-#: Fill residue assignment gaps
-fill_gaps = True
+#: Assign blocks of residues, including gaps
+assign_blocks = True
 
-#: Fill residue assignment gaps in beta-strands.
-fill_gaps_beta = True
+#: Assign alpha-helix blocks
+assign_blocks_alpha = True
 
-#: Fill residue assignment gaps in 310-helices
-fill_gaps_310 = True
+#: Assign beta-strand blocks, including gaps
+assign_blocks_beta = True
 
-#: fill_gap: Overwrite classification assignments, if an assignment has already
-#: been made
-fill_gaps_overwrite = False
+#: Assign 310-helix blocks, including gaps
+assign_blocks_310 = True
 
-#: fill_gap: Check the previous and subsequent residues in a contiguous
+#: assign_blocks: Overwrite classification assignments, if an assignment has
+#: already been made
+assign_blocks_overwrite = False
+
+
+#: assign_blocks: Check the previous and subsequent residues in a contiguous
+#: alpha-helix assignment
+assign_blocks_alpha_extend_termini = False
+
+#: assign_blocks: Label the 'minor' classification of the specified number of
+# N- or C-terminal residues as 'N-term' or 'C-term'
+assign_blocks_alpha_label_N_term = 1
+assign_blocks_alpha_label_C_term = 1
+
+#: assign_blocks: Only fill gaps in alpha-helices that are as large as the
+#: following number
+assign_blocks_alpha_gap_tolerance = 1
+
+
+#: assign_blocks: Check the previous and subsequent residues in a contiguous
 #: beta-sheet assignment
-fill_gaps_beta_extend_termini = True
+assign_blocks_beta_extend_termini = True
 
-#: fill_gap: Label the 'minor' classification of the specified number of N- or
-#: C-terminal residues as 'N-term' or 'C-term'
-fill_gaps_beta_label_N_term = 1
-fill_gaps_beta_label_C_term = 1
+#: assign_blocks: Label the 'minor' classification of the specified number of
+# N- or C-terminal residues as 'N-term' or 'C-term'
+assign_blocks_beta_label_N_term = 1
+assign_blocks_beta_label_C_term = 1
 
-#: fill_gap: Only fill gaps in beta-sheets that are as large as the following
-#: number
-fill_gaps_beta_gap_tolerance = 2
+#: assign_blocks: Only fill gaps in beta-sheets that are as large as the
+#: following number
+assign_blocks_beta_gap_tolerance = 2
 
-#: fill_gap: Check the previous and subsequent residues in a contiguous
+
+#: assign_blocks: Check the previous and subsequent residues in a contiguous
 #: 310 assignment
-fill_gaps_310_extend_termini = False
+assign_blocks_310_extend_termini = False
 
-#: fill_gap: Label the 'minor' classification of the specified number of N- or
-#: C-terminal residues as 'N-term' or 'C-term'
-fill_gaps_310_label_N_term = 0
-fill_gaps_310_label_C_term = 0
+#: assign_blocks: Label the 'minor' classification of the specified number of
+#: N- or C-terminal residues as 'N-term' or 'C-term'
+assign_blocks_310_label_N_term = 0
+assign_blocks_310_label_C_term = 0
 
-#: fill_gap: Only fill gaps in 310-helices that are as large as the following
-#: number
-fill_gaps_310_gap_tolerance = 3
+#: assign_blocks: Only fill gaps in 310-helices that are as large as the
+#: following number
+assign_blocks_310_gap_tolerance = 3
 
 
 # Tables
