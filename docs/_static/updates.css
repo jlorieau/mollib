@@ -162,6 +162,7 @@ div.body h1 {
   padding: 0;
   color: #12446d;
   font-size: 1.6em;
+  border-bottom: 1px dotted #becbd6;
 }
 
 div.body h2 {
