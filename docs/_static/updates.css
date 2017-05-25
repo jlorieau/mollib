@@ -2,9 +2,64 @@ code {
   color: currentColor;
 }
 
+div.document {
+  background-color: #fff;
+}
+
+/* topbar */
+
+div.related {
+  max-width: 1305px;
+  background: #1e69a8;
+  font-size: 1.1em;
+}
+
+div.related a {
+  color: #e2f1ff;
+}
+
+/* Sidebar*/
+
 div.sphinxsidebar {
   font-size: 0.9em;
+  border: 1px solid #ccc;
+  border-radius: 0px 0px 10px 0px;
+  background-color: #f3f9fd;
 }
+
+div.sphinxsidebar h3 {
+  color: #1e69a8;
+  background-color: transparent;
+  padding: 0px 10px;
+}
+
+div.sphinxsidebar h3 a {
+  color: #1e69a8;
+  background-color: transparent;
+}
+
+div.sphinxsidebar #searchbox input[type="text"] {
+  font-size: 1.1em;
+  margin-left: 15px;
+  width: 125px;
+}
+
+div.sphinxsidebar input[type=submit] {
+  font-size: 0.5em;
+  margin-left: 5px;
+  color: #51a8f1;
+  background-color: #dcefff;
+  border-radius: 3px;
+  padding: 1px 5px;
+  border: 1px solid #aad9ff;
+}
+
+div.sphinxsidebar input[type=submit]:hover {
+  color: #dcefff;
+  background-color: #51a8f1;
+}
+
+/* Main text body */
 
 div.body {
   max-width: 1000px;
@@ -13,7 +68,8 @@ div.body {
 }
 
 div.body pre {
-  background-color: #fcfcfc;
+  background-color: #f9f9f9;
+  border: 1px solid #c5d4dc;
   border-radius: 2px;
   margin-left: 15px;
 }
@@ -105,17 +161,22 @@ div.body p.admonition-title {
 
 div.note {
   font-size: 0.9em;
+  color: #444;
+  background-color: #efefef;
+  margin-left: 15px;
 }
 
-div.related {
-  max-width: 1305px;
-  background: #1e69a8;
-  font-size: 1.0em;
+/* Footbar */
+
+div.footer {
+  color: #aaa;
 }
 
-div.note {
-  margin-left: 10px;
+div.footer a {
+  color: #999;
 }
+
+/* Body formatting */
 
 div.code-block-caption {
   margin-left: 15px;
@@ -140,10 +201,6 @@ div.figure p.caption {
   padding: 0px;
   margin: 0px;
 }
-
-/*div.figure.align-right {*/
-  /*margin-left: 0px;*/
-/*}*/
 
 .class dt {
   background: #f7dab9;

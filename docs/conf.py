@@ -140,7 +140,7 @@ html_theme = 'nature'
 # further.  For a list of options available for each theme, see the
 # documentation.
 #
-# html_theme_options = {}
+html_theme_options = {'sidebarwidth': 200}
 
 # Add any paths that contain custom themes here, relative to this directory.
 # html_theme_path = []
@@ -148,7 +148,7 @@ html_theme = 'nature'
 # The name for this set of Sphinx documents.
 # "<project> v<release> documentation" by default.
 #
-# html_title = u'MolLib v3'
+html_title = u'Mollib ' + __version__
 
 # A shorter title for the navigation bar.  Default is the same as html_title.
 #
@@ -190,8 +190,9 @@ html_static_path = ['_static']
 # Custom sidebar templates, maps document names to template names.
 #
 # html_sidebars = {}
-html_sidebars = { '**': ['globaltoc.html', 'relations.html', 'sourcelink.html',
-                         'searchbox.html'], }
+# html_sidebars = { '**': ['globaltoc.html', 'relations.html', 'sourcelink.html',
+#                          'searchbox.html'], }
+html_sidebars = { '**': ['globaltoc.html', 'searchbox.html'], }
 
 # Additional templates that should be rendered to pages, maps page names to
 # template names.
@@ -200,11 +201,11 @@ html_sidebars = { '**': ['globaltoc.html', 'relations.html', 'sourcelink.html',
 
 # If false, no module index is generated.
 #
-# html_domain_indices = True
+html_domain_indices = False
 
 # If false, no index is generated.
 #
-# html_use_index = True
+html_use_index = False
 
 # If true, the index is split into individual pages for each letter.
 #
