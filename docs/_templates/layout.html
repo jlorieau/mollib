@@ -1,0 +1,21 @@
+{% extends '!layout.html' %}
+
+{% block header %}
+<div class="header">
+  <a href="{{ pathto(master_doc) }}">
+    <span class="title"><span class="title-left">mol</span>lib</span>
+  </a>
+  <ul>
+  <form class="search" action="{{ pathto('search') }}" method="get">
+    <li>
+      <div><input type="text" name="q" placeholder="search"/></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </li>
+  </form>
+  </span>
+  </ul>
+</div>
+
+
+{% endblock %}

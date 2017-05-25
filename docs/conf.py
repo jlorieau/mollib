@@ -192,7 +192,7 @@ html_static_path = ['_static']
 # html_sidebars = {}
 # html_sidebars = { '**': ['globaltoc.html', 'relations.html', 'sourcelink.html',
 #                          'searchbox.html'], }
-html_sidebars = { '**': ['globaltoc.html', 'searchbox.html'], }
+html_sidebars = { '**': ['globaltoc.html', ], }
 
 # Additional templates that should be rendered to pages, maps page names to
 # template names.
@@ -201,11 +201,11 @@ html_sidebars = { '**': ['globaltoc.html', 'searchbox.html'], }
 
 # If false, no module index is generated.
 #
-html_domain_indices = False
+html_domain_indices = True
 
 # If false, no index is generated.
 #
-html_use_index = False
+html_use_index = True
 
 # If true, the index is split into individual pages for each letter.
 #

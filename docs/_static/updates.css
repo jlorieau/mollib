@@ -1,3 +1,7 @@
+body {
+  background-color: #ffffff;
+}
+
 code {
   color: currentColor;
 }
@@ -6,16 +10,65 @@ div.document {
   background-color: #fff;
 }
 
-/* topbar */
+/* Header */
+
+div.header {
+  background-color: #1e69a8;
+  background: linear-gradient(#2a71ad, #3473a9);
+  min-height: 40px;
+  max-width: 1176px; /**/
+}
+
+div.header span.title {
+  padding: 3px 10px;
+  float: left;
+  color: #cbe1f9;
+  text-shadow: 2px 2px 2px #555;
+  font-size: 1.8em;
+  font-family: 'Source Sans Pro', Arial, Helvetica, sans-serif;;
+}
+
+div.header span.title-left {
+  color: #e9f8ff;
+}
+
+div.header ul {
+  float: right;
+  list-style: none;
+  margin: 9px;
+}
+
+div.header li {
+  display: inline;
+}
+
+div.header .search input[type="text"] {
+  font-size: 0.9em;
+  margin-left: 15px;
+  width: 125px;
+  border-radius: 3px;
+  border-style: none;
+  padding: 2px 6px;
+  background-color: #ebf5fd;
+}
+
+div.header .search input[type=text]:focus {
+  background-color: #cfeaff;
+}
+
+/* topbar (breadcrumbs) */
 
 div.related {
-  max-width: 1305px;
-  background: #1e69a8;
-  font-size: 1.1em;
+  color: #b1afaf;
+  background: #eaeaea;
+  font-size: 0.8em;
+  text-shadow: none;
+  line-height: 25px;
+  max-width: 1176px; /**/
 }
 
 div.related a {
-  color: #e2f1ff;
+  color: #5a5a5a;
 }
 
 /* Sidebar*/
@@ -62,16 +115,18 @@ div.sphinxsidebar input[type=submit]:hover {
 /* Main text body */
 
 div.body {
-  max-width: 1030px;
+  max-width: 900px;
   font-size: 1.1em;
   margin-left: 15px;
+  /*border-right: 1px solid #f1f1f1;*/
 }
 
 div.body pre {
-  background-color: #f9f9f9;
-  border: 1px solid #c5d4dc;
+  background-color: #fcfcfc;
+  border: 1px solid #d6d6d6;
   border-radius: 2px;
   margin-left: 15px;
+  font-size: 1.0em;
 }
 
 div.body a {
@@ -106,14 +161,14 @@ div.body h1 {
   background: None;
   padding: 0;
   color: #12446d;
-  font-size: 160%;
+  font-size: 1.6em;
 }
 
 div.body h2 {
   background: None;
   padding: 0;
   color: #1a65a2;
-  font-size: 120%;
+  font-size: 1.3em;
 }
 
 div.body h3 {
@@ -121,7 +176,7 @@ div.body h3 {
   padding: 0px;
   margin-left: 10px;
   color: #247ec7;
-  font-size: 100%;
+  font-size: 1.1em;
 }
 
 div.body li {
@@ -139,6 +194,7 @@ div.body dl {
 
 div.body dt {
   font-weight: 600;
+  font-size: 1.1em;
 }
 
 div.body thead {
@@ -170,6 +226,7 @@ div.note {
 
 div.footer {
   color: #aaa;
+  max-width: 1176px; /**/
 }
 
 div.footer a {
