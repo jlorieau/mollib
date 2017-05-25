@@ -1,6 +1,6 @@
-######################
-mollib's documentation
-######################
+######
+mollib
+######
 
 
 Mollib is a *unified* command-line program and Python library for the
@@ -42,13 +42,7 @@ Mollib includes tools for:
    :maxdepth: 2
 
    cli/cli
+   tips
    releases/releases
    develop
    api/api
-
-.. only:: html
-
-   * :ref:`genindex`
-   * :ref:`modindex`
-   * :ref:`search`
-

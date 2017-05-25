@@ -6,7 +6,7 @@ The ``process`` command is the main command for processing, reading and writing
 files. All of the options and preprocessors available in ``process`` are
 available to other commands.
 
-.. include:: output/mollib_process_help.rst
+.. include:: output/ml_process_help.rst
 
 Arguments
 ---------
@@ -72,4 +72,4 @@ The following example loads a crystal structure of ubiquitin from the PDB
 (``-i 1UBQ``), adds hydrogens to the molecule (``--hydrogenate``) and saves the
 output to a new file (``-o 1UBQ_H.pdb``).
 
-.. include:: output/mollib_process_i_1UBQ_o_1UBQ_H.pdb_hydrogenate.rst
+.. include:: output/ml_process_i_1UBQ_o_1UBQ_H.pdb_hydrogenate.rst

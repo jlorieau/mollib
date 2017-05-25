@@ -16,7 +16,7 @@ The ``hbonds`` command has the following features:
   torsion angles. This prevents the misclassification of 310-helices and
   beta turns as well as isolated i+3, i+4 and i+5 hydrogen bonds.
 
-.. include:: output/mollib_hbonds_help.rst
+.. include:: output/ml_hbonds_help.rst
 
 
 .. note:: If the molecule does not have hydrogens, this command will need
@@ -46,13 +46,13 @@ Examples
 In this example, the hemagglutinin fusion peptide structure (``-i 2KXA``) is
 downloaded, and its amide hydrogen bonds are reported.
 
-.. include:: output/mollib_hbonds_i_2KXA.rst
+.. include:: output/ml_hbonds_i_2KXA.rst
 
 This example downloads a crystal structure of ubiquitin (``-i 1UBQ``), adds
 hydrogens to the structure and shows part (``|head -n15``) of its amide
 hydrogen bond report.
 
-.. include:: output/mollib_hbonds_i_1UBQ_hydrogenate_head_n15.rst
+.. include:: output/ml_hbonds_i_1UBQ_hydrogenate_head_n15.rst
 
 Theory
 ------
