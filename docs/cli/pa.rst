@@ -183,8 +183,9 @@ from the three components.
     \delta_{iso} = \frac{1}{3} \left( \delta_{zz} + \delta_{xx} +
     \delta_{yy} \right)
 
-.. figure:: img/backbone_tensor.png
+.. figure:: img/backbone_tensor.*
     :align: right
+    :width: 350
     :alt: Backbone CSA tensor conventions
 
     Backbone CSA tensor conventions
