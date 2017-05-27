@@ -51,6 +51,8 @@ magnetic_interactions = process.process(labels=data.keys())
 # Conduct the SVD fit
 data_pred, Saupe_components, stats = calc_pa_SVD(magnetic_interactions, data)
 
+# Print the overall statistics
+print('Q (%)', stats['Overall']['Q (%)'])
 
 # Prepare a subplot for each interaction type
 int_types = ('N-H', 'C', 'N', 'H')  # The different interaction types to plot
