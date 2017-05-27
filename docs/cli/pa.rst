@@ -117,6 +117,7 @@ The partial alignment RDC and RACS data file has the following format:
     5C                112         1
     6C               -250
 
+
 Examples
 --------
 
@@ -145,3 +146,70 @@ the fit. In this case, the structure is missing hydrogen atoms, and these
 must be added (``--hydrogenate``).
 
 .. include:: output/ml_pa_i_1UBQ_a_2MJB_set_0_fix-outliers_project-methyls_hydrogenate_summary.rst
+
+Tensor Conventions
+------------------
+
+In the absence of motion, dipolar tensors are axially symmetric (i.e.
+:math:`\delta_{xx} = \delta_{yy}`) and the principal component
+(:math:`\delta_{zz}`) is colinear with the internuclear vector in the principal
+axis system (PAS).
+
+Chemical shift tensors (CSA) may be axially asymmetric (i.e.
+:math:`\delta_{xx} \neq \delta_{yy}`), and their geometries must be specified
+in relation to internal atomic coordinates. We use the convention from
+Cornilescu *et al.* [Cornilescu2000]_.
+
+.. [Cornilescu2000] Cornilescu, G. & Bax, A. Measurement of Proton, Nitrogen,
+    and Carbonyl Chemical Shielding Anisotropies in a Protein Dissolved in a
+    Dilute Liquid Crystalline Phase. J. Am. Chem. Soc. 122, 10143–10154 (2000).
+
+The literature reports both the chemical *shielding* tensor (\ :math:`\sigma`\ )
+and the chemical *shift* tensor (\ :math:`\delta`\ ). The difference between
+the two is an inversion of sign (i.e. :math:`\sigma = - \delta`\ ). As a result,
+the ordering of components between different conventions will change. In the
+Haeberlen convention, the chemical shift components are order by their
+magnitudes.
+
+.. math::
+
+    | \delta_{zz} | \geq | \delta_{xx} | \geq | \delta_{yy} |
+
+The isotropic component (\ :math:`\delta_{iso}`\ ) has already been subtracted
+from the three components.
+
+.. math::
+
+    \delta_{iso} = \frac{1}{3} \left( \delta_{zz} + \delta_{xx} +
+    \delta_{yy} \right)
+
+.. figure:: img/backbone_tensor.png
+    :align: right
+    :alt: Backbone CSA tensor conventions
+
+    Backbone CSA tensor conventions
+
+In the IUPAC convention, the components are normally ordered starting from the
+largest component (with sign) as the '11' component. However, for chemical
+*shielding* tensors, the '33' component is largest.
+
+.. math::
+
+    \sigma_{33} \geq \sigma_{22} \geq \sigma_{11}
+
+Mollib uses the Haeberlen convention and chemical *shift* tensors. The backbone
+H, C' and N CSA tensors are defined as follows:
+
+The :sup:`13`\ C' tensor (blue) has the largest component
+(\ :math:`\delta_{zz}`\ ) oriented orthogonal to the O-C-N plane, and it is
+rotated about this component by the :math:`\alpha_z` angle.
+
+The :sup:`15`\ N tensor (red) has the largest component
+(\ :math:`\delta_{zz}`\ ) nearly colinear with the H-N bond, and it is rotated
+away from the bond about the yy-component (orthogonal to the H-N-C' plane) with
+an angle :math:`\beta_y`\ .
+
+The :sup:`1`\ H tensor (green) has the largest component
+(\ :math:`\delta_{zz}`\ ) nearly colinear with the H-N bond, and it is rotated
+about the xx-component (orthogonal to the H-N-C' plane) by an angle
+:math:`\gamma_x`\ .

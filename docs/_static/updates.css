@@ -212,8 +212,21 @@ div.body tr.row-even {
   background: #f5f5f5;
 }
 
+div.body sup {
+  font-size: xx-small;
+}
+
+div.body sub {
+  font-size: xx-small;
+}
+
 div.body p.admonition-title {
   margin: 0px;
+}
+
+div.body table.citation {
+  margin-left: 30px;
+  font-size: 0.9em;
 }
 
 div.note {
