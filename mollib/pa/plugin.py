@@ -65,7 +65,7 @@ class PA(Plugin):
         p.add_argument('--set',
                        action='store', required=False,
                        metavar='id',
-                       help='If multiple datasets are available, this option'
+                       help='If multiple datasets are available, this option '
                             'specifies which dataset to use.')
 
         p.add_argument('--exclude',
