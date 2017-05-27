@@ -227,6 +227,8 @@ div.body p.admonition-title {
 div.body table.citation {
   margin-left: 30px;
   font-size: 0.9em;
+  color: #777777;
+  border-left: 1px solid #aaaaaa;
 }
 
 div.note {
