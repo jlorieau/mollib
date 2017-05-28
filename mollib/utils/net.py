@@ -7,9 +7,9 @@ import tempfile
 import shutil
 import logging
 try:
-    from urllib.request import URLopener
+    from urllib2 import urlopen
 except ImportError:
-    from urllib import URLopener
+    from urllib.request import urlopen
 
 from . import settings
 
@@ -109,15 +109,16 @@ def get_or_fetch(identifier, extensions=None, urls=None, load_cached=True,
         for url in urls:
             # Check the url and filename. An exception is raised if the
             # response is a 404
-            opener = URLopener()
             try:
-                opener.retrieve('/'.join((url, filename)), temp_path)
+                response = urlopen('/'.join((url, filename)))
             except:
                 continue
 
-            # At this point, the url was successful retrieved.
+            # At this point, the url was successful retrieved. Save it to a
+            # temporary path.
+            shutil.copyfileobj(response, temp_path)
 
-            # See if a local copy should be saved
+            # See if a copy in the local/present should be saved
             _save_locally(temp_path)
 
             # Return its local locations
