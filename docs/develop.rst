@@ -65,6 +65,12 @@ mollib.
 
     .. include:: cli/output/make_help.rst
 
+Including Datasets
+==================
+
+Datasets are included in the ``mollib/data`` directory. Data files should be
+included in the ``MANIFEST.in`` file.
+
 Building Platform Packages
 ==========================
 

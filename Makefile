@@ -7,8 +7,8 @@ inplace: ## Build extensions in place
 	$(PYTHON) setup.py build_ext --inplace -f
 
 test: inplace  ## Test the package with the current python version
-	pip install 'nose>=1.3'
-	nosetests
+	pip install 'pytest'
+	pytest
 
 test-all: clean  ## Test the package with multiple python environments using tox
 	pip install 'tox>=2.7'
@@ -20,6 +20,7 @@ develop: inplace  ## Prepare the package for active development
 clean:  ## Clean compiled package files, docs and test files
 	find . -name '*.pyc' -exec rm -f {} +
 	find . -name '*.pyo' -exec rm -f {} +
+	find . -name __pycache__ -type d -exec rm -rf {} +
 	find . -name '*~' -exec rm -f {} +
 	find . -name '*.so' -exec rm -f {} +
 	rm -rf .tox

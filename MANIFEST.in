@@ -1,0 +1,3 @@
+# Datasets
+include mollib/*.txt
+recursive-include mollib/data *.npz

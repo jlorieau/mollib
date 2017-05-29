@@ -379,7 +379,7 @@ def add_energy_hbonds(hbond):
          energy_dataset) = energy_hbond_datasets[type_classification]
         hbond.hbond_dataset = type_classification
     else:
-        # Energy dataset not found. Nothing else can be done
+        # Energy dataset not found. Nothing else can be done. Just classify
         return None
 
     # Try to get the corresponding energy for this hbond

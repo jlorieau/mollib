@@ -6,8 +6,6 @@
 import unittest
 import weakref
 
-from nose.plugins.attrib import attr
-
 from mollib.core import Molecule
 
 aminoacids = {'ALA', 'GLY', 'SER', 'THR', 'MET', 'CYS', 'ILE', 'LEU',
@@ -46,7 +44,6 @@ class TestMolecule(unittest.TestCase):
         self.assertEqual(ref(), molecules['2KXA'])
         self.assertEqual(ref(), mol)
 
-    @attr('bench')
     def test_large_molecule(self):
         """Tests the parsing and performance of a very large protein complex.
 

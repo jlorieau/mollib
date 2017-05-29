@@ -4,7 +4,6 @@ Test the geometry functions
 import unittest
 from math import sqrt
 
-from nose.plugins.attrib import attr
 import numpy as np
 
 from mollib.core import (Molecule, measure_distances, calc_vector,
@@ -36,32 +35,6 @@ class TestGeometry(unittest.TestCase):
         with self.assertRaises(TypeError):
             vec = calc_vector((1.0, 2.0), (0.0, -1.0))
 
-    @attr('bench')
-    def test_speed_calc_vector(self):
-        """"Tests the speed of the calc_vector function.
-
-        The number of vectors is tuned so that this test takes 1.0s.
-        """
-        np.random.seed(0)
-        for i in range(52000):
-            pt1 = np.random.rand(3) * 10. - 5.0
-            pt2 = np.random.rand(3) * 10. - 5.0
-            vec = calc_vector(pt1, pt2)
-            self.assertEqual(len(vec), len(pt1))
-
-    @attr('bench')
-    def test_speed_vector_length(self):
-        """"Tests the speed of the vector_length function.
-
-        The number of vectors is tuned so that this test takes 1.0s.
-        """
-        np.random.seed(0)
-        for i in range(100000):
-            vec1 = np.random.rand(3) * 10. - 5.0
-            length = vector_length(vec1)
-            self.assertGreaterEqual(length, -8.67)
-            self.assertLessEqual(length, 8.67)
-
     def test_within_distance(self):
         mol = Molecule('2KXA')
 
@@ -78,22 +51,6 @@ class TestGeometry(unittest.TestCase):
         atoms = within_distance(mol['A'][5]['CA'], cutoff=3.0,
                                 elements='C|N|O', exclude_intraresidue=True)
         self.assertEqual(len(atoms), 3)
-
-
-    @attr('bench')
-    def test_speed_within_distance(self):
-        """"Tests the speed of the vector_length function.
-
-        The number of vectors is tuned so that this test takes 1.0s.
-        Cython within_distance:  3 / 1.0s
-        Cuthon box:             10 / 1.0s
-        """
-        mol = Molecule('2KXA')
-
-        for i in range(15):
-            for atom in mol.atoms:
-                atoms = within_distance(atom, cutoff=3.0)
-
 
     def test_measure_distances(self):
         mol = Molecule('2MUV')
