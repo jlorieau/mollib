@@ -3,8 +3,6 @@ Tests for hbonds
 """
 import unittest
 
-from nose.plugins.attrib import attr
-
 from mollib import Molecule
 from mollib.hbonds import find_hbond_partners
 
@@ -12,7 +10,6 @@ from mollib.hbonds import find_hbond_partners
 class TestHydrogenBonds(unittest.TestCase):
     "Tests the objects and functions for hbonds."
 
-    @attr('bench')
     def test_large_molecule(self):
         """Tests the detection of hbonds in a large protein.
 

@@ -83,8 +83,11 @@ class TestHbondClassify(unittest.TestCase):
         # Assert that all of the hbonds have an energy associated and that these
         # are float numbers
         for hbond in hbonds:
-            self.assertTrue(hasattr(hbond, 'energy_hbond'))
-            self.assertTrue(hbond.energy_hbond)
+            msg = ("The hydrogen bond '{}' does not have an 'energy_hbond' " 
+                   "assignment.")
+            self.assertTrue(hasattr(hbond, 'energy_hbond'),
+                            msg=msg.format(hbond.short_repr()))
+            self.assertTrue(isinstance(hbond.energy_hbond, float))
 
     def test_energy_ramachandran(self):
         """Test the 'energy_ramachandran` property of residues, set by
@@ -113,5 +116,8 @@ class TestHbondClassify(unittest.TestCase):
         # The 'energy_ramachandran' attributes should now be assigned and
         # have float values
         for residue in mol.residues:
-            self.assertTrue(hasattr(residue, 'energy_ramachandran'))
+            msg = ("Residue '{}' does not have an 'energy_ramachandran' "
+                   "assignment")
+            self.assertTrue(hasattr(residue, 'energy_ramachandran'),
+                            msg=msg.format(residue))
             self.assertIsInstance(residue.energy_ramachandran, float)
