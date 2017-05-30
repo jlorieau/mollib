@@ -79,7 +79,8 @@ class Process(Plugin):
             print(molecule)
             chain_msg = '\tChain {:<3}: {:>4} residues, {:>4} atoms.'
             for chain in molecule.chains:
-                print(chain_msg.format(chain, chain.residue_size,
+                chain_id = str(chain.id)
+                print(chain_msg.format(chain_id, chain.residue_size,
                                        chain.atom_size))
 
     def postprocess(self, molecules, args):
