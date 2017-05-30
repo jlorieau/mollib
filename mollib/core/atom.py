@@ -145,7 +145,6 @@ class Atom(Primitive):
                  '_pK', '_topology','_repr', '_fullname')
     optional = ('charge', 'residue', 'chain', 'molecule',
                 '_pK', '_topology', '_repr', '_fullname')
-    # bonded_atom_names ' ['1N', '2C-1'
 
     # Atom molecular weights. These must be labeled according the a str.title()
     # function. eg. ZN becomes Zn.
