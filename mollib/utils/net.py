@@ -96,8 +96,9 @@ def get_or_fetch(identifier, extensions=None, urls=None, load_cached=True,
         # Get the path for the temporary file
         temp_path = os.path.join(temp_dir, filename)
 
-        # See if a cached version exists and whether it should be returned
-        if load_cached and os.path.isfile(temp_path):
+        # See if a cached version exists and whether it's a valid file. If so,
+        # return it.
+        if load_cached and _is_valid(temp_path):
             # See if a local copy should be saved
             _save_locally(temp_path)
 
@@ -116,7 +117,8 @@ def get_or_fetch(identifier, extensions=None, urls=None, load_cached=True,
 
             # At this point, the url was successful retrieved. Save it to a
             # temporary path.
-            shutil.copyfileobj(response, temp_path)
+            with open(temp_path, 'wb') as out_file:
+                shutil.copyfileobj(response, out_file)
 
             # See if a copy in the local/present should be saved
             _save_locally(temp_path)
@@ -158,6 +160,29 @@ def _save_locally(filepath):
         shutil.copy2(filepath, '.')
         return True
     return False
+
+
+def _is_valid(filepath):
+    """Test whether the file at the given filepath is a valid file.
+    
+    Parameters
+    ----------
+    filepath: str
+        The path of the cached file to test.
+    
+    Returns
+    -------
+    bool
+        True if the file is valid, False otherwise.
+    """
+    try:
+        # See if the file contains data.
+        return os.stat(filepath).st_size > 0
+    except OSError:
+        # File not found.
+        return False
+
+
 
 def clear_cache():
     """Clears the temporary cache for mollib."""
