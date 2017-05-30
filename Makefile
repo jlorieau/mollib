@@ -1,7 +1,10 @@
-.PHONY: inplace clean docs test test-all build-data develop clean-data help docs
+.PHONY: inplace clean docs test test-all build-data develop clean-data help docs profile
 .DEFAULT_GOAL := help
 
 PYTHON ?= python
+
+PROFILE_FILES := $(wildcard analysis/profiling/*.pyopts)
+PROFILE_TGT := $(PROFILE_FILES:.pyopts=.txt)
 
 inplace: ## Build extensions in place
 	$(PYTHON) setup.py build_ext --inplace -f
@@ -23,6 +26,7 @@ clean:  ## Clean compiled package files, docs and test files
 	find . -name __pycache__ -type d -exec rm -rf {} +
 	find . -name '*~' -exec rm -f {} +
 	find . -name '*.so' -exec rm -f {} +
+	find analysis/ -name '*.txt' -exec rm -f {} +
 	rm -rf .tox
 	$(MAKE) -C docs clean
 
@@ -53,6 +57,13 @@ install:  ## Install mollib
 
 #publish
 # pip install 'twine>=1.5.0'
+
+analysis/profiling/%.txt: analysis/profiling/%.pyopts
+	python -m cProfile -s tottime `which mollib` `cat $<` > $@
+
+profile: $(PROFILE_TGT)  ## Build the profile reports (analysis/profiling)
+	@grep -A15 "function calls" analysis/profiling/*.txt > analysis/profiling/summary.txt
+	@echo "\033[92mProfile reports built under analysis/profiling\033[0m"
 
 help:  ## Print this help message
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-15s\033[0m %s\n", $$1, $$2}'

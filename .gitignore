@@ -23,5 +23,6 @@ docs/cli/output/*
 # Analysis files and images
 analysis/*/*.png
 analysis/*/*.svg
+analysis/*/*.txt
 *.ipynb
 .ipynb_checkpoints
