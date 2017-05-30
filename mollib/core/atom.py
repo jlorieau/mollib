@@ -361,7 +361,7 @@ class Atom(Primitive):
         """
         # If the residues are the same, simply add the atom's name
         if (self.residue is not None and atom.residue is not None and
-                    self.residue == atom.residue):
+            self.residue == atom.residue):
             self_name = self.name
             atom_name = atom.name
         # Otherwise use the atom's fullname
