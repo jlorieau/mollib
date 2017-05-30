@@ -59,10 +59,10 @@ install:  ## Install mollib
 # pip install 'twine>=1.5.0'
 
 analysis/profiling/%.txt: analysis/profiling/%.pyopts
-	python -m cProfile -s tottime `which mollib` `cat $<` > $@
+	python -m cProfile -s cumtime `which mollib` `cat $<` > $@
 
 profile: $(PROFILE_TGT)  ## Build the profile reports (analysis/profiling)
-	@grep -A15 "function calls" analysis/profiling/*.txt > analysis/profiling/summary.txt
+	@grep -A15 "function calls" analysis/profiling/*.txt | grep -v summary.txt > analysis/profiling/summary.txt
 	@echo "\033[92mProfile reports built under analysis/profiling\033[0m"
 
 help:  ## Print this help message
