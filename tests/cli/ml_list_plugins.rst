@@ -2,7 +2,7 @@
 
 .. raw:: html
 
-    <div class="highlight"><pre><span></span><span class="gp">  $</span> ml --list-plugins
+    <div class="highlight"><pre><span></span><span class="gp">$</span> ml --list-plugins
     <span class="go">Installed plugins:</span>
     <span class="go">	process         <font color="green">Enabled</font></span>
     <span class="go">	measure         <font color="green">Enabled</font></span>

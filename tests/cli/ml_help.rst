@@ -2,7 +2,7 @@
 
 .. raw:: html
 
-    <div class="highlight"><pre><span></span><span class="gp">  $</span> ml --help
+    <div class="highlight"><pre><span></span><span class="gp">$</span> ml --help
     <span class="go">usage: mollib [-h] [-d | -s | -v] [--list-plugins] [--list-settings]</span>
     <span class="go">              [--version]</span>
     <span class="go">              ...</span>

@@ -17,7 +17,7 @@ errors = 0
 	@exec ./$< > $@  # export the text file
 
 %.html: %.sh
-	@echo "  $$ `cat $<`" > tmp_$@
+	@echo "$$ `cat $<`" > tmp_$@
 	@FORCE_COLOR=TRUE exec ./$< >> tmp_$@
 	@pygmentize -l shell-session -f html tmp_$@ | sed 's/^/    /g' >> tmp2_$@
 
