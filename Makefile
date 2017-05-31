@@ -1,4 +1,4 @@
-.PHONY: inplace clean docs test test-all build-data develop clean-data help docs profile
+.PHONY: inplace inplace-force clean docs test test-all test-cli build-data develop clean-data help docs profile
 .DEFAULT_GOAL := help
 
 PYTHON ?= python
@@ -6,14 +6,20 @@ PYTHON ?= python
 PROFILE_FILES := $(wildcard analysis/profiling/*.pyopts)
 PROFILE_TGT := $(PROFILE_FILES:.pyopts=.txt)
 
-inplace: ## Build extensions in place
+inplace:  ## Build extensions in place
+	$(PYTHON) setup.py build_ext --inplace
+
+inplace-force:  ## Build extensions in place (force0
 	$(PYTHON) setup.py build_ext --inplace -f
 
 test: inplace  ## Test the package with the current python version
 	pip install 'pytest'
 	pytest
 
-test-all: clean  ## Test the package with multiple python environments using tox
+test-cli:  ## Test the command-line interface
+	@$(MAKE) --no-print-directory -C tests/cli test
+
+test-all: clean test-cli  ## Test the package with multiple python environments using tox
 	pip install 'tox>=2.7'
 	tox
 
@@ -30,7 +36,7 @@ clean:  ## Clean compiled package files, docs and test files
 	rm -rf .tox
 	$(MAKE) -C docs clean
 
-build-data: inplace  ## Build the datasets
+build-data: inplace-force  ## Build the datasets
 	pip install 'tqdm>=4.8'
 	python setup.py build_data
 
