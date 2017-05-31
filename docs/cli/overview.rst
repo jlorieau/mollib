@@ -5,7 +5,7 @@ The command line interface includes all of mollib's functions for processing
 and analyzing molecules and molecular data. Mollib can be accessed either
 through the ``mollib`` or ``ml`` commands.
 
-.. include:: output/ml_help.rst
+.. include:: cmds/ml_help.rst
 
 
 ``-h`` / ``--help``
