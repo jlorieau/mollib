@@ -29,7 +29,7 @@ through the ``mollib`` or ``ml`` commands.
 ``--list-plugins``
     Display a list of installed and enabled plugins.
 
-    .. include:: output/ml_list-plugins.rst
+    .. include:: cmds/ml_list_plugins.rst
 
 ``--list-settings``
     Display a list of the settings sections that will be interpreted from

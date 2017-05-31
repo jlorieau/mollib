@@ -17,12 +17,12 @@ errors = 0
 	@exec ./$< > $@  # export the text file
 
 %.html: %.sh
-	@echo "  $ `cat $<`" > tmp_$@
+	@echo "  $$ `cat $<`" > tmp_$@
 	@FORCE_COLOR=TRUE exec ./$< >> tmp_$@
 	@pygmentize -l shell-session -f html tmp_$@ | sed 's/^/    /g' >> tmp2_$@
 
 	@echo ".. only:: html\n\n.. raw:: html\n" > $@
-	@cat -e tmp2_$@ | sed 's/\$$//g'>> $@                            # Copy command output, strip non-print chars
+	@cat -e tmp2_$@ | sed 's/\$$$$//g'>> $@                            # Copy command output, strip non-print chars
 	@echo '\n' >> $@
 
 	@sed -i '' 's/\^\[\[1m/<font style=\"font-weight:bold;\">/g' $@  # Replace bold codes
@@ -66,7 +66,7 @@ errors = 0
 	@cat $? > $@
 	@rm $?
 
-test: build ## Test the CLI output
+test: build  ## Test the CLI output against the reference .txt files
 	@for i in $(CLI); do \
 		echo "Testing $$i.sh" ; \
 		exec ./$$i.sh | diff $$i.txt - ; \
@@ -76,6 +76,9 @@ test: build ## Test the CLI output
 clean:
 	@rm -f *.txt *.tex *.html *.rst
 
-build: $(CLI_TXT) $(CLI_RST)
+build: $(CLI_TXT) $(CLI_RST)  ## Build the CLI .txt outputs and documentation .rst
 	@echo 'Building CLI files'
-#	@find . -size  0 -delete  # delete empty files
+	@find . -size  0 -delete  # delete empty files
+
+help:  ## Print this help message
+	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-15s\033[0m %s\n", $$1, $$2}'

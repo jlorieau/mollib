@@ -25,8 +25,8 @@ The following are instructions for locally developing a branch of mollib.
 
         $ make docs
 
-    .. note:: You will need to have ``sphinx``, ``sphinxcontrib-napoleon``
-              installed.
+    .. note:: You will need to have ``sphinx``, ``sphinxcontrib-napoleon``,
+              ``latex`` and ``latexmk`` installed.
 
 5. **Test the Build** Run the package's tests.
 
@@ -92,12 +92,11 @@ Mollib includes 4 different kinds of tests. These are all executed by the
    are run by executing:
 
         a. ``make test-cli``
-        b. ``make test-all``
-        c. Additionally, if the output of a command changes, the reference
+        b. Additionally, if the output of a command changes, the reference
            commands can be reset by entering the ``tests/cli`` directory and
            typing ``make clean&&make build``. The changed ``.txt`` and ``.rst``
            files should be committed to the repository.
-        d. New commands can be created by typing the command in a ``.sh`` file
+        c. New commands can be created by typing the command in a ``.sh`` file
            and making this file executable.
 
 Makefile Options

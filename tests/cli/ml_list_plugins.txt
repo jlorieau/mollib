@@ -1,0 +1,6 @@
+Installed plugins:
+	process         Enabled
+	measure         Enabled
+	hydrogenate     Enabled
+	hbonds          Enabled
+	pa              Enabled
