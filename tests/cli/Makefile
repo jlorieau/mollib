@@ -1,4 +1,4 @@
-.PHONE: build clean test
+.PHONY: build clean test permissions
 .DEFAULT_GOAL := build
 
 CLI_SRC := $(wildcard *.sh)
@@ -10,13 +10,13 @@ CLI := $(CLI_SRC:.sh=)
 
 errors = 0
 
-#%.rst: %.sh
+permissions: $(CLI_SRC)
+	@chmod u+x $?
 
-%.txt: %.sh  ## Process the text output of commands
-	@echo $<
+%.txt: %.sh permissions ## Process the text output of commands
 	@exec ./$< > $@  # export the text file
 
-%.html: %.sh
+%.html: %.sh permissions
 	@echo "$$ `cat $<`" > tmp_$@
 	@FORCE_COLOR=TRUE exec ./$< >> tmp_$@
 	@pygmentize -l shell-session -f html tmp_$@ | sed 's/^/    /g' >> tmp2_$@
@@ -25,22 +25,22 @@ errors = 0
 	@cat -e tmp2_$@ | sed 's/\$$$$//g'>> $@                            # Copy command output, strip non-print chars
 	@echo '\n' >> $@
 
-	@sed -i '' 's/\^\[\[1m/<font style=\"font-weight:bold;\">/g' $@  # Replace bold codes
-	@sed -i '' 's/\^\[\[22m/<\/font>/g' $@                           # Replace closing codes for bold
-	@sed -i '' 's/\^\[\[36m/<font color=\"#008b8b\">/g' $@           # Replace cyan colors
-	@sed -i '' 's/\^\[\[91m/<font color=\"red\">/g' $@               # Replace red colors
-	@sed -i '' 's/\^\[\[92m/<font color=\"green\">/g' $@             # Replace green colors
-	@sed -i '' 's/\^\[\[33m/<font color=\"#abb51f\">/g' $@
-	@sed -i '' 's/\^\[\[94m/<font color=\"blue\">/g' $@              # Replace blue colors
-	@sed -i '' 's/\^\[\[95m/<font color=\"magenta\">/g' $@           # Replace magenta colors
-	@sed -i '' 's/\^\[\[96m/<font color=\"#008b8b\">/g' $@           # Replace cyan colors
-	@sed -i '' 's/\^\[\[0m/<\/font>/g' $@                            # Replace closing codes for colors
+	@sed --in-place='' 's/\^\[\[1m/<font style=\"font-weight:bold;\">/g' $@  # Replace bold codes
+	@sed --in-place='' 's/\^\[\[22m/<\/font>/g' $@                           # Replace closing codes for bold
+	@sed --in-place='' 's/\^\[\[36m/<font color=\"#008b8b\">/g' $@           # Replace cyan colors
+	@sed --in-place='' 's/\^\[\[91m/<font color=\"red\">/g' $@               # Replace red colors
+	@sed --in-place='' 's/\^\[\[92m/<font color=\"green\">/g' $@             # Replace green colors
+	@sed --in-place='' 's/\^\[\[33m/<font color=\"#abb51f\">/g' $@
+	@sed --in-place='' 's/\^\[\[94m/<font color=\"blue\">/g' $@              # Replace blue colors
+	@sed --in-place='' 's/\^\[\[95m/<font color=\"magenta\">/g' $@           # Replace magenta colors
+	@sed --in-place='' 's/\^\[\[96m/<font color=\"#008b8b\">/g' $@           # Replace cyan colors
+	@sed --in-place='' 's/\^\[\[0m/<\/font>/g' $@                            # Replace closing codes for colors
 
-	@rm tmp_$@ tmp2_$@  # Remove temporary files
+	@rm -f tmp_$@ tmp2_$@ *.pdb # Remove temporary files
 
-%.tex: %.sh
+%.tex: %.sh permissions
 	@FORCE_COLOR=TRUE exec ./$< >> tmp_$@
-	@sed -i '' 's/^/  /g' tmp_$@                                # Add a 2-spacetab at the start of every line
+	@sed --in-place='' 's/^/  /g' tmp_$@                                # Add a 2-spacetab at the start of every line
 
 	@echo ".. only:: latex\n\n.. raw:: latex\n" > $@
 	@echo "  \\\\begin{sphinxVerbatim}[commandchars=\\\\\\\\\\\\{\\\\},fontsize=\\\\footnotesize]" >> $@
@@ -48,27 +48,27 @@ errors = 0
 	@cat -e tmp_$@ | sed 's/\$$//g' >> $@                       # Copy command output, strip non-print chars
 	@echo "  \\\\end{sphinxVerbatim}\n {} \n" >> $@
 
-	@sed -i '' 's/--/-{-}/g' $@                             # Preserve --
-	@sed -i '' 's/\^\[\[1m/\\textbf{/g' $@                 # Replace bold codes
-	@sed -i '' 's/\^\[\[22m/}/g' $@                        # Replace closing bold codes
-	@sed -i '' 's/\^\[\[36m/\\textcolor{cyan}{/g' $@       # Replace cyan colors
-	@sed -i '' 's/\^\[\[91m/\\textcolor{red}{/g' $@        # Replace red colors
-	@sed -i '' 's/\^\[\[92m/\\textcolor{olivegreen}{/g' $@ # Replace green colors
-	@sed -i '' 's/\^\[\[33m/\\textcolor{darkyellow}{/g' $@ # Replace dark yelow colors
-	@sed -i '' 's/\^\[\[94m/\\textcolor{blue}{/g' $@       # Replace blue colors
-	@sed -i '' 's/\^\[\[95m/\\textcolor{magenta}{/g' $@    # Replace magenta colors
-	@sed -i '' 's/\^\[\[96m/\\textcolor{cyan}{/g' $@       # Replace cyan colors
-	@sed -i '' 's/\^\[\[0m/}/g' $@                         # Replace closing codes for colors
+	@sed --in-place='' 's/--/-{-}/g' $@                             # Preserve --
+	@sed --in-place='' 's/\^\[\[1m/\\textbf{/g' $@                 # Replace bold codes
+	@sed --in-place='' 's/\^\[\[22m/}/g' $@                        # Replace closing bold codes
+	@sed --in-place='' 's/\^\[\[36m/\\textcolor{cyan}{/g' $@       # Replace cyan colors
+	@sed --in-place='' 's/\^\[\[91m/\\textcolor{red}{/g' $@        # Replace red colors
+	@sed --in-place='' 's/\^\[\[92m/\\textcolor{olivegreen}{/g' $@ # Replace green colors
+	@sed --in-place='' 's/\^\[\[33m/\\textcolor{darkyellow}{/g' $@ # Replace dark yelow colors
+	@sed --in-place='' 's/\^\[\[94m/\\textcolor{blue}{/g' $@       # Replace blue colors
+	@sed --in-place='' 's/\^\[\[95m/\\textcolor{magenta}{/g' $@    # Replace magenta colors
+	@sed --in-place='' 's/\^\[\[96m/\\textcolor{cyan}{/g' $@       # Replace cyan colors
+	@sed --in-place='' 's/\^\[\[0m/}/g' $@                         # Replace closing codes for colors
 
-	@rm tmp_$@  # Remove temporary files
+	@rm -f tmp_$@ *.pdb # Remove temporary files
 
 %.rst: %.html %.tex
 	@cat $? > $@
 	@rm $?
 
-test: build  ## Test the CLI output against the reference .txt files
+test: build permissions ## Test the CLI output against the reference .txt files
 	@for i in $(CLI); do \
-		echo "Testing $$i.sh" ; \
+		printf "Testing \033[1m$$i.sh\033[22m\n" ; \
 		exec ./$$i.sh | diff $$i.txt - ; \
 		return_value=$$? ; \
 	done
@@ -77,8 +77,7 @@ clean:
 	@rm -f *.txt *.tex *.html *.rst
 
 build: $(CLI_TXT) $(CLI_RST)  ## Build the CLI .txt outputs and documentation .rst
-	@echo 'Building CLI files'
-	@find . -size  0 -delete  # delete empty files
+	@printf '\033[92mCLI files built\033[0m\n'
 
 help:  ## Print this help message
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-15s\033[0m %s\n", $$1, $$2}'
