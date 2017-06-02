@@ -283,6 +283,10 @@ def add_energy_ramachandran(residue):
         (phi_1d, psi_1d,
          energy_2d) = energy_ramachandran_datasets['No classification']
         residue.ramachandran_dataset = 'No classification'
+    else:
+        residue.ramachandran_dataset = 'No classification'
+        residue.energy_ramachandran = 0.0
+        return None
 
     # Find the appropriate phi and psi angles for the residue.
     phi, psi = residue.ramachandran_angles
