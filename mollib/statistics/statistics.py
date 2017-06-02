@@ -122,7 +122,6 @@ class Statistics(object):
 
         identifier = None
         try:
-
             for count, identifier in it:
                 # Skip empty entries
                 if not identifier.strip():
