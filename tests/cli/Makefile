@@ -14,53 +14,53 @@ permissions: $(CLI_SRC)
 	@chmod u+x $?
 
 %.txt: %.sh permissions ## Process the text output of commands
-	@exec ./$< > $@  # export the text file
+	@./$< > $@  # export the text file
 
 %.html: %.sh permissions
 	@echo "$$ `cat $<`" > tmp_$@
-	@FORCE_COLOR=TRUE exec ./$< >> tmp_$@
+	@FORCE_COLOR=TRUE ./$< >> tmp_$@
 	@pygmentize -l shell-session -f html tmp_$@ | sed 's/^/    /g' >> tmp2_$@
 
 	@echo ".. only:: html\n\n.. raw:: html\n" > $@
 	@cat -e tmp2_$@ | sed 's/\$$$$//g'>> $@                            # Copy command output, strip non-print chars
 	@echo '\n' >> $@
 
-	@sed --in-place='' 's/\^\[\[1m/<font style=\"font-weight:bold;\">/g' $@  # Replace bold codes
-	@sed --in-place='' 's/\^\[\[22m/<\/font>/g' $@                           # Replace closing codes for bold
-	@sed --in-place='' 's/\^\[\[36m/<font color=\"#008b8b\">/g' $@           # Replace cyan colors
-	@sed --in-place='' 's/\^\[\[91m/<font color=\"red\">/g' $@               # Replace red colors
-	@sed --in-place='' 's/\^\[\[92m/<font color=\"green\">/g' $@             # Replace green colors
-	@sed --in-place='' 's/\^\[\[33m/<font color=\"#abb51f\">/g' $@
-	@sed --in-place='' 's/\^\[\[94m/<font color=\"blue\">/g' $@              # Replace blue colors
-	@sed --in-place='' 's/\^\[\[95m/<font color=\"magenta\">/g' $@           # Replace magenta colors
-	@sed --in-place='' 's/\^\[\[96m/<font color=\"#008b8b\">/g' $@           # Replace cyan colors
-	@sed --in-place='' 's/\^\[\[0m/<\/font>/g' $@                            # Replace closing codes for colors
+	@sed --in-place='.bak' 's/\^\[\[1m/<font style=\"font-weight:bold;\">/g' $@  # Replace bold codes
+	@sed --in-place='.bak' 's/\^\[\[22m/<\/font>/g' $@                           # Replace closing codes for bold
+	@sed --in-place='.bak' 's/\^\[\[36m/<font color=\"#008b8b\">/g' $@           # Replace cyan colors
+	@sed --in-place='.bak' 's/\^\[\[91m/<font color=\"red\">/g' $@               # Replace red colors
+	@sed --in-place='.bak' 's/\^\[\[92m/<font color=\"green\">/g' $@             # Replace green colors
+	@sed --in-place='.bak' 's/\^\[\[33m/<font color=\"#abb51f\">/g' $@
+	@sed --in-place='.bak' 's/\^\[\[94m/<font color=\"blue\">/g' $@              # Replace blue colors
+	@sed --in-place='.bak' 's/\^\[\[95m/<font color=\"magenta\">/g' $@           # Replace magenta colors
+	@sed --in-place='.bak' 's/\^\[\[96m/<font color=\"#008b8b\">/g' $@           # Replace cyan colors
+	@sed --in-place='.bak' 's/\^\[\[0m/<\/font>/g' $@                            # Replace closing codes for colors
 
-	@rm -f tmp_$@ tmp2_$@ *.pdb # Remove temporary files
+	@rm -f tmp_$@ tmp2_$@ *.bak *.pdb  # Remove temporary files
 
 %.tex: %.sh permissions
-	@FORCE_COLOR=TRUE exec ./$< >> tmp_$@
-	@sed --in-place='' 's/^/  /g' tmp_$@                                # Add a 2-spacetab at the start of every line
+	@FORCE_COLOR=TRUE ./$< >> tmp_$@
+	@sed --in-place='.bak' 's/^/  /g' tmp_$@                                # Add a 2-spacetab at the start of every line
 
 	@echo ".. only:: latex\n\n.. raw:: latex\n" > $@
 	@echo "  \\\\begin{sphinxVerbatim}[commandchars=\\\\\\\\\\\\{\\\\},fontsize=\\\\footnotesize]" >> $@
 	@echo "  \\\\textcolor{darkorange}{$$} `cat $<`" >> $@
-	@cat -e tmp_$@ | sed 's/\$$//g' >> $@                       # Copy command output, strip non-print chars
+	@cat -e tmp_$@ | sed 's/\$$$$//g' >> $@                       # Copy command output, strip non-print chars
 	@echo "  \\\\end{sphinxVerbatim}\n {} \n" >> $@
 
-	@sed --in-place='' 's/--/-{-}/g' $@                             # Preserve --
-	@sed --in-place='' 's/\^\[\[1m/\\textbf{/g' $@                 # Replace bold codes
-	@sed --in-place='' 's/\^\[\[22m/}/g' $@                        # Replace closing bold codes
-	@sed --in-place='' 's/\^\[\[36m/\\textcolor{cyan}{/g' $@       # Replace cyan colors
-	@sed --in-place='' 's/\^\[\[91m/\\textcolor{red}{/g' $@        # Replace red colors
-	@sed --in-place='' 's/\^\[\[92m/\\textcolor{olivegreen}{/g' $@ # Replace green colors
-	@sed --in-place='' 's/\^\[\[33m/\\textcolor{darkyellow}{/g' $@ # Replace dark yelow colors
-	@sed --in-place='' 's/\^\[\[94m/\\textcolor{blue}{/g' $@       # Replace blue colors
-	@sed --in-place='' 's/\^\[\[95m/\\textcolor{magenta}{/g' $@    # Replace magenta colors
-	@sed --in-place='' 's/\^\[\[96m/\\textcolor{cyan}{/g' $@       # Replace cyan colors
-	@sed --in-place='' 's/\^\[\[0m/}/g' $@                         # Replace closing codes for colors
+	@sed --in-place='.bak' 's/--/-{-}/g' $@                             # Preserve --
+	@sed --in-place='.bak' 's/\^\[\[1m/\\textbf{/g' $@                 # Replace bold codes
+	@sed --in-place='.bak' 's/\^\[\[22m/}/g' $@                        # Replace closing bold codes
+	@sed --in-place='.bak' 's/\^\[\[36m/\\textcolor{cyan}{/g' $@       # Replace cyan colors
+	@sed --in-place='.bak' 's/\^\[\[91m/\\textcolor{red}{/g' $@        # Replace red colors
+	@sed --in-place='.bak' 's/\^\[\[92m/\\textcolor{olivegreen}{/g' $@ # Replace green colors
+	@sed --in-place='.bak' 's/\^\[\[33m/\\textcolor{darkyellow}{/g' $@ # Replace dark yelow colors
+	@sed --in-place='.bak' 's/\^\[\[94m/\\textcolor{blue}{/g' $@       # Replace blue colors
+	@sed --in-place='.bak' 's/\^\[\[95m/\\textcolor{magenta}{/g' $@    # Replace magenta colors
+	@sed --in-place='.bak' 's/\^\[\[96m/\\textcolor{cyan}{/g' $@       # Replace cyan colors
+	@sed --in-place='.bak' 's/\^\[\[0m/}/g' $@                         # Replace closing codes for colors
 
-	@rm -f tmp_$@ *.pdb # Remove temporary files
+	@rm -f tmp_$@ *.bak *.pdb # Remove temporary files
 
 %.rst: %.html %.tex
 	@cat $? > $@
@@ -69,7 +69,7 @@ permissions: $(CLI_SRC)
 test: build permissions ## Test the CLI output against the reference .txt files
 	@for i in $(CLI); do \
 		printf "Testing \033[1m$$i.sh\033[22m\n" ; \
-		exec ./$$i.sh | diff $$i.txt - ; \
+		./$$i.sh | diff $$i.txt - ; \
 		return_value=$$? ; \
 	done
 
