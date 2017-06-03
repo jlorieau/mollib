@@ -1,0 +1,7 @@
+Installed settings sections:
+	[settings]
+	[utils.settings]
+	[hydrogens.settings]
+	[hbonds.settings]
+	[statistics.settings]
+	[pa.settings]

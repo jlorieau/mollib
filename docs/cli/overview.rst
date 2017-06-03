@@ -35,7 +35,7 @@ through the ``mollib`` or ``ml`` commands.
     Display a list of the settings sections that will be interpreted from
     configuration files.
 
-    .. include:: output/ml_list-settings.rst
+    .. include:: cmds/ml_list_settings.rst
 
 .. _configuration-files:
 

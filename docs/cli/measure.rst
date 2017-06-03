@@ -6,7 +6,7 @@ The ``measure`` command is used for measuring geometries in molecules.
 All of the options and preprocessors available from the :ref:`process-command`
 are also available.
 
-.. include:: output/ml_measure_help.rst
+.. include:: cmds/ml_measure_help.rst
 
 Arguments
 ---------
@@ -139,13 +139,13 @@ Measure :math:`\alpha`-helical HA-H distances in chain 'A' for
 residues 23-49 of 2MUV, the homotetrametic influenza M2 channel. Include
 statistics on the measured distances.
 
-.. include:: output/ml_measure_i_2MUV_d_23:49.HA_23:49.H_only-delta_3_stats.rst
+.. include:: cmds/ml_measure_2muv_1.rst
 
 Measure CA-CA distances between residue 20-21 for chains 'A', 'B', 'C'
 and 'D' of 2MUV--excluding same residue distances and same chain
 distances.
 
-.. include:: output/ml_measure_i_2MUV_d_A:D.20:21.CA_A:D.20:21.CA_exclude-intra_exclude-intra-chain.rst
+.. include:: cmds/ml_measure_2muv_2.rst
 
 Compare the distance between the HA of residue 5 and the H of residue
 21 for two different structures, 2KXA and 2LWA. The 2KXA structure
@@ -155,7 +155,7 @@ promixity. The 2LWA structure represents the conformational ensemble
 of the HAfp-G8A mutant with a closed structure (chain 'A'), a
 semi-closed structure (chain 'B') and an open structure (chain 'C').
 
-.. include:: output/ml_measure_i_2KXA_2LWA_d_A:C.5.HA_A:C.21.H_only-intra-chain.rst
+.. include:: cmds/ml_measure_2kxa_1.rst
 
 Measuring Angles
 ~~~~~~~~~~~~~~~~
@@ -163,7 +163,7 @@ Measuring Angles
 Measure the angle of the bonded 'C-1'--'N'--'H' atoms for residues
 20-30 from the ubiquitin structure 2MJB.
 
-.. include:: output/ml_measure_i_2MJB_a_20:30.C_20:30.N_20:30.H_only-bonded.rst
+.. include:: cmds/ml_measure_2mjb_1.rst
 
 Measuring Dihedrals
 ~~~~~~~~~~~~~~~~~~~
@@ -171,7 +171,7 @@ Measuring Dihedrals
 The following example measures the :math:`\phi` angle for residues 2-6 of the
 hemagglutinin fusion peptide domain (2KXA).
 
-.. include:: output/ml_measure_i_2KXA_dih_2:6.C_2:6.N_2:6.CA_2:6.C_only-bonded_stats.rst
+.. include:: cmds/ml_measure_2kxa_2.rst
 
 Ramachandran Angles
 ~~~~~~~~~~~~~~~~~~~
@@ -179,7 +179,7 @@ Ramachandran Angles
 Measure the Ramachandran :math:`\phi` and :math:`\psi` angles for the
 hemagglutinin fusion peptide structure 2KXA.
 
-.. include:: output/ml_measure_i_2KXA_rama.rst
+.. include:: cmds/ml_measure_2kxa_3.rst
 
 Approach to Secondary Structure Assignments
 -------------------------------------------
@@ -277,7 +277,7 @@ The energy is zero when a set of dihedrals angles is optimal for a given type
 of secondary structure classification. The following are the energy plots for
 each secondary structure classification.
 
-.. image:: img/ramachandran_countour_1_lowres.png
-.. image:: img/ramachandran_countour_2_lowres.png
-.. image:: img/ramachandran_countour_3_lowres.png
-.. image:: img/ramachandran_countour_4_lowres.png
+.. image:: img/rama/ramachandran_countour_1_lowres.png
+.. image:: img/rama/ramachandran_countour_2_lowres.png
+.. image:: img/rama/ramachandran_countour_3_lowres.png
+.. image:: img/rama/ramachandran_countour_4_lowres.png

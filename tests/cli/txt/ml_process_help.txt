@@ -1,0 +1,15 @@
+usage: mollib process [-h] -i id/filename [id/filename ...] [-c filename] [-l]
+                      [-s] [-o [filename [filename ...]]] [--hydrogenate]
+
+arguments:
+  -h, --help            show this help message and exit
+  -i id/filename [id/filename ...], --in id/filename [id/filename ...]
+                        (required) The filename(s) or PDB identifier(s) of the
+                        structure(s)
+  -c filename, --config filename
+                        The configuration filename
+  -l                    List details on the molecule(s)
+  -s, --save            Save fetched files to the local directory.
+  -o [filename [filename ...]], --out [filename [filename ...]]
+                        The output filename(s) for the structure(s)
+  --hydrogenate         Strip hydrogens and re-add them before analysis

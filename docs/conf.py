@@ -93,7 +93,7 @@ language = None
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 # This patterns also effect to html_static_path and html_extra_path
-exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
+exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store', 'cli/cmds']
 
 # The reST default role (used for this markup: `text`) to use for all
 # documents.
@@ -478,21 +478,21 @@ def process_cmd(string):
 
 if 'cli' in sys.argv:
     process_cmd("make help")
+    #
+    # process_cmd("ml --help")
+    # process_cmd("ml --list-plugins")
+    # process_cmd("ml --list-settings")
+    #
+    # process_cmd("ml process --help")
+    # process_cmd("ml process -i 1UBQ -o 1UBQ_H.pdb --hydrogenate")
 
-    process_cmd("ml --help")
-    process_cmd("ml --list-plugins")
-    process_cmd("ml --list-settings")
-
-    process_cmd("ml process --help")
-    process_cmd("ml process -i 1UBQ -o 1UBQ_H.pdb --hydrogenate")
-
-    process_cmd("ml measure --help")
-    process_cmd("ml measure -i 2MUV -d A:D.20:21.CA A:D.20:21.CA --exclude-intra --exclude-intra-chain")
-    process_cmd("ml measure -i 2MUV -d 23:49.HA 23:49.H --only-delta 3 --stats")
-    process_cmd("ml measure -i 2KXA 2LWA -d A:C.5.HA A:C.21.H --only-intra-chain")
-    process_cmd("ml measure -i 2MJB -a 20:30.C 20:30.N 20:30.H --only-bonded")
-    process_cmd("ml measure -i 2KXA -dih 2:6.C 2:6.N 2:6.CA 2:6.C --only-bonded --stats")
-    process_cmd("ml measure -i 2KXA --rama")
+    # process_cmd("ml measure --help")
+    # process_cmd("ml measure -i 2MUV -d A:D.20:21.CA A:D.20:21.CA --exclude-intra --exclude-intra-chain")
+    # process_cmd("ml measure -i 2MUV -d 23:49.HA 23:49.H --only-delta 3 --stats")
+    # process_cmd("ml measure -i 2KXA 2LWA -d A:C.5.HA A:C.21.H --only-intra-chain")
+    # process_cmd("ml measure -i 2MJB -a 20:30.C 20:30.N 20:30.H --only-bonded")
+    # process_cmd("ml measure -i 2KXA -dih 2:6.C 2:6.N 2:6.CA 2:6.C --only-bonded --stats")
+    # process_cmd("ml measure -i 2KXA --rama")
 
     process_cmd("ml hbonds --help")
     process_cmd("ml hbonds -i 2KXA")

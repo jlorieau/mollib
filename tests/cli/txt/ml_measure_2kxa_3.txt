@@ -1,0 +1,29 @@
+Table: Ramachandran angles for 2KXA
+
+Residue  Phi (deg)  Psi (deg)  Classification  Minor   E (kT) / Prob.  
+-------- ---------- ---------- --------------- ------- ----------------
+A.G1        0.0     -179.9                             0.0 / 100.0%    
+A.L2      -61.0      -45.6     alpha-helix     N-term  1.1 / 31.9%     
+A.F3      -65.2      -48.3     alpha-helix             1.7 / 18.4%     
+A.G4      -57.2      -32.3     alpha-helix             1.9 / 15.4%     
+A.A5      -68.4      -45.0     alpha-helix             0.7 / 51.0%     
+A.I6      -61.7      -51.1     alpha-helix             2.5 /  8.1%     
+A.A7      -66.7      -42.8     alpha-helix             0.7 / 51.0%     
+A.G8      -63.4      -34.5     alpha-helix             1.4 / 23.5%     
+A.F9      -65.4      -44.3     alpha-helix             0.7 / 51.0%     
+A.I10     -65.1      -28.7     alpha-helix             3.4 /  3.4%     
+A.E11     -92.2      -47.2     alpha-helix             7.5 /  0.1%     
+A.G12    -111.9       28.0     alpha-helix     C-term  5.1 /  0.6%     
+A.G13      44.9     -146.5                             7.2 /  0.1%     
+A.W14     -49.7      -61.9     alpha-helix     N-term  5.7 /  0.3%     
+A.T15     -49.6      -32.2     alpha-helix             8.4 /  0.0%     
+A.G16     -69.5      -37.4     alpha-helix             0.9 / 38.9%     
+A.M17     -58.3      -46.5     alpha-helix             0.8 / 45.5%     
+A.I18     -62.6      -49.1     alpha-helix             0.6 / 54.7%     
+A.D19     -55.5      -45.6     alpha-helix             0.8 / 45.5%     
+A.G20     -65.7      -34.8     alpha-helix             1.7 / 17.7%     
+A.W21     -62.9      -48.0     alpha-helix             0.6 / 54.7%     
+A.Y22     -77.6      -33.0     alpha-helix     C-term  2.9 /  5.3%     
+A.G23      74.3      -87.9                             6.7 /  0.1%     
+A.S24     -56.7        0.0                             0.0 / 100.0%    
+
