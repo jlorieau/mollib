@@ -1,23 +1,28 @@
 .PHONY: build clean test permissions
 .DEFAULT_GOAL := build
 
+TXT_DIR = txt
+RST_DIR = rst
+
 CLI_SRC := $(wildcard *.sh)
-CLI_TXT := $(CLI_SRC:.sh=.txt)
+CLI_TXT := $(CLI_SRC:%.sh=$(TXT_DIR)/%.txt)
 CLI_HTML := $(CLI_SRC:.sh=.html)
 CLI_TEX := $(CLI_SRC:.sh=.tex)
-CLI_RST := $(CLI_SRC:.sh=.rst)
+CLI_RST := $(CLI_SRC:%.sh=$(RST_DIR)/%.rst)
 CLI := $(CLI_SRC:.sh=)
+
 
 errors = 0
 
-permissions: $(CLI_SRC)
-	@chmod u+x $?
-
-%.txt: %.sh permissions ## Process the text output of commands
+$(TXT_DIR)/%.txt: %.sh ## Process the text output of commands
+	@chmod u+x ./$<
 	@./$< > $@  # export the text file
 
-%.html: %.sh permissions
+	@rm -f *.pdb
+
+%.html: %.sh
 	@echo "$$ `cat $<`" > tmp_$@
+	@chmod u+x ./$<
 	@FORCE_COLOR=TRUE ./$< >> tmp_$@
 	@pygmentize -l shell-session -f html tmp_$@ | sed 's/^/    /g' >> tmp2_$@
 
@@ -25,22 +30,23 @@ permissions: $(CLI_SRC)
 	@cat -e tmp2_$@ | sed 's/\$$$$//g'>> $@                            # Copy command output, strip non-print chars
 	@echo '\n' >> $@
 
-	@sed --in-place='.bak' 's/\^\[\[1m/<font style=\"font-weight:bold;\">/g' $@  # Replace bold codes
-	@sed --in-place='.bak' 's/\^\[\[22m/<\/font>/g' $@                           # Replace closing codes for bold
-	@sed --in-place='.bak' 's/\^\[\[36m/<font color=\"#008b8b\">/g' $@           # Replace cyan colors
-	@sed --in-place='.bak' 's/\^\[\[91m/<font color=\"red\">/g' $@               # Replace red colors
-	@sed --in-place='.bak' 's/\^\[\[92m/<font color=\"green\">/g' $@             # Replace green colors
-	@sed --in-place='.bak' 's/\^\[\[33m/<font color=\"#abb51f\">/g' $@
-	@sed --in-place='.bak' 's/\^\[\[94m/<font color=\"blue\">/g' $@              # Replace blue colors
-	@sed --in-place='.bak' 's/\^\[\[95m/<font color=\"magenta\">/g' $@           # Replace magenta colors
-	@sed --in-place='.bak' 's/\^\[\[96m/<font color=\"#008b8b\">/g' $@           # Replace cyan colors
-	@sed --in-place='.bak' 's/\^\[\[0m/<\/font>/g' $@                            # Replace closing codes for colors
+	@sed -i'.bak' 's/\^\[\[1m/<font style=\"font-weight:bold;\">/g' $@  # Replace bold codes
+	@sed -i'.bak' 's/\^\[\[22m/<\/font>/g' $@                           # Replace closing codes for bold
+	@sed -i'.bak' 's/\^\[\[36m/<font color=\"#008b8b\">/g' $@           # Replace cyan colors
+	@sed -i'.bak' 's/\^\[\[91m/<font color=\"red\">/g' $@               # Replace red colors
+	@sed -i'.bak' 's/\^\[\[92m/<font color=\"green\">/g' $@             # Replace green colors
+	@sed -i'.bak' 's/\^\[\[33m/<font color=\"#abb51f\">/g' $@
+	@sed -i'.bak' 's/\^\[\[94m/<font color=\"blue\">/g' $@              # Replace blue colors
+	@sed -i'.bak' 's/\^\[\[95m/<font color=\"magenta\">/g' $@           # Replace magenta colors
+	@sed -i'.bak' 's/\^\[\[96m/<font color=\"#008b8b\">/g' $@           # Replace cyan colors
+	@sed -i'.bak' 's/\^\[\[0m/<\/font>/g' $@                            # Replace closing codes for colors
 
 	@rm -f tmp_$@ tmp2_$@ *.bak *.pdb  # Remove temporary files
 
-%.tex: %.sh permissions
+%.tex: %.sh
+	@chmod u+x ./$<
 	@FORCE_COLOR=TRUE ./$< >> tmp_$@
-	@sed --in-place='.bak' 's/^/  /g' tmp_$@                                # Add a 2-spacetab at the start of every line
+	@sed -i'.bak' 's/^/  /g' tmp_$@                                # Add a 2-spacetab at the start of every line
 
 	@echo ".. only:: latex\n\n.. raw:: latex\n" > $@
 	@echo "  \\\\begin{sphinxVerbatim}[commandchars=\\\\\\\\\\\\{\\\\},fontsize=\\\\footnotesize]" >> $@
@@ -48,33 +54,39 @@ permissions: $(CLI_SRC)
 	@cat -e tmp_$@ | sed 's/\$$$$//g' >> $@                       # Copy command output, strip non-print chars
 	@echo "  \\\\end{sphinxVerbatim}\n {} \n" >> $@
 
-	@sed --in-place='.bak' 's/--/-{-}/g' $@                             # Preserve --
-	@sed --in-place='.bak' 's/\^\[\[1m/\\textbf{/g' $@                 # Replace bold codes
-	@sed --in-place='.bak' 's/\^\[\[22m/}/g' $@                        # Replace closing bold codes
-	@sed --in-place='.bak' 's/\^\[\[36m/\\textcolor{cyan}{/g' $@       # Replace cyan colors
-	@sed --in-place='.bak' 's/\^\[\[91m/\\textcolor{red}{/g' $@        # Replace red colors
-	@sed --in-place='.bak' 's/\^\[\[92m/\\textcolor{olivegreen}{/g' $@ # Replace green colors
-	@sed --in-place='.bak' 's/\^\[\[33m/\\textcolor{darkyellow}{/g' $@ # Replace dark yelow colors
-	@sed --in-place='.bak' 's/\^\[\[94m/\\textcolor{blue}{/g' $@       # Replace blue colors
-	@sed --in-place='.bak' 's/\^\[\[95m/\\textcolor{magenta}{/g' $@    # Replace magenta colors
-	@sed --in-place='.bak' 's/\^\[\[96m/\\textcolor{cyan}{/g' $@       # Replace cyan colors
-	@sed --in-place='.bak' 's/\^\[\[0m/}/g' $@                         # Replace closing codes for colors
+	@sed -i'.bak' 's/--/-{-}/g' $@                             # Preserve --
+	@sed -i'.bak' 's/\^\[\[1m/\\textbf{/g' $@                 # Replace bold codes
+	@sed -i'.bak' 's/\^\[\[22m/}/g' $@                        # Replace closing bold codes
+	@sed -i'.bak' 's/\^\[\[36m/\\textcolor{cyan}{/g' $@       # Replace cyan colors
+	@sed -i'.bak' 's/\^\[\[91m/\\textcolor{red}{/g' $@        # Replace red colors
+	@sed -i'.bak' 's/\^\[\[92m/\\textcolor{olivegreen}{/g' $@ # Replace green colors
+	@sed -i'.bak' 's/\^\[\[33m/\\textcolor{darkyellow}{/g' $@ # Replace dark yelow colors
+	@sed -i'.bak' 's/\^\[\[94m/\\textcolor{blue}{/g' $@       # Replace blue colors
+	@sed -i'.bak' 's/\^\[\[95m/\\textcolor{magenta}{/g' $@    # Replace magenta colors
+	@sed -i'.bak' 's/\^\[\[96m/\\textcolor{cyan}{/g' $@       # Replace cyan colors
+	@sed -i'.bak' 's/\^\[\[0m/}/g' $@                         # Replace closing codes for colors
 
 	@rm -f tmp_$@ *.bak *.pdb # Remove temporary files
 
-%.rst: %.html %.tex
+$(RST_DIR)/%.rst: %.html %.tex
 	@cat $? > $@
 	@rm $?
 
-test: build permissions ## Test the CLI output against the reference .txt files
+test: build ## Test the CLI output against the reference .txt files
 	@for i in $(CLI); do \
 		printf "Testing \033[1m$$i.sh\033[22m\n" ; \
-		./$$i.sh | diff $$i.txt - ; \
+		chmod u+x ./$$i.sh ; \
+		./$$i.sh | diff txt/$$i.txt - ; \
 		return_value=$$? ; \
 	done
+	@rm -f *.pdb
 
-clean:
-	@rm -f *.txt *.tex *.html *.rst
+clean:  ## Clean the output files
+	@find . -name '*.txt' -exec rm -f {} +
+	@find . -name '*.tex' -exec rm -f {} +
+	@find . -name '*.html' -exec rm -f {} +
+	@find . -name '*.rst' -exec rm -f {} +
+	@find . -name '*.pdb' -exec rm -f {} +
 
 build: $(CLI_TXT) $(CLI_RST)  ## Build the CLI .txt outputs and documentation .rst
 	@printf '\033[92mCLI files built\033[0m\n'
