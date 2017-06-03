@@ -47,7 +47,7 @@ def get_or_fetch(identifier, extensions=None, urls=None, load_cached=True,
     >>> temp_path is not None
     True
     >>> # Try to retrieve a file that doesn't exist. None is returned.
-    >>> temp_path = get_or_fetch('21312', 'html', 'http://www.glg222.com/',
+    >>> temp_path = get_or_fetch('21312', 'html', 'http://www.google.com/',
     ...                          critical=False)
     >>> temp_path is None
     True
