@@ -364,7 +364,7 @@ def find_hbond_partners(molecule, donor1_elements=None, donor2_elements=None,
     >>> print(len(hbonds))
     21
     >>> print(hbonds[0].short_repr())
-    Hbond don.(A.G1.H2--N) - acc.(A.G20.O--C)
+    Hbond don.(A.G1.H2--N) - acc.(A.W21.O--C)
     """
     #: TODO: Implement a cache checking and force option like 'add_hydrogens'
 

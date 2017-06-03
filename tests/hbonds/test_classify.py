@@ -48,7 +48,7 @@ class TestHbondClassify(unittest.TestCase):
             '2KXA': convert_dssp(' HHHHHHHHHHH HHHHHHHHH  '),
 
             # Ubiquitin crystal structure
-            '1UBQ': convert_dssp(' EEEEEEaa EEEEEE  aa  HHHHHHHHHHHH   aa '
+            '1UBQ': convert_dssp(' EEEEEEaa EEEEEE  aa  HHHHHHHHHHHH   aaa'
                                  'EEEEEbb EEEaa  GGGG   ccEEEEEEE     ')
                       }
 
