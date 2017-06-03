@@ -31,7 +31,7 @@ hbond_distance_cutoff = {'d1a1': (1.5, 2.5),
 
 #: The cutoff angle ranges (in degrees) between atoms to be considered a
 #: hydrogen bond.
-hbond_angle_cutoff = {'theta': (90., 180.),
+hbond_angle_cutoff = {'theta': (105., 180.),
                        'phi': (-180., 180.)
                       }
 
