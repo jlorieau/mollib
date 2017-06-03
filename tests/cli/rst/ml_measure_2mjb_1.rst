@@ -2,7 +2,7 @@
 
 .. raw:: html
 
-    <div class="highlight"><pre><span></span><span class="gp">$</span> ml measure -i 2MJB -a <span class="m">20</span>:30.C <span class="m">20</span>:30.N <span class="m">20</span>:30.H --only-bonded
+    <div class="highlight"><pre><span></span><span class="gp">$</span> ml measure -i 2MJB -a 20:30.C 20:30.N 20:30.H --only-bonded
     <span class="go"><font style="font-weight:bold;">Table: </font>Angles for 2MJB</span>
     
     <span class="go"><font style="font-weight:bold;">Num</font>  <font style="font-weight:bold;">Atom 1</font>   <font style="font-weight:bold;">Atom 2</font>   <font style="font-weight:bold;">Atom 3</font>   <font style="font-weight:bold;">Angle (deg)</font>  </span>

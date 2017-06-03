@@ -6,6 +6,6 @@ Num  Atom 1  Atom 2  Atom 3   Atom 4  Dihedral (deg)
 2    A.F3.C  A.G4.N  A.G4.CA  A.G4.C  -57.2           
 3    A.G4.C  A.A5.N  A.A5.CA  A.A5.C  -68.4           
 4    A.A5.C  A.I6.N  A.I6.CA  A.I6.C  -61.7           
-                                      ------------    
-                                      -63.0 ± 4.0    
+                                      -----------     
+                                      -63.0 ± 4.0     
 
