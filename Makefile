@@ -26,13 +26,15 @@ test-all: clean test-cli  ## Test the package with multiple python environments 
 develop: inplace  ## Prepare the package for active development
 	$(PYTHON) setup.py develop
 
-clean:  ## Clean compiled package files, docs and test files
+clean:  ## Safely clean compiled package files, docs and test files
 	find . -name '*.pyc' -exec rm -f {} +
 	find . -name '*.pyo' -exec rm -f {} +
 	find . -name __pycache__ -type d -exec rm -rf {} +
 	find . -name '*~' -exec rm -f {} +
 	find . -name '*.so' -exec rm -f {} +
 	find analysis/ -name '*.txt' -exec rm -f {} +
+	find analysis/ -name '*.svg' -exec rm -f {} +
+	find analysis/ -name '*.png' -exec rm -f {} +
 	rm -rf .tox
 	$(MAKE) -C docs clean
 
