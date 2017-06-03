@@ -129,7 +129,7 @@ for row, subfigure_labels in enumerate(subfigure_groups, 1):
                                fontname=title_font)
 
         # Set the x-axis label
-        axarr[count].set_xlabel(r'$d_{H...O}$ (A)', fontsize=axes_fontsize,
+        axarr[count].set_xlabel(r'$d_{H...O}$ ($\AA$)', fontsize=axes_fontsize,
                                 fontname=axes_font)
 
         # Set the x-axis ticks
@@ -202,7 +202,7 @@ for row, subfigure_labels in enumerate(subfigure_groups, 1):
                                fontname=title_font)
 
         # Set the x-axis label
-        axarr[count].set_xlabel(r'$d_{H...O}$ (A)', fontsize=axes_fontsize,
+        axarr[count].set_xlabel(r'$d_{H...O}$ ($\AA$)', fontsize=axes_fontsize,
                                 fontname=axes_font)
 
         # Set the x-axis ticks
