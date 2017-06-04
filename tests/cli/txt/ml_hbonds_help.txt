@@ -1,0 +1,19 @@
+usage: mollib hbonds [-h] -i id/filename [id/filename ...] [-c filename] [-l]
+                     [-s] [--hydrogenate] [--aliphatic] [--detailed]
+                     [--sort-type]
+
+arguments:
+  -h, --help            show this help message and exit
+  -i id/filename [id/filename ...], --in id/filename [id/filename ...]
+                        (required) The filename(s) or PDB identifier(s) of the
+                        structure(s)
+  -c filename, --config filename
+                        The configuration filename
+  -l                    List details on the molecule(s)
+  -s, --save            Save fetched files to the local directory.
+  --hydrogenate         Strip hydrogens and re-add them before analysis
+
+hbond options:
+  --aliphatic           Includes aliphatic hydrogen bonds
+  --detailed            Report detailed information on hydrogen bonds.
+  --sort-type           Sort hydrogen bonds by type

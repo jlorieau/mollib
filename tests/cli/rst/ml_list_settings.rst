@@ -2,7 +2,7 @@
 
 .. raw:: html
 
-    <div class="highlight"><pre><span></span><span class="gp">$</span> ml --list-settings
+    <div class="highlight"><pre><span></span><span class="gp">$</span>  ml --list-settings
     <span class="go">Installed settings sections:</span>
     <span class="go">	[settings]</span>
     <span class="go">	[utils.settings]</span>
@@ -18,7 +18,7 @@
 .. raw:: latex
 
   \begin{sphinxVerbatim}[commandchars=\\\{\},fontsize=\footnotesize]
-  \textcolor{darkorange}{$} ml -{-}list-settings
+  \textcolor{darkorange}{$}  ml -{-}list-settings
   Installed settings sections:
   	[settings]
   	[utils.settings]

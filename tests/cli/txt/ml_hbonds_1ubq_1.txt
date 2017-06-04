@@ -1,0 +1,15 @@
+Table: Hydrogen bond listing for 1UBQ
+
+Num  Donor            Acceptor       Classification                    E (kT) / Prob.  
+---- ---------------- -------------- --------------------------------- ----------------
+1    A.M1.H2--N       A.V17.O--C     bb-bb amide (isolated)            6.2 /  0.2%     
+2    A.I3.H--N        A.L15.O--C     bb-bb amide (sheet)               2.0 / 13.8%     
+3    A.F4.H--N        A.S65.O--C     bb-bb amide (sheet)               1.3 / 27.3%     
+4    A.V5.H--N        A.I13.O--C     bb-bb amide (sheet)               0.2 / 81.8%     
+5    A.K6.H--N        A.L67.O--C     bb-bb amide (sheet)               1.2 / 30.0%     
+6    A.T7.H--N        A.K11.O--C     bb-bb amide (sheet)               2.9 /  5.6%     
+7    A.T9.H--N        A.T7.OG1--CB   bb-sc amide (isolated)            1.0 / 36.3%     
+8    A.G10.H--N       A.T7.O--C      bb-bb amide (type I turn)         3.3 /  3.7%     
+9    A.I13.H--N       A.V5.O--C      bb-bb amide (sheet)               2.8 /  5.8%     
+10   A.L15.H--N       A.I3.O--C      bb-bb amide (sheet)               2.1 / 12.4%     
+11   A.V17.H--N       A.M1.O--C      bb-bb amide (isolated)            1.8 / 16.7%     

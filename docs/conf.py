@@ -79,7 +79,7 @@ release = __version__
 #
 # This is also used if you do content translation via gettext catalogs.
 # Usually you set "language" from the command line for these cases.
-language = None
+# language = None
 
 # There are two options for replacing |today|: either, you set today to some
 # non-false value, then it is used:
@@ -494,15 +494,15 @@ if 'cli' in sys.argv:
     # process_cmd("ml measure -i 2KXA -dih 2:6.C 2:6.N 2:6.CA 2:6.C --only-bonded --stats")
     # process_cmd("ml measure -i 2KXA --rama")
 
-    process_cmd("ml hbonds --help")
-    process_cmd("ml hbonds -i 2KXA")
-    process_cmd("ml hbonds -i 1UBQ --hydrogenate|head -n15")
+    # process_cmd("ml hbonds --help")
+    # process_cmd("ml hbonds -i 2KXA")
+    # process_cmd("ml hbonds -i 1UBQ --hydrogenate|head -n15")
 
-    process_cmd("ml pa --help")
-    process_cmd("ml pa -i 2KXA -a 2KXA")
-    process_cmd("ml pa -i 2MJB -a 2MJB --set 0 --fix-outliers --project-methyls --summary")
-    process_cmd("ml pa -i 2MJB -a 2MJB --set 0 --exclude CE-HE CD-HD CE-SD --fix-outliers --project-methyls --summary")
-    process_cmd("ml pa -i 1UBQ -a 2MJB --set 0 --fix-outliers --project-methyls --hydrogenate --summary")
+    # process_cmd("ml pa --help")
+    # process_cmd("ml pa -i 2KXA -a 2KXA")
+    # process_cmd("ml pa -i 2MJB -a 2MJB --set 0 --fix-outliers --project-methyls --summary")
+    # process_cmd("ml pa -i 2MJB -a 2MJB --set 0 --exclude CE-HE CD-HD CE-SD --fix-outliers --project-methyls --summary")
+    # process_cmd("ml pa -i 1UBQ -a 2MJB --set 0 --fix-outliers --project-methyls --hydrogenate --summary")
 
     # cleanup
     os.system("rm ../1UBQ_H.pdb")

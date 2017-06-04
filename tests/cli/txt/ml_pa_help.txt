@@ -1,0 +1,47 @@
+usage: mollib pa [-h] -i id/filename [id/filename ...] [-c filename] [-l] [-s]
+                 [--hydrogenate] -a id/filename [id/filename ...]
+                 [-o filename] [-p filename] [--summary] [--set id]
+                 [--exclude [interaction-type [interaction-type ...]]]
+                 [--project-methyls] [--methyl-scale number]
+                 [--fix-sign | --nofix-sign]
+                 [--fix-nh-scale | --nofix-nh-scale]
+                 [--fix-outliers | --nofix-outliers]
+
+arguments:
+  -h, --help            show this help message and exit
+  -i id/filename [id/filename ...], --in id/filename [id/filename ...]
+                        (required) The filename(s) or PDB identifier(s) of the
+                        structure(s)
+  -c filename, --config filename
+                        The configuration filename
+  -l                    List details on the molecule(s)
+  -s, --save            Save fetched files to the local directory.
+  --hydrogenate         Strip hydrogens and re-add them before analysis
+  -a id/filename [id/filename ...], --alignment id/filename [id/filename ...]
+                        (required) Alignment file or identifier with RDC and
+                        RACS data
+  -o filename, --out filename
+                        The output filename for the reports of the fit data.
+  -p filename, --pred filename
+                        The output filename for the report of the back-
+                        calculated RDCs and RACSs that are not in the
+                        experimental data.
+  --summary             Only display the fit summary
+  --set id              If multiple datasets are available, this option
+                        specifies which dataset to use.
+  --exclude [interaction-type [interaction-type ...]]
+                        Exclude one or more interactions of the following
+                        type(s). ex: N-H or CE-HE
+  --project-methyls     Fit methyl RDCs by projecting their values on the
+                        corresponding C-C bond, as used by Xplor-NIH
+  --methyl-scale number
+                        The order parameter to use in scaling the methyl RDCs.
+
+fixer arguments:
+  --fix-sign            Check and fix mistakes in RDC and RACS sign
+  --nofix-sign          Disable check in RDC and RACS sign
+  --fix-nh-scale        Check and rescale couplings that were scaled to the
+                        N-H RDC.
+  --nofix-nh-scale      Disable N-H rescaling of couplings.
+  --fix-outliers        Fit without outliers
+  --nofix-outliers      Disable fitting without outliers

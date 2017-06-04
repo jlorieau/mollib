@@ -2,7 +2,7 @@
 
 .. raw:: html
 
-    <div class="highlight"><pre><span></span><span class="gp">$</span> ml measure --help
+    <div class="highlight"><pre><span></span><span class="gp">$</span>  ml measure --help
     <span class="go">usage: mollib measure [-h] -i id/filename [id/filename ...] [-c filename] [-l]</span>
     <span class="go">                      [-s]</span>
     <span class="go">                      [-d atom atom | -a atom atom atom | -dih atom atom atom atom | -w atom atom]</span>
@@ -56,7 +56,7 @@
 .. raw:: latex
 
   \begin{sphinxVerbatim}[commandchars=\\\{\},fontsize=\footnotesize]
-  \textcolor{darkorange}{$} ml measure -{-}help
+  \textcolor{darkorange}{$}  ml measure -{-}help
   usage: mollib measure [-h] -i id/filename [id/filename ...] [-c filename] [-l]
                         [-s]
                         [-d atom atom | -a atom atom atom | -dih atom atom atom atom | -w atom atom]

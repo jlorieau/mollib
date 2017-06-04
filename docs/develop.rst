@@ -103,9 +103,7 @@ Makefile Options
 ================
 
 The ``make`` command contains a number of commands to setup and develop
-mollib.
-
-    .. include:: cli/output/make_help.rst
+mollib. The make commands are listed by typing ``make help``.
 
 Including Datasets
 ==================

@@ -1,4 +1,4 @@
-.PHONY: build clean test permissions
+.PHONY: build clean test
 .DEFAULT_GOAL := build
 
 TXT_DIR = txt
@@ -14,20 +14,23 @@ CLI := $(CLI_SRC:.sh=)
 
 errors = 0
 
+
 $(TXT_DIR)/%.txt: %.sh ## Process the text output of commands
 	@chmod u+x ./$<
 	@./$< > $@  # export the text file
 
 	@rm -f *.pdb
 
+
 %.html: %.sh
-	@echo "$$ `cat $<`" > tmp_$@
+	@printf "$$" > tmp_$@
+	@sed 's/^/  /g' $< >> tmp_$@
 	@chmod u+x ./$<
 	@FORCE_COLOR=TRUE ./$< >> tmp_$@
 	@pygmentize -l shell-session -f html tmp_$@ | sed 's/^/    /g' >> tmp2_$@
 
 	@echo ".. only:: html\n\n.. raw:: html\n" > $@
-	@cat -e tmp2_$@ | sed 's/\$$$$//g'>> $@                            # Copy command output, strip non-print chars
+	@cat -e tmp2_$@ | sed 's/\$$$$//g'>> $@                             # Copy command output, strip non-print chars
 	@echo '\n' >> $@
 
 	@sed -i'.bak' 's/\^\[\[1m/<font style=\"font-weight:bold;\">/g' $@  # Replace bold codes
@@ -43,6 +46,7 @@ $(TXT_DIR)/%.txt: %.sh ## Process the text output of commands
 
 	@rm -f tmp_$@ tmp2_$@ *.bak *.pdb  # Remove temporary files
 
+
 %.tex: %.sh
 	@chmod u+x ./$<
 	@FORCE_COLOR=TRUE ./$< >> tmp_$@
@@ -50,7 +54,8 @@ $(TXT_DIR)/%.txt: %.sh ## Process the text output of commands
 
 	@echo ".. only:: latex\n\n.. raw:: latex\n" > $@
 	@echo "  \\\\begin{sphinxVerbatim}[commandchars=\\\\\\\\\\\\{\\\\},fontsize=\\\\footnotesize]" >> $@
-	@echo "  \\\\textcolor{darkorange}{$$} `cat $<`" >> $@
+	@printf "  \\\\textcolor{darkorange}{$$}" >> $@
+	@sed 's/^/  /g' $< >> $@
 	@cat -e tmp_$@ | sed 's/\$$$$//g' >> $@                       # Copy command output, strip non-print chars
 	@echo "  \\\\end{sphinxVerbatim}\n {} \n" >> $@
 
@@ -68,18 +73,21 @@ $(TXT_DIR)/%.txt: %.sh ## Process the text output of commands
 
 	@rm -f tmp_$@ *.bak *.pdb # Remove temporary files
 
+
 $(RST_DIR)/%.rst: %.html %.tex
 	@cat $? > $@
 	@rm $?
+
 
 test: build ## Test the CLI output against the reference .txt files
 	@for i in $(CLI); do \
 		printf "Testing \033[1m$$i.sh\033[22m\n" ; \
 		chmod u+x ./$$i.sh ; \
-		./$$i.sh | diff txt/$$i.txt - ; \
+		./$$i.sh | diff txt/$$i.txt - || exit 1 ; \
 		return_value=$$? ; \
 	done
-	@rm -f *.pdb
+	@rm -f tmp.out *.pdb
+
 
 clean:  ## Clean the output files
 	@find . -name '*.txt' -exec rm -f {} +
@@ -88,8 +96,10 @@ clean:  ## Clean the output files
 	@find . -name '*.rst' -exec rm -f {} +
 	@find . -name '*.pdb' -exec rm -f {} +
 
+
 build: $(CLI_TXT) $(CLI_RST)  ## Build the CLI .txt outputs and documentation .rst
 	@printf '\033[92mCLI files built\033[0m\n'
+
 
 help:  ## Print this help message
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-15s\033[0m %s\n", $$1, $$2}'
