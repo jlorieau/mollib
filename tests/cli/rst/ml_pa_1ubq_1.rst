@@ -2,8 +2,8 @@
 
 .. raw:: html
 
-    <div class="highlight"><pre><span></span><span class="gp">$</span>  ml pa -i 1UBQ -a 2MJB --set <span class="m">0</span> --fix-outliers --project-methyls --hydrogenate <span class="se">\</span>
-    <span class="go">  --summary</span>
+    <div class="highlight"><pre><span></span><span class="gp">$</span>  ml -s pa -i 1UBQ -a 2MJB --set <span class="m">0</span> --fix-outliers --project-methyls <span class="se">\</span>
+    <span class="go">  --hydrogenate --summary</span>
     <span class="go"><font style="font-weight:bold;">Table: </font>Summary SVD Statistics for Molecule 1UBQ</span>
     
     <span class="go">---------- --------------- --------------- ----------------- --------------- -----------</span>
@@ -28,8 +28,8 @@
     
     <span class="go">* Inverting the sign of &#39;N-H&#39; interactions improved the overall Q-factor from 516.4% to 93.7%.</span>
     <span class="go">* Inverting the sign of &#39;C-N+1&#39; interactions improved the overall Q-factor from 93.7% to 46.3%.</span>
-    <span class="go">* Removing outlier data points A.46CA-CB, A.33CE-HE#, A.48N-H, A.48CD-HD#, A.14CB-CG2, A.28CA-CB,</span>
-    <span class="go">  A.14CB-HB, A.13CB-CG2, A.7C-8H improved the overall Q-factor from 46.3% to 39.8%.</span>
+    <span class="go">* Removing outlier data points A.46CA-CB, A.14CB-CG2, A.48CD-HD#, A.33CE-HE#, A.48N-H, A.7C-8H,</span>
+    <span class="go">  A.28CA-CB, A.13CB-CG2, A.14CB-HB improved the overall Q-factor from 46.3% to 39.8%.</span>
     </pre></div>
 
 
@@ -38,8 +38,8 @@
 .. raw:: latex
 
   \begin{sphinxVerbatim}[commandchars=\\\{\},fontsize=\footnotesize]
-  \textcolor{darkorange}{$}  ml pa -i 1UBQ -a 2MJB -{-}set 0 -{-}fix-outliers -{-}project-methyls -{-}hydrogenate \
-  -{-}summary
+  \textcolor{darkorange}{$}  ml -s pa -i 1UBQ -a 2MJB -{-}set 0 -{-}fix-outliers -{-}project-methyls \textbackslash
+  -{-}hydrogenate -{-}summary
   \textbf{Table: }Summary SVD Statistics for Molecule 1UBQ
   
   -{-}-{-}-{-}-{-}-{-} -{-}-{-}-{-}-{-}-{-}-{-}-{-}- -{-}-{-}-{-}-{-}-{-}-{-}-{-}- -{-}-{-}-{-}-{-}-{-}-{-}-{-}-{-}- -{-}-{-}-{-}-{-}-{-}-{-}-{-}- -{-}-{-}-{-}-{-}-{-}-
@@ -64,8 +64,8 @@
   
   * Inverting the sign of 'N-H' interactions improved the overall Q-factor from 516.4% to 93.7%.
   * Inverting the sign of 'C-N+1' interactions improved the overall Q-factor from 93.7% to 46.3%.
-  * Removing outlier data points A.46CA-CB, A.33CE-HE#, A.48N-H, A.48CD-HD#, A.14CB-CG2, A.28CA-CB,
-    A.14CB-HB, A.13CB-CG2, A.7C-8H improved the overall Q-factor from 46.3% to 39.8%.
+  * Removing outlier data points A.46CA-CB, A.14CB-CG2, A.48CD-HD#, A.33CE-HE#, A.48N-H, A.7C-8H,
+    A.28CA-CB, A.13CB-CG2, A.14CB-HB improved the overall Q-factor from 46.3% to 39.8%.
   \end{sphinxVerbatim}
  {} 
 

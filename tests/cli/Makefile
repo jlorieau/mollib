@@ -30,7 +30,7 @@ $(TXT_DIR)/%.txt: %.sh ## Process the text output of commands
 	@pygmentize -l shell-session -f html tmp_$@ | sed 's/^/    /g' >> tmp2_$@
 
 	@echo ".. only:: html\n\n.. raw:: html\n" > $@
-	@cat -e tmp2_$@ | sed 's/\$$$$//g'>> $@                             # Copy command output, strip non-print chars
+	@cat -e tmp2_$@ | sed 's/\$$$$//g' >> $@                            # Copy command output, strip non-print chars
 	@echo '\n' >> $@
 
 	@sed -i'.bak' 's/\^\[\[1m/<font style=\"font-weight:bold;\">/g' $@  # Replace bold codes
@@ -50,16 +50,16 @@ $(TXT_DIR)/%.txt: %.sh ## Process the text output of commands
 %.tex: %.sh
 	@chmod u+x ./$<
 	@FORCE_COLOR=TRUE ./$< >> tmp_$@
-	@sed -i'.bak' 's/^/  /g' tmp_$@                                # Add a 2-spacetab at the start of every line
+	@sed -i'.bak' 's/^/  /g' tmp_$@                           # Add a 2-spacetab at the start of every line
 
 	@echo ".. only:: latex\n\n.. raw:: latex\n" > $@
 	@echo "  \\\\begin{sphinxVerbatim}[commandchars=\\\\\\\\\\\\{\\\\},fontsize=\\\\footnotesize]" >> $@
 	@printf "  \\\\textcolor{darkorange}{$$}" >> $@
-	@sed 's/^/  /g' $< >> $@
-	@cat -e tmp_$@ | sed 's/\$$$$//g' >> $@                       # Copy command output, strip non-print chars
+	@sed 's/^/  /g' $< | sed 's/\\/\\textbackslash/g'>> $@
+	@cat -e tmp_$@ | sed 's/\$$$$//g' >> $@                   # Copy command output, strip non-print chars
 	@echo "  \\\\end{sphinxVerbatim}\n {} \n" >> $@
 
-	@sed -i'.bak' 's/--/-{-}/g' $@                             # Preserve --
+	@sed -i'.bak' 's/--/-{-}/g' $@                            # Preserve --
 	@sed -i'.bak' 's/\^\[\[1m/\\textbf{/g' $@                 # Replace bold codes
 	@sed -i'.bak' 's/\^\[\[22m/}/g' $@                        # Replace closing bold codes
 	@sed -i'.bak' 's/\^\[\[36m/\\textcolor{cyan}{/g' $@       # Replace cyan colors

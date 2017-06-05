@@ -279,7 +279,7 @@ latex_elements = {
          \definecolor{darkorange}{RGB}{198,  93,  9}
          \sphinxDeclareColorOption{VerbatimBorderColor}{{rgb}{0.5,0.5,0.5}}
          \sphinxDeclareColorOption{VerbatimColor}{{rgb}{0.985,0.985,0.985}}
-         \fvset{fontsize=\footnotesize}
+         \fvset{fontsize=auto}
          \sphinxverbatimsep=6pt
          \sphinxshadowsize=15pt
          \usepackage{enumitem}

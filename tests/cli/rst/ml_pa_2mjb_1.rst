@@ -2,7 +2,7 @@
 
 .. raw:: html
 
-    <div class="highlight"><pre><span></span><span class="gp">$</span>  ml pa -i 2MJB -a 2MJB --set <span class="m">0</span> --fix-outliers --project-methyls --summary
+    <div class="highlight"><pre><span></span><span class="gp">$</span>  ml -s pa -i 2MJB -a 2MJB --set <span class="m">0</span> --fix-outliers --project-methyls --summary
     <span class="go"><font style="font-weight:bold;">Table: </font>Summary SVD Statistics for Molecule 2MJB</span>
     
     <span class="go">---------- --------------- ---------------- ----------------- --------------- -----------</span>
@@ -27,7 +27,7 @@
     
     <span class="go">* Inverting the sign of &#39;N-H&#39; interactions improved the overall Q-factor from 351.1% to 84.6%.</span>
     <span class="go">* Inverting the sign of &#39;C-N+1&#39; interactions improved the overall Q-factor from 84.6% to 27.1%.</span>
-    <span class="go">* Removing outlier data points A.46CA-CB, A.48CD-HD#, A.16CB-HB#, A.60CB-HB#, A.13CB-CG2, A.24C-25N</span>
+    <span class="go">* Removing outlier data points A.46CA-CB, A.13CB-CG2, A.16CB-HB#, A.60CB-HB#, A.48CD-HD#, A.24C-25N</span>
     <span class="go">  improved the overall Q-factor from 27.1% to 23.8%.</span>
     </pre></div>
 
@@ -37,7 +37,7 @@
 .. raw:: latex
 
   \begin{sphinxVerbatim}[commandchars=\\\{\},fontsize=\footnotesize]
-  \textcolor{darkorange}{$}  ml pa -i 2MJB -a 2MJB -{-}set 0 -{-}fix-outliers -{-}project-methyls -{-}summary
+  \textcolor{darkorange}{$}  ml -s pa -i 2MJB -a 2MJB -{-}set 0 -{-}fix-outliers -{-}project-methyls -{-}summary
   \textbf{Table: }Summary SVD Statistics for Molecule 2MJB
   
   -{-}-{-}-{-}-{-}-{-} -{-}-{-}-{-}-{-}-{-}-{-}-{-}- -{-}-{-}-{-}-{-}-{-}-{-}-{-}-{-} -{-}-{-}-{-}-{-}-{-}-{-}-{-}-{-}- -{-}-{-}-{-}-{-}-{-}-{-}-{-}- -{-}-{-}-{-}-{-}-{-}-
@@ -62,7 +62,7 @@
   
   * Inverting the sign of 'N-H' interactions improved the overall Q-factor from 351.1% to 84.6%.
   * Inverting the sign of 'C-N+1' interactions improved the overall Q-factor from 84.6% to 27.1%.
-  * Removing outlier data points A.46CA-CB, A.48CD-HD#, A.16CB-HB#, A.60CB-HB#, A.13CB-CG2, A.24C-25N
+  * Removing outlier data points A.46CA-CB, A.13CB-CG2, A.16CB-HB#, A.60CB-HB#, A.48CD-HD#, A.24C-25N
     improved the overall Q-factor from 27.1% to 23.8%.
   \end{sphinxVerbatim}
  {} 
