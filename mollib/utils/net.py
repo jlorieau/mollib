@@ -6,12 +6,17 @@ import os
 import tempfile
 import shutil
 import logging
+import ssl
 try:
-    from urllib2 import urlopen
+    from urllib2 import urlopen, URLError
 except ImportError:
-    from urllib.request import urlopen
+    from urllib.request import urlopen, URLError
 
 from . import settings
+
+ctx = ssl.create_default_context()
+ctx.check_hostname = False
+ctx.verify_mode = ssl.CERT_NONE
 
 
 def get_or_fetch(identifier, extensions=None, urls=None, load_cached=True,
@@ -52,6 +57,9 @@ def get_or_fetch(identifier, extensions=None, urls=None, load_cached=True,
     >>> temp_path is None
     True
     """
+    # Setup the SSL context
+    global ctx
+
     # Setup the message in case the file was not found
     msg = ("Could not find file or identifier '{}'. A suitable file must be "
            "specified to continue.")
@@ -111,8 +119,8 @@ def get_or_fetch(identifier, extensions=None, urls=None, load_cached=True,
             # Check the url and filename. An exception is raised if the
             # response is a 404
             try:
-                response = urlopen('/'.join((url, filename)))
-            except:
+                response = urlopen('/'.join((url, filename)), context=ctx)
+            except (URLError, ValueError):
                 continue
 
             # At this point, the url was successful retrieved. Save it to a
