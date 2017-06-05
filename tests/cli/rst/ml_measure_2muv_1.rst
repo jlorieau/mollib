@@ -39,7 +39,7 @@
 
 .. raw:: latex
 
-  \begin{sphinxVerbatim}[commandchars=\\\{\},fontsize=\footnotesize]
+  \begin{sphinxVerbatim}[commandchars=\\\{\},fontsize=\small]
   \textcolor{darkorange}{$}  ml measure -i 2MUV -d 23:49.HA 23:49.H -{-}only-delta 3 -{-}stats
   \textbf{Table: }Distances for 2MUV
   

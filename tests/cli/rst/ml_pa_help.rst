@@ -57,7 +57,7 @@
 
 .. raw:: latex
 
-  \begin{sphinxVerbatim}[commandchars=\\\{\},fontsize=\footnotesize]
+  \begin{sphinxVerbatim}[commandchars=\\\{\},fontsize=\small]
   \textcolor{darkorange}{$}  ml pa -{-}help
   usage: mollib pa [-h] -i id/filename [id/filename ...] [-c filename] [-l] [-s]
                    [-{-}hydrogenate] -a id/filename [id/filename ...]

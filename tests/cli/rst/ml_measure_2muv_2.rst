@@ -38,7 +38,7 @@
 
 .. raw:: latex
 
-  \begin{sphinxVerbatim}[commandchars=\\\{\},fontsize=\footnotesize]
+  \begin{sphinxVerbatim}[commandchars=\\\{\},fontsize=\small]
   \textcolor{darkorange}{$}  ml measure -i 2MUV -d A:D.20:21.CA A:D.20:21.CA -{-}exclude-intra -{-}exclude-intra-chain
   \textbf{Table: }Distances for 2MUV
   

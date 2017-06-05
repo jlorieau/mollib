@@ -20,7 +20,7 @@
 
 .. raw:: latex
 
-  \begin{sphinxVerbatim}[commandchars=\\\{\},fontsize=\footnotesize]
+  \begin{sphinxVerbatim}[commandchars=\\\{\},fontsize=\small]
   \textcolor{darkorange}{$}  ml measure -i 2KXA -dih 2:6.C 2:6.N 2:6.CA 2:6.C -{-}only-bonded -{-}stats
   \textbf{Table: }Dihedrals for 2KXA
   

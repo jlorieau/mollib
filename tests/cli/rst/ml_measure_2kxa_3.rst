@@ -38,7 +38,7 @@
 
 .. raw:: latex
 
-  \begin{sphinxVerbatim}[commandchars=\\\{\},fontsize=\footnotesize]
+  \begin{sphinxVerbatim}[commandchars=\\\{\},fontsize=\small]
   \textcolor{darkorange}{$}  ml measure -i 2KXA -{-}rama
   \textbf{Table: }Ramachandran angles for 2KXA
   

@@ -29,7 +29,7 @@
 
 .. raw:: latex
 
-  \begin{sphinxVerbatim}[commandchars=\\\{\},fontsize=\footnotesize]
+  \begin{sphinxVerbatim}[commandchars=\\\{\},fontsize=\small]
   \textcolor{darkorange}{$}  ml hbonds -{-}help
   usage: mollib hbonds [-h] -i id/filename [id/filename ...] [-c filename] [-l]
                        [-s] [-{-}hydrogenate] [-{-}aliphatic] [-{-}detailed]

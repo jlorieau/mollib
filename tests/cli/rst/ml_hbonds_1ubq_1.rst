@@ -25,7 +25,7 @@
 
 .. raw:: latex
 
-  \begin{sphinxVerbatim}[commandchars=\\\{\},fontsize=\footnotesize]
+  \begin{sphinxVerbatim}[commandchars=\\\{\},fontsize=\small]
   \textcolor{darkorange}{$}  ml hbonds -i 1UBQ -{-}hydrogenate|head -n15
   \textbf{Table: }Hydrogen bond listing for 1UBQ
   

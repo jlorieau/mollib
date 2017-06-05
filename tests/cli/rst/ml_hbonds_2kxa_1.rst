@@ -35,7 +35,7 @@
 
 .. raw:: latex
 
-  \begin{sphinxVerbatim}[commandchars=\\\{\},fontsize=\footnotesize]
+  \begin{sphinxVerbatim}[commandchars=\\\{\},fontsize=\small]
   \textcolor{darkorange}{$}  ml hbonds -i 2KXA
   \textbf{Table: }Hydrogen bond listing for 2KXA
   

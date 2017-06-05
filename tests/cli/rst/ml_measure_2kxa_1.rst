@@ -23,7 +23,7 @@
 
 .. raw:: latex
 
-  \begin{sphinxVerbatim}[commandchars=\\\{\},fontsize=\footnotesize]
+  \begin{sphinxVerbatim}[commandchars=\\\{\},fontsize=\small]
   \textcolor{darkorange}{$}  ml measure -i 2KXA 2LWA -d A:C.5.HA A:C.21.H -{-}only-intra-chain
   \textbf{Table: }Distances for 2KXA
   

@@ -32,7 +32,7 @@
 
 .. raw:: latex
 
-  \begin{sphinxVerbatim}[commandchars=\\\{\},fontsize=\footnotesize]
+  \begin{sphinxVerbatim}[commandchars=\\\{\},fontsize=\small]
   \textcolor{darkorange}{$}  ml -{-}help
   usage: mollib [-h] [-d | -s | -v] [-{-}list-plugins] [-{-}list-settings]
                 [-{-}version]

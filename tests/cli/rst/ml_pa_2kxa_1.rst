@@ -91,7 +91,7 @@
 
 .. raw:: latex
 
-  \begin{sphinxVerbatim}[commandchars=\\\{\},fontsize=\footnotesize]
+  \begin{sphinxVerbatim}[commandchars=\\\{\},fontsize=\small]
   \textcolor{darkorange}{$}  ml pa -i 2KXA -a 2KXA
   \textbf{Table: }Summary SVD Statistics for Molecule 2KXA
   

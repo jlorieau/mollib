@@ -36,7 +36,7 @@
 
 .. raw:: latex
 
-  \begin{sphinxVerbatim}[commandchars=\\\{\},fontsize=\footnotesize]
+  \begin{sphinxVerbatim}[commandchars=\\\{\},fontsize=\small]
   \textcolor{darkorange}{$}  ml -s pa -i 2MJB -a 2MJB -{-}set 0 -{-}fix-outliers -{-}project-methyls -{-}summary
   \textbf{Table: }Summary SVD Statistics for Molecule 2MJB
   

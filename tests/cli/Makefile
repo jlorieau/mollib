@@ -53,7 +53,7 @@ $(TXT_DIR)/%.txt: %.sh ## Process the text output of commands
 	@sed -i'.bak' 's/^/  /g' tmp_$@                           # Add a 2-spacetab at the start of every line
 
 	@echo ".. only:: latex\n\n.. raw:: latex\n" > $@
-	@echo "  \\\\begin{sphinxVerbatim}[commandchars=\\\\\\\\\\\\{\\\\},fontsize=\\\\footnotesize]" >> $@
+	@echo "  \\\\begin{sphinxVerbatim}[commandchars=\\\\\\\\\\\\{\\\\},fontsize=\\\\small]" >> $@
 	@printf "  \\\\textcolor{darkorange}{$$}" >> $@
 	@sed 's/^/  /g' $< | sed 's/\\/\\textbackslash/g'>> $@
 	@cat -e tmp_$@ | sed 's/\$$$$//g' >> $@                   # Copy command output, strip non-print chars

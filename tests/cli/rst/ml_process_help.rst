@@ -25,7 +25,7 @@
 
 .. raw:: latex
 
-  \begin{sphinxVerbatim}[commandchars=\\\{\},fontsize=\footnotesize]
+  \begin{sphinxVerbatim}[commandchars=\\\{\},fontsize=\small]
   \textcolor{darkorange}{$}  ml process -{-}help
   usage: mollib process [-h] -i id/filename [id/filename ...] [-c filename] [-l]
                         [-s] [-o [filename [filename ...]]] [-{-}hydrogenate]

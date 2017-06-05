@@ -55,7 +55,7 @@
 
 .. raw:: latex
 
-  \begin{sphinxVerbatim}[commandchars=\\\{\},fontsize=\footnotesize]
+  \begin{sphinxVerbatim}[commandchars=\\\{\},fontsize=\small]
   \textcolor{darkorange}{$}  ml measure -{-}help
   usage: mollib measure [-h] -i id/filename [id/filename ...] [-c filename] [-l]
                         [-s]

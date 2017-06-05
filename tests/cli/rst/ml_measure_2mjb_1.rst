@@ -24,7 +24,7 @@
 
 .. raw:: latex
 
-  \begin{sphinxVerbatim}[commandchars=\\\{\},fontsize=\footnotesize]
+  \begin{sphinxVerbatim}[commandchars=\\\{\},fontsize=\small]
   \textcolor{darkorange}{$}  ml measure -i 2MJB -a 20:30.C 20:30.N 20:30.H -{-}only-bonded
   \textbf{Table: }Angles for 2MJB
   

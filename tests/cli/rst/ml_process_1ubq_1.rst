@@ -10,7 +10,7 @@
 
 .. raw:: latex
 
-  \begin{sphinxVerbatim}[commandchars=\\\{\},fontsize=\footnotesize]
+  \begin{sphinxVerbatim}[commandchars=\\\{\},fontsize=\small]
   \textcolor{darkorange}{$}  ml process -i 1UBQ -o 1UBQ_H.pdb -{-}hydrogenate
   \end{sphinxVerbatim}
  {} 
