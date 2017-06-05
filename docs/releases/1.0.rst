@@ -124,3 +124,19 @@ pa
 
 - Alignment files with multiple alignment media datasets can be selected with
   the ``--set`` option.
+
+API Features
+------------
+
+The API has the following features and updates.
+
+- A testing framework that uses pytest, tox and a CLI tester. The CLI tester
+  is located in the ``tests/cli`` directory, and it is invoked by typing
+  ``make test-cli`` in the root project directory. It is also included in the
+  tox tests under the ``cli`` environment.
+
+- A plugin framework to add and remove functionality. The base Plugin is
+  located in the ``plugins`` folder.
+
+- A settings manager to dynamically change settings from the command line or
+  through configuration files.
