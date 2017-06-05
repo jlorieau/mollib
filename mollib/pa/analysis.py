@@ -282,8 +282,9 @@ def find_outliers(data, predicted):
     # the data into rdc and racs types, we will use the first item of this
     # tuple to group the values.
     keys_sorted = sorted(data, key=lambda x: sort_func(x)[0])
-    data_groups = {k:list(g) for k, g in
-                   groupby(keys_sorted, key=lambda x: sort_func(x)[0])}
+    data_groups = OrderedDict((k, list(g)) for k, g in
+                              groupby(keys_sorted,
+                                      key=lambda x: sort_func(x)[0]))
 
     # Keep track of the standard deviation for each group
     stdev_dict = {}

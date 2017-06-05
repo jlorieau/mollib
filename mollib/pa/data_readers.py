@@ -119,7 +119,7 @@ def read_pa_file(filename, set_id=None, ignore_ext=False):
         A dict with the data. The keys are tensor keys
         and the values are :obj:`RDC` or :obj:`RACS` datum objects.
     """
-    data = {}
+    data = OrderedDict()
 
     # Read in the filename to a string
     if filename.endswith('.gz'):
@@ -233,7 +233,7 @@ def read_pa_string(string):
         string = string.splitlines()
 
     # Prepare the returned data list
-    data = {}
+    data = OrderedDict()
 
     # Find all of the matches and produce a generator
     matches = (m for l in string for m in [_re_pa.search(l)] if m)
@@ -294,7 +294,7 @@ def read_dc_string(string):
         string = string.splitlines()
 
     # Prepare the returned data list
-    data = {}
+    data = OrderedDict()
 
     # Find all of the matches and produce a generator
     matches = (m for l in string for m in [_re_dc.search(l)] if m)
@@ -366,7 +366,6 @@ def read_mr_string(string, set_id=None):
     """
     # Prepare the returned data list
     data_sets = OrderedDict()
-    data_keys = {}
 
     # Find all of the matches and produce a generator
     matches = _re_mr.finditer(string)
@@ -415,7 +414,7 @@ def read_mr_string(string, set_id=None):
         label = validate_label(label)
 
         # Add it to the dict
-        data = data_sets.setdefault(coord_num, {})
+        data = data_sets.setdefault(coord_num, OrderedDict())
         data[label] = data_type(value=value)
 
     # Return only the data set specified

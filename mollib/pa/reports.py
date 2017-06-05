@@ -70,6 +70,7 @@ def report_tables(data, predicted=None):
 
     # Iterate over the data and add the values to the table.
     for label in sorted(data, key=sort_func):
+
         # Get the fields
         interaction = label
         value = data[label].value

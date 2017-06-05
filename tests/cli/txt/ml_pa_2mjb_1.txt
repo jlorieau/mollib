@@ -22,5 +22,5 @@ Angles     Z (deg): 49.0   Y' (deg): 22.2   Z'' (deg): 104.8
 
 * Inverting the sign of 'N-H' interactions improved the overall Q-factor from 351.1% to 84.6%.
 * Inverting the sign of 'C-N+1' interactions improved the overall Q-factor from 84.6% to 27.1%.
-* Removing outlier data points A.46CA-CB, A.48CD-HD#, A.16CB-HB#, A.60CB-HB#, A.13CB-CG2, A.24C-25N
+* Removing outlier data points A.46CA-CB, A.13CB-CG2, A.16CB-HB#, A.60CB-HB#, A.48CD-HD#, A.24C-25N
   improved the overall Q-factor from 27.1% to 23.8%.

@@ -135,13 +135,17 @@ def sort_func(label):
     Examples
     --------
     >>> sort_func('14N-H')
-    ('N-H', 'A', 14)
+    ('N-H', 'A', 14, '14N-H')
     >>> sort_func('13C')
-    ('C', 'A', 13)
+    ('C', 'A', 13, '13C')
     >>> sort_func('B.14N-13C')
-    ('C-N', 'B', 13)
+    ('C-N', 'B', 13, 'B.14N-13C')
     >>> sort_func('B.35CA-HA2')
-    ('CA-HA', 'B', 35)
+    ('CA-HA', 'B', 35, 'B.35CA-HA2')
+    >>> sort_func('13CA-HA2')
+    ('CA-HA', 'A', 13, '13CA-HA2')
+    >>> sort_func('13CA-HA3')
+    ('CA-HA', 'A', 13, '13CA-HA3')
     """
     # Generate a key from the label
     key = interaction_key(label)
@@ -155,7 +159,7 @@ def sort_func(label):
     chain_id = key[0][0]
     res_number = key[0][1]
 
-    return interaction_type, chain_id, res_number
+    return interaction_type, chain_id, res_number, label
 
 
 def interaction_type(label, delimiter='-'):
