@@ -121,6 +121,15 @@ class HydrogenBond(object):
 
         return s
 
+    def __lt__(self, other):
+        self_tuple = (self.donor.atom1.residue.number,
+                      self.type_classification,
+                      self.major_classification)
+        other_tuple = (other.donor.atom1.residue.number,
+                       other.type_classification,
+                       other.major_classification)
+        return self_tuple < other_tuple
+
 
 def find_dipoles(molecule, donor1_elements=None, donor2_elements=None,
                  acceptor1_elements=None, acceptor2_elements=None):
@@ -382,6 +391,8 @@ def find_hbond_partners(molecule, donor1_elements=None, donor2_elements=None,
                                              acceptor2_elements)
 
     # Prepare dicts with the atom ids for the donor and acceptor dipoles
+    # These are used to quickly create the filtered_donor and filtered_acceptor
+    # sets.
     acceptor_ids = {}
     for acceptor in acceptor_list:
         id_1 = id(acceptor.atom1)
@@ -403,7 +414,6 @@ def find_hbond_partners(molecule, donor1_elements=None, donor2_elements=None,
 
         s = donor_ids.setdefault(id_2, set())
         s.add(donor)
-
 
     # returned list
     hbonds = []
@@ -428,7 +438,7 @@ def find_hbond_partners(molecule, donor1_elements=None, donor2_elements=None,
 
         # If found, find all of the nearest neighbor atoms to the donor atom
         # and filter the acceptor_list based on these atoms.
-        filtered_acceptor_list = acceptor_list
+        filtered_acceptor_set = acceptor_list
         if largest_cutoff:
             if 'd1' in largest_cutoff_atoms:
                 donor_atom = donor_dip.atom1
@@ -441,24 +451,20 @@ def find_hbond_partners(molecule, donor1_elements=None, donor2_elements=None,
                 nearest_atoms = within_distance(donor_atom,
                                                 cutoff=largest_cutoff)
 
-                # We match based on atom ids because the __eq__ Atom method
-                # is expensive. The new filtered_acceptor_list will only contain
-                # acceptor dipoles that are within the distance cutoff of the
-                # donor dipole atoms.
-                nearest_atom_ids = {id(a) for a in nearest_atoms}
-                filtered_acceptor_list = set()
+                # Find the donor dipoles that have one of the nearest_atoms
+                # in it. We match based on atom ids because the __eq__ Atom
+                # method is expensive. The new filtered_acceptor_set will only
+                # contain acceptor dipoles that are within the distance cutoff
+                # of the donor dipole atoms.
+                filtered_acceptor_set = set()
                 for nearest_atom in nearest_atoms:
                     id_1 = id(nearest_atom)
-                    if id(nearest_atom) in acceptor_ids:
-                        filtered_acceptor_list |= acceptor_ids[id_1]
-
-                # filtered_acceptor_list = [a for a in acceptor_list
-                #                           if id(a.atom1) in nearest_atom_ids or
-                #                           id(a.atom2) in nearest_atom_ids]
+                    if id_1 in acceptor_ids:
+                        filtered_acceptor_set |= acceptor_ids[id_1]
 
         # Find all of the acceptor dipoles that have the right distances and
         # angles to the donor dipoles.
-        for acceptor_dip in filtered_acceptor_list:
+        for acceptor_dip in filtered_acceptor_set:
             # Measure the distances between atoms in the two dipoles
             distance_dict = dipole_distances(donor_dip, acceptor_dip)
 
@@ -498,6 +504,10 @@ def find_hbond_partners(molecule, donor1_elements=None, donor2_elements=None,
 
     # Classify this hydrogen bond and add to the hbond list
     classify_hbonds(hbonds)
+
+    # Sort the hbonds. Sorting is needed so that the output hbond listing
+    # is reproducible and deterministic
+    hbonds = sorted(hbonds)
 
     # Set the hbonds molecular parameter and return the hbonds
     molecule.set_parameter('Structural Features', 'hbonds', hbonds)
