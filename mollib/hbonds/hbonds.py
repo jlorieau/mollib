@@ -381,6 +381,30 @@ def find_hbond_partners(molecule, donor1_elements=None, donor2_elements=None,
                                              acceptor1_elements,
                                              acceptor2_elements)
 
+    # Prepare dicts with the atom ids for the donor and acceptor dipoles
+    acceptor_ids = {}
+    for acceptor in acceptor_list:
+        id_1 = id(acceptor.atom1)
+        id_2 = id(acceptor.atom2)
+
+        s = acceptor_ids.setdefault(id_1, set())
+        s.add(acceptor)
+
+        s = acceptor_ids.setdefault(id_2, set())
+        s.add(acceptor)
+
+    donor_ids = {}
+    for donor in donor_list:
+        id_1 = id(donor.atom1)
+        id_2 = id(donor.atom2)
+
+        s = donor_ids.setdefault(id_1, set())
+        s.add(donor)
+
+        s = donor_ids.setdefault(id_2, set())
+        s.add(donor)
+
+
     # returned list
     hbonds = []
 
@@ -422,9 +446,15 @@ def find_hbond_partners(molecule, donor1_elements=None, donor2_elements=None,
                 # acceptor dipoles that are within the distance cutoff of the
                 # donor dipole atoms.
                 nearest_atom_ids = {id(a) for a in nearest_atoms}
-                filtered_acceptor_list = [a for a in acceptor_list
-                                          if id(a.atom1) in nearest_atom_ids or
-                                          id(a.atom2) in nearest_atom_ids]
+                filtered_acceptor_list = set()
+                for nearest_atom in nearest_atoms:
+                    id_1 = id(nearest_atom)
+                    if id(nearest_atom) in acceptor_ids:
+                        filtered_acceptor_list |= acceptor_ids[id_1]
+
+                # filtered_acceptor_list = [a for a in acceptor_list
+                #                           if id(a.atom1) in nearest_atom_ids or
+                #                           id(a.atom2) in nearest_atom_ids]
 
         # Find all of the acceptor dipoles that have the right distances and
         # angles to the donor dipoles.
