@@ -418,7 +418,7 @@ def find_hbond_partners(molecule, donor1_elements=None, donor2_elements=None,
                 # is expensive. The new filtered_acceptor_list will only contain
                 # acceptor dipoles that are within the distance cutoff of the
                 # donor dipole atoms.
-                nearest_atom_ids = [id(a) for a in nearest_atoms]
+                nearest_atom_ids = {id(a) for a in nearest_atoms}
                 filtered_acceptor_list = [a for a in acceptor_list
                                           if id(a.atom1) in nearest_atom_ids or
                                           id(a.atom2) in nearest_atom_ids]
