@@ -29,7 +29,7 @@ from mollib.core import (measure_distance, calc_vector, vector_length,
                          within_distance)
 
 
-class Dipole(namedtuple('Dipole','atom1 atom2')):
+class Dipole(namedtuple('Dipole', 'atom1 atom2')):
     """An electric dipole namedtuple.
 
     Attributes
@@ -91,12 +91,12 @@ class HydrogenBond(object):
             setattr(self, k, v)
 
     def short_repr(self):
-        "The short representation of the HydrogenBond."
+        """The short representation of the HydrogenBond."""
         return "Hbond don.({d}) - acc.({a})".format(d=self.donor,
-                                                      a=self.acceptor)
+                                                    a=self.acceptor)
 
     def __repr__(self):
-        "The long representation of the HydrogenBond."
+        """The long representation of the HydrogenBond."""
         s = self.short_repr()
 
         if self.type_classification:
@@ -166,8 +166,8 @@ def find_dipoles(molecule, donor1_elements=None, donor2_elements=None,
     # Get the donor and acceptor elements values from settings if these aren't
     # specified in the function parameters,  and it splits the atom elements at
     # the '|' character.
-    donor1_elements  = (donor1_elements if donor1_elements is not None
-                        else settings.donor1_elements)
+    donor1_elements = (donor1_elements if donor1_elements is not None
+                       else settings.donor1_elements)
     donor2_elements = (donor2_elements if donor2_elements is not None
                        else settings.donor2_elements)
     acceptor1_elements = (acceptor1_elements if acceptor1_elements is not None
@@ -375,9 +375,11 @@ def find_hbond_partners(molecule, donor1_elements=None, donor2_elements=None,
                   settings.hbond_angle_cutoff)
 
     # Get the acceptor and donor dipole lists
-    donor_list, acceptor_list = find_dipoles(molecule, donor1_elements,
-                                           donor2_elements, acceptor1_elements,
-                                           acceptor2_elements)
+    donor_list, acceptor_list = find_dipoles(molecule,
+                                             donor1_elements,
+                                             donor2_elements,
+                                             acceptor1_elements,
+                                             acceptor2_elements)
 
     # returned list
     hbonds = []
@@ -396,8 +398,9 @@ def find_hbond_partners(molecule, donor1_elements=None, donor2_elements=None,
             cutoff_max = v[1]
             if largest_cutoff is None or cutoff_max > largest_cutoff:
                 largest_cutoff = cutoff_max
-                largest_cutoff_atoms = k[0:2], k[2:4]  # split 'a1d1' to
-                                                       # ('a1', 'd1')
+
+                # split 'a1d1' to ('a1', 'd1')
+                largest_cutoff_atoms = k[0:2], k[2:4]
 
         # If found, find all of the nearest neighbor atoms to the donor atom
         # and filter the acceptor_list based on these atoms.
