@@ -26,7 +26,7 @@ import numpy as np
 from . import settings
 from .classify_hbonds import classify_hbonds
 from mollib.core import (measure_distance, calc_vector, vector_length,
-                         within_distance)
+                         within_distance, cross)
 
 
 class Dipole(namedtuple('Dipole', 'atom1 atom2')):
@@ -314,11 +314,11 @@ def dipole_angles(donor_dipole, acceptor_dipole):
     a2_bonded = a2_bonded[0]  # Pull the first atom from the list
 
     v2 = calc_vector(a2.pos, a2_bonded.pos)
-    y = np.cross(z, v2)
+    y = cross(z, v2)
     y /= vector_length(y)
 
     # The x-axis is orthogonal to the y- and z-axes
-    x = np.cross(y, z)
+    x = cross(y, z)
     x /= vector_length(x)
 
     # Calculate the theta, phi wrt the coordinate system of the a1-d1 vector
