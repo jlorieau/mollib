@@ -29,6 +29,18 @@ cpdef double vector_length(np.ndarray[np.float64_t, ndim=1] vector):
     return sqrt(v2)
 
 
+@cython.boundscheck(False)
+@cython.wraparound(False)
+cpdef np.ndarray[np.float64_t, ndim=1] cross(np.ndarray[np.float64_t, ndim=1] a,
+                                             np.ndarray[np.float64_t, ndim=1] b):
+    """Returns the cross product between two vectors."""
+    cdef np.ndarray[np.float64_t, ndim=1] c = np.zeros((3), dtype=np.float64)
+    c[0] = a[1]*b[2] - a[2]*b[1]
+    c[1] = a[2]*b[0] - a[0]*b[2]
+    c[2] = a[0]*b[1] - a[1]*b[0]
+    return c
+
+
 def calc_vector(vector_i, vector_j, normalize=True):
     """Returns the vector between atoms 'i' and 'j' with optional
     normalization."""
