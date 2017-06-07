@@ -213,20 +213,6 @@ def read_pa_string(string):
         A dict with the data. 
         - **key**: interaction labels (str). ex: '14N-H'
         - **value**: RDC or RACS datum objects (:obj:`RDC` :obj:`RACS`)
-
-    Examples
-    --------
-    >>> data = read_pa_string('''
-    ... # Interaction   Value (Hz)   Error (optional)
-    ... 14N-H           -14.5        0.1
-    ... 15N-H             3.5
-    ...
-    ... 5C                112         1''')
-    >>> for k, v in sorted(data.items()):
-    ...     print("{:<10} {}".format(k, v))
-    A.14N-H    rdc(-14.5±0.1)
-    A.15N-H    rdc(3.5±0.0)
-    A.5C       racs(112.0±1.0)
     """
     # Convert the string into a list of lines, if it isn't already.
     if not isinstance(string, list):
