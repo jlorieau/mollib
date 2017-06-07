@@ -7,8 +7,8 @@
     
     <span class="go"><font style="font-weight:bold;">Num</font>  <font style="font-weight:bold;">Donor</font>       <font style="font-weight:bold;">Acceptor</font>    <font style="font-weight:bold;">Classification</font>                    <font style="font-weight:bold;">E (kT) / Prob.</font>  </span>
     <span class="go">---- ----------- ----------- --------------------------------- ----------------</span>
-    <span class="go">1    A.G1.H2--N  A.W21.O--C  bb-bb amide (isolated)            <font color="#abb51f">3.5 /  3.1%</font>     </span>
-    <span class="go">2    A.G1.H1--N  A.G20.O--C  bb-bb amide (isolated)            <font color="green">1.4 / 23.6%</font>     </span>
+    <span class="go">1    A.G1.H1--N  A.G20.O--C  bb-bb amide (isolated)            <font color="green">1.4 / 23.6%</font>     </span>
+    <span class="go">2    A.G1.H2--N  A.W21.O--C  bb-bb amide (isolated)            <font color="#abb51f">3.5 /  3.1%</font>     </span>
     <span class="go">3    A.A5.H--N   A.G1.O--C   bb-bb amide (isolated)            <font color="green">1.2 / 31.4%</font>     </span>
     <span class="go">4    A.I6.H--N   A.L2.O--C   bb-bb amide (alpha-helix/N-term)  <font color="green">3.0 /  4.8%</font>     </span>
     <span class="go">5    A.A7.H--N   A.F3.O--C   bb-bb amide (alpha-helix/N-term)  <font color="red">7.5 /  0.1%</font>     </span>
@@ -41,8 +41,8 @@
   
   \textbf{Num}  \textbf{Donor}       \textbf{Acceptor}    \textbf{Classification}                    \textbf{E (kT) / Prob.}  
   -{-}-{-} -{-}-{-}-{-}-{-}-{-}- -{-}-{-}-{-}-{-}-{-}- -{-}-{-}-{-}-{-}-{-}-{-}-{-}-{-}-{-}-{-}-{-}-{-}-{-}-{-}-{-}-{-}- -{-}-{-}-{-}-{-}-{-}-{-}-{-}-{-}
-  1    A.G1.H2-{-}N  A.W21.O-{-}C  bb-bb amide (isolated)            \textcolor{darkyellow}{3.5 /  3.1%}     
-  2    A.G1.H1-{-}N  A.G20.O-{-}C  bb-bb amide (isolated)            \textcolor{olivegreen}{1.4 / 23.6%}     
+  1    A.G1.H1-{-}N  A.G20.O-{-}C  bb-bb amide (isolated)            \textcolor{olivegreen}{1.4 / 23.6%}     
+  2    A.G1.H2-{-}N  A.W21.O-{-}C  bb-bb amide (isolated)            \textcolor{darkyellow}{3.5 /  3.1%}     
   3    A.A5.H-{-}N   A.G1.O-{-}C   bb-bb amide (isolated)            \textcolor{olivegreen}{1.2 / 31.4%}     
   4    A.I6.H-{-}N   A.L2.O-{-}C   bb-bb amide (alpha-helix/N-term)  \textcolor{olivegreen}{3.0 /  4.8%}     
   5    A.A7.H-{-}N   A.F3.O-{-}C   bb-bb amide (alpha-helix/N-term)  \textcolor{red}{7.5 /  0.1%}     
