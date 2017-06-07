@@ -28,8 +28,6 @@ import logging
 from math import sqrt, cos, sin, pi
 from itertools import chain
 
-import numpy as np
-
 from mollib.core import calc_vector, vector_length, within_distance, cross
 from . import settings
 
