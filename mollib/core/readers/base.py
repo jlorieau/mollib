@@ -1,7 +1,12 @@
 """
 Molecular reader classes.
 """
+import gzip
+import io
+
 from mollib.core import Molecule, Chain, Residue, Atom
+from mollib.utils.net import get_or_fetch
+from mollib.utils.checks import check_file
 
 
 class MoleculeReader(object):
@@ -13,6 +18,9 @@ class MoleculeReader(object):
 
     #: The order to run the reader (int). To disable, set the order to None.
     order = None
+
+    #: A tuple of urls to check for the file or identifier
+    urls = None
 
     #: The default class to create molecules
     molecule_class = Molecule
@@ -26,23 +34,74 @@ class MoleculeReader(object):
     #: The default class to create atoms
     atom_class = Atom
 
-    def __init__(self, identifiers_or_files, *args, **kwargs):
+    def __init__(self, urls=None, *args, **kwargs):
         """Initialize the molecular reader
+        
+        Parameters
+        ----------
+        urls: tuple
+            A list of urls to check for the file to read
+        args: tuple, optional
+            Positional arguments
+        kwargs: dict, optional
+            Keywork arguments
+        """
+        if urls is not None:
+            self.urls = urls
+
+        # Find subclasses and instantiate these.
+        self.subclasses = [cls(*args, **kwargs)
+                           for cls in sorted(self.__class__.__subclasses__(),
+                                             key=lambda x: x.order)
+                           if cls.order is not None]
+
+        # super(MoleculeReader, self).__init__(urls, *args, **kwargs)
+
+    def read(self, identifiers_or_files, *args, **kwargs):
+        """Read data into molecules.
         
         Parameters
         ----------
         identifiers_or_files: str or list
             One or more identifiers (ex: PDB codes, like '2kxa') or
             filenames and paths for structure files.
-        args: tuple, optional
-            Positional arguments
-        kwargs: dict, optional
-            Keywork arguments
         """
-        self._identifiers_or_files = identifiers_or_files
-        super(MoleculeReader, self).__init__(*args, **kwargs)
+        # Wrap the identifers or files into lists, if needed
+        if (not hasattr(identifiers_or_files, '__iter__')
+            or isinstance(identifiers_or_files, str)):
+            identifiers_or_files = [identifiers_or_files, ]
 
-    def parse(self, stream, molecule=None):
+        # Prepare the molecules to return
+        molecules = []
+
+        # Loop through the identifiers and files
+        for identifier in identifiers_or_files:
+            for sub in self.subclasses:
+                # Get the file for the identifier
+                filepath = get_or_fetch(identifier, extensions='pdb.gz',
+                                        urls=sub.urls)
+
+                # If the file couldn't be found, raise an error and exit
+                if filepath is None:
+                    check_file(identifier, critical=True)
+
+                # Load the file into a stream
+                if filepath.endswith('.gz'):
+                    with io.BufferedReader(gzip.open(filepath)) as stream:
+                        returned_molecules = sub.parse(stream, *args, **kwargs)
+                else:
+                    with open(filepath) as f:
+                        returned_molecules = sub.parse(stream, *args, **kwargs)
+
+                # If molecules were returned then it was successfully
+                # parsed. No more parsing needed.
+                if returned_molecules:
+                    molecules += returned_molecules
+                    break
+
+        return molecules
+
+    def parse(self, stream, *args, **kwargs):
         """Parse a data stream.
         
         Parameters
@@ -51,7 +110,6 @@ class MoleculeReader(object):
         
         Returns
         -------
-        count: int
-            The number of matched items.
+        molecules: list of :obj:`mollib.Molecule` objects
         """
-        return 0
+        return None

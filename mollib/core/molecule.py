@@ -62,6 +62,11 @@ class Molecule(dict):
         molecule.
     atom_class: :class:`Atom`
         The `Atom` class to use for generating atom objects for this molecule.
+    name: str
+        The name or identifier for the molecule
+    model_id: int or None
+        If multiple models were included, then this is the model id number.
+        Otherwise it's None.
     connections: list
         A list of lists of atom numbers for atoms that are connected to each
         other. Note that each list item respect the field order and position
@@ -166,6 +171,7 @@ class Molecule(dict):
         name = os.path.splitext(name)[0]
 
         self.name = name
+        self.model_id = None
         self.identifier = identifier
         self.connections = []
         self._parameters = {}

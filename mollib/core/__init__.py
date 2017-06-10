@@ -12,7 +12,7 @@ from .chain import Chain
 from .geometry import *
 from .molecule import Molecule
 from .residue import Residue
-from .readers import MoleculeReader
+from .readers import *
 from .utils import *
 
 # TODO: add a '--model' option to select models other than the first.
