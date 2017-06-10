@@ -172,7 +172,7 @@ class Molecule(dict):
         self.cache = {}
 
         # Read in the data
-        self.read_identifier(identifier)
+        # self.read_identifier(identifier)
         super(Molecule, self).__init__(*args, **kwargs)
 
     def __repr__(self):
