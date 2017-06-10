@@ -48,7 +48,8 @@ def get_or_fetch(identifier, extensions=None, urls=None, load_cached=True,
     Examples
     --------
     >>> # Retrieve a file that exists    
-    >>> temp_path = get_or_fetch('index', 'html', 'http://www.google.com/')
+    >>> temp_path = get_or_fetch('index', 'html', 'http://www.google.com/',
+    ...                          critical=False)
     >>> temp_path is not None
     True
     >>> # Try to retrieve a file that doesn't exist. None is returned.
@@ -82,9 +83,9 @@ def get_or_fetch(identifier, extensions=None, urls=None, load_cached=True,
         return None
 
     # Convert urls and extensions to iterators
-    if not hasattr(extensions, '__iter___'):
+    if isinstance(extensions, str):
         extensions = (extensions, )
-    if not hasattr(urls, '__iter__'):
+    if isinstance(urls, str):
         urls = (urls, )
 
     # At this point, the file couldn't be found at a local path. In this case,
@@ -120,7 +121,7 @@ def get_or_fetch(identifier, extensions=None, urls=None, load_cached=True,
             # response is a 404
             try:
                 response = urlopen('/'.join((url, filename)), context=ctx)
-            except (URLError, ValueError):
+            except URLError:
                 continue
 
             # At this point, the url was successful retrieved. Save it to a

@@ -9,6 +9,7 @@ from collections import namedtuple
 import numpy as np
 
 from mollib import Molecule
+from mollib.core import cross, vector_length
 from mollib.utils.interactions import (interaction_label, interaction_atoms,
                                        interaction_type)
 from mollib.utils.tensors import get_Haeberlen
@@ -424,22 +425,22 @@ class ProcessACS(Process):
 
         # Now calculate the tensor orientations and directional cosines
         vec1 = ref_atom1.pos - atom.pos
-        length = np.linalg.norm(vec1)
+        length = vector_length(vec1)
         if length > 0.:
             vec1 /= length
 
         v = ref_atom1.pos - ref_atom2.pos
-        length = np.linalg.norm(v)
+        length = vector_length(v)
         if length > 0.:
             v /= length
 
-        vec2 = np.cross(v, vec1)
-        length = np.linalg.norm(vec2)
+        vec2 = cross(v, vec1)
+        length = vector_length(vec2)
         if length > 0.:
             vec2 /= length
 
-        vec3 = np.cross(vec1, vec2)
-        length = np.linalg.norm(vec3)
+        vec3 = cross(vec1, vec2)
+        length = vector_length(vec3)
         if length > 0.:
             vec3 /= length
 

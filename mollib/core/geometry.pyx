@@ -20,13 +20,26 @@ from .utils import filter_atoms
 @cython.boundscheck(False)
 @cython.wraparound(False)
 cpdef double vector_length(np.ndarray[np.float64_t, ndim=1] vector):
-    """Returns the length (in A) of a vector"""
+    """Return the length (in A) of a vector"""
     cdef Py_ssize_t i
     cdef Py_ssize_t vector_size = vector.shape[0]
     cdef double v2 = 0.0
     for i in range(vector_size):
         v2 += vector[i]*vector[i]
     return sqrt(v2)
+
+
+
+@cython.boundscheck(False)
+@cython.wraparound(False)
+cpdef np.ndarray[np.float64_t, ndim=1] cross(np.ndarray[np.float64_t, ndim=1] a,
+                                             np.ndarray[np.float64_t, ndim=1] b):
+    """Return the cross product between two vectors."""
+    cdef np.ndarray[np.float64_t, ndim=1] c = np.zeros((3), dtype=np.float64)
+    c[0] = a[1]*b[2] - a[2]*b[1]
+    c[1] = a[2]*b[0] - a[0]*b[2]
+    c[2] = a[0]*b[1] - a[1]*b[0]
+    return c
 
 
 def calc_vector(vector_i, vector_j, normalize=True):
@@ -243,13 +256,13 @@ def measure_dihedral(atom_1, atom_2, atom_3, atom_4):
     # The dihedral is the angle between the plans a-b-c and b-c-d
     # The angle between these plans can be calculated from their
     # normals (cross products)
-    n1 = np.cross(ab, bc)
-    n2 = np.cross(bc, cd)
+    cdef np.ndarray[np.float64_t, ndim=1] n1 = cross(ab, bc)
+    cdef np.ndarray[np.float64_t, ndim=1] n2 = cross(bc, cd)
 
     # The angle between n1 and n2 can be calculated with acos. However
     # the followin atan2 relationship returns a number between 0 and
     # 2pi
-    m1 = np.cross(n1, bc)
+    cdef np.ndarray[np.float64_t, ndim=1] m1 = cross(n1, bc)
     x = np.dot(n1, n2)
     y = np.dot(m1, n2)
     angle = atan2(y, x) * 180. / np.pi

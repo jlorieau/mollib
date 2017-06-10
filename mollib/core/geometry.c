@@ -4,7 +4,7 @@
 {
     "distutils": {
         "depends": []
-    }, 
+    },
     "module_name": "mollib.core.geometry"
 }
 END: Cython Metadata */
@@ -765,7 +765,7 @@ typedef struct {
 } __Pyx_memviewslice;
 
 
-/* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":725
+/* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":725
  * # in Cython to enable them only on the right systems.
  * 
  * ctypedef npy_int8       int8_t             # <<<<<<<<<<<<<<
@@ -774,7 +774,7 @@ typedef struct {
  */
 typedef npy_int8 __pyx_t_5numpy_int8_t;
 
-/* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":726
+/* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":726
  * 
  * ctypedef npy_int8       int8_t
  * ctypedef npy_int16      int16_t             # <<<<<<<<<<<<<<
@@ -783,7 +783,7 @@ typedef npy_int8 __pyx_t_5numpy_int8_t;
  */
 typedef npy_int16 __pyx_t_5numpy_int16_t;
 
-/* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":727
+/* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":727
  * ctypedef npy_int8       int8_t
  * ctypedef npy_int16      int16_t
  * ctypedef npy_int32      int32_t             # <<<<<<<<<<<<<<
@@ -792,7 +792,7 @@ typedef npy_int16 __pyx_t_5numpy_int16_t;
  */
 typedef npy_int32 __pyx_t_5numpy_int32_t;
 
-/* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":728
+/* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":728
  * ctypedef npy_int16      int16_t
  * ctypedef npy_int32      int32_t
  * ctypedef npy_int64      int64_t             # <<<<<<<<<<<<<<
@@ -801,7 +801,7 @@ typedef npy_int32 __pyx_t_5numpy_int32_t;
  */
 typedef npy_int64 __pyx_t_5numpy_int64_t;
 
-/* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":732
+/* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":732
  * #ctypedef npy_int128     int128_t
  * 
  * ctypedef npy_uint8      uint8_t             # <<<<<<<<<<<<<<
@@ -810,7 +810,7 @@ typedef npy_int64 __pyx_t_5numpy_int64_t;
  */
 typedef npy_uint8 __pyx_t_5numpy_uint8_t;
 
-/* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":733
+/* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":733
  * 
  * ctypedef npy_uint8      uint8_t
  * ctypedef npy_uint16     uint16_t             # <<<<<<<<<<<<<<
@@ -819,7 +819,7 @@ typedef npy_uint8 __pyx_t_5numpy_uint8_t;
  */
 typedef npy_uint16 __pyx_t_5numpy_uint16_t;
 
-/* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":734
+/* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":734
  * ctypedef npy_uint8      uint8_t
  * ctypedef npy_uint16     uint16_t
  * ctypedef npy_uint32     uint32_t             # <<<<<<<<<<<<<<
@@ -828,7 +828,7 @@ typedef npy_uint16 __pyx_t_5numpy_uint16_t;
  */
 typedef npy_uint32 __pyx_t_5numpy_uint32_t;
 
-/* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":735
+/* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":735
  * ctypedef npy_uint16     uint16_t
  * ctypedef npy_uint32     uint32_t
  * ctypedef npy_uint64     uint64_t             # <<<<<<<<<<<<<<
@@ -837,7 +837,7 @@ typedef npy_uint32 __pyx_t_5numpy_uint32_t;
  */
 typedef npy_uint64 __pyx_t_5numpy_uint64_t;
 
-/* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":739
+/* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":739
  * #ctypedef npy_uint128    uint128_t
  * 
  * ctypedef npy_float32    float32_t             # <<<<<<<<<<<<<<
@@ -846,7 +846,7 @@ typedef npy_uint64 __pyx_t_5numpy_uint64_t;
  */
 typedef npy_float32 __pyx_t_5numpy_float32_t;
 
-/* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":740
+/* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":740
  * 
  * ctypedef npy_float32    float32_t
  * ctypedef npy_float64    float64_t             # <<<<<<<<<<<<<<
@@ -855,7 +855,7 @@ typedef npy_float32 __pyx_t_5numpy_float32_t;
  */
 typedef npy_float64 __pyx_t_5numpy_float64_t;
 
-/* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":749
+/* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":749
  * # The int types are mapped a bit surprising --
  * # numpy.int corresponds to 'l' and numpy.long to 'q'
  * ctypedef npy_long       int_t             # <<<<<<<<<<<<<<
@@ -864,7 +864,7 @@ typedef npy_float64 __pyx_t_5numpy_float64_t;
  */
 typedef npy_long __pyx_t_5numpy_int_t;
 
-/* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":750
+/* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":750
  * # numpy.int corresponds to 'l' and numpy.long to 'q'
  * ctypedef npy_long       int_t
  * ctypedef npy_longlong   long_t             # <<<<<<<<<<<<<<
@@ -873,7 +873,7 @@ typedef npy_long __pyx_t_5numpy_int_t;
  */
 typedef npy_longlong __pyx_t_5numpy_long_t;
 
-/* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":751
+/* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":751
  * ctypedef npy_long       int_t
  * ctypedef npy_longlong   long_t
  * ctypedef npy_longlong   longlong_t             # <<<<<<<<<<<<<<
@@ -882,7 +882,7 @@ typedef npy_longlong __pyx_t_5numpy_long_t;
  */
 typedef npy_longlong __pyx_t_5numpy_longlong_t;
 
-/* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":753
+/* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":753
  * ctypedef npy_longlong   longlong_t
  * 
  * ctypedef npy_ulong      uint_t             # <<<<<<<<<<<<<<
@@ -891,7 +891,7 @@ typedef npy_longlong __pyx_t_5numpy_longlong_t;
  */
 typedef npy_ulong __pyx_t_5numpy_uint_t;
 
-/* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":754
+/* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":754
  * 
  * ctypedef npy_ulong      uint_t
  * ctypedef npy_ulonglong  ulong_t             # <<<<<<<<<<<<<<
@@ -900,7 +900,7 @@ typedef npy_ulong __pyx_t_5numpy_uint_t;
  */
 typedef npy_ulonglong __pyx_t_5numpy_ulong_t;
 
-/* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":755
+/* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":755
  * ctypedef npy_ulong      uint_t
  * ctypedef npy_ulonglong  ulong_t
  * ctypedef npy_ulonglong  ulonglong_t             # <<<<<<<<<<<<<<
@@ -909,7 +909,7 @@ typedef npy_ulonglong __pyx_t_5numpy_ulong_t;
  */
 typedef npy_ulonglong __pyx_t_5numpy_ulonglong_t;
 
-/* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":757
+/* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":757
  * ctypedef npy_ulonglong  ulonglong_t
  * 
  * ctypedef npy_intp       intp_t             # <<<<<<<<<<<<<<
@@ -918,7 +918,7 @@ typedef npy_ulonglong __pyx_t_5numpy_ulonglong_t;
  */
 typedef npy_intp __pyx_t_5numpy_intp_t;
 
-/* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":758
+/* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":758
  * 
  * ctypedef npy_intp       intp_t
  * ctypedef npy_uintp      uintp_t             # <<<<<<<<<<<<<<
@@ -927,7 +927,7 @@ typedef npy_intp __pyx_t_5numpy_intp_t;
  */
 typedef npy_uintp __pyx_t_5numpy_uintp_t;
 
-/* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":760
+/* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":760
  * ctypedef npy_uintp      uintp_t
  * 
  * ctypedef npy_double     float_t             # <<<<<<<<<<<<<<
@@ -936,7 +936,7 @@ typedef npy_uintp __pyx_t_5numpy_uintp_t;
  */
 typedef npy_double __pyx_t_5numpy_float_t;
 
-/* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":761
+/* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":761
  * 
  * ctypedef npy_double     float_t
  * ctypedef npy_double     double_t             # <<<<<<<<<<<<<<
@@ -945,7 +945,7 @@ typedef npy_double __pyx_t_5numpy_float_t;
  */
 typedef npy_double __pyx_t_5numpy_double_t;
 
-/* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":762
+/* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":762
  * ctypedef npy_double     float_t
  * ctypedef npy_double     double_t
  * ctypedef npy_longdouble longdouble_t             # <<<<<<<<<<<<<<
@@ -985,7 +985,7 @@ struct __pyx_MemviewEnum_obj;
 struct __pyx_memoryview_obj;
 struct __pyx_memoryviewslice_obj;
 
-/* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":764
+/* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":764
  * ctypedef npy_longdouble longdouble_t
  * 
  * ctypedef npy_cfloat      cfloat_t             # <<<<<<<<<<<<<<
@@ -994,7 +994,7 @@ struct __pyx_memoryviewslice_obj;
  */
 typedef npy_cfloat __pyx_t_5numpy_cfloat_t;
 
-/* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":765
+/* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":765
  * 
  * ctypedef npy_cfloat      cfloat_t
  * ctypedef npy_cdouble     cdouble_t             # <<<<<<<<<<<<<<
@@ -1003,7 +1003,7 @@ typedef npy_cfloat __pyx_t_5numpy_cfloat_t;
  */
 typedef npy_cdouble __pyx_t_5numpy_cdouble_t;
 
-/* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":766
+/* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":766
  * ctypedef npy_cfloat      cfloat_t
  * ctypedef npy_cdouble     cdouble_t
  * ctypedef npy_clongdouble clongdouble_t             # <<<<<<<<<<<<<<
@@ -1012,7 +1012,7 @@ typedef npy_cdouble __pyx_t_5numpy_cdouble_t;
  */
 typedef npy_clongdouble __pyx_t_5numpy_clongdouble_t;
 
-/* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":768
+/* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":768
  * ctypedef npy_clongdouble clongdouble_t
  * 
  * ctypedef npy_cdouble     complex_t             # <<<<<<<<<<<<<<
@@ -1310,6 +1310,19 @@ static void __Pyx_WriteUnraisable(const char *name, int clineno,
 static CYTHON_INLINE int __Pyx_ArgTypeTest(PyObject *obj, PyTypeObject *type, int none_allowed,
     const char *name, int exact);
 
+/* GetModuleGlobalName.proto */
+static CYTHON_INLINE PyObject *__Pyx_GetModuleGlobalName(PyObject *name);
+
+/* PyObjectCall.proto */
+#if CYTHON_COMPILING_IN_CPYTHON
+static CYTHON_INLINE PyObject* __Pyx_PyObject_Call(PyObject *func, PyObject *arg, PyObject *kw);
+#else
+#define __Pyx_PyObject_Call(func, arg, kw) PyObject_Call(func, arg, kw)
+#endif
+
+/* ExtTypeTest.proto */
+static CYTHON_INLINE int __Pyx_TypeTest(PyObject *obj, PyTypeObject *type);
+
 /* RaiseArgTupleInvalid.proto */
 static void __Pyx_RaiseArgtupleInvalid(const char* func_name, int exact,
     Py_ssize_t num_min, Py_ssize_t num_max, Py_ssize_t num_found);
@@ -1322,9 +1335,6 @@ static int __Pyx_ParseOptionalKeywords(PyObject *kwds, PyObject **argnames[],\
     PyObject *kwds2, PyObject *values[], Py_ssize_t num_pos_args,\
     const char* function_name);
 
-/* ExtTypeTest.proto */
-static CYTHON_INLINE int __Pyx_TypeTest(PyObject *obj, PyTypeObject *type);
-
 /* BufferFallbackError.proto */
 static void __Pyx_RaiseBufferFallbackError(void);
 
@@ -1333,13 +1343,6 @@ static CYTHON_INLINE int __Pyx_PySequence_ContainsTF(PyObject* item, PyObject* s
     int result = PySequence_Contains(seq, item);
     return unlikely(result < 0) ? result : (result == (eq == Py_EQ));
 }
-
-/* PyObjectCall.proto */
-#if CYTHON_COMPILING_IN_CPYTHON
-static CYTHON_INLINE PyObject* __Pyx_PyObject_Call(PyObject *func, PyObject *arg, PyObject *kw);
-#else
-#define __Pyx_PyObject_Call(func, arg, kw) PyObject_Call(func, arg, kw)
-#endif
 
 /* PyFunctionFastCall.proto */
 #if CYTHON_FAST_PYCALL
@@ -1391,9 +1394,6 @@ static CYTHON_INLINE int __Pyx_ListComp_Append(PyObject* list, PyObject* x) {
 #else
 #define __Pyx_ListComp_Append(L,x) PyList_Append(L,x)
 #endif
-
-/* GetModuleGlobalName.proto */
-static CYTHON_INLINE PyObject *__Pyx_GetModuleGlobalName(PyObject *name);
 
 /* GetItemInt.proto */
 #define __Pyx_GetItemInt(o, i, type, is_signed, to_py_func, is_list, wraparound, boundscheck)\
@@ -1959,6 +1959,7 @@ static PyObject *indirect_contiguous = 0;
 static int __pyx_memoryview_thread_locks_used;
 static PyThread_type_lock __pyx_memoryview_thread_locks[8];
 static double __pyx_f_6mollib_4core_8geometry_vector_length(PyArrayObject *, int __pyx_skip_dispatch); /*proto*/
+static PyArrayObject *__pyx_f_6mollib_4core_8geometry_cross(PyArrayObject *, PyArrayObject *, int __pyx_skip_dispatch); /*proto*/
 static double __pyx_f_6mollib_4core_8geometry_measure_distance(PyObject *, PyObject *, int __pyx_skip_dispatch); /*proto*/
 static struct __pyx_array_obj *__pyx_array_new(PyObject *, Py_ssize_t, char *, char *, char *); /*proto*/
 static void *__pyx_align_pointer(void *, size_t); /*proto*/
@@ -2009,9 +2010,9 @@ static PyObject *__pyx_builtin_Ellipsis;
 static PyObject *__pyx_builtin_TypeError;
 static PyObject *__pyx_builtin_id;
 static PyObject *__pyx_builtin_IndexError;
-static const char __pyx_k_[] = "";
 static const char __pyx_k_O[] = "O";
 static const char __pyx_k_a[] = "a";
+static const char __pyx_k_b[] = "b";
 static const char __pyx_k_c[] = "c";
 static const char __pyx_k_i[] = "i";
 static const char __pyx_k_j[] = "j";
@@ -2020,7 +2021,8 @@ static const char __pyx_k_l[] = "l";
 static const char __pyx_k_v[] = "v";
 static const char __pyx_k_x[] = "x";
 static const char __pyx_k_y[] = "y";
-static const char __pyx_k__2[] = "|";
+static const char __pyx_k__2[] = "";
+static const char __pyx_k__3[] = "|";
 static const char __pyx_k_ab[] = "ab";
 static const char __pyx_k_bc[] = "bc";
 static const char __pyx_k_cd[] = "cd";
@@ -2056,7 +2058,7 @@ static const char __pyx_k_atoms[] = "atoms";
 static const char __pyx_k_cache[] = "cache";
 static const char __pyx_k_chain[] = "chain";
 static const char __pyx_k_class[] = "__class__";
-static const char __pyx_k_cross[] = "cross";
+static const char __pyx_k_dtype[] = "dtype";
 static const char __pyx_k_error[] = "error";
 static const char __pyx_k_flags[] = "flags";
 static const char __pyx_k_items[] = "items";
@@ -2067,6 +2069,7 @@ static const char __pyx_k_shape[] = "shape";
 static const char __pyx_k_split[] = "split";
 static const char __pyx_k_start[] = "start";
 static const char __pyx_k_utils[] = "utils";
+static const char __pyx_k_zeros[] = "zeros";
 static const char __pyx_k_atom_1[] = "atom_1";
 static const char __pyx_k_atom_2[] = "atom_2";
 static const char __pyx_k_atom_3[] = "atom_3";
@@ -2087,6 +2090,7 @@ static const char __pyx_k_struct[] = "struct";
 static const char __pyx_k_unpack[] = "unpack";
 static const char __pyx_k_element[] = "element";
 static const char __pyx_k_filters[] = "filters";
+static const char __pyx_k_float64[] = "float64";
 static const char __pyx_k_fortran[] = "fortran";
 static const char __pyx_k_memview[] = "memview";
 static const char __pyx_k_residue[] = "residue";
@@ -2133,17 +2137,17 @@ static const char __pyx_k_mollib_core_geometry[] = "mollib.core.geometry";
 static const char __pyx_k_strided_and_indirect[] = "<strided and indirect>";
 static const char __pyx_k_contiguous_and_direct[] = "<contiguous and direct>";
 static const char __pyx_k_MemoryView_of_r_object[] = "<MemoryView of %r object>";
-static const char __pyx_k_measure_angle_line_175[] = "measure_angle (line 175)";
+static const char __pyx_k_measure_angle_line_188[] = "measure_angle (line 188)";
 static const char __pyx_k_MemoryView_of_r_at_0x_x[] = "<MemoryView of %r at 0x%x>";
 static const char __pyx_k_contiguous_and_indirect[] = "<contiguous and indirect>";
-static const char __pyx_k_measure_angles_line_345[] = "measure_angles (line 345)";
+static const char __pyx_k_measure_angles_line_358[] = "measure_angles (line 358)";
 static const char __pyx_k_Cannot_index_with_type_s[] = "Cannot index with type '%s'";
-static const char __pyx_k_measure_distance_line_45[] = "measure_distance (line 45)";
-static const char __pyx_k_within_distance_line_119[] = "within_distance (line 119)";
+static const char __pyx_k_measure_distance_line_58[] = "measure_distance (line 58)";
+static const char __pyx_k_within_distance_line_132[] = "within_distance (line 132)";
 static const char __pyx_k_Invalid_shape_in_axis_d_d[] = "Invalid shape in axis %d: %d.";
-static const char __pyx_k_measure_dihedral_line_209[] = "measure_dihedral (line 209)";
-static const char __pyx_k_measure_dihedrals_line_434[] = "measure_dihedrals (line 434)";
-static const char __pyx_k_measure_distances_line_259[] = "measure_distances (line 259)";
+static const char __pyx_k_measure_dihedral_line_222[] = "measure_dihedral (line 222)";
+static const char __pyx_k_measure_dihedrals_line_447[] = "measure_dihedrals (line 447)";
+static const char __pyx_k_measure_distances_line_272[] = "measure_distances (line 272)";
 static const char __pyx_k_itemsize_0_for_cython_array[] = "itemsize <= 0 for cython.array";
 static const char __pyx_k_ndarray_is_not_C_contiguous[] = "ndarray is not C contiguous";
 static const char __pyx_k_measure_angles_locals_lambda[] = "measure_angles.<locals>.<lambda>";
@@ -2152,7 +2156,7 @@ static const char __pyx_k_Tools_to_measure_geometries_in[] = "\nTools to measure
 static const char __pyx_k_strided_and_direct_or_indirect[] = "<strided and direct or indirect>";
 static const char __pyx_k_Measure_the_dihedral_angles_for[] = "Measure the dihedral angles for atoms selected by selector1, selector 2,\n    selector3 and selector4.\n\n    Parameters\n    ----------\n    molecule: :obj:`mollib.Molecule`\n        The molecule object from which distances will be measured.\n    selector1: str\n        A string for the selector of the first atom(s) of the angle.\n    selector2: str\n        A string for the selector of the second atom(s) of the angle.\n    selector3: str\n        A string for the selector of the third atom(s) of the angle.\n    selector4: str\n        A string for the selector of the fourth atom(s) of the angle.\n    filters: dict\n        See :func:`mollib.core.filter_atoms`\n\n\n        .. note:: The locator respects the rules outlined in\n                  :class:`mollib.Molecule.get_atoms`\n\n    Returns\n    -------\n    list of tuples\n        A sorted list of tuples with (atom1, atom2, atom3, atom4, angle) for\n        each angle selected.\n\n    Examples\n    --------\n    >>> from mollib.core import Molecule, measure_dihedrals\n    >>> mol = Molecule('2KXA')\n    >>> args = ('3:5.C', '3:5.N', '3:5.CA', '3:5.C')\n    >>> kwargs = {'bonded': True}\n    >>> dihs = measure_dihedrals(mol, *args, **kwargs)\n    >>> for i in dihs: print(i)\n    (A.F3.C, A.G4.N, A.G4.CA, A.G4.C, -57.2)\n    (A.G4.C, A.A5.N, A.A5.CA, A.A5.C, -68.4)\n\n    ";
 static const char __pyx_k_Measure_the_distances_for_atoms[] = "Measure the distances for atoms selected by selector1 and selector2.\n\n    Parameters\n    ----------\n    molecule: :obj:`mollib.Molecule`\n        The molecule object from which distances will be measured.\n    selector1: str\n        A string for locator of the first atom(s) to measure the distances\n        from.\n    selector2: str\n        A string for the locator of the second atom(s) to measure the distances\n        to.\n    filters: dict\n        See :func:`mollib.core.filter_atoms`\n\n\n        .. note:: The selectors respects the rules outlined in\n                  :class:`mollib.Molecule.get_atoms`\n\n    Returns\n    -------\n    list of tuples\n        A list of tuples for (atom1, atom2, distance) for each distance\n        selected.\n\n    Examples\n    --------\n    >>> from mollib.core import Molecule, measure_distances\n    >>> mol = Molecule('2MUV')\n    >>> kwargs = {'residue_delta': 0, 'only_intra': True}\n    >>> dists = measure_distances(mol, '23:25.N', '23:25.CA', **kwargs)\n    >>> for i in dists: print(i)\n    (A.S23.N, A.S23.CA, 1.46)\n    (A.D24.N, A.D24.CA, 1.45)\n    (A.P25.N, A.P25.CA, 1.49)\n    >>> dists = measure_distances(mol, 'A:C.23.N', 'A:C.23.N')\n    >>> for i in dists: print(i)\n    (A.S23.N, B.S23.N, 11.23)\n    (A.S23.N, C.S23.N, 15.49)\n    (B.S23.N, C.S23.N, 11.04)\n    >>> dists = measure_distances(mol, '23.N', '24.N', exclude_intra=True)\n    >>> for i in dists: print(i)\n    (A.S23.N, A.D24.N, 3.45)\n\n    ";
-static const char __pyx_k_home_jlorieau_Code_Python_Bioph[] = "/home/jlorieau/Code/Python/BiophysicsAndBiochemistry/mollib/mollib/core/geometry.pyx";
+static const char __pyx_k_Users_jlorieau_Code_Python_Biop[] = "/Users/jlorieau/Code/Python/BiophysicsAndBiochemistry/mollib/mollib/core/geometry.pyx";
 static const char __pyx_k_measure_dihedrals_locals_lambda[] = "measure_dihedrals.<locals>.<lambda>";
 static const char __pyx_k_measure_distances_locals_lambda[] = "measure_distances.<locals>.<lambda>";
 static const char __pyx_k_numpy_core_multiarray_failed_to[] = "numpy.core.multiarray failed to import";
@@ -2176,7 +2180,6 @@ static const char __pyx_k_numpy_core_umath_failed_to_impor[] = "numpy.core.umath
 static const char __pyx_k_unable_to_allocate_shape_and_str[] = "unable to allocate shape and strides.";
 static const char __pyx_k_Format_string_allocated_too_shor_2[] = "Format string allocated too short.";
 static const char __pyx_k_Measure_the_atom_1_atom_2_atom_3_2[] = "Measure the atom_1--atom_2--atom_3--atom_4 dihedral angle.\n\n    Parameters\n    ----------\n    atom_1 : :obj:`Atom`\n        The first atom.\n    atom_2 : :obj:`Atom`\n        The second atom.\n    atom_3 : :obj:`Atom`\n        The third atom.\n    atom_4 : :obj:`Atom`\n        The fourth atom.\n\n    Returns\n    -------\n    angle : float\n        The dihedral angle.\n\n    Examples\n    --------\n    >>> from mollib.core import Molecule, measure_dihedral\n    >>> mol = Molecule('2KXA')\n    >>> F3 = mol['A'][3]\n    >>> angle = measure_dihedral(F3['N'], F3['CA'], F3['CB'], F3['CG'])\n    >>> print(\"{:.1f} deg\".format(angle))\n    -62.0 deg\n\n    ";
-static PyObject *__pyx_kp_s_;
 static PyObject *__pyx_n_s_ASCII;
 static PyObject *__pyx_kp_s_Buffer_view_does_not_expose_stri;
 static PyObject *__pyx_kp_s_Can_only_create_a_buffer_that_is;
@@ -2206,8 +2209,10 @@ static PyObject *__pyx_kp_s_Out_of_bounds_on_buffer_access_a;
 static PyObject *__pyx_n_s_RuntimeError;
 static PyObject *__pyx_n_s_TypeError;
 static PyObject *__pyx_kp_s_Unable_to_convert_item_to_object;
+static PyObject *__pyx_kp_s_Users_jlorieau_Code_Python_Biop;
 static PyObject *__pyx_n_s_ValueError;
 static PyObject *__pyx_kp_s__2;
+static PyObject *__pyx_kp_s__3;
 static PyObject *__pyx_n_s_a;
 static PyObject *__pyx_n_s_ab;
 static PyObject *__pyx_n_s_allocate_buffer;
@@ -2222,6 +2227,7 @@ static PyObject *__pyx_n_s_atoms1;
 static PyObject *__pyx_n_s_atoms2;
 static PyObject *__pyx_n_s_atoms3;
 static PyObject *__pyx_n_s_atoms4;
+static PyObject *__pyx_n_s_b;
 static PyObject *__pyx_n_s_base;
 static PyObject *__pyx_n_s_bc;
 static PyObject *__pyx_n_s_box;
@@ -2234,11 +2240,11 @@ static PyObject *__pyx_n_s_chain;
 static PyObject *__pyx_n_s_class;
 static PyObject *__pyx_kp_s_contiguous_and_direct;
 static PyObject *__pyx_kp_s_contiguous_and_indirect;
-static PyObject *__pyx_n_s_cross;
 static PyObject *__pyx_n_s_cutoff;
 static PyObject *__pyx_n_s_dihedral;
 static PyObject *__pyx_n_s_dist;
 static PyObject *__pyx_n_s_dot;
+static PyObject *__pyx_n_s_dtype;
 static PyObject *__pyx_n_s_dtype_is_object;
 static PyObject *__pyx_n_s_element;
 static PyObject *__pyx_n_s_element_list;
@@ -2250,13 +2256,13 @@ static PyObject *__pyx_n_s_exclude_intraresidue;
 static PyObject *__pyx_n_s_filter_atoms;
 static PyObject *__pyx_n_s_filters;
 static PyObject *__pyx_n_s_flags;
+static PyObject *__pyx_n_s_float64;
 static PyObject *__pyx_n_s_format;
 static PyObject *__pyx_n_s_fortran;
 static PyObject *__pyx_n_u_fortran;
 static PyObject *__pyx_n_s_get_atoms;
 static PyObject *__pyx_n_s_get_points;
 static PyObject *__pyx_kp_s_got_differing_extents_in_dimensi;
-static PyObject *__pyx_kp_s_home_jlorieau_Code_Python_Bioph;
 static PyObject *__pyx_n_s_i;
 static PyObject *__pyx_n_s_id;
 static PyObject *__pyx_n_s_import;
@@ -2272,18 +2278,18 @@ static PyObject *__pyx_n_s_length;
 static PyObject *__pyx_n_s_m1;
 static PyObject *__pyx_n_s_main;
 static PyObject *__pyx_n_s_measure_angle;
-static PyObject *__pyx_kp_u_measure_angle_line_175;
+static PyObject *__pyx_kp_u_measure_angle_line_188;
 static PyObject *__pyx_n_s_measure_angles;
-static PyObject *__pyx_kp_u_measure_angles_line_345;
+static PyObject *__pyx_kp_u_measure_angles_line_358;
 static PyObject *__pyx_n_s_measure_angles_locals_lambda;
 static PyObject *__pyx_n_s_measure_dihedral;
-static PyObject *__pyx_kp_u_measure_dihedral_line_209;
+static PyObject *__pyx_kp_u_measure_dihedral_line_222;
 static PyObject *__pyx_n_s_measure_dihedrals;
-static PyObject *__pyx_kp_u_measure_dihedrals_line_434;
+static PyObject *__pyx_kp_u_measure_dihedrals_line_447;
 static PyObject *__pyx_n_s_measure_dihedrals_locals_lambda;
-static PyObject *__pyx_kp_u_measure_distance_line_45;
+static PyObject *__pyx_kp_u_measure_distance_line_58;
 static PyObject *__pyx_n_s_measure_distances;
-static PyObject *__pyx_kp_u_measure_distances_line_259;
+static PyObject *__pyx_kp_u_measure_distances_line_272;
 static PyObject *__pyx_n_s_measure_distances_locals_lambda;
 static PyObject *__pyx_n_s_memview;
 static PyObject *__pyx_n_s_mode;
@@ -2341,21 +2347,23 @@ static PyObject *__pyx_n_s_vec;
 static PyObject *__pyx_n_s_vector_i;
 static PyObject *__pyx_n_s_vector_j;
 static PyObject *__pyx_n_s_within_distance;
-static PyObject *__pyx_kp_u_within_distance_line_119;
+static PyObject *__pyx_kp_u_within_distance_line_132;
 static PyObject *__pyx_n_s_x;
 static PyObject *__pyx_n_s_y;
+static PyObject *__pyx_n_s_zeros;
 static PyObject *__pyx_pf_6mollib_4core_8geometry_vector_length(CYTHON_UNUSED PyObject *__pyx_self, PyArrayObject *__pyx_v_vector); /* proto */
-static PyObject *__pyx_pf_6mollib_4core_8geometry_2calc_vector(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_vector_i, PyObject *__pyx_v_vector_j, PyObject *__pyx_v_normalize); /* proto */
-static PyObject *__pyx_pf_6mollib_4core_8geometry_4measure_distance(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_atom_1, PyObject *__pyx_v_atom_2); /* proto */
-static PyObject *__pyx_pf_6mollib_4core_8geometry_6within_distance(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_atom, PyObject *__pyx_v_cutoff, PyObject *__pyx_v_elements, PyObject *__pyx_v_exclude_intraresidue); /* proto */
-static PyObject *__pyx_pf_6mollib_4core_8geometry_8measure_angle(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_atom_1, PyObject *__pyx_v_atom_2, PyObject *__pyx_v_atom_3); /* proto */
-static PyObject *__pyx_pf_6mollib_4core_8geometry_10measure_dihedral(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_atom_1, PyObject *__pyx_v_atom_2, PyObject *__pyx_v_atom_3, PyObject *__pyx_v_atom_4); /* proto */
+static PyObject *__pyx_pf_6mollib_4core_8geometry_2cross(CYTHON_UNUSED PyObject *__pyx_self, PyArrayObject *__pyx_v_a, PyArrayObject *__pyx_v_b); /* proto */
+static PyObject *__pyx_pf_6mollib_4core_8geometry_4calc_vector(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_vector_i, PyObject *__pyx_v_vector_j, PyObject *__pyx_v_normalize); /* proto */
+static PyObject *__pyx_pf_6mollib_4core_8geometry_6measure_distance(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_atom_1, PyObject *__pyx_v_atom_2); /* proto */
+static PyObject *__pyx_pf_6mollib_4core_8geometry_8within_distance(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_atom, PyObject *__pyx_v_cutoff, PyObject *__pyx_v_elements, PyObject *__pyx_v_exclude_intraresidue); /* proto */
+static PyObject *__pyx_pf_6mollib_4core_8geometry_10measure_angle(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_atom_1, PyObject *__pyx_v_atom_2, PyObject *__pyx_v_atom_3); /* proto */
+static PyObject *__pyx_pf_6mollib_4core_8geometry_12measure_dihedral(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_atom_1, PyObject *__pyx_v_atom_2, PyObject *__pyx_v_atom_3, PyObject *__pyx_v_atom_4); /* proto */
 static PyObject *__pyx_lambda_funcdef_lambda(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_i); /* proto */
-static PyObject *__pyx_pf_6mollib_4core_8geometry_12measure_distances(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_molecule, PyObject *__pyx_v_selector1, PyObject *__pyx_v_selector2, PyObject *__pyx_v_filters); /* proto */
+static PyObject *__pyx_pf_6mollib_4core_8geometry_14measure_distances(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_molecule, PyObject *__pyx_v_selector1, PyObject *__pyx_v_selector2, PyObject *__pyx_v_filters); /* proto */
 static PyObject *__pyx_lambda_funcdef_lambda1(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_i); /* proto */
-static PyObject *__pyx_pf_6mollib_4core_8geometry_14measure_angles(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_molecule, PyObject *__pyx_v_selector1, PyObject *__pyx_v_selector2, PyObject *__pyx_v_selector3, PyObject *__pyx_v_filters); /* proto */
+static PyObject *__pyx_pf_6mollib_4core_8geometry_16measure_angles(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_molecule, PyObject *__pyx_v_selector1, PyObject *__pyx_v_selector2, PyObject *__pyx_v_selector3, PyObject *__pyx_v_filters); /* proto */
 static PyObject *__pyx_lambda_funcdef_lambda2(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_i); /* proto */
-static PyObject *__pyx_pf_6mollib_4core_8geometry_16measure_dihedrals(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_molecule, PyObject *__pyx_v_selector1, PyObject *__pyx_v_selector2, PyObject *__pyx_v_selector3, PyObject *__pyx_v_selector4, PyObject *__pyx_v_filters); /* proto */
+static PyObject *__pyx_pf_6mollib_4core_8geometry_18measure_dihedrals(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_molecule, PyObject *__pyx_v_selector1, PyObject *__pyx_v_selector2, PyObject *__pyx_v_selector3, PyObject *__pyx_v_selector4, PyObject *__pyx_v_filters); /* proto */
 static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, Py_buffer *__pyx_v_info, int __pyx_v_flags); /* proto */
 static void __pyx_pf_5numpy_7ndarray_2__releasebuffer__(PyArrayObject *__pyx_v_self, Py_buffer *__pyx_v_info); /* proto */
 static int __pyx_array___pyx_pf_15View_dot_MemoryView_5array___cinit__(struct __pyx_array_obj *__pyx_v_self, PyObject *__pyx_v_shape, Py_ssize_t __pyx_v_itemsize, PyObject *__pyx_v_format, PyObject *__pyx_v_mode, int __pyx_v_allocate_buffer); /* proto */
@@ -2398,17 +2406,18 @@ static __Pyx_CachedCFunction __pyx_umethod_PyDict_Type_items = {0, &__pyx_n_s_it
 static PyObject *__pyx_int_0;
 static PyObject *__pyx_int_1;
 static PyObject *__pyx_int_2;
+static PyObject *__pyx_int_3;
 static PyObject *__pyx_int_neg_1;
-static PyObject *__pyx_slice__4;
+static PyObject *__pyx_tuple_;
 static PyObject *__pyx_slice__5;
 static PyObject *__pyx_slice__6;
-static PyObject *__pyx_tuple__3;
-static PyObject *__pyx_tuple__7;
+static PyObject *__pyx_slice__7;
+static PyObject *__pyx_tuple__4;
 static PyObject *__pyx_tuple__8;
 static PyObject *__pyx_tuple__9;
-static PyObject *__pyx_slice__25;
 static PyObject *__pyx_slice__26;
 static PyObject *__pyx_slice__27;
+static PyObject *__pyx_slice__28;
 static PyObject *__pyx_tuple__10;
 static PyObject *__pyx_tuple__11;
 static PyObject *__pyx_tuple__12;
@@ -2424,32 +2433,33 @@ static PyObject *__pyx_tuple__21;
 static PyObject *__pyx_tuple__22;
 static PyObject *__pyx_tuple__23;
 static PyObject *__pyx_tuple__24;
-static PyObject *__pyx_tuple__28;
+static PyObject *__pyx_tuple__25;
 static PyObject *__pyx_tuple__29;
-static PyObject *__pyx_tuple__31;
-static PyObject *__pyx_tuple__33;
-static PyObject *__pyx_tuple__35;
-static PyObject *__pyx_tuple__37;
-static PyObject *__pyx_tuple__39;
-static PyObject *__pyx_tuple__41;
-static PyObject *__pyx_tuple__43;
+static PyObject *__pyx_tuple__30;
+static PyObject *__pyx_tuple__32;
+static PyObject *__pyx_tuple__34;
+static PyObject *__pyx_tuple__36;
+static PyObject *__pyx_tuple__38;
+static PyObject *__pyx_tuple__40;
+static PyObject *__pyx_tuple__42;
 static PyObject *__pyx_tuple__44;
 static PyObject *__pyx_tuple__45;
 static PyObject *__pyx_tuple__46;
 static PyObject *__pyx_tuple__47;
-static PyObject *__pyx_codeobj__30;
-static PyObject *__pyx_codeobj__32;
-static PyObject *__pyx_codeobj__34;
-static PyObject *__pyx_codeobj__36;
-static PyObject *__pyx_codeobj__38;
-static PyObject *__pyx_codeobj__40;
-static PyObject *__pyx_codeobj__42;
+static PyObject *__pyx_tuple__48;
+static PyObject *__pyx_codeobj__31;
+static PyObject *__pyx_codeobj__33;
+static PyObject *__pyx_codeobj__35;
+static PyObject *__pyx_codeobj__37;
+static PyObject *__pyx_codeobj__39;
+static PyObject *__pyx_codeobj__41;
+static PyObject *__pyx_codeobj__43;
 
 /* "mollib/core/geometry.pyx":22
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * cpdef double vector_length(np.ndarray[np.float64_t, ndim=1] vector):             # <<<<<<<<<<<<<<
- *     """Returns the length (in A) of a vector"""
+ *     """Return the length (in A) of a vector"""
  *     cdef Py_ssize_t i
  */
 
@@ -2478,7 +2488,7 @@ static double __pyx_f_6mollib_4core_8geometry_vector_length(PyArrayObject *__pyx
   __pyx_pybuffernd_vector.diminfo[0].strides = __pyx_pybuffernd_vector.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_vector.diminfo[0].shape = __pyx_pybuffernd_vector.rcbuffer->pybuffer.shape[0];
 
   /* "mollib/core/geometry.pyx":25
- *     """Returns the length (in A) of a vector"""
+ *     """Return the length (in A) of a vector"""
  *     cdef Py_ssize_t i
  *     cdef Py_ssize_t vector_size = vector.shape[0]             # <<<<<<<<<<<<<<
  *     cdef double v2 = 0.0
@@ -2532,7 +2542,7 @@ static double __pyx_f_6mollib_4core_8geometry_vector_length(PyArrayObject *__pyx
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * cpdef double vector_length(np.ndarray[np.float64_t, ndim=1] vector):             # <<<<<<<<<<<<<<
- *     """Returns the length (in A) of a vector"""
+ *     """Return the length (in A) of a vector"""
  *     cdef Py_ssize_t i
  */
 
@@ -2556,7 +2566,7 @@ static double __pyx_f_6mollib_4core_8geometry_vector_length(PyArrayObject *__pyx
 
 /* Python wrapper */
 static PyObject *__pyx_pw_6mollib_4core_8geometry_1vector_length(PyObject *__pyx_self, PyObject *__pyx_v_vector); /*proto*/
-static char __pyx_doc_6mollib_4core_8geometry_vector_length[] = "Returns the length (in A) of a vector";
+static char __pyx_doc_6mollib_4core_8geometry_vector_length[] = "Return the length (in A) of a vector";
 static PyObject *__pyx_pw_6mollib_4core_8geometry_1vector_length(PyObject *__pyx_self, PyObject *__pyx_v_vector) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
@@ -2616,7 +2626,320 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_vector_length(CYTHON_UNUSED Py
   return __pyx_r;
 }
 
-/* "mollib/core/geometry.pyx":32
+/* "mollib/core/geometry.pyx":35
+ * @cython.boundscheck(False)
+ * @cython.wraparound(False)
+ * cpdef np.ndarray[np.float64_t, ndim=1] cross(np.ndarray[np.float64_t, ndim=1] a,             # <<<<<<<<<<<<<<
+ *                                              np.ndarray[np.float64_t, ndim=1] b):
+ *     """Return the cross product between two vectors."""
+ */
+
+static PyObject *__pyx_pw_6mollib_4core_8geometry_3cross(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static PyArrayObject *__pyx_f_6mollib_4core_8geometry_cross(PyArrayObject *__pyx_v_a, PyArrayObject *__pyx_v_b, CYTHON_UNUSED int __pyx_skip_dispatch) {
+  PyArrayObject *__pyx_v_c = 0;
+  __Pyx_LocalBuf_ND __pyx_pybuffernd_a;
+  __Pyx_Buffer __pyx_pybuffer_a;
+  __Pyx_LocalBuf_ND __pyx_pybuffernd_b;
+  __Pyx_Buffer __pyx_pybuffer_b;
+  __Pyx_LocalBuf_ND __pyx_pybuffernd_c;
+  __Pyx_Buffer __pyx_pybuffer_c;
+  PyArrayObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  PyObject *__pyx_t_2 = NULL;
+  PyObject *__pyx_t_3 = NULL;
+  PyObject *__pyx_t_4 = NULL;
+  PyArrayObject *__pyx_t_5 = NULL;
+  Py_ssize_t __pyx_t_6;
+  Py_ssize_t __pyx_t_7;
+  Py_ssize_t __pyx_t_8;
+  Py_ssize_t __pyx_t_9;
+  Py_ssize_t __pyx_t_10;
+  Py_ssize_t __pyx_t_11;
+  Py_ssize_t __pyx_t_12;
+  Py_ssize_t __pyx_t_13;
+  Py_ssize_t __pyx_t_14;
+  Py_ssize_t __pyx_t_15;
+  Py_ssize_t __pyx_t_16;
+  Py_ssize_t __pyx_t_17;
+  Py_ssize_t __pyx_t_18;
+  Py_ssize_t __pyx_t_19;
+  Py_ssize_t __pyx_t_20;
+  __Pyx_RefNannySetupContext("cross", 0);
+  __pyx_pybuffer_c.pybuffer.buf = NULL;
+  __pyx_pybuffer_c.refcount = 0;
+  __pyx_pybuffernd_c.data = NULL;
+  __pyx_pybuffernd_c.rcbuffer = &__pyx_pybuffer_c;
+  __pyx_pybuffer_a.pybuffer.buf = NULL;
+  __pyx_pybuffer_a.refcount = 0;
+  __pyx_pybuffernd_a.data = NULL;
+  __pyx_pybuffernd_a.rcbuffer = &__pyx_pybuffer_a;
+  __pyx_pybuffer_b.pybuffer.buf = NULL;
+  __pyx_pybuffer_b.refcount = 0;
+  __pyx_pybuffernd_b.data = NULL;
+  __pyx_pybuffernd_b.rcbuffer = &__pyx_pybuffer_b;
+  {
+    __Pyx_BufFmt_StackElem __pyx_stack[1];
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_a.rcbuffer->pybuffer, (PyObject*)__pyx_v_a, &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 35, __pyx_L1_error)
+  }
+  __pyx_pybuffernd_a.diminfo[0].strides = __pyx_pybuffernd_a.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_a.diminfo[0].shape = __pyx_pybuffernd_a.rcbuffer->pybuffer.shape[0];
+  {
+    __Pyx_BufFmt_StackElem __pyx_stack[1];
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_b.rcbuffer->pybuffer, (PyObject*)__pyx_v_b, &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 35, __pyx_L1_error)
+  }
+  __pyx_pybuffernd_b.diminfo[0].strides = __pyx_pybuffernd_b.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_b.diminfo[0].shape = __pyx_pybuffernd_b.rcbuffer->pybuffer.shape[0];
+
+  /* "mollib/core/geometry.pyx":38
+ *                                              np.ndarray[np.float64_t, ndim=1] b):
+ *     """Return the cross product between two vectors."""
+ *     cdef np.ndarray[np.float64_t, ndim=1] c = np.zeros((3), dtype=np.float64)             # <<<<<<<<<<<<<<
+ *     c[0] = a[1]*b[2] - a[2]*b[1]
+ *     c[1] = a[2]*b[0] - a[0]*b[2]
+ */
+  __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 38, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_zeros); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 38, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_t_1 = PyDict_New(); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 38, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_3 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 38, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_float64); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 38, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_dtype, __pyx_t_4) < 0) __PYX_ERR(0, 38, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_tuple_, __pyx_t_1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 38, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  if (!(likely(((__pyx_t_4) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_4, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 38, __pyx_L1_error)
+  __pyx_t_5 = ((PyArrayObject *)__pyx_t_4);
+  {
+    __Pyx_BufFmt_StackElem __pyx_stack[1];
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_c.rcbuffer->pybuffer, (PyObject*)__pyx_t_5, &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES| PyBUF_WRITABLE, 1, 0, __pyx_stack) == -1)) {
+      __pyx_v_c = ((PyArrayObject *)Py_None); __Pyx_INCREF(Py_None); __pyx_pybuffernd_c.rcbuffer->pybuffer.buf = NULL;
+      __PYX_ERR(0, 38, __pyx_L1_error)
+    } else {__pyx_pybuffernd_c.diminfo[0].strides = __pyx_pybuffernd_c.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_c.diminfo[0].shape = __pyx_pybuffernd_c.rcbuffer->pybuffer.shape[0];
+    }
+  }
+  __pyx_t_5 = 0;
+  __pyx_v_c = ((PyArrayObject *)__pyx_t_4);
+  __pyx_t_4 = 0;
+
+  /* "mollib/core/geometry.pyx":39
+ *     """Return the cross product between two vectors."""
+ *     cdef np.ndarray[np.float64_t, ndim=1] c = np.zeros((3), dtype=np.float64)
+ *     c[0] = a[1]*b[2] - a[2]*b[1]             # <<<<<<<<<<<<<<
+ *     c[1] = a[2]*b[0] - a[0]*b[2]
+ *     c[2] = a[0]*b[1] - a[1]*b[0]
+ */
+  __pyx_t_6 = 1;
+  __pyx_t_7 = 2;
+  __pyx_t_8 = 2;
+  __pyx_t_9 = 1;
+  __pyx_t_10 = 0;
+  *__Pyx_BufPtrStrided1d(__pyx_t_5numpy_float64_t *, __pyx_pybuffernd_c.rcbuffer->pybuffer.buf, __pyx_t_10, __pyx_pybuffernd_c.diminfo[0].strides) = (((*__Pyx_BufPtrStrided1d(__pyx_t_5numpy_float64_t *, __pyx_pybuffernd_a.rcbuffer->pybuffer.buf, __pyx_t_6, __pyx_pybuffernd_a.diminfo[0].strides)) * (*__Pyx_BufPtrStrided1d(__pyx_t_5numpy_float64_t *, __pyx_pybuffernd_b.rcbuffer->pybuffer.buf, __pyx_t_7, __pyx_pybuffernd_b.diminfo[0].strides))) - ((*__Pyx_BufPtrStrided1d(__pyx_t_5numpy_float64_t *, __pyx_pybuffernd_a.rcbuffer->pybuffer.buf, __pyx_t_8, __pyx_pybuffernd_a.diminfo[0].strides)) * (*__Pyx_BufPtrStrided1d(__pyx_t_5numpy_float64_t *, __pyx_pybuffernd_b.rcbuffer->pybuffer.buf, __pyx_t_9, __pyx_pybuffernd_b.diminfo[0].strides))));
+
+  /* "mollib/core/geometry.pyx":40
+ *     cdef np.ndarray[np.float64_t, ndim=1] c = np.zeros((3), dtype=np.float64)
+ *     c[0] = a[1]*b[2] - a[2]*b[1]
+ *     c[1] = a[2]*b[0] - a[0]*b[2]             # <<<<<<<<<<<<<<
+ *     c[2] = a[0]*b[1] - a[1]*b[0]
+ *     return c
+ */
+  __pyx_t_11 = 2;
+  __pyx_t_12 = 0;
+  __pyx_t_13 = 0;
+  __pyx_t_14 = 2;
+  __pyx_t_15 = 1;
+  *__Pyx_BufPtrStrided1d(__pyx_t_5numpy_float64_t *, __pyx_pybuffernd_c.rcbuffer->pybuffer.buf, __pyx_t_15, __pyx_pybuffernd_c.diminfo[0].strides) = (((*__Pyx_BufPtrStrided1d(__pyx_t_5numpy_float64_t *, __pyx_pybuffernd_a.rcbuffer->pybuffer.buf, __pyx_t_11, __pyx_pybuffernd_a.diminfo[0].strides)) * (*__Pyx_BufPtrStrided1d(__pyx_t_5numpy_float64_t *, __pyx_pybuffernd_b.rcbuffer->pybuffer.buf, __pyx_t_12, __pyx_pybuffernd_b.diminfo[0].strides))) - ((*__Pyx_BufPtrStrided1d(__pyx_t_5numpy_float64_t *, __pyx_pybuffernd_a.rcbuffer->pybuffer.buf, __pyx_t_13, __pyx_pybuffernd_a.diminfo[0].strides)) * (*__Pyx_BufPtrStrided1d(__pyx_t_5numpy_float64_t *, __pyx_pybuffernd_b.rcbuffer->pybuffer.buf, __pyx_t_14, __pyx_pybuffernd_b.diminfo[0].strides))));
+
+  /* "mollib/core/geometry.pyx":41
+ *     c[0] = a[1]*b[2] - a[2]*b[1]
+ *     c[1] = a[2]*b[0] - a[0]*b[2]
+ *     c[2] = a[0]*b[1] - a[1]*b[0]             # <<<<<<<<<<<<<<
+ *     return c
+ * 
+ */
+  __pyx_t_16 = 0;
+  __pyx_t_17 = 1;
+  __pyx_t_18 = 1;
+  __pyx_t_19 = 0;
+  __pyx_t_20 = 2;
+  *__Pyx_BufPtrStrided1d(__pyx_t_5numpy_float64_t *, __pyx_pybuffernd_c.rcbuffer->pybuffer.buf, __pyx_t_20, __pyx_pybuffernd_c.diminfo[0].strides) = (((*__Pyx_BufPtrStrided1d(__pyx_t_5numpy_float64_t *, __pyx_pybuffernd_a.rcbuffer->pybuffer.buf, __pyx_t_16, __pyx_pybuffernd_a.diminfo[0].strides)) * (*__Pyx_BufPtrStrided1d(__pyx_t_5numpy_float64_t *, __pyx_pybuffernd_b.rcbuffer->pybuffer.buf, __pyx_t_17, __pyx_pybuffernd_b.diminfo[0].strides))) - ((*__Pyx_BufPtrStrided1d(__pyx_t_5numpy_float64_t *, __pyx_pybuffernd_a.rcbuffer->pybuffer.buf, __pyx_t_18, __pyx_pybuffernd_a.diminfo[0].strides)) * (*__Pyx_BufPtrStrided1d(__pyx_t_5numpy_float64_t *, __pyx_pybuffernd_b.rcbuffer->pybuffer.buf, __pyx_t_19, __pyx_pybuffernd_b.diminfo[0].strides))));
+
+  /* "mollib/core/geometry.pyx":42
+ *     c[1] = a[2]*b[0] - a[0]*b[2]
+ *     c[2] = a[0]*b[1] - a[1]*b[0]
+ *     return c             # <<<<<<<<<<<<<<
+ * 
+ * 
+ */
+  __Pyx_XDECREF(((PyObject *)__pyx_r));
+  __Pyx_INCREF(((PyObject *)__pyx_v_c));
+  __pyx_r = ((PyArrayObject *)__pyx_v_c);
+  goto __pyx_L0;
+
+  /* "mollib/core/geometry.pyx":35
+ * @cython.boundscheck(False)
+ * @cython.wraparound(False)
+ * cpdef np.ndarray[np.float64_t, ndim=1] cross(np.ndarray[np.float64_t, ndim=1] a,             # <<<<<<<<<<<<<<
+ *                                              np.ndarray[np.float64_t, ndim=1] b):
+ *     """Return the cross product between two vectors."""
+ */
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_XDECREF(__pyx_t_2);
+  __Pyx_XDECREF(__pyx_t_3);
+  __Pyx_XDECREF(__pyx_t_4);
+  { PyObject *__pyx_type, *__pyx_value, *__pyx_tb;
+    __Pyx_PyThreadState_declare
+    __Pyx_PyThreadState_assign
+    __Pyx_ErrFetch(&__pyx_type, &__pyx_value, &__pyx_tb);
+    __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_a.rcbuffer->pybuffer);
+    __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_b.rcbuffer->pybuffer);
+    __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_c.rcbuffer->pybuffer);
+  __Pyx_ErrRestore(__pyx_type, __pyx_value, __pyx_tb);}
+  __Pyx_AddTraceback("mollib.core.geometry.cross", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = 0;
+  goto __pyx_L2;
+  __pyx_L0:;
+  __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_a.rcbuffer->pybuffer);
+  __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_b.rcbuffer->pybuffer);
+  __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_c.rcbuffer->pybuffer);
+  __pyx_L2:;
+  __Pyx_XDECREF((PyObject *)__pyx_v_c);
+  __Pyx_XGIVEREF((PyObject *)__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* Python wrapper */
+static PyObject *__pyx_pw_6mollib_4core_8geometry_3cross(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static char __pyx_doc_6mollib_4core_8geometry_2cross[] = "Return the cross product between two vectors.";
+static PyObject *__pyx_pw_6mollib_4core_8geometry_3cross(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+  PyArrayObject *__pyx_v_a = 0;
+  PyArrayObject *__pyx_v_b = 0;
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("cross (wrapper)", 0);
+  {
+    static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_a,&__pyx_n_s_b,0};
+    PyObject* values[2] = {0,0};
+    if (unlikely(__pyx_kwds)) {
+      Py_ssize_t kw_args;
+      const Py_ssize_t pos_args = PyTuple_GET_SIZE(__pyx_args);
+      switch (pos_args) {
+        case  2: values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
+        case  1: values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
+        case  0: break;
+        default: goto __pyx_L5_argtuple_error;
+      }
+      kw_args = PyDict_Size(__pyx_kwds);
+      switch (pos_args) {
+        case  0:
+        if (likely((values[0] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_a)) != 0)) kw_args--;
+        else goto __pyx_L5_argtuple_error;
+        case  1:
+        if (likely((values[1] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_b)) != 0)) kw_args--;
+        else {
+          __Pyx_RaiseArgtupleInvalid("cross", 1, 2, 2, 1); __PYX_ERR(0, 35, __pyx_L3_error)
+        }
+      }
+      if (unlikely(kw_args > 0)) {
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "cross") < 0)) __PYX_ERR(0, 35, __pyx_L3_error)
+      }
+    } else if (PyTuple_GET_SIZE(__pyx_args) != 2) {
+      goto __pyx_L5_argtuple_error;
+    } else {
+      values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
+      values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
+    }
+    __pyx_v_a = ((PyArrayObject *)values[0]);
+    __pyx_v_b = ((PyArrayObject *)values[1]);
+  }
+  goto __pyx_L4_argument_unpacking_done;
+  __pyx_L5_argtuple_error:;
+  __Pyx_RaiseArgtupleInvalid("cross", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 35, __pyx_L3_error)
+  __pyx_L3_error:;
+  __Pyx_AddTraceback("mollib.core.geometry.cross", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_RefNannyFinishContext();
+  return NULL;
+  __pyx_L4_argument_unpacking_done:;
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_a), __pyx_ptype_5numpy_ndarray, 1, "a", 0))) __PYX_ERR(0, 35, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_b), __pyx_ptype_5numpy_ndarray, 1, "b", 0))) __PYX_ERR(0, 36, __pyx_L1_error)
+  __pyx_r = __pyx_pf_6mollib_4core_8geometry_2cross(__pyx_self, __pyx_v_a, __pyx_v_b);
+
+  /* function exit code */
+  goto __pyx_L0;
+  __pyx_L1_error:;
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_6mollib_4core_8geometry_2cross(CYTHON_UNUSED PyObject *__pyx_self, PyArrayObject *__pyx_v_a, PyArrayObject *__pyx_v_b) {
+  __Pyx_LocalBuf_ND __pyx_pybuffernd_a;
+  __Pyx_Buffer __pyx_pybuffer_a;
+  __Pyx_LocalBuf_ND __pyx_pybuffernd_b;
+  __Pyx_Buffer __pyx_pybuffer_b;
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  __Pyx_RefNannySetupContext("cross", 0);
+  __pyx_pybuffer_a.pybuffer.buf = NULL;
+  __pyx_pybuffer_a.refcount = 0;
+  __pyx_pybuffernd_a.data = NULL;
+  __pyx_pybuffernd_a.rcbuffer = &__pyx_pybuffer_a;
+  __pyx_pybuffer_b.pybuffer.buf = NULL;
+  __pyx_pybuffer_b.refcount = 0;
+  __pyx_pybuffernd_b.data = NULL;
+  __pyx_pybuffernd_b.rcbuffer = &__pyx_pybuffer_b;
+  {
+    __Pyx_BufFmt_StackElem __pyx_stack[1];
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_a.rcbuffer->pybuffer, (PyObject*)__pyx_v_a, &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 35, __pyx_L1_error)
+  }
+  __pyx_pybuffernd_a.diminfo[0].strides = __pyx_pybuffernd_a.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_a.diminfo[0].shape = __pyx_pybuffernd_a.rcbuffer->pybuffer.shape[0];
+  {
+    __Pyx_BufFmt_StackElem __pyx_stack[1];
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_b.rcbuffer->pybuffer, (PyObject*)__pyx_v_b, &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 35, __pyx_L1_error)
+  }
+  __pyx_pybuffernd_b.diminfo[0].strides = __pyx_pybuffernd_b.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_b.diminfo[0].shape = __pyx_pybuffernd_b.rcbuffer->pybuffer.shape[0];
+  __Pyx_XDECREF(__pyx_r);
+  __pyx_t_1 = ((PyObject *)__pyx_f_6mollib_4core_8geometry_cross(__pyx_v_a, __pyx_v_b, 0)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 35, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_r = __pyx_t_1;
+  __pyx_t_1 = 0;
+  goto __pyx_L0;
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  { PyObject *__pyx_type, *__pyx_value, *__pyx_tb;
+    __Pyx_PyThreadState_declare
+    __Pyx_PyThreadState_assign
+    __Pyx_ErrFetch(&__pyx_type, &__pyx_value, &__pyx_tb);
+    __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_a.rcbuffer->pybuffer);
+    __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_b.rcbuffer->pybuffer);
+  __Pyx_ErrRestore(__pyx_type, __pyx_value, __pyx_tb);}
+  __Pyx_AddTraceback("mollib.core.geometry.cross", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  goto __pyx_L2;
+  __pyx_L0:;
+  __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_a.rcbuffer->pybuffer);
+  __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_b.rcbuffer->pybuffer);
+  __pyx_L2:;
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "mollib/core/geometry.pyx":45
  * 
  * 
  * def calc_vector(vector_i, vector_j, normalize=True):             # <<<<<<<<<<<<<<
@@ -2625,10 +2948,10 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_vector_length(CYTHON_UNUSED Py
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_6mollib_4core_8geometry_3calc_vector(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static char __pyx_doc_6mollib_4core_8geometry_2calc_vector[] = "Returns the vector between atoms 'i' and 'j' with optional\n    normalization.";
-static PyMethodDef __pyx_mdef_6mollib_4core_8geometry_3calc_vector = {"calc_vector", (PyCFunction)__pyx_pw_6mollib_4core_8geometry_3calc_vector, METH_VARARGS|METH_KEYWORDS, __pyx_doc_6mollib_4core_8geometry_2calc_vector};
-static PyObject *__pyx_pw_6mollib_4core_8geometry_3calc_vector(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+static PyObject *__pyx_pw_6mollib_4core_8geometry_5calc_vector(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static char __pyx_doc_6mollib_4core_8geometry_4calc_vector[] = "Returns the vector between atoms 'i' and 'j' with optional\n    normalization.";
+static PyMethodDef __pyx_mdef_6mollib_4core_8geometry_5calc_vector = {"calc_vector", (PyCFunction)__pyx_pw_6mollib_4core_8geometry_5calc_vector, METH_VARARGS|METH_KEYWORDS, __pyx_doc_6mollib_4core_8geometry_4calc_vector};
+static PyObject *__pyx_pw_6mollib_4core_8geometry_5calc_vector(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyObject *__pyx_v_vector_i = 0;
   PyObject *__pyx_v_vector_j = 0;
   PyObject *__pyx_v_normalize = 0;
@@ -2657,7 +2980,7 @@ static PyObject *__pyx_pw_6mollib_4core_8geometry_3calc_vector(PyObject *__pyx_s
         case  1:
         if (likely((values[1] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_vector_j)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("calc_vector", 0, 2, 3, 1); __PYX_ERR(0, 32, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("calc_vector", 0, 2, 3, 1); __PYX_ERR(0, 45, __pyx_L3_error)
         }
         case  2:
         if (kw_args > 0) {
@@ -2666,7 +2989,7 @@ static PyObject *__pyx_pw_6mollib_4core_8geometry_3calc_vector(PyObject *__pyx_s
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "calc_vector") < 0)) __PYX_ERR(0, 32, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "calc_vector") < 0)) __PYX_ERR(0, 45, __pyx_L3_error)
       }
     } else {
       switch (PyTuple_GET_SIZE(__pyx_args)) {
@@ -2683,20 +3006,20 @@ static PyObject *__pyx_pw_6mollib_4core_8geometry_3calc_vector(PyObject *__pyx_s
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("calc_vector", 0, 2, 3, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 32, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("calc_vector", 0, 2, 3, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 45, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("mollib.core.geometry.calc_vector", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_6mollib_4core_8geometry_2calc_vector(__pyx_self, __pyx_v_vector_i, __pyx_v_vector_j, __pyx_v_normalize);
+  __pyx_r = __pyx_pf_6mollib_4core_8geometry_4calc_vector(__pyx_self, __pyx_v_vector_i, __pyx_v_vector_j, __pyx_v_normalize);
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_6mollib_4core_8geometry_2calc_vector(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_vector_i, PyObject *__pyx_v_vector_j, PyObject *__pyx_v_normalize) {
+static PyObject *__pyx_pf_6mollib_4core_8geometry_4calc_vector(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_vector_i, PyObject *__pyx_v_vector_j, PyObject *__pyx_v_normalize) {
   PyObject *__pyx_v_vec = NULL;
   double __pyx_v_length;
   PyObject *__pyx_r = NULL;
@@ -2706,54 +3029,54 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_2calc_vector(CYTHON_UNUSED PyO
   PyObject *__pyx_t_3 = NULL;
   __Pyx_RefNannySetupContext("calc_vector", 0);
 
-  /* "mollib/core/geometry.pyx":35
+  /* "mollib/core/geometry.pyx":48
  *     """Returns the vector between atoms 'i' and 'j' with optional
  *     normalization."""
  *     vec = vector_i - vector_j             # <<<<<<<<<<<<<<
  * 
  *     if normalize:
  */
-  __pyx_t_1 = PyNumber_Subtract(__pyx_v_vector_i, __pyx_v_vector_j); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 35, __pyx_L1_error)
+  __pyx_t_1 = PyNumber_Subtract(__pyx_v_vector_i, __pyx_v_vector_j); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 48, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_vec = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "mollib/core/geometry.pyx":37
+  /* "mollib/core/geometry.pyx":50
  *     vec = vector_i - vector_j
  * 
  *     if normalize:             # <<<<<<<<<<<<<<
  *         length = vector_length(vec)
  *         vec /= length
  */
-  __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_v_normalize); if (unlikely(__pyx_t_2 < 0)) __PYX_ERR(0, 37, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_v_normalize); if (unlikely(__pyx_t_2 < 0)) __PYX_ERR(0, 50, __pyx_L1_error)
   if (__pyx_t_2) {
 
-    /* "mollib/core/geometry.pyx":38
+    /* "mollib/core/geometry.pyx":51
  * 
  *     if normalize:
  *         length = vector_length(vec)             # <<<<<<<<<<<<<<
  *         vec /= length
  *     return vec
  */
-    if (!(likely(((__pyx_v_vec) == Py_None) || likely(__Pyx_TypeTest(__pyx_v_vec, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 38, __pyx_L1_error)
+    if (!(likely(((__pyx_v_vec) == Py_None) || likely(__Pyx_TypeTest(__pyx_v_vec, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 51, __pyx_L1_error)
     __pyx_v_length = __pyx_f_6mollib_4core_8geometry_vector_length(((PyArrayObject *)__pyx_v_vec), 0);
 
-    /* "mollib/core/geometry.pyx":39
+    /* "mollib/core/geometry.pyx":52
  *     if normalize:
  *         length = vector_length(vec)
  *         vec /= length             # <<<<<<<<<<<<<<
  *     return vec
  * 
  */
-    __pyx_t_1 = PyFloat_FromDouble(__pyx_v_length); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 39, __pyx_L1_error)
+    __pyx_t_1 = PyFloat_FromDouble(__pyx_v_length); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 52, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_3 = __Pyx_PyNumber_InPlaceDivide(__pyx_v_vec, __pyx_t_1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 39, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyNumber_InPlaceDivide(__pyx_v_vec, __pyx_t_1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 52, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
     __Pyx_DECREF_SET(__pyx_v_vec, __pyx_t_3);
     __pyx_t_3 = 0;
 
-    /* "mollib/core/geometry.pyx":37
+    /* "mollib/core/geometry.pyx":50
  *     vec = vector_i - vector_j
  * 
  *     if normalize:             # <<<<<<<<<<<<<<
@@ -2762,7 +3085,7 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_2calc_vector(CYTHON_UNUSED PyO
  */
   }
 
-  /* "mollib/core/geometry.pyx":40
+  /* "mollib/core/geometry.pyx":53
  *         length = vector_length(vec)
  *         vec /= length
  *     return vec             # <<<<<<<<<<<<<<
@@ -2774,7 +3097,7 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_2calc_vector(CYTHON_UNUSED PyO
   __pyx_r = __pyx_v_vec;
   goto __pyx_L0;
 
-  /* "mollib/core/geometry.pyx":32
+  /* "mollib/core/geometry.pyx":45
  * 
  * 
  * def calc_vector(vector_i, vector_j, normalize=True):             # <<<<<<<<<<<<<<
@@ -2795,7 +3118,7 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_2calc_vector(CYTHON_UNUSED PyO
   return __pyx_r;
 }
 
-/* "mollib/core/geometry.pyx":45
+/* "mollib/core/geometry.pyx":58
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * cpdef double measure_distance(object atom_1, object atom_2):             # <<<<<<<<<<<<<<
@@ -2803,7 +3126,7 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_2calc_vector(CYTHON_UNUSED PyO
  * 
  */
 
-static PyObject *__pyx_pw_6mollib_4core_8geometry_5measure_distance(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static PyObject *__pyx_pw_6mollib_4core_8geometry_7measure_distance(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
 static double __pyx_f_6mollib_4core_8geometry_measure_distance(PyObject *__pyx_v_atom_1, PyObject *__pyx_v_atom_2, CYTHON_UNUSED int __pyx_skip_dispatch) {
   double __pyx_v_x;
   double __pyx_v_y;
@@ -2839,7 +3162,7 @@ static double __pyx_f_6mollib_4core_8geometry_measure_distance(PyObject *__pyx_v
   __pyx_pybuffernd_vj.data = NULL;
   __pyx_pybuffernd_vj.rcbuffer = &__pyx_pybuffer_vj;
 
-  /* "mollib/core/geometry.pyx":70
+  /* "mollib/core/geometry.pyx":83
  *     """
  *     cdef double x, y, z
  *     cdef double length = 0.0             # <<<<<<<<<<<<<<
@@ -2848,16 +3171,16 @@ static double __pyx_f_6mollib_4core_8geometry_measure_distance(PyObject *__pyx_v
  */
   __pyx_v_length = 0.0;
 
-  /* "mollib/core/geometry.pyx":73
+  /* "mollib/core/geometry.pyx":86
  *     cdef np.ndarray[np.float64_t, ndim=1] vi, vj
  * 
  *     vi = atom_1.pos             # <<<<<<<<<<<<<<
  *     vj = atom_2.pos
  * 
  */
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_atom_1, __pyx_n_s_pos); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 73, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_atom_1, __pyx_n_s_pos); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 86, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (!(likely(((__pyx_t_1) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_1, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 73, __pyx_L1_error)
+  if (!(likely(((__pyx_t_1) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_1, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 86, __pyx_L1_error)
   __pyx_t_2 = ((PyArrayObject *)__pyx_t_1);
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
@@ -2873,22 +3196,22 @@ static double __pyx_f_6mollib_4core_8geometry_measure_distance(PyObject *__pyx_v
       }
     }
     __pyx_pybuffernd_vi.diminfo[0].strides = __pyx_pybuffernd_vi.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_vi.diminfo[0].shape = __pyx_pybuffernd_vi.rcbuffer->pybuffer.shape[0];
-    if (unlikely(__pyx_t_3 < 0)) __PYX_ERR(0, 73, __pyx_L1_error)
+    if (unlikely(__pyx_t_3 < 0)) __PYX_ERR(0, 86, __pyx_L1_error)
   }
   __pyx_t_2 = 0;
   __pyx_v_vi = ((PyArrayObject *)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "mollib/core/geometry.pyx":74
+  /* "mollib/core/geometry.pyx":87
  * 
  *     vi = atom_1.pos
  *     vj = atom_2.pos             # <<<<<<<<<<<<<<
  * 
  *     x = vi[0] - vj[0]
  */
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_atom_2, __pyx_n_s_pos); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 74, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_atom_2, __pyx_n_s_pos); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 87, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (!(likely(((__pyx_t_1) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_1, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 74, __pyx_L1_error)
+  if (!(likely(((__pyx_t_1) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_1, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 87, __pyx_L1_error)
   __pyx_t_2 = ((PyArrayObject *)__pyx_t_1);
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
@@ -2904,13 +3227,13 @@ static double __pyx_f_6mollib_4core_8geometry_measure_distance(PyObject *__pyx_v
       }
     }
     __pyx_pybuffernd_vj.diminfo[0].strides = __pyx_pybuffernd_vj.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_vj.diminfo[0].shape = __pyx_pybuffernd_vj.rcbuffer->pybuffer.shape[0];
-    if (unlikely(__pyx_t_3 < 0)) __PYX_ERR(0, 74, __pyx_L1_error)
+    if (unlikely(__pyx_t_3 < 0)) __PYX_ERR(0, 87, __pyx_L1_error)
   }
   __pyx_t_2 = 0;
   __pyx_v_vj = ((PyArrayObject *)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "mollib/core/geometry.pyx":76
+  /* "mollib/core/geometry.pyx":89
  *     vj = atom_2.pos
  * 
  *     x = vi[0] - vj[0]             # <<<<<<<<<<<<<<
@@ -2921,7 +3244,7 @@ static double __pyx_f_6mollib_4core_8geometry_measure_distance(PyObject *__pyx_v
   __pyx_t_8 = 0;
   __pyx_v_x = ((*__Pyx_BufPtrStrided1d(__pyx_t_5numpy_float64_t *, __pyx_pybuffernd_vi.rcbuffer->pybuffer.buf, __pyx_t_7, __pyx_pybuffernd_vi.diminfo[0].strides)) - (*__Pyx_BufPtrStrided1d(__pyx_t_5numpy_float64_t *, __pyx_pybuffernd_vj.rcbuffer->pybuffer.buf, __pyx_t_8, __pyx_pybuffernd_vj.diminfo[0].strides)));
 
-  /* "mollib/core/geometry.pyx":77
+  /* "mollib/core/geometry.pyx":90
  * 
  *     x = vi[0] - vj[0]
  *     y = vi[1] - vj[1]             # <<<<<<<<<<<<<<
@@ -2932,7 +3255,7 @@ static double __pyx_f_6mollib_4core_8geometry_measure_distance(PyObject *__pyx_v
   __pyx_t_10 = 1;
   __pyx_v_y = ((*__Pyx_BufPtrStrided1d(__pyx_t_5numpy_float64_t *, __pyx_pybuffernd_vi.rcbuffer->pybuffer.buf, __pyx_t_9, __pyx_pybuffernd_vi.diminfo[0].strides)) - (*__Pyx_BufPtrStrided1d(__pyx_t_5numpy_float64_t *, __pyx_pybuffernd_vj.rcbuffer->pybuffer.buf, __pyx_t_10, __pyx_pybuffernd_vj.diminfo[0].strides)));
 
-  /* "mollib/core/geometry.pyx":78
+  /* "mollib/core/geometry.pyx":91
  *     x = vi[0] - vj[0]
  *     y = vi[1] - vj[1]
  *     z = vi[2] - vj[2]             # <<<<<<<<<<<<<<
@@ -2943,7 +3266,7 @@ static double __pyx_f_6mollib_4core_8geometry_measure_distance(PyObject *__pyx_v
   __pyx_t_12 = 2;
   __pyx_v_z = ((*__Pyx_BufPtrStrided1d(__pyx_t_5numpy_float64_t *, __pyx_pybuffernd_vi.rcbuffer->pybuffer.buf, __pyx_t_11, __pyx_pybuffernd_vi.diminfo[0].strides)) - (*__Pyx_BufPtrStrided1d(__pyx_t_5numpy_float64_t *, __pyx_pybuffernd_vj.rcbuffer->pybuffer.buf, __pyx_t_12, __pyx_pybuffernd_vj.diminfo[0].strides)));
 
-  /* "mollib/core/geometry.pyx":80
+  /* "mollib/core/geometry.pyx":93
  *     z = vi[2] - vj[2]
  * 
  *     length = sqrt(x * x + y * y + z * z)             # <<<<<<<<<<<<<<
@@ -2952,7 +3275,7 @@ static double __pyx_f_6mollib_4core_8geometry_measure_distance(PyObject *__pyx_v
  */
   __pyx_v_length = sqrt((((__pyx_v_x * __pyx_v_x) + (__pyx_v_y * __pyx_v_y)) + (__pyx_v_z * __pyx_v_z)));
 
-  /* "mollib/core/geometry.pyx":81
+  /* "mollib/core/geometry.pyx":94
  * 
  *     length = sqrt(x * x + y * y + z * z)
  *     return length             # <<<<<<<<<<<<<<
@@ -2962,7 +3285,7 @@ static double __pyx_f_6mollib_4core_8geometry_measure_distance(PyObject *__pyx_v
   __pyx_r = __pyx_v_length;
   goto __pyx_L0;
 
-  /* "mollib/core/geometry.pyx":45
+  /* "mollib/core/geometry.pyx":58
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * cpdef double measure_distance(object atom_1, object atom_2):             # <<<<<<<<<<<<<<
@@ -2994,9 +3317,9 @@ static double __pyx_f_6mollib_4core_8geometry_measure_distance(PyObject *__pyx_v
 }
 
 /* Python wrapper */
-static PyObject *__pyx_pw_6mollib_4core_8geometry_5measure_distance(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static char __pyx_doc_6mollib_4core_8geometry_4measure_distance[] = "Measure the atom_1--atom_2 distance.\n\n    Parameters\n    ----------\n    atom_1 : :obj:`Atom`\n        The first atom.\n    atom_2 : :obj:`Atom`\n        The second atom.\n\n    Returns\n    -------\n    distance : float\n        The distance (in Angstroms)\n\n    Examples\n    --------\n    >>> from mollib.core import Molecule, measure_distance\n    >>> mol = Molecule('2KXA')\n    >>> d = measure_distance(mol['A'][3]['CA'], mol['A'][3]['HA'])\n    >>> print(\"{:.2f} A\".format(d))\n    1.08 A\n\n    ";
-static PyObject *__pyx_pw_6mollib_4core_8geometry_5measure_distance(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+static PyObject *__pyx_pw_6mollib_4core_8geometry_7measure_distance(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static char __pyx_doc_6mollib_4core_8geometry_6measure_distance[] = "Measure the atom_1--atom_2 distance.\n\n    Parameters\n    ----------\n    atom_1 : :obj:`Atom`\n        The first atom.\n    atom_2 : :obj:`Atom`\n        The second atom.\n\n    Returns\n    -------\n    distance : float\n        The distance (in Angstroms)\n\n    Examples\n    --------\n    >>> from mollib.core import Molecule, measure_distance\n    >>> mol = Molecule('2KXA')\n    >>> d = measure_distance(mol['A'][3]['CA'], mol['A'][3]['HA'])\n    >>> print(\"{:.2f} A\".format(d))\n    1.08 A\n\n    ";
+static PyObject *__pyx_pw_6mollib_4core_8geometry_7measure_distance(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyObject *__pyx_v_atom_1 = 0;
   PyObject *__pyx_v_atom_2 = 0;
   PyObject *__pyx_r = 0;
@@ -3022,11 +3345,11 @@ static PyObject *__pyx_pw_6mollib_4core_8geometry_5measure_distance(PyObject *__
         case  1:
         if (likely((values[1] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_atom_2)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("measure_distance", 1, 2, 2, 1); __PYX_ERR(0, 45, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("measure_distance", 1, 2, 2, 1); __PYX_ERR(0, 58, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "measure_distance") < 0)) __PYX_ERR(0, 45, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "measure_distance") < 0)) __PYX_ERR(0, 58, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 2) {
       goto __pyx_L5_argtuple_error;
@@ -3039,26 +3362,26 @@ static PyObject *__pyx_pw_6mollib_4core_8geometry_5measure_distance(PyObject *__
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("measure_distance", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 45, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("measure_distance", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 58, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("mollib.core.geometry.measure_distance", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_6mollib_4core_8geometry_4measure_distance(__pyx_self, __pyx_v_atom_1, __pyx_v_atom_2);
+  __pyx_r = __pyx_pf_6mollib_4core_8geometry_6measure_distance(__pyx_self, __pyx_v_atom_1, __pyx_v_atom_2);
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_6mollib_4core_8geometry_4measure_distance(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_atom_1, PyObject *__pyx_v_atom_2) {
+static PyObject *__pyx_pf_6mollib_4core_8geometry_6measure_distance(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_atom_1, PyObject *__pyx_v_atom_2) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("measure_distance", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = PyFloat_FromDouble(__pyx_f_6mollib_4core_8geometry_measure_distance(__pyx_v_atom_1, __pyx_v_atom_2, 0)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 45, __pyx_L1_error)
+  __pyx_t_1 = PyFloat_FromDouble(__pyx_f_6mollib_4core_8geometry_measure_distance(__pyx_v_atom_1, __pyx_v_atom_2, 0)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 58, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -3075,7 +3398,7 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_4measure_distance(CYTHON_UNUSE
   return __pyx_r;
 }
 
-/* "mollib/core/geometry.pyx":85
+/* "mollib/core/geometry.pyx":98
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * cdef double _within_distance(double[:] point1, double[:] point2,             # <<<<<<<<<<<<<<
@@ -3097,7 +3420,7 @@ static double __pyx_f_6mollib_4core_8geometry__within_distance(__Pyx_memviewslic
   Py_ssize_t __pyx_t_6;
   int __pyx_t_7;
 
-  /* "mollib/core/geometry.pyx":105
+  /* "mollib/core/geometry.pyx":118
  *     # assert
  *     cdef double vx, vy, vz, d2
  *     vx = point1[0] - point2[0]             # <<<<<<<<<<<<<<
@@ -3108,7 +3431,7 @@ static double __pyx_f_6mollib_4core_8geometry__within_distance(__Pyx_memviewslic
   __pyx_t_2 = 0;
   __pyx_v_vx = ((*((double *) ( /* dim=0 */ (__pyx_v_point1.data + __pyx_t_1 * __pyx_v_point1.strides[0]) ))) - (*((double *) ( /* dim=0 */ (__pyx_v_point2.data + __pyx_t_2 * __pyx_v_point2.strides[0]) ))));
 
-  /* "mollib/core/geometry.pyx":106
+  /* "mollib/core/geometry.pyx":119
  *     cdef double vx, vy, vz, d2
  *     vx = point1[0] - point2[0]
  *     vy = point1[1] - point2[1]             # <<<<<<<<<<<<<<
@@ -3119,7 +3442,7 @@ static double __pyx_f_6mollib_4core_8geometry__within_distance(__Pyx_memviewslic
   __pyx_t_4 = 1;
   __pyx_v_vy = ((*((double *) ( /* dim=0 */ (__pyx_v_point1.data + __pyx_t_3 * __pyx_v_point1.strides[0]) ))) - (*((double *) ( /* dim=0 */ (__pyx_v_point2.data + __pyx_t_4 * __pyx_v_point2.strides[0]) ))));
 
-  /* "mollib/core/geometry.pyx":107
+  /* "mollib/core/geometry.pyx":120
  *     vx = point1[0] - point2[0]
  *     vy = point1[1] - point2[1]
  *     vz = point1[2] - point2[2]             # <<<<<<<<<<<<<<
@@ -3130,7 +3453,7 @@ static double __pyx_f_6mollib_4core_8geometry__within_distance(__Pyx_memviewslic
   __pyx_t_6 = 2;
   __pyx_v_vz = ((*((double *) ( /* dim=0 */ (__pyx_v_point1.data + __pyx_t_5 * __pyx_v_point1.strides[0]) ))) - (*((double *) ( /* dim=0 */ (__pyx_v_point2.data + __pyx_t_6 * __pyx_v_point2.strides[0]) ))));
 
-  /* "mollib/core/geometry.pyx":109
+  /* "mollib/core/geometry.pyx":122
  *     vz = point1[2] - point2[2]
  * 
  *     d2 = vx * vx             # <<<<<<<<<<<<<<
@@ -3139,7 +3462,7 @@ static double __pyx_f_6mollib_4core_8geometry__within_distance(__Pyx_memviewslic
  */
   __pyx_v_d2 = (__pyx_v_vx * __pyx_v_vx);
 
-  /* "mollib/core/geometry.pyx":110
+  /* "mollib/core/geometry.pyx":123
  * 
  *     d2 = vx * vx
  *     d2 += vy * vy             # <<<<<<<<<<<<<<
@@ -3148,7 +3471,7 @@ static double __pyx_f_6mollib_4core_8geometry__within_distance(__Pyx_memviewslic
  */
   __pyx_v_d2 = (__pyx_v_d2 + (__pyx_v_vy * __pyx_v_vy));
 
-  /* "mollib/core/geometry.pyx":111
+  /* "mollib/core/geometry.pyx":124
  *     d2 = vx * vx
  *     d2 += vy * vy
  *     d2 += vz * vz             # <<<<<<<<<<<<<<
@@ -3157,7 +3480,7 @@ static double __pyx_f_6mollib_4core_8geometry__within_distance(__Pyx_memviewslic
  */
   __pyx_v_d2 = (__pyx_v_d2 + (__pyx_v_vz * __pyx_v_vz));
 
-  /* "mollib/core/geometry.pyx":113
+  /* "mollib/core/geometry.pyx":126
  *     d2 += vz * vz
  * 
  *     if d2 < distance_cutoff * distance_cutoff:             # <<<<<<<<<<<<<<
@@ -3167,7 +3490,7 @@ static double __pyx_f_6mollib_4core_8geometry__within_distance(__Pyx_memviewslic
   __pyx_t_7 = ((__pyx_v_d2 < (__pyx_v_distance_cutoff * __pyx_v_distance_cutoff)) != 0);
   if (__pyx_t_7) {
 
-    /* "mollib/core/geometry.pyx":114
+    /* "mollib/core/geometry.pyx":127
  * 
  *     if d2 < distance_cutoff * distance_cutoff:
  *         return sqrt(d2)             # <<<<<<<<<<<<<<
@@ -3177,7 +3500,7 @@ static double __pyx_f_6mollib_4core_8geometry__within_distance(__Pyx_memviewslic
     __pyx_r = sqrt(__pyx_v_d2);
     goto __pyx_L0;
 
-    /* "mollib/core/geometry.pyx":113
+    /* "mollib/core/geometry.pyx":126
  *     d2 += vz * vz
  * 
  *     if d2 < distance_cutoff * distance_cutoff:             # <<<<<<<<<<<<<<
@@ -3186,7 +3509,7 @@ static double __pyx_f_6mollib_4core_8geometry__within_distance(__Pyx_memviewslic
  */
   }
 
-  /* "mollib/core/geometry.pyx":116
+  /* "mollib/core/geometry.pyx":129
  *         return sqrt(d2)
  *     else:
  *         return -1.0             # <<<<<<<<<<<<<<
@@ -3198,7 +3521,7 @@ static double __pyx_f_6mollib_4core_8geometry__within_distance(__Pyx_memviewslic
     goto __pyx_L0;
   }
 
-  /* "mollib/core/geometry.pyx":85
+  /* "mollib/core/geometry.pyx":98
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * cdef double _within_distance(double[:] point1, double[:] point2,             # <<<<<<<<<<<<<<
@@ -3211,7 +3534,7 @@ static double __pyx_f_6mollib_4core_8geometry__within_distance(__Pyx_memviewslic
   return __pyx_r;
 }
 
-/* "mollib/core/geometry.pyx":119
+/* "mollib/core/geometry.pyx":132
  * 
  * 
  * def within_distance(atom, cutoff, elements='', exclude_intraresidue=False):             # <<<<<<<<<<<<<<
@@ -3220,10 +3543,10 @@ static double __pyx_f_6mollib_4core_8geometry__within_distance(__Pyx_memviewslic
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_6mollib_4core_8geometry_7within_distance(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static char __pyx_doc_6mollib_4core_8geometry_6within_distance[] = "Find all atoms of element within the specified distance (in Angstroms)\n       of atom.\n\n   Parameters\n   ----------\n   atom: :obj:`atom`\n       The atom to find atoms around it.\n   cutoff: float\n       The distance boundary between atom and atoms of element to return.\n   elements: str\n       The element names of the atoms to return. This string supports the\n       or character '|'.\n       If '', all atoms within the distance will be returned\n       ex: 'H|C|N' for all H, C and N atoms\n   exclude_intraresidue: bool\n       If True, atoms within the same residue as atom will be excluded.\n   atom_selelction: iterable, optional\n       If specified, the nearest neighbors will be searched from this iterable\n       instead of the atom.molecule attribute.\n\n\n       ..note : The elements and exclude_intraresidue methods are ignored when\n                an atom_selection is specified.\n\n   Returns\n   -------\n   list of tuples\n       A list of tuples with (atom objects, distance).\n\n    Examples\n    --------\n    >>> from mollib.core import Molecule, within_distance\n    >>> mol = Molecule('2KXA')\n    >>> within_distance(mol['A'][5]['CA'], cutoff=2.0)\n    [A.A5.CB, A.A5.C, A.A5.N, A.A5.HA]\n\n    ";
-static PyMethodDef __pyx_mdef_6mollib_4core_8geometry_7within_distance = {"within_distance", (PyCFunction)__pyx_pw_6mollib_4core_8geometry_7within_distance, METH_VARARGS|METH_KEYWORDS, __pyx_doc_6mollib_4core_8geometry_6within_distance};
-static PyObject *__pyx_pw_6mollib_4core_8geometry_7within_distance(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+static PyObject *__pyx_pw_6mollib_4core_8geometry_9within_distance(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static char __pyx_doc_6mollib_4core_8geometry_8within_distance[] = "Find all atoms of element within the specified distance (in Angstroms)\n       of atom.\n\n   Parameters\n   ----------\n   atom: :obj:`atom`\n       The atom to find atoms around it.\n   cutoff: float\n       The distance boundary between atom and atoms of element to return.\n   elements: str\n       The element names of the atoms to return. This string supports the\n       or character '|'.\n       If '', all atoms within the distance will be returned\n       ex: 'H|C|N' for all H, C and N atoms\n   exclude_intraresidue: bool\n       If True, atoms within the same residue as atom will be excluded.\n   atom_selelction: iterable, optional\n       If specified, the nearest neighbors will be searched from this iterable\n       instead of the atom.molecule attribute.\n\n\n       ..note : The elements and exclude_intraresidue methods are ignored when\n                an atom_selection is specified.\n\n   Returns\n   -------\n   list of tuples\n       A list of tuples with (atom objects, distance).\n\n    Examples\n    --------\n    >>> from mollib.core import Molecule, within_distance\n    >>> mol = Molecule('2KXA')\n    >>> within_distance(mol['A'][5]['CA'], cutoff=2.0)\n    [A.A5.CB, A.A5.C, A.A5.N, A.A5.HA]\n\n    ";
+static PyMethodDef __pyx_mdef_6mollib_4core_8geometry_9within_distance = {"within_distance", (PyCFunction)__pyx_pw_6mollib_4core_8geometry_9within_distance, METH_VARARGS|METH_KEYWORDS, __pyx_doc_6mollib_4core_8geometry_8within_distance};
+static PyObject *__pyx_pw_6mollib_4core_8geometry_9within_distance(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyObject *__pyx_v_atom = 0;
   PyObject *__pyx_v_cutoff = 0;
   PyObject *__pyx_v_elements = 0;
@@ -3234,7 +3557,7 @@ static PyObject *__pyx_pw_6mollib_4core_8geometry_7within_distance(PyObject *__p
   {
     static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_atom,&__pyx_n_s_cutoff,&__pyx_n_s_elements,&__pyx_n_s_exclude_intraresidue,0};
     PyObject* values[4] = {0,0,0,0};
-    values[2] = ((PyObject *)__pyx_kp_s_);
+    values[2] = ((PyObject *)__pyx_kp_s__2);
     values[3] = ((PyObject *)Py_False);
     if (unlikely(__pyx_kwds)) {
       Py_ssize_t kw_args;
@@ -3255,7 +3578,7 @@ static PyObject *__pyx_pw_6mollib_4core_8geometry_7within_distance(PyObject *__p
         case  1:
         if (likely((values[1] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_cutoff)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("within_distance", 0, 2, 4, 1); __PYX_ERR(0, 119, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("within_distance", 0, 2, 4, 1); __PYX_ERR(0, 132, __pyx_L3_error)
         }
         case  2:
         if (kw_args > 0) {
@@ -3269,7 +3592,7 @@ static PyObject *__pyx_pw_6mollib_4core_8geometry_7within_distance(PyObject *__p
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "within_distance") < 0)) __PYX_ERR(0, 119, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "within_distance") < 0)) __PYX_ERR(0, 132, __pyx_L3_error)
       }
     } else {
       switch (PyTuple_GET_SIZE(__pyx_args)) {
@@ -3288,20 +3611,20 @@ static PyObject *__pyx_pw_6mollib_4core_8geometry_7within_distance(PyObject *__p
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("within_distance", 0, 2, 4, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 119, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("within_distance", 0, 2, 4, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 132, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("mollib.core.geometry.within_distance", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_6mollib_4core_8geometry_6within_distance(__pyx_self, __pyx_v_atom, __pyx_v_cutoff, __pyx_v_elements, __pyx_v_exclude_intraresidue);
+  __pyx_r = __pyx_pf_6mollib_4core_8geometry_8within_distance(__pyx_self, __pyx_v_atom, __pyx_v_cutoff, __pyx_v_elements, __pyx_v_exclude_intraresidue);
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_6mollib_4core_8geometry_6within_distance(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_atom, PyObject *__pyx_v_cutoff, PyObject *__pyx_v_elements, PyObject *__pyx_v_exclude_intraresidue) {
+static PyObject *__pyx_pf_6mollib_4core_8geometry_8within_distance(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_atom, PyObject *__pyx_v_cutoff, PyObject *__pyx_v_elements, PyObject *__pyx_v_exclude_intraresidue) {
   PyObject *__pyx_v_box = NULL;
   PyObject *__pyx_v_atoms = NULL;
   PyObject *__pyx_v_element_list = NULL;
@@ -3321,62 +3644,62 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_6within_distance(CYTHON_UNUSED
   PyObject *__pyx_t_11 = NULL;
   __Pyx_RefNannySetupContext("within_distance", 0);
 
-  /* "mollib/core/geometry.pyx":158
+  /* "mollib/core/geometry.pyx":171
  *     """
  * 
  *     if 'box' not in atom.molecule.cache:             # <<<<<<<<<<<<<<
  *         box = Box(atom.molecule.atoms)
  *         atom.molecule.cache['box'] = box
  */
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_atom, __pyx_n_s_molecule); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 158, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_atom, __pyx_n_s_molecule); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 171, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_cache); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 158, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_cache); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 171, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_3 = (__Pyx_PySequence_ContainsTF(__pyx_n_s_box, __pyx_t_2, Py_NE)); if (unlikely(__pyx_t_3 < 0)) __PYX_ERR(0, 158, __pyx_L1_error)
+  __pyx_t_3 = (__Pyx_PySequence_ContainsTF(__pyx_n_s_box, __pyx_t_2, Py_NE)); if (unlikely(__pyx_t_3 < 0)) __PYX_ERR(0, 171, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __pyx_t_4 = (__pyx_t_3 != 0);
   if (__pyx_t_4) {
 
-    /* "mollib/core/geometry.pyx":159
+    /* "mollib/core/geometry.pyx":172
  * 
  *     if 'box' not in atom.molecule.cache:
  *         box = Box(atom.molecule.atoms)             # <<<<<<<<<<<<<<
  *         atom.molecule.cache['box'] = box
  * 
  */
-    __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_atom, __pyx_n_s_molecule); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 159, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_atom, __pyx_n_s_molecule); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 172, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_atoms); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 159, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_atoms); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 172, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __pyx_t_2 = PyTuple_New(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 159, __pyx_L1_error)
+    __pyx_t_2 = PyTuple_New(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 172, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_GIVEREF(__pyx_t_1);
     PyTuple_SET_ITEM(__pyx_t_2, 0, __pyx_t_1);
     __pyx_t_1 = 0;
-    __pyx_t_1 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_6mollib_4core_12geometry_box_Box), __pyx_t_2, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 159, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_6mollib_4core_12geometry_box_Box), __pyx_t_2, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 172, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     __pyx_v_box = __pyx_t_1;
     __pyx_t_1 = 0;
 
-    /* "mollib/core/geometry.pyx":160
+    /* "mollib/core/geometry.pyx":173
  *     if 'box' not in atom.molecule.cache:
  *         box = Box(atom.molecule.atoms)
  *         atom.molecule.cache['box'] = box             # <<<<<<<<<<<<<<
  * 
  *     box = atom.molecule.cache['box']
  */
-    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_atom, __pyx_n_s_molecule); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 160, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_atom, __pyx_n_s_molecule); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 173, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_cache); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 160, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_cache); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 173, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    if (unlikely(PyObject_SetItem(__pyx_t_2, __pyx_n_s_box, __pyx_v_box) < 0)) __PYX_ERR(0, 160, __pyx_L1_error)
+    if (unlikely(PyObject_SetItem(__pyx_t_2, __pyx_n_s_box, __pyx_v_box) < 0)) __PYX_ERR(0, 173, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-    /* "mollib/core/geometry.pyx":158
+    /* "mollib/core/geometry.pyx":171
  *     """
  * 
  *     if 'box' not in atom.molecule.cache:             # <<<<<<<<<<<<<<
@@ -3385,32 +3708,32 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_6within_distance(CYTHON_UNUSED
  */
   }
 
-  /* "mollib/core/geometry.pyx":162
+  /* "mollib/core/geometry.pyx":175
  *         atom.molecule.cache['box'] = box
  * 
  *     box = atom.molecule.cache['box']             # <<<<<<<<<<<<<<
  *     atoms = box.get_points(atom, cutoff)
  * 
  */
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_atom, __pyx_n_s_molecule); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 162, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_atom, __pyx_n_s_molecule); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 175, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_cache); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 162, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_cache); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 175, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = PyObject_GetItem(__pyx_t_1, __pyx_n_s_box); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 162, __pyx_L1_error)
+  __pyx_t_2 = PyObject_GetItem(__pyx_t_1, __pyx_n_s_box); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 175, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_XDECREF_SET(__pyx_v_box, __pyx_t_2);
   __pyx_t_2 = 0;
 
-  /* "mollib/core/geometry.pyx":163
+  /* "mollib/core/geometry.pyx":176
  * 
  *     box = atom.molecule.cache['box']
  *     atoms = box.get_points(atom, cutoff)             # <<<<<<<<<<<<<<
  * 
  *     # Filter the atoms in the iterable
  */
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_box, __pyx_n_s_get_points); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 163, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_box, __pyx_n_s_get_points); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 176, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_t_5 = NULL;
   __pyx_t_6 = 0;
@@ -3427,7 +3750,7 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_6within_distance(CYTHON_UNUSED
   #if CYTHON_FAST_PYCALL
   if (PyFunction_Check(__pyx_t_1)) {
     PyObject *__pyx_temp[3] = {__pyx_t_5, __pyx_v_atom, __pyx_v_cutoff};
-    __pyx_t_2 = __Pyx_PyFunction_FastCall(__pyx_t_1, __pyx_temp+1-__pyx_t_6, 2+__pyx_t_6); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 163, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyFunction_FastCall(__pyx_t_1, __pyx_temp+1-__pyx_t_6, 2+__pyx_t_6); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 176, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
     __Pyx_GOTREF(__pyx_t_2);
   } else
@@ -3435,13 +3758,13 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_6within_distance(CYTHON_UNUSED
   #if CYTHON_FAST_PYCCALL
   if (__Pyx_PyFastCFunction_Check(__pyx_t_1)) {
     PyObject *__pyx_temp[3] = {__pyx_t_5, __pyx_v_atom, __pyx_v_cutoff};
-    __pyx_t_2 = __Pyx_PyCFunction_FastCall(__pyx_t_1, __pyx_temp+1-__pyx_t_6, 2+__pyx_t_6); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 163, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyCFunction_FastCall(__pyx_t_1, __pyx_temp+1-__pyx_t_6, 2+__pyx_t_6); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 176, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
     __Pyx_GOTREF(__pyx_t_2);
   } else
   #endif
   {
-    __pyx_t_7 = PyTuple_New(2+__pyx_t_6); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 163, __pyx_L1_error)
+    __pyx_t_7 = PyTuple_New(2+__pyx_t_6); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 176, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_7);
     if (__pyx_t_5) {
       __Pyx_GIVEREF(__pyx_t_5); PyTuple_SET_ITEM(__pyx_t_7, 0, __pyx_t_5); __pyx_t_5 = NULL;
@@ -3452,7 +3775,7 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_6within_distance(CYTHON_UNUSED
     __Pyx_INCREF(__pyx_v_cutoff);
     __Pyx_GIVEREF(__pyx_v_cutoff);
     PyTuple_SET_ITEM(__pyx_t_7, 1+__pyx_t_6, __pyx_v_cutoff);
-    __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_7, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 163, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_7, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 176, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
   }
@@ -3460,24 +3783,24 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_6within_distance(CYTHON_UNUSED
   __pyx_v_atoms = __pyx_t_2;
   __pyx_t_2 = 0;
 
-  /* "mollib/core/geometry.pyx":166
+  /* "mollib/core/geometry.pyx":179
  * 
  *     # Filter the atoms in the iterable
  *     element_list = elements.split('|') if elements != '' else []             # <<<<<<<<<<<<<<
  * 
  *     atoms = [a for a in atoms if
  */
-  __pyx_t_4 = (__Pyx_PyString_Equals(__pyx_v_elements, __pyx_kp_s_, Py_NE)); if (unlikely(__pyx_t_4 < 0)) __PYX_ERR(0, 166, __pyx_L1_error)
+  __pyx_t_4 = (__Pyx_PyString_Equals(__pyx_v_elements, __pyx_kp_s__2, Py_NE)); if (unlikely(__pyx_t_4 < 0)) __PYX_ERR(0, 179, __pyx_L1_error)
   if (__pyx_t_4) {
-    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_elements, __pyx_n_s_split); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 166, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_elements, __pyx_n_s_split); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 179, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_7 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_tuple__3, NULL); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 166, __pyx_L1_error)
+    __pyx_t_7 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_tuple__4, NULL); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 179, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_7);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
     __pyx_t_2 = __pyx_t_7;
     __pyx_t_7 = 0;
   } else {
-    __pyx_t_7 = PyList_New(0); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 166, __pyx_L1_error)
+    __pyx_t_7 = PyList_New(0); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 179, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_7);
     __pyx_t_2 = __pyx_t_7;
     __pyx_t_7 = 0;
@@ -3485,39 +3808,39 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_6within_distance(CYTHON_UNUSED
   __pyx_v_element_list = __pyx_t_2;
   __pyx_t_2 = 0;
 
-  /* "mollib/core/geometry.pyx":168
+  /* "mollib/core/geometry.pyx":181
  *     element_list = elements.split('|') if elements != '' else []
  * 
  *     atoms = [a for a in atoms if             # <<<<<<<<<<<<<<
  *              ((a != atom) and
  *               (not element_list or a.element in element_list) and
  */
-  __pyx_t_2 = PyList_New(0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 168, __pyx_L1_error)
+  __pyx_t_2 = PyList_New(0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 181, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   if (likely(PyList_CheckExact(__pyx_v_atoms)) || PyTuple_CheckExact(__pyx_v_atoms)) {
     __pyx_t_7 = __pyx_v_atoms; __Pyx_INCREF(__pyx_t_7); __pyx_t_8 = 0;
     __pyx_t_9 = NULL;
   } else {
-    __pyx_t_8 = -1; __pyx_t_7 = PyObject_GetIter(__pyx_v_atoms); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 168, __pyx_L1_error)
+    __pyx_t_8 = -1; __pyx_t_7 = PyObject_GetIter(__pyx_v_atoms); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 181, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_7);
-    __pyx_t_9 = Py_TYPE(__pyx_t_7)->tp_iternext; if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 168, __pyx_L1_error)
+    __pyx_t_9 = Py_TYPE(__pyx_t_7)->tp_iternext; if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 181, __pyx_L1_error)
   }
   for (;;) {
     if (likely(!__pyx_t_9)) {
       if (likely(PyList_CheckExact(__pyx_t_7))) {
         if (__pyx_t_8 >= PyList_GET_SIZE(__pyx_t_7)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_1 = PyList_GET_ITEM(__pyx_t_7, __pyx_t_8); __Pyx_INCREF(__pyx_t_1); __pyx_t_8++; if (unlikely(0 < 0)) __PYX_ERR(0, 168, __pyx_L1_error)
+        __pyx_t_1 = PyList_GET_ITEM(__pyx_t_7, __pyx_t_8); __Pyx_INCREF(__pyx_t_1); __pyx_t_8++; if (unlikely(0 < 0)) __PYX_ERR(0, 181, __pyx_L1_error)
         #else
-        __pyx_t_1 = PySequence_ITEM(__pyx_t_7, __pyx_t_8); __pyx_t_8++; if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 168, __pyx_L1_error)
+        __pyx_t_1 = PySequence_ITEM(__pyx_t_7, __pyx_t_8); __pyx_t_8++; if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 181, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_1);
         #endif
       } else {
         if (__pyx_t_8 >= PyTuple_GET_SIZE(__pyx_t_7)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_1 = PyTuple_GET_ITEM(__pyx_t_7, __pyx_t_8); __Pyx_INCREF(__pyx_t_1); __pyx_t_8++; if (unlikely(0 < 0)) __PYX_ERR(0, 168, __pyx_L1_error)
+        __pyx_t_1 = PyTuple_GET_ITEM(__pyx_t_7, __pyx_t_8); __Pyx_INCREF(__pyx_t_1); __pyx_t_8++; if (unlikely(0 < 0)) __PYX_ERR(0, 181, __pyx_L1_error)
         #else
-        __pyx_t_1 = PySequence_ITEM(__pyx_t_7, __pyx_t_8); __pyx_t_8++; if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 168, __pyx_L1_error)
+        __pyx_t_1 = PySequence_ITEM(__pyx_t_7, __pyx_t_8); __pyx_t_8++; if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 181, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_1);
         #endif
       }
@@ -3527,7 +3850,7 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_6within_distance(CYTHON_UNUSED
         PyObject* exc_type = PyErr_Occurred();
         if (exc_type) {
           if (likely(exc_type == PyExc_StopIteration || PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-          else __PYX_ERR(0, 168, __pyx_L1_error)
+          else __PYX_ERR(0, 181, __pyx_L1_error)
         }
         break;
       }
@@ -3536,15 +3859,15 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_6within_distance(CYTHON_UNUSED
     __Pyx_XDECREF_SET(__pyx_v_a, __pyx_t_1);
     __pyx_t_1 = 0;
 
-    /* "mollib/core/geometry.pyx":169
+    /* "mollib/core/geometry.pyx":182
  * 
  *     atoms = [a for a in atoms if
  *              ((a != atom) and             # <<<<<<<<<<<<<<
  *               (not element_list or a.element in element_list) and
  *               (not exclude_intraresidue or a.residue != atom.residue))]
  */
-    __pyx_t_1 = PyObject_RichCompare(__pyx_v_a, __pyx_v_atom, Py_NE); __Pyx_XGOTREF(__pyx_t_1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 169, __pyx_L1_error)
-    __pyx_t_3 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely(__pyx_t_3 < 0)) __PYX_ERR(0, 169, __pyx_L1_error)
+    __pyx_t_1 = PyObject_RichCompare(__pyx_v_a, __pyx_v_atom, Py_NE); __Pyx_XGOTREF(__pyx_t_1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 182, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely(__pyx_t_3 < 0)) __PYX_ERR(0, 182, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
     if (__pyx_t_3) {
     } else {
@@ -3552,22 +3875,22 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_6within_distance(CYTHON_UNUSED
       goto __pyx_L7_bool_binop_done;
     }
 
-    /* "mollib/core/geometry.pyx":170
+    /* "mollib/core/geometry.pyx":183
  *     atoms = [a for a in atoms if
  *              ((a != atom) and
  *               (not element_list or a.element in element_list) and             # <<<<<<<<<<<<<<
  *               (not exclude_intraresidue or a.residue != atom.residue))]
  *     return atoms
  */
-    __pyx_t_3 = __Pyx_PyObject_IsTrue(__pyx_v_element_list); if (unlikely(__pyx_t_3 < 0)) __PYX_ERR(0, 170, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyObject_IsTrue(__pyx_v_element_list); if (unlikely(__pyx_t_3 < 0)) __PYX_ERR(0, 183, __pyx_L1_error)
     __pyx_t_10 = ((!__pyx_t_3) != 0);
     if (!__pyx_t_10) {
     } else {
       goto __pyx_L9_next_and;
     }
-    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_a, __pyx_n_s_element); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 170, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_a, __pyx_n_s_element); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 183, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_10 = (__Pyx_PySequence_ContainsTF(__pyx_t_1, __pyx_v_element_list, Py_EQ)); if (unlikely(__pyx_t_10 < 0)) __PYX_ERR(0, 170, __pyx_L1_error)
+    __pyx_t_10 = (__Pyx_PySequence_ContainsTF(__pyx_t_1, __pyx_v_element_list, Py_EQ)); if (unlikely(__pyx_t_10 < 0)) __PYX_ERR(0, 183, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
     __pyx_t_3 = (__pyx_t_10 != 0);
     if (__pyx_t_3) {
@@ -3577,33 +3900,33 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_6within_distance(CYTHON_UNUSED
     }
     __pyx_L9_next_and:;
 
-    /* "mollib/core/geometry.pyx":171
+    /* "mollib/core/geometry.pyx":184
  *              ((a != atom) and
  *               (not element_list or a.element in element_list) and
  *               (not exclude_intraresidue or a.residue != atom.residue))]             # <<<<<<<<<<<<<<
  *     return atoms
  * 
  */
-    __pyx_t_3 = __Pyx_PyObject_IsTrue(__pyx_v_exclude_intraresidue); if (unlikely(__pyx_t_3 < 0)) __PYX_ERR(0, 171, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyObject_IsTrue(__pyx_v_exclude_intraresidue); if (unlikely(__pyx_t_3 < 0)) __PYX_ERR(0, 184, __pyx_L1_error)
     __pyx_t_10 = ((!__pyx_t_3) != 0);
     if (!__pyx_t_10) {
     } else {
       __pyx_t_4 = __pyx_t_10;
       goto __pyx_L7_bool_binop_done;
     }
-    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_a, __pyx_n_s_residue); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 171, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_a, __pyx_n_s_residue); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 184, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_v_atom, __pyx_n_s_residue); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 171, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_v_atom, __pyx_n_s_residue); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 184, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
-    __pyx_t_11 = PyObject_RichCompare(__pyx_t_1, __pyx_t_5, Py_NE); __Pyx_XGOTREF(__pyx_t_11); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 171, __pyx_L1_error)
+    __pyx_t_11 = PyObject_RichCompare(__pyx_t_1, __pyx_t_5, Py_NE); __Pyx_XGOTREF(__pyx_t_11); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 184, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    __pyx_t_10 = __Pyx_PyObject_IsTrue(__pyx_t_11); if (unlikely(__pyx_t_10 < 0)) __PYX_ERR(0, 171, __pyx_L1_error)
+    __pyx_t_10 = __Pyx_PyObject_IsTrue(__pyx_t_11); if (unlikely(__pyx_t_10 < 0)) __PYX_ERR(0, 184, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
     __pyx_t_4 = __pyx_t_10;
     __pyx_L7_bool_binop_done:;
 
-    /* "mollib/core/geometry.pyx":168
+    /* "mollib/core/geometry.pyx":181
  *     element_list = elements.split('|') if elements != '' else []
  * 
  *     atoms = [a for a in atoms if             # <<<<<<<<<<<<<<
@@ -3611,14 +3934,14 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_6within_distance(CYTHON_UNUSED
  *               (not element_list or a.element in element_list) and
  */
     if (__pyx_t_4) {
-      if (unlikely(__Pyx_ListComp_Append(__pyx_t_2, (PyObject*)__pyx_v_a))) __PYX_ERR(0, 168, __pyx_L1_error)
+      if (unlikely(__Pyx_ListComp_Append(__pyx_t_2, (PyObject*)__pyx_v_a))) __PYX_ERR(0, 181, __pyx_L1_error)
     }
   }
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
   __Pyx_DECREF_SET(__pyx_v_atoms, __pyx_t_2);
   __pyx_t_2 = 0;
 
-  /* "mollib/core/geometry.pyx":172
+  /* "mollib/core/geometry.pyx":185
  *               (not element_list or a.element in element_list) and
  *               (not exclude_intraresidue or a.residue != atom.residue))]
  *     return atoms             # <<<<<<<<<<<<<<
@@ -3630,7 +3953,7 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_6within_distance(CYTHON_UNUSED
   __pyx_r = __pyx_v_atoms;
   goto __pyx_L0;
 
-  /* "mollib/core/geometry.pyx":119
+  /* "mollib/core/geometry.pyx":132
  * 
  * 
  * def within_distance(atom, cutoff, elements='', exclude_intraresidue=False):             # <<<<<<<<<<<<<<
@@ -3657,7 +3980,7 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_6within_distance(CYTHON_UNUSED
   return __pyx_r;
 }
 
-/* "mollib/core/geometry.pyx":175
+/* "mollib/core/geometry.pyx":188
  * 
  * 
  * def measure_angle(atom_1, atom_2, atom_3):             # <<<<<<<<<<<<<<
@@ -3666,10 +3989,10 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_6within_distance(CYTHON_UNUSED
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_6mollib_4core_8geometry_9measure_angle(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static char __pyx_doc_6mollib_4core_8geometry_8measure_angle[] = "Measure the atom_1--atom_2--atom_3 angle.\n\n    Parameters\n    ----------\n    atom_1: :obj:`Atom`\n        The first atom of the angle to measure.\n    atom_2: :obj:`Atom`\n        The second atom of the angle to measure.\n    atom_3: :obj:`Atom`\n        The third atom of the angle to measure.\n\n    Returns\n    -------\n    angle : float\n        The angle (in degrees).\n\n    Examples\n    --------\n    >>> from mollib.core import Molecule, measure_angle\n    >>> mol = Molecule('2KXA')\n    >>> gly4 = mol['A'][4]\n    >>> angle = measure_angle(gly4['HA2'], gly4['CA'], gly4['HA3'])\n    >>> print(\"{:.1f} deg\".format(angle))\n    109.3 deg\n\n    ";
-static PyMethodDef __pyx_mdef_6mollib_4core_8geometry_9measure_angle = {"measure_angle", (PyCFunction)__pyx_pw_6mollib_4core_8geometry_9measure_angle, METH_VARARGS|METH_KEYWORDS, __pyx_doc_6mollib_4core_8geometry_8measure_angle};
-static PyObject *__pyx_pw_6mollib_4core_8geometry_9measure_angle(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+static PyObject *__pyx_pw_6mollib_4core_8geometry_11measure_angle(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static char __pyx_doc_6mollib_4core_8geometry_10measure_angle[] = "Measure the atom_1--atom_2--atom_3 angle.\n\n    Parameters\n    ----------\n    atom_1: :obj:`Atom`\n        The first atom of the angle to measure.\n    atom_2: :obj:`Atom`\n        The second atom of the angle to measure.\n    atom_3: :obj:`Atom`\n        The third atom of the angle to measure.\n\n    Returns\n    -------\n    angle : float\n        The angle (in degrees).\n\n    Examples\n    --------\n    >>> from mollib.core import Molecule, measure_angle\n    >>> mol = Molecule('2KXA')\n    >>> gly4 = mol['A'][4]\n    >>> angle = measure_angle(gly4['HA2'], gly4['CA'], gly4['HA3'])\n    >>> print(\"{:.1f} deg\".format(angle))\n    109.3 deg\n\n    ";
+static PyMethodDef __pyx_mdef_6mollib_4core_8geometry_11measure_angle = {"measure_angle", (PyCFunction)__pyx_pw_6mollib_4core_8geometry_11measure_angle, METH_VARARGS|METH_KEYWORDS, __pyx_doc_6mollib_4core_8geometry_10measure_angle};
+static PyObject *__pyx_pw_6mollib_4core_8geometry_11measure_angle(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyObject *__pyx_v_atom_1 = 0;
   PyObject *__pyx_v_atom_2 = 0;
   PyObject *__pyx_v_atom_3 = 0;
@@ -3697,16 +4020,16 @@ static PyObject *__pyx_pw_6mollib_4core_8geometry_9measure_angle(PyObject *__pyx
         case  1:
         if (likely((values[1] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_atom_2)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("measure_angle", 1, 3, 3, 1); __PYX_ERR(0, 175, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("measure_angle", 1, 3, 3, 1); __PYX_ERR(0, 188, __pyx_L3_error)
         }
         case  2:
         if (likely((values[2] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_atom_3)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("measure_angle", 1, 3, 3, 2); __PYX_ERR(0, 175, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("measure_angle", 1, 3, 3, 2); __PYX_ERR(0, 188, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "measure_angle") < 0)) __PYX_ERR(0, 175, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "measure_angle") < 0)) __PYX_ERR(0, 188, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 3) {
       goto __pyx_L5_argtuple_error;
@@ -3721,20 +4044,20 @@ static PyObject *__pyx_pw_6mollib_4core_8geometry_9measure_angle(PyObject *__pyx
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("measure_angle", 1, 3, 3, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 175, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("measure_angle", 1, 3, 3, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 188, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("mollib.core.geometry.measure_angle", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_6mollib_4core_8geometry_8measure_angle(__pyx_self, __pyx_v_atom_1, __pyx_v_atom_2, __pyx_v_atom_3);
+  __pyx_r = __pyx_pf_6mollib_4core_8geometry_10measure_angle(__pyx_self, __pyx_v_atom_1, __pyx_v_atom_2, __pyx_v_atom_3);
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_6mollib_4core_8geometry_8measure_angle(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_atom_1, PyObject *__pyx_v_atom_2, PyObject *__pyx_v_atom_3) {
+static PyObject *__pyx_pf_6mollib_4core_8geometry_10measure_angle(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_atom_1, PyObject *__pyx_v_atom_2, PyObject *__pyx_v_atom_3) {
   PyObject *__pyx_v_v1 = NULL;
   PyObject *__pyx_v_v2 = NULL;
   double __pyx_v_angle;
@@ -3748,20 +4071,20 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_8measure_angle(CYTHON_UNUSED P
   double __pyx_t_6;
   __Pyx_RefNannySetupContext("measure_angle", 0);
 
-  /* "mollib/core/geometry.pyx":202
+  /* "mollib/core/geometry.pyx":215
  * 
  *     """
  *     v1 = calc_vector(atom_2.pos, atom_1.pos, normalize=True)             # <<<<<<<<<<<<<<
  *     v2 = calc_vector(atom_2.pos, atom_3.pos, normalize=True)
  * 
  */
-  __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_calc_vector); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 202, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_calc_vector); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 215, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_atom_2, __pyx_n_s_pos); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 202, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_atom_2, __pyx_n_s_pos); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 215, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_atom_1, __pyx_n_s_pos); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 202, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_atom_1, __pyx_n_s_pos); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 215, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_4 = PyTuple_New(2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 202, __pyx_L1_error)
+  __pyx_t_4 = PyTuple_New(2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 215, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_GIVEREF(__pyx_t_2);
   PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_t_2);
@@ -3769,10 +4092,10 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_8measure_angle(CYTHON_UNUSED P
   PyTuple_SET_ITEM(__pyx_t_4, 1, __pyx_t_3);
   __pyx_t_2 = 0;
   __pyx_t_3 = 0;
-  __pyx_t_3 = PyDict_New(); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 202, __pyx_L1_error)
+  __pyx_t_3 = PyDict_New(); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 215, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_normalize, Py_True) < 0) __PYX_ERR(0, 202, __pyx_L1_error)
-  __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_4, __pyx_t_3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 202, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_normalize, Py_True) < 0) __PYX_ERR(0, 215, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_4, __pyx_t_3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 215, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
@@ -3780,20 +4103,20 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_8measure_angle(CYTHON_UNUSED P
   __pyx_v_v1 = __pyx_t_2;
   __pyx_t_2 = 0;
 
-  /* "mollib/core/geometry.pyx":203
+  /* "mollib/core/geometry.pyx":216
  *     """
  *     v1 = calc_vector(atom_2.pos, atom_1.pos, normalize=True)
  *     v2 = calc_vector(atom_2.pos, atom_3.pos, normalize=True)             # <<<<<<<<<<<<<<
  * 
  *     angle = acos(np.dot(v1, v2))
  */
-  __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_calc_vector); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 203, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_calc_vector); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 216, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_atom_2, __pyx_n_s_pos); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 203, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_atom_2, __pyx_n_s_pos); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 216, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_atom_3, __pyx_n_s_pos); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 203, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_atom_3, __pyx_n_s_pos); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 216, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_1 = PyTuple_New(2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 203, __pyx_L1_error)
+  __pyx_t_1 = PyTuple_New(2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 216, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_GIVEREF(__pyx_t_3);
   PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_t_3);
@@ -3801,10 +4124,10 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_8measure_angle(CYTHON_UNUSED P
   PyTuple_SET_ITEM(__pyx_t_1, 1, __pyx_t_4);
   __pyx_t_3 = 0;
   __pyx_t_4 = 0;
-  __pyx_t_4 = PyDict_New(); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 203, __pyx_L1_error)
+  __pyx_t_4 = PyDict_New(); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 216, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_normalize, Py_True) < 0) __PYX_ERR(0, 203, __pyx_L1_error)
-  __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_1, __pyx_t_4); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 203, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_normalize, Py_True) < 0) __PYX_ERR(0, 216, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_1, __pyx_t_4); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 216, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
@@ -3812,16 +4135,16 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_8measure_angle(CYTHON_UNUSED P
   __pyx_v_v2 = __pyx_t_3;
   __pyx_t_3 = 0;
 
-  /* "mollib/core/geometry.pyx":205
+  /* "mollib/core/geometry.pyx":218
  *     v2 = calc_vector(atom_2.pos, atom_3.pos, normalize=True)
  * 
  *     angle = acos(np.dot(v1, v2))             # <<<<<<<<<<<<<<
  *     return angle*180./pi
  * 
  */
-  __pyx_t_4 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 205, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 218, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_dot); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 205, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_dot); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 218, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   __pyx_t_4 = NULL;
@@ -3839,7 +4162,7 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_8measure_angle(CYTHON_UNUSED P
   #if CYTHON_FAST_PYCALL
   if (PyFunction_Check(__pyx_t_1)) {
     PyObject *__pyx_temp[3] = {__pyx_t_4, __pyx_v_v1, __pyx_v_v2};
-    __pyx_t_3 = __Pyx_PyFunction_FastCall(__pyx_t_1, __pyx_temp+1-__pyx_t_5, 2+__pyx_t_5); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 205, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyFunction_FastCall(__pyx_t_1, __pyx_temp+1-__pyx_t_5, 2+__pyx_t_5); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 218, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
     __Pyx_GOTREF(__pyx_t_3);
   } else
@@ -3847,13 +4170,13 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_8measure_angle(CYTHON_UNUSED P
   #if CYTHON_FAST_PYCCALL
   if (__Pyx_PyFastCFunction_Check(__pyx_t_1)) {
     PyObject *__pyx_temp[3] = {__pyx_t_4, __pyx_v_v1, __pyx_v_v2};
-    __pyx_t_3 = __Pyx_PyCFunction_FastCall(__pyx_t_1, __pyx_temp+1-__pyx_t_5, 2+__pyx_t_5); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 205, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyCFunction_FastCall(__pyx_t_1, __pyx_temp+1-__pyx_t_5, 2+__pyx_t_5); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 218, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
     __Pyx_GOTREF(__pyx_t_3);
   } else
   #endif
   {
-    __pyx_t_2 = PyTuple_New(2+__pyx_t_5); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 205, __pyx_L1_error)
+    __pyx_t_2 = PyTuple_New(2+__pyx_t_5); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 218, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     if (__pyx_t_4) {
       __Pyx_GIVEREF(__pyx_t_4); PyTuple_SET_ITEM(__pyx_t_2, 0, __pyx_t_4); __pyx_t_4 = NULL;
@@ -3864,16 +4187,16 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_8measure_angle(CYTHON_UNUSED P
     __Pyx_INCREF(__pyx_v_v2);
     __Pyx_GIVEREF(__pyx_v_v2);
     PyTuple_SET_ITEM(__pyx_t_2, 1+__pyx_t_5, __pyx_v_v2);
-    __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_2, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 205, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_2, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 218, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   }
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_6 = __pyx_PyFloat_AsDouble(__pyx_t_3); if (unlikely((__pyx_t_6 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 205, __pyx_L1_error)
+  __pyx_t_6 = __pyx_PyFloat_AsDouble(__pyx_t_3); if (unlikely((__pyx_t_6 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 218, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __pyx_v_angle = acos(__pyx_t_6);
 
-  /* "mollib/core/geometry.pyx":206
+  /* "mollib/core/geometry.pyx":219
  * 
  *     angle = acos(np.dot(v1, v2))
  *     return angle*180./pi             # <<<<<<<<<<<<<<
@@ -3884,15 +4207,15 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_8measure_angle(CYTHON_UNUSED P
   __pyx_t_6 = (__pyx_v_angle * 180.);
   if (unlikely(M_PI == 0)) {
     PyErr_SetString(PyExc_ZeroDivisionError, "float division");
-    __PYX_ERR(0, 206, __pyx_L1_error)
+    __PYX_ERR(0, 219, __pyx_L1_error)
   }
-  __pyx_t_3 = PyFloat_FromDouble((__pyx_t_6 / M_PI)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 206, __pyx_L1_error)
+  __pyx_t_3 = PyFloat_FromDouble((__pyx_t_6 / M_PI)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 219, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __pyx_r = __pyx_t_3;
   __pyx_t_3 = 0;
   goto __pyx_L0;
 
-  /* "mollib/core/geometry.pyx":175
+  /* "mollib/core/geometry.pyx":188
  * 
  * 
  * def measure_angle(atom_1, atom_2, atom_3):             # <<<<<<<<<<<<<<
@@ -3916,7 +4239,7 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_8measure_angle(CYTHON_UNUSED P
   return __pyx_r;
 }
 
-/* "mollib/core/geometry.pyx":209
+/* "mollib/core/geometry.pyx":222
  * 
  * 
  * def measure_dihedral(atom_1, atom_2, atom_3, atom_4):             # <<<<<<<<<<<<<<
@@ -3925,10 +4248,10 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_8measure_angle(CYTHON_UNUSED P
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_6mollib_4core_8geometry_11measure_dihedral(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static char __pyx_doc_6mollib_4core_8geometry_10measure_dihedral[] = "Measure the atom_1--atom_2--atom_3--atom_4 dihedral angle.\n\n    Parameters\n    ----------\n    atom_1 : :obj:`Atom`\n        The first atom.\n    atom_2 : :obj:`Atom`\n        The second atom.\n    atom_3 : :obj:`Atom`\n        The third atom.\n    atom_4 : :obj:`Atom`\n        The fourth atom.\n\n    Returns\n    -------\n    angle : float\n        The dihedral angle.\n\n    Examples\n    --------\n    >>> from mollib.core import Molecule, measure_dihedral\n    >>> mol = Molecule('2KXA')\n    >>> F3 = mol['A'][3]\n    >>> angle = measure_dihedral(F3['N'], F3['CA'], F3['CB'], F3['CG'])\n    >>> print(\"{:.1f} deg\".format(angle))\n    -62.0 deg\n\n    ";
-static PyMethodDef __pyx_mdef_6mollib_4core_8geometry_11measure_dihedral = {"measure_dihedral", (PyCFunction)__pyx_pw_6mollib_4core_8geometry_11measure_dihedral, METH_VARARGS|METH_KEYWORDS, __pyx_doc_6mollib_4core_8geometry_10measure_dihedral};
-static PyObject *__pyx_pw_6mollib_4core_8geometry_11measure_dihedral(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+static PyObject *__pyx_pw_6mollib_4core_8geometry_13measure_dihedral(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static char __pyx_doc_6mollib_4core_8geometry_12measure_dihedral[] = "Measure the atom_1--atom_2--atom_3--atom_4 dihedral angle.\n\n    Parameters\n    ----------\n    atom_1 : :obj:`Atom`\n        The first atom.\n    atom_2 : :obj:`Atom`\n        The second atom.\n    atom_3 : :obj:`Atom`\n        The third atom.\n    atom_4 : :obj:`Atom`\n        The fourth atom.\n\n    Returns\n    -------\n    angle : float\n        The dihedral angle.\n\n    Examples\n    --------\n    >>> from mollib.core import Molecule, measure_dihedral\n    >>> mol = Molecule('2KXA')\n    >>> F3 = mol['A'][3]\n    >>> angle = measure_dihedral(F3['N'], F3['CA'], F3['CB'], F3['CG'])\n    >>> print(\"{:.1f} deg\".format(angle))\n    -62.0 deg\n\n    ";
+static PyMethodDef __pyx_mdef_6mollib_4core_8geometry_13measure_dihedral = {"measure_dihedral", (PyCFunction)__pyx_pw_6mollib_4core_8geometry_13measure_dihedral, METH_VARARGS|METH_KEYWORDS, __pyx_doc_6mollib_4core_8geometry_12measure_dihedral};
+static PyObject *__pyx_pw_6mollib_4core_8geometry_13measure_dihedral(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyObject *__pyx_v_atom_1 = 0;
   PyObject *__pyx_v_atom_2 = 0;
   PyObject *__pyx_v_atom_3 = 0;
@@ -3958,21 +4281,21 @@ static PyObject *__pyx_pw_6mollib_4core_8geometry_11measure_dihedral(PyObject *_
         case  1:
         if (likely((values[1] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_atom_2)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("measure_dihedral", 1, 4, 4, 1); __PYX_ERR(0, 209, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("measure_dihedral", 1, 4, 4, 1); __PYX_ERR(0, 222, __pyx_L3_error)
         }
         case  2:
         if (likely((values[2] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_atom_3)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("measure_dihedral", 1, 4, 4, 2); __PYX_ERR(0, 209, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("measure_dihedral", 1, 4, 4, 2); __PYX_ERR(0, 222, __pyx_L3_error)
         }
         case  3:
         if (likely((values[3] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_atom_4)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("measure_dihedral", 1, 4, 4, 3); __PYX_ERR(0, 209, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("measure_dihedral", 1, 4, 4, 3); __PYX_ERR(0, 222, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "measure_dihedral") < 0)) __PYX_ERR(0, 209, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "measure_dihedral") < 0)) __PYX_ERR(0, 222, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 4) {
       goto __pyx_L5_argtuple_error;
@@ -3989,29 +4312,35 @@ static PyObject *__pyx_pw_6mollib_4core_8geometry_11measure_dihedral(PyObject *_
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("measure_dihedral", 1, 4, 4, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 209, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("measure_dihedral", 1, 4, 4, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 222, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("mollib.core.geometry.measure_dihedral", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_6mollib_4core_8geometry_10measure_dihedral(__pyx_self, __pyx_v_atom_1, __pyx_v_atom_2, __pyx_v_atom_3, __pyx_v_atom_4);
+  __pyx_r = __pyx_pf_6mollib_4core_8geometry_12measure_dihedral(__pyx_self, __pyx_v_atom_1, __pyx_v_atom_2, __pyx_v_atom_3, __pyx_v_atom_4);
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_6mollib_4core_8geometry_10measure_dihedral(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_atom_1, PyObject *__pyx_v_atom_2, PyObject *__pyx_v_atom_3, PyObject *__pyx_v_atom_4) {
+static PyObject *__pyx_pf_6mollib_4core_8geometry_12measure_dihedral(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_atom_1, PyObject *__pyx_v_atom_2, PyObject *__pyx_v_atom_3, PyObject *__pyx_v_atom_4) {
   PyObject *__pyx_v_ab = NULL;
   PyObject *__pyx_v_bc = NULL;
   PyObject *__pyx_v_cd = NULL;
-  PyObject *__pyx_v_n1 = NULL;
-  PyObject *__pyx_v_n2 = NULL;
-  PyObject *__pyx_v_m1 = NULL;
+  PyArrayObject *__pyx_v_n1 = 0;
+  PyArrayObject *__pyx_v_n2 = 0;
+  PyArrayObject *__pyx_v_m1 = 0;
   PyObject *__pyx_v_x = NULL;
   PyObject *__pyx_v_y = NULL;
   PyObject *__pyx_v_angle = NULL;
+  __Pyx_LocalBuf_ND __pyx_pybuffernd_m1;
+  __Pyx_Buffer __pyx_pybuffer_m1;
+  __Pyx_LocalBuf_ND __pyx_pybuffernd_n1;
+  __Pyx_Buffer __pyx_pybuffer_n1;
+  __Pyx_LocalBuf_ND __pyx_pybuffernd_n2;
+  __Pyx_Buffer __pyx_pybuffer_n2;
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -4022,21 +4351,33 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_10measure_dihedral(CYTHON_UNUS
   double __pyx_t_6;
   double __pyx_t_7;
   __Pyx_RefNannySetupContext("measure_dihedral", 0);
+  __pyx_pybuffer_n1.pybuffer.buf = NULL;
+  __pyx_pybuffer_n1.refcount = 0;
+  __pyx_pybuffernd_n1.data = NULL;
+  __pyx_pybuffernd_n1.rcbuffer = &__pyx_pybuffer_n1;
+  __pyx_pybuffer_n2.pybuffer.buf = NULL;
+  __pyx_pybuffer_n2.refcount = 0;
+  __pyx_pybuffernd_n2.data = NULL;
+  __pyx_pybuffernd_n2.rcbuffer = &__pyx_pybuffer_n2;
+  __pyx_pybuffer_m1.pybuffer.buf = NULL;
+  __pyx_pybuffer_m1.refcount = 0;
+  __pyx_pybuffernd_m1.data = NULL;
+  __pyx_pybuffernd_m1.rcbuffer = &__pyx_pybuffer_m1;
 
-  /* "mollib/core/geometry.pyx":239
+  /* "mollib/core/geometry.pyx":252
  *     """
  *     # Calculate the normalized vectors.
  *     ab = calc_vector(atom_1.pos, atom_2.pos, normalize=True)             # <<<<<<<<<<<<<<
  *     bc = calc_vector(atom_2.pos, atom_3.pos, normalize=True)
  *     cd = calc_vector(atom_3.pos, atom_4.pos, normalize=True)
  */
-  __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_calc_vector); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 239, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_calc_vector); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 252, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_atom_1, __pyx_n_s_pos); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 239, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_atom_1, __pyx_n_s_pos); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 252, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_atom_2, __pyx_n_s_pos); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 239, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_atom_2, __pyx_n_s_pos); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 252, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_4 = PyTuple_New(2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 239, __pyx_L1_error)
+  __pyx_t_4 = PyTuple_New(2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 252, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_GIVEREF(__pyx_t_2);
   PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_t_2);
@@ -4044,10 +4385,10 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_10measure_dihedral(CYTHON_UNUS
   PyTuple_SET_ITEM(__pyx_t_4, 1, __pyx_t_3);
   __pyx_t_2 = 0;
   __pyx_t_3 = 0;
-  __pyx_t_3 = PyDict_New(); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 239, __pyx_L1_error)
+  __pyx_t_3 = PyDict_New(); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 252, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_normalize, Py_True) < 0) __PYX_ERR(0, 239, __pyx_L1_error)
-  __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_4, __pyx_t_3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 239, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_normalize, Py_True) < 0) __PYX_ERR(0, 252, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_4, __pyx_t_3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 252, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
@@ -4055,20 +4396,20 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_10measure_dihedral(CYTHON_UNUS
   __pyx_v_ab = __pyx_t_2;
   __pyx_t_2 = 0;
 
-  /* "mollib/core/geometry.pyx":240
+  /* "mollib/core/geometry.pyx":253
  *     # Calculate the normalized vectors.
  *     ab = calc_vector(atom_1.pos, atom_2.pos, normalize=True)
  *     bc = calc_vector(atom_2.pos, atom_3.pos, normalize=True)             # <<<<<<<<<<<<<<
  *     cd = calc_vector(atom_3.pos, atom_4.pos, normalize=True)
  * 
  */
-  __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_calc_vector); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 240, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_calc_vector); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 253, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_atom_2, __pyx_n_s_pos); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 240, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_atom_2, __pyx_n_s_pos); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 253, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_atom_3, __pyx_n_s_pos); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 240, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_atom_3, __pyx_n_s_pos); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 253, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_1 = PyTuple_New(2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 240, __pyx_L1_error)
+  __pyx_t_1 = PyTuple_New(2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 253, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_GIVEREF(__pyx_t_3);
   PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_t_3);
@@ -4076,10 +4417,10 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_10measure_dihedral(CYTHON_UNUS
   PyTuple_SET_ITEM(__pyx_t_1, 1, __pyx_t_4);
   __pyx_t_3 = 0;
   __pyx_t_4 = 0;
-  __pyx_t_4 = PyDict_New(); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 240, __pyx_L1_error)
+  __pyx_t_4 = PyDict_New(); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 253, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_normalize, Py_True) < 0) __PYX_ERR(0, 240, __pyx_L1_error)
-  __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_1, __pyx_t_4); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 240, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_normalize, Py_True) < 0) __PYX_ERR(0, 253, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_1, __pyx_t_4); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 253, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
@@ -4087,20 +4428,20 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_10measure_dihedral(CYTHON_UNUS
   __pyx_v_bc = __pyx_t_3;
   __pyx_t_3 = 0;
 
-  /* "mollib/core/geometry.pyx":241
+  /* "mollib/core/geometry.pyx":254
  *     ab = calc_vector(atom_1.pos, atom_2.pos, normalize=True)
  *     bc = calc_vector(atom_2.pos, atom_3.pos, normalize=True)
  *     cd = calc_vector(atom_3.pos, atom_4.pos, normalize=True)             # <<<<<<<<<<<<<<
  * 
  *     # The dihedral is the angle between the plans a-b-c and b-c-d
  */
-  __pyx_t_3 = __Pyx_GetModuleGlobalName(__pyx_n_s_calc_vector); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 241, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_GetModuleGlobalName(__pyx_n_s_calc_vector); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 254, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_atom_3, __pyx_n_s_pos); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 241, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_atom_3, __pyx_n_s_pos); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 254, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_atom_4, __pyx_n_s_pos); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 241, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_atom_4, __pyx_n_s_pos); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 254, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = PyTuple_New(2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 241, __pyx_L1_error)
+  __pyx_t_2 = PyTuple_New(2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 254, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_GIVEREF(__pyx_t_4);
   PyTuple_SET_ITEM(__pyx_t_2, 0, __pyx_t_4);
@@ -4108,10 +4449,10 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_10measure_dihedral(CYTHON_UNUS
   PyTuple_SET_ITEM(__pyx_t_2, 1, __pyx_t_1);
   __pyx_t_4 = 0;
   __pyx_t_1 = 0;
-  __pyx_t_1 = PyDict_New(); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 241, __pyx_L1_error)
+  __pyx_t_1 = PyDict_New(); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 254, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_normalize, Py_True) < 0) __PYX_ERR(0, 241, __pyx_L1_error)
-  __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_2, __pyx_t_1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 241, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_normalize, Py_True) < 0) __PYX_ERR(0, 254, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_2, __pyx_t_1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 254, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
@@ -4119,196 +4460,81 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_10measure_dihedral(CYTHON_UNUS
   __pyx_v_cd = __pyx_t_4;
   __pyx_t_4 = 0;
 
-  /* "mollib/core/geometry.pyx":246
+  /* "mollib/core/geometry.pyx":259
  *     # The angle between these plans can be calculated from their
  *     # normals (cross products)
- *     n1 = np.cross(ab, bc)             # <<<<<<<<<<<<<<
- *     n2 = np.cross(bc, cd)
+ *     cdef np.ndarray[np.float64_t, ndim=1] n1 = cross(ab, bc)             # <<<<<<<<<<<<<<
+ *     cdef np.ndarray[np.float64_t, ndim=1] n2 = cross(bc, cd)
  * 
  */
-  __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 246, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_cross); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 246, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = NULL;
-  __pyx_t_5 = 0;
-  if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_2))) {
-    __pyx_t_1 = PyMethod_GET_SELF(__pyx_t_2);
-    if (likely(__pyx_t_1)) {
-      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_2);
-      __Pyx_INCREF(__pyx_t_1);
-      __Pyx_INCREF(function);
-      __Pyx_DECREF_SET(__pyx_t_2, function);
-      __pyx_t_5 = 1;
-    }
-  }
-  #if CYTHON_FAST_PYCALL
-  if (PyFunction_Check(__pyx_t_2)) {
-    PyObject *__pyx_temp[3] = {__pyx_t_1, __pyx_v_ab, __pyx_v_bc};
-    __pyx_t_4 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_5, 2+__pyx_t_5); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 246, __pyx_L1_error)
-    __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __Pyx_GOTREF(__pyx_t_4);
-  } else
-  #endif
-  #if CYTHON_FAST_PYCCALL
-  if (__Pyx_PyFastCFunction_Check(__pyx_t_2)) {
-    PyObject *__pyx_temp[3] = {__pyx_t_1, __pyx_v_ab, __pyx_v_bc};
-    __pyx_t_4 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_5, 2+__pyx_t_5); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 246, __pyx_L1_error)
-    __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __Pyx_GOTREF(__pyx_t_4);
-  } else
-  #endif
+  if (!(likely(((__pyx_v_ab) == Py_None) || likely(__Pyx_TypeTest(__pyx_v_ab, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 259, __pyx_L1_error)
+  if (!(likely(((__pyx_v_bc) == Py_None) || likely(__Pyx_TypeTest(__pyx_v_bc, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 259, __pyx_L1_error)
+  __pyx_t_4 = ((PyObject *)__pyx_f_6mollib_4core_8geometry_cross(((PyArrayObject *)__pyx_v_ab), ((PyArrayObject *)__pyx_v_bc), 0)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 259, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
   {
-    __pyx_t_3 = PyTuple_New(2+__pyx_t_5); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 246, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_3);
-    if (__pyx_t_1) {
-      __Pyx_GIVEREF(__pyx_t_1); PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_1); __pyx_t_1 = NULL;
+    __Pyx_BufFmt_StackElem __pyx_stack[1];
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_n1.rcbuffer->pybuffer, (PyObject*)((PyArrayObject *)__pyx_t_4), &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) {
+      __pyx_v_n1 = ((PyArrayObject *)Py_None); __Pyx_INCREF(Py_None); __pyx_pybuffernd_n1.rcbuffer->pybuffer.buf = NULL;
+      __PYX_ERR(0, 259, __pyx_L1_error)
+    } else {__pyx_pybuffernd_n1.diminfo[0].strides = __pyx_pybuffernd_n1.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_n1.diminfo[0].shape = __pyx_pybuffernd_n1.rcbuffer->pybuffer.shape[0];
     }
-    __Pyx_INCREF(__pyx_v_ab);
-    __Pyx_GIVEREF(__pyx_v_ab);
-    PyTuple_SET_ITEM(__pyx_t_3, 0+__pyx_t_5, __pyx_v_ab);
-    __Pyx_INCREF(__pyx_v_bc);
-    __Pyx_GIVEREF(__pyx_v_bc);
-    PyTuple_SET_ITEM(__pyx_t_3, 1+__pyx_t_5, __pyx_v_bc);
-    __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_3, NULL); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 246, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_4);
-    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   }
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_v_n1 = __pyx_t_4;
+  __pyx_v_n1 = ((PyArrayObject *)__pyx_t_4);
   __pyx_t_4 = 0;
 
-  /* "mollib/core/geometry.pyx":247
+  /* "mollib/core/geometry.pyx":260
  *     # normals (cross products)
- *     n1 = np.cross(ab, bc)
- *     n2 = np.cross(bc, cd)             # <<<<<<<<<<<<<<
+ *     cdef np.ndarray[np.float64_t, ndim=1] n1 = cross(ab, bc)
+ *     cdef np.ndarray[np.float64_t, ndim=1] n2 = cross(bc, cd)             # <<<<<<<<<<<<<<
  * 
  *     # The angle between n1 and n2 can be calculated with acos. However
  */
-  __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 247, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_cross); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 247, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_3);
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = NULL;
-  __pyx_t_5 = 0;
-  if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_3))) {
-    __pyx_t_2 = PyMethod_GET_SELF(__pyx_t_3);
-    if (likely(__pyx_t_2)) {
-      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_3);
-      __Pyx_INCREF(__pyx_t_2);
-      __Pyx_INCREF(function);
-      __Pyx_DECREF_SET(__pyx_t_3, function);
-      __pyx_t_5 = 1;
-    }
-  }
-  #if CYTHON_FAST_PYCALL
-  if (PyFunction_Check(__pyx_t_3)) {
-    PyObject *__pyx_temp[3] = {__pyx_t_2, __pyx_v_bc, __pyx_v_cd};
-    __pyx_t_4 = __Pyx_PyFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_5, 2+__pyx_t_5); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 247, __pyx_L1_error)
-    __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __Pyx_GOTREF(__pyx_t_4);
-  } else
-  #endif
-  #if CYTHON_FAST_PYCCALL
-  if (__Pyx_PyFastCFunction_Check(__pyx_t_3)) {
-    PyObject *__pyx_temp[3] = {__pyx_t_2, __pyx_v_bc, __pyx_v_cd};
-    __pyx_t_4 = __Pyx_PyCFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_5, 2+__pyx_t_5); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 247, __pyx_L1_error)
-    __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __Pyx_GOTREF(__pyx_t_4);
-  } else
-  #endif
+  if (!(likely(((__pyx_v_bc) == Py_None) || likely(__Pyx_TypeTest(__pyx_v_bc, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 260, __pyx_L1_error)
+  if (!(likely(((__pyx_v_cd) == Py_None) || likely(__Pyx_TypeTest(__pyx_v_cd, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 260, __pyx_L1_error)
+  __pyx_t_4 = ((PyObject *)__pyx_f_6mollib_4core_8geometry_cross(((PyArrayObject *)__pyx_v_bc), ((PyArrayObject *)__pyx_v_cd), 0)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 260, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
   {
-    __pyx_t_1 = PyTuple_New(2+__pyx_t_5); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 247, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-    if (__pyx_t_2) {
-      __Pyx_GIVEREF(__pyx_t_2); PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_t_2); __pyx_t_2 = NULL;
+    __Pyx_BufFmt_StackElem __pyx_stack[1];
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_n2.rcbuffer->pybuffer, (PyObject*)((PyArrayObject *)__pyx_t_4), &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) {
+      __pyx_v_n2 = ((PyArrayObject *)Py_None); __Pyx_INCREF(Py_None); __pyx_pybuffernd_n2.rcbuffer->pybuffer.buf = NULL;
+      __PYX_ERR(0, 260, __pyx_L1_error)
+    } else {__pyx_pybuffernd_n2.diminfo[0].strides = __pyx_pybuffernd_n2.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_n2.diminfo[0].shape = __pyx_pybuffernd_n2.rcbuffer->pybuffer.shape[0];
     }
-    __Pyx_INCREF(__pyx_v_bc);
-    __Pyx_GIVEREF(__pyx_v_bc);
-    PyTuple_SET_ITEM(__pyx_t_1, 0+__pyx_t_5, __pyx_v_bc);
-    __Pyx_INCREF(__pyx_v_cd);
-    __Pyx_GIVEREF(__pyx_v_cd);
-    PyTuple_SET_ITEM(__pyx_t_1, 1+__pyx_t_5, __pyx_v_cd);
-    __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_1, NULL); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 247, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_4);
-    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   }
-  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __pyx_v_n2 = __pyx_t_4;
+  __pyx_v_n2 = ((PyArrayObject *)__pyx_t_4);
   __pyx_t_4 = 0;
 
-  /* "mollib/core/geometry.pyx":252
+  /* "mollib/core/geometry.pyx":265
  *     # the followin atan2 relationship returns a number between 0 and
  *     # 2pi
- *     m1 = np.cross(n1, bc)             # <<<<<<<<<<<<<<
+ *     cdef np.ndarray[np.float64_t, ndim=1] m1 = cross(n1, bc)             # <<<<<<<<<<<<<<
  *     x = np.dot(n1, n2)
  *     y = np.dot(m1, n2)
  */
-  __pyx_t_3 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 252, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_cross); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 252, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __pyx_t_3 = NULL;
-  __pyx_t_5 = 0;
-  if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_1))) {
-    __pyx_t_3 = PyMethod_GET_SELF(__pyx_t_1);
-    if (likely(__pyx_t_3)) {
-      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_1);
-      __Pyx_INCREF(__pyx_t_3);
-      __Pyx_INCREF(function);
-      __Pyx_DECREF_SET(__pyx_t_1, function);
-      __pyx_t_5 = 1;
-    }
-  }
-  #if CYTHON_FAST_PYCALL
-  if (PyFunction_Check(__pyx_t_1)) {
-    PyObject *__pyx_temp[3] = {__pyx_t_3, __pyx_v_n1, __pyx_v_bc};
-    __pyx_t_4 = __Pyx_PyFunction_FastCall(__pyx_t_1, __pyx_temp+1-__pyx_t_5, 2+__pyx_t_5); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 252, __pyx_L1_error)
-    __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __Pyx_GOTREF(__pyx_t_4);
-  } else
-  #endif
-  #if CYTHON_FAST_PYCCALL
-  if (__Pyx_PyFastCFunction_Check(__pyx_t_1)) {
-    PyObject *__pyx_temp[3] = {__pyx_t_3, __pyx_v_n1, __pyx_v_bc};
-    __pyx_t_4 = __Pyx_PyCFunction_FastCall(__pyx_t_1, __pyx_temp+1-__pyx_t_5, 2+__pyx_t_5); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 252, __pyx_L1_error)
-    __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __Pyx_GOTREF(__pyx_t_4);
-  } else
-  #endif
+  if (!(likely(((__pyx_v_bc) == Py_None) || likely(__Pyx_TypeTest(__pyx_v_bc, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 265, __pyx_L1_error)
+  __pyx_t_4 = ((PyObject *)__pyx_f_6mollib_4core_8geometry_cross(((PyArrayObject *)__pyx_v_n1), ((PyArrayObject *)__pyx_v_bc), 0)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 265, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
   {
-    __pyx_t_2 = PyTuple_New(2+__pyx_t_5); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 252, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_2);
-    if (__pyx_t_3) {
-      __Pyx_GIVEREF(__pyx_t_3); PyTuple_SET_ITEM(__pyx_t_2, 0, __pyx_t_3); __pyx_t_3 = NULL;
+    __Pyx_BufFmt_StackElem __pyx_stack[1];
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_m1.rcbuffer->pybuffer, (PyObject*)((PyArrayObject *)__pyx_t_4), &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) {
+      __pyx_v_m1 = ((PyArrayObject *)Py_None); __Pyx_INCREF(Py_None); __pyx_pybuffernd_m1.rcbuffer->pybuffer.buf = NULL;
+      __PYX_ERR(0, 265, __pyx_L1_error)
+    } else {__pyx_pybuffernd_m1.diminfo[0].strides = __pyx_pybuffernd_m1.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_m1.diminfo[0].shape = __pyx_pybuffernd_m1.rcbuffer->pybuffer.shape[0];
     }
-    __Pyx_INCREF(__pyx_v_n1);
-    __Pyx_GIVEREF(__pyx_v_n1);
-    PyTuple_SET_ITEM(__pyx_t_2, 0+__pyx_t_5, __pyx_v_n1);
-    __Pyx_INCREF(__pyx_v_bc);
-    __Pyx_GIVEREF(__pyx_v_bc);
-    PyTuple_SET_ITEM(__pyx_t_2, 1+__pyx_t_5, __pyx_v_bc);
-    __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_2, NULL); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 252, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_4);
-    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   }
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_v_m1 = __pyx_t_4;
+  __pyx_v_m1 = ((PyArrayObject *)__pyx_t_4);
   __pyx_t_4 = 0;
 
-  /* "mollib/core/geometry.pyx":253
+  /* "mollib/core/geometry.pyx":266
  *     # 2pi
- *     m1 = np.cross(n1, bc)
+ *     cdef np.ndarray[np.float64_t, ndim=1] m1 = cross(n1, bc)
  *     x = np.dot(n1, n2)             # <<<<<<<<<<<<<<
  *     y = np.dot(m1, n2)
  *     angle = atan2(y, x) * 180. / np.pi
  */
-  __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 253, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 266, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_dot); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 253, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_dot); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 266, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_t_1 = NULL;
@@ -4325,33 +4551,33 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_10measure_dihedral(CYTHON_UNUS
   }
   #if CYTHON_FAST_PYCALL
   if (PyFunction_Check(__pyx_t_2)) {
-    PyObject *__pyx_temp[3] = {__pyx_t_1, __pyx_v_n1, __pyx_v_n2};
-    __pyx_t_4 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_5, 2+__pyx_t_5); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 253, __pyx_L1_error)
+    PyObject *__pyx_temp[3] = {__pyx_t_1, ((PyObject *)__pyx_v_n1), ((PyObject *)__pyx_v_n2)};
+    __pyx_t_4 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_5, 2+__pyx_t_5); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 266, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
     __Pyx_GOTREF(__pyx_t_4);
   } else
   #endif
   #if CYTHON_FAST_PYCCALL
   if (__Pyx_PyFastCFunction_Check(__pyx_t_2)) {
-    PyObject *__pyx_temp[3] = {__pyx_t_1, __pyx_v_n1, __pyx_v_n2};
-    __pyx_t_4 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_5, 2+__pyx_t_5); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 253, __pyx_L1_error)
+    PyObject *__pyx_temp[3] = {__pyx_t_1, ((PyObject *)__pyx_v_n1), ((PyObject *)__pyx_v_n2)};
+    __pyx_t_4 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_5, 2+__pyx_t_5); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 266, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
     __Pyx_GOTREF(__pyx_t_4);
   } else
   #endif
   {
-    __pyx_t_3 = PyTuple_New(2+__pyx_t_5); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 253, __pyx_L1_error)
+    __pyx_t_3 = PyTuple_New(2+__pyx_t_5); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 266, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     if (__pyx_t_1) {
       __Pyx_GIVEREF(__pyx_t_1); PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_1); __pyx_t_1 = NULL;
     }
-    __Pyx_INCREF(__pyx_v_n1);
-    __Pyx_GIVEREF(__pyx_v_n1);
-    PyTuple_SET_ITEM(__pyx_t_3, 0+__pyx_t_5, __pyx_v_n1);
-    __Pyx_INCREF(__pyx_v_n2);
-    __Pyx_GIVEREF(__pyx_v_n2);
-    PyTuple_SET_ITEM(__pyx_t_3, 1+__pyx_t_5, __pyx_v_n2);
-    __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_3, NULL); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 253, __pyx_L1_error)
+    __Pyx_INCREF(((PyObject *)__pyx_v_n1));
+    __Pyx_GIVEREF(((PyObject *)__pyx_v_n1));
+    PyTuple_SET_ITEM(__pyx_t_3, 0+__pyx_t_5, ((PyObject *)__pyx_v_n1));
+    __Pyx_INCREF(((PyObject *)__pyx_v_n2));
+    __Pyx_GIVEREF(((PyObject *)__pyx_v_n2));
+    PyTuple_SET_ITEM(__pyx_t_3, 1+__pyx_t_5, ((PyObject *)__pyx_v_n2));
+    __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_3, NULL); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 266, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   }
@@ -4359,16 +4585,16 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_10measure_dihedral(CYTHON_UNUS
   __pyx_v_x = __pyx_t_4;
   __pyx_t_4 = 0;
 
-  /* "mollib/core/geometry.pyx":254
- *     m1 = np.cross(n1, bc)
+  /* "mollib/core/geometry.pyx":267
+ *     cdef np.ndarray[np.float64_t, ndim=1] m1 = cross(n1, bc)
  *     x = np.dot(n1, n2)
  *     y = np.dot(m1, n2)             # <<<<<<<<<<<<<<
  *     angle = atan2(y, x) * 180. / np.pi
  *     return angle
  */
-  __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 254, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 267, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_dot); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 254, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_dot); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 267, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __pyx_t_2 = NULL;
@@ -4385,33 +4611,33 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_10measure_dihedral(CYTHON_UNUS
   }
   #if CYTHON_FAST_PYCALL
   if (PyFunction_Check(__pyx_t_3)) {
-    PyObject *__pyx_temp[3] = {__pyx_t_2, __pyx_v_m1, __pyx_v_n2};
-    __pyx_t_4 = __Pyx_PyFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_5, 2+__pyx_t_5); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 254, __pyx_L1_error)
+    PyObject *__pyx_temp[3] = {__pyx_t_2, ((PyObject *)__pyx_v_m1), ((PyObject *)__pyx_v_n2)};
+    __pyx_t_4 = __Pyx_PyFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_5, 2+__pyx_t_5); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 267, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
     __Pyx_GOTREF(__pyx_t_4);
   } else
   #endif
   #if CYTHON_FAST_PYCCALL
   if (__Pyx_PyFastCFunction_Check(__pyx_t_3)) {
-    PyObject *__pyx_temp[3] = {__pyx_t_2, __pyx_v_m1, __pyx_v_n2};
-    __pyx_t_4 = __Pyx_PyCFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_5, 2+__pyx_t_5); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 254, __pyx_L1_error)
+    PyObject *__pyx_temp[3] = {__pyx_t_2, ((PyObject *)__pyx_v_m1), ((PyObject *)__pyx_v_n2)};
+    __pyx_t_4 = __Pyx_PyCFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_5, 2+__pyx_t_5); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 267, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
     __Pyx_GOTREF(__pyx_t_4);
   } else
   #endif
   {
-    __pyx_t_1 = PyTuple_New(2+__pyx_t_5); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 254, __pyx_L1_error)
+    __pyx_t_1 = PyTuple_New(2+__pyx_t_5); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 267, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     if (__pyx_t_2) {
       __Pyx_GIVEREF(__pyx_t_2); PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_t_2); __pyx_t_2 = NULL;
     }
-    __Pyx_INCREF(__pyx_v_m1);
-    __Pyx_GIVEREF(__pyx_v_m1);
-    PyTuple_SET_ITEM(__pyx_t_1, 0+__pyx_t_5, __pyx_v_m1);
-    __Pyx_INCREF(__pyx_v_n2);
-    __Pyx_GIVEREF(__pyx_v_n2);
-    PyTuple_SET_ITEM(__pyx_t_1, 1+__pyx_t_5, __pyx_v_n2);
-    __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_1, NULL); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 254, __pyx_L1_error)
+    __Pyx_INCREF(((PyObject *)__pyx_v_m1));
+    __Pyx_GIVEREF(((PyObject *)__pyx_v_m1));
+    PyTuple_SET_ITEM(__pyx_t_1, 0+__pyx_t_5, ((PyObject *)__pyx_v_m1));
+    __Pyx_INCREF(((PyObject *)__pyx_v_n2));
+    __Pyx_GIVEREF(((PyObject *)__pyx_v_n2));
+    PyTuple_SET_ITEM(__pyx_t_1, 1+__pyx_t_5, ((PyObject *)__pyx_v_n2));
+    __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_1, NULL); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 267, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   }
@@ -4419,30 +4645,30 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_10measure_dihedral(CYTHON_UNUS
   __pyx_v_y = __pyx_t_4;
   __pyx_t_4 = 0;
 
-  /* "mollib/core/geometry.pyx":255
+  /* "mollib/core/geometry.pyx":268
  *     x = np.dot(n1, n2)
  *     y = np.dot(m1, n2)
  *     angle = atan2(y, x) * 180. / np.pi             # <<<<<<<<<<<<<<
  *     return angle
  * 
  */
-  __pyx_t_6 = __pyx_PyFloat_AsDouble(__pyx_v_y); if (unlikely((__pyx_t_6 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 255, __pyx_L1_error)
-  __pyx_t_7 = __pyx_PyFloat_AsDouble(__pyx_v_x); if (unlikely((__pyx_t_7 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 255, __pyx_L1_error)
-  __pyx_t_4 = PyFloat_FromDouble((atan2(__pyx_t_6, __pyx_t_7) * 180.)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 255, __pyx_L1_error)
+  __pyx_t_6 = __pyx_PyFloat_AsDouble(__pyx_v_y); if (unlikely((__pyx_t_6 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 268, __pyx_L1_error)
+  __pyx_t_7 = __pyx_PyFloat_AsDouble(__pyx_v_x); if (unlikely((__pyx_t_7 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 268, __pyx_L1_error)
+  __pyx_t_4 = PyFloat_FromDouble((atan2(__pyx_t_6, __pyx_t_7) * 180.)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 268, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_3 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 255, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 268, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_pi); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 255, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_pi); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 268, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __pyx_t_3 = __Pyx_PyNumber_Divide(__pyx_t_4, __pyx_t_1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 255, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyNumber_Divide(__pyx_t_4, __pyx_t_1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 268, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_v_angle = __pyx_t_3;
   __pyx_t_3 = 0;
 
-  /* "mollib/core/geometry.pyx":256
+  /* "mollib/core/geometry.pyx":269
  *     y = np.dot(m1, n2)
  *     angle = atan2(y, x) * 180. / np.pi
  *     return angle             # <<<<<<<<<<<<<<
@@ -4454,7 +4680,7 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_10measure_dihedral(CYTHON_UNUS
   __pyx_r = __pyx_v_angle;
   goto __pyx_L0;
 
-  /* "mollib/core/geometry.pyx":209
+  /* "mollib/core/geometry.pyx":222
  * 
  * 
  * def measure_dihedral(atom_1, atom_2, atom_3, atom_4):             # <<<<<<<<<<<<<<
@@ -4468,15 +4694,28 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_10measure_dihedral(CYTHON_UNUS
   __Pyx_XDECREF(__pyx_t_2);
   __Pyx_XDECREF(__pyx_t_3);
   __Pyx_XDECREF(__pyx_t_4);
+  { PyObject *__pyx_type, *__pyx_value, *__pyx_tb;
+    __Pyx_PyThreadState_declare
+    __Pyx_PyThreadState_assign
+    __Pyx_ErrFetch(&__pyx_type, &__pyx_value, &__pyx_tb);
+    __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_m1.rcbuffer->pybuffer);
+    __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_n1.rcbuffer->pybuffer);
+    __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_n2.rcbuffer->pybuffer);
+  __Pyx_ErrRestore(__pyx_type, __pyx_value, __pyx_tb);}
   __Pyx_AddTraceback("mollib.core.geometry.measure_dihedral", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
+  goto __pyx_L2;
   __pyx_L0:;
+  __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_m1.rcbuffer->pybuffer);
+  __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_n1.rcbuffer->pybuffer);
+  __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_n2.rcbuffer->pybuffer);
+  __pyx_L2:;
   __Pyx_XDECREF(__pyx_v_ab);
   __Pyx_XDECREF(__pyx_v_bc);
   __Pyx_XDECREF(__pyx_v_cd);
-  __Pyx_XDECREF(__pyx_v_n1);
-  __Pyx_XDECREF(__pyx_v_n2);
-  __Pyx_XDECREF(__pyx_v_m1);
+  __Pyx_XDECREF((PyObject *)__pyx_v_n1);
+  __Pyx_XDECREF((PyObject *)__pyx_v_n2);
+  __Pyx_XDECREF((PyObject *)__pyx_v_m1);
   __Pyx_XDECREF(__pyx_v_x);
   __Pyx_XDECREF(__pyx_v_y);
   __Pyx_XDECREF(__pyx_v_angle);
@@ -4485,7 +4724,7 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_10measure_dihedral(CYTHON_UNUS
   return __pyx_r;
 }
 
-/* "mollib/core/geometry.pyx":259
+/* "mollib/core/geometry.pyx":272
  * 
  * 
  * def measure_distances(molecule, selector1, selector2,             # <<<<<<<<<<<<<<
@@ -4494,10 +4733,10 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_10measure_dihedral(CYTHON_UNUS
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_6mollib_4core_8geometry_13measure_distances(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static char __pyx_doc_6mollib_4core_8geometry_12measure_distances[] = "Measure the distances for atoms selected by selector1 and selector2.\n\n    Parameters\n    ----------\n    molecule: :obj:`mollib.Molecule`\n        The molecule object from which distances will be measured.\n    selector1: str\n        A string for locator of the first atom(s) to measure the distances\n        from.\n    selector2: str\n        A string for the locator of the second atom(s) to measure the distances\n        to.\n    filters: dict\n        See :func:`mollib.core.filter_atoms`\n\n\n        .. note:: The selectors respects the rules outlined in\n                  :class:`mollib.Molecule.get_atoms`\n\n    Returns\n    -------\n    list of tuples\n        A list of tuples for (atom1, atom2, distance) for each distance\n        selected.\n\n    Examples\n    --------\n    >>> from mollib.core import Molecule, measure_distances\n    >>> mol = Molecule('2MUV')\n    >>> kwargs = {'residue_delta': 0, 'only_intra': True}\n    >>> dists = measure_distances(mol, '23:25.N', '23:25.CA', **kwargs)\n    >>> for i in dists: print(i)\n    (A.S23.N, A.S23.CA, 1.46)\n    (A.D24.N, A.D24.CA, 1.45)\n    (A.P25.N, A.P25.CA, 1.49)\n    >>> dists = measure_distances(mol, 'A:C.23.N', 'A:C.23.N')\n    >>> for i in dists: print(i)\n    (A.S23.N, B.S23.N, 11.23)\n    (A.S23.N, C.S23.N, 15.49)\n    (B.S23.N, C.S23.N, 11.04)\n    >>> dists = measure_distances(mol, '23.N', '24.N', exclude_intra=True)\n    >>> for i in dists: print(i)\n    (A.S23.N, A.D24.N, 3.45)\n\n    ";
-static PyMethodDef __pyx_mdef_6mollib_4core_8geometry_13measure_distances = {"measure_distances", (PyCFunction)__pyx_pw_6mollib_4core_8geometry_13measure_distances, METH_VARARGS|METH_KEYWORDS, __pyx_doc_6mollib_4core_8geometry_12measure_distances};
-static PyObject *__pyx_pw_6mollib_4core_8geometry_13measure_distances(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+static PyObject *__pyx_pw_6mollib_4core_8geometry_15measure_distances(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static char __pyx_doc_6mollib_4core_8geometry_14measure_distances[] = "Measure the distances for atoms selected by selector1 and selector2.\n\n    Parameters\n    ----------\n    molecule: :obj:`mollib.Molecule`\n        The molecule object from which distances will be measured.\n    selector1: str\n        A string for locator of the first atom(s) to measure the distances\n        from.\n    selector2: str\n        A string for the locator of the second atom(s) to measure the distances\n        to.\n    filters: dict\n        See :func:`mollib.core.filter_atoms`\n\n\n        .. note:: The selectors respects the rules outlined in\n                  :class:`mollib.Molecule.get_atoms`\n\n    Returns\n    -------\n    list of tuples\n        A list of tuples for (atom1, atom2, distance) for each distance\n        selected.\n\n    Examples\n    --------\n    >>> from mollib.core import Molecule, measure_distances\n    >>> mol = Molecule('2MUV')\n    >>> kwargs = {'residue_delta': 0, 'only_intra': True}\n    >>> dists = measure_distances(mol, '23:25.N', '23:25.CA', **kwargs)\n    >>> for i in dists: print(i)\n    (A.S23.N, A.S23.CA, 1.46)\n    (A.D24.N, A.D24.CA, 1.45)\n    (A.P25.N, A.P25.CA, 1.49)\n    >>> dists = measure_distances(mol, 'A:C.23.N', 'A:C.23.N')\n    >>> for i in dists: print(i)\n    (A.S23.N, B.S23.N, 11.23)\n    (A.S23.N, C.S23.N, 15.49)\n    (B.S23.N, C.S23.N, 11.04)\n    >>> dists = measure_distances(mol, '23.N', '24.N', exclude_intra=True)\n    >>> for i in dists: print(i)\n    (A.S23.N, A.D24.N, 3.45)\n\n    ";
+static PyMethodDef __pyx_mdef_6mollib_4core_8geometry_15measure_distances = {"measure_distances", (PyCFunction)__pyx_pw_6mollib_4core_8geometry_15measure_distances, METH_VARARGS|METH_KEYWORDS, __pyx_doc_6mollib_4core_8geometry_14measure_distances};
+static PyObject *__pyx_pw_6mollib_4core_8geometry_15measure_distances(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyObject *__pyx_v_molecule = 0;
   PyObject *__pyx_v_selector1 = 0;
   PyObject *__pyx_v_selector2 = 0;
@@ -4528,16 +4767,16 @@ static PyObject *__pyx_pw_6mollib_4core_8geometry_13measure_distances(PyObject *
         case  1:
         if (likely((values[1] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_selector1)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("measure_distances", 1, 3, 3, 1); __PYX_ERR(0, 259, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("measure_distances", 1, 3, 3, 1); __PYX_ERR(0, 272, __pyx_L3_error)
         }
         case  2:
         if (likely((values[2] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_selector2)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("measure_distances", 1, 3, 3, 2); __PYX_ERR(0, 259, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("measure_distances", 1, 3, 3, 2); __PYX_ERR(0, 272, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, __pyx_v_filters, values, pos_args, "measure_distances") < 0)) __PYX_ERR(0, 259, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, __pyx_v_filters, values, pos_args, "measure_distances") < 0)) __PYX_ERR(0, 272, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 3) {
       goto __pyx_L5_argtuple_error;
@@ -4552,14 +4791,14 @@ static PyObject *__pyx_pw_6mollib_4core_8geometry_13measure_distances(PyObject *
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("measure_distances", 1, 3, 3, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 259, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("measure_distances", 1, 3, 3, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 272, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_DECREF(__pyx_v_filters); __pyx_v_filters = 0;
   __Pyx_AddTraceback("mollib.core.geometry.measure_distances", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_6mollib_4core_8geometry_12measure_distances(__pyx_self, __pyx_v_molecule, __pyx_v_selector1, __pyx_v_selector2, __pyx_v_filters);
+  __pyx_r = __pyx_pf_6mollib_4core_8geometry_14measure_distances(__pyx_self, __pyx_v_molecule, __pyx_v_selector1, __pyx_v_selector2, __pyx_v_filters);
 
   /* function exit code */
   __Pyx_XDECREF(__pyx_v_filters);
@@ -4567,7 +4806,7 @@ static PyObject *__pyx_pw_6mollib_4core_8geometry_13measure_distances(PyObject *
   return __pyx_r;
 }
 
-/* "mollib/core/geometry.pyx":337
+/* "mollib/core/geometry.pyx":350
  *     # Return the sorted list of tuples. Sort first by chain number, then
  *     # by residue number
  *     sort_key = lambda i: (i[0][0].chain.id,             # <<<<<<<<<<<<<<
@@ -4599,83 +4838,83 @@ static PyObject *__pyx_lambda_funcdef_lambda(CYTHON_UNUSED PyObject *__pyx_self,
   PyObject *__pyx_t_5 = NULL;
   __Pyx_RefNannySetupContext("lambda", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_i, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 337, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_i, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 350, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_GetItemInt(__pyx_t_1, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 337, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_GetItemInt(__pyx_t_1, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 350, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_chain); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 337, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_chain); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 350, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_id); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 337, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_id); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 350, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "mollib/core/geometry.pyx":338
+  /* "mollib/core/geometry.pyx":351
  *     # by residue number
  *     sort_key = lambda i: (i[0][0].chain.id,
  *                           i[0][1].chain.id,             # <<<<<<<<<<<<<<
  *                           i[0][0].residue.number,
  *                           i[0][1].residue.number)
  */
-  __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_i, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 338, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_i, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 351, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_3 = __Pyx_GetItemInt(__pyx_t_1, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 338, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_GetItemInt(__pyx_t_1, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 351, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_chain); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 338, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_chain); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 351, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_id); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 338, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_id); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 351, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "mollib/core/geometry.pyx":339
+  /* "mollib/core/geometry.pyx":352
  *     sort_key = lambda i: (i[0][0].chain.id,
  *                           i[0][1].chain.id,
  *                           i[0][0].residue.number,             # <<<<<<<<<<<<<<
  *                           i[0][1].residue.number)
  *     return [(k[0], k[1], v)
  */
-  __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_i, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 339, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_i, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 352, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_4 = __Pyx_GetItemInt(__pyx_t_1, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 339, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_GetItemInt(__pyx_t_1, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 352, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_residue); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 339, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_residue); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 352, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_number); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 339, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_number); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 352, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "mollib/core/geometry.pyx":340
+  /* "mollib/core/geometry.pyx":353
  *                           i[0][1].chain.id,
  *                           i[0][0].residue.number,
  *                           i[0][1].residue.number)             # <<<<<<<<<<<<<<
  *     return [(k[0], k[1], v)
  *             for k, v in sorted(results.items(), key=sort_key)]
  */
-  __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_i, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 340, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_i, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 353, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_5 = __Pyx_GetItemInt(__pyx_t_1, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 340, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_GetItemInt(__pyx_t_1, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 353, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_residue); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 340, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_residue); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 353, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_number); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 340, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_number); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 353, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "mollib/core/geometry.pyx":337
+  /* "mollib/core/geometry.pyx":350
  *     # Return the sorted list of tuples. Sort first by chain number, then
  *     # by residue number
  *     sort_key = lambda i: (i[0][0].chain.id,             # <<<<<<<<<<<<<<
  *                           i[0][1].chain.id,
  *                           i[0][0].residue.number,
  */
-  __pyx_t_1 = PyTuple_New(4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 337, __pyx_L1_error)
+  __pyx_t_1 = PyTuple_New(4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 350, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_GIVEREF(__pyx_t_2);
   PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_t_2);
@@ -4708,7 +4947,7 @@ static PyObject *__pyx_lambda_funcdef_lambda(CYTHON_UNUSED PyObject *__pyx_self,
   return __pyx_r;
 }
 
-/* "mollib/core/geometry.pyx":259
+/* "mollib/core/geometry.pyx":272
  * 
  * 
  * def measure_distances(molecule, selector1, selector2,             # <<<<<<<<<<<<<<
@@ -4716,7 +4955,7 @@ static PyObject *__pyx_lambda_funcdef_lambda(CYTHON_UNUSED PyObject *__pyx_self,
  *     """Measure the distances for atoms selected by selector1 and selector2.
  */
 
-static PyObject *__pyx_pf_6mollib_4core_8geometry_12measure_distances(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_molecule, PyObject *__pyx_v_selector1, PyObject *__pyx_v_selector2, PyObject *__pyx_v_filters) {
+static PyObject *__pyx_pf_6mollib_4core_8geometry_14measure_distances(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_molecule, PyObject *__pyx_v_selector1, PyObject *__pyx_v_selector2, PyObject *__pyx_v_filters) {
   PyObject *__pyx_v_results = NULL;
   PyObject *__pyx_v_atoms1 = NULL;
   PyObject *__pyx_v_atoms2 = NULL;
@@ -4745,26 +4984,26 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_12measure_distances(CYTHON_UNU
   PyObject *(*__pyx_t_14)(PyObject *);
   __Pyx_RefNannySetupContext("measure_distances", 0);
 
-  /* "mollib/core/geometry.pyx":307
+  /* "mollib/core/geometry.pyx":320
  *     """
  *     # Returned dict
  *     results = {}             # <<<<<<<<<<<<<<
  * 
  *     # This function logs an error if a1 or a2 isn't properly
  */
-  __pyx_t_1 = PyDict_New(); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 307, __pyx_L1_error)
+  __pyx_t_1 = PyDict_New(); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 320, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_results = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "mollib/core/geometry.pyx":312
+  /* "mollib/core/geometry.pyx":325
  *     # formatted. An additional message is not needed. Just skip
  *     # it if both atoms aren't found.
  *     atoms1 = molecule.get_atoms(selector1)             # <<<<<<<<<<<<<<
  *     atoms2 = molecule.get_atoms(selector2)
  * 
  */
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_molecule, __pyx_n_s_get_atoms); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 312, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_molecule, __pyx_n_s_get_atoms); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 325, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_t_3 = NULL;
   if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_2))) {
@@ -4777,13 +5016,13 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_12measure_distances(CYTHON_UNU
     }
   }
   if (!__pyx_t_3) {
-    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_v_selector1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 312, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_v_selector1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 325, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
   } else {
     #if CYTHON_FAST_PYCALL
     if (PyFunction_Check(__pyx_t_2)) {
       PyObject *__pyx_temp[2] = {__pyx_t_3, __pyx_v_selector1};
-      __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 312, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 325, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
       __Pyx_GOTREF(__pyx_t_1);
     } else
@@ -4791,19 +5030,19 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_12measure_distances(CYTHON_UNU
     #if CYTHON_FAST_PYCCALL
     if (__Pyx_PyFastCFunction_Check(__pyx_t_2)) {
       PyObject *__pyx_temp[2] = {__pyx_t_3, __pyx_v_selector1};
-      __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 312, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 325, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
       __Pyx_GOTREF(__pyx_t_1);
     } else
     #endif
     {
-      __pyx_t_4 = PyTuple_New(1+1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 312, __pyx_L1_error)
+      __pyx_t_4 = PyTuple_New(1+1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 325, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_4);
       __Pyx_GIVEREF(__pyx_t_3); PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_t_3); __pyx_t_3 = NULL;
       __Pyx_INCREF(__pyx_v_selector1);
       __Pyx_GIVEREF(__pyx_v_selector1);
       PyTuple_SET_ITEM(__pyx_t_4, 0+1, __pyx_v_selector1);
-      __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_4, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 312, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_4, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 325, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     }
@@ -4812,14 +5051,14 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_12measure_distances(CYTHON_UNU
   __pyx_v_atoms1 = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "mollib/core/geometry.pyx":313
+  /* "mollib/core/geometry.pyx":326
  *     # it if both atoms aren't found.
  *     atoms1 = molecule.get_atoms(selector1)
  *     atoms2 = molecule.get_atoms(selector2)             # <<<<<<<<<<<<<<
  * 
  *     if not atoms1 or not atoms2:
  */
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_molecule, __pyx_n_s_get_atoms); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 313, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_molecule, __pyx_n_s_get_atoms); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 326, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_t_4 = NULL;
   if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_2))) {
@@ -4832,13 +5071,13 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_12measure_distances(CYTHON_UNU
     }
   }
   if (!__pyx_t_4) {
-    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_v_selector2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 313, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_v_selector2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 326, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
   } else {
     #if CYTHON_FAST_PYCALL
     if (PyFunction_Check(__pyx_t_2)) {
       PyObject *__pyx_temp[2] = {__pyx_t_4, __pyx_v_selector2};
-      __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 313, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 326, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
       __Pyx_GOTREF(__pyx_t_1);
     } else
@@ -4846,19 +5085,19 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_12measure_distances(CYTHON_UNU
     #if CYTHON_FAST_PYCCALL
     if (__Pyx_PyFastCFunction_Check(__pyx_t_2)) {
       PyObject *__pyx_temp[2] = {__pyx_t_4, __pyx_v_selector2};
-      __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 313, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 326, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
       __Pyx_GOTREF(__pyx_t_1);
     } else
     #endif
     {
-      __pyx_t_3 = PyTuple_New(1+1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 313, __pyx_L1_error)
+      __pyx_t_3 = PyTuple_New(1+1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 326, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
       __Pyx_GIVEREF(__pyx_t_4); PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_4); __pyx_t_4 = NULL;
       __Pyx_INCREF(__pyx_v_selector2);
       __Pyx_GIVEREF(__pyx_v_selector2);
       PyTuple_SET_ITEM(__pyx_t_3, 0+1, __pyx_v_selector2);
-      __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_3, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 313, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_3, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 326, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     }
@@ -4867,27 +5106,27 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_12measure_distances(CYTHON_UNU
   __pyx_v_atoms2 = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "mollib/core/geometry.pyx":315
+  /* "mollib/core/geometry.pyx":328
  *     atoms2 = molecule.get_atoms(selector2)
  * 
  *     if not atoms1 or not atoms2:             # <<<<<<<<<<<<<<
  *         return []
  * 
  */
-  __pyx_t_6 = __Pyx_PyObject_IsTrue(__pyx_v_atoms1); if (unlikely(__pyx_t_6 < 0)) __PYX_ERR(0, 315, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_PyObject_IsTrue(__pyx_v_atoms1); if (unlikely(__pyx_t_6 < 0)) __PYX_ERR(0, 328, __pyx_L1_error)
   __pyx_t_7 = ((!__pyx_t_6) != 0);
   if (!__pyx_t_7) {
   } else {
     __pyx_t_5 = __pyx_t_7;
     goto __pyx_L4_bool_binop_done;
   }
-  __pyx_t_7 = __Pyx_PyObject_IsTrue(__pyx_v_atoms2); if (unlikely(__pyx_t_7 < 0)) __PYX_ERR(0, 315, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_PyObject_IsTrue(__pyx_v_atoms2); if (unlikely(__pyx_t_7 < 0)) __PYX_ERR(0, 328, __pyx_L1_error)
   __pyx_t_6 = ((!__pyx_t_7) != 0);
   __pyx_t_5 = __pyx_t_6;
   __pyx_L4_bool_binop_done:;
   if (__pyx_t_5) {
 
-    /* "mollib/core/geometry.pyx":316
+    /* "mollib/core/geometry.pyx":329
  * 
  *     if not atoms1 or not atoms2:
  *         return []             # <<<<<<<<<<<<<<
@@ -4895,13 +5134,13 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_12measure_distances(CYTHON_UNU
  *     for i in atoms1:
  */
     __Pyx_XDECREF(__pyx_r);
-    __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 316, __pyx_L1_error)
+    __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 329, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __pyx_r = __pyx_t_1;
     __pyx_t_1 = 0;
     goto __pyx_L0;
 
-    /* "mollib/core/geometry.pyx":315
+    /* "mollib/core/geometry.pyx":328
  *     atoms2 = molecule.get_atoms(selector2)
  * 
  *     if not atoms1 or not atoms2:             # <<<<<<<<<<<<<<
@@ -4910,7 +5149,7 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_12measure_distances(CYTHON_UNU
  */
   }
 
-  /* "mollib/core/geometry.pyx":318
+  /* "mollib/core/geometry.pyx":331
  *         return []
  * 
  *     for i in atoms1:             # <<<<<<<<<<<<<<
@@ -4921,26 +5160,26 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_12measure_distances(CYTHON_UNU
     __pyx_t_1 = __pyx_v_atoms1; __Pyx_INCREF(__pyx_t_1); __pyx_t_8 = 0;
     __pyx_t_9 = NULL;
   } else {
-    __pyx_t_8 = -1; __pyx_t_1 = PyObject_GetIter(__pyx_v_atoms1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 318, __pyx_L1_error)
+    __pyx_t_8 = -1; __pyx_t_1 = PyObject_GetIter(__pyx_v_atoms1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 331, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_9 = Py_TYPE(__pyx_t_1)->tp_iternext; if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 318, __pyx_L1_error)
+    __pyx_t_9 = Py_TYPE(__pyx_t_1)->tp_iternext; if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 331, __pyx_L1_error)
   }
   for (;;) {
     if (likely(!__pyx_t_9)) {
       if (likely(PyList_CheckExact(__pyx_t_1))) {
         if (__pyx_t_8 >= PyList_GET_SIZE(__pyx_t_1)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_2 = PyList_GET_ITEM(__pyx_t_1, __pyx_t_8); __Pyx_INCREF(__pyx_t_2); __pyx_t_8++; if (unlikely(0 < 0)) __PYX_ERR(0, 318, __pyx_L1_error)
+        __pyx_t_2 = PyList_GET_ITEM(__pyx_t_1, __pyx_t_8); __Pyx_INCREF(__pyx_t_2); __pyx_t_8++; if (unlikely(0 < 0)) __PYX_ERR(0, 331, __pyx_L1_error)
         #else
-        __pyx_t_2 = PySequence_ITEM(__pyx_t_1, __pyx_t_8); __pyx_t_8++; if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 318, __pyx_L1_error)
+        __pyx_t_2 = PySequence_ITEM(__pyx_t_1, __pyx_t_8); __pyx_t_8++; if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 331, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_2);
         #endif
       } else {
         if (__pyx_t_8 >= PyTuple_GET_SIZE(__pyx_t_1)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_2 = PyTuple_GET_ITEM(__pyx_t_1, __pyx_t_8); __Pyx_INCREF(__pyx_t_2); __pyx_t_8++; if (unlikely(0 < 0)) __PYX_ERR(0, 318, __pyx_L1_error)
+        __pyx_t_2 = PyTuple_GET_ITEM(__pyx_t_1, __pyx_t_8); __Pyx_INCREF(__pyx_t_2); __pyx_t_8++; if (unlikely(0 < 0)) __PYX_ERR(0, 331, __pyx_L1_error)
         #else
-        __pyx_t_2 = PySequence_ITEM(__pyx_t_1, __pyx_t_8); __pyx_t_8++; if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 318, __pyx_L1_error)
+        __pyx_t_2 = PySequence_ITEM(__pyx_t_1, __pyx_t_8); __pyx_t_8++; if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 331, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_2);
         #endif
       }
@@ -4950,7 +5189,7 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_12measure_distances(CYTHON_UNU
         PyObject* exc_type = PyErr_Occurred();
         if (exc_type) {
           if (likely(exc_type == PyExc_StopIteration || PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-          else __PYX_ERR(0, 318, __pyx_L1_error)
+          else __PYX_ERR(0, 331, __pyx_L1_error)
         }
         break;
       }
@@ -4959,7 +5198,7 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_12measure_distances(CYTHON_UNU
     __Pyx_XDECREF_SET(__pyx_v_i, __pyx_t_2);
     __pyx_t_2 = 0;
 
-    /* "mollib/core/geometry.pyx":319
+    /* "mollib/core/geometry.pyx":332
  * 
  *     for i in atoms1:
  *         for j in atoms2:             # <<<<<<<<<<<<<<
@@ -4970,26 +5209,26 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_12measure_distances(CYTHON_UNU
       __pyx_t_2 = __pyx_v_atoms2; __Pyx_INCREF(__pyx_t_2); __pyx_t_10 = 0;
       __pyx_t_11 = NULL;
     } else {
-      __pyx_t_10 = -1; __pyx_t_2 = PyObject_GetIter(__pyx_v_atoms2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 319, __pyx_L1_error)
+      __pyx_t_10 = -1; __pyx_t_2 = PyObject_GetIter(__pyx_v_atoms2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 332, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_2);
-      __pyx_t_11 = Py_TYPE(__pyx_t_2)->tp_iternext; if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 319, __pyx_L1_error)
+      __pyx_t_11 = Py_TYPE(__pyx_t_2)->tp_iternext; if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 332, __pyx_L1_error)
     }
     for (;;) {
       if (likely(!__pyx_t_11)) {
         if (likely(PyList_CheckExact(__pyx_t_2))) {
           if (__pyx_t_10 >= PyList_GET_SIZE(__pyx_t_2)) break;
           #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-          __pyx_t_3 = PyList_GET_ITEM(__pyx_t_2, __pyx_t_10); __Pyx_INCREF(__pyx_t_3); __pyx_t_10++; if (unlikely(0 < 0)) __PYX_ERR(0, 319, __pyx_L1_error)
+          __pyx_t_3 = PyList_GET_ITEM(__pyx_t_2, __pyx_t_10); __Pyx_INCREF(__pyx_t_3); __pyx_t_10++; if (unlikely(0 < 0)) __PYX_ERR(0, 332, __pyx_L1_error)
           #else
-          __pyx_t_3 = PySequence_ITEM(__pyx_t_2, __pyx_t_10); __pyx_t_10++; if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 319, __pyx_L1_error)
+          __pyx_t_3 = PySequence_ITEM(__pyx_t_2, __pyx_t_10); __pyx_t_10++; if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 332, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_3);
           #endif
         } else {
           if (__pyx_t_10 >= PyTuple_GET_SIZE(__pyx_t_2)) break;
           #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-          __pyx_t_3 = PyTuple_GET_ITEM(__pyx_t_2, __pyx_t_10); __Pyx_INCREF(__pyx_t_3); __pyx_t_10++; if (unlikely(0 < 0)) __PYX_ERR(0, 319, __pyx_L1_error)
+          __pyx_t_3 = PyTuple_GET_ITEM(__pyx_t_2, __pyx_t_10); __Pyx_INCREF(__pyx_t_3); __pyx_t_10++; if (unlikely(0 < 0)) __PYX_ERR(0, 332, __pyx_L1_error)
           #else
-          __pyx_t_3 = PySequence_ITEM(__pyx_t_2, __pyx_t_10); __pyx_t_10++; if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 319, __pyx_L1_error)
+          __pyx_t_3 = PySequence_ITEM(__pyx_t_2, __pyx_t_10); __pyx_t_10++; if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 332, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_3);
           #endif
         }
@@ -4999,7 +5238,7 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_12measure_distances(CYTHON_UNU
           PyObject* exc_type = PyErr_Occurred();
           if (exc_type) {
             if (likely(exc_type == PyExc_StopIteration || PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-            else __PYX_ERR(0, 319, __pyx_L1_error)
+            else __PYX_ERR(0, 332, __pyx_L1_error)
           }
           break;
         }
@@ -5008,14 +5247,14 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_12measure_distances(CYTHON_UNU
       __Pyx_XDECREF_SET(__pyx_v_j, __pyx_t_3);
       __pyx_t_3 = 0;
 
-      /* "mollib/core/geometry.pyx":321
+      /* "mollib/core/geometry.pyx":334
  *         for j in atoms2:
  *             # Sort the atoms into a tuple
  *             key = (i, j)             # <<<<<<<<<<<<<<
  * 
  *             # The atoms in forward or reverse order are duplicates
  */
-      __pyx_t_3 = PyTuple_New(2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 321, __pyx_L1_error)
+      __pyx_t_3 = PyTuple_New(2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 334, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
       __Pyx_INCREF(__pyx_v_i);
       __Pyx_GIVEREF(__pyx_v_i);
@@ -5026,30 +5265,30 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_12measure_distances(CYTHON_UNU
       __Pyx_XDECREF_SET(__pyx_v_key, ((PyObject*)__pyx_t_3));
       __pyx_t_3 = 0;
 
-      /* "mollib/core/geometry.pyx":324
+      /* "mollib/core/geometry.pyx":337
  * 
  *             # The atoms in forward or reverse order are duplicates
  *             if key in results or key[::-1] in results:             # <<<<<<<<<<<<<<
  *                 continue
  * 
  */
-      __pyx_t_6 = (__Pyx_PyDict_ContainsTF(__pyx_v_key, __pyx_v_results, Py_EQ)); if (unlikely(__pyx_t_6 < 0)) __PYX_ERR(0, 324, __pyx_L1_error)
+      __pyx_t_6 = (__Pyx_PyDict_ContainsTF(__pyx_v_key, __pyx_v_results, Py_EQ)); if (unlikely(__pyx_t_6 < 0)) __PYX_ERR(0, 337, __pyx_L1_error)
       __pyx_t_7 = (__pyx_t_6 != 0);
       if (!__pyx_t_7) {
       } else {
         __pyx_t_5 = __pyx_t_7;
         goto __pyx_L11_bool_binop_done;
       }
-      __pyx_t_3 = PyObject_GetItem(__pyx_v_key, __pyx_slice__4); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 324, __pyx_L1_error)
+      __pyx_t_3 = PyObject_GetItem(__pyx_v_key, __pyx_slice__5); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 337, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
-      __pyx_t_7 = (__Pyx_PyDict_ContainsTF(__pyx_t_3, __pyx_v_results, Py_EQ)); if (unlikely(__pyx_t_7 < 0)) __PYX_ERR(0, 324, __pyx_L1_error)
+      __pyx_t_7 = (__Pyx_PyDict_ContainsTF(__pyx_t_3, __pyx_v_results, Py_EQ)); if (unlikely(__pyx_t_7 < 0)) __PYX_ERR(0, 337, __pyx_L1_error)
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
       __pyx_t_6 = (__pyx_t_7 != 0);
       __pyx_t_5 = __pyx_t_6;
       __pyx_L11_bool_binop_done:;
       if (__pyx_t_5) {
 
-        /* "mollib/core/geometry.pyx":325
+        /* "mollib/core/geometry.pyx":338
  *             # The atoms in forward or reverse order are duplicates
  *             if key in results or key[::-1] in results:
  *                 continue             # <<<<<<<<<<<<<<
@@ -5058,7 +5297,7 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_12measure_distances(CYTHON_UNU
  */
         goto __pyx_L8_continue;
 
-        /* "mollib/core/geometry.pyx":324
+        /* "mollib/core/geometry.pyx":337
  * 
  *             # The atoms in forward or reverse order are duplicates
  *             if key in results or key[::-1] in results:             # <<<<<<<<<<<<<<
@@ -5067,23 +5306,23 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_12measure_distances(CYTHON_UNU
  */
       }
 
-      /* "mollib/core/geometry.pyx":328
+      /* "mollib/core/geometry.pyx":341
  * 
  *             # Process the filters
  *             if filter_atoms(*key, **filters):             # <<<<<<<<<<<<<<
  *                 continue
  * 
  */
-      __pyx_t_3 = __Pyx_GetModuleGlobalName(__pyx_n_s_filter_atoms); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 328, __pyx_L1_error)
+      __pyx_t_3 = __Pyx_GetModuleGlobalName(__pyx_n_s_filter_atoms); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 341, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
-      __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_v_key, __pyx_v_filters); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 328, __pyx_L1_error)
+      __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_v_key, __pyx_v_filters); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 341, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_4);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-      __pyx_t_5 = __Pyx_PyObject_IsTrue(__pyx_t_4); if (unlikely(__pyx_t_5 < 0)) __PYX_ERR(0, 328, __pyx_L1_error)
+      __pyx_t_5 = __Pyx_PyObject_IsTrue(__pyx_t_4); if (unlikely(__pyx_t_5 < 0)) __PYX_ERR(0, 341, __pyx_L1_error)
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
       if (__pyx_t_5) {
 
-        /* "mollib/core/geometry.pyx":329
+        /* "mollib/core/geometry.pyx":342
  *             # Process the filters
  *             if filter_atoms(*key, **filters):
  *                 continue             # <<<<<<<<<<<<<<
@@ -5092,7 +5331,7 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_12measure_distances(CYTHON_UNU
  */
         goto __pyx_L8_continue;
 
-        /* "mollib/core/geometry.pyx":328
+        /* "mollib/core/geometry.pyx":341
  * 
  *             # Process the filters
  *             if filter_atoms(*key, **filters):             # <<<<<<<<<<<<<<
@@ -5101,16 +5340,16 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_12measure_distances(CYTHON_UNU
  */
       }
 
-      /* "mollib/core/geometry.pyx":332
+      /* "mollib/core/geometry.pyx":345
  * 
  *             # Add the distance to the results
  *             dist = round(measure_distance(i, j), 2)             # <<<<<<<<<<<<<<
  *             results[key] = dist
  * 
  */
-      __pyx_t_4 = PyFloat_FromDouble(__pyx_f_6mollib_4core_8geometry_measure_distance(__pyx_v_i, __pyx_v_j, 0)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 332, __pyx_L1_error)
+      __pyx_t_4 = PyFloat_FromDouble(__pyx_f_6mollib_4core_8geometry_measure_distance(__pyx_v_i, __pyx_v_j, 0)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 345, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_4);
-      __pyx_t_3 = PyTuple_New(2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 332, __pyx_L1_error)
+      __pyx_t_3 = PyTuple_New(2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 345, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
       __Pyx_GIVEREF(__pyx_t_4);
       PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_4);
@@ -5118,22 +5357,22 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_12measure_distances(CYTHON_UNU
       __Pyx_GIVEREF(__pyx_int_2);
       PyTuple_SET_ITEM(__pyx_t_3, 1, __pyx_int_2);
       __pyx_t_4 = 0;
-      __pyx_t_4 = __Pyx_PyObject_Call(__pyx_builtin_round, __pyx_t_3, NULL); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 332, __pyx_L1_error)
+      __pyx_t_4 = __Pyx_PyObject_Call(__pyx_builtin_round, __pyx_t_3, NULL); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 345, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_4);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
       __Pyx_XDECREF_SET(__pyx_v_dist, __pyx_t_4);
       __pyx_t_4 = 0;
 
-      /* "mollib/core/geometry.pyx":333
+      /* "mollib/core/geometry.pyx":346
  *             # Add the distance to the results
  *             dist = round(measure_distance(i, j), 2)
  *             results[key] = dist             # <<<<<<<<<<<<<<
  * 
  *     # Return the sorted list of tuples. Sort first by chain number, then
  */
-      if (unlikely(PyDict_SetItem(__pyx_v_results, __pyx_v_key, __pyx_v_dist) < 0)) __PYX_ERR(0, 333, __pyx_L1_error)
+      if (unlikely(PyDict_SetItem(__pyx_v_results, __pyx_v_key, __pyx_v_dist) < 0)) __PYX_ERR(0, 346, __pyx_L1_error)
 
-      /* "mollib/core/geometry.pyx":319
+      /* "mollib/core/geometry.pyx":332
  * 
  *     for i in atoms1:
  *         for j in atoms2:             # <<<<<<<<<<<<<<
@@ -5144,7 +5383,7 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_12measure_distances(CYTHON_UNU
     }
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-    /* "mollib/core/geometry.pyx":318
+    /* "mollib/core/geometry.pyx":331
  *         return []
  * 
  *     for i in atoms1:             # <<<<<<<<<<<<<<
@@ -5154,19 +5393,19 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_12measure_distances(CYTHON_UNU
   }
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "mollib/core/geometry.pyx":337
+  /* "mollib/core/geometry.pyx":350
  *     # Return the sorted list of tuples. Sort first by chain number, then
  *     # by residue number
  *     sort_key = lambda i: (i[0][0].chain.id,             # <<<<<<<<<<<<<<
  *                           i[0][1].chain.id,
  *                           i[0][0].residue.number,
  */
-  __pyx_t_1 = __Pyx_CyFunction_NewEx(&__pyx_mdef_6mollib_4core_8geometry_17measure_distances_lambda, 0, __pyx_n_s_measure_distances_locals_lambda, NULL, __pyx_n_s_mollib_core_geometry, __pyx_d, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 337, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_CyFunction_NewEx(&__pyx_mdef_6mollib_4core_8geometry_17measure_distances_lambda, 0, __pyx_n_s_measure_distances_locals_lambda, NULL, __pyx_n_s_mollib_core_geometry, __pyx_d, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 350, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_sort_key = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "mollib/core/geometry.pyx":341
+  /* "mollib/core/geometry.pyx":354
  *                           i[0][0].residue.number,
  *                           i[0][1].residue.number)
  *     return [(k[0], k[1], v)             # <<<<<<<<<<<<<<
@@ -5174,27 +5413,27 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_12measure_distances(CYTHON_UNU
  * 
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 341, __pyx_L1_error)
+  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 354, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
 
-  /* "mollib/core/geometry.pyx":342
+  /* "mollib/core/geometry.pyx":355
  *                           i[0][1].residue.number)
  *     return [(k[0], k[1], v)
  *             for k, v in sorted(results.items(), key=sort_key)]             # <<<<<<<<<<<<<<
  * 
  * 
  */
-  __pyx_t_2 = __Pyx_PyDict_Items(__pyx_v_results); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 342, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyDict_Items(__pyx_v_results); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 355, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_4 = PyTuple_New(1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 342, __pyx_L1_error)
+  __pyx_t_4 = PyTuple_New(1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 355, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_GIVEREF(__pyx_t_2);
   PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_t_2);
   __pyx_t_2 = 0;
-  __pyx_t_2 = PyDict_New(); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 342, __pyx_L1_error)
+  __pyx_t_2 = PyDict_New(); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 355, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_key, __pyx_v_sort_key) < 0) __PYX_ERR(0, 342, __pyx_L1_error)
-  __pyx_t_3 = __Pyx_PyObject_Call(__pyx_builtin_sorted, __pyx_t_4, __pyx_t_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 342, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_key, __pyx_v_sort_key) < 0) __PYX_ERR(0, 355, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_Call(__pyx_builtin_sorted, __pyx_t_4, __pyx_t_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 355, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
@@ -5202,9 +5441,9 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_12measure_distances(CYTHON_UNU
     __pyx_t_2 = __pyx_t_3; __Pyx_INCREF(__pyx_t_2); __pyx_t_8 = 0;
     __pyx_t_9 = NULL;
   } else {
-    __pyx_t_8 = -1; __pyx_t_2 = PyObject_GetIter(__pyx_t_3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 342, __pyx_L1_error)
+    __pyx_t_8 = -1; __pyx_t_2 = PyObject_GetIter(__pyx_t_3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 355, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_9 = Py_TYPE(__pyx_t_2)->tp_iternext; if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 342, __pyx_L1_error)
+    __pyx_t_9 = Py_TYPE(__pyx_t_2)->tp_iternext; if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 355, __pyx_L1_error)
   }
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   for (;;) {
@@ -5212,17 +5451,17 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_12measure_distances(CYTHON_UNU
       if (likely(PyList_CheckExact(__pyx_t_2))) {
         if (__pyx_t_8 >= PyList_GET_SIZE(__pyx_t_2)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_3 = PyList_GET_ITEM(__pyx_t_2, __pyx_t_8); __Pyx_INCREF(__pyx_t_3); __pyx_t_8++; if (unlikely(0 < 0)) __PYX_ERR(0, 342, __pyx_L1_error)
+        __pyx_t_3 = PyList_GET_ITEM(__pyx_t_2, __pyx_t_8); __Pyx_INCREF(__pyx_t_3); __pyx_t_8++; if (unlikely(0 < 0)) __PYX_ERR(0, 355, __pyx_L1_error)
         #else
-        __pyx_t_3 = PySequence_ITEM(__pyx_t_2, __pyx_t_8); __pyx_t_8++; if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 342, __pyx_L1_error)
+        __pyx_t_3 = PySequence_ITEM(__pyx_t_2, __pyx_t_8); __pyx_t_8++; if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 355, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_3);
         #endif
       } else {
         if (__pyx_t_8 >= PyTuple_GET_SIZE(__pyx_t_2)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_3 = PyTuple_GET_ITEM(__pyx_t_2, __pyx_t_8); __Pyx_INCREF(__pyx_t_3); __pyx_t_8++; if (unlikely(0 < 0)) __PYX_ERR(0, 342, __pyx_L1_error)
+        __pyx_t_3 = PyTuple_GET_ITEM(__pyx_t_2, __pyx_t_8); __Pyx_INCREF(__pyx_t_3); __pyx_t_8++; if (unlikely(0 < 0)) __PYX_ERR(0, 355, __pyx_L1_error)
         #else
-        __pyx_t_3 = PySequence_ITEM(__pyx_t_2, __pyx_t_8); __pyx_t_8++; if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 342, __pyx_L1_error)
+        __pyx_t_3 = PySequence_ITEM(__pyx_t_2, __pyx_t_8); __pyx_t_8++; if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 355, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_3);
         #endif
       }
@@ -5232,7 +5471,7 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_12measure_distances(CYTHON_UNU
         PyObject* exc_type = PyErr_Occurred();
         if (exc_type) {
           if (likely(exc_type == PyExc_StopIteration || PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-          else __PYX_ERR(0, 342, __pyx_L1_error)
+          else __PYX_ERR(0, 355, __pyx_L1_error)
         }
         break;
       }
@@ -5248,7 +5487,7 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_12measure_distances(CYTHON_UNU
       if (unlikely(size != 2)) {
         if (size > 2) __Pyx_RaiseTooManyValuesError(2);
         else if (size >= 0) __Pyx_RaiseNeedMoreValuesError(size);
-        __PYX_ERR(0, 342, __pyx_L1_error)
+        __PYX_ERR(0, 355, __pyx_L1_error)
       }
       #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
       if (likely(PyTuple_CheckExact(sequence))) {
@@ -5261,15 +5500,15 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_12measure_distances(CYTHON_UNU
       __Pyx_INCREF(__pyx_t_4);
       __Pyx_INCREF(__pyx_t_12);
       #else
-      __pyx_t_4 = PySequence_ITEM(sequence, 0); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 342, __pyx_L1_error)
+      __pyx_t_4 = PySequence_ITEM(sequence, 0); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 355, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_4);
-      __pyx_t_12 = PySequence_ITEM(sequence, 1); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 342, __pyx_L1_error)
+      __pyx_t_12 = PySequence_ITEM(sequence, 1); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 355, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_12);
       #endif
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     } else {
       Py_ssize_t index = -1;
-      __pyx_t_13 = PyObject_GetIter(__pyx_t_3); if (unlikely(!__pyx_t_13)) __PYX_ERR(0, 342, __pyx_L1_error)
+      __pyx_t_13 = PyObject_GetIter(__pyx_t_3); if (unlikely(!__pyx_t_13)) __PYX_ERR(0, 355, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_13);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
       __pyx_t_14 = Py_TYPE(__pyx_t_13)->tp_iternext;
@@ -5277,7 +5516,7 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_12measure_distances(CYTHON_UNU
       __Pyx_GOTREF(__pyx_t_4);
       index = 1; __pyx_t_12 = __pyx_t_14(__pyx_t_13); if (unlikely(!__pyx_t_12)) goto __pyx_L16_unpacking_failed;
       __Pyx_GOTREF(__pyx_t_12);
-      if (__Pyx_IternextUnpackEndCheck(__pyx_t_14(__pyx_t_13), 2) < 0) __PYX_ERR(0, 342, __pyx_L1_error)
+      if (__Pyx_IternextUnpackEndCheck(__pyx_t_14(__pyx_t_13), 2) < 0) __PYX_ERR(0, 355, __pyx_L1_error)
       __pyx_t_14 = NULL;
       __Pyx_DECREF(__pyx_t_13); __pyx_t_13 = 0;
       goto __pyx_L17_unpacking_done;
@@ -5285,7 +5524,7 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_12measure_distances(CYTHON_UNU
       __Pyx_DECREF(__pyx_t_13); __pyx_t_13 = 0;
       __pyx_t_14 = NULL;
       if (__Pyx_IterFinish() == 0) __Pyx_RaiseNeedMoreValuesError(index);
-      __PYX_ERR(0, 342, __pyx_L1_error)
+      __PYX_ERR(0, 355, __pyx_L1_error)
       __pyx_L17_unpacking_done:;
     }
     __Pyx_XDECREF_SET(__pyx_v_k, __pyx_t_4);
@@ -5293,18 +5532,18 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_12measure_distances(CYTHON_UNU
     __Pyx_XDECREF_SET(__pyx_v_v, __pyx_t_12);
     __pyx_t_12 = 0;
 
-    /* "mollib/core/geometry.pyx":341
+    /* "mollib/core/geometry.pyx":354
  *                           i[0][0].residue.number,
  *                           i[0][1].residue.number)
  *     return [(k[0], k[1], v)             # <<<<<<<<<<<<<<
  *             for k, v in sorted(results.items(), key=sort_key)]
  * 
  */
-    __pyx_t_3 = __Pyx_GetItemInt(__pyx_v_k, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 341, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_GetItemInt(__pyx_v_k, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 354, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_12 = __Pyx_GetItemInt(__pyx_v_k, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 341, __pyx_L1_error)
+    __pyx_t_12 = __Pyx_GetItemInt(__pyx_v_k, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 354, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_12);
-    __pyx_t_4 = PyTuple_New(3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 341, __pyx_L1_error)
+    __pyx_t_4 = PyTuple_New(3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 354, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     __Pyx_GIVEREF(__pyx_t_3);
     PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_t_3);
@@ -5315,10 +5554,10 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_12measure_distances(CYTHON_UNU
     PyTuple_SET_ITEM(__pyx_t_4, 2, __pyx_v_v);
     __pyx_t_3 = 0;
     __pyx_t_12 = 0;
-    if (unlikely(__Pyx_ListComp_Append(__pyx_t_1, (PyObject*)__pyx_t_4))) __PYX_ERR(0, 341, __pyx_L1_error)
+    if (unlikely(__Pyx_ListComp_Append(__pyx_t_1, (PyObject*)__pyx_t_4))) __PYX_ERR(0, 354, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-    /* "mollib/core/geometry.pyx":342
+    /* "mollib/core/geometry.pyx":355
  *                           i[0][1].residue.number)
  *     return [(k[0], k[1], v)
  *             for k, v in sorted(results.items(), key=sort_key)]             # <<<<<<<<<<<<<<
@@ -5331,7 +5570,7 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_12measure_distances(CYTHON_UNU
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "mollib/core/geometry.pyx":259
+  /* "mollib/core/geometry.pyx":272
  * 
  * 
  * def measure_distances(molecule, selector1, selector2,             # <<<<<<<<<<<<<<
@@ -5365,7 +5604,7 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_12measure_distances(CYTHON_UNU
   return __pyx_r;
 }
 
-/* "mollib/core/geometry.pyx":345
+/* "mollib/core/geometry.pyx":358
  * 
  * 
  * def measure_angles(molecule, selector1, selector2, selector3,             # <<<<<<<<<<<<<<
@@ -5374,10 +5613,10 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_12measure_distances(CYTHON_UNU
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_6mollib_4core_8geometry_15measure_angles(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static char __pyx_doc_6mollib_4core_8geometry_14measure_angles[] = "Measure the angles for atoms selected by selector1, selector 2 and\n    selector3.\n\n    Parameters\n    ----------\n    molecule: :obj:`mollib.Molecule`\n        The molecule object from which distances will be measured.\n    selector1: str\n        A string for the selector of the first atom(s) of the angle.\n    selector2: str\n        A string for the selector of the second atom(s) of the angle.\n    selector3: str\n        A string for the selector of the third atom(s) of the angle.\n    filters: dict\n        See :func:`mollib.core.filter_atoms`\n\n\n        .. note:: The locator respects the rules outlined in\n                  :class:`mollib.Molecule.get_atoms`\n\n    Returns\n    -------\n    list of tuples\n        A sorted list of tuples with (atom1, atom2, atom3, angle) for each\n        angle selected.\n\n    Examples\n    --------\n    >>> from mollib.core import Molecule, measure_angles\n    >>> mol = Molecule('2KXA')\n    >>> ang = measure_angles(mol, '3:5.N', '3:5.CA', '3:5.C', only_intra=True)\n    >>> for i in ang: print(i)\n    (A.F3.N, A.F3.CA, A.F3.C, 110.7)\n    (A.G4.N, A.G4.CA, A.G4.C, 110.9)\n    (A.A5.N, A.A5.CA, A.A5.C, 110.7)\n    >>> kwargs = {'residue_delta': 1, 'bonded': True}\n    >>> ang = measure_angles(mol, '3:8.C', '3:8.N', '3:8.CA', **kwargs)\n    >>> for i in ang: print(i)\n    (A.F3.C, A.G4.N, A.G4.CA, 120.8)\n    (A.G4.C, A.A5.N, A.A5.CA, 121.5)\n    (A.A5.C, A.I6.N, A.I6.CA, 120.7)\n    (A.I6.C, A.A7.N, A.A7.CA, 121.2)\n    (A.A7.C, A.G8.N, A.G8.CA, 120.9)\n\n    ";
-static PyMethodDef __pyx_mdef_6mollib_4core_8geometry_15measure_angles = {"measure_angles", (PyCFunction)__pyx_pw_6mollib_4core_8geometry_15measure_angles, METH_VARARGS|METH_KEYWORDS, __pyx_doc_6mollib_4core_8geometry_14measure_angles};
-static PyObject *__pyx_pw_6mollib_4core_8geometry_15measure_angles(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+static PyObject *__pyx_pw_6mollib_4core_8geometry_17measure_angles(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static char __pyx_doc_6mollib_4core_8geometry_16measure_angles[] = "Measure the angles for atoms selected by selector1, selector 2 and\n    selector3.\n\n    Parameters\n    ----------\n    molecule: :obj:`mollib.Molecule`\n        The molecule object from which distances will be measured.\n    selector1: str\n        A string for the selector of the first atom(s) of the angle.\n    selector2: str\n        A string for the selector of the second atom(s) of the angle.\n    selector3: str\n        A string for the selector of the third atom(s) of the angle.\n    filters: dict\n        See :func:`mollib.core.filter_atoms`\n\n\n        .. note:: The locator respects the rules outlined in\n                  :class:`mollib.Molecule.get_atoms`\n\n    Returns\n    -------\n    list of tuples\n        A sorted list of tuples with (atom1, atom2, atom3, angle) for each\n        angle selected.\n\n    Examples\n    --------\n    >>> from mollib.core import Molecule, measure_angles\n    >>> mol = Molecule('2KXA')\n    >>> ang = measure_angles(mol, '3:5.N', '3:5.CA', '3:5.C', only_intra=True)\n    >>> for i in ang: print(i)\n    (A.F3.N, A.F3.CA, A.F3.C, 110.7)\n    (A.G4.N, A.G4.CA, A.G4.C, 110.9)\n    (A.A5.N, A.A5.CA, A.A5.C, 110.7)\n    >>> kwargs = {'residue_delta': 1, 'bonded': True}\n    >>> ang = measure_angles(mol, '3:8.C', '3:8.N', '3:8.CA', **kwargs)\n    >>> for i in ang: print(i)\n    (A.F3.C, A.G4.N, A.G4.CA, 120.8)\n    (A.G4.C, A.A5.N, A.A5.CA, 121.5)\n    (A.A5.C, A.I6.N, A.I6.CA, 120.7)\n    (A.I6.C, A.A7.N, A.A7.CA, 121.2)\n    (A.A7.C, A.G8.N, A.G8.CA, 120.9)\n\n    ";
+static PyMethodDef __pyx_mdef_6mollib_4core_8geometry_17measure_angles = {"measure_angles", (PyCFunction)__pyx_pw_6mollib_4core_8geometry_17measure_angles, METH_VARARGS|METH_KEYWORDS, __pyx_doc_6mollib_4core_8geometry_16measure_angles};
+static PyObject *__pyx_pw_6mollib_4core_8geometry_17measure_angles(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyObject *__pyx_v_molecule = 0;
   PyObject *__pyx_v_selector1 = 0;
   PyObject *__pyx_v_selector2 = 0;
@@ -5410,21 +5649,21 @@ static PyObject *__pyx_pw_6mollib_4core_8geometry_15measure_angles(PyObject *__p
         case  1:
         if (likely((values[1] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_selector1)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("measure_angles", 1, 4, 4, 1); __PYX_ERR(0, 345, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("measure_angles", 1, 4, 4, 1); __PYX_ERR(0, 358, __pyx_L3_error)
         }
         case  2:
         if (likely((values[2] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_selector2)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("measure_angles", 1, 4, 4, 2); __PYX_ERR(0, 345, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("measure_angles", 1, 4, 4, 2); __PYX_ERR(0, 358, __pyx_L3_error)
         }
         case  3:
         if (likely((values[3] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_selector3)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("measure_angles", 1, 4, 4, 3); __PYX_ERR(0, 345, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("measure_angles", 1, 4, 4, 3); __PYX_ERR(0, 358, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, __pyx_v_filters, values, pos_args, "measure_angles") < 0)) __PYX_ERR(0, 345, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, __pyx_v_filters, values, pos_args, "measure_angles") < 0)) __PYX_ERR(0, 358, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 4) {
       goto __pyx_L5_argtuple_error;
@@ -5441,14 +5680,14 @@ static PyObject *__pyx_pw_6mollib_4core_8geometry_15measure_angles(PyObject *__p
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("measure_angles", 1, 4, 4, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 345, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("measure_angles", 1, 4, 4, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 358, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_DECREF(__pyx_v_filters); __pyx_v_filters = 0;
   __Pyx_AddTraceback("mollib.core.geometry.measure_angles", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_6mollib_4core_8geometry_14measure_angles(__pyx_self, __pyx_v_molecule, __pyx_v_selector1, __pyx_v_selector2, __pyx_v_selector3, __pyx_v_filters);
+  __pyx_r = __pyx_pf_6mollib_4core_8geometry_16measure_angles(__pyx_self, __pyx_v_molecule, __pyx_v_selector1, __pyx_v_selector2, __pyx_v_selector3, __pyx_v_filters);
 
   /* function exit code */
   __Pyx_XDECREF(__pyx_v_filters);
@@ -5456,7 +5695,7 @@ static PyObject *__pyx_pw_6mollib_4core_8geometry_15measure_angles(PyObject *__p
   return __pyx_r;
 }
 
-/* "mollib/core/geometry.pyx":424
+/* "mollib/core/geometry.pyx":437
  * 
  *     # Return the sorted list of tuples
  *     sort_key = lambda i: (i[0][0].chain.id,             # <<<<<<<<<<<<<<
@@ -5490,121 +5729,121 @@ static PyObject *__pyx_lambda_funcdef_lambda1(CYTHON_UNUSED PyObject *__pyx_self
   PyObject *__pyx_t_7 = NULL;
   __Pyx_RefNannySetupContext("lambda1", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_i, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 424, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_i, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 437, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_GetItemInt(__pyx_t_1, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 424, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_GetItemInt(__pyx_t_1, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 437, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_chain); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 424, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_chain); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 437, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_id); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 424, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_id); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 437, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "mollib/core/geometry.pyx":425
+  /* "mollib/core/geometry.pyx":438
  *     # Return the sorted list of tuples
  *     sort_key = lambda i: (i[0][0].chain.id,
  *                           i[0][1].chain.id,             # <<<<<<<<<<<<<<
  *                           i[0][2].chain.id,
  *                           i[0][0].residue.number,
  */
-  __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_i, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 425, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_i, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 438, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_3 = __Pyx_GetItemInt(__pyx_t_1, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 425, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_GetItemInt(__pyx_t_1, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 438, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_chain); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 425, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_chain); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 438, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_id); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 425, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_id); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 438, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "mollib/core/geometry.pyx":426
+  /* "mollib/core/geometry.pyx":439
  *     sort_key = lambda i: (i[0][0].chain.id,
  *                           i[0][1].chain.id,
  *                           i[0][2].chain.id,             # <<<<<<<<<<<<<<
  *                           i[0][0].residue.number,
  *                           i[0][1].residue.number,
  */
-  __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_i, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 426, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_i, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 439, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_4 = __Pyx_GetItemInt(__pyx_t_1, 2, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 426, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_GetItemInt(__pyx_t_1, 2, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 439, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_chain); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 426, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_chain); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 439, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_id); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 426, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_id); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 439, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "mollib/core/geometry.pyx":427
+  /* "mollib/core/geometry.pyx":440
  *                           i[0][1].chain.id,
  *                           i[0][2].chain.id,
  *                           i[0][0].residue.number,             # <<<<<<<<<<<<<<
  *                           i[0][1].residue.number,
  *                           i[0][2].residue.number)
  */
-  __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_i, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 427, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_i, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 440, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_5 = __Pyx_GetItemInt(__pyx_t_1, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 427, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_GetItemInt(__pyx_t_1, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 440, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_residue); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 427, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_residue); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 440, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_number); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 427, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_number); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 440, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "mollib/core/geometry.pyx":428
+  /* "mollib/core/geometry.pyx":441
  *                           i[0][2].chain.id,
  *                           i[0][0].residue.number,
  *                           i[0][1].residue.number,             # <<<<<<<<<<<<<<
  *                           i[0][2].residue.number)
  *     return [(k[0], k[1], k[2], v)
  */
-  __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_i, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 428, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_i, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 441, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_6 = __Pyx_GetItemInt(__pyx_t_1, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 428, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_GetItemInt(__pyx_t_1, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 441, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_6, __pyx_n_s_residue); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 428, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_6, __pyx_n_s_residue); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 441, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-  __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_number); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 428, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_number); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 441, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "mollib/core/geometry.pyx":429
+  /* "mollib/core/geometry.pyx":442
  *                           i[0][0].residue.number,
  *                           i[0][1].residue.number,
  *                           i[0][2].residue.number)             # <<<<<<<<<<<<<<
  *     return [(k[0], k[1], k[2], v)
  *             for k,v in sorted(results.items(), key=sort_key)]
  */
-  __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_i, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 429, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_i, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 442, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_7 = __Pyx_GetItemInt(__pyx_t_1, 2, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 429, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_GetItemInt(__pyx_t_1, 2, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 442, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_7, __pyx_n_s_residue); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 429, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_7, __pyx_n_s_residue); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 442, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-  __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_number); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 429, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_number); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 442, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "mollib/core/geometry.pyx":424
+  /* "mollib/core/geometry.pyx":437
  * 
  *     # Return the sorted list of tuples
  *     sort_key = lambda i: (i[0][0].chain.id,             # <<<<<<<<<<<<<<
  *                           i[0][1].chain.id,
  *                           i[0][2].chain.id,
  */
-  __pyx_t_1 = PyTuple_New(6); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 424, __pyx_L1_error)
+  __pyx_t_1 = PyTuple_New(6); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 437, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_GIVEREF(__pyx_t_2);
   PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_t_2);
@@ -5645,7 +5884,7 @@ static PyObject *__pyx_lambda_funcdef_lambda1(CYTHON_UNUSED PyObject *__pyx_self
   return __pyx_r;
 }
 
-/* "mollib/core/geometry.pyx":345
+/* "mollib/core/geometry.pyx":358
  * 
  * 
  * def measure_angles(molecule, selector1, selector2, selector3,             # <<<<<<<<<<<<<<
@@ -5653,7 +5892,7 @@ static PyObject *__pyx_lambda_funcdef_lambda1(CYTHON_UNUSED PyObject *__pyx_self
  *     """Measure the angles for atoms selected by selector1, selector 2 and
  */
 
-static PyObject *__pyx_pf_6mollib_4core_8geometry_14measure_angles(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_molecule, PyObject *__pyx_v_selector1, PyObject *__pyx_v_selector2, PyObject *__pyx_v_selector3, PyObject *__pyx_v_filters) {
+static PyObject *__pyx_pf_6mollib_4core_8geometry_16measure_angles(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_molecule, PyObject *__pyx_v_selector1, PyObject *__pyx_v_selector2, PyObject *__pyx_v_selector3, PyObject *__pyx_v_filters) {
   PyObject *__pyx_v_results = NULL;
   PyObject *__pyx_v_atoms1 = NULL;
   PyObject *__pyx_v_atoms2 = NULL;
@@ -5687,26 +5926,26 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_14measure_angles(CYTHON_UNUSED
   PyObject *(*__pyx_t_18)(PyObject *);
   __Pyx_RefNannySetupContext("measure_angles", 0);
 
-  /* "mollib/core/geometry.pyx":393
+  /* "mollib/core/geometry.pyx":406
  *     """
  *     # Returned dict
  *     results = {}             # <<<<<<<<<<<<<<
  * 
  *     # This function logs an error if a1 or a2 isn't properly
  */
-  __pyx_t_1 = PyDict_New(); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 393, __pyx_L1_error)
+  __pyx_t_1 = PyDict_New(); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 406, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_results = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "mollib/core/geometry.pyx":398
+  /* "mollib/core/geometry.pyx":411
  *     # formatted. An additional message is not needed. Just skip
  *     # it if both atoms aren't found.
  *     atoms1 = molecule.get_atoms(selector1)             # <<<<<<<<<<<<<<
  *     atoms2 = molecule.get_atoms(selector2)
  *     atoms3 = molecule.get_atoms(selector3)
  */
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_molecule, __pyx_n_s_get_atoms); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 398, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_molecule, __pyx_n_s_get_atoms); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 411, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_t_3 = NULL;
   if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_2))) {
@@ -5719,13 +5958,13 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_14measure_angles(CYTHON_UNUSED
     }
   }
   if (!__pyx_t_3) {
-    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_v_selector1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 398, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_v_selector1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 411, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
   } else {
     #if CYTHON_FAST_PYCALL
     if (PyFunction_Check(__pyx_t_2)) {
       PyObject *__pyx_temp[2] = {__pyx_t_3, __pyx_v_selector1};
-      __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 398, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 411, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
       __Pyx_GOTREF(__pyx_t_1);
     } else
@@ -5733,19 +5972,19 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_14measure_angles(CYTHON_UNUSED
     #if CYTHON_FAST_PYCCALL
     if (__Pyx_PyFastCFunction_Check(__pyx_t_2)) {
       PyObject *__pyx_temp[2] = {__pyx_t_3, __pyx_v_selector1};
-      __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 398, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 411, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
       __Pyx_GOTREF(__pyx_t_1);
     } else
     #endif
     {
-      __pyx_t_4 = PyTuple_New(1+1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 398, __pyx_L1_error)
+      __pyx_t_4 = PyTuple_New(1+1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 411, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_4);
       __Pyx_GIVEREF(__pyx_t_3); PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_t_3); __pyx_t_3 = NULL;
       __Pyx_INCREF(__pyx_v_selector1);
       __Pyx_GIVEREF(__pyx_v_selector1);
       PyTuple_SET_ITEM(__pyx_t_4, 0+1, __pyx_v_selector1);
-      __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_4, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 398, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_4, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 411, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     }
@@ -5754,14 +5993,14 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_14measure_angles(CYTHON_UNUSED
   __pyx_v_atoms1 = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "mollib/core/geometry.pyx":399
+  /* "mollib/core/geometry.pyx":412
  *     # it if both atoms aren't found.
  *     atoms1 = molecule.get_atoms(selector1)
  *     atoms2 = molecule.get_atoms(selector2)             # <<<<<<<<<<<<<<
  *     atoms3 = molecule.get_atoms(selector3)
  * 
  */
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_molecule, __pyx_n_s_get_atoms); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 399, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_molecule, __pyx_n_s_get_atoms); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 412, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_t_4 = NULL;
   if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_2))) {
@@ -5774,13 +6013,13 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_14measure_angles(CYTHON_UNUSED
     }
   }
   if (!__pyx_t_4) {
-    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_v_selector2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 399, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_v_selector2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 412, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
   } else {
     #if CYTHON_FAST_PYCALL
     if (PyFunction_Check(__pyx_t_2)) {
       PyObject *__pyx_temp[2] = {__pyx_t_4, __pyx_v_selector2};
-      __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 399, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 412, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
       __Pyx_GOTREF(__pyx_t_1);
     } else
@@ -5788,19 +6027,19 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_14measure_angles(CYTHON_UNUSED
     #if CYTHON_FAST_PYCCALL
     if (__Pyx_PyFastCFunction_Check(__pyx_t_2)) {
       PyObject *__pyx_temp[2] = {__pyx_t_4, __pyx_v_selector2};
-      __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 399, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 412, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
       __Pyx_GOTREF(__pyx_t_1);
     } else
     #endif
     {
-      __pyx_t_3 = PyTuple_New(1+1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 399, __pyx_L1_error)
+      __pyx_t_3 = PyTuple_New(1+1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 412, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
       __Pyx_GIVEREF(__pyx_t_4); PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_4); __pyx_t_4 = NULL;
       __Pyx_INCREF(__pyx_v_selector2);
       __Pyx_GIVEREF(__pyx_v_selector2);
       PyTuple_SET_ITEM(__pyx_t_3, 0+1, __pyx_v_selector2);
-      __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_3, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 399, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_3, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 412, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     }
@@ -5809,14 +6048,14 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_14measure_angles(CYTHON_UNUSED
   __pyx_v_atoms2 = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "mollib/core/geometry.pyx":400
+  /* "mollib/core/geometry.pyx":413
  *     atoms1 = molecule.get_atoms(selector1)
  *     atoms2 = molecule.get_atoms(selector2)
  *     atoms3 = molecule.get_atoms(selector3)             # <<<<<<<<<<<<<<
  * 
  *     if not atoms1 or not atoms2 or not atoms3:
  */
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_molecule, __pyx_n_s_get_atoms); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 400, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_molecule, __pyx_n_s_get_atoms); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 413, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_t_3 = NULL;
   if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_2))) {
@@ -5829,13 +6068,13 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_14measure_angles(CYTHON_UNUSED
     }
   }
   if (!__pyx_t_3) {
-    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_v_selector3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 400, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_v_selector3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 413, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
   } else {
     #if CYTHON_FAST_PYCALL
     if (PyFunction_Check(__pyx_t_2)) {
       PyObject *__pyx_temp[2] = {__pyx_t_3, __pyx_v_selector3};
-      __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 400, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 413, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
       __Pyx_GOTREF(__pyx_t_1);
     } else
@@ -5843,19 +6082,19 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_14measure_angles(CYTHON_UNUSED
     #if CYTHON_FAST_PYCCALL
     if (__Pyx_PyFastCFunction_Check(__pyx_t_2)) {
       PyObject *__pyx_temp[2] = {__pyx_t_3, __pyx_v_selector3};
-      __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 400, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 413, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
       __Pyx_GOTREF(__pyx_t_1);
     } else
     #endif
     {
-      __pyx_t_4 = PyTuple_New(1+1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 400, __pyx_L1_error)
+      __pyx_t_4 = PyTuple_New(1+1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 413, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_4);
       __Pyx_GIVEREF(__pyx_t_3); PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_t_3); __pyx_t_3 = NULL;
       __Pyx_INCREF(__pyx_v_selector3);
       __Pyx_GIVEREF(__pyx_v_selector3);
       PyTuple_SET_ITEM(__pyx_t_4, 0+1, __pyx_v_selector3);
-      __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_4, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 400, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_4, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 413, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     }
@@ -5864,34 +6103,34 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_14measure_angles(CYTHON_UNUSED
   __pyx_v_atoms3 = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "mollib/core/geometry.pyx":402
+  /* "mollib/core/geometry.pyx":415
  *     atoms3 = molecule.get_atoms(selector3)
  * 
  *     if not atoms1 or not atoms2 or not atoms3:             # <<<<<<<<<<<<<<
  *         return []
  * 
  */
-  __pyx_t_6 = __Pyx_PyObject_IsTrue(__pyx_v_atoms1); if (unlikely(__pyx_t_6 < 0)) __PYX_ERR(0, 402, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_PyObject_IsTrue(__pyx_v_atoms1); if (unlikely(__pyx_t_6 < 0)) __PYX_ERR(0, 415, __pyx_L1_error)
   __pyx_t_7 = ((!__pyx_t_6) != 0);
   if (!__pyx_t_7) {
   } else {
     __pyx_t_5 = __pyx_t_7;
     goto __pyx_L4_bool_binop_done;
   }
-  __pyx_t_7 = __Pyx_PyObject_IsTrue(__pyx_v_atoms2); if (unlikely(__pyx_t_7 < 0)) __PYX_ERR(0, 402, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_PyObject_IsTrue(__pyx_v_atoms2); if (unlikely(__pyx_t_7 < 0)) __PYX_ERR(0, 415, __pyx_L1_error)
   __pyx_t_6 = ((!__pyx_t_7) != 0);
   if (!__pyx_t_6) {
   } else {
     __pyx_t_5 = __pyx_t_6;
     goto __pyx_L4_bool_binop_done;
   }
-  __pyx_t_6 = __Pyx_PyObject_IsTrue(__pyx_v_atoms3); if (unlikely(__pyx_t_6 < 0)) __PYX_ERR(0, 402, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_PyObject_IsTrue(__pyx_v_atoms3); if (unlikely(__pyx_t_6 < 0)) __PYX_ERR(0, 415, __pyx_L1_error)
   __pyx_t_7 = ((!__pyx_t_6) != 0);
   __pyx_t_5 = __pyx_t_7;
   __pyx_L4_bool_binop_done:;
   if (__pyx_t_5) {
 
-    /* "mollib/core/geometry.pyx":403
+    /* "mollib/core/geometry.pyx":416
  * 
  *     if not atoms1 or not atoms2 or not atoms3:
  *         return []             # <<<<<<<<<<<<<<
@@ -5899,13 +6138,13 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_14measure_angles(CYTHON_UNUSED
  *     for i in atoms1:
  */
     __Pyx_XDECREF(__pyx_r);
-    __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 403, __pyx_L1_error)
+    __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 416, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __pyx_r = __pyx_t_1;
     __pyx_t_1 = 0;
     goto __pyx_L0;
 
-    /* "mollib/core/geometry.pyx":402
+    /* "mollib/core/geometry.pyx":415
  *     atoms3 = molecule.get_atoms(selector3)
  * 
  *     if not atoms1 or not atoms2 or not atoms3:             # <<<<<<<<<<<<<<
@@ -5914,7 +6153,7 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_14measure_angles(CYTHON_UNUSED
  */
   }
 
-  /* "mollib/core/geometry.pyx":405
+  /* "mollib/core/geometry.pyx":418
  *         return []
  * 
  *     for i in atoms1:             # <<<<<<<<<<<<<<
@@ -5925,26 +6164,26 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_14measure_angles(CYTHON_UNUSED
     __pyx_t_1 = __pyx_v_atoms1; __Pyx_INCREF(__pyx_t_1); __pyx_t_8 = 0;
     __pyx_t_9 = NULL;
   } else {
-    __pyx_t_8 = -1; __pyx_t_1 = PyObject_GetIter(__pyx_v_atoms1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 405, __pyx_L1_error)
+    __pyx_t_8 = -1; __pyx_t_1 = PyObject_GetIter(__pyx_v_atoms1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 418, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_9 = Py_TYPE(__pyx_t_1)->tp_iternext; if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 405, __pyx_L1_error)
+    __pyx_t_9 = Py_TYPE(__pyx_t_1)->tp_iternext; if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 418, __pyx_L1_error)
   }
   for (;;) {
     if (likely(!__pyx_t_9)) {
       if (likely(PyList_CheckExact(__pyx_t_1))) {
         if (__pyx_t_8 >= PyList_GET_SIZE(__pyx_t_1)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_2 = PyList_GET_ITEM(__pyx_t_1, __pyx_t_8); __Pyx_INCREF(__pyx_t_2); __pyx_t_8++; if (unlikely(0 < 0)) __PYX_ERR(0, 405, __pyx_L1_error)
+        __pyx_t_2 = PyList_GET_ITEM(__pyx_t_1, __pyx_t_8); __Pyx_INCREF(__pyx_t_2); __pyx_t_8++; if (unlikely(0 < 0)) __PYX_ERR(0, 418, __pyx_L1_error)
         #else
-        __pyx_t_2 = PySequence_ITEM(__pyx_t_1, __pyx_t_8); __pyx_t_8++; if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 405, __pyx_L1_error)
+        __pyx_t_2 = PySequence_ITEM(__pyx_t_1, __pyx_t_8); __pyx_t_8++; if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 418, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_2);
         #endif
       } else {
         if (__pyx_t_8 >= PyTuple_GET_SIZE(__pyx_t_1)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_2 = PyTuple_GET_ITEM(__pyx_t_1, __pyx_t_8); __Pyx_INCREF(__pyx_t_2); __pyx_t_8++; if (unlikely(0 < 0)) __PYX_ERR(0, 405, __pyx_L1_error)
+        __pyx_t_2 = PyTuple_GET_ITEM(__pyx_t_1, __pyx_t_8); __Pyx_INCREF(__pyx_t_2); __pyx_t_8++; if (unlikely(0 < 0)) __PYX_ERR(0, 418, __pyx_L1_error)
         #else
-        __pyx_t_2 = PySequence_ITEM(__pyx_t_1, __pyx_t_8); __pyx_t_8++; if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 405, __pyx_L1_error)
+        __pyx_t_2 = PySequence_ITEM(__pyx_t_1, __pyx_t_8); __pyx_t_8++; if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 418, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_2);
         #endif
       }
@@ -5954,7 +6193,7 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_14measure_angles(CYTHON_UNUSED
         PyObject* exc_type = PyErr_Occurred();
         if (exc_type) {
           if (likely(exc_type == PyExc_StopIteration || PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-          else __PYX_ERR(0, 405, __pyx_L1_error)
+          else __PYX_ERR(0, 418, __pyx_L1_error)
         }
         break;
       }
@@ -5963,7 +6202,7 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_14measure_angles(CYTHON_UNUSED
     __Pyx_XDECREF_SET(__pyx_v_i, __pyx_t_2);
     __pyx_t_2 = 0;
 
-    /* "mollib/core/geometry.pyx":406
+    /* "mollib/core/geometry.pyx":419
  * 
  *     for i in atoms1:
  *         for j in atoms2:             # <<<<<<<<<<<<<<
@@ -5974,26 +6213,26 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_14measure_angles(CYTHON_UNUSED
       __pyx_t_2 = __pyx_v_atoms2; __Pyx_INCREF(__pyx_t_2); __pyx_t_10 = 0;
       __pyx_t_11 = NULL;
     } else {
-      __pyx_t_10 = -1; __pyx_t_2 = PyObject_GetIter(__pyx_v_atoms2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 406, __pyx_L1_error)
+      __pyx_t_10 = -1; __pyx_t_2 = PyObject_GetIter(__pyx_v_atoms2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 419, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_2);
-      __pyx_t_11 = Py_TYPE(__pyx_t_2)->tp_iternext; if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 406, __pyx_L1_error)
+      __pyx_t_11 = Py_TYPE(__pyx_t_2)->tp_iternext; if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 419, __pyx_L1_error)
     }
     for (;;) {
       if (likely(!__pyx_t_11)) {
         if (likely(PyList_CheckExact(__pyx_t_2))) {
           if (__pyx_t_10 >= PyList_GET_SIZE(__pyx_t_2)) break;
           #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-          __pyx_t_4 = PyList_GET_ITEM(__pyx_t_2, __pyx_t_10); __Pyx_INCREF(__pyx_t_4); __pyx_t_10++; if (unlikely(0 < 0)) __PYX_ERR(0, 406, __pyx_L1_error)
+          __pyx_t_4 = PyList_GET_ITEM(__pyx_t_2, __pyx_t_10); __Pyx_INCREF(__pyx_t_4); __pyx_t_10++; if (unlikely(0 < 0)) __PYX_ERR(0, 419, __pyx_L1_error)
           #else
-          __pyx_t_4 = PySequence_ITEM(__pyx_t_2, __pyx_t_10); __pyx_t_10++; if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 406, __pyx_L1_error)
+          __pyx_t_4 = PySequence_ITEM(__pyx_t_2, __pyx_t_10); __pyx_t_10++; if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 419, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_4);
           #endif
         } else {
           if (__pyx_t_10 >= PyTuple_GET_SIZE(__pyx_t_2)) break;
           #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-          __pyx_t_4 = PyTuple_GET_ITEM(__pyx_t_2, __pyx_t_10); __Pyx_INCREF(__pyx_t_4); __pyx_t_10++; if (unlikely(0 < 0)) __PYX_ERR(0, 406, __pyx_L1_error)
+          __pyx_t_4 = PyTuple_GET_ITEM(__pyx_t_2, __pyx_t_10); __Pyx_INCREF(__pyx_t_4); __pyx_t_10++; if (unlikely(0 < 0)) __PYX_ERR(0, 419, __pyx_L1_error)
           #else
-          __pyx_t_4 = PySequence_ITEM(__pyx_t_2, __pyx_t_10); __pyx_t_10++; if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 406, __pyx_L1_error)
+          __pyx_t_4 = PySequence_ITEM(__pyx_t_2, __pyx_t_10); __pyx_t_10++; if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 419, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_4);
           #endif
         }
@@ -6003,7 +6242,7 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_14measure_angles(CYTHON_UNUSED
           PyObject* exc_type = PyErr_Occurred();
           if (exc_type) {
             if (likely(exc_type == PyExc_StopIteration || PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-            else __PYX_ERR(0, 406, __pyx_L1_error)
+            else __PYX_ERR(0, 419, __pyx_L1_error)
           }
           break;
         }
@@ -6012,7 +6251,7 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_14measure_angles(CYTHON_UNUSED
       __Pyx_XDECREF_SET(__pyx_v_j, __pyx_t_4);
       __pyx_t_4 = 0;
 
-      /* "mollib/core/geometry.pyx":407
+      /* "mollib/core/geometry.pyx":420
  *     for i in atoms1:
  *         for j in atoms2:
  *             for k in atoms3:             # <<<<<<<<<<<<<<
@@ -6023,26 +6262,26 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_14measure_angles(CYTHON_UNUSED
         __pyx_t_4 = __pyx_v_atoms3; __Pyx_INCREF(__pyx_t_4); __pyx_t_12 = 0;
         __pyx_t_13 = NULL;
       } else {
-        __pyx_t_12 = -1; __pyx_t_4 = PyObject_GetIter(__pyx_v_atoms3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 407, __pyx_L1_error)
+        __pyx_t_12 = -1; __pyx_t_4 = PyObject_GetIter(__pyx_v_atoms3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 420, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_4);
-        __pyx_t_13 = Py_TYPE(__pyx_t_4)->tp_iternext; if (unlikely(!__pyx_t_13)) __PYX_ERR(0, 407, __pyx_L1_error)
+        __pyx_t_13 = Py_TYPE(__pyx_t_4)->tp_iternext; if (unlikely(!__pyx_t_13)) __PYX_ERR(0, 420, __pyx_L1_error)
       }
       for (;;) {
         if (likely(!__pyx_t_13)) {
           if (likely(PyList_CheckExact(__pyx_t_4))) {
             if (__pyx_t_12 >= PyList_GET_SIZE(__pyx_t_4)) break;
             #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-            __pyx_t_3 = PyList_GET_ITEM(__pyx_t_4, __pyx_t_12); __Pyx_INCREF(__pyx_t_3); __pyx_t_12++; if (unlikely(0 < 0)) __PYX_ERR(0, 407, __pyx_L1_error)
+            __pyx_t_3 = PyList_GET_ITEM(__pyx_t_4, __pyx_t_12); __Pyx_INCREF(__pyx_t_3); __pyx_t_12++; if (unlikely(0 < 0)) __PYX_ERR(0, 420, __pyx_L1_error)
             #else
-            __pyx_t_3 = PySequence_ITEM(__pyx_t_4, __pyx_t_12); __pyx_t_12++; if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 407, __pyx_L1_error)
+            __pyx_t_3 = PySequence_ITEM(__pyx_t_4, __pyx_t_12); __pyx_t_12++; if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 420, __pyx_L1_error)
             __Pyx_GOTREF(__pyx_t_3);
             #endif
           } else {
             if (__pyx_t_12 >= PyTuple_GET_SIZE(__pyx_t_4)) break;
             #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-            __pyx_t_3 = PyTuple_GET_ITEM(__pyx_t_4, __pyx_t_12); __Pyx_INCREF(__pyx_t_3); __pyx_t_12++; if (unlikely(0 < 0)) __PYX_ERR(0, 407, __pyx_L1_error)
+            __pyx_t_3 = PyTuple_GET_ITEM(__pyx_t_4, __pyx_t_12); __Pyx_INCREF(__pyx_t_3); __pyx_t_12++; if (unlikely(0 < 0)) __PYX_ERR(0, 420, __pyx_L1_error)
             #else
-            __pyx_t_3 = PySequence_ITEM(__pyx_t_4, __pyx_t_12); __pyx_t_12++; if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 407, __pyx_L1_error)
+            __pyx_t_3 = PySequence_ITEM(__pyx_t_4, __pyx_t_12); __pyx_t_12++; if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 420, __pyx_L1_error)
             __Pyx_GOTREF(__pyx_t_3);
             #endif
           }
@@ -6052,7 +6291,7 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_14measure_angles(CYTHON_UNUSED
             PyObject* exc_type = PyErr_Occurred();
             if (exc_type) {
               if (likely(exc_type == PyExc_StopIteration || PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-              else __PYX_ERR(0, 407, __pyx_L1_error)
+              else __PYX_ERR(0, 420, __pyx_L1_error)
             }
             break;
           }
@@ -6061,14 +6300,14 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_14measure_angles(CYTHON_UNUSED
         __Pyx_XDECREF_SET(__pyx_v_k, __pyx_t_3);
         __pyx_t_3 = 0;
 
-        /* "mollib/core/geometry.pyx":409
+        /* "mollib/core/geometry.pyx":422
  *             for k in atoms3:
  *                 # Sort the atoms into a tuple
  *                 key = (i, j, k)             # <<<<<<<<<<<<<<
  * 
  *                 # The atoms in forward or reverse order are duplicates
  */
-        __pyx_t_3 = PyTuple_New(3); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 409, __pyx_L1_error)
+        __pyx_t_3 = PyTuple_New(3); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 422, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_3);
         __Pyx_INCREF(__pyx_v_i);
         __Pyx_GIVEREF(__pyx_v_i);
@@ -6082,30 +6321,30 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_14measure_angles(CYTHON_UNUSED
         __Pyx_XDECREF_SET(__pyx_v_key, ((PyObject*)__pyx_t_3));
         __pyx_t_3 = 0;
 
-        /* "mollib/core/geometry.pyx":412
+        /* "mollib/core/geometry.pyx":425
  * 
  *                 # The atoms in forward or reverse order are duplicates
  *                 if key in results or key[::-1] in results:             # <<<<<<<<<<<<<<
  *                     continue
  * 
  */
-        __pyx_t_7 = (__Pyx_PyDict_ContainsTF(__pyx_v_key, __pyx_v_results, Py_EQ)); if (unlikely(__pyx_t_7 < 0)) __PYX_ERR(0, 412, __pyx_L1_error)
+        __pyx_t_7 = (__Pyx_PyDict_ContainsTF(__pyx_v_key, __pyx_v_results, Py_EQ)); if (unlikely(__pyx_t_7 < 0)) __PYX_ERR(0, 425, __pyx_L1_error)
         __pyx_t_6 = (__pyx_t_7 != 0);
         if (!__pyx_t_6) {
         } else {
           __pyx_t_5 = __pyx_t_6;
           goto __pyx_L14_bool_binop_done;
         }
-        __pyx_t_3 = PyObject_GetItem(__pyx_v_key, __pyx_slice__5); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 412, __pyx_L1_error)
+        __pyx_t_3 = PyObject_GetItem(__pyx_v_key, __pyx_slice__6); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 425, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_3);
-        __pyx_t_6 = (__Pyx_PyDict_ContainsTF(__pyx_t_3, __pyx_v_results, Py_EQ)); if (unlikely(__pyx_t_6 < 0)) __PYX_ERR(0, 412, __pyx_L1_error)
+        __pyx_t_6 = (__Pyx_PyDict_ContainsTF(__pyx_t_3, __pyx_v_results, Py_EQ)); if (unlikely(__pyx_t_6 < 0)) __PYX_ERR(0, 425, __pyx_L1_error)
         __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
         __pyx_t_7 = (__pyx_t_6 != 0);
         __pyx_t_5 = __pyx_t_7;
         __pyx_L14_bool_binop_done:;
         if (__pyx_t_5) {
 
-          /* "mollib/core/geometry.pyx":413
+          /* "mollib/core/geometry.pyx":426
  *                 # The atoms in forward or reverse order are duplicates
  *                 if key in results or key[::-1] in results:
  *                     continue             # <<<<<<<<<<<<<<
@@ -6114,7 +6353,7 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_14measure_angles(CYTHON_UNUSED
  */
           goto __pyx_L11_continue;
 
-          /* "mollib/core/geometry.pyx":412
+          /* "mollib/core/geometry.pyx":425
  * 
  *                 # The atoms in forward or reverse order are duplicates
  *                 if key in results or key[::-1] in results:             # <<<<<<<<<<<<<<
@@ -6123,23 +6362,23 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_14measure_angles(CYTHON_UNUSED
  */
         }
 
-        /* "mollib/core/geometry.pyx":416
+        /* "mollib/core/geometry.pyx":429
  * 
  *                 # Process the filters
  *                 if filter_atoms(*key, **filters):             # <<<<<<<<<<<<<<
  *                     continue
  * 
  */
-        __pyx_t_3 = __Pyx_GetModuleGlobalName(__pyx_n_s_filter_atoms); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 416, __pyx_L1_error)
+        __pyx_t_3 = __Pyx_GetModuleGlobalName(__pyx_n_s_filter_atoms); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 429, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_3);
-        __pyx_t_14 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_v_key, __pyx_v_filters); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 416, __pyx_L1_error)
+        __pyx_t_14 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_v_key, __pyx_v_filters); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 429, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_14);
         __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-        __pyx_t_5 = __Pyx_PyObject_IsTrue(__pyx_t_14); if (unlikely(__pyx_t_5 < 0)) __PYX_ERR(0, 416, __pyx_L1_error)
+        __pyx_t_5 = __Pyx_PyObject_IsTrue(__pyx_t_14); if (unlikely(__pyx_t_5 < 0)) __PYX_ERR(0, 429, __pyx_L1_error)
         __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
         if (__pyx_t_5) {
 
-          /* "mollib/core/geometry.pyx":417
+          /* "mollib/core/geometry.pyx":430
  *                 # Process the filters
  *                 if filter_atoms(*key, **filters):
  *                     continue             # <<<<<<<<<<<<<<
@@ -6148,7 +6387,7 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_14measure_angles(CYTHON_UNUSED
  */
           goto __pyx_L11_continue;
 
-          /* "mollib/core/geometry.pyx":416
+          /* "mollib/core/geometry.pyx":429
  * 
  *                 # Process the filters
  *                 if filter_atoms(*key, **filters):             # <<<<<<<<<<<<<<
@@ -6157,14 +6396,14 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_14measure_angles(CYTHON_UNUSED
  */
         }
 
-        /* "mollib/core/geometry.pyx":420
+        /* "mollib/core/geometry.pyx":433
  * 
  *                 # Add the distance to the results
  *                 angle = round(measure_angle(i, j, k), 1)             # <<<<<<<<<<<<<<
  *                 results[key] = angle
  * 
  */
-        __pyx_t_3 = __Pyx_GetModuleGlobalName(__pyx_n_s_measure_angle); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 420, __pyx_L1_error)
+        __pyx_t_3 = __Pyx_GetModuleGlobalName(__pyx_n_s_measure_angle); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 433, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_3);
         __pyx_t_15 = NULL;
         __pyx_t_16 = 0;
@@ -6181,7 +6420,7 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_14measure_angles(CYTHON_UNUSED
         #if CYTHON_FAST_PYCALL
         if (PyFunction_Check(__pyx_t_3)) {
           PyObject *__pyx_temp[4] = {__pyx_t_15, __pyx_v_i, __pyx_v_j, __pyx_v_k};
-          __pyx_t_14 = __Pyx_PyFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_16, 3+__pyx_t_16); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 420, __pyx_L1_error)
+          __pyx_t_14 = __Pyx_PyFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_16, 3+__pyx_t_16); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 433, __pyx_L1_error)
           __Pyx_XDECREF(__pyx_t_15); __pyx_t_15 = 0;
           __Pyx_GOTREF(__pyx_t_14);
         } else
@@ -6189,13 +6428,13 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_14measure_angles(CYTHON_UNUSED
         #if CYTHON_FAST_PYCCALL
         if (__Pyx_PyFastCFunction_Check(__pyx_t_3)) {
           PyObject *__pyx_temp[4] = {__pyx_t_15, __pyx_v_i, __pyx_v_j, __pyx_v_k};
-          __pyx_t_14 = __Pyx_PyCFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_16, 3+__pyx_t_16); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 420, __pyx_L1_error)
+          __pyx_t_14 = __Pyx_PyCFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_16, 3+__pyx_t_16); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 433, __pyx_L1_error)
           __Pyx_XDECREF(__pyx_t_15); __pyx_t_15 = 0;
           __Pyx_GOTREF(__pyx_t_14);
         } else
         #endif
         {
-          __pyx_t_17 = PyTuple_New(3+__pyx_t_16); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 420, __pyx_L1_error)
+          __pyx_t_17 = PyTuple_New(3+__pyx_t_16); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 433, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_17);
           if (__pyx_t_15) {
             __Pyx_GIVEREF(__pyx_t_15); PyTuple_SET_ITEM(__pyx_t_17, 0, __pyx_t_15); __pyx_t_15 = NULL;
@@ -6209,12 +6448,12 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_14measure_angles(CYTHON_UNUSED
           __Pyx_INCREF(__pyx_v_k);
           __Pyx_GIVEREF(__pyx_v_k);
           PyTuple_SET_ITEM(__pyx_t_17, 2+__pyx_t_16, __pyx_v_k);
-          __pyx_t_14 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_17, NULL); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 420, __pyx_L1_error)
+          __pyx_t_14 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_17, NULL); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 433, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_14);
           __Pyx_DECREF(__pyx_t_17); __pyx_t_17 = 0;
         }
         __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-        __pyx_t_3 = PyTuple_New(2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 420, __pyx_L1_error)
+        __pyx_t_3 = PyTuple_New(2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 433, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_3);
         __Pyx_GIVEREF(__pyx_t_14);
         PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_14);
@@ -6222,22 +6461,22 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_14measure_angles(CYTHON_UNUSED
         __Pyx_GIVEREF(__pyx_int_1);
         PyTuple_SET_ITEM(__pyx_t_3, 1, __pyx_int_1);
         __pyx_t_14 = 0;
-        __pyx_t_14 = __Pyx_PyObject_Call(__pyx_builtin_round, __pyx_t_3, NULL); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 420, __pyx_L1_error)
+        __pyx_t_14 = __Pyx_PyObject_Call(__pyx_builtin_round, __pyx_t_3, NULL); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 433, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_14);
         __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
         __Pyx_XDECREF_SET(__pyx_v_angle, __pyx_t_14);
         __pyx_t_14 = 0;
 
-        /* "mollib/core/geometry.pyx":421
+        /* "mollib/core/geometry.pyx":434
  *                 # Add the distance to the results
  *                 angle = round(measure_angle(i, j, k), 1)
  *                 results[key] = angle             # <<<<<<<<<<<<<<
  * 
  *     # Return the sorted list of tuples
  */
-        if (unlikely(PyDict_SetItem(__pyx_v_results, __pyx_v_key, __pyx_v_angle) < 0)) __PYX_ERR(0, 421, __pyx_L1_error)
+        if (unlikely(PyDict_SetItem(__pyx_v_results, __pyx_v_key, __pyx_v_angle) < 0)) __PYX_ERR(0, 434, __pyx_L1_error)
 
-        /* "mollib/core/geometry.pyx":407
+        /* "mollib/core/geometry.pyx":420
  *     for i in atoms1:
  *         for j in atoms2:
  *             for k in atoms3:             # <<<<<<<<<<<<<<
@@ -6248,7 +6487,7 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_14measure_angles(CYTHON_UNUSED
       }
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-      /* "mollib/core/geometry.pyx":406
+      /* "mollib/core/geometry.pyx":419
  * 
  *     for i in atoms1:
  *         for j in atoms2:             # <<<<<<<<<<<<<<
@@ -6258,7 +6497,7 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_14measure_angles(CYTHON_UNUSED
     }
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-    /* "mollib/core/geometry.pyx":405
+    /* "mollib/core/geometry.pyx":418
  *         return []
  * 
  *     for i in atoms1:             # <<<<<<<<<<<<<<
@@ -6268,19 +6507,19 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_14measure_angles(CYTHON_UNUSED
   }
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "mollib/core/geometry.pyx":424
+  /* "mollib/core/geometry.pyx":437
  * 
  *     # Return the sorted list of tuples
  *     sort_key = lambda i: (i[0][0].chain.id,             # <<<<<<<<<<<<<<
  *                           i[0][1].chain.id,
  *                           i[0][2].chain.id,
  */
-  __pyx_t_1 = __Pyx_CyFunction_NewEx(&__pyx_mdef_6mollib_4core_8geometry_14measure_angles_lambda1, 0, __pyx_n_s_measure_angles_locals_lambda, NULL, __pyx_n_s_mollib_core_geometry, __pyx_d, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 424, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_CyFunction_NewEx(&__pyx_mdef_6mollib_4core_8geometry_14measure_angles_lambda1, 0, __pyx_n_s_measure_angles_locals_lambda, NULL, __pyx_n_s_mollib_core_geometry, __pyx_d, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 437, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_sort_key = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "mollib/core/geometry.pyx":430
+  /* "mollib/core/geometry.pyx":443
  *                           i[0][1].residue.number,
  *                           i[0][2].residue.number)
  *     return [(k[0], k[1], k[2], v)             # <<<<<<<<<<<<<<
@@ -6288,27 +6527,27 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_14measure_angles(CYTHON_UNUSED
  * 
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 430, __pyx_L1_error)
+  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 443, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
 
-  /* "mollib/core/geometry.pyx":431
+  /* "mollib/core/geometry.pyx":444
  *                           i[0][2].residue.number)
  *     return [(k[0], k[1], k[2], v)
  *             for k,v in sorted(results.items(), key=sort_key)]             # <<<<<<<<<<<<<<
  * 
  * 
  */
-  __pyx_t_2 = __Pyx_PyDict_Items(__pyx_v_results); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 431, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyDict_Items(__pyx_v_results); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 444, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_4 = PyTuple_New(1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 431, __pyx_L1_error)
+  __pyx_t_4 = PyTuple_New(1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 444, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_GIVEREF(__pyx_t_2);
   PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_t_2);
   __pyx_t_2 = 0;
-  __pyx_t_2 = PyDict_New(); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 431, __pyx_L1_error)
+  __pyx_t_2 = PyDict_New(); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 444, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_key, __pyx_v_sort_key) < 0) __PYX_ERR(0, 431, __pyx_L1_error)
-  __pyx_t_14 = __Pyx_PyObject_Call(__pyx_builtin_sorted, __pyx_t_4, __pyx_t_2); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 431, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_key, __pyx_v_sort_key) < 0) __PYX_ERR(0, 444, __pyx_L1_error)
+  __pyx_t_14 = __Pyx_PyObject_Call(__pyx_builtin_sorted, __pyx_t_4, __pyx_t_2); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 444, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_14);
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
@@ -6316,9 +6555,9 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_14measure_angles(CYTHON_UNUSED
     __pyx_t_2 = __pyx_t_14; __Pyx_INCREF(__pyx_t_2); __pyx_t_8 = 0;
     __pyx_t_9 = NULL;
   } else {
-    __pyx_t_8 = -1; __pyx_t_2 = PyObject_GetIter(__pyx_t_14); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 431, __pyx_L1_error)
+    __pyx_t_8 = -1; __pyx_t_2 = PyObject_GetIter(__pyx_t_14); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 444, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_9 = Py_TYPE(__pyx_t_2)->tp_iternext; if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 431, __pyx_L1_error)
+    __pyx_t_9 = Py_TYPE(__pyx_t_2)->tp_iternext; if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 444, __pyx_L1_error)
   }
   __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
   for (;;) {
@@ -6326,17 +6565,17 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_14measure_angles(CYTHON_UNUSED
       if (likely(PyList_CheckExact(__pyx_t_2))) {
         if (__pyx_t_8 >= PyList_GET_SIZE(__pyx_t_2)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_14 = PyList_GET_ITEM(__pyx_t_2, __pyx_t_8); __Pyx_INCREF(__pyx_t_14); __pyx_t_8++; if (unlikely(0 < 0)) __PYX_ERR(0, 431, __pyx_L1_error)
+        __pyx_t_14 = PyList_GET_ITEM(__pyx_t_2, __pyx_t_8); __Pyx_INCREF(__pyx_t_14); __pyx_t_8++; if (unlikely(0 < 0)) __PYX_ERR(0, 444, __pyx_L1_error)
         #else
-        __pyx_t_14 = PySequence_ITEM(__pyx_t_2, __pyx_t_8); __pyx_t_8++; if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 431, __pyx_L1_error)
+        __pyx_t_14 = PySequence_ITEM(__pyx_t_2, __pyx_t_8); __pyx_t_8++; if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 444, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_14);
         #endif
       } else {
         if (__pyx_t_8 >= PyTuple_GET_SIZE(__pyx_t_2)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_14 = PyTuple_GET_ITEM(__pyx_t_2, __pyx_t_8); __Pyx_INCREF(__pyx_t_14); __pyx_t_8++; if (unlikely(0 < 0)) __PYX_ERR(0, 431, __pyx_L1_error)
+        __pyx_t_14 = PyTuple_GET_ITEM(__pyx_t_2, __pyx_t_8); __Pyx_INCREF(__pyx_t_14); __pyx_t_8++; if (unlikely(0 < 0)) __PYX_ERR(0, 444, __pyx_L1_error)
         #else
-        __pyx_t_14 = PySequence_ITEM(__pyx_t_2, __pyx_t_8); __pyx_t_8++; if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 431, __pyx_L1_error)
+        __pyx_t_14 = PySequence_ITEM(__pyx_t_2, __pyx_t_8); __pyx_t_8++; if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 444, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_14);
         #endif
       }
@@ -6346,7 +6585,7 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_14measure_angles(CYTHON_UNUSED
         PyObject* exc_type = PyErr_Occurred();
         if (exc_type) {
           if (likely(exc_type == PyExc_StopIteration || PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-          else __PYX_ERR(0, 431, __pyx_L1_error)
+          else __PYX_ERR(0, 444, __pyx_L1_error)
         }
         break;
       }
@@ -6362,7 +6601,7 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_14measure_angles(CYTHON_UNUSED
       if (unlikely(size != 2)) {
         if (size > 2) __Pyx_RaiseTooManyValuesError(2);
         else if (size >= 0) __Pyx_RaiseNeedMoreValuesError(size);
-        __PYX_ERR(0, 431, __pyx_L1_error)
+        __PYX_ERR(0, 444, __pyx_L1_error)
       }
       #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
       if (likely(PyTuple_CheckExact(sequence))) {
@@ -6375,15 +6614,15 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_14measure_angles(CYTHON_UNUSED
       __Pyx_INCREF(__pyx_t_4);
       __Pyx_INCREF(__pyx_t_3);
       #else
-      __pyx_t_4 = PySequence_ITEM(sequence, 0); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 431, __pyx_L1_error)
+      __pyx_t_4 = PySequence_ITEM(sequence, 0); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 444, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_4);
-      __pyx_t_3 = PySequence_ITEM(sequence, 1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 431, __pyx_L1_error)
+      __pyx_t_3 = PySequence_ITEM(sequence, 1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 444, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
       #endif
       __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
     } else {
       Py_ssize_t index = -1;
-      __pyx_t_17 = PyObject_GetIter(__pyx_t_14); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 431, __pyx_L1_error)
+      __pyx_t_17 = PyObject_GetIter(__pyx_t_14); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 444, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_17);
       __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
       __pyx_t_18 = Py_TYPE(__pyx_t_17)->tp_iternext;
@@ -6391,7 +6630,7 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_14measure_angles(CYTHON_UNUSED
       __Pyx_GOTREF(__pyx_t_4);
       index = 1; __pyx_t_3 = __pyx_t_18(__pyx_t_17); if (unlikely(!__pyx_t_3)) goto __pyx_L19_unpacking_failed;
       __Pyx_GOTREF(__pyx_t_3);
-      if (__Pyx_IternextUnpackEndCheck(__pyx_t_18(__pyx_t_17), 2) < 0) __PYX_ERR(0, 431, __pyx_L1_error)
+      if (__Pyx_IternextUnpackEndCheck(__pyx_t_18(__pyx_t_17), 2) < 0) __PYX_ERR(0, 444, __pyx_L1_error)
       __pyx_t_18 = NULL;
       __Pyx_DECREF(__pyx_t_17); __pyx_t_17 = 0;
       goto __pyx_L20_unpacking_done;
@@ -6399,7 +6638,7 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_14measure_angles(CYTHON_UNUSED
       __Pyx_DECREF(__pyx_t_17); __pyx_t_17 = 0;
       __pyx_t_18 = NULL;
       if (__Pyx_IterFinish() == 0) __Pyx_RaiseNeedMoreValuesError(index);
-      __PYX_ERR(0, 431, __pyx_L1_error)
+      __PYX_ERR(0, 444, __pyx_L1_error)
       __pyx_L20_unpacking_done:;
     }
     __Pyx_XDECREF_SET(__pyx_v_k, __pyx_t_4);
@@ -6407,20 +6646,20 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_14measure_angles(CYTHON_UNUSED
     __Pyx_XDECREF_SET(__pyx_v_v, __pyx_t_3);
     __pyx_t_3 = 0;
 
-    /* "mollib/core/geometry.pyx":430
+    /* "mollib/core/geometry.pyx":443
  *                           i[0][1].residue.number,
  *                           i[0][2].residue.number)
  *     return [(k[0], k[1], k[2], v)             # <<<<<<<<<<<<<<
  *             for k,v in sorted(results.items(), key=sort_key)]
  * 
  */
-    __pyx_t_14 = __Pyx_GetItemInt(__pyx_v_k, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 430, __pyx_L1_error)
+    __pyx_t_14 = __Pyx_GetItemInt(__pyx_v_k, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 443, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_14);
-    __pyx_t_3 = __Pyx_GetItemInt(__pyx_v_k, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 430, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_GetItemInt(__pyx_v_k, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 443, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_4 = __Pyx_GetItemInt(__pyx_v_k, 2, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 430, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_GetItemInt(__pyx_v_k, 2, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 443, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_17 = PyTuple_New(4); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 430, __pyx_L1_error)
+    __pyx_t_17 = PyTuple_New(4); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 443, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_17);
     __Pyx_GIVEREF(__pyx_t_14);
     PyTuple_SET_ITEM(__pyx_t_17, 0, __pyx_t_14);
@@ -6434,10 +6673,10 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_14measure_angles(CYTHON_UNUSED
     __pyx_t_14 = 0;
     __pyx_t_3 = 0;
     __pyx_t_4 = 0;
-    if (unlikely(__Pyx_ListComp_Append(__pyx_t_1, (PyObject*)__pyx_t_17))) __PYX_ERR(0, 430, __pyx_L1_error)
+    if (unlikely(__Pyx_ListComp_Append(__pyx_t_1, (PyObject*)__pyx_t_17))) __PYX_ERR(0, 443, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_17); __pyx_t_17 = 0;
 
-    /* "mollib/core/geometry.pyx":431
+    /* "mollib/core/geometry.pyx":444
  *                           i[0][2].residue.number)
  *     return [(k[0], k[1], k[2], v)
  *             for k,v in sorted(results.items(), key=sort_key)]             # <<<<<<<<<<<<<<
@@ -6450,7 +6689,7 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_14measure_angles(CYTHON_UNUSED
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "mollib/core/geometry.pyx":345
+  /* "mollib/core/geometry.pyx":358
  * 
  * 
  * def measure_angles(molecule, selector1, selector2, selector3,             # <<<<<<<<<<<<<<
@@ -6486,7 +6725,7 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_14measure_angles(CYTHON_UNUSED
   return __pyx_r;
 }
 
-/* "mollib/core/geometry.pyx":434
+/* "mollib/core/geometry.pyx":447
  * 
  * 
  * def measure_dihedrals(molecule, selector1, selector2, selector3, selector4,             # <<<<<<<<<<<<<<
@@ -6495,10 +6734,10 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_14measure_angles(CYTHON_UNUSED
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_6mollib_4core_8geometry_17measure_dihedrals(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static char __pyx_doc_6mollib_4core_8geometry_16measure_dihedrals[] = "Measure the dihedral angles for atoms selected by selector1, selector 2,\n    selector3 and selector4.\n\n    Parameters\n    ----------\n    molecule: :obj:`mollib.Molecule`\n        The molecule object from which distances will be measured.\n    selector1: str\n        A string for the selector of the first atom(s) of the angle.\n    selector2: str\n        A string for the selector of the second atom(s) of the angle.\n    selector3: str\n        A string for the selector of the third atom(s) of the angle.\n    selector4: str\n        A string for the selector of the fourth atom(s) of the angle.\n    filters: dict\n        See :func:`mollib.core.filter_atoms`\n\n\n        .. note:: The locator respects the rules outlined in\n                  :class:`mollib.Molecule.get_atoms`\n\n    Returns\n    -------\n    list of tuples\n        A sorted list of tuples with (atom1, atom2, atom3, atom4, angle) for\n        each angle selected.\n\n    Examples\n    --------\n    >>> from mollib.core import Molecule, measure_dihedrals\n    >>> mol = Molecule('2KXA')\n    >>> args = ('3:5.C', '3:5.N', '3:5.CA', '3:5.C')\n    >>> kwargs = {'bonded': True}\n    >>> dihs = measure_dihedrals(mol, *args, **kwargs)\n    >>> for i in dihs: print(i)\n    (A.F3.C, A.G4.N, A.G4.CA, A.G4.C, -57.2)\n    (A.G4.C, A.A5.N, A.A5.CA, A.A5.C, -68.4)\n\n    ";
-static PyMethodDef __pyx_mdef_6mollib_4core_8geometry_17measure_dihedrals = {"measure_dihedrals", (PyCFunction)__pyx_pw_6mollib_4core_8geometry_17measure_dihedrals, METH_VARARGS|METH_KEYWORDS, __pyx_doc_6mollib_4core_8geometry_16measure_dihedrals};
-static PyObject *__pyx_pw_6mollib_4core_8geometry_17measure_dihedrals(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+static PyObject *__pyx_pw_6mollib_4core_8geometry_19measure_dihedrals(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static char __pyx_doc_6mollib_4core_8geometry_18measure_dihedrals[] = "Measure the dihedral angles for atoms selected by selector1, selector 2,\n    selector3 and selector4.\n\n    Parameters\n    ----------\n    molecule: :obj:`mollib.Molecule`\n        The molecule object from which distances will be measured.\n    selector1: str\n        A string for the selector of the first atom(s) of the angle.\n    selector2: str\n        A string for the selector of the second atom(s) of the angle.\n    selector3: str\n        A string for the selector of the third atom(s) of the angle.\n    selector4: str\n        A string for the selector of the fourth atom(s) of the angle.\n    filters: dict\n        See :func:`mollib.core.filter_atoms`\n\n\n        .. note:: The locator respects the rules outlined in\n                  :class:`mollib.Molecule.get_atoms`\n\n    Returns\n    -------\n    list of tuples\n        A sorted list of tuples with (atom1, atom2, atom3, atom4, angle) for\n        each angle selected.\n\n    Examples\n    --------\n    >>> from mollib.core import Molecule, measure_dihedrals\n    >>> mol = Molecule('2KXA')\n    >>> args = ('3:5.C', '3:5.N', '3:5.CA', '3:5.C')\n    >>> kwargs = {'bonded': True}\n    >>> dihs = measure_dihedrals(mol, *args, **kwargs)\n    >>> for i in dihs: print(i)\n    (A.F3.C, A.G4.N, A.G4.CA, A.G4.C, -57.2)\n    (A.G4.C, A.A5.N, A.A5.CA, A.A5.C, -68.4)\n\n    ";
+static PyMethodDef __pyx_mdef_6mollib_4core_8geometry_19measure_dihedrals = {"measure_dihedrals", (PyCFunction)__pyx_pw_6mollib_4core_8geometry_19measure_dihedrals, METH_VARARGS|METH_KEYWORDS, __pyx_doc_6mollib_4core_8geometry_18measure_dihedrals};
+static PyObject *__pyx_pw_6mollib_4core_8geometry_19measure_dihedrals(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyObject *__pyx_v_molecule = 0;
   PyObject *__pyx_v_selector1 = 0;
   PyObject *__pyx_v_selector2 = 0;
@@ -6533,26 +6772,26 @@ static PyObject *__pyx_pw_6mollib_4core_8geometry_17measure_dihedrals(PyObject *
         case  1:
         if (likely((values[1] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_selector1)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("measure_dihedrals", 1, 5, 5, 1); __PYX_ERR(0, 434, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("measure_dihedrals", 1, 5, 5, 1); __PYX_ERR(0, 447, __pyx_L3_error)
         }
         case  2:
         if (likely((values[2] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_selector2)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("measure_dihedrals", 1, 5, 5, 2); __PYX_ERR(0, 434, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("measure_dihedrals", 1, 5, 5, 2); __PYX_ERR(0, 447, __pyx_L3_error)
         }
         case  3:
         if (likely((values[3] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_selector3)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("measure_dihedrals", 1, 5, 5, 3); __PYX_ERR(0, 434, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("measure_dihedrals", 1, 5, 5, 3); __PYX_ERR(0, 447, __pyx_L3_error)
         }
         case  4:
         if (likely((values[4] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_selector4)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("measure_dihedrals", 1, 5, 5, 4); __PYX_ERR(0, 434, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("measure_dihedrals", 1, 5, 5, 4); __PYX_ERR(0, 447, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, __pyx_v_filters, values, pos_args, "measure_dihedrals") < 0)) __PYX_ERR(0, 434, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, __pyx_v_filters, values, pos_args, "measure_dihedrals") < 0)) __PYX_ERR(0, 447, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 5) {
       goto __pyx_L5_argtuple_error;
@@ -6571,14 +6810,14 @@ static PyObject *__pyx_pw_6mollib_4core_8geometry_17measure_dihedrals(PyObject *
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("measure_dihedrals", 1, 5, 5, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 434, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("measure_dihedrals", 1, 5, 5, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 447, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_DECREF(__pyx_v_filters); __pyx_v_filters = 0;
   __Pyx_AddTraceback("mollib.core.geometry.measure_dihedrals", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_6mollib_4core_8geometry_16measure_dihedrals(__pyx_self, __pyx_v_molecule, __pyx_v_selector1, __pyx_v_selector2, __pyx_v_selector3, __pyx_v_selector4, __pyx_v_filters);
+  __pyx_r = __pyx_pf_6mollib_4core_8geometry_18measure_dihedrals(__pyx_self, __pyx_v_molecule, __pyx_v_selector1, __pyx_v_selector2, __pyx_v_selector3, __pyx_v_selector4, __pyx_v_filters);
 
   /* function exit code */
   __Pyx_XDECREF(__pyx_v_filters);
@@ -6586,7 +6825,7 @@ static PyObject *__pyx_pw_6mollib_4core_8geometry_17measure_dihedrals(PyObject *
   return __pyx_r;
 }
 
-/* "mollib/core/geometry.pyx":510
+/* "mollib/core/geometry.pyx":523
  * 
  *     # Return the sorted list of tuples
  *     sort_key = lambda i: (i[0][0].chain.id,             # <<<<<<<<<<<<<<
@@ -6622,159 +6861,159 @@ static PyObject *__pyx_lambda_funcdef_lambda2(CYTHON_UNUSED PyObject *__pyx_self
   PyObject *__pyx_t_9 = NULL;
   __Pyx_RefNannySetupContext("lambda2", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_i, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 510, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_i, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 523, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_GetItemInt(__pyx_t_1, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 510, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_GetItemInt(__pyx_t_1, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 523, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_chain); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 510, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_chain); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 523, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_id); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 510, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_id); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 523, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "mollib/core/geometry.pyx":511
+  /* "mollib/core/geometry.pyx":524
  *     # Return the sorted list of tuples
  *     sort_key = lambda i: (i[0][0].chain.id,
  *                           i[0][1].chain.id,             # <<<<<<<<<<<<<<
  *                           i[0][2].chain.id,
  *                           i[0][3].chain.id,
  */
-  __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_i, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 511, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_i, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 524, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_3 = __Pyx_GetItemInt(__pyx_t_1, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 511, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_GetItemInt(__pyx_t_1, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 524, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_chain); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 511, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_chain); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 524, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_id); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 511, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_id); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 524, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "mollib/core/geometry.pyx":512
+  /* "mollib/core/geometry.pyx":525
  *     sort_key = lambda i: (i[0][0].chain.id,
  *                           i[0][1].chain.id,
  *                           i[0][2].chain.id,             # <<<<<<<<<<<<<<
  *                           i[0][3].chain.id,
  *                           i[0][0].residue.number,
  */
-  __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_i, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 512, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_i, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 525, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_4 = __Pyx_GetItemInt(__pyx_t_1, 2, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 512, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_GetItemInt(__pyx_t_1, 2, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 525, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_chain); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 512, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_chain); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 525, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_id); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 512, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_id); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 525, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "mollib/core/geometry.pyx":513
+  /* "mollib/core/geometry.pyx":526
  *                           i[0][1].chain.id,
  *                           i[0][2].chain.id,
  *                           i[0][3].chain.id,             # <<<<<<<<<<<<<<
  *                           i[0][0].residue.number,
  *                           i[0][1].residue.number,
  */
-  __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_i, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 513, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_i, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 526, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_5 = __Pyx_GetItemInt(__pyx_t_1, 3, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 513, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_GetItemInt(__pyx_t_1, 3, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 526, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_chain); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 513, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_chain); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 526, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_id); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 513, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_id); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 526, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "mollib/core/geometry.pyx":514
+  /* "mollib/core/geometry.pyx":527
  *                           i[0][2].chain.id,
  *                           i[0][3].chain.id,
  *                           i[0][0].residue.number,             # <<<<<<<<<<<<<<
  *                           i[0][1].residue.number,
  *                           i[0][2].residue.number,
  */
-  __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_i, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 514, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_i, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 527, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_6 = __Pyx_GetItemInt(__pyx_t_1, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 514, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_GetItemInt(__pyx_t_1, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 527, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_6, __pyx_n_s_residue); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 514, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_6, __pyx_n_s_residue); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 527, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-  __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_number); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 514, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_number); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 527, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "mollib/core/geometry.pyx":515
+  /* "mollib/core/geometry.pyx":528
  *                           i[0][3].chain.id,
  *                           i[0][0].residue.number,
  *                           i[0][1].residue.number,             # <<<<<<<<<<<<<<
  *                           i[0][2].residue.number,
  *                           i[0][3].residue.number)
  */
-  __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_i, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 515, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_i, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 528, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_7 = __Pyx_GetItemInt(__pyx_t_1, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 515, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_GetItemInt(__pyx_t_1, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 528, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_7, __pyx_n_s_residue); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 515, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_7, __pyx_n_s_residue); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 528, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-  __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_number); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 515, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_number); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 528, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "mollib/core/geometry.pyx":516
+  /* "mollib/core/geometry.pyx":529
  *                           i[0][0].residue.number,
  *                           i[0][1].residue.number,
  *                           i[0][2].residue.number,             # <<<<<<<<<<<<<<
  *                           i[0][3].residue.number)
  *     return [(k[0], k[1], k[2], k[3], v)
  */
-  __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_i, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 516, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_i, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 529, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_8 = __Pyx_GetItemInt(__pyx_t_1, 2, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 516, __pyx_L1_error)
+  __pyx_t_8 = __Pyx_GetItemInt(__pyx_t_1, 2, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 529, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_8);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_8, __pyx_n_s_residue); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 516, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_8, __pyx_n_s_residue); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 529, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-  __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_number); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 516, __pyx_L1_error)
+  __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_number); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 529, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_8);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "mollib/core/geometry.pyx":517
+  /* "mollib/core/geometry.pyx":530
  *                           i[0][1].residue.number,
  *                           i[0][2].residue.number,
  *                           i[0][3].residue.number)             # <<<<<<<<<<<<<<
  *     return [(k[0], k[1], k[2], k[3], v)
  *             for k,v in sorted(results.items(), key=sort_key)]
  */
-  __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_i, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 517, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_i, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 530, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_9 = __Pyx_GetItemInt(__pyx_t_1, 3, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 517, __pyx_L1_error)
+  __pyx_t_9 = __Pyx_GetItemInt(__pyx_t_1, 3, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 530, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_9);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_9, __pyx_n_s_residue); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 517, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_9, __pyx_n_s_residue); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 530, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
-  __pyx_t_9 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_number); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 517, __pyx_L1_error)
+  __pyx_t_9 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_number); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 530, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_9);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "mollib/core/geometry.pyx":510
+  /* "mollib/core/geometry.pyx":523
  * 
  *     # Return the sorted list of tuples
  *     sort_key = lambda i: (i[0][0].chain.id,             # <<<<<<<<<<<<<<
  *                           i[0][1].chain.id,
  *                           i[0][2].chain.id,
  */
-  __pyx_t_1 = PyTuple_New(8); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 510, __pyx_L1_error)
+  __pyx_t_1 = PyTuple_New(8); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 523, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_GIVEREF(__pyx_t_2);
   PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_t_2);
@@ -6823,7 +7062,7 @@ static PyObject *__pyx_lambda_funcdef_lambda2(CYTHON_UNUSED PyObject *__pyx_self
   return __pyx_r;
 }
 
-/* "mollib/core/geometry.pyx":434
+/* "mollib/core/geometry.pyx":447
  * 
  * 
  * def measure_dihedrals(molecule, selector1, selector2, selector3, selector4,             # <<<<<<<<<<<<<<
@@ -6831,7 +7070,7 @@ static PyObject *__pyx_lambda_funcdef_lambda2(CYTHON_UNUSED PyObject *__pyx_self
  *     """Measure the dihedral angles for atoms selected by selector1, selector 2,
  */
 
-static PyObject *__pyx_pf_6mollib_4core_8geometry_16measure_dihedrals(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_molecule, PyObject *__pyx_v_selector1, PyObject *__pyx_v_selector2, PyObject *__pyx_v_selector3, PyObject *__pyx_v_selector4, PyObject *__pyx_v_filters) {
+static PyObject *__pyx_pf_6mollib_4core_8geometry_18measure_dihedrals(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_molecule, PyObject *__pyx_v_selector1, PyObject *__pyx_v_selector2, PyObject *__pyx_v_selector3, PyObject *__pyx_v_selector4, PyObject *__pyx_v_filters) {
   PyObject *__pyx_v_results = NULL;
   PyObject *__pyx_v_atoms1 = NULL;
   PyObject *__pyx_v_atoms2 = NULL;
@@ -6870,26 +7109,26 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_16measure_dihedrals(CYTHON_UNU
   PyObject *(*__pyx_t_21)(PyObject *);
   __Pyx_RefNannySetupContext("measure_dihedrals", 0);
 
-  /* "mollib/core/geometry.pyx":477
+  /* "mollib/core/geometry.pyx":490
  *     """
  *     # Returned dict
  *     results = {}             # <<<<<<<<<<<<<<
  * 
  *     # This function logs an error if a1 or a2 isn't properly
  */
-  __pyx_t_1 = PyDict_New(); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 477, __pyx_L1_error)
+  __pyx_t_1 = PyDict_New(); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 490, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_results = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "mollib/core/geometry.pyx":482
+  /* "mollib/core/geometry.pyx":495
  *     # formatted. An additional message is not needed. Just skip
  *     # it if both atoms aren't found.
  *     atoms1 = molecule.get_atoms(selector1)             # <<<<<<<<<<<<<<
  *     atoms2 = molecule.get_atoms(selector2)
  *     atoms3 = molecule.get_atoms(selector3)
  */
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_molecule, __pyx_n_s_get_atoms); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 482, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_molecule, __pyx_n_s_get_atoms); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 495, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_t_3 = NULL;
   if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_2))) {
@@ -6902,13 +7141,13 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_16measure_dihedrals(CYTHON_UNU
     }
   }
   if (!__pyx_t_3) {
-    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_v_selector1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 482, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_v_selector1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 495, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
   } else {
     #if CYTHON_FAST_PYCALL
     if (PyFunction_Check(__pyx_t_2)) {
       PyObject *__pyx_temp[2] = {__pyx_t_3, __pyx_v_selector1};
-      __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 482, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 495, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
       __Pyx_GOTREF(__pyx_t_1);
     } else
@@ -6916,19 +7155,19 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_16measure_dihedrals(CYTHON_UNU
     #if CYTHON_FAST_PYCCALL
     if (__Pyx_PyFastCFunction_Check(__pyx_t_2)) {
       PyObject *__pyx_temp[2] = {__pyx_t_3, __pyx_v_selector1};
-      __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 482, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 495, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
       __Pyx_GOTREF(__pyx_t_1);
     } else
     #endif
     {
-      __pyx_t_4 = PyTuple_New(1+1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 482, __pyx_L1_error)
+      __pyx_t_4 = PyTuple_New(1+1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 495, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_4);
       __Pyx_GIVEREF(__pyx_t_3); PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_t_3); __pyx_t_3 = NULL;
       __Pyx_INCREF(__pyx_v_selector1);
       __Pyx_GIVEREF(__pyx_v_selector1);
       PyTuple_SET_ITEM(__pyx_t_4, 0+1, __pyx_v_selector1);
-      __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_4, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 482, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_4, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 495, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     }
@@ -6937,14 +7176,14 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_16measure_dihedrals(CYTHON_UNU
   __pyx_v_atoms1 = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "mollib/core/geometry.pyx":483
+  /* "mollib/core/geometry.pyx":496
  *     # it if both atoms aren't found.
  *     atoms1 = molecule.get_atoms(selector1)
  *     atoms2 = molecule.get_atoms(selector2)             # <<<<<<<<<<<<<<
  *     atoms3 = molecule.get_atoms(selector3)
  *     atoms4 = molecule.get_atoms(selector4)
  */
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_molecule, __pyx_n_s_get_atoms); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 483, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_molecule, __pyx_n_s_get_atoms); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 496, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_t_4 = NULL;
   if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_2))) {
@@ -6957,13 +7196,13 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_16measure_dihedrals(CYTHON_UNU
     }
   }
   if (!__pyx_t_4) {
-    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_v_selector2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 483, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_v_selector2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 496, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
   } else {
     #if CYTHON_FAST_PYCALL
     if (PyFunction_Check(__pyx_t_2)) {
       PyObject *__pyx_temp[2] = {__pyx_t_4, __pyx_v_selector2};
-      __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 483, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 496, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
       __Pyx_GOTREF(__pyx_t_1);
     } else
@@ -6971,19 +7210,19 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_16measure_dihedrals(CYTHON_UNU
     #if CYTHON_FAST_PYCCALL
     if (__Pyx_PyFastCFunction_Check(__pyx_t_2)) {
       PyObject *__pyx_temp[2] = {__pyx_t_4, __pyx_v_selector2};
-      __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 483, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 496, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
       __Pyx_GOTREF(__pyx_t_1);
     } else
     #endif
     {
-      __pyx_t_3 = PyTuple_New(1+1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 483, __pyx_L1_error)
+      __pyx_t_3 = PyTuple_New(1+1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 496, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
       __Pyx_GIVEREF(__pyx_t_4); PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_4); __pyx_t_4 = NULL;
       __Pyx_INCREF(__pyx_v_selector2);
       __Pyx_GIVEREF(__pyx_v_selector2);
       PyTuple_SET_ITEM(__pyx_t_3, 0+1, __pyx_v_selector2);
-      __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_3, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 483, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_3, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 496, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     }
@@ -6992,14 +7231,14 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_16measure_dihedrals(CYTHON_UNU
   __pyx_v_atoms2 = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "mollib/core/geometry.pyx":484
+  /* "mollib/core/geometry.pyx":497
  *     atoms1 = molecule.get_atoms(selector1)
  *     atoms2 = molecule.get_atoms(selector2)
  *     atoms3 = molecule.get_atoms(selector3)             # <<<<<<<<<<<<<<
  *     atoms4 = molecule.get_atoms(selector4)
  * 
  */
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_molecule, __pyx_n_s_get_atoms); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 484, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_molecule, __pyx_n_s_get_atoms); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 497, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_t_3 = NULL;
   if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_2))) {
@@ -7012,13 +7251,13 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_16measure_dihedrals(CYTHON_UNU
     }
   }
   if (!__pyx_t_3) {
-    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_v_selector3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 484, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_v_selector3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 497, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
   } else {
     #if CYTHON_FAST_PYCALL
     if (PyFunction_Check(__pyx_t_2)) {
       PyObject *__pyx_temp[2] = {__pyx_t_3, __pyx_v_selector3};
-      __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 484, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 497, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
       __Pyx_GOTREF(__pyx_t_1);
     } else
@@ -7026,19 +7265,19 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_16measure_dihedrals(CYTHON_UNU
     #if CYTHON_FAST_PYCCALL
     if (__Pyx_PyFastCFunction_Check(__pyx_t_2)) {
       PyObject *__pyx_temp[2] = {__pyx_t_3, __pyx_v_selector3};
-      __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 484, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 497, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
       __Pyx_GOTREF(__pyx_t_1);
     } else
     #endif
     {
-      __pyx_t_4 = PyTuple_New(1+1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 484, __pyx_L1_error)
+      __pyx_t_4 = PyTuple_New(1+1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 497, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_4);
       __Pyx_GIVEREF(__pyx_t_3); PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_t_3); __pyx_t_3 = NULL;
       __Pyx_INCREF(__pyx_v_selector3);
       __Pyx_GIVEREF(__pyx_v_selector3);
       PyTuple_SET_ITEM(__pyx_t_4, 0+1, __pyx_v_selector3);
-      __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_4, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 484, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_4, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 497, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     }
@@ -7047,14 +7286,14 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_16measure_dihedrals(CYTHON_UNU
   __pyx_v_atoms3 = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "mollib/core/geometry.pyx":485
+  /* "mollib/core/geometry.pyx":498
  *     atoms2 = molecule.get_atoms(selector2)
  *     atoms3 = molecule.get_atoms(selector3)
  *     atoms4 = molecule.get_atoms(selector4)             # <<<<<<<<<<<<<<
  * 
  *     if not atoms1 or not atoms2 or not atoms3 or not atoms4:
  */
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_molecule, __pyx_n_s_get_atoms); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 485, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_molecule, __pyx_n_s_get_atoms); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 498, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_t_4 = NULL;
   if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_2))) {
@@ -7067,13 +7306,13 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_16measure_dihedrals(CYTHON_UNU
     }
   }
   if (!__pyx_t_4) {
-    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_v_selector4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 485, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_v_selector4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 498, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
   } else {
     #if CYTHON_FAST_PYCALL
     if (PyFunction_Check(__pyx_t_2)) {
       PyObject *__pyx_temp[2] = {__pyx_t_4, __pyx_v_selector4};
-      __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 485, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 498, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
       __Pyx_GOTREF(__pyx_t_1);
     } else
@@ -7081,19 +7320,19 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_16measure_dihedrals(CYTHON_UNU
     #if CYTHON_FAST_PYCCALL
     if (__Pyx_PyFastCFunction_Check(__pyx_t_2)) {
       PyObject *__pyx_temp[2] = {__pyx_t_4, __pyx_v_selector4};
-      __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 485, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 498, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
       __Pyx_GOTREF(__pyx_t_1);
     } else
     #endif
     {
-      __pyx_t_3 = PyTuple_New(1+1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 485, __pyx_L1_error)
+      __pyx_t_3 = PyTuple_New(1+1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 498, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
       __Pyx_GIVEREF(__pyx_t_4); PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_4); __pyx_t_4 = NULL;
       __Pyx_INCREF(__pyx_v_selector4);
       __Pyx_GIVEREF(__pyx_v_selector4);
       PyTuple_SET_ITEM(__pyx_t_3, 0+1, __pyx_v_selector4);
-      __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_3, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 485, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_3, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 498, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     }
@@ -7102,41 +7341,41 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_16measure_dihedrals(CYTHON_UNU
   __pyx_v_atoms4 = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "mollib/core/geometry.pyx":487
+  /* "mollib/core/geometry.pyx":500
  *     atoms4 = molecule.get_atoms(selector4)
  * 
  *     if not atoms1 or not atoms2 or not atoms3 or not atoms4:             # <<<<<<<<<<<<<<
  *         return []
  * 
  */
-  __pyx_t_6 = __Pyx_PyObject_IsTrue(__pyx_v_atoms1); if (unlikely(__pyx_t_6 < 0)) __PYX_ERR(0, 487, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_PyObject_IsTrue(__pyx_v_atoms1); if (unlikely(__pyx_t_6 < 0)) __PYX_ERR(0, 500, __pyx_L1_error)
   __pyx_t_7 = ((!__pyx_t_6) != 0);
   if (!__pyx_t_7) {
   } else {
     __pyx_t_5 = __pyx_t_7;
     goto __pyx_L4_bool_binop_done;
   }
-  __pyx_t_7 = __Pyx_PyObject_IsTrue(__pyx_v_atoms2); if (unlikely(__pyx_t_7 < 0)) __PYX_ERR(0, 487, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_PyObject_IsTrue(__pyx_v_atoms2); if (unlikely(__pyx_t_7 < 0)) __PYX_ERR(0, 500, __pyx_L1_error)
   __pyx_t_6 = ((!__pyx_t_7) != 0);
   if (!__pyx_t_6) {
   } else {
     __pyx_t_5 = __pyx_t_6;
     goto __pyx_L4_bool_binop_done;
   }
-  __pyx_t_6 = __Pyx_PyObject_IsTrue(__pyx_v_atoms3); if (unlikely(__pyx_t_6 < 0)) __PYX_ERR(0, 487, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_PyObject_IsTrue(__pyx_v_atoms3); if (unlikely(__pyx_t_6 < 0)) __PYX_ERR(0, 500, __pyx_L1_error)
   __pyx_t_7 = ((!__pyx_t_6) != 0);
   if (!__pyx_t_7) {
   } else {
     __pyx_t_5 = __pyx_t_7;
     goto __pyx_L4_bool_binop_done;
   }
-  __pyx_t_7 = __Pyx_PyObject_IsTrue(__pyx_v_atoms4); if (unlikely(__pyx_t_7 < 0)) __PYX_ERR(0, 487, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_PyObject_IsTrue(__pyx_v_atoms4); if (unlikely(__pyx_t_7 < 0)) __PYX_ERR(0, 500, __pyx_L1_error)
   __pyx_t_6 = ((!__pyx_t_7) != 0);
   __pyx_t_5 = __pyx_t_6;
   __pyx_L4_bool_binop_done:;
   if (__pyx_t_5) {
 
-    /* "mollib/core/geometry.pyx":488
+    /* "mollib/core/geometry.pyx":501
  * 
  *     if not atoms1 or not atoms2 or not atoms3 or not atoms4:
  *         return []             # <<<<<<<<<<<<<<
@@ -7144,13 +7383,13 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_16measure_dihedrals(CYTHON_UNU
  *     for i in atoms1:
  */
     __Pyx_XDECREF(__pyx_r);
-    __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 488, __pyx_L1_error)
+    __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 501, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __pyx_r = __pyx_t_1;
     __pyx_t_1 = 0;
     goto __pyx_L0;
 
-    /* "mollib/core/geometry.pyx":487
+    /* "mollib/core/geometry.pyx":500
  *     atoms4 = molecule.get_atoms(selector4)
  * 
  *     if not atoms1 or not atoms2 or not atoms3 or not atoms4:             # <<<<<<<<<<<<<<
@@ -7159,7 +7398,7 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_16measure_dihedrals(CYTHON_UNU
  */
   }
 
-  /* "mollib/core/geometry.pyx":490
+  /* "mollib/core/geometry.pyx":503
  *         return []
  * 
  *     for i in atoms1:             # <<<<<<<<<<<<<<
@@ -7170,26 +7409,26 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_16measure_dihedrals(CYTHON_UNU
     __pyx_t_1 = __pyx_v_atoms1; __Pyx_INCREF(__pyx_t_1); __pyx_t_8 = 0;
     __pyx_t_9 = NULL;
   } else {
-    __pyx_t_8 = -1; __pyx_t_1 = PyObject_GetIter(__pyx_v_atoms1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 490, __pyx_L1_error)
+    __pyx_t_8 = -1; __pyx_t_1 = PyObject_GetIter(__pyx_v_atoms1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 503, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_9 = Py_TYPE(__pyx_t_1)->tp_iternext; if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 490, __pyx_L1_error)
+    __pyx_t_9 = Py_TYPE(__pyx_t_1)->tp_iternext; if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 503, __pyx_L1_error)
   }
   for (;;) {
     if (likely(!__pyx_t_9)) {
       if (likely(PyList_CheckExact(__pyx_t_1))) {
         if (__pyx_t_8 >= PyList_GET_SIZE(__pyx_t_1)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_2 = PyList_GET_ITEM(__pyx_t_1, __pyx_t_8); __Pyx_INCREF(__pyx_t_2); __pyx_t_8++; if (unlikely(0 < 0)) __PYX_ERR(0, 490, __pyx_L1_error)
+        __pyx_t_2 = PyList_GET_ITEM(__pyx_t_1, __pyx_t_8); __Pyx_INCREF(__pyx_t_2); __pyx_t_8++; if (unlikely(0 < 0)) __PYX_ERR(0, 503, __pyx_L1_error)
         #else
-        __pyx_t_2 = PySequence_ITEM(__pyx_t_1, __pyx_t_8); __pyx_t_8++; if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 490, __pyx_L1_error)
+        __pyx_t_2 = PySequence_ITEM(__pyx_t_1, __pyx_t_8); __pyx_t_8++; if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 503, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_2);
         #endif
       } else {
         if (__pyx_t_8 >= PyTuple_GET_SIZE(__pyx_t_1)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_2 = PyTuple_GET_ITEM(__pyx_t_1, __pyx_t_8); __Pyx_INCREF(__pyx_t_2); __pyx_t_8++; if (unlikely(0 < 0)) __PYX_ERR(0, 490, __pyx_L1_error)
+        __pyx_t_2 = PyTuple_GET_ITEM(__pyx_t_1, __pyx_t_8); __Pyx_INCREF(__pyx_t_2); __pyx_t_8++; if (unlikely(0 < 0)) __PYX_ERR(0, 503, __pyx_L1_error)
         #else
-        __pyx_t_2 = PySequence_ITEM(__pyx_t_1, __pyx_t_8); __pyx_t_8++; if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 490, __pyx_L1_error)
+        __pyx_t_2 = PySequence_ITEM(__pyx_t_1, __pyx_t_8); __pyx_t_8++; if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 503, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_2);
         #endif
       }
@@ -7199,7 +7438,7 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_16measure_dihedrals(CYTHON_UNU
         PyObject* exc_type = PyErr_Occurred();
         if (exc_type) {
           if (likely(exc_type == PyExc_StopIteration || PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-          else __PYX_ERR(0, 490, __pyx_L1_error)
+          else __PYX_ERR(0, 503, __pyx_L1_error)
         }
         break;
       }
@@ -7208,7 +7447,7 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_16measure_dihedrals(CYTHON_UNU
     __Pyx_XDECREF_SET(__pyx_v_i, __pyx_t_2);
     __pyx_t_2 = 0;
 
-    /* "mollib/core/geometry.pyx":491
+    /* "mollib/core/geometry.pyx":504
  * 
  *     for i in atoms1:
  *         for j in atoms2:             # <<<<<<<<<<<<<<
@@ -7219,26 +7458,26 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_16measure_dihedrals(CYTHON_UNU
       __pyx_t_2 = __pyx_v_atoms2; __Pyx_INCREF(__pyx_t_2); __pyx_t_10 = 0;
       __pyx_t_11 = NULL;
     } else {
-      __pyx_t_10 = -1; __pyx_t_2 = PyObject_GetIter(__pyx_v_atoms2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 491, __pyx_L1_error)
+      __pyx_t_10 = -1; __pyx_t_2 = PyObject_GetIter(__pyx_v_atoms2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 504, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_2);
-      __pyx_t_11 = Py_TYPE(__pyx_t_2)->tp_iternext; if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 491, __pyx_L1_error)
+      __pyx_t_11 = Py_TYPE(__pyx_t_2)->tp_iternext; if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 504, __pyx_L1_error)
     }
     for (;;) {
       if (likely(!__pyx_t_11)) {
         if (likely(PyList_CheckExact(__pyx_t_2))) {
           if (__pyx_t_10 >= PyList_GET_SIZE(__pyx_t_2)) break;
           #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-          __pyx_t_3 = PyList_GET_ITEM(__pyx_t_2, __pyx_t_10); __Pyx_INCREF(__pyx_t_3); __pyx_t_10++; if (unlikely(0 < 0)) __PYX_ERR(0, 491, __pyx_L1_error)
+          __pyx_t_3 = PyList_GET_ITEM(__pyx_t_2, __pyx_t_10); __Pyx_INCREF(__pyx_t_3); __pyx_t_10++; if (unlikely(0 < 0)) __PYX_ERR(0, 504, __pyx_L1_error)
           #else
-          __pyx_t_3 = PySequence_ITEM(__pyx_t_2, __pyx_t_10); __pyx_t_10++; if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 491, __pyx_L1_error)
+          __pyx_t_3 = PySequence_ITEM(__pyx_t_2, __pyx_t_10); __pyx_t_10++; if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 504, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_3);
           #endif
         } else {
           if (__pyx_t_10 >= PyTuple_GET_SIZE(__pyx_t_2)) break;
           #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-          __pyx_t_3 = PyTuple_GET_ITEM(__pyx_t_2, __pyx_t_10); __Pyx_INCREF(__pyx_t_3); __pyx_t_10++; if (unlikely(0 < 0)) __PYX_ERR(0, 491, __pyx_L1_error)
+          __pyx_t_3 = PyTuple_GET_ITEM(__pyx_t_2, __pyx_t_10); __Pyx_INCREF(__pyx_t_3); __pyx_t_10++; if (unlikely(0 < 0)) __PYX_ERR(0, 504, __pyx_L1_error)
           #else
-          __pyx_t_3 = PySequence_ITEM(__pyx_t_2, __pyx_t_10); __pyx_t_10++; if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 491, __pyx_L1_error)
+          __pyx_t_3 = PySequence_ITEM(__pyx_t_2, __pyx_t_10); __pyx_t_10++; if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 504, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_3);
           #endif
         }
@@ -7248,7 +7487,7 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_16measure_dihedrals(CYTHON_UNU
           PyObject* exc_type = PyErr_Occurred();
           if (exc_type) {
             if (likely(exc_type == PyExc_StopIteration || PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-            else __PYX_ERR(0, 491, __pyx_L1_error)
+            else __PYX_ERR(0, 504, __pyx_L1_error)
           }
           break;
         }
@@ -7257,7 +7496,7 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_16measure_dihedrals(CYTHON_UNU
       __Pyx_XDECREF_SET(__pyx_v_j, __pyx_t_3);
       __pyx_t_3 = 0;
 
-      /* "mollib/core/geometry.pyx":492
+      /* "mollib/core/geometry.pyx":505
  *     for i in atoms1:
  *         for j in atoms2:
  *             for k in atoms3:             # <<<<<<<<<<<<<<
@@ -7268,26 +7507,26 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_16measure_dihedrals(CYTHON_UNU
         __pyx_t_3 = __pyx_v_atoms3; __Pyx_INCREF(__pyx_t_3); __pyx_t_12 = 0;
         __pyx_t_13 = NULL;
       } else {
-        __pyx_t_12 = -1; __pyx_t_3 = PyObject_GetIter(__pyx_v_atoms3); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 492, __pyx_L1_error)
+        __pyx_t_12 = -1; __pyx_t_3 = PyObject_GetIter(__pyx_v_atoms3); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 505, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_3);
-        __pyx_t_13 = Py_TYPE(__pyx_t_3)->tp_iternext; if (unlikely(!__pyx_t_13)) __PYX_ERR(0, 492, __pyx_L1_error)
+        __pyx_t_13 = Py_TYPE(__pyx_t_3)->tp_iternext; if (unlikely(!__pyx_t_13)) __PYX_ERR(0, 505, __pyx_L1_error)
       }
       for (;;) {
         if (likely(!__pyx_t_13)) {
           if (likely(PyList_CheckExact(__pyx_t_3))) {
             if (__pyx_t_12 >= PyList_GET_SIZE(__pyx_t_3)) break;
             #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-            __pyx_t_4 = PyList_GET_ITEM(__pyx_t_3, __pyx_t_12); __Pyx_INCREF(__pyx_t_4); __pyx_t_12++; if (unlikely(0 < 0)) __PYX_ERR(0, 492, __pyx_L1_error)
+            __pyx_t_4 = PyList_GET_ITEM(__pyx_t_3, __pyx_t_12); __Pyx_INCREF(__pyx_t_4); __pyx_t_12++; if (unlikely(0 < 0)) __PYX_ERR(0, 505, __pyx_L1_error)
             #else
-            __pyx_t_4 = PySequence_ITEM(__pyx_t_3, __pyx_t_12); __pyx_t_12++; if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 492, __pyx_L1_error)
+            __pyx_t_4 = PySequence_ITEM(__pyx_t_3, __pyx_t_12); __pyx_t_12++; if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 505, __pyx_L1_error)
             __Pyx_GOTREF(__pyx_t_4);
             #endif
           } else {
             if (__pyx_t_12 >= PyTuple_GET_SIZE(__pyx_t_3)) break;
             #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-            __pyx_t_4 = PyTuple_GET_ITEM(__pyx_t_3, __pyx_t_12); __Pyx_INCREF(__pyx_t_4); __pyx_t_12++; if (unlikely(0 < 0)) __PYX_ERR(0, 492, __pyx_L1_error)
+            __pyx_t_4 = PyTuple_GET_ITEM(__pyx_t_3, __pyx_t_12); __Pyx_INCREF(__pyx_t_4); __pyx_t_12++; if (unlikely(0 < 0)) __PYX_ERR(0, 505, __pyx_L1_error)
             #else
-            __pyx_t_4 = PySequence_ITEM(__pyx_t_3, __pyx_t_12); __pyx_t_12++; if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 492, __pyx_L1_error)
+            __pyx_t_4 = PySequence_ITEM(__pyx_t_3, __pyx_t_12); __pyx_t_12++; if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 505, __pyx_L1_error)
             __Pyx_GOTREF(__pyx_t_4);
             #endif
           }
@@ -7297,7 +7536,7 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_16measure_dihedrals(CYTHON_UNU
             PyObject* exc_type = PyErr_Occurred();
             if (exc_type) {
               if (likely(exc_type == PyExc_StopIteration || PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-              else __PYX_ERR(0, 492, __pyx_L1_error)
+              else __PYX_ERR(0, 505, __pyx_L1_error)
             }
             break;
           }
@@ -7306,7 +7545,7 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_16measure_dihedrals(CYTHON_UNU
         __Pyx_XDECREF_SET(__pyx_v_k, __pyx_t_4);
         __pyx_t_4 = 0;
 
-        /* "mollib/core/geometry.pyx":493
+        /* "mollib/core/geometry.pyx":506
  *         for j in atoms2:
  *             for k in atoms3:
  *                 for l in atoms4:             # <<<<<<<<<<<<<<
@@ -7317,26 +7556,26 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_16measure_dihedrals(CYTHON_UNU
           __pyx_t_4 = __pyx_v_atoms4; __Pyx_INCREF(__pyx_t_4); __pyx_t_14 = 0;
           __pyx_t_15 = NULL;
         } else {
-          __pyx_t_14 = -1; __pyx_t_4 = PyObject_GetIter(__pyx_v_atoms4); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 493, __pyx_L1_error)
+          __pyx_t_14 = -1; __pyx_t_4 = PyObject_GetIter(__pyx_v_atoms4); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 506, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_4);
-          __pyx_t_15 = Py_TYPE(__pyx_t_4)->tp_iternext; if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 493, __pyx_L1_error)
+          __pyx_t_15 = Py_TYPE(__pyx_t_4)->tp_iternext; if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 506, __pyx_L1_error)
         }
         for (;;) {
           if (likely(!__pyx_t_15)) {
             if (likely(PyList_CheckExact(__pyx_t_4))) {
               if (__pyx_t_14 >= PyList_GET_SIZE(__pyx_t_4)) break;
               #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-              __pyx_t_16 = PyList_GET_ITEM(__pyx_t_4, __pyx_t_14); __Pyx_INCREF(__pyx_t_16); __pyx_t_14++; if (unlikely(0 < 0)) __PYX_ERR(0, 493, __pyx_L1_error)
+              __pyx_t_16 = PyList_GET_ITEM(__pyx_t_4, __pyx_t_14); __Pyx_INCREF(__pyx_t_16); __pyx_t_14++; if (unlikely(0 < 0)) __PYX_ERR(0, 506, __pyx_L1_error)
               #else
-              __pyx_t_16 = PySequence_ITEM(__pyx_t_4, __pyx_t_14); __pyx_t_14++; if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 493, __pyx_L1_error)
+              __pyx_t_16 = PySequence_ITEM(__pyx_t_4, __pyx_t_14); __pyx_t_14++; if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 506, __pyx_L1_error)
               __Pyx_GOTREF(__pyx_t_16);
               #endif
             } else {
               if (__pyx_t_14 >= PyTuple_GET_SIZE(__pyx_t_4)) break;
               #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-              __pyx_t_16 = PyTuple_GET_ITEM(__pyx_t_4, __pyx_t_14); __Pyx_INCREF(__pyx_t_16); __pyx_t_14++; if (unlikely(0 < 0)) __PYX_ERR(0, 493, __pyx_L1_error)
+              __pyx_t_16 = PyTuple_GET_ITEM(__pyx_t_4, __pyx_t_14); __Pyx_INCREF(__pyx_t_16); __pyx_t_14++; if (unlikely(0 < 0)) __PYX_ERR(0, 506, __pyx_L1_error)
               #else
-              __pyx_t_16 = PySequence_ITEM(__pyx_t_4, __pyx_t_14); __pyx_t_14++; if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 493, __pyx_L1_error)
+              __pyx_t_16 = PySequence_ITEM(__pyx_t_4, __pyx_t_14); __pyx_t_14++; if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 506, __pyx_L1_error)
               __Pyx_GOTREF(__pyx_t_16);
               #endif
             }
@@ -7346,7 +7585,7 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_16measure_dihedrals(CYTHON_UNU
               PyObject* exc_type = PyErr_Occurred();
               if (exc_type) {
                 if (likely(exc_type == PyExc_StopIteration || PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-                else __PYX_ERR(0, 493, __pyx_L1_error)
+                else __PYX_ERR(0, 506, __pyx_L1_error)
               }
               break;
             }
@@ -7355,14 +7594,14 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_16measure_dihedrals(CYTHON_UNU
           __Pyx_XDECREF_SET(__pyx_v_l, __pyx_t_16);
           __pyx_t_16 = 0;
 
-          /* "mollib/core/geometry.pyx":495
+          /* "mollib/core/geometry.pyx":508
  *                 for l in atoms4:
  *                     # Sort the atoms into a tuple
  *                     key = (i, j, k, l)             # <<<<<<<<<<<<<<
  * 
  *                     # The atoms in forward or reverse order are duplicates
  */
-          __pyx_t_16 = PyTuple_New(4); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 495, __pyx_L1_error)
+          __pyx_t_16 = PyTuple_New(4); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 508, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_16);
           __Pyx_INCREF(__pyx_v_i);
           __Pyx_GIVEREF(__pyx_v_i);
@@ -7379,30 +7618,30 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_16measure_dihedrals(CYTHON_UNU
           __Pyx_XDECREF_SET(__pyx_v_key, ((PyObject*)__pyx_t_16));
           __pyx_t_16 = 0;
 
-          /* "mollib/core/geometry.pyx":498
+          /* "mollib/core/geometry.pyx":511
  * 
  *                     # The atoms in forward or reverse order are duplicates
  *                     if key in results or key[::-1] in results:             # <<<<<<<<<<<<<<
  *                         continue
  * 
  */
-          __pyx_t_6 = (__Pyx_PyDict_ContainsTF(__pyx_v_key, __pyx_v_results, Py_EQ)); if (unlikely(__pyx_t_6 < 0)) __PYX_ERR(0, 498, __pyx_L1_error)
+          __pyx_t_6 = (__Pyx_PyDict_ContainsTF(__pyx_v_key, __pyx_v_results, Py_EQ)); if (unlikely(__pyx_t_6 < 0)) __PYX_ERR(0, 511, __pyx_L1_error)
           __pyx_t_7 = (__pyx_t_6 != 0);
           if (!__pyx_t_7) {
           } else {
             __pyx_t_5 = __pyx_t_7;
             goto __pyx_L17_bool_binop_done;
           }
-          __pyx_t_16 = PyObject_GetItem(__pyx_v_key, __pyx_slice__6); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 498, __pyx_L1_error)
+          __pyx_t_16 = PyObject_GetItem(__pyx_v_key, __pyx_slice__7); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 511, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_16);
-          __pyx_t_7 = (__Pyx_PyDict_ContainsTF(__pyx_t_16, __pyx_v_results, Py_EQ)); if (unlikely(__pyx_t_7 < 0)) __PYX_ERR(0, 498, __pyx_L1_error)
+          __pyx_t_7 = (__Pyx_PyDict_ContainsTF(__pyx_t_16, __pyx_v_results, Py_EQ)); if (unlikely(__pyx_t_7 < 0)) __PYX_ERR(0, 511, __pyx_L1_error)
           __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
           __pyx_t_6 = (__pyx_t_7 != 0);
           __pyx_t_5 = __pyx_t_6;
           __pyx_L17_bool_binop_done:;
           if (__pyx_t_5) {
 
-            /* "mollib/core/geometry.pyx":499
+            /* "mollib/core/geometry.pyx":512
  *                     # The atoms in forward or reverse order are duplicates
  *                     if key in results or key[::-1] in results:
  *                         continue             # <<<<<<<<<<<<<<
@@ -7411,7 +7650,7 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_16measure_dihedrals(CYTHON_UNU
  */
             goto __pyx_L14_continue;
 
-            /* "mollib/core/geometry.pyx":498
+            /* "mollib/core/geometry.pyx":511
  * 
  *                     # The atoms in forward or reverse order are duplicates
  *                     if key in results or key[::-1] in results:             # <<<<<<<<<<<<<<
@@ -7420,23 +7659,23 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_16measure_dihedrals(CYTHON_UNU
  */
           }
 
-          /* "mollib/core/geometry.pyx":502
+          /* "mollib/core/geometry.pyx":515
  * 
  *                     # Process the filters
  *                     if filter_atoms(*key, **filters):             # <<<<<<<<<<<<<<
  *                         continue
  * 
  */
-          __pyx_t_16 = __Pyx_GetModuleGlobalName(__pyx_n_s_filter_atoms); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 502, __pyx_L1_error)
+          __pyx_t_16 = __Pyx_GetModuleGlobalName(__pyx_n_s_filter_atoms); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 515, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_16);
-          __pyx_t_17 = __Pyx_PyObject_Call(__pyx_t_16, __pyx_v_key, __pyx_v_filters); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 502, __pyx_L1_error)
+          __pyx_t_17 = __Pyx_PyObject_Call(__pyx_t_16, __pyx_v_key, __pyx_v_filters); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 515, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_17);
           __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
-          __pyx_t_5 = __Pyx_PyObject_IsTrue(__pyx_t_17); if (unlikely(__pyx_t_5 < 0)) __PYX_ERR(0, 502, __pyx_L1_error)
+          __pyx_t_5 = __Pyx_PyObject_IsTrue(__pyx_t_17); if (unlikely(__pyx_t_5 < 0)) __PYX_ERR(0, 515, __pyx_L1_error)
           __Pyx_DECREF(__pyx_t_17); __pyx_t_17 = 0;
           if (__pyx_t_5) {
 
-            /* "mollib/core/geometry.pyx":503
+            /* "mollib/core/geometry.pyx":516
  *                     # Process the filters
  *                     if filter_atoms(*key, **filters):
  *                         continue             # <<<<<<<<<<<<<<
@@ -7445,7 +7684,7 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_16measure_dihedrals(CYTHON_UNU
  */
             goto __pyx_L14_continue;
 
-            /* "mollib/core/geometry.pyx":502
+            /* "mollib/core/geometry.pyx":515
  * 
  *                     # Process the filters
  *                     if filter_atoms(*key, **filters):             # <<<<<<<<<<<<<<
@@ -7454,14 +7693,14 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_16measure_dihedrals(CYTHON_UNU
  */
           }
 
-          /* "mollib/core/geometry.pyx":506
+          /* "mollib/core/geometry.pyx":519
  * 
  *                     # Add the distance to the results
  *                     dihedral = round(measure_dihedral(i, j, k, l), 1)             # <<<<<<<<<<<<<<
  *                     results[key] = dihedral
  * 
  */
-          __pyx_t_16 = __Pyx_GetModuleGlobalName(__pyx_n_s_measure_dihedral); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 506, __pyx_L1_error)
+          __pyx_t_16 = __Pyx_GetModuleGlobalName(__pyx_n_s_measure_dihedral); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 519, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_16);
           __pyx_t_18 = NULL;
           __pyx_t_19 = 0;
@@ -7478,7 +7717,7 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_16measure_dihedrals(CYTHON_UNU
           #if CYTHON_FAST_PYCALL
           if (PyFunction_Check(__pyx_t_16)) {
             PyObject *__pyx_temp[5] = {__pyx_t_18, __pyx_v_i, __pyx_v_j, __pyx_v_k, __pyx_v_l};
-            __pyx_t_17 = __Pyx_PyFunction_FastCall(__pyx_t_16, __pyx_temp+1-__pyx_t_19, 4+__pyx_t_19); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 506, __pyx_L1_error)
+            __pyx_t_17 = __Pyx_PyFunction_FastCall(__pyx_t_16, __pyx_temp+1-__pyx_t_19, 4+__pyx_t_19); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 519, __pyx_L1_error)
             __Pyx_XDECREF(__pyx_t_18); __pyx_t_18 = 0;
             __Pyx_GOTREF(__pyx_t_17);
           } else
@@ -7486,13 +7725,13 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_16measure_dihedrals(CYTHON_UNU
           #if CYTHON_FAST_PYCCALL
           if (__Pyx_PyFastCFunction_Check(__pyx_t_16)) {
             PyObject *__pyx_temp[5] = {__pyx_t_18, __pyx_v_i, __pyx_v_j, __pyx_v_k, __pyx_v_l};
-            __pyx_t_17 = __Pyx_PyCFunction_FastCall(__pyx_t_16, __pyx_temp+1-__pyx_t_19, 4+__pyx_t_19); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 506, __pyx_L1_error)
+            __pyx_t_17 = __Pyx_PyCFunction_FastCall(__pyx_t_16, __pyx_temp+1-__pyx_t_19, 4+__pyx_t_19); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 519, __pyx_L1_error)
             __Pyx_XDECREF(__pyx_t_18); __pyx_t_18 = 0;
             __Pyx_GOTREF(__pyx_t_17);
           } else
           #endif
           {
-            __pyx_t_20 = PyTuple_New(4+__pyx_t_19); if (unlikely(!__pyx_t_20)) __PYX_ERR(0, 506, __pyx_L1_error)
+            __pyx_t_20 = PyTuple_New(4+__pyx_t_19); if (unlikely(!__pyx_t_20)) __PYX_ERR(0, 519, __pyx_L1_error)
             __Pyx_GOTREF(__pyx_t_20);
             if (__pyx_t_18) {
               __Pyx_GIVEREF(__pyx_t_18); PyTuple_SET_ITEM(__pyx_t_20, 0, __pyx_t_18); __pyx_t_18 = NULL;
@@ -7509,12 +7748,12 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_16measure_dihedrals(CYTHON_UNU
             __Pyx_INCREF(__pyx_v_l);
             __Pyx_GIVEREF(__pyx_v_l);
             PyTuple_SET_ITEM(__pyx_t_20, 3+__pyx_t_19, __pyx_v_l);
-            __pyx_t_17 = __Pyx_PyObject_Call(__pyx_t_16, __pyx_t_20, NULL); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 506, __pyx_L1_error)
+            __pyx_t_17 = __Pyx_PyObject_Call(__pyx_t_16, __pyx_t_20, NULL); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 519, __pyx_L1_error)
             __Pyx_GOTREF(__pyx_t_17);
             __Pyx_DECREF(__pyx_t_20); __pyx_t_20 = 0;
           }
           __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
-          __pyx_t_16 = PyTuple_New(2); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 506, __pyx_L1_error)
+          __pyx_t_16 = PyTuple_New(2); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 519, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_16);
           __Pyx_GIVEREF(__pyx_t_17);
           PyTuple_SET_ITEM(__pyx_t_16, 0, __pyx_t_17);
@@ -7522,22 +7761,22 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_16measure_dihedrals(CYTHON_UNU
           __Pyx_GIVEREF(__pyx_int_1);
           PyTuple_SET_ITEM(__pyx_t_16, 1, __pyx_int_1);
           __pyx_t_17 = 0;
-          __pyx_t_17 = __Pyx_PyObject_Call(__pyx_builtin_round, __pyx_t_16, NULL); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 506, __pyx_L1_error)
+          __pyx_t_17 = __Pyx_PyObject_Call(__pyx_builtin_round, __pyx_t_16, NULL); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 519, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_17);
           __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
           __Pyx_XDECREF_SET(__pyx_v_dihedral, __pyx_t_17);
           __pyx_t_17 = 0;
 
-          /* "mollib/core/geometry.pyx":507
+          /* "mollib/core/geometry.pyx":520
  *                     # Add the distance to the results
  *                     dihedral = round(measure_dihedral(i, j, k, l), 1)
  *                     results[key] = dihedral             # <<<<<<<<<<<<<<
  * 
  *     # Return the sorted list of tuples
  */
-          if (unlikely(PyDict_SetItem(__pyx_v_results, __pyx_v_key, __pyx_v_dihedral) < 0)) __PYX_ERR(0, 507, __pyx_L1_error)
+          if (unlikely(PyDict_SetItem(__pyx_v_results, __pyx_v_key, __pyx_v_dihedral) < 0)) __PYX_ERR(0, 520, __pyx_L1_error)
 
-          /* "mollib/core/geometry.pyx":493
+          /* "mollib/core/geometry.pyx":506
  *         for j in atoms2:
  *             for k in atoms3:
  *                 for l in atoms4:             # <<<<<<<<<<<<<<
@@ -7548,7 +7787,7 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_16measure_dihedrals(CYTHON_UNU
         }
         __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-        /* "mollib/core/geometry.pyx":492
+        /* "mollib/core/geometry.pyx":505
  *     for i in atoms1:
  *         for j in atoms2:
  *             for k in atoms3:             # <<<<<<<<<<<<<<
@@ -7558,7 +7797,7 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_16measure_dihedrals(CYTHON_UNU
       }
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-      /* "mollib/core/geometry.pyx":491
+      /* "mollib/core/geometry.pyx":504
  * 
  *     for i in atoms1:
  *         for j in atoms2:             # <<<<<<<<<<<<<<
@@ -7568,7 +7807,7 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_16measure_dihedrals(CYTHON_UNU
     }
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-    /* "mollib/core/geometry.pyx":490
+    /* "mollib/core/geometry.pyx":503
  *         return []
  * 
  *     for i in atoms1:             # <<<<<<<<<<<<<<
@@ -7578,44 +7817,44 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_16measure_dihedrals(CYTHON_UNU
   }
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "mollib/core/geometry.pyx":510
+  /* "mollib/core/geometry.pyx":523
  * 
  *     # Return the sorted list of tuples
  *     sort_key = lambda i: (i[0][0].chain.id,             # <<<<<<<<<<<<<<
  *                           i[0][1].chain.id,
  *                           i[0][2].chain.id,
  */
-  __pyx_t_1 = __Pyx_CyFunction_NewEx(&__pyx_mdef_6mollib_4core_8geometry_17measure_dihedrals_lambda2, 0, __pyx_n_s_measure_dihedrals_locals_lambda, NULL, __pyx_n_s_mollib_core_geometry, __pyx_d, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 510, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_CyFunction_NewEx(&__pyx_mdef_6mollib_4core_8geometry_17measure_dihedrals_lambda2, 0, __pyx_n_s_measure_dihedrals_locals_lambda, NULL, __pyx_n_s_mollib_core_geometry, __pyx_d, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 523, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_sort_key = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "mollib/core/geometry.pyx":518
+  /* "mollib/core/geometry.pyx":531
  *                           i[0][2].residue.number,
  *                           i[0][3].residue.number)
  *     return [(k[0], k[1], k[2], k[3], v)             # <<<<<<<<<<<<<<
  *             for k,v in sorted(results.items(), key=sort_key)]
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 518, __pyx_L1_error)
+  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 531, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
 
-  /* "mollib/core/geometry.pyx":519
+  /* "mollib/core/geometry.pyx":532
  *                           i[0][3].residue.number)
  *     return [(k[0], k[1], k[2], k[3], v)
  *             for k,v in sorted(results.items(), key=sort_key)]             # <<<<<<<<<<<<<<
  */
-  __pyx_t_2 = __Pyx_PyDict_Items(__pyx_v_results); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 519, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyDict_Items(__pyx_v_results); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 532, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 519, __pyx_L1_error)
+  __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 532, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_GIVEREF(__pyx_t_2);
   PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_2);
   __pyx_t_2 = 0;
-  __pyx_t_2 = PyDict_New(); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 519, __pyx_L1_error)
+  __pyx_t_2 = PyDict_New(); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 532, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_key, __pyx_v_sort_key) < 0) __PYX_ERR(0, 519, __pyx_L1_error)
-  __pyx_t_4 = __Pyx_PyObject_Call(__pyx_builtin_sorted, __pyx_t_3, __pyx_t_2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 519, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_key, __pyx_v_sort_key) < 0) __PYX_ERR(0, 532, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_Call(__pyx_builtin_sorted, __pyx_t_3, __pyx_t_2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 532, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
@@ -7623,9 +7862,9 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_16measure_dihedrals(CYTHON_UNU
     __pyx_t_2 = __pyx_t_4; __Pyx_INCREF(__pyx_t_2); __pyx_t_8 = 0;
     __pyx_t_9 = NULL;
   } else {
-    __pyx_t_8 = -1; __pyx_t_2 = PyObject_GetIter(__pyx_t_4); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 519, __pyx_L1_error)
+    __pyx_t_8 = -1; __pyx_t_2 = PyObject_GetIter(__pyx_t_4); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 532, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_9 = Py_TYPE(__pyx_t_2)->tp_iternext; if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 519, __pyx_L1_error)
+    __pyx_t_9 = Py_TYPE(__pyx_t_2)->tp_iternext; if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 532, __pyx_L1_error)
   }
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   for (;;) {
@@ -7633,17 +7872,17 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_16measure_dihedrals(CYTHON_UNU
       if (likely(PyList_CheckExact(__pyx_t_2))) {
         if (__pyx_t_8 >= PyList_GET_SIZE(__pyx_t_2)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_4 = PyList_GET_ITEM(__pyx_t_2, __pyx_t_8); __Pyx_INCREF(__pyx_t_4); __pyx_t_8++; if (unlikely(0 < 0)) __PYX_ERR(0, 519, __pyx_L1_error)
+        __pyx_t_4 = PyList_GET_ITEM(__pyx_t_2, __pyx_t_8); __Pyx_INCREF(__pyx_t_4); __pyx_t_8++; if (unlikely(0 < 0)) __PYX_ERR(0, 532, __pyx_L1_error)
         #else
-        __pyx_t_4 = PySequence_ITEM(__pyx_t_2, __pyx_t_8); __pyx_t_8++; if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 519, __pyx_L1_error)
+        __pyx_t_4 = PySequence_ITEM(__pyx_t_2, __pyx_t_8); __pyx_t_8++; if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 532, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_4);
         #endif
       } else {
         if (__pyx_t_8 >= PyTuple_GET_SIZE(__pyx_t_2)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_4 = PyTuple_GET_ITEM(__pyx_t_2, __pyx_t_8); __Pyx_INCREF(__pyx_t_4); __pyx_t_8++; if (unlikely(0 < 0)) __PYX_ERR(0, 519, __pyx_L1_error)
+        __pyx_t_4 = PyTuple_GET_ITEM(__pyx_t_2, __pyx_t_8); __Pyx_INCREF(__pyx_t_4); __pyx_t_8++; if (unlikely(0 < 0)) __PYX_ERR(0, 532, __pyx_L1_error)
         #else
-        __pyx_t_4 = PySequence_ITEM(__pyx_t_2, __pyx_t_8); __pyx_t_8++; if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 519, __pyx_L1_error)
+        __pyx_t_4 = PySequence_ITEM(__pyx_t_2, __pyx_t_8); __pyx_t_8++; if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 532, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_4);
         #endif
       }
@@ -7653,7 +7892,7 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_16measure_dihedrals(CYTHON_UNU
         PyObject* exc_type = PyErr_Occurred();
         if (exc_type) {
           if (likely(exc_type == PyExc_StopIteration || PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-          else __PYX_ERR(0, 519, __pyx_L1_error)
+          else __PYX_ERR(0, 532, __pyx_L1_error)
         }
         break;
       }
@@ -7669,7 +7908,7 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_16measure_dihedrals(CYTHON_UNU
       if (unlikely(size != 2)) {
         if (size > 2) __Pyx_RaiseTooManyValuesError(2);
         else if (size >= 0) __Pyx_RaiseNeedMoreValuesError(size);
-        __PYX_ERR(0, 519, __pyx_L1_error)
+        __PYX_ERR(0, 532, __pyx_L1_error)
       }
       #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
       if (likely(PyTuple_CheckExact(sequence))) {
@@ -7682,15 +7921,15 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_16measure_dihedrals(CYTHON_UNU
       __Pyx_INCREF(__pyx_t_3);
       __Pyx_INCREF(__pyx_t_17);
       #else
-      __pyx_t_3 = PySequence_ITEM(sequence, 0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 519, __pyx_L1_error)
+      __pyx_t_3 = PySequence_ITEM(sequence, 0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 532, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
-      __pyx_t_17 = PySequence_ITEM(sequence, 1); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 519, __pyx_L1_error)
+      __pyx_t_17 = PySequence_ITEM(sequence, 1); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 532, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_17);
       #endif
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     } else {
       Py_ssize_t index = -1;
-      __pyx_t_16 = PyObject_GetIter(__pyx_t_4); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 519, __pyx_L1_error)
+      __pyx_t_16 = PyObject_GetIter(__pyx_t_4); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 532, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_16);
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
       __pyx_t_21 = Py_TYPE(__pyx_t_16)->tp_iternext;
@@ -7698,7 +7937,7 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_16measure_dihedrals(CYTHON_UNU
       __Pyx_GOTREF(__pyx_t_3);
       index = 1; __pyx_t_17 = __pyx_t_21(__pyx_t_16); if (unlikely(!__pyx_t_17)) goto __pyx_L22_unpacking_failed;
       __Pyx_GOTREF(__pyx_t_17);
-      if (__Pyx_IternextUnpackEndCheck(__pyx_t_21(__pyx_t_16), 2) < 0) __PYX_ERR(0, 519, __pyx_L1_error)
+      if (__Pyx_IternextUnpackEndCheck(__pyx_t_21(__pyx_t_16), 2) < 0) __PYX_ERR(0, 532, __pyx_L1_error)
       __pyx_t_21 = NULL;
       __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
       goto __pyx_L23_unpacking_done;
@@ -7706,7 +7945,7 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_16measure_dihedrals(CYTHON_UNU
       __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
       __pyx_t_21 = NULL;
       if (__Pyx_IterFinish() == 0) __Pyx_RaiseNeedMoreValuesError(index);
-      __PYX_ERR(0, 519, __pyx_L1_error)
+      __PYX_ERR(0, 532, __pyx_L1_error)
       __pyx_L23_unpacking_done:;
     }
     __Pyx_XDECREF_SET(__pyx_v_k, __pyx_t_3);
@@ -7714,21 +7953,21 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_16measure_dihedrals(CYTHON_UNU
     __Pyx_XDECREF_SET(__pyx_v_v, __pyx_t_17);
     __pyx_t_17 = 0;
 
-    /* "mollib/core/geometry.pyx":518
+    /* "mollib/core/geometry.pyx":531
  *                           i[0][2].residue.number,
  *                           i[0][3].residue.number)
  *     return [(k[0], k[1], k[2], k[3], v)             # <<<<<<<<<<<<<<
  *             for k,v in sorted(results.items(), key=sort_key)]
  */
-    __pyx_t_4 = __Pyx_GetItemInt(__pyx_v_k, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 518, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_GetItemInt(__pyx_v_k, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 531, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_17 = __Pyx_GetItemInt(__pyx_v_k, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 518, __pyx_L1_error)
+    __pyx_t_17 = __Pyx_GetItemInt(__pyx_v_k, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 531, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_17);
-    __pyx_t_3 = __Pyx_GetItemInt(__pyx_v_k, 2, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 518, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_GetItemInt(__pyx_v_k, 2, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 531, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_16 = __Pyx_GetItemInt(__pyx_v_k, 3, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 518, __pyx_L1_error)
+    __pyx_t_16 = __Pyx_GetItemInt(__pyx_v_k, 3, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 531, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_16);
-    __pyx_t_20 = PyTuple_New(5); if (unlikely(!__pyx_t_20)) __PYX_ERR(0, 518, __pyx_L1_error)
+    __pyx_t_20 = PyTuple_New(5); if (unlikely(!__pyx_t_20)) __PYX_ERR(0, 531, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_20);
     __Pyx_GIVEREF(__pyx_t_4);
     PyTuple_SET_ITEM(__pyx_t_20, 0, __pyx_t_4);
@@ -7745,10 +7984,10 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_16measure_dihedrals(CYTHON_UNU
     __pyx_t_17 = 0;
     __pyx_t_3 = 0;
     __pyx_t_16 = 0;
-    if (unlikely(__Pyx_ListComp_Append(__pyx_t_1, (PyObject*)__pyx_t_20))) __PYX_ERR(0, 518, __pyx_L1_error)
+    if (unlikely(__Pyx_ListComp_Append(__pyx_t_1, (PyObject*)__pyx_t_20))) __PYX_ERR(0, 531, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_20); __pyx_t_20 = 0;
 
-    /* "mollib/core/geometry.pyx":519
+    /* "mollib/core/geometry.pyx":532
  *                           i[0][3].residue.number)
  *     return [(k[0], k[1], k[2], k[3], v)
  *             for k,v in sorted(results.items(), key=sort_key)]             # <<<<<<<<<<<<<<
@@ -7759,7 +7998,7 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_16measure_dihedrals(CYTHON_UNU
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "mollib/core/geometry.pyx":434
+  /* "mollib/core/geometry.pyx":447
  * 
  * 
  * def measure_dihedrals(molecule, selector1, selector2, selector3, selector4,             # <<<<<<<<<<<<<<
@@ -7798,7 +8037,7 @@ static PyObject *__pyx_pf_6mollib_4core_8geometry_16measure_dihedrals(CYTHON_UNU
   return __pyx_r;
 }
 
-/* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":197
+/* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":197
  *         # experimental exception made for __getbuffer__ and __releasebuffer__
  *         # -- the details of this may change.
  *         def __getbuffer__(ndarray self, Py_buffer* info, int flags):             # <<<<<<<<<<<<<<
@@ -7845,7 +8084,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
     __Pyx_GIVEREF(__pyx_v_info->obj);
   }
 
-  /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":203
+  /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":203
  *             # of flags
  * 
  *             if info == NULL: return             # <<<<<<<<<<<<<<
@@ -7858,7 +8097,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
     goto __pyx_L0;
   }
 
-  /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":206
+  /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":206
  * 
  *             cdef int copy_shape, i, ndim
  *             cdef int endian_detector = 1             # <<<<<<<<<<<<<<
@@ -7867,7 +8106,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
  */
   __pyx_v_endian_detector = 1;
 
-  /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":207
+  /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":207
  *             cdef int copy_shape, i, ndim
  *             cdef int endian_detector = 1
  *             cdef bint little_endian = ((<char*>&endian_detector)[0] != 0)             # <<<<<<<<<<<<<<
@@ -7876,7 +8115,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
  */
   __pyx_v_little_endian = ((((char *)(&__pyx_v_endian_detector))[0]) != 0);
 
-  /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":209
+  /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":209
  *             cdef bint little_endian = ((<char*>&endian_detector)[0] != 0)
  * 
  *             ndim = PyArray_NDIM(self)             # <<<<<<<<<<<<<<
@@ -7885,7 +8124,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
  */
   __pyx_v_ndim = PyArray_NDIM(__pyx_v_self);
 
-  /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":211
+  /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":211
  *             ndim = PyArray_NDIM(self)
  * 
  *             if sizeof(npy_intp) != sizeof(Py_ssize_t):             # <<<<<<<<<<<<<<
@@ -7895,7 +8134,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
   __pyx_t_1 = (((sizeof(npy_intp)) != (sizeof(Py_ssize_t))) != 0);
   if (__pyx_t_1) {
 
-    /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":212
+    /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":212
  * 
  *             if sizeof(npy_intp) != sizeof(Py_ssize_t):
  *                 copy_shape = 1             # <<<<<<<<<<<<<<
@@ -7904,7 +8143,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
  */
     __pyx_v_copy_shape = 1;
 
-    /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":211
+    /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":211
  *             ndim = PyArray_NDIM(self)
  * 
  *             if sizeof(npy_intp) != sizeof(Py_ssize_t):             # <<<<<<<<<<<<<<
@@ -7914,7 +8153,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
     goto __pyx_L4;
   }
 
-  /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":214
+  /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":214
  *                 copy_shape = 1
  *             else:
  *                 copy_shape = 0             # <<<<<<<<<<<<<<
@@ -7926,7 +8165,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
   }
   __pyx_L4:;
 
-  /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":216
+  /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":216
  *                 copy_shape = 0
  * 
  *             if ((flags & pybuf.PyBUF_C_CONTIGUOUS == pybuf.PyBUF_C_CONTIGUOUS)             # <<<<<<<<<<<<<<
@@ -7940,7 +8179,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
     goto __pyx_L6_bool_binop_done;
   }
 
-  /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":217
+  /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":217
  * 
  *             if ((flags & pybuf.PyBUF_C_CONTIGUOUS == pybuf.PyBUF_C_CONTIGUOUS)
  *                 and not PyArray_CHKFLAGS(self, NPY_C_CONTIGUOUS)):             # <<<<<<<<<<<<<<
@@ -7951,7 +8190,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
   __pyx_t_1 = __pyx_t_2;
   __pyx_L6_bool_binop_done:;
 
-  /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":216
+  /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":216
  *                 copy_shape = 0
  * 
  *             if ((flags & pybuf.PyBUF_C_CONTIGUOUS == pybuf.PyBUF_C_CONTIGUOUS)             # <<<<<<<<<<<<<<
@@ -7960,20 +8199,20 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
  */
   if (__pyx_t_1) {
 
-    /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":218
+    /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":218
  *             if ((flags & pybuf.PyBUF_C_CONTIGUOUS == pybuf.PyBUF_C_CONTIGUOUS)
  *                 and not PyArray_CHKFLAGS(self, NPY_C_CONTIGUOUS)):
  *                 raise ValueError(u"ndarray is not C contiguous")             # <<<<<<<<<<<<<<
  * 
  *             if ((flags & pybuf.PyBUF_F_CONTIGUOUS == pybuf.PyBUF_F_CONTIGUOUS)
  */
-    __pyx_t_3 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__7, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 218, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__8, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 218, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_Raise(__pyx_t_3, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     __PYX_ERR(1, 218, __pyx_L1_error)
 
-    /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":216
+    /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":216
  *                 copy_shape = 0
  * 
  *             if ((flags & pybuf.PyBUF_C_CONTIGUOUS == pybuf.PyBUF_C_CONTIGUOUS)             # <<<<<<<<<<<<<<
@@ -7982,7 +8221,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
  */
   }
 
-  /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":220
+  /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":220
  *                 raise ValueError(u"ndarray is not C contiguous")
  * 
  *             if ((flags & pybuf.PyBUF_F_CONTIGUOUS == pybuf.PyBUF_F_CONTIGUOUS)             # <<<<<<<<<<<<<<
@@ -7996,7 +8235,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
     goto __pyx_L9_bool_binop_done;
   }
 
-  /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":221
+  /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":221
  * 
  *             if ((flags & pybuf.PyBUF_F_CONTIGUOUS == pybuf.PyBUF_F_CONTIGUOUS)
  *                 and not PyArray_CHKFLAGS(self, NPY_F_CONTIGUOUS)):             # <<<<<<<<<<<<<<
@@ -8007,7 +8246,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
   __pyx_t_1 = __pyx_t_2;
   __pyx_L9_bool_binop_done:;
 
-  /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":220
+  /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":220
  *                 raise ValueError(u"ndarray is not C contiguous")
  * 
  *             if ((flags & pybuf.PyBUF_F_CONTIGUOUS == pybuf.PyBUF_F_CONTIGUOUS)             # <<<<<<<<<<<<<<
@@ -8016,20 +8255,20 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
  */
   if (__pyx_t_1) {
 
-    /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":222
+    /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":222
  *             if ((flags & pybuf.PyBUF_F_CONTIGUOUS == pybuf.PyBUF_F_CONTIGUOUS)
  *                 and not PyArray_CHKFLAGS(self, NPY_F_CONTIGUOUS)):
  *                 raise ValueError(u"ndarray is not Fortran contiguous")             # <<<<<<<<<<<<<<
  * 
  *             info.buf = PyArray_DATA(self)
  */
-    __pyx_t_3 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__8, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 222, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__9, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 222, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_Raise(__pyx_t_3, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     __PYX_ERR(1, 222, __pyx_L1_error)
 
-    /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":220
+    /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":220
  *                 raise ValueError(u"ndarray is not C contiguous")
  * 
  *             if ((flags & pybuf.PyBUF_F_CONTIGUOUS == pybuf.PyBUF_F_CONTIGUOUS)             # <<<<<<<<<<<<<<
@@ -8038,7 +8277,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
  */
   }
 
-  /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":224
+  /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":224
  *                 raise ValueError(u"ndarray is not Fortran contiguous")
  * 
  *             info.buf = PyArray_DATA(self)             # <<<<<<<<<<<<<<
@@ -8047,7 +8286,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
  */
   __pyx_v_info->buf = PyArray_DATA(__pyx_v_self);
 
-  /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":225
+  /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":225
  * 
  *             info.buf = PyArray_DATA(self)
  *             info.ndim = ndim             # <<<<<<<<<<<<<<
@@ -8056,7 +8295,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
  */
   __pyx_v_info->ndim = __pyx_v_ndim;
 
-  /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":226
+  /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":226
  *             info.buf = PyArray_DATA(self)
  *             info.ndim = ndim
  *             if copy_shape:             # <<<<<<<<<<<<<<
@@ -8066,7 +8305,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
   __pyx_t_1 = (__pyx_v_copy_shape != 0);
   if (__pyx_t_1) {
 
-    /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":229
+    /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":229
  *                 # Allocate new buffer for strides and shape info.
  *                 # This is allocated as one block, strides first.
  *                 info.strides = <Py_ssize_t*>stdlib.malloc(sizeof(Py_ssize_t) * <size_t>ndim * 2)             # <<<<<<<<<<<<<<
@@ -8075,7 +8314,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
  */
     __pyx_v_info->strides = ((Py_ssize_t *)malloc((((sizeof(Py_ssize_t)) * ((size_t)__pyx_v_ndim)) * 2)));
 
-    /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":230
+    /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":230
  *                 # This is allocated as one block, strides first.
  *                 info.strides = <Py_ssize_t*>stdlib.malloc(sizeof(Py_ssize_t) * <size_t>ndim * 2)
  *                 info.shape = info.strides + ndim             # <<<<<<<<<<<<<<
@@ -8084,7 +8323,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
  */
     __pyx_v_info->shape = (__pyx_v_info->strides + __pyx_v_ndim);
 
-    /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":231
+    /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":231
  *                 info.strides = <Py_ssize_t*>stdlib.malloc(sizeof(Py_ssize_t) * <size_t>ndim * 2)
  *                 info.shape = info.strides + ndim
  *                 for i in range(ndim):             # <<<<<<<<<<<<<<
@@ -8095,7 +8334,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
     for (__pyx_t_5 = 0; __pyx_t_5 < __pyx_t_4; __pyx_t_5+=1) {
       __pyx_v_i = __pyx_t_5;
 
-      /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":232
+      /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":232
  *                 info.shape = info.strides + ndim
  *                 for i in range(ndim):
  *                     info.strides[i] = PyArray_STRIDES(self)[i]             # <<<<<<<<<<<<<<
@@ -8104,7 +8343,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
  */
       (__pyx_v_info->strides[__pyx_v_i]) = (PyArray_STRIDES(__pyx_v_self)[__pyx_v_i]);
 
-      /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":233
+      /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":233
  *                 for i in range(ndim):
  *                     info.strides[i] = PyArray_STRIDES(self)[i]
  *                     info.shape[i] = PyArray_DIMS(self)[i]             # <<<<<<<<<<<<<<
@@ -8114,7 +8353,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
       (__pyx_v_info->shape[__pyx_v_i]) = (PyArray_DIMS(__pyx_v_self)[__pyx_v_i]);
     }
 
-    /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":226
+    /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":226
  *             info.buf = PyArray_DATA(self)
  *             info.ndim = ndim
  *             if copy_shape:             # <<<<<<<<<<<<<<
@@ -8124,7 +8363,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
     goto __pyx_L11;
   }
 
-  /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":235
+  /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":235
  *                     info.shape[i] = PyArray_DIMS(self)[i]
  *             else:
  *                 info.strides = <Py_ssize_t*>PyArray_STRIDES(self)             # <<<<<<<<<<<<<<
@@ -8134,7 +8373,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
   /*else*/ {
     __pyx_v_info->strides = ((Py_ssize_t *)PyArray_STRIDES(__pyx_v_self));
 
-    /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":236
+    /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":236
  *             else:
  *                 info.strides = <Py_ssize_t*>PyArray_STRIDES(self)
  *                 info.shape = <Py_ssize_t*>PyArray_DIMS(self)             # <<<<<<<<<<<<<<
@@ -8145,7 +8384,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
   }
   __pyx_L11:;
 
-  /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":237
+  /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":237
  *                 info.strides = <Py_ssize_t*>PyArray_STRIDES(self)
  *                 info.shape = <Py_ssize_t*>PyArray_DIMS(self)
  *             info.suboffsets = NULL             # <<<<<<<<<<<<<<
@@ -8154,7 +8393,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
  */
   __pyx_v_info->suboffsets = NULL;
 
-  /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":238
+  /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":238
  *                 info.shape = <Py_ssize_t*>PyArray_DIMS(self)
  *             info.suboffsets = NULL
  *             info.itemsize = PyArray_ITEMSIZE(self)             # <<<<<<<<<<<<<<
@@ -8163,7 +8402,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
  */
   __pyx_v_info->itemsize = PyArray_ITEMSIZE(__pyx_v_self);
 
-  /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":239
+  /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":239
  *             info.suboffsets = NULL
  *             info.itemsize = PyArray_ITEMSIZE(self)
  *             info.readonly = not PyArray_ISWRITEABLE(self)             # <<<<<<<<<<<<<<
@@ -8172,7 +8411,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
  */
   __pyx_v_info->readonly = (!(PyArray_ISWRITEABLE(__pyx_v_self) != 0));
 
-  /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":242
+  /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":242
  * 
  *             cdef int t
  *             cdef char* f = NULL             # <<<<<<<<<<<<<<
@@ -8181,7 +8420,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
  */
   __pyx_v_f = NULL;
 
-  /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":243
+  /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":243
  *             cdef int t
  *             cdef char* f = NULL
  *             cdef dtype descr = self.descr             # <<<<<<<<<<<<<<
@@ -8193,7 +8432,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
   __pyx_v_descr = ((PyArray_Descr *)__pyx_t_3);
   __pyx_t_3 = 0;
 
-  /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":246
+  /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":246
  *             cdef int offset
  * 
  *             cdef bint hasfields = PyDataType_HASFIELDS(descr)             # <<<<<<<<<<<<<<
@@ -8202,7 +8441,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
  */
   __pyx_v_hasfields = PyDataType_HASFIELDS(__pyx_v_descr);
 
-  /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":248
+  /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":248
  *             cdef bint hasfields = PyDataType_HASFIELDS(descr)
  * 
  *             if not hasfields and not copy_shape:             # <<<<<<<<<<<<<<
@@ -8220,7 +8459,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
   __pyx_L15_bool_binop_done:;
   if (__pyx_t_1) {
 
-    /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":250
+    /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":250
  *             if not hasfields and not copy_shape:
  *                 # do not call releasebuffer
  *                 info.obj = None             # <<<<<<<<<<<<<<
@@ -8233,7 +8472,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
     __Pyx_DECREF(__pyx_v_info->obj);
     __pyx_v_info->obj = Py_None;
 
-    /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":248
+    /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":248
  *             cdef bint hasfields = PyDataType_HASFIELDS(descr)
  * 
  *             if not hasfields and not copy_shape:             # <<<<<<<<<<<<<<
@@ -8243,7 +8482,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
     goto __pyx_L14;
   }
 
-  /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":253
+  /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":253
  *             else:
  *                 # need to call releasebuffer
  *                 info.obj = self             # <<<<<<<<<<<<<<
@@ -8259,7 +8498,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
   }
   __pyx_L14:;
 
-  /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":255
+  /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":255
  *                 info.obj = self
  * 
  *             if not hasfields:             # <<<<<<<<<<<<<<
@@ -8269,7 +8508,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
   __pyx_t_1 = ((!(__pyx_v_hasfields != 0)) != 0);
   if (__pyx_t_1) {
 
-    /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":256
+    /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":256
  * 
  *             if not hasfields:
  *                 t = descr.type_num             # <<<<<<<<<<<<<<
@@ -8279,7 +8518,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
     __pyx_t_4 = __pyx_v_descr->type_num;
     __pyx_v_t = __pyx_t_4;
 
-    /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":257
+    /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":257
  *             if not hasfields:
  *                 t = descr.type_num
  *                 if ((descr.byteorder == c'>' and little_endian) or             # <<<<<<<<<<<<<<
@@ -8299,7 +8538,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
     }
     __pyx_L20_next_or:;
 
-    /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":258
+    /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":258
  *                 t = descr.type_num
  *                 if ((descr.byteorder == c'>' and little_endian) or
  *                     (descr.byteorder == c'<' and not little_endian)):             # <<<<<<<<<<<<<<
@@ -8316,7 +8555,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
     __pyx_t_1 = __pyx_t_2;
     __pyx_L19_bool_binop_done:;
 
-    /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":257
+    /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":257
  *             if not hasfields:
  *                 t = descr.type_num
  *                 if ((descr.byteorder == c'>' and little_endian) or             # <<<<<<<<<<<<<<
@@ -8325,20 +8564,20 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
  */
     if (__pyx_t_1) {
 
-      /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":259
+      /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":259
  *                 if ((descr.byteorder == c'>' and little_endian) or
  *                     (descr.byteorder == c'<' and not little_endian)):
  *                     raise ValueError(u"Non-native byte order not supported")             # <<<<<<<<<<<<<<
  *                 if   t == NPY_BYTE:        f = "b"
  *                 elif t == NPY_UBYTE:       f = "B"
  */
-      __pyx_t_3 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__9, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 259, __pyx_L1_error)
+      __pyx_t_3 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__10, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 259, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
       __Pyx_Raise(__pyx_t_3, 0, 0, 0);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
       __PYX_ERR(1, 259, __pyx_L1_error)
 
-      /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":257
+      /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":257
  *             if not hasfields:
  *                 t = descr.type_num
  *                 if ((descr.byteorder == c'>' and little_endian) or             # <<<<<<<<<<<<<<
@@ -8347,7 +8586,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
  */
     }
 
-    /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":260
+    /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":260
  *                     (descr.byteorder == c'<' and not little_endian)):
  *                     raise ValueError(u"Non-native byte order not supported")
  *                 if   t == NPY_BYTE:        f = "b"             # <<<<<<<<<<<<<<
@@ -8359,7 +8598,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
       __pyx_v_f = ((char *)"b");
       break;
 
-      /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":261
+      /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":261
  *                     raise ValueError(u"Non-native byte order not supported")
  *                 if   t == NPY_BYTE:        f = "b"
  *                 elif t == NPY_UBYTE:       f = "B"             # <<<<<<<<<<<<<<
@@ -8370,7 +8609,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
       __pyx_v_f = ((char *)"B");
       break;
 
-      /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":262
+      /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":262
  *                 if   t == NPY_BYTE:        f = "b"
  *                 elif t == NPY_UBYTE:       f = "B"
  *                 elif t == NPY_SHORT:       f = "h"             # <<<<<<<<<<<<<<
@@ -8381,7 +8620,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
       __pyx_v_f = ((char *)"h");
       break;
 
-      /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":263
+      /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":263
  *                 elif t == NPY_UBYTE:       f = "B"
  *                 elif t == NPY_SHORT:       f = "h"
  *                 elif t == NPY_USHORT:      f = "H"             # <<<<<<<<<<<<<<
@@ -8392,7 +8631,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
       __pyx_v_f = ((char *)"H");
       break;
 
-      /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":264
+      /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":264
  *                 elif t == NPY_SHORT:       f = "h"
  *                 elif t == NPY_USHORT:      f = "H"
  *                 elif t == NPY_INT:         f = "i"             # <<<<<<<<<<<<<<
@@ -8403,7 +8642,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
       __pyx_v_f = ((char *)"i");
       break;
 
-      /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":265
+      /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":265
  *                 elif t == NPY_USHORT:      f = "H"
  *                 elif t == NPY_INT:         f = "i"
  *                 elif t == NPY_UINT:        f = "I"             # <<<<<<<<<<<<<<
@@ -8414,7 +8653,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
       __pyx_v_f = ((char *)"I");
       break;
 
-      /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":266
+      /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":266
  *                 elif t == NPY_INT:         f = "i"
  *                 elif t == NPY_UINT:        f = "I"
  *                 elif t == NPY_LONG:        f = "l"             # <<<<<<<<<<<<<<
@@ -8425,7 +8664,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
       __pyx_v_f = ((char *)"l");
       break;
 
-      /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":267
+      /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":267
  *                 elif t == NPY_UINT:        f = "I"
  *                 elif t == NPY_LONG:        f = "l"
  *                 elif t == NPY_ULONG:       f = "L"             # <<<<<<<<<<<<<<
@@ -8436,7 +8675,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
       __pyx_v_f = ((char *)"L");
       break;
 
-      /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":268
+      /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":268
  *                 elif t == NPY_LONG:        f = "l"
  *                 elif t == NPY_ULONG:       f = "L"
  *                 elif t == NPY_LONGLONG:    f = "q"             # <<<<<<<<<<<<<<
@@ -8447,7 +8686,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
       __pyx_v_f = ((char *)"q");
       break;
 
-      /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":269
+      /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":269
  *                 elif t == NPY_ULONG:       f = "L"
  *                 elif t == NPY_LONGLONG:    f = "q"
  *                 elif t == NPY_ULONGLONG:   f = "Q"             # <<<<<<<<<<<<<<
@@ -8458,7 +8697,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
       __pyx_v_f = ((char *)"Q");
       break;
 
-      /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":270
+      /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":270
  *                 elif t == NPY_LONGLONG:    f = "q"
  *                 elif t == NPY_ULONGLONG:   f = "Q"
  *                 elif t == NPY_FLOAT:       f = "f"             # <<<<<<<<<<<<<<
@@ -8469,7 +8708,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
       __pyx_v_f = ((char *)"f");
       break;
 
-      /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":271
+      /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":271
  *                 elif t == NPY_ULONGLONG:   f = "Q"
  *                 elif t == NPY_FLOAT:       f = "f"
  *                 elif t == NPY_DOUBLE:      f = "d"             # <<<<<<<<<<<<<<
@@ -8480,7 +8719,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
       __pyx_v_f = ((char *)"d");
       break;
 
-      /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":272
+      /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":272
  *                 elif t == NPY_FLOAT:       f = "f"
  *                 elif t == NPY_DOUBLE:      f = "d"
  *                 elif t == NPY_LONGDOUBLE:  f = "g"             # <<<<<<<<<<<<<<
@@ -8491,7 +8730,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
       __pyx_v_f = ((char *)"g");
       break;
 
-      /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":273
+      /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":273
  *                 elif t == NPY_DOUBLE:      f = "d"
  *                 elif t == NPY_LONGDOUBLE:  f = "g"
  *                 elif t == NPY_CFLOAT:      f = "Zf"             # <<<<<<<<<<<<<<
@@ -8502,7 +8741,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
       __pyx_v_f = ((char *)"Zf");
       break;
 
-      /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":274
+      /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":274
  *                 elif t == NPY_LONGDOUBLE:  f = "g"
  *                 elif t == NPY_CFLOAT:      f = "Zf"
  *                 elif t == NPY_CDOUBLE:     f = "Zd"             # <<<<<<<<<<<<<<
@@ -8513,7 +8752,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
       __pyx_v_f = ((char *)"Zd");
       break;
 
-      /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":275
+      /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":275
  *                 elif t == NPY_CFLOAT:      f = "Zf"
  *                 elif t == NPY_CDOUBLE:     f = "Zd"
  *                 elif t == NPY_CLONGDOUBLE: f = "Zg"             # <<<<<<<<<<<<<<
@@ -8524,7 +8763,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
       __pyx_v_f = ((char *)"Zg");
       break;
 
-      /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":276
+      /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":276
  *                 elif t == NPY_CDOUBLE:     f = "Zd"
  *                 elif t == NPY_CLONGDOUBLE: f = "Zg"
  *                 elif t == NPY_OBJECT:      f = "O"             # <<<<<<<<<<<<<<
@@ -8536,7 +8775,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
       break;
       default:
 
-      /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":278
+      /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":278
  *                 elif t == NPY_OBJECT:      f = "O"
  *                 else:
  *                     raise ValueError(u"unknown dtype code in numpy.pxd (%d)" % t)             # <<<<<<<<<<<<<<
@@ -8562,7 +8801,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
       break;
     }
 
-    /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":279
+    /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":279
  *                 else:
  *                     raise ValueError(u"unknown dtype code in numpy.pxd (%d)" % t)
  *                 info.format = f             # <<<<<<<<<<<<<<
@@ -8571,7 +8810,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
  */
     __pyx_v_info->format = __pyx_v_f;
 
-    /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":280
+    /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":280
  *                     raise ValueError(u"unknown dtype code in numpy.pxd (%d)" % t)
  *                 info.format = f
  *                 return             # <<<<<<<<<<<<<<
@@ -8581,7 +8820,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
     __pyx_r = 0;
     goto __pyx_L0;
 
-    /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":255
+    /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":255
  *                 info.obj = self
  * 
  *             if not hasfields:             # <<<<<<<<<<<<<<
@@ -8590,7 +8829,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
  */
   }
 
-  /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":282
+  /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":282
  *                 return
  *             else:
  *                 info.format = <char*>stdlib.malloc(_buffer_format_string_len)             # <<<<<<<<<<<<<<
@@ -8600,7 +8839,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
   /*else*/ {
     __pyx_v_info->format = ((char *)malloc(0xFF));
 
-    /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":283
+    /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":283
  *             else:
  *                 info.format = <char*>stdlib.malloc(_buffer_format_string_len)
  *                 info.format[0] = c'^' # Native data types, manual alignment             # <<<<<<<<<<<<<<
@@ -8609,7 +8848,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
  */
     (__pyx_v_info->format[0]) = '^';
 
-    /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":284
+    /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":284
  *                 info.format = <char*>stdlib.malloc(_buffer_format_string_len)
  *                 info.format[0] = c'^' # Native data types, manual alignment
  *                 offset = 0             # <<<<<<<<<<<<<<
@@ -8618,7 +8857,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
  */
     __pyx_v_offset = 0;
 
-    /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":285
+    /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":285
  *                 info.format[0] = c'^' # Native data types, manual alignment
  *                 offset = 0
  *                 f = _util_dtypestring(descr, info.format + 1,             # <<<<<<<<<<<<<<
@@ -8628,7 +8867,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
     __pyx_t_7 = __pyx_f_5numpy__util_dtypestring(__pyx_v_descr, (__pyx_v_info->format + 1), (__pyx_v_info->format + 0xFF), (&__pyx_v_offset)); if (unlikely(__pyx_t_7 == NULL)) __PYX_ERR(1, 285, __pyx_L1_error)
     __pyx_v_f = __pyx_t_7;
 
-    /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":288
+    /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":288
  *                                       info.format + _buffer_format_string_len,
  *                                       &offset)
  *                 f[0] = c'\0' # Terminate format string             # <<<<<<<<<<<<<<
@@ -8638,7 +8877,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
     (__pyx_v_f[0]) = '\x00';
   }
 
-  /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":197
+  /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":197
  *         # experimental exception made for __getbuffer__ and __releasebuffer__
  *         # -- the details of this may change.
  *         def __getbuffer__(ndarray self, Py_buffer* info, int flags):             # <<<<<<<<<<<<<<
@@ -8670,7 +8909,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
   return __pyx_r;
 }
 
-/* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":290
+/* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":290
  *                 f[0] = c'\0' # Terminate format string
  * 
  *         def __releasebuffer__(ndarray self, Py_buffer* info):             # <<<<<<<<<<<<<<
@@ -8694,7 +8933,7 @@ static void __pyx_pf_5numpy_7ndarray_2__releasebuffer__(PyArrayObject *__pyx_v_s
   int __pyx_t_1;
   __Pyx_RefNannySetupContext("__releasebuffer__", 0);
 
-  /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":291
+  /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":291
  * 
  *         def __releasebuffer__(ndarray self, Py_buffer* info):
  *             if PyArray_HASFIELDS(self):             # <<<<<<<<<<<<<<
@@ -8704,7 +8943,7 @@ static void __pyx_pf_5numpy_7ndarray_2__releasebuffer__(PyArrayObject *__pyx_v_s
   __pyx_t_1 = (PyArray_HASFIELDS(__pyx_v_self) != 0);
   if (__pyx_t_1) {
 
-    /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":292
+    /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":292
  *         def __releasebuffer__(ndarray self, Py_buffer* info):
  *             if PyArray_HASFIELDS(self):
  *                 stdlib.free(info.format)             # <<<<<<<<<<<<<<
@@ -8713,7 +8952,7 @@ static void __pyx_pf_5numpy_7ndarray_2__releasebuffer__(PyArrayObject *__pyx_v_s
  */
     free(__pyx_v_info->format);
 
-    /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":291
+    /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":291
  * 
  *         def __releasebuffer__(ndarray self, Py_buffer* info):
  *             if PyArray_HASFIELDS(self):             # <<<<<<<<<<<<<<
@@ -8722,7 +8961,7 @@ static void __pyx_pf_5numpy_7ndarray_2__releasebuffer__(PyArrayObject *__pyx_v_s
  */
   }
 
-  /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":293
+  /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":293
  *             if PyArray_HASFIELDS(self):
  *                 stdlib.free(info.format)
  *             if sizeof(npy_intp) != sizeof(Py_ssize_t):             # <<<<<<<<<<<<<<
@@ -8732,7 +8971,7 @@ static void __pyx_pf_5numpy_7ndarray_2__releasebuffer__(PyArrayObject *__pyx_v_s
   __pyx_t_1 = (((sizeof(npy_intp)) != (sizeof(Py_ssize_t))) != 0);
   if (__pyx_t_1) {
 
-    /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":294
+    /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":294
  *                 stdlib.free(info.format)
  *             if sizeof(npy_intp) != sizeof(Py_ssize_t):
  *                 stdlib.free(info.strides)             # <<<<<<<<<<<<<<
@@ -8741,7 +8980,7 @@ static void __pyx_pf_5numpy_7ndarray_2__releasebuffer__(PyArrayObject *__pyx_v_s
  */
     free(__pyx_v_info->strides);
 
-    /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":293
+    /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":293
  *             if PyArray_HASFIELDS(self):
  *                 stdlib.free(info.format)
  *             if sizeof(npy_intp) != sizeof(Py_ssize_t):             # <<<<<<<<<<<<<<
@@ -8750,7 +8989,7 @@ static void __pyx_pf_5numpy_7ndarray_2__releasebuffer__(PyArrayObject *__pyx_v_s
  */
   }
 
-  /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":290
+  /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":290
  *                 f[0] = c'\0' # Terminate format string
  * 
  *         def __releasebuffer__(ndarray self, Py_buffer* info):             # <<<<<<<<<<<<<<
@@ -8762,7 +9001,7 @@ static void __pyx_pf_5numpy_7ndarray_2__releasebuffer__(PyArrayObject *__pyx_v_s
   __Pyx_RefNannyFinishContext();
 }
 
-/* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":770
+/* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":770
  * ctypedef npy_cdouble     complex_t
  * 
  * cdef inline object PyArray_MultiIterNew1(a):             # <<<<<<<<<<<<<<
@@ -8776,7 +9015,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_PyArray_MultiIterNew1(PyObject *__
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("PyArray_MultiIterNew1", 0);
 
-  /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":771
+  /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":771
  * 
  * cdef inline object PyArray_MultiIterNew1(a):
  *     return PyArray_MultiIterNew(1, <void*>a)             # <<<<<<<<<<<<<<
@@ -8790,7 +9029,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_PyArray_MultiIterNew1(PyObject *__
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":770
+  /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":770
  * ctypedef npy_cdouble     complex_t
  * 
  * cdef inline object PyArray_MultiIterNew1(a):             # <<<<<<<<<<<<<<
@@ -8809,7 +9048,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_PyArray_MultiIterNew1(PyObject *__
   return __pyx_r;
 }
 
-/* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":773
+/* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":773
  *     return PyArray_MultiIterNew(1, <void*>a)
  * 
  * cdef inline object PyArray_MultiIterNew2(a, b):             # <<<<<<<<<<<<<<
@@ -8823,7 +9062,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_PyArray_MultiIterNew2(PyObject *__
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("PyArray_MultiIterNew2", 0);
 
-  /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":774
+  /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":774
  * 
  * cdef inline object PyArray_MultiIterNew2(a, b):
  *     return PyArray_MultiIterNew(2, <void*>a, <void*>b)             # <<<<<<<<<<<<<<
@@ -8837,7 +9076,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_PyArray_MultiIterNew2(PyObject *__
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":773
+  /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":773
  *     return PyArray_MultiIterNew(1, <void*>a)
  * 
  * cdef inline object PyArray_MultiIterNew2(a, b):             # <<<<<<<<<<<<<<
@@ -8856,7 +9095,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_PyArray_MultiIterNew2(PyObject *__
   return __pyx_r;
 }
 
-/* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":776
+/* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":776
  *     return PyArray_MultiIterNew(2, <void*>a, <void*>b)
  * 
  * cdef inline object PyArray_MultiIterNew3(a, b, c):             # <<<<<<<<<<<<<<
@@ -8870,7 +9109,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_PyArray_MultiIterNew3(PyObject *__
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("PyArray_MultiIterNew3", 0);
 
-  /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":777
+  /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":777
  * 
  * cdef inline object PyArray_MultiIterNew3(a, b, c):
  *     return PyArray_MultiIterNew(3, <void*>a, <void*>b, <void*> c)             # <<<<<<<<<<<<<<
@@ -8884,7 +9123,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_PyArray_MultiIterNew3(PyObject *__
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":776
+  /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":776
  *     return PyArray_MultiIterNew(2, <void*>a, <void*>b)
  * 
  * cdef inline object PyArray_MultiIterNew3(a, b, c):             # <<<<<<<<<<<<<<
@@ -8903,7 +9142,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_PyArray_MultiIterNew3(PyObject *__
   return __pyx_r;
 }
 
-/* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":779
+/* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":779
  *     return PyArray_MultiIterNew(3, <void*>a, <void*>b, <void*> c)
  * 
  * cdef inline object PyArray_MultiIterNew4(a, b, c, d):             # <<<<<<<<<<<<<<
@@ -8917,7 +9156,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_PyArray_MultiIterNew4(PyObject *__
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("PyArray_MultiIterNew4", 0);
 
-  /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":780
+  /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":780
  * 
  * cdef inline object PyArray_MultiIterNew4(a, b, c, d):
  *     return PyArray_MultiIterNew(4, <void*>a, <void*>b, <void*>c, <void*> d)             # <<<<<<<<<<<<<<
@@ -8931,7 +9170,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_PyArray_MultiIterNew4(PyObject *__
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":779
+  /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":779
  *     return PyArray_MultiIterNew(3, <void*>a, <void*>b, <void*> c)
  * 
  * cdef inline object PyArray_MultiIterNew4(a, b, c, d):             # <<<<<<<<<<<<<<
@@ -8950,7 +9189,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_PyArray_MultiIterNew4(PyObject *__
   return __pyx_r;
 }
 
-/* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":782
+/* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":782
  *     return PyArray_MultiIterNew(4, <void*>a, <void*>b, <void*>c, <void*> d)
  * 
  * cdef inline object PyArray_MultiIterNew5(a, b, c, d, e):             # <<<<<<<<<<<<<<
@@ -8964,7 +9203,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_PyArray_MultiIterNew5(PyObject *__
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("PyArray_MultiIterNew5", 0);
 
-  /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":783
+  /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":783
  * 
  * cdef inline object PyArray_MultiIterNew5(a, b, c, d, e):
  *     return PyArray_MultiIterNew(5, <void*>a, <void*>b, <void*>c, <void*> d, <void*> e)             # <<<<<<<<<<<<<<
@@ -8978,7 +9217,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_PyArray_MultiIterNew5(PyObject *__
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":782
+  /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":782
  *     return PyArray_MultiIterNew(4, <void*>a, <void*>b, <void*>c, <void*> d)
  * 
  * cdef inline object PyArray_MultiIterNew5(a, b, c, d, e):             # <<<<<<<<<<<<<<
@@ -8997,7 +9236,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_PyArray_MultiIterNew5(PyObject *__
   return __pyx_r;
 }
 
-/* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":785
+/* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":785
  *     return PyArray_MultiIterNew(5, <void*>a, <void*>b, <void*>c, <void*> d, <void*> e)
  * 
  * cdef inline char* _util_dtypestring(dtype descr, char* f, char* end, int* offset) except NULL:             # <<<<<<<<<<<<<<
@@ -9026,7 +9265,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
   char *__pyx_t_9;
   __Pyx_RefNannySetupContext("_util_dtypestring", 0);
 
-  /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":790
+  /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":790
  * 
  *     cdef dtype child
  *     cdef int endian_detector = 1             # <<<<<<<<<<<<<<
@@ -9035,7 +9274,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
  */
   __pyx_v_endian_detector = 1;
 
-  /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":791
+  /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":791
  *     cdef dtype child
  *     cdef int endian_detector = 1
  *     cdef bint little_endian = ((<char*>&endian_detector)[0] != 0)             # <<<<<<<<<<<<<<
@@ -9044,7 +9283,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
  */
   __pyx_v_little_endian = ((((char *)(&__pyx_v_endian_detector))[0]) != 0);
 
-  /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":794
+  /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":794
  *     cdef tuple fields
  * 
  *     for childname in descr.names:             # <<<<<<<<<<<<<<
@@ -9067,7 +9306,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
     __Pyx_XDECREF_SET(__pyx_v_childname, __pyx_t_3);
     __pyx_t_3 = 0;
 
-    /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":795
+    /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":795
  * 
  *     for childname in descr.names:
  *         fields = descr.fields[childname]             # <<<<<<<<<<<<<<
@@ -9084,7 +9323,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
     __Pyx_XDECREF_SET(__pyx_v_fields, ((PyObject*)__pyx_t_3));
     __pyx_t_3 = 0;
 
-    /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":796
+    /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":796
  *     for childname in descr.names:
  *         fields = descr.fields[childname]
  *         child, new_offset = fields             # <<<<<<<<<<<<<<
@@ -9123,7 +9362,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
     __Pyx_XDECREF_SET(__pyx_v_new_offset, __pyx_t_4);
     __pyx_t_4 = 0;
 
-    /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":798
+    /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":798
  *         child, new_offset = fields
  * 
  *         if (end - f) - <int>(new_offset - offset[0]) < 15:             # <<<<<<<<<<<<<<
@@ -9140,20 +9379,20 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
     __pyx_t_6 = ((((__pyx_v_end - __pyx_v_f) - ((int)__pyx_t_5)) < 15) != 0);
     if (__pyx_t_6) {
 
-      /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":799
+      /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":799
  * 
  *         if (end - f) - <int>(new_offset - offset[0]) < 15:
  *             raise RuntimeError(u"Format string allocated too short, see comment in numpy.pxd")             # <<<<<<<<<<<<<<
  * 
  *         if ((child.byteorder == c'>' and little_endian) or
  */
-      __pyx_t_3 = __Pyx_PyObject_Call(__pyx_builtin_RuntimeError, __pyx_tuple__10, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 799, __pyx_L1_error)
+      __pyx_t_3 = __Pyx_PyObject_Call(__pyx_builtin_RuntimeError, __pyx_tuple__11, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 799, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
       __Pyx_Raise(__pyx_t_3, 0, 0, 0);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
       __PYX_ERR(1, 799, __pyx_L1_error)
 
-      /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":798
+      /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":798
  *         child, new_offset = fields
  * 
  *         if (end - f) - <int>(new_offset - offset[0]) < 15:             # <<<<<<<<<<<<<<
@@ -9162,7 +9401,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
  */
     }
 
-    /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":801
+    /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":801
  *             raise RuntimeError(u"Format string allocated too short, see comment in numpy.pxd")
  * 
  *         if ((child.byteorder == c'>' and little_endian) or             # <<<<<<<<<<<<<<
@@ -9182,7 +9421,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
     }
     __pyx_L8_next_or:;
 
-    /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":802
+    /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":802
  * 
  *         if ((child.byteorder == c'>' and little_endian) or
  *             (child.byteorder == c'<' and not little_endian)):             # <<<<<<<<<<<<<<
@@ -9199,7 +9438,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
     __pyx_t_6 = __pyx_t_7;
     __pyx_L7_bool_binop_done:;
 
-    /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":801
+    /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":801
  *             raise RuntimeError(u"Format string allocated too short, see comment in numpy.pxd")
  * 
  *         if ((child.byteorder == c'>' and little_endian) or             # <<<<<<<<<<<<<<
@@ -9208,20 +9447,20 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
  */
     if (__pyx_t_6) {
 
-      /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":803
+      /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":803
  *         if ((child.byteorder == c'>' and little_endian) or
  *             (child.byteorder == c'<' and not little_endian)):
  *             raise ValueError(u"Non-native byte order not supported")             # <<<<<<<<<<<<<<
  *             # One could encode it in the format string and have Cython
  *             # complain instead, BUT: < and > in format strings also imply
  */
-      __pyx_t_3 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__11, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 803, __pyx_L1_error)
+      __pyx_t_3 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__12, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 803, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
       __Pyx_Raise(__pyx_t_3, 0, 0, 0);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
       __PYX_ERR(1, 803, __pyx_L1_error)
 
-      /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":801
+      /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":801
  *             raise RuntimeError(u"Format string allocated too short, see comment in numpy.pxd")
  * 
  *         if ((child.byteorder == c'>' and little_endian) or             # <<<<<<<<<<<<<<
@@ -9230,7 +9469,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
  */
     }
 
-    /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":813
+    /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":813
  * 
  *         # Output padding bytes
  *         while offset[0] < new_offset:             # <<<<<<<<<<<<<<
@@ -9246,7 +9485,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
       if (!__pyx_t_6) break;
 
-      /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":814
+      /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":814
  *         # Output padding bytes
  *         while offset[0] < new_offset:
  *             f[0] = 120 # "x"; pad byte             # <<<<<<<<<<<<<<
@@ -9255,7 +9494,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
  */
       (__pyx_v_f[0]) = 0x78;
 
-      /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":815
+      /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":815
  *         while offset[0] < new_offset:
  *             f[0] = 120 # "x"; pad byte
  *             f += 1             # <<<<<<<<<<<<<<
@@ -9264,7 +9503,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
  */
       __pyx_v_f = (__pyx_v_f + 1);
 
-      /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":816
+      /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":816
  *             f[0] = 120 # "x"; pad byte
  *             f += 1
  *             offset[0] += 1             # <<<<<<<<<<<<<<
@@ -9275,7 +9514,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
       (__pyx_v_offset[__pyx_t_8]) = ((__pyx_v_offset[__pyx_t_8]) + 1);
     }
 
-    /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":818
+    /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":818
  *             offset[0] += 1
  * 
  *         offset[0] += child.itemsize             # <<<<<<<<<<<<<<
@@ -9285,7 +9524,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
     __pyx_t_8 = 0;
     (__pyx_v_offset[__pyx_t_8]) = ((__pyx_v_offset[__pyx_t_8]) + __pyx_v_child->elsize);
 
-    /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":820
+    /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":820
  *         offset[0] += child.itemsize
  * 
  *         if not PyDataType_HASFIELDS(child):             # <<<<<<<<<<<<<<
@@ -9295,7 +9534,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
     __pyx_t_6 = ((!(PyDataType_HASFIELDS(__pyx_v_child) != 0)) != 0);
     if (__pyx_t_6) {
 
-      /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":821
+      /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":821
  * 
  *         if not PyDataType_HASFIELDS(child):
  *             t = child.type_num             # <<<<<<<<<<<<<<
@@ -9307,7 +9546,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
       __Pyx_XDECREF_SET(__pyx_v_t, __pyx_t_4);
       __pyx_t_4 = 0;
 
-      /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":822
+      /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":822
  *         if not PyDataType_HASFIELDS(child):
  *             t = child.type_num
  *             if end - f < 5:             # <<<<<<<<<<<<<<
@@ -9317,20 +9556,20 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
       __pyx_t_6 = (((__pyx_v_end - __pyx_v_f) < 5) != 0);
       if (__pyx_t_6) {
 
-        /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":823
+        /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":823
  *             t = child.type_num
  *             if end - f < 5:
  *                 raise RuntimeError(u"Format string allocated too short.")             # <<<<<<<<<<<<<<
  * 
  *             # Until ticket #99 is fixed, use integers to avoid warnings
  */
-        __pyx_t_4 = __Pyx_PyObject_Call(__pyx_builtin_RuntimeError, __pyx_tuple__12, NULL); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 823, __pyx_L1_error)
+        __pyx_t_4 = __Pyx_PyObject_Call(__pyx_builtin_RuntimeError, __pyx_tuple__13, NULL); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 823, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_4);
         __Pyx_Raise(__pyx_t_4, 0, 0, 0);
         __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
         __PYX_ERR(1, 823, __pyx_L1_error)
 
-        /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":822
+        /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":822
  *         if not PyDataType_HASFIELDS(child):
  *             t = child.type_num
  *             if end - f < 5:             # <<<<<<<<<<<<<<
@@ -9339,7 +9578,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
  */
       }
 
-      /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":826
+      /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":826
  * 
  *             # Until ticket #99 is fixed, use integers to avoid warnings
  *             if   t == NPY_BYTE:        f[0] =  98 #"b"             # <<<<<<<<<<<<<<
@@ -9357,7 +9596,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
         goto __pyx_L15;
       }
 
-      /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":827
+      /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":827
  *             # Until ticket #99 is fixed, use integers to avoid warnings
  *             if   t == NPY_BYTE:        f[0] =  98 #"b"
  *             elif t == NPY_UBYTE:       f[0] =  66 #"B"             # <<<<<<<<<<<<<<
@@ -9375,7 +9614,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
         goto __pyx_L15;
       }
 
-      /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":828
+      /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":828
  *             if   t == NPY_BYTE:        f[0] =  98 #"b"
  *             elif t == NPY_UBYTE:       f[0] =  66 #"B"
  *             elif t == NPY_SHORT:       f[0] = 104 #"h"             # <<<<<<<<<<<<<<
@@ -9393,7 +9632,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
         goto __pyx_L15;
       }
 
-      /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":829
+      /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":829
  *             elif t == NPY_UBYTE:       f[0] =  66 #"B"
  *             elif t == NPY_SHORT:       f[0] = 104 #"h"
  *             elif t == NPY_USHORT:      f[0] =  72 #"H"             # <<<<<<<<<<<<<<
@@ -9411,7 +9650,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
         goto __pyx_L15;
       }
 
-      /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":830
+      /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":830
  *             elif t == NPY_SHORT:       f[0] = 104 #"h"
  *             elif t == NPY_USHORT:      f[0] =  72 #"H"
  *             elif t == NPY_INT:         f[0] = 105 #"i"             # <<<<<<<<<<<<<<
@@ -9429,7 +9668,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
         goto __pyx_L15;
       }
 
-      /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":831
+      /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":831
  *             elif t == NPY_USHORT:      f[0] =  72 #"H"
  *             elif t == NPY_INT:         f[0] = 105 #"i"
  *             elif t == NPY_UINT:        f[0] =  73 #"I"             # <<<<<<<<<<<<<<
@@ -9447,7 +9686,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
         goto __pyx_L15;
       }
 
-      /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":832
+      /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":832
  *             elif t == NPY_INT:         f[0] = 105 #"i"
  *             elif t == NPY_UINT:        f[0] =  73 #"I"
  *             elif t == NPY_LONG:        f[0] = 108 #"l"             # <<<<<<<<<<<<<<
@@ -9465,7 +9704,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
         goto __pyx_L15;
       }
 
-      /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":833
+      /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":833
  *             elif t == NPY_UINT:        f[0] =  73 #"I"
  *             elif t == NPY_LONG:        f[0] = 108 #"l"
  *             elif t == NPY_ULONG:       f[0] = 76  #"L"             # <<<<<<<<<<<<<<
@@ -9483,7 +9722,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
         goto __pyx_L15;
       }
 
-      /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":834
+      /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":834
  *             elif t == NPY_LONG:        f[0] = 108 #"l"
  *             elif t == NPY_ULONG:       f[0] = 76  #"L"
  *             elif t == NPY_LONGLONG:    f[0] = 113 #"q"             # <<<<<<<<<<<<<<
@@ -9501,7 +9740,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
         goto __pyx_L15;
       }
 
-      /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":835
+      /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":835
  *             elif t == NPY_ULONG:       f[0] = 76  #"L"
  *             elif t == NPY_LONGLONG:    f[0] = 113 #"q"
  *             elif t == NPY_ULONGLONG:   f[0] = 81  #"Q"             # <<<<<<<<<<<<<<
@@ -9519,7 +9758,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
         goto __pyx_L15;
       }
 
-      /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":836
+      /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":836
  *             elif t == NPY_LONGLONG:    f[0] = 113 #"q"
  *             elif t == NPY_ULONGLONG:   f[0] = 81  #"Q"
  *             elif t == NPY_FLOAT:       f[0] = 102 #"f"             # <<<<<<<<<<<<<<
@@ -9537,7 +9776,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
         goto __pyx_L15;
       }
 
-      /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":837
+      /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":837
  *             elif t == NPY_ULONGLONG:   f[0] = 81  #"Q"
  *             elif t == NPY_FLOAT:       f[0] = 102 #"f"
  *             elif t == NPY_DOUBLE:      f[0] = 100 #"d"             # <<<<<<<<<<<<<<
@@ -9555,7 +9794,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
         goto __pyx_L15;
       }
 
-      /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":838
+      /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":838
  *             elif t == NPY_FLOAT:       f[0] = 102 #"f"
  *             elif t == NPY_DOUBLE:      f[0] = 100 #"d"
  *             elif t == NPY_LONGDOUBLE:  f[0] = 103 #"g"             # <<<<<<<<<<<<<<
@@ -9573,7 +9812,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
         goto __pyx_L15;
       }
 
-      /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":839
+      /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":839
  *             elif t == NPY_DOUBLE:      f[0] = 100 #"d"
  *             elif t == NPY_LONGDOUBLE:  f[0] = 103 #"g"
  *             elif t == NPY_CFLOAT:      f[0] = 90; f[1] = 102; f += 1 # Zf             # <<<<<<<<<<<<<<
@@ -9593,7 +9832,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
         goto __pyx_L15;
       }
 
-      /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":840
+      /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":840
  *             elif t == NPY_LONGDOUBLE:  f[0] = 103 #"g"
  *             elif t == NPY_CFLOAT:      f[0] = 90; f[1] = 102; f += 1 # Zf
  *             elif t == NPY_CDOUBLE:     f[0] = 90; f[1] = 100; f += 1 # Zd             # <<<<<<<<<<<<<<
@@ -9613,7 +9852,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
         goto __pyx_L15;
       }
 
-      /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":841
+      /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":841
  *             elif t == NPY_CFLOAT:      f[0] = 90; f[1] = 102; f += 1 # Zf
  *             elif t == NPY_CDOUBLE:     f[0] = 90; f[1] = 100; f += 1 # Zd
  *             elif t == NPY_CLONGDOUBLE: f[0] = 90; f[1] = 103; f += 1 # Zg             # <<<<<<<<<<<<<<
@@ -9633,7 +9872,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
         goto __pyx_L15;
       }
 
-      /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":842
+      /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":842
  *             elif t == NPY_CDOUBLE:     f[0] = 90; f[1] = 100; f += 1 # Zd
  *             elif t == NPY_CLONGDOUBLE: f[0] = 90; f[1] = 103; f += 1 # Zg
  *             elif t == NPY_OBJECT:      f[0] = 79 #"O"             # <<<<<<<<<<<<<<
@@ -9651,7 +9890,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
         goto __pyx_L15;
       }
 
-      /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":844
+      /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":844
  *             elif t == NPY_OBJECT:      f[0] = 79 #"O"
  *             else:
  *                 raise ValueError(u"unknown dtype code in numpy.pxd (%d)" % t)             # <<<<<<<<<<<<<<
@@ -9675,7 +9914,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
       }
       __pyx_L15:;
 
-      /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":845
+      /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":845
  *             else:
  *                 raise ValueError(u"unknown dtype code in numpy.pxd (%d)" % t)
  *             f += 1             # <<<<<<<<<<<<<<
@@ -9684,7 +9923,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
  */
       __pyx_v_f = (__pyx_v_f + 1);
 
-      /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":820
+      /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":820
  *         offset[0] += child.itemsize
  * 
  *         if not PyDataType_HASFIELDS(child):             # <<<<<<<<<<<<<<
@@ -9694,7 +9933,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
       goto __pyx_L13;
     }
 
-    /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":849
+    /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":849
  *             # Cython ignores struct boundary information ("T{...}"),
  *             # so don't output it
  *             f = _util_dtypestring(child, f, end, offset)             # <<<<<<<<<<<<<<
@@ -9707,7 +9946,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
     }
     __pyx_L13:;
 
-    /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":794
+    /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":794
  *     cdef tuple fields
  * 
  *     for childname in descr.names:             # <<<<<<<<<<<<<<
@@ -9717,7 +9956,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
   }
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":850
+  /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":850
  *             # so don't output it
  *             f = _util_dtypestring(child, f, end, offset)
  *     return f             # <<<<<<<<<<<<<<
@@ -9727,7 +9966,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
   __pyx_r = __pyx_v_f;
   goto __pyx_L0;
 
-  /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":785
+  /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":785
  *     return PyArray_MultiIterNew(5, <void*>a, <void*>b, <void*>c, <void*> d, <void*> e)
  * 
  * cdef inline char* _util_dtypestring(dtype descr, char* f, char* end, int* offset) except NULL:             # <<<<<<<<<<<<<<
@@ -9752,7 +9991,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
   return __pyx_r;
 }
 
-/* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":966
+/* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":966
  * 
  * 
  * cdef inline void set_array_base(ndarray arr, object base):             # <<<<<<<<<<<<<<
@@ -9767,7 +10006,7 @@ static CYTHON_INLINE void __pyx_f_5numpy_set_array_base(PyArrayObject *__pyx_v_a
   int __pyx_t_2;
   __Pyx_RefNannySetupContext("set_array_base", 0);
 
-  /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":968
+  /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":968
  * cdef inline void set_array_base(ndarray arr, object base):
  *      cdef PyObject* baseptr
  *      if base is None:             # <<<<<<<<<<<<<<
@@ -9778,7 +10017,7 @@ static CYTHON_INLINE void __pyx_f_5numpy_set_array_base(PyArrayObject *__pyx_v_a
   __pyx_t_2 = (__pyx_t_1 != 0);
   if (__pyx_t_2) {
 
-    /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":969
+    /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":969
  *      cdef PyObject* baseptr
  *      if base is None:
  *          baseptr = NULL             # <<<<<<<<<<<<<<
@@ -9787,7 +10026,7 @@ static CYTHON_INLINE void __pyx_f_5numpy_set_array_base(PyArrayObject *__pyx_v_a
  */
     __pyx_v_baseptr = NULL;
 
-    /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":968
+    /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":968
  * cdef inline void set_array_base(ndarray arr, object base):
  *      cdef PyObject* baseptr
  *      if base is None:             # <<<<<<<<<<<<<<
@@ -9797,7 +10036,7 @@ static CYTHON_INLINE void __pyx_f_5numpy_set_array_base(PyArrayObject *__pyx_v_a
     goto __pyx_L3;
   }
 
-  /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":971
+  /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":971
  *          baseptr = NULL
  *      else:
  *          Py_INCREF(base) # important to do this before decref below!             # <<<<<<<<<<<<<<
@@ -9807,7 +10046,7 @@ static CYTHON_INLINE void __pyx_f_5numpy_set_array_base(PyArrayObject *__pyx_v_a
   /*else*/ {
     Py_INCREF(__pyx_v_base);
 
-    /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":972
+    /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":972
  *      else:
  *          Py_INCREF(base) # important to do this before decref below!
  *          baseptr = <PyObject*>base             # <<<<<<<<<<<<<<
@@ -9818,7 +10057,7 @@ static CYTHON_INLINE void __pyx_f_5numpy_set_array_base(PyArrayObject *__pyx_v_a
   }
   __pyx_L3:;
 
-  /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":973
+  /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":973
  *          Py_INCREF(base) # important to do this before decref below!
  *          baseptr = <PyObject*>base
  *      Py_XDECREF(arr.base)             # <<<<<<<<<<<<<<
@@ -9827,7 +10066,7 @@ static CYTHON_INLINE void __pyx_f_5numpy_set_array_base(PyArrayObject *__pyx_v_a
  */
   Py_XDECREF(__pyx_v_arr->base);
 
-  /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":974
+  /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":974
  *          baseptr = <PyObject*>base
  *      Py_XDECREF(arr.base)
  *      arr.base = baseptr             # <<<<<<<<<<<<<<
@@ -9836,7 +10075,7 @@ static CYTHON_INLINE void __pyx_f_5numpy_set_array_base(PyArrayObject *__pyx_v_a
  */
   __pyx_v_arr->base = __pyx_v_baseptr;
 
-  /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":966
+  /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":966
  * 
  * 
  * cdef inline void set_array_base(ndarray arr, object base):             # <<<<<<<<<<<<<<
@@ -9848,7 +10087,7 @@ static CYTHON_INLINE void __pyx_f_5numpy_set_array_base(PyArrayObject *__pyx_v_a
   __Pyx_RefNannyFinishContext();
 }
 
-/* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":976
+/* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":976
  *      arr.base = baseptr
  * 
  * cdef inline object get_array_base(ndarray arr):             # <<<<<<<<<<<<<<
@@ -9862,7 +10101,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_get_array_base(PyArrayObject *__py
   int __pyx_t_1;
   __Pyx_RefNannySetupContext("get_array_base", 0);
 
-  /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":977
+  /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":977
  * 
  * cdef inline object get_array_base(ndarray arr):
  *     if arr.base is NULL:             # <<<<<<<<<<<<<<
@@ -9872,7 +10111,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_get_array_base(PyArrayObject *__py
   __pyx_t_1 = ((__pyx_v_arr->base == NULL) != 0);
   if (__pyx_t_1) {
 
-    /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":978
+    /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":978
  * cdef inline object get_array_base(ndarray arr):
  *     if arr.base is NULL:
  *         return None             # <<<<<<<<<<<<<<
@@ -9884,7 +10123,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_get_array_base(PyArrayObject *__py
     __pyx_r = Py_None;
     goto __pyx_L0;
 
-    /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":977
+    /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":977
  * 
  * cdef inline object get_array_base(ndarray arr):
  *     if arr.base is NULL:             # <<<<<<<<<<<<<<
@@ -9893,7 +10132,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_get_array_base(PyArrayObject *__py
  */
   }
 
-  /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":980
+  /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":980
  *         return None
  *     else:
  *         return <object>arr.base             # <<<<<<<<<<<<<<
@@ -9907,7 +10146,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_get_array_base(PyArrayObject *__py
     goto __pyx_L0;
   }
 
-  /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":976
+  /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":976
  *      arr.base = baseptr
  * 
  * cdef inline object get_array_base(ndarray arr):             # <<<<<<<<<<<<<<
@@ -9922,7 +10161,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_get_array_base(PyArrayObject *__py
   return __pyx_r;
 }
 
-/* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":985
+/* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":985
  * # Versions of the import_* functions which are more suitable for
  * # Cython code.
  * cdef inline int import_array() except -1:             # <<<<<<<<<<<<<<
@@ -9943,7 +10182,7 @@ static CYTHON_INLINE int __pyx_f_5numpy_import_array(void) {
   PyObject *__pyx_t_8 = NULL;
   __Pyx_RefNannySetupContext("import_array", 0);
 
-  /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":986
+  /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":986
  * # Cython code.
  * cdef inline int import_array() except -1:
  *     try:             # <<<<<<<<<<<<<<
@@ -9959,7 +10198,7 @@ static CYTHON_INLINE int __pyx_f_5numpy_import_array(void) {
     __Pyx_XGOTREF(__pyx_t_3);
     /*try:*/ {
 
-      /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":987
+      /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":987
  * cdef inline int import_array() except -1:
  *     try:
  *         _import_array()             # <<<<<<<<<<<<<<
@@ -9968,7 +10207,7 @@ static CYTHON_INLINE int __pyx_f_5numpy_import_array(void) {
  */
       __pyx_t_4 = _import_array(); if (unlikely(__pyx_t_4 == -1)) __PYX_ERR(1, 987, __pyx_L3_error)
 
-      /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":986
+      /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":986
  * # Cython code.
  * cdef inline int import_array() except -1:
  *     try:             # <<<<<<<<<<<<<<
@@ -9983,7 +10222,7 @@ static CYTHON_INLINE int __pyx_f_5numpy_import_array(void) {
     __pyx_L3_error:;
     __Pyx_PyThreadState_assign
 
-    /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":988
+    /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":988
  *     try:
  *         _import_array()
  *     except Exception:             # <<<<<<<<<<<<<<
@@ -9998,14 +10237,14 @@ static CYTHON_INLINE int __pyx_f_5numpy_import_array(void) {
       __Pyx_GOTREF(__pyx_t_6);
       __Pyx_GOTREF(__pyx_t_7);
 
-      /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":989
+      /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":989
  *         _import_array()
  *     except Exception:
  *         raise ImportError("numpy.core.multiarray failed to import")             # <<<<<<<<<<<<<<
  * 
  * cdef inline int import_umath() except -1:
  */
-      __pyx_t_8 = __Pyx_PyObject_Call(__pyx_builtin_ImportError, __pyx_tuple__13, NULL); if (unlikely(!__pyx_t_8)) __PYX_ERR(1, 989, __pyx_L5_except_error)
+      __pyx_t_8 = __Pyx_PyObject_Call(__pyx_builtin_ImportError, __pyx_tuple__14, NULL); if (unlikely(!__pyx_t_8)) __PYX_ERR(1, 989, __pyx_L5_except_error)
       __Pyx_GOTREF(__pyx_t_8);
       __Pyx_Raise(__pyx_t_8, 0, 0, 0);
       __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
@@ -10014,7 +10253,7 @@ static CYTHON_INLINE int __pyx_f_5numpy_import_array(void) {
     goto __pyx_L5_except_error;
     __pyx_L5_except_error:;
 
-    /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":986
+    /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":986
  * # Cython code.
  * cdef inline int import_array() except -1:
  *     try:             # <<<<<<<<<<<<<<
@@ -10030,7 +10269,7 @@ static CYTHON_INLINE int __pyx_f_5numpy_import_array(void) {
     __pyx_L10_try_end:;
   }
 
-  /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":985
+  /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":985
  * # Versions of the import_* functions which are more suitable for
  * # Cython code.
  * cdef inline int import_array() except -1:             # <<<<<<<<<<<<<<
@@ -10053,7 +10292,7 @@ static CYTHON_INLINE int __pyx_f_5numpy_import_array(void) {
   return __pyx_r;
 }
 
-/* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":991
+/* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":991
  *         raise ImportError("numpy.core.multiarray failed to import")
  * 
  * cdef inline int import_umath() except -1:             # <<<<<<<<<<<<<<
@@ -10074,7 +10313,7 @@ static CYTHON_INLINE int __pyx_f_5numpy_import_umath(void) {
   PyObject *__pyx_t_8 = NULL;
   __Pyx_RefNannySetupContext("import_umath", 0);
 
-  /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":992
+  /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":992
  * 
  * cdef inline int import_umath() except -1:
  *     try:             # <<<<<<<<<<<<<<
@@ -10090,7 +10329,7 @@ static CYTHON_INLINE int __pyx_f_5numpy_import_umath(void) {
     __Pyx_XGOTREF(__pyx_t_3);
     /*try:*/ {
 
-      /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":993
+      /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":993
  * cdef inline int import_umath() except -1:
  *     try:
  *         _import_umath()             # <<<<<<<<<<<<<<
@@ -10099,7 +10338,7 @@ static CYTHON_INLINE int __pyx_f_5numpy_import_umath(void) {
  */
       __pyx_t_4 = _import_umath(); if (unlikely(__pyx_t_4 == -1)) __PYX_ERR(1, 993, __pyx_L3_error)
 
-      /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":992
+      /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":992
  * 
  * cdef inline int import_umath() except -1:
  *     try:             # <<<<<<<<<<<<<<
@@ -10114,7 +10353,7 @@ static CYTHON_INLINE int __pyx_f_5numpy_import_umath(void) {
     __pyx_L3_error:;
     __Pyx_PyThreadState_assign
 
-    /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":994
+    /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":994
  *     try:
  *         _import_umath()
  *     except Exception:             # <<<<<<<<<<<<<<
@@ -10129,14 +10368,14 @@ static CYTHON_INLINE int __pyx_f_5numpy_import_umath(void) {
       __Pyx_GOTREF(__pyx_t_6);
       __Pyx_GOTREF(__pyx_t_7);
 
-      /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":995
+      /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":995
  *         _import_umath()
  *     except Exception:
  *         raise ImportError("numpy.core.umath failed to import")             # <<<<<<<<<<<<<<
  * 
  * cdef inline int import_ufunc() except -1:
  */
-      __pyx_t_8 = __Pyx_PyObject_Call(__pyx_builtin_ImportError, __pyx_tuple__14, NULL); if (unlikely(!__pyx_t_8)) __PYX_ERR(1, 995, __pyx_L5_except_error)
+      __pyx_t_8 = __Pyx_PyObject_Call(__pyx_builtin_ImportError, __pyx_tuple__15, NULL); if (unlikely(!__pyx_t_8)) __PYX_ERR(1, 995, __pyx_L5_except_error)
       __Pyx_GOTREF(__pyx_t_8);
       __Pyx_Raise(__pyx_t_8, 0, 0, 0);
       __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
@@ -10145,7 +10384,7 @@ static CYTHON_INLINE int __pyx_f_5numpy_import_umath(void) {
     goto __pyx_L5_except_error;
     __pyx_L5_except_error:;
 
-    /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":992
+    /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":992
  * 
  * cdef inline int import_umath() except -1:
  *     try:             # <<<<<<<<<<<<<<
@@ -10161,7 +10400,7 @@ static CYTHON_INLINE int __pyx_f_5numpy_import_umath(void) {
     __pyx_L10_try_end:;
   }
 
-  /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":991
+  /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":991
  *         raise ImportError("numpy.core.multiarray failed to import")
  * 
  * cdef inline int import_umath() except -1:             # <<<<<<<<<<<<<<
@@ -10184,7 +10423,7 @@ static CYTHON_INLINE int __pyx_f_5numpy_import_umath(void) {
   return __pyx_r;
 }
 
-/* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":997
+/* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":997
  *         raise ImportError("numpy.core.umath failed to import")
  * 
  * cdef inline int import_ufunc() except -1:             # <<<<<<<<<<<<<<
@@ -10205,7 +10444,7 @@ static CYTHON_INLINE int __pyx_f_5numpy_import_ufunc(void) {
   PyObject *__pyx_t_8 = NULL;
   __Pyx_RefNannySetupContext("import_ufunc", 0);
 
-  /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":998
+  /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":998
  * 
  * cdef inline int import_ufunc() except -1:
  *     try:             # <<<<<<<<<<<<<<
@@ -10221,7 +10460,7 @@ static CYTHON_INLINE int __pyx_f_5numpy_import_ufunc(void) {
     __Pyx_XGOTREF(__pyx_t_3);
     /*try:*/ {
 
-      /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":999
+      /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":999
  * cdef inline int import_ufunc() except -1:
  *     try:
  *         _import_umath()             # <<<<<<<<<<<<<<
@@ -10230,7 +10469,7 @@ static CYTHON_INLINE int __pyx_f_5numpy_import_ufunc(void) {
  */
       __pyx_t_4 = _import_umath(); if (unlikely(__pyx_t_4 == -1)) __PYX_ERR(1, 999, __pyx_L3_error)
 
-      /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":998
+      /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":998
  * 
  * cdef inline int import_ufunc() except -1:
  *     try:             # <<<<<<<<<<<<<<
@@ -10245,7 +10484,7 @@ static CYTHON_INLINE int __pyx_f_5numpy_import_ufunc(void) {
     __pyx_L3_error:;
     __Pyx_PyThreadState_assign
 
-    /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":1000
+    /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":1000
  *     try:
  *         _import_umath()
  *     except Exception:             # <<<<<<<<<<<<<<
@@ -10259,12 +10498,12 @@ static CYTHON_INLINE int __pyx_f_5numpy_import_ufunc(void) {
       __Pyx_GOTREF(__pyx_t_6);
       __Pyx_GOTREF(__pyx_t_7);
 
-      /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":1001
+      /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":1001
  *         _import_umath()
  *     except Exception:
  *         raise ImportError("numpy.core.umath failed to import")             # <<<<<<<<<<<<<<
  */
-      __pyx_t_8 = __Pyx_PyObject_Call(__pyx_builtin_ImportError, __pyx_tuple__15, NULL); if (unlikely(!__pyx_t_8)) __PYX_ERR(1, 1001, __pyx_L5_except_error)
+      __pyx_t_8 = __Pyx_PyObject_Call(__pyx_builtin_ImportError, __pyx_tuple__16, NULL); if (unlikely(!__pyx_t_8)) __PYX_ERR(1, 1001, __pyx_L5_except_error)
       __Pyx_GOTREF(__pyx_t_8);
       __Pyx_Raise(__pyx_t_8, 0, 0, 0);
       __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
@@ -10273,7 +10512,7 @@ static CYTHON_INLINE int __pyx_f_5numpy_import_ufunc(void) {
     goto __pyx_L5_except_error;
     __pyx_L5_except_error:;
 
-    /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":998
+    /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":998
  * 
  * cdef inline int import_ufunc() except -1:
  *     try:             # <<<<<<<<<<<<<<
@@ -10289,7 +10528,7 @@ static CYTHON_INLINE int __pyx_f_5numpy_import_ufunc(void) {
     __pyx_L10_try_end:;
   }
 
-  /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":997
+  /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":997
  *         raise ImportError("numpy.core.umath failed to import")
  * 
  * cdef inline int import_ufunc() except -1:             # <<<<<<<<<<<<<<
@@ -10497,7 +10736,7 @@ static int __pyx_array___pyx_pf_15View_dot_MemoryView_5array___cinit__(struct __
  * 
  *         if itemsize <= 0:
  */
-    __pyx_t_3 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__16, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(2, 131, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__17, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(2, 131, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_Raise(__pyx_t_3, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
@@ -10529,7 +10768,7 @@ static int __pyx_array___pyx_pf_15View_dot_MemoryView_5array___cinit__(struct __
  * 
  *         if not isinstance(format, bytes):
  */
-    __pyx_t_3 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__17, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(2, 134, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__18, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(2, 134, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_Raise(__pyx_t_3, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
@@ -10564,7 +10803,7 @@ static int __pyx_array___pyx_pf_15View_dot_MemoryView_5array___cinit__(struct __
  */
     __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_format, __pyx_n_s_encode); if (unlikely(!__pyx_t_3)) __PYX_ERR(2, 137, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_tuple__18, NULL); if (unlikely(!__pyx_t_5)) __PYX_ERR(2, 137, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_tuple__19, NULL); if (unlikely(!__pyx_t_5)) __PYX_ERR(2, 137, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     __Pyx_DECREF_SET(__pyx_v_format, __pyx_t_5);
@@ -10640,7 +10879,7 @@ static int __pyx_array___pyx_pf_15View_dot_MemoryView_5array___cinit__(struct __
  * 
  * 
  */
-    __pyx_t_5 = __Pyx_PyObject_Call(__pyx_builtin_MemoryError, __pyx_tuple__19, NULL); if (unlikely(!__pyx_t_5)) __PYX_ERR(2, 146, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyObject_Call(__pyx_builtin_MemoryError, __pyx_tuple__20, NULL); if (unlikely(!__pyx_t_5)) __PYX_ERR(2, 146, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_Raise(__pyx_t_5, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
@@ -10924,7 +11163,7 @@ static int __pyx_array___pyx_pf_15View_dot_MemoryView_5array___cinit__(struct __
  * 
  *             if self.dtype_is_object:
  */
-      __pyx_t_5 = __Pyx_PyObject_Call(__pyx_builtin_MemoryError, __pyx_tuple__20, NULL); if (unlikely(!__pyx_t_5)) __PYX_ERR(2, 174, __pyx_L1_error)
+      __pyx_t_5 = __Pyx_PyObject_Call(__pyx_builtin_MemoryError, __pyx_tuple__21, NULL); if (unlikely(!__pyx_t_5)) __PYX_ERR(2, 174, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_5);
       __Pyx_Raise(__pyx_t_5, 0, 0, 0);
       __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
@@ -11162,7 +11401,7 @@ static int __pyx_array___pyx_pf_15View_dot_MemoryView_5array_2__getbuffer__(stru
  *         info.buf = self.data
  *         info.len = self.len
  */
-    __pyx_t_3 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__21, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(2, 190, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__22, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(2, 190, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_Raise(__pyx_t_3, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
@@ -14128,7 +14367,7 @@ static PyObject *__pyx_memoryview_convert_item_to_object(struct __pyx_memoryview
  *         else:
  *             if len(self.view.format) == 1:
  */
-      __pyx_t_6 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__22, NULL); if (unlikely(!__pyx_t_6)) __PYX_ERR(2, 484, __pyx_L5_except_error)
+      __pyx_t_6 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__23, NULL); if (unlikely(!__pyx_t_6)) __PYX_ERR(2, 484, __pyx_L5_except_error)
       __Pyx_GOTREF(__pyx_t_6);
       __Pyx_Raise(__pyx_t_6, 0, 0, 0);
       __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
@@ -14969,7 +15208,7 @@ static PyObject *__pyx_pf_15View_dot_MemoryView_10memoryview_7strides___get__(st
  * 
  *         return tuple([stride for stride in self.view.strides[:self.view.ndim]])
  */
-    __pyx_t_2 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__23, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(2, 556, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__24, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(2, 556, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_Raise(__pyx_t_2, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
@@ -15083,7 +15322,7 @@ static PyObject *__pyx_pf_15View_dot_MemoryView_10memoryview_10suboffsets___get_
     __Pyx_XDECREF(__pyx_r);
     __pyx_t_2 = __Pyx_PyInt_From_int(__pyx_v_self->view.ndim); if (unlikely(!__pyx_t_2)) __PYX_ERR(2, 563, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_3 = PyNumber_Multiply(__pyx_tuple__24, __pyx_t_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(2, 563, __pyx_L1_error)
+    __pyx_t_3 = PyNumber_Multiply(__pyx_tuple__25, __pyx_t_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(2, 563, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     __pyx_r = __pyx_t_3;
@@ -16387,9 +16626,9 @@ static PyObject *_unellipsify(PyObject *__pyx_v_index, int __pyx_v_ndim) {
         __Pyx_GOTREF(__pyx_t_7);
         { Py_ssize_t __pyx_temp;
           for (__pyx_temp=0; __pyx_temp < ((__pyx_v_ndim - __pyx_t_8) + 1); __pyx_temp++) {
-            __Pyx_INCREF(__pyx_slice__25);
-            __Pyx_GIVEREF(__pyx_slice__25);
-            PyList_SET_ITEM(__pyx_t_7, __pyx_temp, __pyx_slice__25);
+            __Pyx_INCREF(__pyx_slice__26);
+            __Pyx_GIVEREF(__pyx_slice__26);
+            PyList_SET_ITEM(__pyx_t_7, __pyx_temp, __pyx_slice__26);
           }
         }
         __pyx_t_9 = __Pyx_PyList_Extend(__pyx_v_result, __pyx_t_7); if (unlikely(__pyx_t_9 == -1)) __PYX_ERR(2, 668, __pyx_L1_error)
@@ -16422,7 +16661,7 @@ static PyObject *_unellipsify(PyObject *__pyx_v_index, int __pyx_v_ndim) {
  *         else:
  */
       /*else*/ {
-        __pyx_t_9 = __Pyx_PyList_Append(__pyx_v_result, __pyx_slice__26); if (unlikely(__pyx_t_9 == -1)) __PYX_ERR(2, 671, __pyx_L1_error)
+        __pyx_t_9 = __Pyx_PyList_Append(__pyx_v_result, __pyx_slice__27); if (unlikely(__pyx_t_9 == -1)) __PYX_ERR(2, 671, __pyx_L1_error)
       }
       __pyx_L7:;
 
@@ -16567,9 +16806,9 @@ static PyObject *_unellipsify(PyObject *__pyx_v_index, int __pyx_v_ndim) {
     __Pyx_GOTREF(__pyx_t_3);
     { Py_ssize_t __pyx_temp;
       for (__pyx_temp=0; __pyx_temp < __pyx_v_nslices; __pyx_temp++) {
-        __Pyx_INCREF(__pyx_slice__27);
-        __Pyx_GIVEREF(__pyx_slice__27);
-        PyList_SET_ITEM(__pyx_t_3, __pyx_temp, __pyx_slice__27);
+        __Pyx_INCREF(__pyx_slice__28);
+        __Pyx_GIVEREF(__pyx_slice__28);
+        PyList_SET_ITEM(__pyx_t_3, __pyx_temp, __pyx_slice__28);
       }
     }
     __pyx_t_9 = __Pyx_PyList_Extend(__pyx_v_result, __pyx_t_3); if (unlikely(__pyx_t_9 == -1)) __PYX_ERR(2, 682, __pyx_L1_error)
@@ -16693,7 +16932,7 @@ static PyObject *assert_direct_dimensions(Py_ssize_t *__pyx_v_suboffsets, int __
  * 
  * 
  */
-      __pyx_t_5 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__28, NULL); if (unlikely(!__pyx_t_5)) __PYX_ERR(2, 689, __pyx_L1_error)
+      __pyx_t_5 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__29, NULL); if (unlikely(!__pyx_t_5)) __PYX_ERR(2, 689, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_5);
       __Pyx_Raise(__pyx_t_5, 0, 0, 0);
       __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
@@ -22633,7 +22872,8 @@ static PyTypeObject __pyx_type___pyx_memoryviewslice = {
 
 static PyMethodDef __pyx_methods[] = {
   {"vector_length", (PyCFunction)__pyx_pw_6mollib_4core_8geometry_1vector_length, METH_O, __pyx_doc_6mollib_4core_8geometry_vector_length},
-  {"measure_distance", (PyCFunction)__pyx_pw_6mollib_4core_8geometry_5measure_distance, METH_VARARGS|METH_KEYWORDS, __pyx_doc_6mollib_4core_8geometry_4measure_distance},
+  {"cross", (PyCFunction)__pyx_pw_6mollib_4core_8geometry_3cross, METH_VARARGS|METH_KEYWORDS, __pyx_doc_6mollib_4core_8geometry_2cross},
+  {"measure_distance", (PyCFunction)__pyx_pw_6mollib_4core_8geometry_7measure_distance, METH_VARARGS|METH_KEYWORDS, __pyx_doc_6mollib_4core_8geometry_6measure_distance},
   {0, 0, 0, 0}
 };
 
@@ -22656,7 +22896,6 @@ static struct PyModuleDef __pyx_moduledef = {
 #endif
 
 static __Pyx_StringTabEntry __pyx_string_tab[] = {
-  {&__pyx_kp_s_, __pyx_k_, sizeof(__pyx_k_), 0, 0, 1, 0},
   {&__pyx_n_s_ASCII, __pyx_k_ASCII, sizeof(__pyx_k_ASCII), 0, 0, 1, 1},
   {&__pyx_kp_s_Buffer_view_does_not_expose_stri, __pyx_k_Buffer_view_does_not_expose_stri, sizeof(__pyx_k_Buffer_view_does_not_expose_stri), 0, 0, 1, 0},
   {&__pyx_kp_s_Can_only_create_a_buffer_that_is, __pyx_k_Can_only_create_a_buffer_that_is, sizeof(__pyx_k_Can_only_create_a_buffer_that_is), 0, 0, 1, 0},
@@ -22686,8 +22925,10 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_RuntimeError, __pyx_k_RuntimeError, sizeof(__pyx_k_RuntimeError), 0, 0, 1, 1},
   {&__pyx_n_s_TypeError, __pyx_k_TypeError, sizeof(__pyx_k_TypeError), 0, 0, 1, 1},
   {&__pyx_kp_s_Unable_to_convert_item_to_object, __pyx_k_Unable_to_convert_item_to_object, sizeof(__pyx_k_Unable_to_convert_item_to_object), 0, 0, 1, 0},
+  {&__pyx_kp_s_Users_jlorieau_Code_Python_Biop, __pyx_k_Users_jlorieau_Code_Python_Biop, sizeof(__pyx_k_Users_jlorieau_Code_Python_Biop), 0, 0, 1, 0},
   {&__pyx_n_s_ValueError, __pyx_k_ValueError, sizeof(__pyx_k_ValueError), 0, 0, 1, 1},
   {&__pyx_kp_s__2, __pyx_k__2, sizeof(__pyx_k__2), 0, 0, 1, 0},
+  {&__pyx_kp_s__3, __pyx_k__3, sizeof(__pyx_k__3), 0, 0, 1, 0},
   {&__pyx_n_s_a, __pyx_k_a, sizeof(__pyx_k_a), 0, 0, 1, 1},
   {&__pyx_n_s_ab, __pyx_k_ab, sizeof(__pyx_k_ab), 0, 0, 1, 1},
   {&__pyx_n_s_allocate_buffer, __pyx_k_allocate_buffer, sizeof(__pyx_k_allocate_buffer), 0, 0, 1, 1},
@@ -22702,6 +22943,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_atoms2, __pyx_k_atoms2, sizeof(__pyx_k_atoms2), 0, 0, 1, 1},
   {&__pyx_n_s_atoms3, __pyx_k_atoms3, sizeof(__pyx_k_atoms3), 0, 0, 1, 1},
   {&__pyx_n_s_atoms4, __pyx_k_atoms4, sizeof(__pyx_k_atoms4), 0, 0, 1, 1},
+  {&__pyx_n_s_b, __pyx_k_b, sizeof(__pyx_k_b), 0, 0, 1, 1},
   {&__pyx_n_s_base, __pyx_k_base, sizeof(__pyx_k_base), 0, 0, 1, 1},
   {&__pyx_n_s_bc, __pyx_k_bc, sizeof(__pyx_k_bc), 0, 0, 1, 1},
   {&__pyx_n_s_box, __pyx_k_box, sizeof(__pyx_k_box), 0, 0, 1, 1},
@@ -22714,11 +22956,11 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_class, __pyx_k_class, sizeof(__pyx_k_class), 0, 0, 1, 1},
   {&__pyx_kp_s_contiguous_and_direct, __pyx_k_contiguous_and_direct, sizeof(__pyx_k_contiguous_and_direct), 0, 0, 1, 0},
   {&__pyx_kp_s_contiguous_and_indirect, __pyx_k_contiguous_and_indirect, sizeof(__pyx_k_contiguous_and_indirect), 0, 0, 1, 0},
-  {&__pyx_n_s_cross, __pyx_k_cross, sizeof(__pyx_k_cross), 0, 0, 1, 1},
   {&__pyx_n_s_cutoff, __pyx_k_cutoff, sizeof(__pyx_k_cutoff), 0, 0, 1, 1},
   {&__pyx_n_s_dihedral, __pyx_k_dihedral, sizeof(__pyx_k_dihedral), 0, 0, 1, 1},
   {&__pyx_n_s_dist, __pyx_k_dist, sizeof(__pyx_k_dist), 0, 0, 1, 1},
   {&__pyx_n_s_dot, __pyx_k_dot, sizeof(__pyx_k_dot), 0, 0, 1, 1},
+  {&__pyx_n_s_dtype, __pyx_k_dtype, sizeof(__pyx_k_dtype), 0, 0, 1, 1},
   {&__pyx_n_s_dtype_is_object, __pyx_k_dtype_is_object, sizeof(__pyx_k_dtype_is_object), 0, 0, 1, 1},
   {&__pyx_n_s_element, __pyx_k_element, sizeof(__pyx_k_element), 0, 0, 1, 1},
   {&__pyx_n_s_element_list, __pyx_k_element_list, sizeof(__pyx_k_element_list), 0, 0, 1, 1},
@@ -22730,13 +22972,13 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_filter_atoms, __pyx_k_filter_atoms, sizeof(__pyx_k_filter_atoms), 0, 0, 1, 1},
   {&__pyx_n_s_filters, __pyx_k_filters, sizeof(__pyx_k_filters), 0, 0, 1, 1},
   {&__pyx_n_s_flags, __pyx_k_flags, sizeof(__pyx_k_flags), 0, 0, 1, 1},
+  {&__pyx_n_s_float64, __pyx_k_float64, sizeof(__pyx_k_float64), 0, 0, 1, 1},
   {&__pyx_n_s_format, __pyx_k_format, sizeof(__pyx_k_format), 0, 0, 1, 1},
   {&__pyx_n_s_fortran, __pyx_k_fortran, sizeof(__pyx_k_fortran), 0, 0, 1, 1},
   {&__pyx_n_u_fortran, __pyx_k_fortran, sizeof(__pyx_k_fortran), 0, 1, 0, 1},
   {&__pyx_n_s_get_atoms, __pyx_k_get_atoms, sizeof(__pyx_k_get_atoms), 0, 0, 1, 1},
   {&__pyx_n_s_get_points, __pyx_k_get_points, sizeof(__pyx_k_get_points), 0, 0, 1, 1},
   {&__pyx_kp_s_got_differing_extents_in_dimensi, __pyx_k_got_differing_extents_in_dimensi, sizeof(__pyx_k_got_differing_extents_in_dimensi), 0, 0, 1, 0},
-  {&__pyx_kp_s_home_jlorieau_Code_Python_Bioph, __pyx_k_home_jlorieau_Code_Python_Bioph, sizeof(__pyx_k_home_jlorieau_Code_Python_Bioph), 0, 0, 1, 0},
   {&__pyx_n_s_i, __pyx_k_i, sizeof(__pyx_k_i), 0, 0, 1, 1},
   {&__pyx_n_s_id, __pyx_k_id, sizeof(__pyx_k_id), 0, 0, 1, 1},
   {&__pyx_n_s_import, __pyx_k_import, sizeof(__pyx_k_import), 0, 0, 1, 1},
@@ -22752,18 +22994,18 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_m1, __pyx_k_m1, sizeof(__pyx_k_m1), 0, 0, 1, 1},
   {&__pyx_n_s_main, __pyx_k_main, sizeof(__pyx_k_main), 0, 0, 1, 1},
   {&__pyx_n_s_measure_angle, __pyx_k_measure_angle, sizeof(__pyx_k_measure_angle), 0, 0, 1, 1},
-  {&__pyx_kp_u_measure_angle_line_175, __pyx_k_measure_angle_line_175, sizeof(__pyx_k_measure_angle_line_175), 0, 1, 0, 0},
+  {&__pyx_kp_u_measure_angle_line_188, __pyx_k_measure_angle_line_188, sizeof(__pyx_k_measure_angle_line_188), 0, 1, 0, 0},
   {&__pyx_n_s_measure_angles, __pyx_k_measure_angles, sizeof(__pyx_k_measure_angles), 0, 0, 1, 1},
-  {&__pyx_kp_u_measure_angles_line_345, __pyx_k_measure_angles_line_345, sizeof(__pyx_k_measure_angles_line_345), 0, 1, 0, 0},
+  {&__pyx_kp_u_measure_angles_line_358, __pyx_k_measure_angles_line_358, sizeof(__pyx_k_measure_angles_line_358), 0, 1, 0, 0},
   {&__pyx_n_s_measure_angles_locals_lambda, __pyx_k_measure_angles_locals_lambda, sizeof(__pyx_k_measure_angles_locals_lambda), 0, 0, 1, 1},
   {&__pyx_n_s_measure_dihedral, __pyx_k_measure_dihedral, sizeof(__pyx_k_measure_dihedral), 0, 0, 1, 1},
-  {&__pyx_kp_u_measure_dihedral_line_209, __pyx_k_measure_dihedral_line_209, sizeof(__pyx_k_measure_dihedral_line_209), 0, 1, 0, 0},
+  {&__pyx_kp_u_measure_dihedral_line_222, __pyx_k_measure_dihedral_line_222, sizeof(__pyx_k_measure_dihedral_line_222), 0, 1, 0, 0},
   {&__pyx_n_s_measure_dihedrals, __pyx_k_measure_dihedrals, sizeof(__pyx_k_measure_dihedrals), 0, 0, 1, 1},
-  {&__pyx_kp_u_measure_dihedrals_line_434, __pyx_k_measure_dihedrals_line_434, sizeof(__pyx_k_measure_dihedrals_line_434), 0, 1, 0, 0},
+  {&__pyx_kp_u_measure_dihedrals_line_447, __pyx_k_measure_dihedrals_line_447, sizeof(__pyx_k_measure_dihedrals_line_447), 0, 1, 0, 0},
   {&__pyx_n_s_measure_dihedrals_locals_lambda, __pyx_k_measure_dihedrals_locals_lambda, sizeof(__pyx_k_measure_dihedrals_locals_lambda), 0, 0, 1, 1},
-  {&__pyx_kp_u_measure_distance_line_45, __pyx_k_measure_distance_line_45, sizeof(__pyx_k_measure_distance_line_45), 0, 1, 0, 0},
+  {&__pyx_kp_u_measure_distance_line_58, __pyx_k_measure_distance_line_58, sizeof(__pyx_k_measure_distance_line_58), 0, 1, 0, 0},
   {&__pyx_n_s_measure_distances, __pyx_k_measure_distances, sizeof(__pyx_k_measure_distances), 0, 0, 1, 1},
-  {&__pyx_kp_u_measure_distances_line_259, __pyx_k_measure_distances_line_259, sizeof(__pyx_k_measure_distances_line_259), 0, 1, 0, 0},
+  {&__pyx_kp_u_measure_distances_line_272, __pyx_k_measure_distances_line_272, sizeof(__pyx_k_measure_distances_line_272), 0, 1, 0, 0},
   {&__pyx_n_s_measure_distances_locals_lambda, __pyx_k_measure_distances_locals_lambda, sizeof(__pyx_k_measure_distances_locals_lambda), 0, 0, 1, 1},
   {&__pyx_n_s_memview, __pyx_k_memview, sizeof(__pyx_k_memview), 0, 0, 1, 1},
   {&__pyx_n_s_mode, __pyx_k_mode, sizeof(__pyx_k_mode), 0, 0, 1, 1},
@@ -22821,15 +23063,16 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_vector_i, __pyx_k_vector_i, sizeof(__pyx_k_vector_i), 0, 0, 1, 1},
   {&__pyx_n_s_vector_j, __pyx_k_vector_j, sizeof(__pyx_k_vector_j), 0, 0, 1, 1},
   {&__pyx_n_s_within_distance, __pyx_k_within_distance, sizeof(__pyx_k_within_distance), 0, 0, 1, 1},
-  {&__pyx_kp_u_within_distance_line_119, __pyx_k_within_distance_line_119, sizeof(__pyx_k_within_distance_line_119), 0, 1, 0, 0},
+  {&__pyx_kp_u_within_distance_line_132, __pyx_k_within_distance_line_132, sizeof(__pyx_k_within_distance_line_132), 0, 1, 0, 0},
   {&__pyx_n_s_x, __pyx_k_x, sizeof(__pyx_k_x), 0, 0, 1, 1},
   {&__pyx_n_s_y, __pyx_k_y, sizeof(__pyx_k_y), 0, 0, 1, 1},
+  {&__pyx_n_s_zeros, __pyx_k_zeros, sizeof(__pyx_k_zeros), 0, 0, 1, 1},
   {0, 0, 0, 0, 0, 0, 0}
 };
 static int __Pyx_InitCachedBuiltins(void) {
   __pyx_builtin_range = __Pyx_GetBuiltinName(__pyx_n_s_range); if (!__pyx_builtin_range) __PYX_ERR(0, 27, __pyx_L1_error)
-  __pyx_builtin_round = __Pyx_GetBuiltinName(__pyx_n_s_round); if (!__pyx_builtin_round) __PYX_ERR(0, 332, __pyx_L1_error)
-  __pyx_builtin_sorted = __Pyx_GetBuiltinName(__pyx_n_s_sorted); if (!__pyx_builtin_sorted) __PYX_ERR(0, 342, __pyx_L1_error)
+  __pyx_builtin_round = __Pyx_GetBuiltinName(__pyx_n_s_round); if (!__pyx_builtin_round) __PYX_ERR(0, 345, __pyx_L1_error)
+  __pyx_builtin_sorted = __Pyx_GetBuiltinName(__pyx_n_s_sorted); if (!__pyx_builtin_sorted) __PYX_ERR(0, 355, __pyx_L1_error)
   __pyx_builtin_ValueError = __Pyx_GetBuiltinName(__pyx_n_s_ValueError); if (!__pyx_builtin_ValueError) __PYX_ERR(1, 218, __pyx_L1_error)
   __pyx_builtin_RuntimeError = __Pyx_GetBuiltinName(__pyx_n_s_RuntimeError); if (!__pyx_builtin_RuntimeError) __PYX_ERR(1, 799, __pyx_L1_error)
   __pyx_builtin_ImportError = __Pyx_GetBuiltinName(__pyx_n_s_ImportError); if (!__pyx_builtin_ImportError) __PYX_ERR(1, 989, __pyx_L1_error)
@@ -22848,146 +23091,157 @@ static int __Pyx_InitCachedConstants(void) {
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__Pyx_InitCachedConstants", 0);
 
-  /* "mollib/core/geometry.pyx":166
+  /* "mollib/core/geometry.pyx":38
+ *                                              np.ndarray[np.float64_t, ndim=1] b):
+ *     """Return the cross product between two vectors."""
+ *     cdef np.ndarray[np.float64_t, ndim=1] c = np.zeros((3), dtype=np.float64)             # <<<<<<<<<<<<<<
+ *     c[0] = a[1]*b[2] - a[2]*b[1]
+ *     c[1] = a[2]*b[0] - a[0]*b[2]
+ */
+  __pyx_tuple_ = PyTuple_Pack(1, __pyx_int_3); if (unlikely(!__pyx_tuple_)) __PYX_ERR(0, 38, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple_);
+  __Pyx_GIVEREF(__pyx_tuple_);
+
+  /* "mollib/core/geometry.pyx":179
  * 
  *     # Filter the atoms in the iterable
  *     element_list = elements.split('|') if elements != '' else []             # <<<<<<<<<<<<<<
  * 
  *     atoms = [a for a in atoms if
  */
-  __pyx_tuple__3 = PyTuple_Pack(1, __pyx_kp_s__2); if (unlikely(!__pyx_tuple__3)) __PYX_ERR(0, 166, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__3);
-  __Pyx_GIVEREF(__pyx_tuple__3);
+  __pyx_tuple__4 = PyTuple_Pack(1, __pyx_kp_s__3); if (unlikely(!__pyx_tuple__4)) __PYX_ERR(0, 179, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__4);
+  __Pyx_GIVEREF(__pyx_tuple__4);
 
-  /* "mollib/core/geometry.pyx":324
+  /* "mollib/core/geometry.pyx":337
  * 
  *             # The atoms in forward or reverse order are duplicates
  *             if key in results or key[::-1] in results:             # <<<<<<<<<<<<<<
  *                 continue
  * 
  */
-  __pyx_slice__4 = PySlice_New(Py_None, Py_None, __pyx_int_neg_1); if (unlikely(!__pyx_slice__4)) __PYX_ERR(0, 324, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_slice__4);
-  __Pyx_GIVEREF(__pyx_slice__4);
+  __pyx_slice__5 = PySlice_New(Py_None, Py_None, __pyx_int_neg_1); if (unlikely(!__pyx_slice__5)) __PYX_ERR(0, 337, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_slice__5);
+  __Pyx_GIVEREF(__pyx_slice__5);
 
-  /* "mollib/core/geometry.pyx":412
+  /* "mollib/core/geometry.pyx":425
  * 
  *                 # The atoms in forward or reverse order are duplicates
  *                 if key in results or key[::-1] in results:             # <<<<<<<<<<<<<<
  *                     continue
  * 
  */
-  __pyx_slice__5 = PySlice_New(Py_None, Py_None, __pyx_int_neg_1); if (unlikely(!__pyx_slice__5)) __PYX_ERR(0, 412, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_slice__5);
-  __Pyx_GIVEREF(__pyx_slice__5);
+  __pyx_slice__6 = PySlice_New(Py_None, Py_None, __pyx_int_neg_1); if (unlikely(!__pyx_slice__6)) __PYX_ERR(0, 425, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_slice__6);
+  __Pyx_GIVEREF(__pyx_slice__6);
 
-  /* "mollib/core/geometry.pyx":498
+  /* "mollib/core/geometry.pyx":511
  * 
  *                     # The atoms in forward or reverse order are duplicates
  *                     if key in results or key[::-1] in results:             # <<<<<<<<<<<<<<
  *                         continue
  * 
  */
-  __pyx_slice__6 = PySlice_New(Py_None, Py_None, __pyx_int_neg_1); if (unlikely(!__pyx_slice__6)) __PYX_ERR(0, 498, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_slice__6);
-  __Pyx_GIVEREF(__pyx_slice__6);
+  __pyx_slice__7 = PySlice_New(Py_None, Py_None, __pyx_int_neg_1); if (unlikely(!__pyx_slice__7)) __PYX_ERR(0, 511, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_slice__7);
+  __Pyx_GIVEREF(__pyx_slice__7);
 
-  /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":218
+  /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":218
  *             if ((flags & pybuf.PyBUF_C_CONTIGUOUS == pybuf.PyBUF_C_CONTIGUOUS)
  *                 and not PyArray_CHKFLAGS(self, NPY_C_CONTIGUOUS)):
  *                 raise ValueError(u"ndarray is not C contiguous")             # <<<<<<<<<<<<<<
  * 
  *             if ((flags & pybuf.PyBUF_F_CONTIGUOUS == pybuf.PyBUF_F_CONTIGUOUS)
  */
-  __pyx_tuple__7 = PyTuple_Pack(1, __pyx_kp_u_ndarray_is_not_C_contiguous); if (unlikely(!__pyx_tuple__7)) __PYX_ERR(1, 218, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__7);
-  __Pyx_GIVEREF(__pyx_tuple__7);
+  __pyx_tuple__8 = PyTuple_Pack(1, __pyx_kp_u_ndarray_is_not_C_contiguous); if (unlikely(!__pyx_tuple__8)) __PYX_ERR(1, 218, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__8);
+  __Pyx_GIVEREF(__pyx_tuple__8);
 
-  /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":222
+  /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":222
  *             if ((flags & pybuf.PyBUF_F_CONTIGUOUS == pybuf.PyBUF_F_CONTIGUOUS)
  *                 and not PyArray_CHKFLAGS(self, NPY_F_CONTIGUOUS)):
  *                 raise ValueError(u"ndarray is not Fortran contiguous")             # <<<<<<<<<<<<<<
  * 
  *             info.buf = PyArray_DATA(self)
  */
-  __pyx_tuple__8 = PyTuple_Pack(1, __pyx_kp_u_ndarray_is_not_Fortran_contiguou); if (unlikely(!__pyx_tuple__8)) __PYX_ERR(1, 222, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__8);
-  __Pyx_GIVEREF(__pyx_tuple__8);
+  __pyx_tuple__9 = PyTuple_Pack(1, __pyx_kp_u_ndarray_is_not_Fortran_contiguou); if (unlikely(!__pyx_tuple__9)) __PYX_ERR(1, 222, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__9);
+  __Pyx_GIVEREF(__pyx_tuple__9);
 
-  /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":259
+  /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":259
  *                 if ((descr.byteorder == c'>' and little_endian) or
  *                     (descr.byteorder == c'<' and not little_endian)):
  *                     raise ValueError(u"Non-native byte order not supported")             # <<<<<<<<<<<<<<
  *                 if   t == NPY_BYTE:        f = "b"
  *                 elif t == NPY_UBYTE:       f = "B"
  */
-  __pyx_tuple__9 = PyTuple_Pack(1, __pyx_kp_u_Non_native_byte_order_not_suppor); if (unlikely(!__pyx_tuple__9)) __PYX_ERR(1, 259, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__9);
-  __Pyx_GIVEREF(__pyx_tuple__9);
+  __pyx_tuple__10 = PyTuple_Pack(1, __pyx_kp_u_Non_native_byte_order_not_suppor); if (unlikely(!__pyx_tuple__10)) __PYX_ERR(1, 259, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__10);
+  __Pyx_GIVEREF(__pyx_tuple__10);
 
-  /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":799
+  /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":799
  * 
  *         if (end - f) - <int>(new_offset - offset[0]) < 15:
  *             raise RuntimeError(u"Format string allocated too short, see comment in numpy.pxd")             # <<<<<<<<<<<<<<
  * 
  *         if ((child.byteorder == c'>' and little_endian) or
  */
-  __pyx_tuple__10 = PyTuple_Pack(1, __pyx_kp_u_Format_string_allocated_too_shor); if (unlikely(!__pyx_tuple__10)) __PYX_ERR(1, 799, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__10);
-  __Pyx_GIVEREF(__pyx_tuple__10);
+  __pyx_tuple__11 = PyTuple_Pack(1, __pyx_kp_u_Format_string_allocated_too_shor); if (unlikely(!__pyx_tuple__11)) __PYX_ERR(1, 799, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__11);
+  __Pyx_GIVEREF(__pyx_tuple__11);
 
-  /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":803
+  /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":803
  *         if ((child.byteorder == c'>' and little_endian) or
  *             (child.byteorder == c'<' and not little_endian)):
  *             raise ValueError(u"Non-native byte order not supported")             # <<<<<<<<<<<<<<
  *             # One could encode it in the format string and have Cython
  *             # complain instead, BUT: < and > in format strings also imply
  */
-  __pyx_tuple__11 = PyTuple_Pack(1, __pyx_kp_u_Non_native_byte_order_not_suppor); if (unlikely(!__pyx_tuple__11)) __PYX_ERR(1, 803, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__11);
-  __Pyx_GIVEREF(__pyx_tuple__11);
+  __pyx_tuple__12 = PyTuple_Pack(1, __pyx_kp_u_Non_native_byte_order_not_suppor); if (unlikely(!__pyx_tuple__12)) __PYX_ERR(1, 803, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__12);
+  __Pyx_GIVEREF(__pyx_tuple__12);
 
-  /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":823
+  /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":823
  *             t = child.type_num
  *             if end - f < 5:
  *                 raise RuntimeError(u"Format string allocated too short.")             # <<<<<<<<<<<<<<
  * 
  *             # Until ticket #99 is fixed, use integers to avoid warnings
  */
-  __pyx_tuple__12 = PyTuple_Pack(1, __pyx_kp_u_Format_string_allocated_too_shor_2); if (unlikely(!__pyx_tuple__12)) __PYX_ERR(1, 823, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__12);
-  __Pyx_GIVEREF(__pyx_tuple__12);
+  __pyx_tuple__13 = PyTuple_Pack(1, __pyx_kp_u_Format_string_allocated_too_shor_2); if (unlikely(!__pyx_tuple__13)) __PYX_ERR(1, 823, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__13);
+  __Pyx_GIVEREF(__pyx_tuple__13);
 
-  /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":989
+  /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":989
  *         _import_array()
  *     except Exception:
  *         raise ImportError("numpy.core.multiarray failed to import")             # <<<<<<<<<<<<<<
  * 
  * cdef inline int import_umath() except -1:
  */
-  __pyx_tuple__13 = PyTuple_Pack(1, __pyx_kp_s_numpy_core_multiarray_failed_to); if (unlikely(!__pyx_tuple__13)) __PYX_ERR(1, 989, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__13);
-  __Pyx_GIVEREF(__pyx_tuple__13);
+  __pyx_tuple__14 = PyTuple_Pack(1, __pyx_kp_s_numpy_core_multiarray_failed_to); if (unlikely(!__pyx_tuple__14)) __PYX_ERR(1, 989, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__14);
+  __Pyx_GIVEREF(__pyx_tuple__14);
 
-  /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":995
+  /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":995
  *         _import_umath()
  *     except Exception:
  *         raise ImportError("numpy.core.umath failed to import")             # <<<<<<<<<<<<<<
  * 
  * cdef inline int import_ufunc() except -1:
  */
-  __pyx_tuple__14 = PyTuple_Pack(1, __pyx_kp_s_numpy_core_umath_failed_to_impor); if (unlikely(!__pyx_tuple__14)) __PYX_ERR(1, 995, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__14);
-  __Pyx_GIVEREF(__pyx_tuple__14);
+  __pyx_tuple__15 = PyTuple_Pack(1, __pyx_kp_s_numpy_core_umath_failed_to_impor); if (unlikely(!__pyx_tuple__15)) __PYX_ERR(1, 995, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__15);
+  __Pyx_GIVEREF(__pyx_tuple__15);
 
-  /* "../../../../../../usr/local/lib/python2.7/dist-packages/Cython/Includes/numpy/__init__.pxd":1001
+  /* "../../VirtualEnvironments/mollib36/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":1001
  *         _import_umath()
  *     except Exception:
  *         raise ImportError("numpy.core.umath failed to import")             # <<<<<<<<<<<<<<
  */
-  __pyx_tuple__15 = PyTuple_Pack(1, __pyx_kp_s_numpy_core_umath_failed_to_impor); if (unlikely(!__pyx_tuple__15)) __PYX_ERR(1, 1001, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__15);
-  __Pyx_GIVEREF(__pyx_tuple__15);
+  __pyx_tuple__16 = PyTuple_Pack(1, __pyx_kp_s_numpy_core_umath_failed_to_impor); if (unlikely(!__pyx_tuple__16)) __PYX_ERR(1, 1001, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__16);
+  __Pyx_GIVEREF(__pyx_tuple__16);
 
   /* "View.MemoryView":131
  * 
@@ -22996,9 +23250,9 @@ static int __Pyx_InitCachedConstants(void) {
  * 
  *         if itemsize <= 0:
  */
-  __pyx_tuple__16 = PyTuple_Pack(1, __pyx_kp_s_Empty_shape_tuple_for_cython_arr); if (unlikely(!__pyx_tuple__16)) __PYX_ERR(2, 131, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__16);
-  __Pyx_GIVEREF(__pyx_tuple__16);
+  __pyx_tuple__17 = PyTuple_Pack(1, __pyx_kp_s_Empty_shape_tuple_for_cython_arr); if (unlikely(!__pyx_tuple__17)) __PYX_ERR(2, 131, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__17);
+  __Pyx_GIVEREF(__pyx_tuple__17);
 
   /* "View.MemoryView":134
  * 
@@ -23007,9 +23261,9 @@ static int __Pyx_InitCachedConstants(void) {
  * 
  *         if not isinstance(format, bytes):
  */
-  __pyx_tuple__17 = PyTuple_Pack(1, __pyx_kp_s_itemsize_0_for_cython_array); if (unlikely(!__pyx_tuple__17)) __PYX_ERR(2, 134, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__17);
-  __Pyx_GIVEREF(__pyx_tuple__17);
+  __pyx_tuple__18 = PyTuple_Pack(1, __pyx_kp_s_itemsize_0_for_cython_array); if (unlikely(!__pyx_tuple__18)) __PYX_ERR(2, 134, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__18);
+  __Pyx_GIVEREF(__pyx_tuple__18);
 
   /* "View.MemoryView":137
  * 
@@ -23018,9 +23272,9 @@ static int __Pyx_InitCachedConstants(void) {
  *         self._format = format  # keep a reference to the byte string
  *         self.format = self._format
  */
-  __pyx_tuple__18 = PyTuple_Pack(1, __pyx_n_s_ASCII); if (unlikely(!__pyx_tuple__18)) __PYX_ERR(2, 137, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__18);
-  __Pyx_GIVEREF(__pyx_tuple__18);
+  __pyx_tuple__19 = PyTuple_Pack(1, __pyx_n_s_ASCII); if (unlikely(!__pyx_tuple__19)) __PYX_ERR(2, 137, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__19);
+  __Pyx_GIVEREF(__pyx_tuple__19);
 
   /* "View.MemoryView":146
  * 
@@ -23029,9 +23283,9 @@ static int __Pyx_InitCachedConstants(void) {
  * 
  * 
  */
-  __pyx_tuple__19 = PyTuple_Pack(1, __pyx_kp_s_unable_to_allocate_shape_and_str); if (unlikely(!__pyx_tuple__19)) __PYX_ERR(2, 146, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__19);
-  __Pyx_GIVEREF(__pyx_tuple__19);
+  __pyx_tuple__20 = PyTuple_Pack(1, __pyx_kp_s_unable_to_allocate_shape_and_str); if (unlikely(!__pyx_tuple__20)) __PYX_ERR(2, 146, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__20);
+  __Pyx_GIVEREF(__pyx_tuple__20);
 
   /* "View.MemoryView":174
  *             self.data = <char *>malloc(self.len)
@@ -23040,9 +23294,9 @@ static int __Pyx_InitCachedConstants(void) {
  * 
  *             if self.dtype_is_object:
  */
-  __pyx_tuple__20 = PyTuple_Pack(1, __pyx_kp_s_unable_to_allocate_array_data); if (unlikely(!__pyx_tuple__20)) __PYX_ERR(2, 174, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__20);
-  __Pyx_GIVEREF(__pyx_tuple__20);
+  __pyx_tuple__21 = PyTuple_Pack(1, __pyx_kp_s_unable_to_allocate_array_data); if (unlikely(!__pyx_tuple__21)) __PYX_ERR(2, 174, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__21);
+  __Pyx_GIVEREF(__pyx_tuple__21);
 
   /* "View.MemoryView":190
  *             bufmode = PyBUF_F_CONTIGUOUS | PyBUF_ANY_CONTIGUOUS
@@ -23051,9 +23305,9 @@ static int __Pyx_InitCachedConstants(void) {
  *         info.buf = self.data
  *         info.len = self.len
  */
-  __pyx_tuple__21 = PyTuple_Pack(1, __pyx_kp_s_Can_only_create_a_buffer_that_is); if (unlikely(!__pyx_tuple__21)) __PYX_ERR(2, 190, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__21);
-  __Pyx_GIVEREF(__pyx_tuple__21);
+  __pyx_tuple__22 = PyTuple_Pack(1, __pyx_kp_s_Can_only_create_a_buffer_that_is); if (unlikely(!__pyx_tuple__22)) __PYX_ERR(2, 190, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__22);
+  __Pyx_GIVEREF(__pyx_tuple__22);
 
   /* "View.MemoryView":484
  *             result = struct.unpack(self.view.format, bytesitem)
@@ -23062,9 +23316,9 @@ static int __Pyx_InitCachedConstants(void) {
  *         else:
  *             if len(self.view.format) == 1:
  */
-  __pyx_tuple__22 = PyTuple_Pack(1, __pyx_kp_s_Unable_to_convert_item_to_object); if (unlikely(!__pyx_tuple__22)) __PYX_ERR(2, 484, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__22);
-  __Pyx_GIVEREF(__pyx_tuple__22);
+  __pyx_tuple__23 = PyTuple_Pack(1, __pyx_kp_s_Unable_to_convert_item_to_object); if (unlikely(!__pyx_tuple__23)) __PYX_ERR(2, 484, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__23);
+  __Pyx_GIVEREF(__pyx_tuple__23);
 
   /* "View.MemoryView":556
  *         if self.view.strides == NULL:
@@ -23073,9 +23327,9 @@ static int __Pyx_InitCachedConstants(void) {
  * 
  *         return tuple([stride for stride in self.view.strides[:self.view.ndim]])
  */
-  __pyx_tuple__23 = PyTuple_Pack(1, __pyx_kp_s_Buffer_view_does_not_expose_stri); if (unlikely(!__pyx_tuple__23)) __PYX_ERR(2, 556, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__23);
-  __Pyx_GIVEREF(__pyx_tuple__23);
+  __pyx_tuple__24 = PyTuple_Pack(1, __pyx_kp_s_Buffer_view_does_not_expose_stri); if (unlikely(!__pyx_tuple__24)) __PYX_ERR(2, 556, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__24);
+  __Pyx_GIVEREF(__pyx_tuple__24);
 
   /* "View.MemoryView":563
  *     def suboffsets(self):
@@ -23084,12 +23338,12 @@ static int __Pyx_InitCachedConstants(void) {
  * 
  *         return tuple([suboffset for suboffset in self.view.suboffsets[:self.view.ndim]])
  */
-  __pyx_tuple__24 = PyTuple_New(1); if (unlikely(!__pyx_tuple__24)) __PYX_ERR(2, 563, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__24);
+  __pyx_tuple__25 = PyTuple_New(1); if (unlikely(!__pyx_tuple__25)) __PYX_ERR(2, 563, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__25);
   __Pyx_INCREF(__pyx_int_neg_1);
   __Pyx_GIVEREF(__pyx_int_neg_1);
-  PyTuple_SET_ITEM(__pyx_tuple__24, 0, __pyx_int_neg_1);
-  __Pyx_GIVEREF(__pyx_tuple__24);
+  PyTuple_SET_ITEM(__pyx_tuple__25, 0, __pyx_int_neg_1);
+  __Pyx_GIVEREF(__pyx_tuple__25);
 
   /* "View.MemoryView":668
  *         if item is Ellipsis:
@@ -23098,9 +23352,9 @@ static int __Pyx_InitCachedConstants(void) {
  *                 seen_ellipsis = True
  *             else:
  */
-  __pyx_slice__25 = PySlice_New(Py_None, Py_None, Py_None); if (unlikely(!__pyx_slice__25)) __PYX_ERR(2, 668, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_slice__25);
-  __Pyx_GIVEREF(__pyx_slice__25);
+  __pyx_slice__26 = PySlice_New(Py_None, Py_None, Py_None); if (unlikely(!__pyx_slice__26)) __PYX_ERR(2, 668, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_slice__26);
+  __Pyx_GIVEREF(__pyx_slice__26);
 
   /* "View.MemoryView":671
  *                 seen_ellipsis = True
@@ -23109,9 +23363,9 @@ static int __Pyx_InitCachedConstants(void) {
  *             have_slices = True
  *         else:
  */
-  __pyx_slice__26 = PySlice_New(Py_None, Py_None, Py_None); if (unlikely(!__pyx_slice__26)) __PYX_ERR(2, 671, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_slice__26);
-  __Pyx_GIVEREF(__pyx_slice__26);
+  __pyx_slice__27 = PySlice_New(Py_None, Py_None, Py_None); if (unlikely(!__pyx_slice__27)) __PYX_ERR(2, 671, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_slice__27);
+  __Pyx_GIVEREF(__pyx_slice__27);
 
   /* "View.MemoryView":682
  *     nslices = ndim - len(result)
@@ -23120,9 +23374,9 @@ static int __Pyx_InitCachedConstants(void) {
  * 
  *     return have_slices or nslices, tuple(result)
  */
-  __pyx_slice__27 = PySlice_New(Py_None, Py_None, Py_None); if (unlikely(!__pyx_slice__27)) __PYX_ERR(2, 682, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_slice__27);
-  __Pyx_GIVEREF(__pyx_slice__27);
+  __pyx_slice__28 = PySlice_New(Py_None, Py_None, Py_None); if (unlikely(!__pyx_slice__28)) __PYX_ERR(2, 682, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_slice__28);
+  __Pyx_GIVEREF(__pyx_slice__28);
 
   /* "View.MemoryView":689
  *     for suboffset in suboffsets[:ndim]:
@@ -23131,93 +23385,93 @@ static int __Pyx_InitCachedConstants(void) {
  * 
  * 
  */
-  __pyx_tuple__28 = PyTuple_Pack(1, __pyx_kp_s_Indirect_dimensions_not_supporte); if (unlikely(!__pyx_tuple__28)) __PYX_ERR(2, 689, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__28);
-  __Pyx_GIVEREF(__pyx_tuple__28);
+  __pyx_tuple__29 = PyTuple_Pack(1, __pyx_kp_s_Indirect_dimensions_not_supporte); if (unlikely(!__pyx_tuple__29)) __PYX_ERR(2, 689, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__29);
+  __Pyx_GIVEREF(__pyx_tuple__29);
 
-  /* "mollib/core/geometry.pyx":32
+  /* "mollib/core/geometry.pyx":45
  * 
  * 
  * def calc_vector(vector_i, vector_j, normalize=True):             # <<<<<<<<<<<<<<
  *     """Returns the vector between atoms 'i' and 'j' with optional
  *     normalization."""
  */
-  __pyx_tuple__29 = PyTuple_Pack(5, __pyx_n_s_vector_i, __pyx_n_s_vector_j, __pyx_n_s_normalize, __pyx_n_s_vec, __pyx_n_s_length); if (unlikely(!__pyx_tuple__29)) __PYX_ERR(0, 32, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__29);
-  __Pyx_GIVEREF(__pyx_tuple__29);
-  __pyx_codeobj__30 = (PyObject*)__Pyx_PyCode_New(3, 0, 5, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__29, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_home_jlorieau_Code_Python_Bioph, __pyx_n_s_calc_vector, 32, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__30)) __PYX_ERR(0, 32, __pyx_L1_error)
+  __pyx_tuple__30 = PyTuple_Pack(5, __pyx_n_s_vector_i, __pyx_n_s_vector_j, __pyx_n_s_normalize, __pyx_n_s_vec, __pyx_n_s_length); if (unlikely(!__pyx_tuple__30)) __PYX_ERR(0, 45, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__30);
+  __Pyx_GIVEREF(__pyx_tuple__30);
+  __pyx_codeobj__31 = (PyObject*)__Pyx_PyCode_New(3, 0, 5, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__30, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_jlorieau_Code_Python_Biop, __pyx_n_s_calc_vector, 45, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__31)) __PYX_ERR(0, 45, __pyx_L1_error)
 
-  /* "mollib/core/geometry.pyx":119
+  /* "mollib/core/geometry.pyx":132
  * 
  * 
  * def within_distance(atom, cutoff, elements='', exclude_intraresidue=False):             # <<<<<<<<<<<<<<
  *     """Find all atoms of element within the specified distance (in Angstroms)
  *        of atom.
  */
-  __pyx_tuple__31 = PyTuple_Pack(8, __pyx_n_s_atom, __pyx_n_s_cutoff, __pyx_n_s_elements, __pyx_n_s_exclude_intraresidue, __pyx_n_s_box, __pyx_n_s_atoms, __pyx_n_s_element_list, __pyx_n_s_a); if (unlikely(!__pyx_tuple__31)) __PYX_ERR(0, 119, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__31);
-  __Pyx_GIVEREF(__pyx_tuple__31);
-  __pyx_codeobj__32 = (PyObject*)__Pyx_PyCode_New(4, 0, 8, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__31, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_home_jlorieau_Code_Python_Bioph, __pyx_n_s_within_distance, 119, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__32)) __PYX_ERR(0, 119, __pyx_L1_error)
+  __pyx_tuple__32 = PyTuple_Pack(8, __pyx_n_s_atom, __pyx_n_s_cutoff, __pyx_n_s_elements, __pyx_n_s_exclude_intraresidue, __pyx_n_s_box, __pyx_n_s_atoms, __pyx_n_s_element_list, __pyx_n_s_a); if (unlikely(!__pyx_tuple__32)) __PYX_ERR(0, 132, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__32);
+  __Pyx_GIVEREF(__pyx_tuple__32);
+  __pyx_codeobj__33 = (PyObject*)__Pyx_PyCode_New(4, 0, 8, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__32, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_jlorieau_Code_Python_Biop, __pyx_n_s_within_distance, 132, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__33)) __PYX_ERR(0, 132, __pyx_L1_error)
 
-  /* "mollib/core/geometry.pyx":175
+  /* "mollib/core/geometry.pyx":188
  * 
  * 
  * def measure_angle(atom_1, atom_2, atom_3):             # <<<<<<<<<<<<<<
  *     """Measure the atom_1--atom_2--atom_3 angle.
  * 
  */
-  __pyx_tuple__33 = PyTuple_Pack(6, __pyx_n_s_atom_1, __pyx_n_s_atom_2, __pyx_n_s_atom_3, __pyx_n_s_v1, __pyx_n_s_v2, __pyx_n_s_angle); if (unlikely(!__pyx_tuple__33)) __PYX_ERR(0, 175, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__33);
-  __Pyx_GIVEREF(__pyx_tuple__33);
-  __pyx_codeobj__34 = (PyObject*)__Pyx_PyCode_New(3, 0, 6, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__33, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_home_jlorieau_Code_Python_Bioph, __pyx_n_s_measure_angle, 175, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__34)) __PYX_ERR(0, 175, __pyx_L1_error)
+  __pyx_tuple__34 = PyTuple_Pack(6, __pyx_n_s_atom_1, __pyx_n_s_atom_2, __pyx_n_s_atom_3, __pyx_n_s_v1, __pyx_n_s_v2, __pyx_n_s_angle); if (unlikely(!__pyx_tuple__34)) __PYX_ERR(0, 188, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__34);
+  __Pyx_GIVEREF(__pyx_tuple__34);
+  __pyx_codeobj__35 = (PyObject*)__Pyx_PyCode_New(3, 0, 6, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__34, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_jlorieau_Code_Python_Biop, __pyx_n_s_measure_angle, 188, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__35)) __PYX_ERR(0, 188, __pyx_L1_error)
 
-  /* "mollib/core/geometry.pyx":209
+  /* "mollib/core/geometry.pyx":222
  * 
  * 
  * def measure_dihedral(atom_1, atom_2, atom_3, atom_4):             # <<<<<<<<<<<<<<
  *     """Measure the atom_1--atom_2--atom_3--atom_4 dihedral angle.
  * 
  */
-  __pyx_tuple__35 = PyTuple_Pack(13, __pyx_n_s_atom_1, __pyx_n_s_atom_2, __pyx_n_s_atom_3, __pyx_n_s_atom_4, __pyx_n_s_ab, __pyx_n_s_bc, __pyx_n_s_cd, __pyx_n_s_n1, __pyx_n_s_n2, __pyx_n_s_m1, __pyx_n_s_x, __pyx_n_s_y, __pyx_n_s_angle); if (unlikely(!__pyx_tuple__35)) __PYX_ERR(0, 209, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__35);
-  __Pyx_GIVEREF(__pyx_tuple__35);
-  __pyx_codeobj__36 = (PyObject*)__Pyx_PyCode_New(4, 0, 13, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__35, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_home_jlorieau_Code_Python_Bioph, __pyx_n_s_measure_dihedral, 209, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__36)) __PYX_ERR(0, 209, __pyx_L1_error)
+  __pyx_tuple__36 = PyTuple_Pack(13, __pyx_n_s_atom_1, __pyx_n_s_atom_2, __pyx_n_s_atom_3, __pyx_n_s_atom_4, __pyx_n_s_ab, __pyx_n_s_bc, __pyx_n_s_cd, __pyx_n_s_n1, __pyx_n_s_n2, __pyx_n_s_m1, __pyx_n_s_x, __pyx_n_s_y, __pyx_n_s_angle); if (unlikely(!__pyx_tuple__36)) __PYX_ERR(0, 222, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__36);
+  __Pyx_GIVEREF(__pyx_tuple__36);
+  __pyx_codeobj__37 = (PyObject*)__Pyx_PyCode_New(4, 0, 13, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__36, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_jlorieau_Code_Python_Biop, __pyx_n_s_measure_dihedral, 222, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__37)) __PYX_ERR(0, 222, __pyx_L1_error)
 
-  /* "mollib/core/geometry.pyx":259
+  /* "mollib/core/geometry.pyx":272
  * 
  * 
  * def measure_distances(molecule, selector1, selector2,             # <<<<<<<<<<<<<<
  *                       **filters):
  *     """Measure the distances for atoms selected by selector1 and selector2.
  */
-  __pyx_tuple__37 = PyTuple_Pack(14, __pyx_n_s_molecule, __pyx_n_s_selector1, __pyx_n_s_selector2, __pyx_n_s_filters, __pyx_n_s_results, __pyx_n_s_atoms1, __pyx_n_s_atoms2, __pyx_n_s_i, __pyx_n_s_j, __pyx_n_s_key, __pyx_n_s_dist, __pyx_n_s_sort_key, __pyx_n_s_k, __pyx_n_s_v); if (unlikely(!__pyx_tuple__37)) __PYX_ERR(0, 259, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__37);
-  __Pyx_GIVEREF(__pyx_tuple__37);
-  __pyx_codeobj__38 = (PyObject*)__Pyx_PyCode_New(3, 0, 14, 0, CO_VARKEYWORDS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__37, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_home_jlorieau_Code_Python_Bioph, __pyx_n_s_measure_distances, 259, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__38)) __PYX_ERR(0, 259, __pyx_L1_error)
+  __pyx_tuple__38 = PyTuple_Pack(14, __pyx_n_s_molecule, __pyx_n_s_selector1, __pyx_n_s_selector2, __pyx_n_s_filters, __pyx_n_s_results, __pyx_n_s_atoms1, __pyx_n_s_atoms2, __pyx_n_s_i, __pyx_n_s_j, __pyx_n_s_key, __pyx_n_s_dist, __pyx_n_s_sort_key, __pyx_n_s_k, __pyx_n_s_v); if (unlikely(!__pyx_tuple__38)) __PYX_ERR(0, 272, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__38);
+  __Pyx_GIVEREF(__pyx_tuple__38);
+  __pyx_codeobj__39 = (PyObject*)__Pyx_PyCode_New(3, 0, 14, 0, CO_VARKEYWORDS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__38, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_jlorieau_Code_Python_Biop, __pyx_n_s_measure_distances, 272, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__39)) __PYX_ERR(0, 272, __pyx_L1_error)
 
-  /* "mollib/core/geometry.pyx":345
+  /* "mollib/core/geometry.pyx":358
  * 
  * 
  * def measure_angles(molecule, selector1, selector2, selector3,             # <<<<<<<<<<<<<<
  *                    **filters):
  *     """Measure the angles for atoms selected by selector1, selector 2 and
  */
-  __pyx_tuple__39 = PyTuple_Pack(16, __pyx_n_s_molecule, __pyx_n_s_selector1, __pyx_n_s_selector2, __pyx_n_s_selector3, __pyx_n_s_filters, __pyx_n_s_results, __pyx_n_s_atoms1, __pyx_n_s_atoms2, __pyx_n_s_atoms3, __pyx_n_s_i, __pyx_n_s_j, __pyx_n_s_k, __pyx_n_s_key, __pyx_n_s_angle, __pyx_n_s_sort_key, __pyx_n_s_v); if (unlikely(!__pyx_tuple__39)) __PYX_ERR(0, 345, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__39);
-  __Pyx_GIVEREF(__pyx_tuple__39);
-  __pyx_codeobj__40 = (PyObject*)__Pyx_PyCode_New(4, 0, 16, 0, CO_VARKEYWORDS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__39, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_home_jlorieau_Code_Python_Bioph, __pyx_n_s_measure_angles, 345, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__40)) __PYX_ERR(0, 345, __pyx_L1_error)
+  __pyx_tuple__40 = PyTuple_Pack(16, __pyx_n_s_molecule, __pyx_n_s_selector1, __pyx_n_s_selector2, __pyx_n_s_selector3, __pyx_n_s_filters, __pyx_n_s_results, __pyx_n_s_atoms1, __pyx_n_s_atoms2, __pyx_n_s_atoms3, __pyx_n_s_i, __pyx_n_s_j, __pyx_n_s_k, __pyx_n_s_key, __pyx_n_s_angle, __pyx_n_s_sort_key, __pyx_n_s_v); if (unlikely(!__pyx_tuple__40)) __PYX_ERR(0, 358, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__40);
+  __Pyx_GIVEREF(__pyx_tuple__40);
+  __pyx_codeobj__41 = (PyObject*)__Pyx_PyCode_New(4, 0, 16, 0, CO_VARKEYWORDS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__40, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_jlorieau_Code_Python_Biop, __pyx_n_s_measure_angles, 358, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__41)) __PYX_ERR(0, 358, __pyx_L1_error)
 
-  /* "mollib/core/geometry.pyx":434
+  /* "mollib/core/geometry.pyx":447
  * 
  * 
  * def measure_dihedrals(molecule, selector1, selector2, selector3, selector4,             # <<<<<<<<<<<<<<
  *                       **filters):
  *     """Measure the dihedral angles for atoms selected by selector1, selector 2,
  */
-  __pyx_tuple__41 = PyTuple_Pack(19, __pyx_n_s_molecule, __pyx_n_s_selector1, __pyx_n_s_selector2, __pyx_n_s_selector3, __pyx_n_s_selector4, __pyx_n_s_filters, __pyx_n_s_results, __pyx_n_s_atoms1, __pyx_n_s_atoms2, __pyx_n_s_atoms3, __pyx_n_s_atoms4, __pyx_n_s_i, __pyx_n_s_j, __pyx_n_s_k, __pyx_n_s_l, __pyx_n_s_key, __pyx_n_s_dihedral, __pyx_n_s_sort_key, __pyx_n_s_v); if (unlikely(!__pyx_tuple__41)) __PYX_ERR(0, 434, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__41);
-  __Pyx_GIVEREF(__pyx_tuple__41);
-  __pyx_codeobj__42 = (PyObject*)__Pyx_PyCode_New(5, 0, 19, 0, CO_VARKEYWORDS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__41, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_home_jlorieau_Code_Python_Bioph, __pyx_n_s_measure_dihedrals, 434, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__42)) __PYX_ERR(0, 434, __pyx_L1_error)
+  __pyx_tuple__42 = PyTuple_Pack(19, __pyx_n_s_molecule, __pyx_n_s_selector1, __pyx_n_s_selector2, __pyx_n_s_selector3, __pyx_n_s_selector4, __pyx_n_s_filters, __pyx_n_s_results, __pyx_n_s_atoms1, __pyx_n_s_atoms2, __pyx_n_s_atoms3, __pyx_n_s_atoms4, __pyx_n_s_i, __pyx_n_s_j, __pyx_n_s_k, __pyx_n_s_l, __pyx_n_s_key, __pyx_n_s_dihedral, __pyx_n_s_sort_key, __pyx_n_s_v); if (unlikely(!__pyx_tuple__42)) __PYX_ERR(0, 447, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__42);
+  __Pyx_GIVEREF(__pyx_tuple__42);
+  __pyx_codeobj__43 = (PyObject*)__Pyx_PyCode_New(5, 0, 19, 0, CO_VARKEYWORDS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__42, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_jlorieau_Code_Python_Biop, __pyx_n_s_measure_dihedrals, 447, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__43)) __PYX_ERR(0, 447, __pyx_L1_error)
 
   /* "View.MemoryView":282
  *         return self.name
@@ -23226,9 +23480,9 @@ static int __Pyx_InitCachedConstants(void) {
  * cdef strided = Enum("<strided and direct>") # default
  * cdef indirect = Enum("<strided and indirect>")
  */
-  __pyx_tuple__43 = PyTuple_Pack(1, __pyx_kp_s_strided_and_direct_or_indirect); if (unlikely(!__pyx_tuple__43)) __PYX_ERR(2, 282, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__43);
-  __Pyx_GIVEREF(__pyx_tuple__43);
+  __pyx_tuple__44 = PyTuple_Pack(1, __pyx_kp_s_strided_and_direct_or_indirect); if (unlikely(!__pyx_tuple__44)) __PYX_ERR(2, 282, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__44);
+  __Pyx_GIVEREF(__pyx_tuple__44);
 
   /* "View.MemoryView":283
  * 
@@ -23237,9 +23491,9 @@ static int __Pyx_InitCachedConstants(void) {
  * cdef indirect = Enum("<strided and indirect>")
  * 
  */
-  __pyx_tuple__44 = PyTuple_Pack(1, __pyx_kp_s_strided_and_direct); if (unlikely(!__pyx_tuple__44)) __PYX_ERR(2, 283, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__44);
-  __Pyx_GIVEREF(__pyx_tuple__44);
+  __pyx_tuple__45 = PyTuple_Pack(1, __pyx_kp_s_strided_and_direct); if (unlikely(!__pyx_tuple__45)) __PYX_ERR(2, 283, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__45);
+  __Pyx_GIVEREF(__pyx_tuple__45);
 
   /* "View.MemoryView":284
  * cdef generic = Enum("<strided and direct or indirect>")
@@ -23248,9 +23502,9 @@ static int __Pyx_InitCachedConstants(void) {
  * 
  * 
  */
-  __pyx_tuple__45 = PyTuple_Pack(1, __pyx_kp_s_strided_and_indirect); if (unlikely(!__pyx_tuple__45)) __PYX_ERR(2, 284, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__45);
-  __Pyx_GIVEREF(__pyx_tuple__45);
+  __pyx_tuple__46 = PyTuple_Pack(1, __pyx_kp_s_strided_and_indirect); if (unlikely(!__pyx_tuple__46)) __PYX_ERR(2, 284, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__46);
+  __Pyx_GIVEREF(__pyx_tuple__46);
 
   /* "View.MemoryView":287
  * 
@@ -23259,9 +23513,9 @@ static int __Pyx_InitCachedConstants(void) {
  * cdef indirect_contiguous = Enum("<contiguous and indirect>")
  * 
  */
-  __pyx_tuple__46 = PyTuple_Pack(1, __pyx_kp_s_contiguous_and_direct); if (unlikely(!__pyx_tuple__46)) __PYX_ERR(2, 287, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__46);
-  __Pyx_GIVEREF(__pyx_tuple__46);
+  __pyx_tuple__47 = PyTuple_Pack(1, __pyx_kp_s_contiguous_and_direct); if (unlikely(!__pyx_tuple__47)) __PYX_ERR(2, 287, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__47);
+  __Pyx_GIVEREF(__pyx_tuple__47);
 
   /* "View.MemoryView":288
  * 
@@ -23270,9 +23524,9 @@ static int __Pyx_InitCachedConstants(void) {
  * 
  * 
  */
-  __pyx_tuple__47 = PyTuple_Pack(1, __pyx_kp_s_contiguous_and_indirect); if (unlikely(!__pyx_tuple__47)) __PYX_ERR(2, 288, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__47);
-  __Pyx_GIVEREF(__pyx_tuple__47);
+  __pyx_tuple__48 = PyTuple_Pack(1, __pyx_kp_s_contiguous_and_indirect); if (unlikely(!__pyx_tuple__48)) __PYX_ERR(2, 288, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__48);
+  __Pyx_GIVEREF(__pyx_tuple__48);
   __Pyx_RefNannyFinishContext();
   return 0;
   __pyx_L1_error:;
@@ -23286,6 +23540,7 @@ static int __Pyx_InitGlobals(void) {
   __pyx_int_0 = PyInt_FromLong(0); if (unlikely(!__pyx_int_0)) __PYX_ERR(0, 1, __pyx_L1_error)
   __pyx_int_1 = PyInt_FromLong(1); if (unlikely(!__pyx_int_1)) __PYX_ERR(0, 1, __pyx_L1_error)
   __pyx_int_2 = PyInt_FromLong(2); if (unlikely(!__pyx_int_2)) __PYX_ERR(0, 1, __pyx_L1_error)
+  __pyx_int_3 = PyInt_FromLong(3); if (unlikely(!__pyx_int_3)) __PYX_ERR(0, 1, __pyx_L1_error)
   __pyx_int_neg_1 = PyInt_FromLong(-1); if (unlikely(!__pyx_int_neg_1)) __PYX_ERR(0, 1, __pyx_L1_error)
   return 0;
   __pyx_L1_error:;
@@ -23489,88 +23744,88 @@ PyMODINIT_FUNC PyInit_geometry(void)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "mollib/core/geometry.pyx":32
+  /* "mollib/core/geometry.pyx":45
  * 
  * 
  * def calc_vector(vector_i, vector_j, normalize=True):             # <<<<<<<<<<<<<<
  *     """Returns the vector between atoms 'i' and 'j' with optional
  *     normalization."""
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_6mollib_4core_8geometry_3calc_vector, NULL, __pyx_n_s_mollib_core_geometry); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 32, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_6mollib_4core_8geometry_5calc_vector, NULL, __pyx_n_s_mollib_core_geometry); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 45, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_calc_vector, __pyx_t_1) < 0) __PYX_ERR(0, 32, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_calc_vector, __pyx_t_1) < 0) __PYX_ERR(0, 45, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "mollib/core/geometry.pyx":119
+  /* "mollib/core/geometry.pyx":132
  * 
  * 
  * def within_distance(atom, cutoff, elements='', exclude_intraresidue=False):             # <<<<<<<<<<<<<<
  *     """Find all atoms of element within the specified distance (in Angstroms)
  *        of atom.
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_6mollib_4core_8geometry_7within_distance, NULL, __pyx_n_s_mollib_core_geometry); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 119, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_6mollib_4core_8geometry_9within_distance, NULL, __pyx_n_s_mollib_core_geometry); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 132, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_within_distance, __pyx_t_1) < 0) __PYX_ERR(0, 119, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_within_distance, __pyx_t_1) < 0) __PYX_ERR(0, 132, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "mollib/core/geometry.pyx":175
+  /* "mollib/core/geometry.pyx":188
  * 
  * 
  * def measure_angle(atom_1, atom_2, atom_3):             # <<<<<<<<<<<<<<
  *     """Measure the atom_1--atom_2--atom_3 angle.
  * 
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_6mollib_4core_8geometry_9measure_angle, NULL, __pyx_n_s_mollib_core_geometry); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 175, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_6mollib_4core_8geometry_11measure_angle, NULL, __pyx_n_s_mollib_core_geometry); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 188, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_measure_angle, __pyx_t_1) < 0) __PYX_ERR(0, 175, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_measure_angle, __pyx_t_1) < 0) __PYX_ERR(0, 188, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "mollib/core/geometry.pyx":209
+  /* "mollib/core/geometry.pyx":222
  * 
  * 
  * def measure_dihedral(atom_1, atom_2, atom_3, atom_4):             # <<<<<<<<<<<<<<
  *     """Measure the atom_1--atom_2--atom_3--atom_4 dihedral angle.
  * 
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_6mollib_4core_8geometry_11measure_dihedral, NULL, __pyx_n_s_mollib_core_geometry); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 209, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_6mollib_4core_8geometry_13measure_dihedral, NULL, __pyx_n_s_mollib_core_geometry); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 222, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_measure_dihedral, __pyx_t_1) < 0) __PYX_ERR(0, 209, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_measure_dihedral, __pyx_t_1) < 0) __PYX_ERR(0, 222, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "mollib/core/geometry.pyx":259
+  /* "mollib/core/geometry.pyx":272
  * 
  * 
  * def measure_distances(molecule, selector1, selector2,             # <<<<<<<<<<<<<<
  *                       **filters):
  *     """Measure the distances for atoms selected by selector1 and selector2.
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_6mollib_4core_8geometry_13measure_distances, NULL, __pyx_n_s_mollib_core_geometry); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 259, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_6mollib_4core_8geometry_15measure_distances, NULL, __pyx_n_s_mollib_core_geometry); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 272, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_measure_distances, __pyx_t_1) < 0) __PYX_ERR(0, 259, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_measure_distances, __pyx_t_1) < 0) __PYX_ERR(0, 272, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "mollib/core/geometry.pyx":345
+  /* "mollib/core/geometry.pyx":358
  * 
  * 
  * def measure_angles(molecule, selector1, selector2, selector3,             # <<<<<<<<<<<<<<
  *                    **filters):
  *     """Measure the angles for atoms selected by selector1, selector 2 and
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_6mollib_4core_8geometry_15measure_angles, NULL, __pyx_n_s_mollib_core_geometry); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 345, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_6mollib_4core_8geometry_17measure_angles, NULL, __pyx_n_s_mollib_core_geometry); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 358, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_measure_angles, __pyx_t_1) < 0) __PYX_ERR(0, 345, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_measure_angles, __pyx_t_1) < 0) __PYX_ERR(0, 358, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "mollib/core/geometry.pyx":434
+  /* "mollib/core/geometry.pyx":447
  * 
  * 
  * def measure_dihedrals(molecule, selector1, selector2, selector3, selector4,             # <<<<<<<<<<<<<<
  *                       **filters):
  *     """Measure the dihedral angles for atoms selected by selector1, selector 2,
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_6mollib_4core_8geometry_17measure_dihedrals, NULL, __pyx_n_s_mollib_core_geometry); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 434, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_6mollib_4core_8geometry_19measure_dihedrals, NULL, __pyx_n_s_mollib_core_geometry); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 447, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_measure_dihedrals, __pyx_t_1) < 0) __PYX_ERR(0, 434, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_measure_dihedrals, __pyx_t_1) < 0) __PYX_ERR(0, 447, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
   /* "mollib/core/geometry.pyx":1
@@ -23580,13 +23835,13 @@ PyMODINIT_FUNC PyInit_geometry(void)
  */
   __pyx_t_1 = PyDict_New(); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 1, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_t_1, __pyx_kp_u_measure_distance_line_45, __pyx_kp_u_Measure_the_atom_1_atom_2_distan) < 0) __PYX_ERR(0, 1, __pyx_L1_error)
-  if (PyDict_SetItem(__pyx_t_1, __pyx_kp_u_within_distance_line_119, __pyx_kp_u_Find_all_atoms_of_element_within) < 0) __PYX_ERR(0, 1, __pyx_L1_error)
-  if (PyDict_SetItem(__pyx_t_1, __pyx_kp_u_measure_angle_line_175, __pyx_kp_u_Measure_the_atom_1_atom_2_atom_3) < 0) __PYX_ERR(0, 1, __pyx_L1_error)
-  if (PyDict_SetItem(__pyx_t_1, __pyx_kp_u_measure_dihedral_line_209, __pyx_kp_u_Measure_the_atom_1_atom_2_atom_3_2) < 0) __PYX_ERR(0, 1, __pyx_L1_error)
-  if (PyDict_SetItem(__pyx_t_1, __pyx_kp_u_measure_distances_line_259, __pyx_kp_u_Measure_the_distances_for_atoms) < 0) __PYX_ERR(0, 1, __pyx_L1_error)
-  if (PyDict_SetItem(__pyx_t_1, __pyx_kp_u_measure_angles_line_345, __pyx_kp_u_Measure_the_angles_for_atoms_sel) < 0) __PYX_ERR(0, 1, __pyx_L1_error)
-  if (PyDict_SetItem(__pyx_t_1, __pyx_kp_u_measure_dihedrals_line_434, __pyx_kp_u_Measure_the_dihedral_angles_for) < 0) __PYX_ERR(0, 1, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_1, __pyx_kp_u_measure_distance_line_58, __pyx_kp_u_Measure_the_atom_1_atom_2_distan) < 0) __PYX_ERR(0, 1, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_1, __pyx_kp_u_within_distance_line_132, __pyx_kp_u_Find_all_atoms_of_element_within) < 0) __PYX_ERR(0, 1, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_1, __pyx_kp_u_measure_angle_line_188, __pyx_kp_u_Measure_the_atom_1_atom_2_atom_3) < 0) __PYX_ERR(0, 1, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_1, __pyx_kp_u_measure_dihedral_line_222, __pyx_kp_u_Measure_the_atom_1_atom_2_atom_3_2) < 0) __PYX_ERR(0, 1, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_1, __pyx_kp_u_measure_distances_line_272, __pyx_kp_u_Measure_the_distances_for_atoms) < 0) __PYX_ERR(0, 1, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_1, __pyx_kp_u_measure_angles_line_358, __pyx_kp_u_Measure_the_angles_for_atoms_sel) < 0) __PYX_ERR(0, 1, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_1, __pyx_kp_u_measure_dihedrals_line_447, __pyx_kp_u_Measure_the_dihedral_angles_for) < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_test, __pyx_t_1) < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
@@ -23610,7 +23865,7 @@ PyMODINIT_FUNC PyInit_geometry(void)
  * cdef strided = Enum("<strided and direct>") # default
  * cdef indirect = Enum("<strided and indirect>")
  */
-  __pyx_t_1 = __Pyx_PyObject_Call(((PyObject *)__pyx_MemviewEnum_type), __pyx_tuple__43, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(2, 282, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_Call(((PyObject *)__pyx_MemviewEnum_type), __pyx_tuple__44, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(2, 282, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_XGOTREF(generic);
   __Pyx_DECREF_SET(generic, __pyx_t_1);
@@ -23624,7 +23879,7 @@ PyMODINIT_FUNC PyInit_geometry(void)
  * cdef indirect = Enum("<strided and indirect>")
  * 
  */
-  __pyx_t_1 = __Pyx_PyObject_Call(((PyObject *)__pyx_MemviewEnum_type), __pyx_tuple__44, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(2, 283, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_Call(((PyObject *)__pyx_MemviewEnum_type), __pyx_tuple__45, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(2, 283, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_XGOTREF(strided);
   __Pyx_DECREF_SET(strided, __pyx_t_1);
@@ -23638,7 +23893,7 @@ PyMODINIT_FUNC PyInit_geometry(void)
  * 
  * 
  */
-  __pyx_t_1 = __Pyx_PyObject_Call(((PyObject *)__pyx_MemviewEnum_type), __pyx_tuple__45, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(2, 284, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_Call(((PyObject *)__pyx_MemviewEnum_type), __pyx_tuple__46, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(2, 284, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_XGOTREF(indirect);
   __Pyx_DECREF_SET(indirect, __pyx_t_1);
@@ -23652,7 +23907,7 @@ PyMODINIT_FUNC PyInit_geometry(void)
  * cdef indirect_contiguous = Enum("<contiguous and indirect>")
  * 
  */
-  __pyx_t_1 = __Pyx_PyObject_Call(((PyObject *)__pyx_MemviewEnum_type), __pyx_tuple__46, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(2, 287, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_Call(((PyObject *)__pyx_MemviewEnum_type), __pyx_tuple__47, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(2, 287, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_XGOTREF(contiguous);
   __Pyx_DECREF_SET(contiguous, __pyx_t_1);
@@ -23666,7 +23921,7 @@ PyMODINIT_FUNC PyInit_geometry(void)
  * 
  * 
  */
-  __pyx_t_1 = __Pyx_PyObject_Call(((PyObject *)__pyx_MemviewEnum_type), __pyx_tuple__47, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(2, 288, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_Call(((PyObject *)__pyx_MemviewEnum_type), __pyx_tuple__48, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(2, 288, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_XGOTREF(indirect_contiguous);
   __Pyx_DECREF_SET(indirect_contiguous, __pyx_t_1);
@@ -24431,8 +24686,59 @@ static CYTHON_INLINE int __Pyx_ArgTypeTest(PyObject *obj, PyTypeObject *type, in
     return 0;
 }
 
+/* GetModuleGlobalName */
+  static CYTHON_INLINE PyObject *__Pyx_GetModuleGlobalName(PyObject *name) {
+    PyObject *result;
+#if !CYTHON_AVOID_BORROWED_REFS
+    result = PyDict_GetItem(__pyx_d, name);
+    if (likely(result)) {
+        Py_INCREF(result);
+    } else {
+#else
+    result = PyObject_GetItem(__pyx_d, name);
+    if (!result) {
+        PyErr_Clear();
+#endif
+        result = __Pyx_GetBuiltinName(name);
+    }
+    return result;
+}
+
+/* PyObjectCall */
+    #if CYTHON_COMPILING_IN_CPYTHON
+static CYTHON_INLINE PyObject* __Pyx_PyObject_Call(PyObject *func, PyObject *arg, PyObject *kw) {
+    PyObject *result;
+    ternaryfunc call = func->ob_type->tp_call;
+    if (unlikely(!call))
+        return PyObject_Call(func, arg, kw);
+    if (unlikely(Py_EnterRecursiveCall((char*)" while calling a Python object")))
+        return NULL;
+    result = (*call)(func, arg, kw);
+    Py_LeaveRecursiveCall();
+    if (unlikely(!result) && unlikely(!PyErr_Occurred())) {
+        PyErr_SetString(
+            PyExc_SystemError,
+            "NULL result without error in PyObject_Call");
+    }
+    return result;
+}
+#endif
+
+/* ExtTypeTest */
+    static CYTHON_INLINE int __Pyx_TypeTest(PyObject *obj, PyTypeObject *type) {
+    if (unlikely(!type)) {
+        PyErr_SetString(PyExc_SystemError, "Missing type object");
+        return 0;
+    }
+    if (likely(PyObject_TypeCheck(obj, type)))
+        return 1;
+    PyErr_Format(PyExc_TypeError, "Cannot convert %.200s to %.200s",
+                 Py_TYPE(obj)->tp_name, type->tp_name);
+    return 0;
+}
+
 /* RaiseArgTupleInvalid */
-  static void __Pyx_RaiseArgtupleInvalid(
+    static void __Pyx_RaiseArgtupleInvalid(
     const char* func_name,
     int exact,
     Py_ssize_t num_min,
@@ -24458,7 +24764,7 @@ static CYTHON_INLINE int __Pyx_ArgTypeTest(PyObject *obj, PyTypeObject *type, in
 }
 
 /* RaiseDoubleKeywords */
-  static void __Pyx_RaiseDoubleKeywordsError(
+    static void __Pyx_RaiseDoubleKeywordsError(
     const char* func_name,
     PyObject* kw_name)
 {
@@ -24472,7 +24778,7 @@ static CYTHON_INLINE int __Pyx_ArgTypeTest(PyObject *obj, PyTypeObject *type, in
 }
 
 /* ParseKeywords */
-  static int __Pyx_ParseOptionalKeywords(
+    static int __Pyx_ParseOptionalKeywords(
     PyObject *kwds,
     PyObject **argnames[],
     PyObject *kwds2,
@@ -24573,47 +24879,14 @@ bad:
     return -1;
 }
 
-/* ExtTypeTest */
-  static CYTHON_INLINE int __Pyx_TypeTest(PyObject *obj, PyTypeObject *type) {
-    if (unlikely(!type)) {
-        PyErr_SetString(PyExc_SystemError, "Missing type object");
-        return 0;
-    }
-    if (likely(PyObject_TypeCheck(obj, type)))
-        return 1;
-    PyErr_Format(PyExc_TypeError, "Cannot convert %.200s to %.200s",
-                 Py_TYPE(obj)->tp_name, type->tp_name);
-    return 0;
-}
-
 /* BufferFallbackError */
-  static void __Pyx_RaiseBufferFallbackError(void) {
+    static void __Pyx_RaiseBufferFallbackError(void) {
   PyErr_SetString(PyExc_ValueError,
      "Buffer acquisition failed on assignment; and then reacquiring the old buffer failed too!");
 }
 
-/* PyObjectCall */
-  #if CYTHON_COMPILING_IN_CPYTHON
-static CYTHON_INLINE PyObject* __Pyx_PyObject_Call(PyObject *func, PyObject *arg, PyObject *kw) {
-    PyObject *result;
-    ternaryfunc call = func->ob_type->tp_call;
-    if (unlikely(!call))
-        return PyObject_Call(func, arg, kw);
-    if (unlikely(Py_EnterRecursiveCall((char*)" while calling a Python object")))
-        return NULL;
-    result = (*call)(func, arg, kw);
-    Py_LeaveRecursiveCall();
-    if (unlikely(!result) && unlikely(!PyErr_Occurred())) {
-        PyErr_SetString(
-            PyExc_SystemError,
-            "NULL result without error in PyObject_Call");
-    }
-    return result;
-}
-#endif
-
 /* PyFunctionFastCall */
-  #if CYTHON_FAST_PYCALL
+    #if CYTHON_FAST_PYCALL
 #include "frameobject.h"
 static PyObject* __Pyx_PyFunction_FastCallNoKw(PyCodeObject *co, PyObject **args, Py_ssize_t na,
                                                PyObject *globals) {
@@ -24733,7 +25006,7 @@ done:
 #endif  // CYTHON_FAST_PYCALL
 
 /* PyCFunctionFastCall */
-  #if CYTHON_FAST_PYCCALL
+    #if CYTHON_FAST_PYCCALL
 static CYTHON_INLINE PyObject * __Pyx_PyCFunction_FastCall(PyObject *func_obj, PyObject **args, Py_ssize_t nargs) {
     PyCFunctionObject *func = (PyCFunctionObject*)func_obj;
     PyCFunction meth = PyCFunction_GET_FUNCTION(func);
@@ -24751,7 +25024,7 @@ static CYTHON_INLINE PyObject * __Pyx_PyCFunction_FastCall(PyObject *func_obj, P
 #endif  // CYTHON_FAST_PYCCALL
 
 /* BytesEquals */
-  static CYTHON_INLINE int __Pyx_PyBytes_Equals(PyObject* s1, PyObject* s2, int equals) {
+    static CYTHON_INLINE int __Pyx_PyBytes_Equals(PyObject* s1, PyObject* s2, int equals) {
 #if CYTHON_COMPILING_IN_PYPY
     return PyObject_RichCompareBool(s1, s2, equals);
 #else
@@ -24789,7 +25062,7 @@ static CYTHON_INLINE PyObject * __Pyx_PyCFunction_FastCall(PyObject *func_obj, P
 }
 
 /* UnicodeEquals */
-  static CYTHON_INLINE int __Pyx_PyUnicode_Equals(PyObject* s1, PyObject* s2, int equals) {
+    static CYTHON_INLINE int __Pyx_PyUnicode_Equals(PyObject* s1, PyObject* s2, int equals) {
 #if CYTHON_COMPILING_IN_PYPY
     return PyObject_RichCompareBool(s1, s2, equals);
 #else
@@ -24870,24 +25143,6 @@ return_ne:
     #endif
     return (equals == Py_NE);
 #endif
-}
-
-/* GetModuleGlobalName */
-  static CYTHON_INLINE PyObject *__Pyx_GetModuleGlobalName(PyObject *name) {
-    PyObject *result;
-#if !CYTHON_AVOID_BORROWED_REFS
-    result = PyDict_GetItem(__pyx_d, name);
-    if (likely(result)) {
-        Py_INCREF(result);
-    } else {
-#else
-    result = PyObject_GetItem(__pyx_d, name);
-    if (!result) {
-        PyErr_Clear();
-#endif
-        result = __Pyx_GetBuiltinName(name);
-    }
-    return result;
 }
 
 /* GetItemInt */

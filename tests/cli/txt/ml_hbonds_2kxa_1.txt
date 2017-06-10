@@ -2,8 +2,8 @@ Table: Hydrogen bond listing for 2KXA
 
 Num  Donor       Acceptor    Classification                    E (kT) / Prob.  
 ---- ----------- ----------- --------------------------------- ----------------
-1    A.G1.H2--N  A.W21.O--C  bb-bb amide (isolated)            3.5 /  3.1%     
-2    A.G1.H1--N  A.G20.O--C  bb-bb amide (isolated)            1.4 / 23.6%     
+1    A.G1.H1--N  A.G20.O--C  bb-bb amide (isolated)            1.4 / 23.6%     
+2    A.G1.H2--N  A.W21.O--C  bb-bb amide (isolated)            3.5 /  3.1%     
 3    A.A5.H--N   A.G1.O--C   bb-bb amide (isolated)            1.2 / 31.4%     
 4    A.I6.H--N   A.L2.O--C   bb-bb amide (alpha-helix/N-term)  3.0 /  4.8%     
 5    A.A7.H--N   A.F3.O--C   bb-bb amide (alpha-helix/N-term)  7.5 /  0.1%     

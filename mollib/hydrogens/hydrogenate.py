@@ -28,9 +28,7 @@ import logging
 from math import sqrt, cos, sin, pi
 from itertools import chain
 
-import numpy as np
-
-from mollib.core import calc_vector, vector_length, within_distance
+from mollib.core import calc_vector, vector_length, within_distance, cross
 from . import settings
 
 
@@ -271,10 +269,10 @@ def add_one_sp2_h(atom, bond_length):
         length = vector_length(bisect)
         bisect /= length
 
-        normal_outplane = np.cross(v1,v2)
+        normal_outplane = cross(v1,v2)
         normal_outplane /= vector_length(normal_outplane)
 
-        normal_inplane = np.cross(normal_outplane, bisect)
+        normal_inplane = cross(normal_outplane, bisect)
         normal_inplane /= vector_length(normal_inplane)
 
         # calculate the h position along the bisector
@@ -316,10 +314,10 @@ def add_one_sp2_h(atom, bond_length):
         v2 = calc_vector(bonded_heavy_atoms[0].pos, bonded_to_bonded.pos,
                          normalize=True)
 
-        n_v1v2 = np.cross(v1, v2)
+        n_v1v2 = cross(v1, v2)
         n_v1v2 /= vector_length(n_v1v2)
 
-        n = np.cross(v1, n_v1v2)
+        n = cross(v1, n_v1v2)
         n /= vector_length(n)
 
         h = (v1 * cos60 - n * sin60) * bond_length
@@ -417,13 +415,13 @@ def add_two_sp2_h(atom, bond_length, jbnmr_convention=True):
         vec = calc_vector(bonded.pos, bonded_to_bonded.pos, normalize=True)
 
         # Calculate the z-axis as the orthogonal vector to these two
-        z = np.cross(x, vec)
+        z = cross(x, vec)
         z /= vector_length(z)
 
         # Calculate the y-axis as the orthogonal to the x- and y- axes.
         # The y-axis is pointing toward the bonded_to_bonded atom for
         # the 'Z' assignment
-        y = np.cross(z, x)
+        y = cross(z, x)
         y /= vector_length(y)
 
         # The new protons are along the x- and y-axes, tilted by 60-degrees
@@ -526,10 +524,10 @@ def add_one_sp3_h(atom, bond_length):
         v1 = calc_vector(bonded.pos, atom.pos, normalize=True)
         v2 = calc_vector(bonded.pos, bonded_to_bonded.pos, normalize=True)
 
-        z = np.cross(v1, v2)
+        z = cross(v1, v2)
         z /= vector_length(z)
 
-        y = np.cross(v1, z)
+        y = cross(v1, z)
         y /= vector_length(y)
 
         h = (cos(19.5*pi/180.)*y -
@@ -623,7 +621,7 @@ def add_two_sp3_h(atom, bond_length, jbnmr_convention=True):
 
         # Calculate the vector orthogonal to the bonded[0]--atom--bonded[1]
         # plane
-        orthog = np.cross(v1, bisect)
+        orthog = cross(v1, bisect)
         orthog /= vector_length(orthog)
 
         # Find the unit vector for hydrogens 2 and 3.
@@ -742,12 +740,12 @@ def add_three_sp3_h(atom, bond_length, alpha=None):
         v2 /= vector_length(v2)
 
         # Calculate the normal to v1 and v2
-        norm1 = np.cross(v1, v2)
+        norm1 = cross(v1, v2)
         norm1 /= vector_length(norm1)
 
         # Calculate the normal to norm1 and v1. v1, norm1 and norm2 form an
         # orthonormal set of vectors
-        norm2 = np.cross(norm1, v1)
+        norm2 = cross(norm1, v1)
         norm2 /= vector_length(norm2)
 
         # All three new protons are tilted away from v1. However, the first
