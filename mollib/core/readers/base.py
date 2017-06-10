@@ -10,4 +10,5 @@ class MoleculeReader(object):
     """
 
 
-    def parse()
+    def parse(self, stream):
+        pass

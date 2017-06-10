@@ -15,6 +15,7 @@ import re
 import weakref
 import logging
 import gzip
+import io
 from itertools import chain as ichain
 from itertools import count
 from collections import OrderedDict
@@ -1028,7 +1029,7 @@ class Molecule(dict):
         self.clear_cache()
 
         if filename.endswith('.gz'):
-            with gzip.open(filename) as f:
+            with io.BufferedReader(gzip.open(filename)) as f:
                 self.read_stream(f)
         else:
             with open(filename) as f:
