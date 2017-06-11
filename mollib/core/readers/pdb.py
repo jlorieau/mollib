@@ -217,7 +217,7 @@ class PDBRigidRegexReader(MoleculeReader):
                              ('CONECT', (_re_conect, _match_conect)),
                              ))
 
-    def parse(self, stream, model_ids=None, *args, **kwargs):
+    def parse(self, stream, name=None, model_ids=None, *args, **kwargs):
         # Parse the arguments.
 
         # model_ids must be a list of integers
@@ -228,6 +228,8 @@ class PDBRigidRegexReader(MoleculeReader):
             msg = ("The specified model ids must be integer numbers. The "
                    "values '{}' were received.")
             raise TypeError(msg.format(model_ids))
+
+        molecule_name = name if isinstance(name, str) else 'Unnamed'
 
         # A list of regex matchers to harvest data from each line.
         # The first item is the regex to match. If there is a match,
@@ -261,7 +263,7 @@ class PDBRigidRegexReader(MoleculeReader):
                 # specified (current_molecule is None) or a new model has been
                 # specified.
                 if m and (name == 'MODEL' or current_molecule is None):
-                    current_molecule = self.molecule_class('tmp')
+                    current_molecule = self.molecule_class(molecule_name)
                     molecules.append(current_molecule)
                 break
 

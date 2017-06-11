@@ -1,6 +1,7 @@
 """
 Molecular reader classes.
 """
+import os
 import gzip
 import io
 
@@ -76,6 +77,11 @@ class MoleculeReader(object):
 
         # Loop through the identifiers and files
         for identifier in identifiers_or_files:
+            # The following strips path and extensition information from the
+            # identifier to make an easily readable name.
+            name = os.path.split(identifier)[-1]
+            name = os.path.splitext(name)[0]
+
             for sub in self.subclasses:
                 # Get the file for the identifier
                 filepath = get_or_fetch(identifier, extensions='pdb.gz',
@@ -88,10 +94,12 @@ class MoleculeReader(object):
                 # Load the file into a stream
                 if filepath.endswith('.gz'):
                     with io.BufferedReader(gzip.open(filepath)) as stream:
-                        returned_molecules = sub.parse(stream, *args, **kwargs)
+                        returned_molecules = sub.parse(stream, name,
+                                                       *args, **kwargs)
                 else:
                     with open(filepath) as f:
-                        returned_molecules = sub.parse(stream, *args, **kwargs)
+                        returned_molecules = sub.parse(stream, name,
+                                                       *args, **kwargs)
 
                 # If molecules were returned then it was successfully
                 # parsed. No more parsing needed.
@@ -101,12 +109,15 @@ class MoleculeReader(object):
 
         return molecules
 
-    def parse(self, stream, *args, **kwargs):
+    def parse(self, stream, name=None, *args, **kwargs):
         """Parse a data stream.
         
         Parameters
         ----------
-        stream: the data stream to parse.
+        stream: io.Stream
+            The data stream to parse.
+        name: str
+            The name of the molecules to parse.
         
         Returns
         -------
