@@ -4,7 +4,8 @@ The plugin for 'measure' command.
 """
 
 from math import floor, log10
-from itertools import chain
+import itertools
+# from itertools import chain
 
 import numpy as np
 
@@ -132,13 +133,13 @@ class Measure(Plugin):
                     dists_list.append(dists)
 
                 # Add the distances to the table
-                for count, dist in enumerate(chain(*dists_list), 1):
+                for count, dist in enumerate(itertools.chain(*dists_list), 1):
                     atom1, atom2, d = dist
                     table.add_row(count, atom1, atom2, '{:.2f}'.format(d))
 
                 # Calculate the stats if specified
                 if args.stats:
-                    values = [i[2] for i in chain(*dists_list)]
+                    values = [i[2] for i in itertools.chain(*dists_list)]
                     mean = np.mean(values)
                     std = np.std(values)
                     stat_str = '{} ± {}'.format(*round_to_sigs(mean, std))
@@ -170,14 +171,14 @@ class Measure(Plugin):
                     angs_list.append(angs)
 
                 # Add the angles to the table
-                for count, ang in enumerate(chain(*angs_list), 1):
+                for count, ang in enumerate(itertools.chain(*angs_list), 1):
                     atom1, atom2, atom3, a = ang
                     table.add_row(count, atom1, atom2, atom3,
                                   '{:.1f}'.format(a))
 
                 # Calculate the stats if specified
                 if args.stats:
-                    values = [i[3] for i in chain(*angs_list)]
+                    values = [i[3] for i in itertools.chain(*angs_list)]
                     mean = np.mean(values)
                     std = np.std(values)
                     stat_str = '{} ± {}'.format(*round_to_sigs(mean, std))
@@ -209,14 +210,14 @@ class Measure(Plugin):
                     dihs_list.append(dihs)
 
                 # Add the angles to the table
-                for count, dih in enumerate(chain(*dihs_list), 1):
+                for count, dih in enumerate(itertools.chain(*dihs_list), 1):
                     atom1, atom2, atom3, atom4, d = dih
                     table.add_row(count, atom1, atom2, atom3, atom4,
                                   '{:.1f}'.format(d))
 
                 # Calculate the stats if specified
                 if args.stats:
-                    values = [i[4] for i in chain(*dihs_list)]
+                    values = [i[4] for i in itertools.chain(*dihs_list)]
                     mean = np.mean(values)
                     std = np.std(values)
                     stat_str = '{} ± {}'.format(*round_to_sigs(mean, std))

@@ -16,8 +16,7 @@ import weakref
 import logging
 import gzip
 import io
-from itertools import chain as ichain
-from itertools import count
+import itertools
 from collections import OrderedDict
 from math import cos, sin, pi
 import os.path
@@ -156,7 +155,7 @@ class Molecule(dict):
             cls._instances.append(ref)
         return instance
 
-    def __init__(self, identifier, *args, **kwargs):
+    def __init__(self, identifier, use_reader=True, *args, **kwargs):
         """Molecule constructor that accepts an identifier.
 
         Parameters
@@ -164,6 +163,9 @@ class Molecule(dict):
         identifier: str
             An molecule identifier that is either a filename (PDB format),
             or PDB code (ex: '2KXA').
+        use_reader: bool, optional
+            If specified, the Molecular reader will be used to load the
+            molecule.
         """
         # The following strips path and extensition information from the
         # identifier to make an easily readable name.
@@ -182,7 +184,11 @@ class Molecule(dict):
         super(Molecule, self).__init__(*args, **kwargs)
 
     def __repr__(self):
-        return ("Molecule ({}):".format(self.name) +
+        if self.model_id is not None:
+            name = '{}-{}'.format(self.name, self.model_id)
+        else:
+            name = self.name
+        return ("Molecule ({}):".format(name) +
                 "    {} chains, {} residues, {} atoms."
                 .format(self.chain_size, self.residue_size, self.atom_size))
 
@@ -246,7 +252,8 @@ class Molecule(dict):
         >>> print(l[16:])
         [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
         """
-        return (r for r in sorted(ichain(*[r.values() for r in self.values()]),
+        return (r for r in sorted(itertools.chain(*[r.values()
+                                                    for r in self.values()]),
                                   key=lambda r: (r.chain.id, r.number)))
 
     @property
@@ -261,7 +268,8 @@ class Molecule(dict):
         >>> print(l[16:])
         [16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1]
         """
-        return (r for r in sorted(ichain(*[r.values() for r in self.values()]),
+        return (r for r in sorted(itertools.chain(*[r.values()
+                                                    for r in self.values()]),
                                   key=lambda r: (r.chain.id, r.number),
                                   reverse=True))
 
@@ -274,8 +282,9 @@ class Molecule(dict):
     def atoms(self):
         """An iterator over all atoms in this molecule, sorted by atom
         number."""
-        return (a for a in sorted(ichain(*[r.values() for r in
-                                           ichain(*[c.values() for c in
+        return (a for a in sorted(itertools.chain(*[r.values() for r in
+                                                itertools.chain(*[c.values()
+                                                                  for c in
                                                     self.values()])]),
                                   key=lambda a: a.number))
 
@@ -755,7 +764,7 @@ class Molecule(dict):
 
         # Convert the atom numbers to actual atoms. First collect all the
         # atom numbers needed and convert it to a dict.
-        number_set = set(ichain(*atom_numbers))
+        number_set = set(itertools.chain(*atom_numbers))
         atom_list = [a for a in self.atoms if a.number in number_set]
         atom_dict = {a.number:a for a in atom_list}
 
@@ -815,7 +824,7 @@ class Molecule(dict):
         chains = chains_protein + chains_hetatm
 
         # Prepare the atom number counter and renumber the atom numbers
-        counter = count(1)
+        counter = itertools.count(1)
         for chain in chains:
             for residue in chain.residues:
                 # The following sorts hydrogens together with their heavy atoms.

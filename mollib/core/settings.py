@@ -40,3 +40,6 @@ energy_cutoff_bad = 20.0  # Only observed < 0.5% of the time.
 
 #: urls to download PDB files
 pdb_urls = ('https://files.rcsb.org/download/',)
+
+#: Only load the first model, by default
+pdb_first_model = True

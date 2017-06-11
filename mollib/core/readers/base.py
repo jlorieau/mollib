@@ -5,7 +5,10 @@ import os
 import gzip
 import io
 
-from mollib.core import Molecule, Chain, Residue, Atom
+from .. import molecule
+from .. import chain
+from .. import residue
+from .. import atom
 from mollib.utils.net import get_or_fetch
 from mollib.utils.checks import check_file
 
@@ -24,16 +27,16 @@ class MoleculeReader(object):
     urls = None
 
     #: The default class to create molecules
-    molecule_class = Molecule
+    molecule_class = molecule.Molecule
 
     #: The default class to create chains
-    chain_class = Chain
+    chain_class = chain.Chain
 
     #: The default class to create residues
-    residue_class = Residue
+    residue_class = residue.Residue
 
     #: The default class to create atoms
-    atom_class = Atom
+    atom_class = atom.Atom
 
     def __init__(self, urls=None, *args, **kwargs):
         """Initialize the molecular reader
@@ -51,14 +54,13 @@ class MoleculeReader(object):
             self.urls = urls
 
         # Find subclasses and instantiate these.
-        self.subclasses = [cls(*args, **kwargs)
+        self.subclasses = [cls(urls, *args, **kwargs)
                            for cls in sorted(self.__class__.__subclasses__(),
                                              key=lambda x: x.order)
                            if cls.order is not None]
 
-        # super(MoleculeReader, self).__init__(urls, *args, **kwargs)
-
-    def read(self, identifiers_or_files, *args, **kwargs):
+    def read(self, identifiers_or_files, source_molecule=None,
+             *args, **kwargs):
         """Read data into molecules.
         
         Parameters
@@ -66,6 +68,18 @@ class MoleculeReader(object):
         identifiers_or_files: str or list
             One or more identifiers (ex: PDB codes, like '2kxa') or
             filenames and paths for structure files.
+        source_molecule: molecule (:obj:`mollib.Molecule`), optional
+            If specified, the molecule will have their data replaced with the 
+            parsed data. Only the first model will be loaded.
+        args: tuple, optional
+            Positional arguments
+        kwargs: dict, optional
+            Keywork arguments
+            
+        Returns
+        -------
+        molecules: list of :obj:`mollib.Molecule` objects
+            The molecules read from the file.
         """
         # Wrap the identifers or files into lists, if needed
         if (not hasattr(identifiers_or_files, '__iter__')
@@ -109,15 +123,22 @@ class MoleculeReader(object):
 
         return molecules
 
-    def parse(self, stream, name=None, *args, **kwargs):
+    def parse(self, stream, name=None, source_molecule=None, *args, **kwargs):
         """Parse a data stream.
         
         Parameters
         ----------
         stream: io.Stream
             The data stream to parse.
-        name: str
+        name: str, optional
             The name of the molecules to parse.
+        source_molecule: molecule (:obj:`mollib.Molecule`), optional
+            If specified, the molecule will have their data replaced with the 
+            parsed data. Only the first model will be loaded.
+        args: tuple, optional
+            Positional arguments
+        kwargs: dict, optional
+            Keywork arguments
         
         Returns
         -------

@@ -218,18 +218,37 @@ class PDBRigidRegexReader(MoleculeReader):
                              ))
 
     def parse(self, stream, name=None, model_ids=None, *args, **kwargs):
+        """
+        
+        Parameters
+        ----------
+        stream
+        name
+        model_ids: list of int
+            If specified, only the given model id numbers will be returned.
+        args
+        kwargs
+
+        Returns
+        -------
+
+        """
         # Parse the arguments.
+        molecule_name = name if isinstance(name, str) else 'Unnamed'
 
         # model_ids must be a list of integers
         if model_ids is not None and hasattr(model_ids, '__iter__'):
-            model_ids = (model_ids, )
+            model_ids = (model_ids,)
         if model_ids is not None and not all(isinstance(i, int)
                                              for i in model_ids):
             msg = ("The specified model ids must be integer numbers. The "
                    "values '{}' were received.")
             raise TypeError(msg.format(model_ids))
 
-        molecule_name = name if isinstance(name, str) else 'Unnamed'
+        # If model_ids aren't specified, see if there are any settings that
+        # might influence which models to select
+        if model_ids is None and settings.pdb_first_model:
+            model_ids = [1, ]
 
         # A list of regex matchers to harvest data from each line.
         # The first item is the regex to match. If there is a match,
@@ -275,6 +294,12 @@ class PDBRigidRegexReader(MoleculeReader):
             func(self, m, current_molecule)
 
         # The parsing is finished.
+
+        # Select the molecules by model_id, if needed
+        if model_ids is not None:
+            molecules = [m for m in molecules
+                         if hasattr(m, 'model_id') and m.model_id in model_ids]
+
         # Now go through all of the molecules, and conduct needed processing
         # functions.
         for molecule in molecules:

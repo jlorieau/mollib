@@ -4,8 +4,6 @@ Utility functions.
 from math import sqrt
 
 import re
-import tempfile
-import os
 from itertools import combinations
 try:
     from itertools import zip_longest
