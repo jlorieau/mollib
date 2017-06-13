@@ -263,9 +263,6 @@ class PDBRigidRegexReader(MoleculeReader):
         molecules = []
         current_molecule = None
 
-        # Flag to finish parsing
-        done_parsing = False
-
         # Find the ATOM/HETATM lines and pull out the necessary data
         for line in stream:
             # Placeholders for the regex match and the match processing function
@@ -290,20 +287,12 @@ class PDBRigidRegexReader(MoleculeReader):
                 # specified.
                 if m and (name == 'MODEL' or current_molecule is None):
                     # Use source molecules, if available
-                    if source_molecules is not None:
-                        try:
-                            current_molecule = source_molecules.popleft()
-                        except IndexError:
-                            # No more molecules to parse
-                            done_parsing = True
+                    if source_molecules:
+                        current_molecule = source_molecules.popleft()
                     else:
                         current_molecule = self.molecule_class(molecule_name,
                                                                use_reader=False)
                     molecules.append(current_molecule)
-                break
-
-            # Check to see if the parsing is finished
-            if done_parsing:
                 break
 
             # If line cannot be matched, skip this line.
@@ -315,8 +304,14 @@ class PDBRigidRegexReader(MoleculeReader):
 
         # The parsing is finished.
 
+        # Copy the connections across all molecules
+        if molecules:
+            connections = molecules[-1].connections
+            for molecule in molecules:
+                molecule.connections = connections
+
         # Select the molecules by model_id, if needed
-        if model_ids is not None:
+        if model_ids is not None and source_molecules is None:
             molecules = [m for m in molecules
                          if hasattr(m, 'model_id') and m.model_id in model_ids]
 
