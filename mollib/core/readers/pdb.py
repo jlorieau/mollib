@@ -2,12 +2,13 @@
 Readers for Protein Databank Files.
 """
 import re
-from collections import OrderedDict
+from collections import OrderedDict, deque
 
 import numpy as np
 
 from .. import settings as settings
 from .base import MoleculeReader
+from mollib.utils.iteration import wrapit
 
 
 # TODO: Make a faster reader with structs and binary, with a fallback
@@ -217,7 +218,8 @@ class PDBRigidRegexReader(MoleculeReader):
                              ('CONECT', (_re_conect, _match_conect)),
                              ))
 
-    def parse(self, stream, name=None, model_ids=None, *args, **kwargs):
+    def parse(self, stream, name=None, source_molecules=None,
+              model_ids=None, *args, **kwargs):
         """
         
         Parameters
@@ -236,9 +238,11 @@ class PDBRigidRegexReader(MoleculeReader):
         # Parse the arguments.
         molecule_name = name if isinstance(name, str) else 'Unnamed'
 
+        source_molecules = (deque((source_molecules, ))
+                            if source_molecules is not None else None)
+
         # model_ids must be a list of integers
-        if model_ids is not None and hasattr(model_ids, '__iter__'):
-            model_ids = (model_ids,)
+        model_ids = wrapit(model_ids)
         if model_ids is not None and not all(isinstance(i, int)
                                              for i in model_ids):
             msg = ("The specified model ids must be integer numbers. The "
@@ -258,6 +262,9 @@ class PDBRigidRegexReader(MoleculeReader):
         # Prepare the list of returned molecules
         molecules = []
         current_molecule = None
+
+        # Flag to finish parsing
+        done_parsing = False
 
         # Find the ATOM/HETATM lines and pull out the necessary data
         for line in stream:
@@ -282,8 +289,21 @@ class PDBRigidRegexReader(MoleculeReader):
                 # specified (current_molecule is None) or a new model has been
                 # specified.
                 if m and (name == 'MODEL' or current_molecule is None):
-                    current_molecule = self.molecule_class(molecule_name)
+                    # Use source molecules, if available
+                    if source_molecules is not None:
+                        try:
+                            current_molecule = source_molecules.popleft()
+                        except IndexError:
+                            # No more molecules to parse
+                            done_parsing = True
+                    else:
+                        current_molecule = self.molecule_class(molecule_name,
+                                                               use_reader=False)
                     molecules.append(current_molecule)
+                break
+
+            # Check to see if the parsing is finished
+            if done_parsing:
                 break
 
             # If line cannot be matched, skip this line.

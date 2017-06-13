@@ -27,8 +27,8 @@ from .atom import Atom
 from .residue import Residue
 from .chain import Chain
 from .topology import topology
-from .utils import grouper
 from mollib.utils.net import get_or_fetch
+from mollib.utils.iteration import grouper
 from . import settings
 
 
@@ -180,7 +180,12 @@ class Molecule(dict):
         self.cache = {}
 
         # Read in the data
-        # self.read_identifier(identifier)
+        if use_reader:
+            from . import readers
+            mr = readers.MoleculeReader()
+            mr.read(identifiers_or_files=identifier,
+                    source_molecules=self)
+
         super(Molecule, self).__init__(*args, **kwargs)
 
     def __repr__(self):

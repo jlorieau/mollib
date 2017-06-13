@@ -59,7 +59,7 @@ class MoleculeReader(object):
                                              key=lambda x: x.order)
                            if cls.order is not None]
 
-    def read(self, identifiers_or_files, source_molecule=None,
+    def read(self, identifiers_or_files, source_molecules=None,
              *args, **kwargs):
         """Read data into molecules.
         
@@ -109,10 +109,12 @@ class MoleculeReader(object):
                 if filepath.endswith('.gz'):
                     with io.BufferedReader(gzip.open(filepath)) as stream:
                         returned_molecules = sub.parse(stream, name,
+                                                       source_molecules,
                                                        *args, **kwargs)
                 else:
                     with open(filepath) as f:
                         returned_molecules = sub.parse(stream, name,
+                                                       source_molecules,
                                                        *args, **kwargs)
 
                 # If molecules were returned then it was successfully
@@ -123,7 +125,7 @@ class MoleculeReader(object):
 
         return molecules
 
-    def parse(self, stream, name=None, source_molecule=None, *args, **kwargs):
+    def parse(self, stream, name=None, source_molecules=None, *args, **kwargs):
         """Parse a data stream.
         
         Parameters
