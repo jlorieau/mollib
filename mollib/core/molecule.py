@@ -1050,7 +1050,8 @@ class Molecule(dict):
 
         if filename.endswith('.gz'):
             with io.BufferedReader(gzip.open(filename)) as f:
-                self.read_stream(f)
+                contents = f.read()
+            self.read_stream(contents)
         else:
             with open(filename) as f:
                 self.read_stream(f)
