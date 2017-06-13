@@ -257,7 +257,7 @@ class PDBRigidRegexReader(MoleculeReader):
         # A list of regex matchers to harvest data from each line.
         # The first item is the regex to match. If there is a match,
         # the second item (function) will be called with the match
-        matchers = self._matchers
+        matchers = self._matchers.copy()
 
         # Prepare the list of returned molecules
         molecules = []
@@ -287,12 +287,21 @@ class PDBRigidRegexReader(MoleculeReader):
                 # specified.
                 if m and (name == 'MODEL' or current_molecule is None):
                     # Use source molecules, if available
-                    if source_molecules:
-                        current_molecule = source_molecules.popleft()
-                    else:
+                    # if source_molecules:
+                    #     current_molecule = source_molecules.popleft()
+                    # else:
+                    #     current_molecule = self.molecule_class(molecule_name,
+                    #                                            use_reader=False)
+                    if source_molecules is None:
                         current_molecule = self.molecule_class(molecule_name,
                                                                use_reader=False)
-                    molecules.append(current_molecule)
+                        molecules.append(current_molecule)
+                    elif source_molecules:
+                        current_molecule = source_molecules.popleft()
+                        molecules.append(current_molecule)
+                    else:
+                        del matchers['ATOM']
+                        del matchers['MODEL']
                 break
 
             # If line cannot be matched, skip this line.
