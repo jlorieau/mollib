@@ -5,7 +5,6 @@ The plugin for 'measure' command.
 
 from math import floor, log10
 import itertools
-# from itertools import chain
 
 import numpy as np
 
