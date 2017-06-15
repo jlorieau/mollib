@@ -108,14 +108,14 @@ class MoleculeReader(object):
                 # Load the file into a stream
                 if filepath.endswith('.gz'):
                     with io.BufferedReader(gzip.open(filepath)) as stream:
-                        returned_molecules = sub.parse(stream, name,
-                                                       source_molecules,
-                                                       *args, **kwargs)
+                        content = stream.read().decode('latin-1')
                 else:
                     with open(filepath) as f:
-                        returned_molecules = sub.parse(stream, name,
-                                                       source_molecules,
-                                                       *args, **kwargs)
+                        content = f.read()
+
+                returned_molecules = sub.parse(content, name,
+                                               source_molecules,
+                                               *args, **kwargs)
 
                 # If molecules were returned then it was successfully
                 # parsed. No more parsing needed.
