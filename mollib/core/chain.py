@@ -8,6 +8,8 @@ class Chain(dict):
     ----------
     id: str
         The chain's id. ex: 'A'
+    molecule: `mollib.molecule`
+        The molecule the chain belongs to.
     """
 
     def __init__(self, identifier, *args, **kwargs):
