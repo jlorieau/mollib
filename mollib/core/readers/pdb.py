@@ -2,7 +2,7 @@
 Readers for Protein Databank Files.
 """
 import re
-from collections import OrderedDict, deque
+from collections import deque
 import itertools
 
 import numpy as np
@@ -15,7 +15,7 @@ from mollib.utils.iteration import wrapit
 def parse_atom_lines(atom_list, atom_cls):
     """Parse a list of 'ATOM' or 'HETATM' strings.
 
-    A list of atoms replaces the list of strings passed to the function.
+    Replaces the given list of strings with a list of atoms.
 
     Parameters
     ----------
@@ -47,7 +47,19 @@ _re_model = re.compile(r'^MODEL\s+(?P<model_id>[\d]+)\s+$')
 
 
 def parse_model_line(model_line):
-    """Parse a 'MODEL' line and return the model id number."""
+    """Parse a 'MODEL' line and return the model id number.
+    
+    Parameters
+    ----------
+    model_line: str
+        The string that contains the new model information.
+        ex: 'MODEL         1'
+    
+    Returns
+    -------
+    model_id: int,
+        The parsed model_id number.
+    """
     global _re_model
 
     match = _re_model.match(model_line)
@@ -62,7 +74,19 @@ _re_conect = re.compile(r'^CONECT(?P<numbers>[\s\d]+)$')
 
 
 def parse_conect_lines(conect_lines):
-    """Parser the 'CONECT' lines and return a connections list."""
+    """Parser the 'CONECT' lines and return a connections list.
+    
+    Parameters
+    ----------
+    conect_lines: list of str
+        The 'CONECT' lines of the PDB file.
+        ex: CONECT 2059 2044
+    
+    Returns
+    -------
+    connections: list of tuple
+        A list of tuples of atom numbers that should be connected.
+    """
     global _re_conect
 
     connections = []
@@ -88,7 +112,7 @@ class PDBReader(MoleculeReader):
     """A molecule reader for protein databank (PDB) files.
     """
 
-    order = -10
+    order = 0
 
     def __init__(self, urls=None, *args, **kwargs):
         if urls is None:
@@ -101,10 +125,28 @@ class PDBReader(MoleculeReader):
         
         Parameters
         ----------
+        molecules: list of molecule objects (:obj:`mollib.Molecule`)
+            A list of the molecules that are being parsed and processed.
+        molecule_name: str
+            The name of the new molecule to create.
+        source_molecules: `collections.deque` or :obj:`mollib.Molecule`
+            If source_molecules are specified, these will be used instead of
+            creating new molecules. Once the source_molecules run out, then None
+            is returned.
+        model_id: int, optional
+            If specified, the new molecule will only be created if the model_id
+            is in the model_ids specified. This will also assign the 'model_id'
+            attribute for the molecule.
+        model_ids: set of int, optional
+            If specified a molecule will only be returned if the model_id is in
+            the model_ids set.
         
         Returns
         -------
         molecule or None
+            If a molecule is available or can be created, it will be returned.
+            If a molecule is unavailable or cannot be created, None will be
+            returned.
         """
         # First see if a model_id was specified and whether its in the allowed
         # model_ids. If not, return no molecules
@@ -139,20 +181,30 @@ class PDBReader(MoleculeReader):
 
     def parse(self, stream, name=None, source_molecules=None,
               model_ids=None, *args, **kwargs):
-        """Parse the file stream.
+        """Parse the file or string stream.
 
         Parameters
         ----------
-        stream
-        name
+        stream: stream
+            The stream of text to parse.
+        name: str, optional
+            If specified, this is the name that will be given to the molecules
+            and assigned to the molecule's 'name' attribute.
+        source_molecules: `collections.deque` or :obj:`mollib.Molecule`
+            If source_molecules are specified, these will be used instead of
+            creating new molecules. Once the source_molecules run out, then None
+            is returned.
         model_ids: list of int
             If specified, only the given model id numbers will be returned.
-        args
-        kwargs
+        args: tuple
+            Function arguments
+        kwargs: dict
+            Function keywork arguments
 
         Returns
         -------
-
+        molecules: list of molecule objects (:obj:`mollib.Molecule`)
+            The molecules that we parsed and read in.
         """
         # Parse the arguments.
         molecule_name = name if isinstance(name, str) else 'Unnamed'
