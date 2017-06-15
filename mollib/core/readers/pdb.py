@@ -31,10 +31,10 @@ def parse_atom_lines(atom_list, atom_cls):
     A list of atom objects (:obj:`mollib.Atom`) if the 'ATOM' strings can be
     parsed.
     """
-    processed = [atom_cls(number=int(l[7:11]),
-                          name=str(l[13:16]).strip(),
+    processed = [atom_cls(number=int(l[6:11]),
+                          name=str(l[12:16]).strip(),
                           residue=(str(l[17:20]).strip(),
-                                   int(l[23:26]),),  # ('THR', 23)
+                                   int(l[22:26]),),  # ('THR', 23)
                           chain=str(l[21:22]).strip(),
                           pos=np.array((float(l[31:38]),
                                         float(l[39:46]),
@@ -124,6 +124,7 @@ class PDBReader(MoleculeReader):
                 if source_molecules:
                     # There are source molecules to return
                     molecule = source_molecules.popleft()
+                    molecule.clear()
                     molecule.model_id = model_id
                     molecules.append(molecule)
                     return molecule
