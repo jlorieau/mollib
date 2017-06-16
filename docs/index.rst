@@ -44,7 +44,7 @@ Mollib includes tools for:
    :maxdepth: 2
 
    cli/cli
-   tips
+   recipes/recipes
    releases/releases
    develop
    api/api

@@ -1,5 +1,5 @@
-Tips and Tricks
-###############
+Command-line Tips and Tricks
+############################
 
 Shell Aliases and Functions
 ---------------------------

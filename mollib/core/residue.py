@@ -34,6 +34,10 @@ class Residue(dict):
         The residue's 1-letter name. ex: 'M'
     number: int
         The residue's number in the sequence.
+    chain: :obj:`mollib.chain`
+        The chain the residue belongs to.
+    molecule: :obj:`mollib.molecule`
+        The molecule the residue belongs to.
 
     Attributes
     ----------
@@ -72,6 +76,9 @@ class Residue(dict):
 
     def __init__(self, name, number, *args, **kwargs):
         name = str(name).upper()
+
+        self.molecule = None
+        self.chain = None
 
         self.name = name  # full name, MET
         self.letter = self.one_letter_codes.get(self.name, 'X')  # letter code

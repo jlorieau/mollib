@@ -7,8 +7,6 @@ Tools to measure geometries in molecules.
 
 from libc.math cimport sqrt, ceil, acos, atan2, M_PI as pi
 
-from itertools import chain
-
 import numpy as np
 cimport numpy as np
 cimport cython

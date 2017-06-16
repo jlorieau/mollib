@@ -4,13 +4,7 @@ Utility functions.
 from math import sqrt
 
 import re
-import tempfile
-import os
-from itertools import combinations
-try:
-    from itertools import zip_longest
-except ImportError:
-    from itertools import izip_longest as zip_longest
+import itertools
 
 
 re_str = re.compile(r'[a-zA-Z]')
@@ -55,12 +49,6 @@ def convert(s):
 
     # All else fails, try just returning the string
     return str(s).strip()
-
-# TODO: Use the version from utils.iter_tools
-def grouper(n, iterable, fillvalue=None):
-    "grouper(3, 'ABCDEFG', 'x') --> ABC DEF Gxx."
-    args = [iter(iterable)] * n
-    return zip_longest(*args, fillvalue=fillvalue)
 
 
 def group_by_2(iterable):
@@ -140,33 +128,33 @@ def filter_atoms(*atoms, **filters):
     bonded = filters.get('bonded', False)
 
     # Filter atoms that are all the same, if the different filter is set
-    if different and all(i == j for i,j in combinations(atoms, 2)):
+    if different and all(i == j for i,j in itertools.combinations(atoms, 2)):
         return True
 
     # Check that all of the atoms come from the same residue, if only_intra
     if only_intra and not all(i.residue == j.residue
-                             for i,j in combinations(atoms, 2)):
+                             for i,j in itertools.combinations(atoms, 2)):
         return True
 
     # Filter if any of the atoms belong to multiple residues and
     # exclude_intra is True
     if exclude_intra and all(i.residue == j.residue
-                             for i,j in combinations(atoms, 2)):
+                             for i,j in itertools.combinations(atoms, 2)):
         return True
 
     # Filter based on chains
     if exclude_intra_chain and all(i.chain.id == j.chain.id
-                             for i,j in combinations(atoms, 2)):
+                             for i,j in itertools.combinations(atoms, 2)):
         return True
 
     if only_intra_chain and any(i.chain.id != j.chain.id
-                                for i,j in combinations(atoms, 2)):
+                                for i,j in itertools.combinations(atoms, 2)):
         return True
 
     # Calculate the residue number differences (deltas) between residues
     # This will produce a list like [1, 2, 1]
     deltas = [j.residue.number - i.residue.number
-              for i,j in combinations(atoms, 2)]
+              for i,j in itertools.combinations(atoms, 2)]
 
     # Check that at least one set of residues are 'residue_delta' apart, if
     # residue_delta is specified. Test that none of the deltas is equal to

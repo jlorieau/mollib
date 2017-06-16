@@ -1,4 +1,4 @@
-from itertools import chain as ichain
+import itertools
 
 
 class Chain(dict):
@@ -8,6 +8,8 @@ class Chain(dict):
     ----------
     id: str
         The chain's id. ex: 'A'
+    molecule: `mollib.molecule`
+        The molecule the chain belongs to.
     """
 
     def __init__(self, identifier, *args, **kwargs):
@@ -40,7 +42,8 @@ class Chain(dict):
     def atoms(self):
         """An iterator over all atoms in this chain,
         sorted by atom number."""
-        return (a for a in sorted(ichain(*[r.values() for r in self.values()]),
+        return (a for a in sorted(itertools.chain(*[r.values()
+                                                    for r in self.values()]),
                                   key=lambda a: a.number))
 
     @property
