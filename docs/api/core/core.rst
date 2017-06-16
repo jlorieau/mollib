@@ -9,6 +9,7 @@ Core Module
     residue
     chain
     molecule
+    readers
     functions
     plugins
     settings
