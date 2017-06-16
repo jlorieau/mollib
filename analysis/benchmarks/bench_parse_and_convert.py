@@ -287,22 +287,22 @@ def process_measurement(atom_dict, key):
     
     processed = [[str(l[0:6]).strip(),
                   int(l[7:11]),
-                  # str(l[13:16]).strip(),
-                  # str(l[16:17]).strip(),
-                  # str(l[17:20]).strip(),
-                  # str(l[21:22]),
-                  # int(l[23:26]),
-                  # str(l[27:28]),
-                  # float(l[31:38]),
-                  # float(l[39:46]),
-                  # float(l[47:54]),
-                  # float(l[55:60]),
-                  # float(l[61:66]),
-                  # str(l[76:78]),
-                  # '',
+                  str(l[13:16]).strip(),
+                  str(l[16:17]).strip(),
+                  str(l[17:20]).strip(),
+                  str(l[21:22]),
+                  int(l[23:26]),
+                  str(l[27:28]),
+                  float(l[31:38]),
+                  float(l[39:46]),
+                  float(l[47:54]),
+                  float(l[55:60]),
+                  float(l[61:66]),
+                  str(l[76:78]),
+                  '',
                 ]
                 for l in lines]
-
+    print(processed[0])
     atom_dict[key] = processed
 
 
