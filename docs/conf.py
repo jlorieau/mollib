@@ -55,7 +55,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = 'mollib'
-copyright = u'2016, Justin L Lorieau'
+copyright = u'2016-2017, Justin L Lorieau'
 author = 'Justin L Lorieau'
 
 # The version info for the project you're documenting, acts as replacement for
