@@ -148,6 +148,7 @@ class PDBReader(MoleculeReader):
             If a molecule is unavailable or cannot be created, None will be
             returned.
         """
+
         # First see if a model_id was specified and whether its in the allowed
         # model_ids. If not, return no molecules
         if (model_id is not None and
@@ -221,11 +222,6 @@ class PDBReader(MoleculeReader):
                    "values '{}' were received.")
             raise TypeError(msg.format(model_ids))
 
-        # If model_ids aren't specified, see if there are any settings that
-        # might influence which models to select
-        if model_ids is None and settings.pdb_first_model:
-            model_ids = [1, ]
-
         # Prepare the list of returned molecules. The keys are the model_id
         # numbers and the values are the molecules.
         molecules = []
@@ -250,7 +246,6 @@ class PDBReader(MoleculeReader):
             # This part checks to see if a new molecule should be assigned
             # based on a new model
             if k.startswith('MODEL'):
-
                 # See if this is a new model and try to create it if needed.
                 model_id = parse_model_line(next(lines))
                 current_model_id = model_id

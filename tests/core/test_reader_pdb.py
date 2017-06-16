@@ -46,3 +46,13 @@ def test_select_models():
     for model_id, model in zip(model_ids, models):
         assert model.model_id == model_id
         assert len(list(model.atoms)) == len(list(models[0].atoms))
+
+
+def test_all_models():
+    """Tests the loading of all models."""
+
+    # The '2kxa' structure should have 10 models
+    mr = MoleculeReader()
+    models = mr.read('2kxa')
+
+    assert len(models) == 10
