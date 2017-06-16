@@ -3,6 +3,7 @@
 from math import sqrt
 
 from mollib import Molecule
+from mollib.core import MoleculeReader
 
 
 def test_single_model():
@@ -31,3 +32,17 @@ def test_single_model():
         # If it's a different model, the RMSD should be at least 0.2A
         else:
             assert rmsd > 0.2
+
+
+def test_select_models():
+    """Tests the loading of select models"""
+
+    model_ids = [1, 5, 8]
+    mr = MoleculeReader()
+    models = mr.read(identifiers_or_files='2kxa', model_ids=model_ids)
+
+    assert len(models) == 3
+
+    for model_id, model in zip(model_ids, models):
+        assert model.model_id == model_id
+        assert len(list(model.atoms)) == len(list(models[0].atoms))
