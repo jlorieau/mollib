@@ -57,6 +57,10 @@ Arguments
     was not accounted for in the reported RDCs. By default, this value is
     1.0.
 
+.. note:: The models option (``-m``/``--models``) will load the models as
+          multiple molecules to be fit together in the SVD rather than conduct
+          a separate SVD for each.
+
 Fixer Arguments
 ^^^^^^^^^^^^^^^
 
