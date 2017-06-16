@@ -4,7 +4,7 @@ Reader Factories
 Base Reader
 -----------
 
-.. automodule:: mollib.core.readers.base
+.. autoclass:: mollib.MoleculeReader
     :members:
 
 PDB Readers
