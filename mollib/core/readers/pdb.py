@@ -174,7 +174,8 @@ class PDBReader(MoleculeReader):
 
         # In this case, there are no source molecules and the molecule has an
         # allowed model_id (or it's not a model at all). Create a new molecule.
-        molecule = self.molecule_class(name=molecule_name)
+        molecule = self.molecule_class(identifier=molecule_name,
+                                       use_reader=False)
         molecule.model_id = model_id
         molecules.append(molecule)
         return molecule
