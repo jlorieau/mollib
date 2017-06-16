@@ -49,6 +49,11 @@ class Process(Plugin):
                                    help='Save fetched files to the local '
                                         'directory.')
 
+            # Specify specific models
+            subparser.add_argument('-m', '--models',
+                                   nargs='*', type=int,
+                                   help='The models numbers to analyze.')
+
         # Add the output file option only to the process parser
         subparser = self.command_subparsers['process']
 
@@ -111,7 +116,7 @@ class Process(Plugin):
             # Write the file.
             output_filename = output_filename[0]
             msg = "Writing ({}) to {}."
-            logging.debug(msg.format(molecule.name, output_filename))
+            logging.debug(msg.format(molecule.fullname, output_filename))
 
             molecule.write_pdb(output_filename)
 

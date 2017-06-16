@@ -1,5 +1,6 @@
 usage: mollib process [-h] -i id/filename [id/filename ...] [-c filename] [-l]
-                      [-s] [-o [filename [filename ...]]] [--hydrogenate]
+                      [-s] [-m [MODELS [MODELS ...]]]
+                      [-o [filename [filename ...]]] [--hydrogenate]
 
 arguments:
   -h, --help            show this help message and exit
@@ -10,6 +11,8 @@ arguments:
                         The configuration filename
   -l                    List details on the molecule(s)
   -s, --save            Save fetched files to the local directory.
+  -m [MODELS [MODELS ...]], --models [MODELS [MODELS ...]]
+                        The models numbers to analyze.
   -o [filename [filename ...]], --out [filename [filename ...]]
                         The output filename(s) for the structure(s)
   --hydrogenate         Strip hydrogens and re-add them before analysis

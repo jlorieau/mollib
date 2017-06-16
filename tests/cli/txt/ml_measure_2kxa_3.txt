@@ -1,4 +1,4 @@
-Table: Ramachandran angles for 2KXA
+Table: Ramachandran angles for 2KXA-1
 
 Residue  Phi (deg)  Psi (deg)  Classification  Minor   E (kT) / Prob.  
 -------- ---------- ---------- --------------- ------- ----------------

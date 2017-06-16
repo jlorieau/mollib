@@ -3,7 +3,7 @@
 .. raw:: html
 
     <div class="highlight"><pre><span></span><span class="gp">$</span>  ml pa -i 2KXA -a 2KXA
-    <span class="go"><font style="font-weight:bold;">Table: </font>Summary SVD Statistics for Molecule 2KXA</span>
+    <span class="go"><font style="font-weight:bold;">Table: </font>Summary SVD Statistics for Molecule 2KXA-1</span>
     
     <span class="go">---------- ---------------- --------------- ----------------- -------------- -----------</span>
     <span class="go">Overall    Q (%): 18.2      RMS: 2.0        count: 58                                   </span>
@@ -19,7 +19,7 @@
     <span class="go">Angles     Z (deg): 230.1   Y&#39; (deg): 83.5  Z&#39;&#39; (deg): 104.9                            </span>
     <span class="go">---------- ---------------- --------------- ----------------- -------------- -----------</span>
     
-    <span class="go"><font style="font-weight:bold;">Table: </font>Observed and Predicted RDCs and RACS for Molecule 2KXA</span>
+    <span class="go"><font style="font-weight:bold;">Table: </font>Observed and Predicted RDCs and RACS for Molecule 2KXA-1</span>
     
     <span class="go"><font style="font-weight:bold;">Interaction</font>   <font style="font-weight:bold;">Value</font>   <font style="font-weight:bold;">Error</font>  <font style="font-weight:bold;">Predicted</font>  <font style="font-weight:bold;">Deviation</font>  </span>
     <span class="go">------------- ------- ------ ---------- -----------</span>
@@ -93,7 +93,7 @@
 
   \begin{sphinxVerbatim}[commandchars=\\\{\},fontsize=\small]
   \textcolor{darkorange}{$}  ml pa -i 2KXA -a 2KXA
-  \textbf{Table: }Summary SVD Statistics for Molecule 2KXA
+  \textbf{Table: }Summary SVD Statistics for Molecule 2KXA-1
   
   -{-}-{-}-{-}-{-}-{-} -{-}-{-}-{-}-{-}-{-}-{-}-{-}-{-} -{-}-{-}-{-}-{-}-{-}-{-}-{-}- -{-}-{-}-{-}-{-}-{-}-{-}-{-}-{-}- -{-}-{-}-{-}-{-}-{-}-{-}-{-} -{-}-{-}-{-}-{-}-{-}-
   Overall    Q (%): 18.2      RMS: 2.0        count: 58                                   
@@ -109,7 +109,7 @@
   Angles     Z (deg): 230.1   Y' (deg): 83.5  Z'' (deg): 104.9                            
   -{-}-{-}-{-}-{-}-{-} -{-}-{-}-{-}-{-}-{-}-{-}-{-}-{-} -{-}-{-}-{-}-{-}-{-}-{-}-{-}- -{-}-{-}-{-}-{-}-{-}-{-}-{-}-{-}- -{-}-{-}-{-}-{-}-{-}-{-}-{-} -{-}-{-}-{-}-{-}-{-}-
   
-  \textbf{Table: }Observed and Predicted RDCs and RACS for Molecule 2KXA
+  \textbf{Table: }Observed and Predicted RDCs and RACS for Molecule 2KXA-1
   
   \textbf{Interaction}   \textbf{Value}   \textbf{Error}  \textbf{Predicted}  \textbf{Deviation}  
   -{-}-{-}-{-}-{-}-{-}-{-}- -{-}-{-}-{-}- -{-}-{-}-{-} -{-}-{-}-{-}-{-}-{-} -{-}-{-}-{-}-{-}-{-}-

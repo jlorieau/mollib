@@ -1,4 +1,4 @@
-Table: Angles for 2MJB
+Table: Angles for 2MJB-1
 
 Num  Atom 1   Atom 2   Atom 3   Angle (deg)  
 ---- -------- -------- -------- -------------

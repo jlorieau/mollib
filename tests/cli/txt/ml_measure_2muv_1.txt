@@ -1,4 +1,4 @@
-Table: Distances for 2MUV
+Table: Distances for 2MUV-1
 
 Num  Atom 1    Atom 2   Dist. (A)  
 ---- --------- -------- -----------

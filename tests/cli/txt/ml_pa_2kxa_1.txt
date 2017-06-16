@@ -1,4 +1,4 @@
-Table: Summary SVD Statistics for Molecule 2KXA
+Table: Summary SVD Statistics for Molecule 2KXA-1
 
 ---------- ---------------- --------------- ----------------- -------------- -----------
 Overall    Q (%): 18.2      RMS: 2.0        count: 58                                   
@@ -14,7 +14,7 @@ Saupe      Szz: -0.0007373  Syy: 0.0003228  Sxx: 0.0004144
 Angles     Z (deg): 230.1   Y' (deg): 83.5  Z'' (deg): 104.9                            
 ---------- ---------------- --------------- ----------------- -------------- -----------
 
-Table: Observed and Predicted RDCs and RACS for Molecule 2KXA
+Table: Observed and Predicted RDCs and RACS for Molecule 2KXA-1
 
 Interaction   Value   Error  Predicted  Deviation  
 ------------- ------- ------ ---------- -----------

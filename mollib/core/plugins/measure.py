@@ -117,7 +117,7 @@ class Measure(Plugin):
         if args.command == 'measure':
             if getattr(args, 'dist', False):
                 table = MDTable('Num', 'Atom 1', 'Atom 2', 'Dist. (A)')
-                table.title = 'Distances for {}'.format(molecule.name)
+                table.title = 'Distances for {}'.format(molecule.fullname)
 
                 dists_list = []
                 for selector1, selector2 in args.dist:
@@ -153,7 +153,7 @@ class Measure(Plugin):
             if getattr(args, 'angle', False):
                 table = MDTable('Num', 'Atom 1', 'Atom 2', 'Atom 3',
                                 'Angle (deg)')
-                table.title = 'Angles for {}'.format(molecule.name)
+                table.title = 'Angles for {}'.format(molecule.fullname)
 
                 angs_list = []
 
@@ -192,7 +192,7 @@ class Measure(Plugin):
             if getattr(args, 'dihedral', False):
                 table = MDTable('Num', 'Atom 1', 'Atom 2', 'Atom 3', 'Atom 4',
                                 'Dihedral (deg)')
-                table.title = 'Dihedrals for {}'.format(molecule.name)
+                table.title = 'Dihedrals for {}'.format(molecule.fullname)
 
                 dihs_list = []
 

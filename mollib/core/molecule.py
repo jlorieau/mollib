@@ -184,13 +184,16 @@ class Molecule(dict):
         super(Molecule, self).__init__(*args, **kwargs)
 
     def __repr__(self):
-        if self.model_id is not None:
-            name = '{}-{}'.format(self.name, self.model_id)
-        else:
-            name = self.name
-        return ("Molecule ({}):".format(name) +
+        return ("Molecule ({}):".format(self.fullname) +
                 "    {} chains, {} residues, {} atoms."
                 .format(self.chain_size, self.residue_size, self.atom_size))
+
+    @property
+    def fullname(self):
+        if self.model_id is not None:
+            return '{}-{}'.format(self.name, self.model_id)
+        else:
+            return self.name
 
     # Class properties
 

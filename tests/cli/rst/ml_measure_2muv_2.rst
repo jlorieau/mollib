@@ -3,7 +3,7 @@
 .. raw:: html
 
     <div class="highlight"><pre><span></span><span class="gp">$</span>  ml measure -i 2MUV -d A:D.20:21.CA A:D.20:21.CA --exclude-intra --exclude-intra-chain
-    <span class="go"><font style="font-weight:bold;">Table: </font>Distances for 2MUV</span>
+    <span class="go"><font style="font-weight:bold;">Table: </font>Distances for 2MUV-1</span>
     
     <span class="go"><font style="font-weight:bold;">Num</font>  <font style="font-weight:bold;">Atom 1</font>    <font style="font-weight:bold;">Atom 2</font>    <font style="font-weight:bold;">Dist. (A)</font>  </span>
     <span class="go">---- --------- --------- -----------</span>
@@ -40,7 +40,7 @@
 
   \begin{sphinxVerbatim}[commandchars=\\\{\},fontsize=\small]
   \textcolor{darkorange}{$}  ml measure -i 2MUV -d A:D.20:21.CA A:D.20:21.CA -{-}exclude-intra -{-}exclude-intra-chain
-  \textbf{Table: }Distances for 2MUV
+  \textbf{Table: }Distances for 2MUV-1
   
   \textbf{Num}  \textbf{Atom 1}    \textbf{Atom 2}    \textbf{Dist. (A)}  
   -{-}-{-} -{-}-{-}-{-}-{-}- -{-}-{-}-{-}-{-}- -{-}-{-}-{-}-{-}-{-}-

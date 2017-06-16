@@ -1,4 +1,4 @@
-Table: Hydrogen bond listing for 2KXA
+Table: Hydrogen bond listing for 2KXA-1
 
 Num  Donor       Acceptor    Classification                    E (kT) / Prob.  
 ---- ----------- ----------- --------------------------------- ----------------

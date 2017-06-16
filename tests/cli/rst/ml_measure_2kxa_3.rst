@@ -3,7 +3,7 @@
 .. raw:: html
 
     <div class="highlight"><pre><span></span><span class="gp">$</span>  ml measure -i 2KXA --rama
-    <span class="go"><font style="font-weight:bold;">Table: </font>Ramachandran angles for 2KXA</span>
+    <span class="go"><font style="font-weight:bold;">Table: </font>Ramachandran angles for 2KXA-1</span>
     
     <span class="go"><font style="font-weight:bold;">Residue</font>  <font style="font-weight:bold;">Phi (deg)</font>  <font style="font-weight:bold;">Psi (deg)</font>  <font style="font-weight:bold;">Classification</font>  <font style="font-weight:bold;">Minor</font>   <font style="font-weight:bold;">E (kT) / Prob.</font>  </span>
     <span class="go">-------- ---------- ---------- --------------- ------- ----------------</span>
@@ -40,7 +40,7 @@
 
   \begin{sphinxVerbatim}[commandchars=\\\{\},fontsize=\small]
   \textcolor{darkorange}{$}  ml measure -i 2KXA -{-}rama
-  \textbf{Table: }Ramachandran angles for 2KXA
+  \textbf{Table: }Ramachandran angles for 2KXA-1
   
   \textbf{Residue}  \textbf{Phi (deg)}  \textbf{Psi (deg)}  \textbf{Classification}  \textbf{Minor}   \textbf{E (kT) / Prob.}  
   -{-}-{-}-{-}-{-} -{-}-{-}-{-}-{-}-{-} -{-}-{-}-{-}-{-}-{-} -{-}-{-}-{-}-{-}-{-}-{-}-{-}- -{-}-{-}-{-}- -{-}-{-}-{-}-{-}-{-}-{-}-{-}-{-}

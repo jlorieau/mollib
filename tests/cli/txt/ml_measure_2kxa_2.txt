@@ -1,4 +1,4 @@
-Table: Dihedrals for 2KXA
+Table: Dihedrals for 2KXA-1
 
 Num  Atom 1  Atom 2  Atom 3   Atom 4  Dihedral (deg)  
 ---- ------- ------- -------- ------- ----------------

@@ -1,10 +1,10 @@
-Table: Distances for 2KXA
+Table: Distances for 2KXA-1
 
 Num  Atom 1   Atom 2   Dist. (A)  
 ---- -------- -------- -----------
 1    A.A5.HA  A.W21.H  3.30       
 
-Table: Distances for 2LWA
+Table: Distances for 2LWA-1
 
 Num  Atom 1   Atom 2   Dist. (A)  
 ---- -------- -------- -----------

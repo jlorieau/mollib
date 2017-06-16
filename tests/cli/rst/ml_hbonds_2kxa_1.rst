@@ -3,7 +3,7 @@
 .. raw:: html
 
     <div class="highlight"><pre><span></span><span class="gp">$</span>  ml hbonds -i 2KXA
-    <span class="go"><font style="font-weight:bold;">Table: </font>Hydrogen bond listing for 2KXA</span>
+    <span class="go"><font style="font-weight:bold;">Table: </font>Hydrogen bond listing for 2KXA-1</span>
     
     <span class="go"><font style="font-weight:bold;">Num</font>  <font style="font-weight:bold;">Donor</font>       <font style="font-weight:bold;">Acceptor</font>    <font style="font-weight:bold;">Classification</font>                    <font style="font-weight:bold;">E (kT) / Prob.</font>  </span>
     <span class="go">---- ----------- ----------- --------------------------------- ----------------</span>
@@ -37,7 +37,7 @@
 
   \begin{sphinxVerbatim}[commandchars=\\\{\},fontsize=\small]
   \textcolor{darkorange}{$}  ml hbonds -i 2KXA
-  \textbf{Table: }Hydrogen bond listing for 2KXA
+  \textbf{Table: }Hydrogen bond listing for 2KXA-1
   
   \textbf{Num}  \textbf{Donor}       \textbf{Acceptor}    \textbf{Classification}                    \textbf{E (kT) / Prob.}  
   -{-}-{-} -{-}-{-}-{-}-{-}-{-}- -{-}-{-}-{-}-{-}-{-}- -{-}-{-}-{-}-{-}-{-}-{-}-{-}-{-}-{-}-{-}-{-}-{-}-{-}-{-}-{-}-{-}- -{-}-{-}-{-}-{-}-{-}-{-}-{-}-{-}

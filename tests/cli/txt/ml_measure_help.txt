@@ -1,5 +1,5 @@
 usage: mollib measure [-h] -i id/filename [id/filename ...] [-c filename] [-l]
-                      [-s]
+                      [-s] [-m [MODELS [MODELS ...]]]
                       [-d atom atom | -a atom atom atom | -dih atom atom atom atom | -w atom atom]
                       [--stats] [--only-intra] [--exclude-intra]
                       [--only-intra-chain] [--exclude-intra-chain]
@@ -15,6 +15,8 @@ arguments:
                         The configuration filename
   -l                    List details on the molecule(s)
   -s, --save            Save fetched files to the local directory.
+  -m [MODELS [MODELS ...]], --models [MODELS [MODELS ...]]
+                        The models numbers to analyze.
   --hydrogenate         Strip hydrogens and re-add them before analysis
 
 measurement options:

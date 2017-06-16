@@ -1,4 +1,4 @@
-Table: Summary SVD Statistics for Molecule 2MJB
+Table: Summary SVD Statistics for Molecule 2MJB-1
 
 ---------- --------------- ---------------- ----------------- --------------- -----------
 Overall    Q (%): 18.7     RMS: 2.71        count: 461                                   

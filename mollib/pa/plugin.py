@@ -195,32 +195,32 @@ class PA(Plugin):
             if len(molecules) > 1:
                 # Make title for stats table
                 title = "Summary SVD Statistics for Molecules "
-                title += word_list([m.name for m in molecules])
+                title += word_list([m.fullname for m in molecules])
                 table.title = title
 
                 # Make title for the fit data table
                 title = "Observed and Predicted RDCs and RACS for Molecules "
-                title += word_list([m.name for m in molecules])
+                title += word_list([m.fullname for m in molecules])
                 tables['fit'].title = title
 
                 # Make title for the back-calculated predicted data
                 title = "Back-calculated RDCs and RACS for Molecules "
-                title += word_list([m.name for m in molecules])
+                title += word_list([m.fullname for m in molecules])
                 tables['pred'].title = title
             else:
                 # Make title for stats table
                 title = "Summary SVD Statistics for Molecule "
-                title += molecules[0].name
+                title += molecules[0].fullname
                 table.title = title
 
                 # Make title for the fit data table
                 title = "Observed and Predicted RDCs and RACS for Molecule "
-                title += molecules[0].name
+                title += molecules[0].fullname
                 tables['fit'].title = title
 
                 # Make title for the back-calculated predicted data
                 title = "Back-calculated RDCs and RACS for Molecule "
-                title += molecules[0].name
+                title += molecules[0].fullname
                 tables['pred'].title = title
 
             # Prepare the standard output

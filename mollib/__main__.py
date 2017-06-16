@@ -106,8 +106,15 @@ def main():
     config.read(config_files)
     load_settings(config)
 
-    # Prepare and preprocess the structure
-    molecules = [mollib.Molecule(identifier) for identifier in args.i[0]]
+    # Load the molecules
+    if args.models:
+        molecules = []
+        mr = mollib.MoleculeReader()
+        model_ids = args.models
+        for identifier in args.i[0]:
+            molecules += mr.read(identifier, model_ids=model_ids)
+    else:
+        molecules = [mollib.Molecule(identifier) for identifier in args.i[0]]
 
     # Find the relevant plugins to execute
     active_plugins = plugin_manager.plugins()

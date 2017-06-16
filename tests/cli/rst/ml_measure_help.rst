@@ -4,7 +4,7 @@
 
     <div class="highlight"><pre><span></span><span class="gp">$</span>  ml measure --help
     <span class="go">usage: mollib measure [-h] -i id/filename [id/filename ...] [-c filename] [-l]</span>
-    <span class="go">                      [-s]</span>
+    <span class="go">                      [-s] [-m [MODELS [MODELS ...]]]</span>
     <span class="go">                      [-d atom atom | -a atom atom atom | -dih atom atom atom atom | -w atom atom]</span>
     <span class="go">                      [--stats] [--only-intra] [--exclude-intra]</span>
     <span class="go">                      [--only-intra-chain] [--exclude-intra-chain]</span>
@@ -20,6 +20,8 @@
     <span class="go">                        The configuration filename</span>
     <span class="go">  -l                    List details on the molecule(s)</span>
     <span class="go">  -s, --save            Save fetched files to the local directory.</span>
+    <span class="go">  -m [MODELS [MODELS ...]], --models [MODELS [MODELS ...]]</span>
+    <span class="go">                        The models numbers to analyze.</span>
     <span class="go">  --hydrogenate         Strip hydrogens and re-add them before analysis</span>
     
     <span class="go">measurement options:</span>
@@ -58,7 +60,7 @@
   \begin{sphinxVerbatim}[commandchars=\\\{\},fontsize=\small]
   \textcolor{darkorange}{$}  ml measure -{-}help
   usage: mollib measure [-h] -i id/filename [id/filename ...] [-c filename] [-l]
-                        [-s]
+                        [-s] [-m [MODELS [MODELS ...]]]
                         [-d atom atom | -a atom atom atom | -dih atom atom atom atom | -w atom atom]
                         [-{-}stats] [-{-}only-intra] [-{-}exclude-intra]
                         [-{-}only-intra-chain] [-{-}exclude-intra-chain]
@@ -74,6 +76,8 @@
                           The configuration filename
     -l                    List details on the molecule(s)
     -s, -{-}save            Save fetched files to the local directory.
+    -m [MODELS [MODELS ...]], -{-}models [MODELS [MODELS ...]]
+                          The models numbers to analyze.
     -{-}hydrogenate         Strip hydrogens and re-add them before analysis
   
   measurement options:

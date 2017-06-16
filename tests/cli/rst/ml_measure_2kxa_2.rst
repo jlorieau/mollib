@@ -3,7 +3,7 @@
 .. raw:: html
 
     <div class="highlight"><pre><span></span><span class="gp">$</span>  ml measure -i 2KXA -dih 2:6.C 2:6.N 2:6.CA 2:6.C --only-bonded --stats
-    <span class="go"><font style="font-weight:bold;">Table: </font>Dihedrals for 2KXA</span>
+    <span class="go"><font style="font-weight:bold;">Table: </font>Dihedrals for 2KXA-1</span>
     
     <span class="go"><font style="font-weight:bold;">Num</font>  <font style="font-weight:bold;">Atom 1</font>  <font style="font-weight:bold;">Atom 2</font>  <font style="font-weight:bold;">Atom 3</font>   <font style="font-weight:bold;">Atom 4</font>  <font style="font-weight:bold;">Dihedral (deg)</font>  </span>
     <span class="go">---- ------- ------- -------- ------- ----------------</span>
@@ -22,7 +22,7 @@
 
   \begin{sphinxVerbatim}[commandchars=\\\{\},fontsize=\small]
   \textcolor{darkorange}{$}  ml measure -i 2KXA -dih 2:6.C 2:6.N 2:6.CA 2:6.C -{-}only-bonded -{-}stats
-  \textbf{Table: }Dihedrals for 2KXA
+  \textbf{Table: }Dihedrals for 2KXA-1
   
   \textbf{Num}  \textbf{Atom 1}  \textbf{Atom 2}  \textbf{Atom 3}   \textbf{Atom 4}  \textbf{Dihedral (deg)}  
   -{-}-{-} -{-}-{-}-{-}- -{-}-{-}-{-}- -{-}-{-}-{-}-{-} -{-}-{-}-{-}- -{-}-{-}-{-}-{-}-{-}-{-}-{-}-{-}
