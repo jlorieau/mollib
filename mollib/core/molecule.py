@@ -139,7 +139,6 @@ class Molecule(dict):
     residue_class = Residue
     atom_class = Atom
 
-
     def __new__(cls, *args, **kwargs):
         "Keep track of class instances"
         instance = dict.__new__(cls, *args, **kwargs)
