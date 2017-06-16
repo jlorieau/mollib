@@ -14,10 +14,7 @@ The molecule object.
 import re
 import weakref
 import logging
-import gzip
-import io
 import itertools
-from collections import OrderedDict
 from math import cos, sin, pi
 import os.path
 
@@ -27,7 +24,6 @@ from .atom import Atom
 from .residue import Residue
 from .chain import Chain
 from .topology import topology
-from mollib.utils.net import get_or_fetch
 from mollib.utils.iteration import grouper
 from . import settings
 
@@ -155,7 +151,8 @@ class Molecule(dict):
             cls._instances.append(ref)
         return instance
 
-    def __init__(self, identifier, use_reader=True, *args, **kwargs):
+    def __init__(self, identifier, model_id=None, use_reader=True,
+                 *args, **kwargs):
         """Molecule constructor that accepts an identifier.
 
         Parameters
@@ -173,17 +170,16 @@ class Molecule(dict):
         name = os.path.splitext(name)[0]
 
         self.name = name
-        self.model_id = None
         self.identifier = identifier
         self.connections = []
         self._parameters = {}
         self.cache = {}
 
-        # Read in the data
+        # Read in the data. The reader sets the model_id attribute
         if use_reader:
             from . import readers
             mr = readers.MoleculeReader()
-            mr.read(identifiers_or_files=identifier,
+            mr.read(identifiers_or_files=identifier, model_ids=model_id,
                     source_molecules=self)
 
         super(Molecule, self).__init__(*args, **kwargs)
