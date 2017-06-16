@@ -74,7 +74,6 @@ def main():
                         version=('%(prog)s ' + mollib.__version__.__version__),
                         help='Show the program version')
 
-    #TODO: Add argument to just download pdb file ('-g --get')
     # Load the plugins
     plugin_manager = PluginManager(parser=parser, subparser=subparsers)
     parser = plugin_manager.process_parsers()
