@@ -12,8 +12,8 @@ Arguments
 ---------
 
 ``-i`` / ``--in`` ``id/filename``
-    **(required)** The listing of one or more structural identifiers
-    (ex: PDB file identifiers) or filenames.
+    **(required)** One or more structural identifiers (ex: PDB file
+    identifiers) or filenames to load.
 
     If the structure could not be found locally, a copy will be
     downloaded and cached for further analysis.
@@ -38,6 +38,10 @@ Arguments
 
 ``-s`` / ``--save``
     Save fetched files from the internet to the local directory.
+
+``-m`` / ``--models``
+    The specific model numbers to load. By default, only the first model is
+    loaded.
 
 ``-l``
     List details on the molecule, including the number of chains, residues
