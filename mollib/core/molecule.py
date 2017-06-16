@@ -171,6 +171,7 @@ class Molecule(dict):
 
         self.name = name
         self.identifier = identifier
+        self.model_id = None
         self.connections = []
         self._parameters = {}
         self.cache = {}
