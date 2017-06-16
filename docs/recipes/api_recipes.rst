@@ -68,8 +68,8 @@ accessed by chain id (ex: ``'A'``), residues are accessed by residue number
     [A.F3.N, A.F3.CA, A.F3.C, A.F3.O, A.F3.CB], ...
 
     >>> CA = F3['CA']
-    >>> print(round(CA.x, 1), round(CA.y, 1), round(CA.z, 1))
-    (13.2, -2.7, 6.3)
+    >>> print("position: {:.1f} {:.1f} {:.1f}".format(CA.x, CA.y, CA.z))
+    position: 13.2 -2.7 6.3
 
     >>> mol['A'][3]['CA'] ==  CA
     True
