@@ -18,6 +18,22 @@ class MoleculeReader(object):
     
     This class is the interface used by read molecules. Sub-classes implement
     the different readers.
+    
+    Examples
+    --------
+    >>> from mollib import MoleculeReader
+    >>> mr = MoleculeReader()
+    >>> molecules = mr.read('2kxa')  # Read in the 10 models
+    >>> print(len(molecules))
+    10
+    >>> print(molecules[0])
+    Molecule (2kxa-1):    1 chains, 24 residues, 332 atoms.
+    >>> molecules = mr.read('2kxa', model_ids=[1, 5, 8])
+    >>> for i in molecules:
+    ...     print(i)
+    Molecule (2kxa-1):    1 chains, 24 residues, 332 atoms.
+    Molecule (2kxa-5):    1 chains, 24 residues, 332 atoms.
+    Molecule (2kxa-8):    1 chains, 24 residues, 332 atoms.
     """
 
     #: The order to run the reader (int). To disable, set the order to None.
