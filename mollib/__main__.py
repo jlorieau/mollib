@@ -101,7 +101,7 @@ def main():
     # Read in the configuration file(s)
     config_files = [os.path.expanduser('~/.mollibrc'), ]
     if args.config:
-        config_files.append(args.config)
+        config_files.append(args.config[0])
     config = configparser.ConfigParser()
     config.read(config_files)
     load_settings(config)
