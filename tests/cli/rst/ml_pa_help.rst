@@ -4,7 +4,7 @@
 
     <div class="highlight"><pre><span></span><span class="gp">$</span>  ml pa --help
     <span class="go">usage: mollib pa [-h] -i id/filename [id/filename ...] [-c filename] [-l] [-s]</span>
-    <span class="go">                 [-m [MODELS [MODELS ...]]] [--hydrogenate] -a id/filename</span>
+    <span class="go">                 [-m [MODELS [MODELS ...]]] [--hydrogenate] -d id/filename</span>
     <span class="go">                 [id/filename ...] [-o filename] [-p filename] [--summary]</span>
     <span class="go">                 [--set id]</span>
     <span class="go">                 [--exclude [interaction-type [interaction-type ...]]]</span>
@@ -25,7 +25,7 @@
     <span class="go">  -m [MODELS [MODELS ...]], --models [MODELS [MODELS ...]]</span>
     <span class="go">                        The models numbers to analyze.</span>
     <span class="go">  --hydrogenate         Strip hydrogens and re-add them before analysis</span>
-    <span class="go">  -a id/filename [id/filename ...], --alignment id/filename [id/filename ...]</span>
+    <span class="go">  -d id/filename [id/filename ...], --data id/filename [id/filename ...]</span>
     <span class="go">                        (required) Alignment file or identifier with RDC and</span>
     <span class="go">                        RACS data</span>
     <span class="go">  -o filename, --out filename</span>
@@ -63,7 +63,7 @@
   \begin{sphinxVerbatim}[commandchars=\\\{\},fontsize=\small]
   \textcolor{darkorange}{$}  ml pa -{-}help
   usage: mollib pa [-h] -i id/filename [id/filename ...] [-c filename] [-l] [-s]
-                   [-m [MODELS [MODELS ...]]] [-{-}hydrogenate] -a id/filename
+                   [-m [MODELS [MODELS ...]]] [-{-}hydrogenate] -d id/filename
                    [id/filename ...] [-o filename] [-p filename] [-{-}summary]
                    [-{-}set id]
                    [-{-}exclude [interaction-type [interaction-type ...]]]
@@ -84,7 +84,7 @@
     -m [MODELS [MODELS ...]], -{-}models [MODELS [MODELS ...]]
                           The models numbers to analyze.
     -{-}hydrogenate         Strip hydrogens and re-add them before analysis
-    -a id/filename [id/filename ...], -{-}alignment id/filename [id/filename ...]
+    -d id/filename [id/filename ...], -{-}data id/filename [id/filename ...]
                           (required) Alignment file or identifier with RDC and
                           RACS data
     -o filename, -{-}out filename

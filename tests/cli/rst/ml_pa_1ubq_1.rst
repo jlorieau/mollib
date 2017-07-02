@@ -2,7 +2,7 @@
 
 .. raw:: html
 
-    <div class="highlight"><pre><span></span><span class="gp">$</span>  ml -s pa -i 1UBQ -a 2MJB --set <span class="m">0</span> --fix-outliers --project-methyls <span class="se">\</span>
+    <div class="highlight"><pre><span></span><span class="gp">$</span>  ml -s pa -i 1UBQ -d 2MJB --set <span class="m">0</span> --fix-outliers --project-methyls <span class="se">\</span>
     <span class="go">  --hydrogenate --summary</span>
     <span class="go"><font style="font-weight:bold;">Table: </font>Summary SVD Statistics for Molecule 1UBQ</span>
     
@@ -38,7 +38,7 @@
 .. raw:: latex
 
   \begin{sphinxVerbatim}[commandchars=\\\{\},fontsize=\small]
-  \textcolor{darkorange}{$}  ml -s pa -i 1UBQ -a 2MJB -{-}set 0 -{-}fix-outliers -{-}project-methyls \textbackslash
+  \textcolor{darkorange}{$}  ml -s pa -i 1UBQ -d 2MJB -{-}set 0 -{-}fix-outliers -{-}project-methyls \textbackslash
   -{-}hydrogenate -{-}summary
   \textbf{Table: }Summary SVD Statistics for Molecule 1UBQ
   

@@ -37,7 +37,7 @@ class PA(Plugin):
         "Process the parser for the 'pa' command."
         p = self.command_subparsers['pa']
 
-        p.add_argument('-a', '--alignment',
+        p.add_argument('-d', '--data',
                        action='append', nargs='+',
                        required=True, metavar='id/filename',
                        help="(required) Alignment file or identifier with RDC "
@@ -153,7 +153,7 @@ class PA(Plugin):
         if args.command == 'pa':
             # Get the alignment data
             data = {}
-            for data_filename in args.alignment[0]:
+            for data_filename in args.data[0]:
                 # verify that the file exists
                 file_path = get_or_fetch(data_filename, extensions='mr.gz',
                                          urls=settings.mr_urls,

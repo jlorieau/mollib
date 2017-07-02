@@ -1,1 +1,1 @@
-ml pa -i 2KXA -a 2KXA
+ml pa -i 2KXA -d 2KXA

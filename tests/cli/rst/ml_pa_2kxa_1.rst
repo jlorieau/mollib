@@ -2,7 +2,7 @@
 
 .. raw:: html
 
-    <div class="highlight"><pre><span></span><span class="gp">$</span>  ml pa -i 2KXA -a 2KXA
+    <div class="highlight"><pre><span></span><span class="gp">$</span>  ml pa -i 2KXA -d 2KXA
     <span class="go"><font style="font-weight:bold;">Table: </font>Summary SVD Statistics for Molecule 2KXA-1</span>
     
     <span class="go">---------- ---------------- --------------- ----------------- -------------- -----------</span>
@@ -92,7 +92,7 @@
 .. raw:: latex
 
   \begin{sphinxVerbatim}[commandchars=\\\{\},fontsize=\small]
-  \textcolor{darkorange}{$}  ml pa -i 2KXA -a 2KXA
+  \textcolor{darkorange}{$}  ml pa -i 2KXA -d 2KXA
   \textbf{Table: }Summary SVD Statistics for Molecule 2KXA-1
   
   -{-}-{-}-{-}-{-}-{-} -{-}-{-}-{-}-{-}-{-}-{-}-{-}-{-} -{-}-{-}-{-}-{-}-{-}-{-}-{-}- -{-}-{-}-{-}-{-}-{-}-{-}-{-}-{-}- -{-}-{-}-{-}-{-}-{-}-{-}-{-} -{-}-{-}-{-}-{-}-{-}-

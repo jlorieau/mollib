@@ -2,7 +2,7 @@
 
 .. raw:: html
 
-    <div class="highlight"><pre><span></span><span class="gp">$</span>  ml -s pa -i 2MJB -a 2MJB --set <span class="m">0</span> --exclude CE-HE CD-HD CE-SD --fix-outliers <span class="se">\</span>
+    <div class="highlight"><pre><span></span><span class="gp">$</span>  ml -s pa -i 2MJB -d 2MJB --set <span class="m">0</span> --exclude CE-HE CD-HD CE-SD --fix-outliers <span class="se">\</span>
     <span class="go">  --project-methyls --summary</span>
     <span class="go"><font style="font-weight:bold;">Table: </font>Summary SVD Statistics for Molecule 2MJB-1</span>
     
@@ -35,7 +35,7 @@
 .. raw:: latex
 
   \begin{sphinxVerbatim}[commandchars=\\\{\},fontsize=\small]
-  \textcolor{darkorange}{$}  ml -s pa -i 2MJB -a 2MJB -{-}set 0 -{-}exclude CE-HE CD-HD CE-SD -{-}fix-outliers \textbackslash
+  \textcolor{darkorange}{$}  ml -s pa -i 2MJB -d 2MJB -{-}set 0 -{-}exclude CE-HE CD-HD CE-SD -{-}fix-outliers \textbackslash
   -{-}project-methyls -{-}summary
   \textbf{Table: }Summary SVD Statistics for Molecule 2MJB-1
   

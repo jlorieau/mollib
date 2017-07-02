@@ -1,5 +1,5 @@
 usage: mollib pa [-h] -i id/filename [id/filename ...] [-c filename] [-l] [-s]
-                 [-m [MODELS [MODELS ...]]] [--hydrogenate] -a id/filename
+                 [-m [MODELS [MODELS ...]]] [--hydrogenate] -d id/filename
                  [id/filename ...] [-o filename] [-p filename] [--summary]
                  [--set id]
                  [--exclude [interaction-type [interaction-type ...]]]
@@ -20,7 +20,7 @@ arguments:
   -m [MODELS [MODELS ...]], --models [MODELS [MODELS ...]]
                         The models numbers to analyze.
   --hydrogenate         Strip hydrogens and re-add them before analysis
-  -a id/filename [id/filename ...], --alignment id/filename [id/filename ...]
+  -d id/filename [id/filename ...], --data id/filename [id/filename ...]
                         (required) Alignment file or identifier with RDC and
                         RACS data
   -o filename, --out filename

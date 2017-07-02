@@ -12,7 +12,7 @@ outliers (yellow) and bad outliers (red).
 Arguments
 ---------
 
-``-a`` / ``--alignment`` ``filename``
+``-d`` / ``--data`` ``filename``
     The file(s) with the RDC and RACS alignment data. These can be in
     either of the following formats:
 
