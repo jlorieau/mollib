@@ -8,6 +8,7 @@ from itertools import izip_longest as zip_longest
 import numpy as np
 import matplotlib
 import matplotlib.pyplot as plt
+from scipy import ndimage
 
 # Plot parameters
 figsize = (7, 1.5)  # size of each subplot in inches
@@ -70,7 +71,6 @@ results['Overall'] = zip(phi_list, psi_list)
 
 
 # Prepare the plots
-
 
 # Define the plots. These are organized by keys in results and the
 # corresponding color map.
@@ -186,3 +186,54 @@ for row, subfigure_labels in enumerate(subfigure_groups, 1):
                 format='PNG', dpi=220, bbox_inches='tight', pad_inches=0.02)
     plt.savefig('ramachandran/ramachandran_countour_{}.svg'.format(row),
                 format='SVG', bbox_inches='tight', pad_inches=0.05)
+
+# Prepare an overall contour plot with lines
+phi_psi = results['Overall']
+x, y = zip(*phi_psi)
+
+x = np.array(x)
+y = np.array(y)
+N = len(x)
+
+# Convert to a histogram
+hist2d, x, y = np.histogram2d(y, x, bins=36, range=np.array(
+        [(-180., 185.), (-180., 185.)]))
+hist2d = -1. * np.log(hist2d + 0.1)
+
+minimum = np.min(hist2d)
+hist2d -= minimum
+
+# Optionally smooth the data
+# hist2d = ndimage.gaussian_filter(hist2d, sigma=0.25, order=0)
+
+# Contour levels at 98% (4.0) and 99.8%
+levels = np.array([4.1, 6.1])
+
+f, axarr = plt.subplots(nrows=1, ncols=1, sharey=True,
+                            figsize=(4,4))
+# Set the x-axis and y-axis labels
+axarr.set_xlabel(r'$\phi$ (deg)', fontsize=axes_fontsize,
+                 fontname=axes_font)
+axarr.set_ylabel(r'$\psi$ (deg)', fontsize=axes_fontsize,
+                 fontname=axes_font)
+
+# Set the axis tick spacing
+axarr.xaxis.set_ticks(np.arange(-180, 181, 90))
+axarr.set_xlim(-180, 180)
+axarr.yaxis.set_ticks(np.arange(-180, 181, 90))
+axarr.set_ylim(-180, 180)
+
+# Set the axis tick label size
+axarr.tick_params(labelsize=label_fontsize)
+
+# Outer ticks
+axarr.get_yaxis().set_tick_params(direction='out')
+axarr.get_xaxis().set_tick_params(direction='out')
+
+# Create the 2d contour plot
+axarr.contour(x[:-1], y[:-1], hist2d, levels, cmap=plt.cm.Blues_r)
+
+plt.savefig('ramachandran/ramachandran_line_countour_overall_lowres.png',
+            format='PNG', dpi=220, bbox_inches='tight', pad_inches=0.02)
+plt.savefig('ramachandran/ramachandran_line_countour_overall.svg',
+            format='SVG', bbox_inches='tight', pad_inches=0.05)
