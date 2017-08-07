@@ -1,7 +1,7 @@
 Mollib 1.0 release notes
 ========================
 
-*Jun 6, 2017*
+*Aug 14, 2017*
 
 Version 1.0 of mollib is the first release. This page documents the changes
 and features available in this version.
@@ -38,6 +38,8 @@ process
 - The hydrogens plugin (``--hydrogenate``) is included to strip and replace
   hydrogen atoms in a molecule. The topology of protein molecules are included
   and the ``CONECT`` topologies in PDB files are supported.
+
+- Individual models or many models can be selected.
 
 --------
 
