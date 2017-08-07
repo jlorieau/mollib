@@ -1,7 +1,7 @@
 Mollib 1.0 release notes
 ========================
 
-*Aug 14, 2017*
+*Aug 13, 2017*
 
 Version 1.0 of mollib is the first release. This page documents the changes
 and features available in this version.
