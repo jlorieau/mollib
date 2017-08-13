@@ -16,12 +16,12 @@ Arguments
     The file(s) with the RDC and RACS alignment data. These can be in
     either of the following formats:
 
-    - The pa format. See :ref:`pa_format`.
+    - The mollib data format. See :ref:`pa_format`.
 
     - NMRPipe's DC format.
 
-    - Magnetic resonance data files (``.mr``) submitted to the PDB. This
-      function supports the automatic fetching and caching of magnetic
+    - Magnetic resonance data files (``.mr``) in Xplor format submitted to the
+      PDB. This function supports the automatic fetching and caching of magnetic
       resonance data files.
 
 ``-o`` / ``--out`` ``filename``
@@ -45,7 +45,8 @@ Arguments
     mulitple alignment data sets from multiple alignment media. Sets can
     be selected from their alignment tensor value (ex: 500, 501, etc) or
     from their position within the data file, starting with 0. (ex: 0 for
-    the first dataset, 1, for the second dataset and so on.)
+    the first dataset, 1, for the second dataset and so on.) By default, the
+    first dataset is used.
 
 ``--project-methyls``
     (Optional) Use the C-C bond RDC values for the methyl ¹H-¹³C RDCs. This
@@ -68,7 +69,7 @@ Fixer Arguments
     (Optional) Check to see if the sign of RDCs or RACSs of the same type
     need to be inverted to get a better fit. This operation is useful for
     automatically fixing the sign of couplings when the absolute value of
-    the \|J+D\|- and \|J\|-couplings are measured. By default, this fixer
+    the \|J+D\|- and \|J\|-couplings are used. By default, this fixer
     is **on**.
 
 ``--fix-outliers`` / ``--nofix-outliers``
@@ -172,7 +173,7 @@ The literature reports both the chemical *shielding* tensor (\ :math:`\sigma`\ )
 and the chemical *shift* tensor (\ :math:`\delta`\ ). The difference between
 the two is an inversion of sign (i.e. :math:`\sigma = - \delta`\ ). As a result,
 the ordering of components between different conventions will change. In the
-Haeberlen convention, the chemical shift components are order by their
+Haeberlen convention, the chemical shift components are ordered by their
 magnitudes.
 
 .. math::

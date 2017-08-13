@@ -4,8 +4,8 @@ Python Recipes
 Loading a Molecule
 ------------------
 
-A molecule can be loaded directory from molecule objects. The following will
-automatically download the file and cache it and read in the PDB for the
+A molecule can be loaded directly from molecule objects. The following will
+automatically download the file, cache it and read in the PDB for the
 structure '2kxa'.
 
 .. code:: python

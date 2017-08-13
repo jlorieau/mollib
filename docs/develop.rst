@@ -63,33 +63,34 @@ Testing
 Mollib includes 4 different kinds of tests. These are all executed by the
 ``make test-all`` command.
 
-1. **Pytests and unitests** These are tests stored in the ``tests`` directory.
-   They are run automatically by executing:
+1. **Pytests and unitests**. These are tests stored in the ``tests`` directory.
+   They are run automatically by executing one of the following:
 
         a. ``pytest``
         b. ``make test``
         c. ``make test-all``
 
-2. **Docstring tests** These are tests within the docstrings of functions,
-   classes and methods in the mollib source (``mollib``). These tests are run
-   automatically by executing:
+2. **Docstring tests**. These are tests within the docstrings of functions,
+   classes and methods in the mollib source (``mollib`` subdirectory). These
+   tests are run automatically by executing one of the following:
 
         a. ``pytest``
         b. ``make test``
         c. ``make test-all``
 
-3. **Tox** All of the pytests, unittests and doctests are tested in each Python
-   environment using tox. These tests are run automatically by executing:
+3. **Tox**. All of the pytests, unittests and doctests are tested in each Python
+   environment using tox. These tests are run automatically by executing one of
+   the following:
 
         a. ``tox``
         b. ``make test-all``
 
-4. **CLI tests** These tests detect changes in the output text from a specific
+4. **CLI tests**. These tests detect changes in the output text from a specific
    set of command arguments and mollib. These tests are located in
-   ``tests/cli``. An error will be flagged if the output of a mollib command has
-   changed from the contents of the ``.txt`` file. The output of the commands
-   are also used in the documentation within the ``.rst`` files. These tests
-   are run by executing:
+   ``tests/cli`` directory. An error will be flagged if the output of a mollib
+   command has changed from the contents of the ``.txt`` file. The output of
+   the commands are also used in the documentation within the ``.rst`` files.
+   These tests are run by executing:
 
         a. ``make test-cli``
         b. Additionally, if the output of a command changes, the reference
@@ -208,7 +209,7 @@ Docstrings follow the numpy style. There are a few additional guidelines:
               - 'RMS': The root-mean square of the fit (Hz/ppb), float
               - 'count': The number of interactions fit, int
 
-    3. *Sublists* that follow a paragraph listing in a parameter should not be
+    3. *Lists* that follow a paragraph listing in a parameter should not be
        indented with respect to the paragraph.
 
         .. code:: raw

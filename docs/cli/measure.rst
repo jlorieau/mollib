@@ -38,8 +38,7 @@ Arguments
     See :ref:`atom-selectors` and :ref:`atom-filters`.
 
 
-    .. note:: If simple Ramachandran and side-chain
-              dihedrals are needed, checkout ``--rama``.
+    .. note:: If simple Ramachandran dihedrals are needed, checkout ``--rama``.
 
 ``--stats``
     Report the average and standard deviation of all measured values. This
@@ -50,16 +49,7 @@ Arguments
     options are ignored. Heteroatom chains are skipped.
 
     The ``--rama`` command classifies Ramachandran angles based on
-    backbone-backbone amide hydrogen bonds. A residue is classified based
-    on whether its amide or carbonyl is participating in a hydrogen bond.
-    Residues without a classification are either randomly coil, or they
-    correspond to secondary structure units at the surface of the protein,
-    without an intramolecular hydrogen bond.
-
-    The *isolated* classification is given for residues that have backbone
-    hydrogen bonds, but these cannot be classified into conventional
-    secondary structure units. See the :ref:`hbonds-command` for further
-    details.
+    backbone-backbone amide hydrogen bonds.
 
 Atom Selectors and Filters
 --------------------------
@@ -78,7 +68,7 @@ follow one of these conventions:
        ``CB`` atom of residue number 31 in chain 'A'.
 
 Additionally, the chain id, residue number or both can be expressed as a
-range using the ``:`` character:
+range using the ':' character:
 
     1. (residue range).(atom name). ex: ``31:34.CB`` for the ``CB`` atom of
        residue number 31, 32, 33 and 34.
@@ -115,7 +105,7 @@ Filters
 ``--only-delta`` ``DELTA``
     Exclude atom selections that don't have at least one set of atoms
     with residues separated by ``DELTA`` number. This filter ignores the
-    chain identifier and and may need to be combined
+    chain identifier and may need to be combined
     with ``--filter-intra-chain`` or ``--exclude-intra-chain``.
 
 ``--only-bonded``
@@ -209,7 +199,7 @@ Helices
 ~~~~~~~
 
 Helices consist of stretches of hydrogen bonded residues with helical dihedrals.
-3:sub:`10`-helices are typically short, with one or more 'i'-'i+3'hydrogen
+310-helices are typically short, with one or more 'i'-'i+3'hydrogen
 bonds, and these can be mischaracterized as turns (type I turns). In this case,
 mollib checks that all residues in the helix have helical dihedral angles.
 
@@ -243,8 +233,8 @@ in assignment.
 For example, a checkered sheet assignment ('E E E E E') will be assigned as a
 single contiguous ß-strand ('EEEEEEEEE') if all residues in the block have
 ß-strand backbone dihedral angles. 310-helices are another example in which the
-'i' and 'i+3' residues are hydrogen bonded, yet the 'i+1' and 'i+2' residues are
-not. In this case, the gap will be filled by assigning residues 'i' through
+'i' and 'i+3' residues are hydrogen bonded, yet the 'i+1' and 'i+2' residues may
+not be. In this case, the gap will be filled by assigning residues 'i' through
 'i+3' as 310-helix, if all four residues have helical dihedral angles.
 
 Additionally, assigning blocks will label the minor classification of N- and

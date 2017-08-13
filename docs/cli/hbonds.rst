@@ -71,7 +71,7 @@ optimal hydrogen bonds are askew from a standard electric dipole.
 Geometry
 ^^^^^^^^
 
-A hydrogen bond has a acceptor dipole and a donor dipole. The donor dipole has
+A hydrogen bond has an acceptor dipole and a donor dipole. The donor dipole has
 a d1 donor atom (H) and a d2 donor atom (N, O or C), and the acceptor has an a1
 acceptor atom (O) and an a2 acceptor atom (C). The geometry of a hydrogen bond
 is defined by the distance of the d1a1 vector (:math:`d_{d1a1}`), the

@@ -4,7 +4,7 @@ Command-line Tips and Tricks
 Shell Aliases and Functions
 ---------------------------
 
-The following aliases are helpful in minimizing typing at the command line.
+The following aliases are helpful in reducing typing on the command line.
 These can be added to the user shell script (ex: ``.bashrc``).
 
 .. code:: shell

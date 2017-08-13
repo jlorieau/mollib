@@ -18,7 +18,7 @@ Arguments
     If the structure could not be found locally, a copy will be
     downloaded and cached for further analysis.
 
-    Multiple input identifiers and filenamed can be used to process multiple
+    Multiple input identifiers and filenames can be used to process multiple
     files simultaneously.
 
 ``-o`` / ``--out`` ``filename``
