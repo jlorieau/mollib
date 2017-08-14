@@ -37,7 +37,7 @@ class PA(Plugin):
         "Process the parser for the 'pa' command."
         p = self.command_subparsers['pa']
 
-        p.add_argument('-a', '--alignment',
+        p.add_argument('-d', '--data',
                        action='append', nargs='+',
                        required=True, metavar='id/filename',
                        help="(required) Alignment file or identifier with RDC "
@@ -65,7 +65,7 @@ class PA(Plugin):
         p.add_argument('--set',
                        action='store', required=False,
                        metavar='id',
-                       help='If multiple datasets are available, this option'
+                       help='If multiple datasets are available, this option '
                             'specifies which dataset to use.')
 
         p.add_argument('--exclude',
@@ -153,7 +153,7 @@ class PA(Plugin):
         if args.command == 'pa':
             # Get the alignment data
             data = {}
-            for data_filename in args.alignment[0]:
+            for data_filename in args.data[0]:
                 # verify that the file exists
                 file_path = get_or_fetch(data_filename, extensions='mr.gz',
                                          urls=settings.mr_urls,
@@ -195,32 +195,32 @@ class PA(Plugin):
             if len(molecules) > 1:
                 # Make title for stats table
                 title = "Summary SVD Statistics for Molecules "
-                title += word_list([m.name for m in molecules])
+                title += word_list([m.fullname for m in molecules])
                 table.title = title
 
                 # Make title for the fit data table
                 title = "Observed and Predicted RDCs and RACS for Molecules "
-                title += word_list([m.name for m in molecules])
+                title += word_list([m.fullname for m in molecules])
                 tables['fit'].title = title
 
                 # Make title for the back-calculated predicted data
                 title = "Back-calculated RDCs and RACS for Molecules "
-                title += word_list([m.name for m in molecules])
+                title += word_list([m.fullname for m in molecules])
                 tables['pred'].title = title
             else:
                 # Make title for stats table
                 title = "Summary SVD Statistics for Molecule "
-                title += molecules[0].name
+                title += molecules[0].fullname
                 table.title = title
 
                 # Make title for the fit data table
                 title = "Observed and Predicted RDCs and RACS for Molecule "
-                title += molecules[0].name
+                title += molecules[0].fullname
                 tables['fit'].title = title
 
                 # Make title for the back-calculated predicted data
                 title = "Back-calculated RDCs and RACS for Molecule "
-                title += molecules[0].name
+                title += molecules[0].fullname
                 tables['pred'].title = title
 
             # Prepare the standard output

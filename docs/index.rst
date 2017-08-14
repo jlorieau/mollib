@@ -1,6 +1,6 @@
-######################
-mollib's documentation
-######################
+######
+mollib
+######
 
 
 Mollib is a *unified* command-line program and Python library for the
@@ -19,6 +19,8 @@ Mollib includes tools for:
   angles
 - The :ref:`measurement <measure-command>` of geometries within molecules
   as well as the reporting and classification of Ramachandran angles.
+- The statistical analysis and comparison of structures to high-resolution
+  crystal structures.
 - The analysis of :ref:`partial alignment <pa-command>` data with residual
   dipolar coupling (RDC) and residual anisotropic chemical shift (RACS, a.k.a
   RCSA) data.
@@ -42,13 +44,7 @@ Mollib includes tools for:
    :maxdepth: 2
 
    cli/cli
+   recipes/recipes
    releases/releases
    develop
    api/api
-
-.. only:: html
-
-   * :ref:`genindex`
-   * :ref:`modindex`
-   * :ref:`search`
-

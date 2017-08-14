@@ -1,3 +1,6 @@
+# Hydrogen Bond Definitions
+# -------------------------
+
 #: Element selector string for the hydrogen bond donor atom1. The OR
 #: operator, '|', is supported.
 #:
@@ -23,14 +26,18 @@ acceptor2_elements = 'C|13C'
 #: bond.
 #:
 #: 'd1a1': The distance between the donor1 and acceptor1 atoms
-hbond_distance_cutoff = {'d1a1': (1.5, 3.0),
+hbond_distance_cutoff = {'d1a1': (1.5, 2.5),
                          }
 
 #: The cutoff angle ranges (in degrees) between atoms to be considered a
 #: hydrogen bond.
-hbond_angle_cutoff = {'theta': (110., 180.),
+hbond_angle_cutoff = {'theta': (105., 180.),
                        'phi': (-180., 180.)
                       }
+
+
+# Dihedral Angle Ranges
+# ---------------------
 
 # Phi torsion angle range (in degrees) for helices. (Generously allowed)
 helix_phi = (-170., 0.)
@@ -72,6 +79,10 @@ beta_turn_i2_psi = {'turnI':   (-50., 50.),
                     'turnIp':  (-50., 50.),
                     'turnIIp': (-50., 50.)
                     }
+
+
+# Classification names
+# --------------------
 
 #: Classification type name for backbone-backbone (bb-bb) amide hydrogen
 #: bonds
@@ -159,8 +170,71 @@ minor_C = 'C-term'
 #: Minor classification name for glycines
 minor_gly = 'Gly'
 
-#: Fill residue assignment gaps
-fill_gaps = True
+
+# Assign Blocks
+# -------------
+
+#: Assign blocks of residues, including gaps
+assign_blocks = True
+
+#: Assign alpha-helix blocks
+assign_blocks_alpha = True
+
+#: Assign beta-strand blocks, including gaps
+assign_blocks_beta = True
+
+#: Assign 310-helix blocks, including gaps
+assign_blocks_310 = True
+
+#: assign_blocks: Overwrite classification assignments, if an assignment has
+#: already been made
+assign_blocks_overwrite = False
+
+
+#: assign_blocks: Check the previous and subsequent residues in a contiguous
+#: alpha-helix assignment
+assign_blocks_alpha_extend_termini = False
+
+#: assign_blocks: Label the 'minor' classification of the specified number of
+# N- or C-terminal residues as 'N-term' or 'C-term'
+assign_blocks_alpha_label_N_term = 1
+assign_blocks_alpha_label_C_term = 1
+
+#: assign_blocks: Only fill gaps in alpha-helices that are as large as the
+#: following number
+assign_blocks_alpha_gap_tolerance = 1
+
+
+#: assign_blocks: Check the previous and subsequent residues in a contiguous
+#: beta-sheet assignment
+assign_blocks_beta_extend_termini = True
+
+#: assign_blocks: Label the 'minor' classification of the specified number of
+# N- or C-terminal residues as 'N-term' or 'C-term'
+assign_blocks_beta_label_N_term = 1
+assign_blocks_beta_label_C_term = 1
+
+#: assign_blocks: Only fill gaps in beta-sheets that are as large as the
+#: following number
+assign_blocks_beta_gap_tolerance = 2
+
+
+#: assign_blocks: Check the previous and subsequent residues in a contiguous
+#: 310 assignment
+assign_blocks_310_extend_termini = False
+
+#: assign_blocks: Label the 'minor' classification of the specified number of
+#: N- or C-terminal residues as 'N-term' or 'C-term'
+assign_blocks_310_label_N_term = 0
+assign_blocks_310_label_C_term = 0
+
+#: assign_blocks: Only fill gaps in 310-helices that are as large as the
+#: following number
+assign_blocks_310_gap_tolerance = 3
+
+
+# Tables
+# ------
 
 #: Render HBond tables with detailed information
 hbond_table_detailed = False

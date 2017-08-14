@@ -1,7 +1,7 @@
 Mollib 1.0 release notes
 ========================
 
-*Apr 24, 2017*
+*Aug 13, 2017*
 
 Version 1.0 of mollib is the first release. This page documents the changes
 and features available in this version.
@@ -38,6 +38,8 @@ process
 - The hydrogens plugin (``--hydrogenate``) is included to strip and replace
   hydrogen atoms in a molecule. The topology of protein molecules are included
   and the ``CONECT`` topologies in PDB files are supported.
+
+- Individual models or many models can be selected.
 
 --------
 
@@ -124,3 +126,27 @@ pa
 
 - Alignment files with multiple alignment media datasets can be selected with
   the ``--set`` option.
+
+API Features
+------------
+
+The API has the following features and updates.
+
+- *Testing Framework*. A testing framework that uses pytest, tox and a CLI
+  tester.
+
+- *CLI Tester*. The CLI tester is located in the ``tests/cli`` directory, and it
+  is invoked by typing ``make test-cli`` in the root project directory. It is
+  also included in the tox tests under the ``cli`` environment.
+
+- *Plugin Framework*. A plugin framework to add and remove functionality. The
+  base Plugin is located in the ``plugins`` folder.
+
+- *Settings Manager*. A settings manager to dynamically change settings from the
+  command line or through configuration files.
+
+- *Optimized Functions*. Optimized (Cython) functions to calculate the length of
+  vectors and to find atoms within a distance cutoff located in ``mollib.core``.
+
+- *Statistics Plugin*. A statistics plugin to calculate statistics and datasets
+  over high-resolution structures.

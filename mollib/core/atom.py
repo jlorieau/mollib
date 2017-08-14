@@ -145,7 +145,6 @@ class Atom(Primitive):
                  '_pK', '_topology','_repr', '_fullname')
     optional = ('charge', 'residue', 'chain', 'molecule',
                 '_pK', '_topology', '_repr', '_fullname')
-    # bonded_atom_names ' ['1N', '2C-1'
 
     # Atom molecular weights. These must be labeled according the a str.title()
     # function. eg. ZN becomes Zn.
@@ -361,7 +360,7 @@ class Atom(Primitive):
         """
         # If the residues are the same, simply add the atom's name
         if (self.residue is not None and atom.residue is not None and
-                    self.residue == atom.residue):
+            self.residue == atom.residue):
             self_name = self.name
             atom_name = atom.name
         # Otherwise use the atom's fullname

@@ -16,7 +16,7 @@ The ``hbonds`` command has the following features:
   torsion angles. This prevents the misclassification of 310-helices and
   beta turns as well as isolated i+3, i+4 and i+5 hydrogen bonds.
 
-.. include:: output/mollib_hbonds_help.rst
+.. include:: cmds/ml_hbonds_help.rst
 
 
 .. note:: If the molecule does not have hydrogens, this command will need
@@ -46,13 +46,13 @@ Examples
 In this example, the hemagglutinin fusion peptide structure (``-i 2KXA``) is
 downloaded, and its amide hydrogen bonds are reported.
 
-.. include:: output/mollib_hbonds_i_2KXA.rst
+.. include:: cmds/ml_hbonds_2kxa_1.rst
 
 This example downloads a crystal structure of ubiquitin (``-i 1UBQ``), adds
 hydrogens to the structure and shows part (``|head -n15``) of its amide
 hydrogen bond report.
 
-.. include:: output/mollib_hbonds_i_1UBQ_hydrogenate_head_n15.rst
+.. include:: cmds/ml_hbonds_1ubq_1.rst
 
 Theory
 ------
@@ -71,7 +71,7 @@ optimal hydrogen bonds are askew from a standard electric dipole.
 Geometry
 ^^^^^^^^
 
-A hydrogen bond has a acceptor dipole and a donor dipole. The donor dipole has
+A hydrogen bond has an acceptor dipole and a donor dipole. The donor dipole has
 a d1 donor atom (H) and a d2 donor atom (N, O or C), and the acceptor has an a1
 acceptor atom (O) and an a2 acceptor atom (C). The geometry of a hydrogen bond
 is defined by the distance of the d1a1 vector (:math:`d_{d1a1}`), the

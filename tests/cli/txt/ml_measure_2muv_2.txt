@@ -1,0 +1,29 @@
+Table: Distances for 2MUV-1
+
+Num  Atom 1    Atom 2    Dist. (A)  
+---- --------- --------- -----------
+1    A.N20.CA  B.N20.CA  18.05      
+2    A.N20.CA  B.D21.CA  17.50      
+3    A.D21.CA  B.N20.CA  14.39      
+4    A.D21.CA  B.D21.CA  13.70      
+5    A.N20.CA  C.N20.CA  25.10      
+6    A.N20.CA  C.D21.CA  21.94      
+7    A.D21.CA  C.N20.CA  21.95      
+8    A.D21.CA  C.D21.CA  19.02      
+9    A.N20.CA  D.N20.CA  17.86      
+10   A.N20.CA  D.D21.CA  14.21      
+11   A.D21.CA  D.N20.CA  17.32      
+12   A.D21.CA  D.D21.CA  13.52      
+13   B.N20.CA  C.N20.CA  17.89      
+14   B.N20.CA  C.D21.CA  17.44      
+15   B.D21.CA  C.N20.CA  14.21      
+16   B.D21.CA  C.D21.CA  13.64      
+17   B.N20.CA  D.N20.CA  25.32      
+18   B.N20.CA  D.D21.CA  22.15      
+19   B.D21.CA  D.N20.CA  22.14      
+20   B.D21.CA  D.D21.CA  19.21      
+21   C.N20.CA  D.N20.CA  17.51      
+22   C.N20.CA  D.D21.CA  17.00      
+23   C.D21.CA  D.N20.CA  13.86      
+24   C.D21.CA  D.D21.CA  13.20      
+

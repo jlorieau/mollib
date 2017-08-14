@@ -85,7 +85,6 @@ classifiers += [
           'Programming Language :: Python',
           'Programming Language :: Python :: 2.7',
           'Programming Language :: Python :: 3',
-          'Programming Language :: Python :: 3.4',
           'Programming Language :: Python :: 3.5',
           'Programming Language :: Python :: 3.6',
           'Topic :: Scientific/Engineering',
@@ -105,7 +104,7 @@ setup(name='mollib',
       setup_requires=setup_requires,
       install_requires=['numpy', 'scipy', 'configparser'],
       test_suite='nose.collector',
-      scripts=['bin/mollib'],
+      scripts=['bin/mollib', 'bin/ml'],
       entry_points={
           'console_scripts': [
             'mollib = mollib.__main__:main'

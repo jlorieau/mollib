@@ -6,7 +6,7 @@ The ``measure`` command is used for measuring geometries in molecules.
 All of the options and preprocessors available from the :ref:`process-command`
 are also available.
 
-.. include:: output/mollib_measure_help.rst
+.. include:: cmds/ml_measure_help.rst
 
 Arguments
 ---------
@@ -38,8 +38,7 @@ Arguments
     See :ref:`atom-selectors` and :ref:`atom-filters`.
 
 
-    .. note:: If simple Ramachandran and side-chain
-              dihedrals are needed, checkout ``--rama``.
+    .. note:: If simple Ramachandran dihedrals are needed, checkout ``--rama``.
 
 ``--stats``
     Report the average and standard deviation of all measured values. This
@@ -50,16 +49,7 @@ Arguments
     options are ignored. Heteroatom chains are skipped.
 
     The ``--rama`` command classifies Ramachandran angles based on
-    backbone-backbone amide hydrogen bonds. A residue is classified based
-    on whether its amide or carbonyl is participating in a hydrogen bond.
-    Residues without a classification are either randomly coil, or they
-    correspond to secondary structure units at the surface of the protein,
-    without an intramolecular hydrogen bond.
-
-    The *isolated* classification is given for residues that have backbone
-    hydrogen bonds, but these cannot be classified into conventional
-    secondary structure units. See the :ref:`hbonds-command` for further
-    details.
+    backbone-backbone amide hydrogen bonds.
 
 Atom Selectors and Filters
 --------------------------
@@ -78,7 +68,7 @@ follow one of these conventions:
        ``CB`` atom of residue number 31 in chain 'A'.
 
 Additionally, the chain id, residue number or both can be expressed as a
-range using the ``:`` character:
+range using the ':' character:
 
     1. (residue range).(atom name). ex: ``31:34.CB`` for the ``CB`` atom of
        residue number 31, 32, 33 and 34.
@@ -115,7 +105,7 @@ Filters
 ``--only-delta`` ``DELTA``
     Exclude atom selections that don't have at least one set of atoms
     with residues separated by ``DELTA`` number. This filter ignores the
-    chain identifier and and may need to be combined
+    chain identifier and may need to be combined
     with ``--filter-intra-chain`` or ``--exclude-intra-chain``.
 
 ``--only-bonded``
@@ -139,13 +129,13 @@ Measure :math:`\alpha`-helical HA-H distances in chain 'A' for
 residues 23-49 of 2MUV, the homotetrametic influenza M2 channel. Include
 statistics on the measured distances.
 
-.. include:: output/mollib_measure_i_2MUV_d_23:49.HA_23:49.H_only-delta_3_stats.rst
+.. include:: cmds/ml_measure_2muv_1.rst
 
 Measure CA-CA distances between residue 20-21 for chains 'A', 'B', 'C'
 and 'D' of 2MUV--excluding same residue distances and same chain
 distances.
 
-.. include:: output/mollib_measure_i_2MUV_d_A:D.20:21.CA_A:D.20:21.CA_exclude-intra_exclude-intra-chain.rst
+.. include:: cmds/ml_measure_2muv_2.rst
 
 Compare the distance between the HA of residue 5 and the H of residue
 21 for two different structures, 2KXA and 2LWA. The 2KXA structure
@@ -155,7 +145,7 @@ promixity. The 2LWA structure represents the conformational ensemble
 of the HAfp-G8A mutant with a closed structure (chain 'A'), a
 semi-closed structure (chain 'B') and an open structure (chain 'C').
 
-.. include:: output/mollib_measure_i_2KXA_2LWA_d_A:C.5.HA_A:C.21.H_only-intra-chain.rst
+.. include:: cmds/ml_measure_2kxa_1.rst
 
 Measuring Angles
 ~~~~~~~~~~~~~~~~
@@ -163,7 +153,7 @@ Measuring Angles
 Measure the angle of the bonded 'C-1'--'N'--'H' atoms for residues
 20-30 from the ubiquitin structure 2MJB.
 
-.. include:: output/mollib_measure_i_2MJB_a_20:30.C_20:30.N_20:30.H_only-bonded.rst
+.. include:: cmds/ml_measure_2mjb_1.rst
 
 Measuring Dihedrals
 ~~~~~~~~~~~~~~~~~~~
@@ -171,7 +161,7 @@ Measuring Dihedrals
 The following example measures the :math:`\phi` angle for residues 2-6 of the
 hemagglutinin fusion peptide domain (2KXA).
 
-.. include:: output/mollib_measure_i_2KXA_dih_2:6.C_2:6.N_2:6.CA_2:6.C_only-bonded_stats.rst
+.. include:: cmds/ml_measure_2kxa_2.rst
 
 Ramachandran Angles
 ~~~~~~~~~~~~~~~~~~~
@@ -179,7 +169,7 @@ Ramachandran Angles
 Measure the Ramachandran :math:`\phi` and :math:`\psi` angles for the
 hemagglutinin fusion peptide structure 2KXA.
 
-.. include:: output/mollib_measure_i_2KXA_rama.rst
+.. include:: cmds/ml_measure_2kxa_3.rst
 
 Approach to Secondary Structure Assignments
 -------------------------------------------
@@ -208,6 +198,11 @@ included in the assignment.
 Helices
 ~~~~~~~
 
+Helices consist of stretches of hydrogen bonded residues with helical dihedrals.
+310-helices are typically short, with one or more 'i'-'i+3'hydrogen
+bonds, and these can be mischaracterized as turns (type I turns). In this case,
+mollib checks that all residues in the helix have helical dihedral angles.
+
 Sheets
 ~~~~~~
 
@@ -220,33 +215,38 @@ To accurately identify sheet strands, mollib will find groups of sheet hydrogen
 bonds, then it will evaluate whether the residues are in a checkered pattern and
 whether the previous or subsequent residues have sheet backbone torsion angles.
 Thereafter, it will assign all residues in the group to a sheet classification,
-if no other classification has already been made. See :ref:`fill gaps
-<measure-fill-gaps>` for details.
+if no other classification has already been made. See :ref:`assign blocks
+<measure-assign-blocks>` for details.
 
+.. _measure-assign-blocks:
 
-.. _measure-fill-gaps:
-
-Fill Gaps
-~~~~~~~~~
+Assign Blocks
+~~~~~~~~~~~~~
 
 Secondary structure assignments are made based on hydrogen bonds. In some cases,
 such as the edge strands of sheets or short 310-helices, residues within a
 contiguous block are not assigned because they do not form an internal hydrogen
-bond. Fill gaps will find contiguous blocks of secondary structure units, test
-the dihedral of residues within that block, and make an assignment of the whole
-block.
+bond. Mollib assign contiguous blocks of residues with the same secondary
+structure by testing the dihedral of residues within that block and filling gaps
+in assignment.
 
-A checkered sheet assignment ('E E E E E'), for example with become a fill block
-assignment ('EEEEEEEEE'). 310-helices are another example in which the 'i' and
-'i+3' residues are hydrogen bonded, yet the 'i+1' and 'i+2' residues are not. In
-this case, the gap will be filled by assigning residues 'i' through 'i+3' as
-310-helix, if all four residues have helical dihedral angles.
+For example, a checkered sheet assignment ('E E E E E') will be assigned as a
+single contiguous ß-strand ('EEEEEEEEE') if all residues in the block have
+ß-strand backbone dihedral angles. 310-helices are another example in which the
+'i' and 'i+3' residues are hydrogen bonded, yet the 'i+1' and 'i+2' residues may
+not be. In this case, the gap will be filled by assigning residues 'i' through
+'i+3' as 310-helix, if all four residues have helical dihedral angles.
 
-By default, filling gaps will not overwrite secondary structure assignments for
-residues that already have an assignment.
+Additionally, assigning blocks will label the minor classification of N- and
+C-terminal residues for certain secondary structure blocks, depending on the
+settings.
 
-Potential of Mean Force Plots
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.. note:: The identification of the 'N-term' and 'C-term' minor classifications
+          are done separately for residues and hydrogen bonds. These assignments
+          may be different between residues and hydrogen bonds.
+
+Energy Maps
+~~~~~~~~~~~
 
 The backbone dihedral probabilities and energies are calculated from potential
 of mean force plots for each type of secondary structure. It is calculated from
@@ -267,7 +267,7 @@ The energy is zero when a set of dihedrals angles is optimal for a given type
 of secondary structure classification. The following are the energy plots for
 each secondary structure classification.
 
-.. image:: img/ramachandran_countour_1_lowres.png
-.. image:: img/ramachandran_countour_2_lowres.png
-.. image:: img/ramachandran_countour_3_lowres.png
-.. image:: img/ramachandran_countour_4_lowres.png
+.. image:: img/rama/ramachandran_countour_1_lowres.png
+.. image:: img/rama/ramachandran_countour_2_lowres.png
+.. image:: img/rama/ramachandran_countour_3_lowres.png
+.. image:: img/rama/ramachandran_countour_4_lowres.png

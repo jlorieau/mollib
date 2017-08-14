@@ -12,6 +12,8 @@ import mollib
 from mollib.utils import FormattedStr
 from mollib.plugins import PluginManager
 from mollib.core import list_global_settings, load_settings
+import mollib.utils.settings
+
 
 try:
     import configparser
@@ -72,7 +74,6 @@ def main():
                         version=('%(prog)s ' + mollib.__version__.__version__),
                         help='Show the program version')
 
-    #TODO: Add argument to just download pdb file ('-g --get')
     # Load the plugins
     plugin_manager = PluginManager(parser=parser, subparser=subparsers)
     parser = plugin_manager.process_parsers()
@@ -88,6 +89,10 @@ def main():
     # Parse the commands
     args = parser.parse_args()
 
+    # Set special flags that need to be set before processing molecules
+    if args.save:
+        mollib.utils.settings.save_fetched_files_locally = True
+
     # Setup the logger
     fmt = '{}: %(levelname)-8s %(message)s'.format('mollib')
     logging.basicConfig(format=fmt, level=args.loglevel)
@@ -96,13 +101,20 @@ def main():
     # Read in the configuration file(s)
     config_files = [os.path.expanduser('~/.mollibrc'), ]
     if args.config:
-        config_files.append(args.config)
+        config_files.append(args.config[0])
     config = configparser.ConfigParser()
     config.read(config_files)
     load_settings(config)
 
-    # Prepare and preprocess the structure
-    molecules = [mollib.Molecule(identifier) for identifier in args.i[0]]
+    # Load the molecules
+    if args.models:
+        molecules = []
+        mr = mollib.MoleculeReader()
+        model_ids = args.models
+        for identifier in args.i[0]:
+            molecules += mr.read(identifier, model_ids=model_ids)
+    else:
+        molecules = [mollib.Molecule(identifier) for identifier in args.i[0]]
 
     # Find the relevant plugins to execute
     active_plugins = plugin_manager.plugins()

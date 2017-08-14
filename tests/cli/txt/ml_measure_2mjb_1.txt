@@ -1,0 +1,15 @@
+Table: Angles for 2MJB-1
+
+Num  Atom 1   Atom 2   Atom 3   Angle (deg)  
+---- -------- -------- -------- -------------
+1    A.S20.C  A.D21.N  A.D21.H  120.2        
+2    A.D21.C  A.T22.N  A.T22.H  118.4        
+3    A.T22.C  A.I23.N  A.I23.H  119.0        
+4    A.I23.C  A.E24.N  A.E24.H  118.7        
+5    A.E24.C  A.N25.N  A.N25.H  119.2        
+6    A.N25.C  A.V26.N  A.V26.H  118.9        
+7    A.V26.C  A.K27.N  A.K27.H  119.2        
+8    A.K27.C  A.A28.N  A.A28.H  118.5        
+9    A.A28.C  A.K29.N  A.K29.H  118.4        
+10   A.K29.C  A.I30.N  A.I30.H  118.9        
+

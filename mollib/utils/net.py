@@ -4,10 +4,19 @@ Utility functions to access files from the internet.
 
 import os
 import tempfile
+import shutil
+import logging
+import ssl
 try:
-    from urllib.request import URLopener
+    from urllib2 import urlopen, URLError
 except ImportError:
-    from urllib import URLopener
+    from urllib.request import urlopen, URLError
+
+from . import settings
+
+ctx = ssl.create_default_context()
+ctx.check_hostname = False
+ctx.verify_mode = ssl.CERT_NONE
 
 
 def get_or_fetch(identifier, extensions=None, urls=None, load_cached=True,
@@ -39,15 +48,19 @@ def get_or_fetch(identifier, extensions=None, urls=None, load_cached=True,
     Examples
     --------
     >>> # Retrieve a file that exists    
-    >>> temp_path = get_or_fetch('index', 'html', 'http://www.google.com/')
+    >>> temp_path = get_or_fetch('index', 'html', 'http://www.google.com/',
+    ...                          critical=False)
     >>> temp_path is not None
     True
     >>> # Try to retrieve a file that doesn't exist. None is returned.
-    >>> temp_path = get_or_fetch('21312', 'html', 'http://www.glg222.com/',
+    >>> temp_path = get_or_fetch('21312', 'html', 'http://www.google.com/',
     ...                          critical=False)
     >>> temp_path is None
     True
     """
+    # Setup the SSL context
+    global ctx
+
     # Setup the message in case the file was not found
     msg = ("Could not find file or identifier '{}'. A suitable file must be "
            "specified to continue.")
@@ -55,6 +68,10 @@ def get_or_fetch(identifier, extensions=None, urls=None, load_cached=True,
     # See if the file exists at the path already. If it does, return this
     # path
     if os.path.isfile(identifier):
+        # See if a local copy should be saved
+        _save_locally(identifier)
+
+        # Return the identifier filename
         return identifier
 
     # If the extensions and url aren't specified, then there's nothing else
@@ -66,9 +83,9 @@ def get_or_fetch(identifier, extensions=None, urls=None, load_cached=True,
         return None
 
     # Convert urls and extensions to iterators
-    if not hasattr(extensions, '__iter___'):
+    if isinstance(extensions, str):
         extensions = (extensions, )
-    if not hasattr(urls, '__iter__'):
+    if isinstance(urls, str):
         urls = (urls, )
 
     # At this point, the file couldn't be found at a local path. In this case,
@@ -88,8 +105,13 @@ def get_or_fetch(identifier, extensions=None, urls=None, load_cached=True,
         # Get the path for the temporary file
         temp_path = os.path.join(temp_dir, filename)
 
-        # See if a cached version exists and whether it should be returned
-        if load_cached and os.path.isfile(temp_path):
+        # See if a cached version exists and whether it's a valid file. If so,
+        # return it.
+        if load_cached and _is_valid(temp_path):
+            # See if a local copy should be saved
+            _save_locally(temp_path)
+
+            # Return the cached copy
             return temp_path
 
         # The file isn't available, try retrieving it. Go through the possible
@@ -97,14 +119,20 @@ def get_or_fetch(identifier, extensions=None, urls=None, load_cached=True,
         for url in urls:
             # Check the url and filename. An exception is raised if the
             # response is a 404
-            opener = URLopener()
             try:
-                opener.retrieve('/'.join((url, filename)), temp_path)
-            except:
+                response = urlopen('/'.join((url, filename)), context=ctx)
+            except URLError:
                 continue
 
-            # At this point, the url was successful retrieved. Return its
-            # local locations
+            # At this point, the url was successful retrieved. Save it to a
+            # temporary path.
+            with open(temp_path, 'wb') as out_file:
+                shutil.copyfileobj(response, out_file)
+
+            # See if a copy in the local/present should be saved
+            _save_locally(temp_path)
+
+            # Return its local locations
             return temp_path
 
     # If a temporary file was not produced, then the file couldn't be
@@ -116,6 +144,53 @@ def get_or_fetch(identifier, extensions=None, urls=None, load_cached=True,
 
     # In this case, return None
     return None
+
+
+def _save_locally(filepath):
+    """Saves the file locally, if specified in the settings, and logs 
+    information on the saved file.
+    
+    Parameters
+    ----------
+    filepath: str
+        The path of the cached file to save locally.
+    
+    Returns
+    -------
+    bool
+        True if the file was saved locally, False otherwise.
+    """
+    if settings.save_fetched_files_locally:
+        filename = os.path.basename(filepath)
+        msg = "Saving file '{}' to the current directory."
+        logging.info(msg.format(filename))
+
+        # copy the file locally
+        shutil.copy2(filepath, '.')
+        return True
+    return False
+
+
+def _is_valid(filepath):
+    """Test whether the file at the given filepath is a valid file.
+    
+    Parameters
+    ----------
+    filepath: str
+        The path of the cached file to test.
+    
+    Returns
+    -------
+    bool
+        True if the file is valid, False otherwise.
+    """
+    try:
+        # See if the file contains data.
+        return os.stat(filepath).st_size > 0
+    except OSError:
+        # File not found.
+        return False
+
 
 
 def clear_cache():

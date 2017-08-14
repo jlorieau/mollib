@@ -1,0 +1,47 @@
+usage: mollib measure [-h] -i id/filename [id/filename ...] [-c filename] [-l]
+                      [-s] [-m [MODELS [MODELS ...]]]
+                      [-d atom atom | -a atom atom atom | -dih atom atom atom atom | -w atom atom]
+                      [--stats] [--only-intra] [--exclude-intra]
+                      [--only-intra-chain] [--exclude-intra-chain]
+                      [--only-delta DELTA] [--only-bonded] [--hydrogenate]
+                      [--rama]
+
+arguments:
+  -h, --help            show this help message and exit
+  -i id/filename [id/filename ...], --in id/filename [id/filename ...]
+                        (required) The filename(s) or PDB identifier(s) of the
+                        structure(s)
+  -c filename, --config filename
+                        The configuration filename
+  -l                    List details on the molecule(s)
+  -s, --save            Save fetched files to the local directory.
+  -m [MODELS [MODELS ...]], --models [MODELS [MODELS ...]]
+                        The models numbers to analyze.
+  --hydrogenate         Strip hydrogens and re-add them before analysis
+
+measurement options:
+  -d atom atom, --dist atom atom
+                        Measure distances between 2 atom selections. ex: 31.N
+                        32.CA
+  -a atom atom atom, --angle atom atom atom
+                        Measure angles between 3 atom selections. ex: 31.N
+                        31.CA 31.C
+  -dih atom atom atom atom, --dihedral atom atom atom atom
+                        Measure dihedral angles between 4 atom selections. ex:
+                        31.N 31.CA 31.C 32.N
+  -w atom atom, --within atom atom
+                        Measure all distances from atom selection to within
+                        the specified distance. ex: 31:33.N 5
+  --stats               Report statistics on the reported measurements.
+  --rama                Report the Ramachandran angles. Filters and options
+                        are ignored.
+
+filters:
+  --only-intra          Only report measurements within a residue
+  --exclude-intra       Exclude measurements within a residue
+  --only-intra-chain    Only report measurements within a chain
+  --exclude-intra-chain
+                        Exclude measurements within a chain
+  --only-delta DELTA    Only report residues separated by DELTA residue
+                        numbers
+  --only-bonded         Only report measurements from bonded atoms

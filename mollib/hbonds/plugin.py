@@ -74,7 +74,8 @@ class Hbonds(Plugin):
 
             # Setup and print the table
             table = HBondTable(hbonds)
-            table.title = ('Hydrogen bond listing for {}'.format(molecule.name))
+            table.title = ('Hydrogen bond listing '
+                           'for {}'.format(molecule.fullname))
             print(table.content())
 
         # Process the Ramachandran angles. This function detects secondary
@@ -83,5 +84,5 @@ class Hbonds(Plugin):
             # Setup the table
             table = RamaTable(molecule)
             table.title = ('Ramachandran angles '
-                           'for {}'.format(molecule.name))
+                           'for {}'.format(molecule.fullname))
             print(table.content())

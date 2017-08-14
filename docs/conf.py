@@ -34,7 +34,7 @@ sys.path.insert(0, os.path.abspath('..'))
 extensions = [
     'sphinx.ext.autodoc',
     'sphinx.ext.mathjax',
-    'sphinxcontrib.napoleon',
+    'sphinx.ext.napoleon',
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -55,7 +55,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = 'mollib'
-copyright = u'2016, Justin L Lorieau'
+copyright = u'2016-2017, Justin L Lorieau'
 author = 'Justin L Lorieau'
 
 # The version info for the project you're documenting, acts as replacement for
@@ -79,7 +79,7 @@ release = __version__
 #
 # This is also used if you do content translation via gettext catalogs.
 # Usually you set "language" from the command line for these cases.
-language = None
+# language = None
 
 # There are two options for replacing |today|: either, you set today to some
 # non-false value, then it is used:
@@ -93,7 +93,7 @@ language = None
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 # This patterns also effect to html_static_path and html_extra_path
-exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
+exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store', 'cli/cmds']
 
 # The reST default role (used for this markup: `text`) to use for all
 # documents.
@@ -140,7 +140,7 @@ html_theme = 'nature'
 # further.  For a list of options available for each theme, see the
 # documentation.
 #
-# html_theme_options = {}
+html_theme_options = {'sidebarwidth': 200}
 
 # Add any paths that contain custom themes here, relative to this directory.
 # html_theme_path = []
@@ -148,7 +148,7 @@ html_theme = 'nature'
 # The name for this set of Sphinx documents.
 # "<project> v<release> documentation" by default.
 #
-# html_title = u'MolLib v3'
+html_title = u'Mollib ' + __version__
 
 # A shorter title for the navigation bar.  Default is the same as html_title.
 #
@@ -190,8 +190,9 @@ html_static_path = ['_static']
 # Custom sidebar templates, maps document names to template names.
 #
 # html_sidebars = {}
-html_sidebars = { '**': ['globaltoc.html', 'relations.html', 'sourcelink.html',
-                         'searchbox.html'], }
+# html_sidebars = { '**': ['globaltoc.html', 'relations.html', 'sourcelink.html',
+#                          'searchbox.html'], }
+html_sidebars = { '**': ['globaltoc.html', ], }
 
 # Additional templates that should be rendered to pages, maps page names to
 # template names.
@@ -200,11 +201,11 @@ html_sidebars = { '**': ['globaltoc.html', 'relations.html', 'sourcelink.html',
 
 # If false, no module index is generated.
 #
-# html_domain_indices = True
+html_domain_indices = True
 
 # If false, no index is generated.
 #
-# html_use_index = True
+html_use_index = True
 
 # If true, the index is split into individual pages for each letter.
 #
@@ -278,7 +279,7 @@ latex_elements = {
          \definecolor{darkorange}{RGB}{198,  93,  9}
          \sphinxDeclareColorOption{VerbatimBorderColor}{{rgb}{0.5,0.5,0.5}}
          \sphinxDeclareColorOption{VerbatimColor}{{rgb}{0.985,0.985,0.985}}
-         \fvset{fontsize=\footnotesize}
+         \fvset{fontsize=\small}
          \sphinxverbatimsep=6pt
          \sphinxshadowsize=15pt
          \usepackage{enumitem}
@@ -387,121 +388,3 @@ autodoc_member_order = 'bysource'
 # Custom css
 def setup(app):
     app.add_stylesheet('updates.css')
-
-# Get the CLI output text
-def process_cmd(string):
-    # Process the command. Split the arguments and strip '-' and '|' characters
-    args = string.split()
-    progname = args[0]
-    args_name = '_'.join([i.strip('-').replace('|', '_') for i in args[1:]])
-    shell_cmd = "$ {cmd}".format(cmd=string)
-    shell_cmd = " \\\n> ".join(textwrap.wrap(shell_cmd, 78))
-
-    # Prepare the CLI output file.
-    print(shell_cmd)
-    cmd = ("echo '{shell_cmd}' "
-            "> cli/output/{progname}_{args_name}.txt\n")
-
-    cmd += ("cd ..&&"
-            "FORCE_COLOR=TRUE {progname} {args}"
-            ">> docs/cli/output/{progname}_{args_name}.txt\n"
-            "cd docs\n")
-
-    # Process the html component
-    cmd += ("echo '.. only:: html\n\n.. raw:: html\n'"
-            "> cli/output/{progname}_{args_name}.html\n")
-
-    cmd += ("pygmentize -l shell-session -f html "
-            "cli/output/{progname}_{args_name}.txt"
-            "|sed 's/^/    /g' >> cli/output/{progname}_{args_name}.html\n")
-
-    # Replace ANSI colors
-    cmd += ("cat -e cli/output/{progname}_{args_name}.html"
-            "|sed 's/\$$//g'"  # Remove $ at the end of lines
-            "|sed 's/\^\[\[1m/<font style=\"font-weight:bold;\">/g'"
-            "|sed 's/\^\[\[22m/<\/font>/g'"
-            "|sed 's/\^\[\[36m/<font color=\"#008b8b\">/g'"  # cyan
-            "|sed 's/\^\[\[91m/<font color=\"red\">/g'"
-            "|sed 's/\^\[\[92m/<font color=\"green\">/g'"
-            "|sed 's/\^\[\[33m/<font color=\"#abb51f\">/g'"
-            "|sed 's/\^\[\[94m/<font color=\"blue\">/g'"
-            "|sed 's/\^\[\[95m/<font color=\"magenta\">/g'"
-            "|sed 's/\^\[\[96m/<font color=\"#008b8b\">/g'"  # cyan
-            "|sed 's/\^\[\[0m/<\/font>/g'"
-            ">cli/output/{progname}_{args_name}.tmp\n")
-
-    cmd += ("mv cli/output/{progname}_{args_name}.tmp "
-            "cli/output/{progname}_{args_name}.rst\n")
-
-    # Process the latex component
-    cmd += ("echo '\n.. only:: latex\n\n"
-            ".. raw:: latex\n\n"
-            "    \\\\begin{{sphinxVerbatim}}"
-            "[commandchars=\\\\\\\\\\\\{{\\\\}},"  # [commandchars=\\\{\},
-            "fontsize=\\\\footnotesize]"  # fontsize=\footnotesize,
-            "'"
-            "> cli/output/{progname}_{args_name}.tex\n")
-
-    cmd += ("cat -e cli/output/{progname}_{args_name}.txt"
-            "|sed 's/user@host\$/\\\\textcolor{{darkorange}}"
-                "{{\\\\textbf{{user@host$}}}}/g'"  # highlight the term prompt
-            "|sed 's/^/    /g'"  # Add a tab at the start of every line
-            "|sed 's/^   //g'" # Strip leading spaces
-            "|sed 's/\$$//g'"  # Remove $ at the end of lines
-            "|sed 's/--/-{{-}}/g'"  # Preserve --
-            "|sed 's/\^\[\[1m/\\\\textbf{{/g'"
-            "|sed 's/\^\[\[22m/}}/g'"
-            "|sed 's/\^\[\[36m/\\\\textcolor{{cyan}}{{/g'"
-            "|sed 's/\^\[\[91m/\\\\textcolor{{red}}{{/g'"
-            "|sed 's/\^\[\[92m/\\\\textcolor{{olivegreen}}{{/g'"
-            "|sed 's/\^\[\[33m/\\\\textcolor{{darkyellow}}{{/g'"
-            "|sed 's/\^\[\[94m/\\\\textcolor{{blue}}{{/g'"
-            "|sed 's/\^\[\[95m/\\\\textcolor{{magenta}}{{/g'"
-            "|sed 's/\^\[\[96m/\\\\textcolor{{cyan}}{{/g'"
-            "|sed 's/\^\[\[0m/}}/g'"
-            ">>cli/output/{progname}_{args_name}.tex\n")
-
-    #cmd += ("echo '\n    \\\\end{{sphinxVerbatim}}\n\\\\\\\\\n'"
-    cmd += ("echo '    \\\\end{{sphinxVerbatim}}\n {{}} \n'"
-            ">>cli/output/{progname}_{args_name}.tex\n")
-
-    cmd += ("cat cli/output/{progname}_{args_name}.tex "
-            ">> cli/output/{progname}_{args_name}.rst\n")
-
-    # Clean up
-    cmd += ("rm cli/output/*.txt cli/output/*.tex cli/output/*.html\n")
-    cmd = cmd.format(shell_cmd=shell_cmd, progname=progname,
-                     args=' '.join(args[1:]), args_name=args_name)
-
-    os.system(cmd)
-
-if 'cli' in sys.argv:
-    process_cmd("make help")
-
-    process_cmd("mollib --help")
-    process_cmd("mollib --list-plugins")
-    process_cmd("mollib --list-settings")
-
-    process_cmd("mollib process --help")
-    process_cmd("mollib process -i 1UBQ -o 1UBQ_H.pdb --hydrogenate")
-
-    process_cmd("mollib measure --help")
-    process_cmd("mollib measure -i 2MUV -d A:D.20:21.CA A:D.20:21.CA --exclude-intra --exclude-intra-chain")
-    process_cmd("mollib measure -i 2MUV -d 23:49.HA 23:49.H --only-delta 3 --stats")
-    process_cmd("mollib measure -i 2KXA 2LWA -d A:C.5.HA A:C.21.H --only-intra-chain")
-    process_cmd("mollib measure -i 2MJB -a 20:30.C 20:30.N 20:30.H --only-bonded")
-    process_cmd("mollib measure -i 2KXA -dih 2:6.C 2:6.N 2:6.CA 2:6.C --only-bonded --stats")
-    process_cmd("mollib measure -i 2KXA --rama")
-
-    process_cmd("mollib hbonds --help")
-    process_cmd("mollib hbonds -i 2KXA")
-    process_cmd("mollib hbonds -i 1UBQ --hydrogenate|head -n15")
-
-    process_cmd("mollib pa --help")
-    process_cmd("mollib pa -i 2KXA -a 2KXA")
-    process_cmd("mollib pa -i 2MJB -a 2MJB --set 0 --fix-outliers --project-methyls --summary")
-    process_cmd("mollib pa -i 2MJB -a 2MJB --set 0 --exclude CE-HE CD-HD CE-SD --fix-outliers --project-methyls --summary")
-    process_cmd("mollib pa -i 1UBQ -a 2MJB --set 0 --fix-outliers --project-methyls --hydrogenate --summary")
-
-    # cleanup
-    os.system("rm ../1UBQ_H.pdb")

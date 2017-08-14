@@ -6,19 +6,19 @@ The ``process`` command is the main command for processing, reading and writing
 files. All of the options and preprocessors available in ``process`` are
 available to other commands.
 
-.. include:: output/mollib_process_help.rst
+.. include:: cmds/ml_process_help.rst
 
 Arguments
 ---------
 
 ``-i`` / ``--in`` ``id/filename``
-    **(required)** The listing of one or more structural identifiers
-    (ex: PDB file identifiers) or filenames.
+    **(required)** One or more structural identifiers (ex: PDB file
+    identifiers) or filenames to load.
 
     If the structure could not be found locally, a copy will be
     downloaded and cached for further analysis.
 
-    Multiple input identifiers and filenamed can be used to process multiple
+    Multiple input identifiers and filenames can be used to process multiple
     files simultaneously.
 
 ``-o`` / ``--out`` ``filename``
@@ -35,6 +35,13 @@ Arguments
 ``-c`` / ``--config`` ``filename``
     The configuration file. See :ref:`Configuration
     files <configuration-files>` for more details.
+
+``-s`` / ``--save``
+    Save fetched files from the internet to the local directory.
+
+``-m`` / ``--models``
+    The specific model numbers to load. By default, only the first model is
+    loaded.
 
 ``-l``
     List details on the molecule, including the number of chains, residues
@@ -69,4 +76,4 @@ The following example loads a crystal structure of ubiquitin from the PDB
 (``-i 1UBQ``), adds hydrogens to the molecule (``--hydrogenate``) and saves the
 output to a new file (``-o 1UBQ_H.pdb``).
 
-.. include:: output/mollib_process_i_1UBQ_o_1UBQ_H.pdb_hydrogenate.rst
+.. include:: cmds/ml_process_1ubq_1.rst

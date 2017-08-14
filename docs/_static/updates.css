@@ -1,21 +1,132 @@
+body {
+  background-color: #ffffff;
+}
+
 code {
   color: currentColor;
 }
 
-div.sphinxsidebar {
-  font-size: 0.9em;
+div.document {
+  background-color: #fff;
 }
 
-div.body {
-  max-width: 1000px;
+/* Header */
+
+div.header {
+  background-color: #1e69a8;
+  background: linear-gradient(#2a71ad, #3473a9);
+  min-height: 40px;
+  max-width: 1176px; /**/
+}
+
+div.header span.title {
+  padding: 3px 10px;
+  float: left;
+  color: #cbe1f9;
+  text-shadow: 2px 2px 2px #555;
+  font-size: 1.8em;
+  font-family: 'Source Sans Pro', Arial, Helvetica, sans-serif;;
+}
+
+div.header span.title-left {
+  color: #e9f8ff;
+}
+
+div.header ul {
+  float: right;
+  list-style: none;
+  margin: 9px;
+}
+
+div.header li {
+  display: inline;
+}
+
+div.header .search input[type="text"] {
+  font-size: 0.9em;
+  margin-left: 15px;
+  width: 125px;
+  border-radius: 3px;
+  border-style: none;
+  padding: 2px 6px;
+  background-color: #ebf5fd;
+}
+
+div.header .search input[type=text]:focus {
+  background-color: #cfeaff;
+}
+
+/* topbar (breadcrumbs) */
+
+div.related {
+  color: #b1afaf;
+  background: #eaeaea;
+  font-size: 0.8em;
+  text-shadow: none;
+  line-height: 25px;
+  max-width: 1176px; /**/
+}
+
+div.related a {
+  color: #5a5a5a;
+}
+
+/* Sidebar*/
+
+div.sphinxsidebar {
+  font-size: 0.9em;
+  border: 1px solid #ccc;
+  border-radius: 0px 0px 10px 0px;
+  background-color: #f3f9fd;
+}
+
+div.sphinxsidebar h3 {
+  color: #1e69a8;
+  background-color: transparent;
+  padding: 0px 10px;
+}
+
+div.sphinxsidebar h3 a {
+  color: #1e69a8;
+  background-color: transparent;
+}
+
+div.sphinxsidebar #searchbox input[type="text"] {
   font-size: 1.1em;
   margin-left: 15px;
+  width: 125px;
+}
+
+div.sphinxsidebar input[type=submit] {
+  font-size: 0.5em;
+  margin-left: 5px;
+  color: #51a8f1;
+  background-color: #dcefff;
+  border-radius: 3px;
+  padding: 1px 5px;
+  border: 1px solid #aad9ff;
+}
+
+div.sphinxsidebar input[type=submit]:hover {
+  color: #dcefff;
+  background-color: #51a8f1;
+}
+
+/* Main text body */
+
+div.body {
+  max-width: 900px;
+  font-size: 1.1em;
+  margin-left: 15px;
+  /*border-right: 1px solid #f1f1f1;*/
 }
 
 div.body pre {
   background-color: #fcfcfc;
+  border: 1px solid #d6d6d6;
   border-radius: 2px;
   margin-left: 15px;
+  font-size: 1.0em;
 }
 
 div.body a {
@@ -50,14 +161,15 @@ div.body h1 {
   background: None;
   padding: 0;
   color: #12446d;
-  font-size: 160%;
+  font-size: 1.6em;
+  border-bottom: 1px dotted #becbd6;
 }
 
 div.body h2 {
   background: None;
   padding: 0;
   color: #1a65a2;
-  font-size: 120%;
+  font-size: 1.3em;
 }
 
 div.body h3 {
@@ -65,7 +177,7 @@ div.body h3 {
   padding: 0px;
   margin-left: 10px;
   color: #247ec7;
-  font-size: 100%;
+  font-size: 1.1em;
 }
 
 div.body li {
@@ -83,6 +195,7 @@ div.body dl {
 
 div.body dt {
   font-weight: 600;
+  font-size: 1.1em;
 }
 
 div.body thead {
@@ -99,23 +212,44 @@ div.body tr.row-even {
   background: #f5f5f5;
 }
 
+div.body sup {
+  font-size: xx-small;
+}
+
+div.body sub {
+  font-size: xx-small;
+}
+
 div.body p.admonition-title {
   margin: 0px;
 }
 
+div.body table.citation {
+  margin-left: 30px;
+  font-size: 0.9em;
+  color: #777777;
+  border-left: 1px solid #aaaaaa;
+}
+
 div.note {
   font-size: 0.9em;
+  color: #444;
+  background-color: #efefef;
+  margin-left: 15px;
 }
 
-div.related {
-  max-width: 1305px;
-  background: #1e69a8;
-  font-size: 1.0em;
+/* Footbar */
+
+div.footer {
+  color: #aaa;
+  max-width: 1176px; /**/
 }
 
-div.note {
-  margin-left: 10px;
+div.footer a {
+  color: #999;
 }
+
+/* Body formatting */
 
 div.code-block-caption {
   margin-left: 15px;
@@ -140,10 +274,6 @@ div.figure p.caption {
   padding: 0px;
   margin: 0px;
 }
-
-/*div.figure.align-right {*/
-  /*margin-left: 0px;*/
-/*}*/
 
 .class dt {
   background: #f7dab9;

@@ -6,7 +6,7 @@ cdef extern from "math.h":
 
 cimport cython
 
-from itertools import chain
+import itertools
 
 
 cdef class Box:
@@ -177,4 +177,5 @@ cdef class Box:
     def get_points(self, point, radius):
         nodes = self.get_nodes(point, radius)
 
-        return (a for a in chain(*nodes) if self.dist(a, point) < radius)
+        return (a for a in itertools.chain(*nodes)
+                if self.dist(a, point) < radius)

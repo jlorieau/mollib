@@ -14,10 +14,7 @@ The molecule object.
 import re
 import weakref
 import logging
-import gzip
-from itertools import chain as ichain
-from itertools import count
-from collections import OrderedDict
+import itertools
 from math import cos, sin, pi
 import os.path
 
@@ -27,8 +24,7 @@ from .atom import Atom
 from .residue import Residue
 from .chain import Chain
 from .topology import topology
-from .utils import grouper
-from mollib.utils.net import get_or_fetch
+from mollib.utils.iteration import grouper
 from . import settings
 
 
@@ -61,6 +57,11 @@ class Molecule(dict):
         molecule.
     atom_class: :class:`Atom`
         The `Atom` class to use for generating atom objects for this molecule.
+    name: str
+        The name or identifier for the molecule
+    model_id: int or None
+        If multiple models were included, then this is the model id number.
+        Otherwise it's None.
     connections: list
         A list of lists of atom numbers for atoms that are connected to each
         other. Note that each list item respect the field order and position
@@ -131,14 +132,12 @@ class Molecule(dict):
     # TODO: add translate method
     # TODO: Add atom notes
     # TODO: Add atom isotopes
-    # TODO: Add function to read pdb header
 
     # The following class-level attributes are used to customize the base or
     # derived Chain, Residue and Atom classes used in the molecule
     chain_class = Chain
     residue_class = Residue
     atom_class = Atom
-
 
     def __new__(cls, *args, **kwargs):
         "Keep track of class instances"
@@ -150,7 +149,8 @@ class Molecule(dict):
             cls._instances.append(ref)
         return instance
 
-    def __init__(self, identifier, *args, **kwargs):
+    def __init__(self, identifier, model_id=None, use_reader=True,
+                 *args, **kwargs):
         """Molecule constructor that accepts an identifier.
 
         Parameters
@@ -158,6 +158,9 @@ class Molecule(dict):
         identifier: str
             An molecule identifier that is either a filename (PDB format),
             or PDB code (ex: '2KXA').
+        use_reader: bool, optional
+            If specified, the Molecular reader will be used to load the
+            molecule.
         """
         # The following strips path and extensition information from the
         # identifier to make an easily readable name.
@@ -166,18 +169,31 @@ class Molecule(dict):
 
         self.name = name
         self.identifier = identifier
+        self.model_id = None
         self.connections = []
         self._parameters = {}
         self.cache = {}
 
-        # Read in the data
-        self.read_identifier(identifier)
+        # Read in the data. The reader sets the model_id attribute
+        if use_reader:
+            from . import readers
+            mr = readers.MoleculeReader()
+            mr.read(identifiers_or_files=identifier, model_ids=model_id,
+                    source_molecules=self)
+
         super(Molecule, self).__init__(*args, **kwargs)
 
     def __repr__(self):
-        return ("Molecule ({}):".format(self.name) +
+        return ("Molecule ({}):".format(self.fullname) +
                 "    {} chains, {} residues, {} atoms."
                 .format(self.chain_size, self.residue_size, self.atom_size))
+
+    @property
+    def fullname(self):
+        if self.model_id is not None:
+            return '{}-{}'.format(self.name, self.model_id)
+        else:
+            return self.name
 
     # Class properties
 
@@ -239,7 +255,8 @@ class Molecule(dict):
         >>> print(l[16:])
         [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
         """
-        return (r for r in sorted(ichain(*[r.values() for r in self.values()]),
+        return (r for r in sorted(itertools.chain(*[r.values()
+                                                    for r in self.values()]),
                                   key=lambda r: (r.chain.id, r.number)))
 
     @property
@@ -254,7 +271,8 @@ class Molecule(dict):
         >>> print(l[16:])
         [16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1]
         """
-        return (r for r in sorted(ichain(*[r.values() for r in self.values()]),
+        return (r for r in sorted(itertools.chain(*[r.values()
+                                                    for r in self.values()]),
                                   key=lambda r: (r.chain.id, r.number),
                                   reverse=True))
 
@@ -267,8 +285,9 @@ class Molecule(dict):
     def atoms(self):
         """An iterator over all atoms in this molecule, sorted by atom
         number."""
-        return (a for a in sorted(ichain(*[r.values() for r in
-                                           ichain(*[c.values() for c in
+        return (a for a in sorted(itertools.chain(*[r.values() for r in
+                                                itertools.chain(*[c.values()
+                                                                  for c in
                                                     self.values()])]),
                                   key=lambda a: a.number))
 
@@ -748,7 +767,7 @@ class Molecule(dict):
 
         # Convert the atom numbers to actual atoms. First collect all the
         # atom numbers needed and convert it to a dict.
-        number_set = set(ichain(*atom_numbers))
+        number_set = set(itertools.chain(*atom_numbers))
         atom_list = [a for a in self.atoms if a.number in number_set]
         atom_dict = {a.number:a for a in atom_list}
 
@@ -808,7 +827,7 @@ class Molecule(dict):
         chains = chains_protein + chains_hetatm
 
         # Prepare the atom number counter and renumber the atom numbers
-        counter = count(1)
+        counter = itertools.count(1)
         for chain in chains:
             for residue in chain.residues:
                 # The following sorts hydrogens together with their heavy atoms.
@@ -1000,249 +1019,6 @@ class Molecule(dict):
                 # numbers
                 for numbers in grouper(3, bonded_numbers, ''):
                     f.write(conect_line.format(atom_number_1, *numbers))
-
-    def read_identifier(self, identifier):
-        """Reads in structure based on an identifier
-
-        Parameters
-        ----------
-        identifier : str
-            The `identifier` is either a filename, path, or 4-alphanumeric
-            PDB code.
-        """
-        # Check to see if identifier is a filename or path
-        if os.path.isfile(identifier):
-            self.read_pdb(identifier)
-        else:
-            self.fetch_pdb(identifier)
-
-    def read_pdb(self, filename):
-        """Reads in data from a PDB file.
-
-        Supported extensions include '.pdb' and '.pdb.gz'
-
-
-        .. note:: This function invalidates all caches.
-        """
-        # Invalidate all caches
-        self.clear_cache()
-
-        if filename.endswith('.gz'):
-            with gzip.open(filename) as f:
-                self.read_stream(f)
-        else:
-            with open(filename) as f:
-                self.read_stream(f)
-
-    def fetch_pdb(self, pdb_code, load_cached=True):
-        """Download/fetch a PDB file online.
-
-        Parameters
-        ----------
-        pdb_code : str
-            The 4 alphanumeric character PDB code to load.
-        load_cached : bool, optional
-            If a cached version is available, use that instead of downloading
-            the file.
-        """
-        temp_path = get_or_fetch(pdb_code, extensions='pdb.gz',
-                                 urls=settings.pdb_urls)
-        if temp_path is None:
-            msg = "The identifier or file '{}' could not be found."
-            raise IOError(msg.format(pdb_code))
-        self.read_pdb(temp_path)
-
-    _re_atom = re.compile((r"(?P<type>ATOM  |HETATM)"
-                            "(?P<number>[\s\d]{5}) "
-                            "(?P<name>[\s\w]{4})"
-                            "(?P<alt_loc>[\w\s])"
-                            "(?P<residue_name>[\w\s]{3}) "
-                            "(?P<chain>[\s\w]{1})"
-                            "(?P<residue_number>[\s\w]{4})"
-                            "(?P<icode>[\w\s])   "
-                            "(?P<x>[\d\s\.\-]{8})"
-                            "(?P<y>[\d\s\.\-]{8})"
-                            "(?P<z>[\d\s\.\-]{8})"
-                            "(?P<occupancy>[\d\s\.\-]{6})"
-                            "(?P<B_factor>[\d\s\.\-]{6})          "
-                            "(?P<element>[\s\w]{2})"
-                            "(?P<charge>[\d\s\.\-]{2})?"))
-
-    _conversions = {'type': lambda x: str(x).strip(),
-                    'number': int,
-                    'name': lambda x: str(x).strip(),
-                    'alt_loc': lambda x: str(x).strip(),
-                    'residue_name': lambda x: str(x).strip(),
-                    'chain': lambda x: str(x).strip(),
-                    'residue_number': int,
-                    'icode': lambda x: str(x).strip(),
-                    'x': float,
-                    'y': float,
-                    'z': float,
-                    'occupancy': float,
-                    'B_factor': float,
-                    'element': lambda x: str(x).strip(),
-                    'charge': lambda x: float(x) if str(x).strip() else ''}
-
-    def _match_atom(self, match):
-        """Matches an ATOM or HETATM line in a PDB file and creates new
-        :obj:`mollib.Atom`, :obj:`mollib.Residue` and :obj:`mollib.Chain`
-        objects.
-
-        Parameters
-        ----------
-        match : regex :obj:`match`
-            A regex match object generated by self._re_atom
-
-        .. note:: This function uses the string conversion functions in
-                  self._conversions.
-        """
-        t = match.groups()
-        # Convert types
-        t = (str(t[0]).strip(),  # 0: type
-             int(t[1]),     # 1: number
-             str(t[2]).strip(),  # 2: name
-             str(t[3]).strip(),  # 3: alt_loc
-             str(t[4]).strip(),  # 4: residue_name
-             str(t[5]).strip(),  # 5: chain
-             int(t[6]),     # 6: residue_number
-             str(t[7]).strip(),  # 7: icode
-             float(t[8]),   # 8: x
-             float(t[9]),   # 9: y
-             float(t[10]),  # 10: z
-             float(t[11]),  # 11: occupancy
-             float(t[12]),  # 12: B-factor
-             str(t[13]).strip(), # 13: element
-             str(t[14]).strip(), # 14: charge
-             #(float(t[14]) if t[14] and
-             # str(t[14]).strip() else '')  # 14: charge
-             )
-
-        # Implementation 2: twice as slow as implementation 1
-        # groupdict = {field_name: self._conversions[field_name](field_value)
-        #              for field_name, field_value
-        #              in match.groupdict().items()}
-        #
-        # Implementation 3: slower than implementaiton 2
-        # Old implementation of string conversion using the slower convert(...)
-        # groupdict = {field_name: convert(field_value)
-        #              for field_name, field_value
-        #              in match.groupdict().items()}
-
-        # create Chain, if it doesn't already exist
-        identifier = t[5]
-
-        # If this is a HETATM, then append a '*' to the chain name so that
-        # it doesn't overwrite protein chains.
-        if t[0] == 'HETATM':
-            identifier += '*'
-
-        # Create a new chain, if it doesn't already exist
-        if identifier not in self:
-            chain = self.chain_class(identifier=identifier)
-            chain.molecule = self
-            self[identifier] = chain
-
-        chain = self[identifier]
-
-        # create Residue, if it doesn't already exist
-        res_number, res_name, = t[6], t[4]
-
-        if res_number not in chain:
-            try:
-                residue = self.residue_class(number=res_number, name=res_name)
-
-                residue.chain = chain
-                residue.molecule = self
-                chain[res_number] = residue
-            except KeyError:
-                return None
-        residue = chain[res_number]
-
-        # create the Atom. The following code overwrites atoms duplicate
-        # in atom name
-        number, name, alt_loc, element = t[1], t[2], t[3], t[13]
-
-        # Reformat the x/y/z coordinates to a numpy array
-        pos = np.array(t[8:11])
-
-        # Populate the new atom parameters and create the new Atom object.
-        atom = self.atom_class(number=number, name=name, pos=pos,
-                               element=element, residue=residue, chain=chain,
-                               molecule=self)
-
-        residue[name] = atom
-
-    _re_conect = re.compile(r'^CONECT(?P<numbers>[\s\d]+)$')
-
-    def _match_conect(self, match):
-        """Matches a 'CONECT' line in a PDB file and populates the connections
-        attributue.
-        """
-        # The CONECT line format uses fixed columns and some may be missing so
-        # This line has to be broken into fixed pieces
-        number_str = match.groupdict()['numbers']
-
-        str_len = len(number_str)
-        offset = -7 # This is for the stripped 'CONECT' string
-        cols = [(7, 11), (12, 16), (17, 21), (22, 26), (27, 31), (32, 36),
-                (37, 41), (42, 46), (47, 51), (52, 56), (57,61)]
-        cols = [(i+offset, j+offset+1) for i,j in cols]
-
-        atom_numbers = [number_str[i:j].strip()
-                        if (i < str_len and j <str_len) else None
-                        for i,j in cols]
-        atom_numbers = [int(i) if i else None for i in atom_numbers]
-        self.connections.append(atom_numbers)
-
-    def read_stream(self, stream):
-        """Reads in data from a stream.
-        """
-        # TODO: Make a faster reader with structs and binary, with a fallback
-        #       to the regex matcher.
-        self.clear()
-
-        # A list of regex matchers to harvest data from each line.
-        # The first item is the regex to match. If there is a match,
-        # the second item (function) will be called with the match
-        matchers = OrderedDict((
-                            ('ATOM', (self._re_atom, self._match_atom)),
-                            ('CONECT', (self._re_conect, self._match_conect)),
-                                ))
-
-        # Find the ATOM/HETATM lines and pull out the necessary data
-
-        # Generator implementation 1: This generator function reads only the
-        # the first model. It's a little slower than implementation 2 (about
-        # 10%). It takes 6.0s to read 3H0G
-        for line in stream:
-            m, func = None, None
-            # Gzipped files return bytes lines that have to be decoded
-            if type(line) == bytes:
-                line = line.decode('latin-1')
-
-            # Read only the first model. Skip reading ATOM lines hereafter
-            if line[0:6] == 'ENDMDL' and 'ATOM' in matchers:
-                del matchers['ATOM']
-
-            # Advance the iterator if 1) no regex has been specified
-            # yet, 2) the current regex is returning no matches and
-            # it has before
-            for name, (regex, func) in matchers.items():
-                m = regex.match(line)
-                if m:
-                    break
-            # If line cannot be matched, skip this line.
-            if m is None or func is None:
-                continue
-            func(m)
-
-        # Create links and set the atom topologies
-        self.link_residues()
-
-        # TODO: This test should skip CONECT items if there are more than
-        #       99,999 atoms
-        self.set_atom_topologies()
 
     # Molecular Properties
 

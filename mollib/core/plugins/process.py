@@ -26,22 +26,33 @@ class Process(Plugin):
 
             # Input filename or identifier
             subparser.add_argument('-i', '--in', dest='i',
-                                action='append', nargs='+', required=True,
-                                type=str,
-                                metavar='id/filename',
-                                help=("(required) The filename(s) or PDB "
-                                      "identifier(s) of the structure(s)"))
+                                   action='append', nargs='+', required=True,
+                                   type=str,
+                                   metavar='id/filename',
+                                   help=("(required) The filename(s) or PDB "
+                                         "identifier(s) of the structure(s)"))
 
             # Config filename
             subparser.add_argument('-c', '--config',
-                                nargs=1, required=False, type=str,
-                                metavar='filename',
-                                help="The configuration filename")
+                                   nargs=1, required=False, type=str,
+                                   metavar='filename',
+                                   help="The configuration filename")
 
             # List molecule details
             subparser.add_argument('-l',
-                                action='store_true',
-                                help='List details on the molecule(s)')
+                                   action='store_true',
+                                   help='List details on the molecule(s)')
+
+            # Save fetched files locally
+            subparser.add_argument('-s', '--save',
+                                   action='store_true',
+                                   help='Save fetched files to the local '
+                                        'directory.')
+
+            # Specify specific models
+            subparser.add_argument('-m', '--models',
+                                   nargs='*', type=int,
+                                   help='The models numbers to analyze.')
 
         # Add the output file option only to the process parser
         subparser = self.command_subparsers['process']
@@ -73,7 +84,8 @@ class Process(Plugin):
             print(molecule)
             chain_msg = '\tChain {:<3}: {:>4} residues, {:>4} atoms.'
             for chain in molecule.chains:
-                print(chain_msg.format(chain, chain.residue_size,
+                chain_id = str(chain.id)
+                print(chain_msg.format(chain_id, chain.residue_size,
                                        chain.atom_size))
 
     def postprocess(self, molecules, args):
@@ -104,10 +116,10 @@ class Process(Plugin):
             # Write the file.
             output_filename = output_filename[0]
             msg = "Writing ({}) to {}."
-            logging.debug(msg.format(molecule.name, output_filename))
+            logging.debug(msg.format(molecule.fullname, output_filename))
 
             molecule.write_pdb(output_filename)
 
     def selected(self, args):
-        "This plugin is always active."
+        """This plugin is always active."""
         return True

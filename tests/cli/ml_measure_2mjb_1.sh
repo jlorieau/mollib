@@ -1,0 +1,1 @@
+ml measure -i 2MJB -a 20:30.C 20:30.N 20:30.H --only-bonded

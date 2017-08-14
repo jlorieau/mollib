@@ -1,0 +1,30 @@
+Table: Distances for 2MUV-1
+
+Num  Atom 1    Atom 2   Dist. (A)  
+---- --------- -------- -----------
+1    A.S23.HA  A.L26.H  7.01       
+2    A.D24.HA  A.V27.H  5.08       
+3    A.P25.HA  A.V28.H  3.38       
+4    A.L26.HA  A.A29.H  3.58       
+5    A.V27.HA  A.A30.H  3.64       
+6    A.V28.HA  A.N31.H  3.58       
+7    A.A29.HA  A.I32.H  3.42       
+8    A.A30.HA  A.I33.H  3.59       
+9    A.N31.HA  A.G34.H  3.53       
+10   A.I32.HA  A.I35.H  3.75       
+11   A.I33.HA  A.L36.H  3.42       
+12   A.I35.HA  A.L38.H  3.36       
+13   A.L36.HA  A.I39.H  3.54       
+14   A.H37.HA  A.L40.H  3.49       
+15   A.L38.HA  A.W41.H  3.42       
+16   A.I39.HA  A.I42.H  3.77       
+17   A.L40.HA  A.L43.H  3.63       
+18   A.W41.HA  A.D44.H  3.46       
+19   A.I42.HA  A.R45.H  3.61       
+20   A.L43.HA  A.L46.H  3.36       
+21   A.D44.HA  A.F47.H  3.58       
+22   A.R45.HA  A.F48.H  3.67       
+23   A.L46.HA  A.K49.H  6.94       
+                        ---------  
+                        4.0 ± 1.0  
+
