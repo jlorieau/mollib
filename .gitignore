@@ -3,7 +3,7 @@
 *.pyc
 *.so
 *.egg-info
-.eggs/*
+.eggs
 *.tar
 *~
 build/
@@ -13,7 +13,7 @@ dist/
 .idea
 .tox
 .cache
-.coverage
+.coverage**
 .noseids
 nosetests.json
 
@@ -24,5 +24,8 @@ docs/cli/output/*
 # Analysis files and images
 analysis/*/*.png
 analysis/*/*.svg
-benchmarks/
+analysis/*/*/*.png
+analysis/*/*/*.svg
+analysis/*/*.txt
+*.ipynb
 .ipynb_checkpoints
