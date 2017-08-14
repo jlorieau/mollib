@@ -1,3 +1,5 @@
 # Datasets
 include mollib/*.txt
+recursive-include mollib/ *.pyx
+recursive-include mollib/ *.pxd
 recursive-include mollib/data *.npz
