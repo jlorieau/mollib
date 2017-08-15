@@ -35,4 +35,4 @@ install:
   - make install
 # command to run tests
 script:
-  - pytest --doctest-modules --doctest-glob=mollib/*.py --doctest-glob=*.pyx --doctest-glob=docs/*.rst --ignore=setup.py --ignore=docs/conf.py --ignore=build/* tests/
+  - pytest
