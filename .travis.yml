@@ -4,7 +4,16 @@ python:
   - "3.4"
   - "3.5"
   - "3.6"
-
+addons:
+  apt:
+    packages:
+    - libatlas-dev
+    - libatlas-base-dev
+    - liblapack-dev
+    - gfortran
+    - libgmp-dev
+    - libmpfr-dev
+    - ccache
 install:
   - make install
 # command to run tests
