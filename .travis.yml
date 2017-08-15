@@ -31,7 +31,7 @@ before_install:
 # Install packages
 install:
 #  - conda install --yes python=$TRAVIS_PYTHON_VERSION numpy scipy pytest
-  - pip install numpy scipy --only-binary
+  - pip install --only-binary=numpy,scipy numpy scipy
   - make install
 # command to run tests
 script:
