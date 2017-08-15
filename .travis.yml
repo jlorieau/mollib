@@ -30,7 +30,7 @@ before_install:
   - sudo ln -s /run/shm /dev/shm
 # Install packages
 install:
-  - conda install --yes python=$TRAVIS_PYTHON_VERSION atlas numpy scipy matplotlib pytest dateutil pandas statsmodels
+  - conda install --yes python=$TRAVIS_PYTHON_VERSION numpy scipy pytest
   - make install
 # command to run tests
 script:
