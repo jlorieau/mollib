@@ -30,10 +30,8 @@ before_install:
   - sudo ln -s /run/shm /dev/shm
 # Install packages
 install:
-  - conda install --yes python=$TRAVIS_PYTHON_VERSION atlas numpy scipy matplotlib nose dateutil pandas statsmodels
-  # Coverage packages are on my binstar channel
-  - conda install --yes -c dan_blanchard python-coveralls nose-cov
-  - python setup.py install
+  - conda install --yes python=$TRAVIS_PYTHON_VERSION atlas numpy scipy matplotlib pytest dateutil pandas statsmodels
+  - make install
 # command to run tests
 script:
   - pytest --doctest-modules --doctest-glob=mollib/*.py --doctest-glob=*.pyx --doctest-glob=docs/*.rst --ignore=setup.py --ignore=docs/conf.py --ignore=build/* tests/
