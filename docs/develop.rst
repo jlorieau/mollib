@@ -142,14 +142,26 @@ Linux Distributions (Python Wheels)
 Mac OS X Distributions (mpkg)
 *****************************
 
-    Compile and build a Mac OS X package (``.mpkg``) file.
+    1. Upload the source distribution
 
-    .. code-block:: shell-session
+        .. code-block:: shell-session
 
-        $ python setup.py bdist_mpkg
+            $ python setup.py sdist upload
 
-    The ``.mpkg`` file can be installed by dragging it into the Applications
-    folder.
+    2. Upload a binary distribution
+
+        .. code-block:: shell-session
+
+            $ python setup.py bdist_wheel upload
+
+    2. Compile and build a Mac OS X package (``.mpkg``) file.
+
+        .. code-block:: shell-session
+
+            $ python setup.py bdist_mpkg
+
+      The ``.mpkg`` file can be installed by dragging it into the Applications
+      folder.
 
 
 Adding Plugins

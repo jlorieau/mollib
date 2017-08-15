@@ -15,8 +15,8 @@ It includes tools for:
   their acceptor-donor residues and Ramachandran angles
 - The `measurement`_ of geometries within molecules as well as the reporting
   and classification of Ramachandran angles.
-- The analysis `partial alignment`_ data with residual dipolar coupling (RDC)
-  and residual anisotropic chemical shift (RACS, a.k.a RCSA) data.
+- The analysis `partial alignment`_ NMR data with residual dipolar coupling
+  (RDC) and residual anisotropic chemical shift (RACS, a.k.a RCSA) data.
 
 .. _`processing`: http://mollib.readthedocs.io/en/latest/cli/process.html
 .. _`hydrogen bonds`: http://mollib.readthedocs.io/en/latest/cli/hbonds.html
