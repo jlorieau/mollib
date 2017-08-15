@@ -1,20 +1,39 @@
 language: python
 python:
-  - "2.7"
-  - "3.4"
-  - "3.5"
+#  - "2.7"
+#  - "3.4"
+#  - "3.5"
   - "3.6"
-addons:
-  apt:
-    packages:
-    - libatlas-dev
-    - libatlas-base-dev
-    - liblapack-dev
-    - gfortran
-    - libgmp-dev
-    - libmpfr-dev
-    - ccache
+notifications:
+  email: false
+#addons:
+#  apt:
+#    packages:
+#    - libatlas-dev
+#    - libatlas-base-dev
+#    - liblapack-dev
+#    - gfortran
+#    - libgmp-dev
+#    - libmpfr-dev
+#    - ccache
+#install:
+#  - make install
+# Setup anaconda
+before_install:
+  - wget http://repo.continuum.io/miniconda/Miniconda-latest-Linux-x86_64.sh -O miniconda.sh
+  - chmod +x miniconda.sh
+  - ./miniconda.sh -b
+  - export PATH=/home/travis/miniconda/bin:$PATH
+  - conda update --yes conda
+  # The next couple lines fix a crash with multiprocessing on Travis and are not specific to using Miniconda
+  - sudo rm -rf /dev/shm
+  - sudo ln -s /run/shm /dev/shm
+# Install packages
 install:
-  - make install
+  - conda install --yes python=$TRAVIS_PYTHON_VERSION atlas numpy scipy matplotlib nose dateutil pandas statsmodels
+  # Coverage packages are on my binstar channel
+  - conda install --yes -c dan_blanchard python-coveralls nose-cov
+  - python setup.py install
 # command to run tests
-script: pytest
+script:
+  - pytest --doctest-modules --doctest-glob=mollib/*.py --doctest-glob=*.pyx --doctest-glob=docs/*.rst --ignore=setup.py --ignore=docs/conf.py --ignore=build/* tests/
