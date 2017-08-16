@@ -1,23 +1,33 @@
-language: python
-python:
-  - "2.7"
-  - "3.4"
-  - "3.5"
-  - "3.6"
-os:
-  - linux
-  - osx
 notifications:
   email: false
+language: python
+python:
+- '2.7'
+- '3.4'
+- '3.5'
+- '3.6'
+os:
+- linux
+- osx
+matrix:
+  include:
+  - os: osx
+    language: generic
 before_install:
-  # The next couple lines fix a crash with multiprocessing on Travis
-  - sudo rm -rf /dev/shm
-  - sudo ln -s /run/shm /dev/shm
+- sudo rm -rf /dev/shm
+- sudo ln -s /run/shm /dev/shm
 install:
-  # Use precompiled versions of numpy and scipy to reduce build times
-  - pip install --only-binary=numpy,scipy numpy scipy
-  - make install
-# command to run tests
+- pip install --only-binary=numpy,scipy numpy scipy
+- make install
 script:
-  - make develop
-  - pytest
+- make develop
+- pytest
+deploy:
+  provider: pypi
+  server: https://testpypi.python.org/pypi
+  user: jlorieau
+  password:
+    secure: r9bZFAgKe58/sQf7VarhFXM5xiHydOV6ezlNpA2cCGG+mZHwIcLZduZMVmdGqbQDbQDMDFWp2IHu/h4f4lPjSoFX9D/E4iIhhce9Iqh/axfFFjaWwt+Gi1NnDOipnLNSew4pkJQ2W1EUn1nlSlHNgKfiWCxmuLBt0l3I8uMHReMDzXEpYp2DfDRqGH1CcMsoQqeiFs/LktqsSZ+KtyrVsuZS8u4hdlQiXfC4j42u8PvAFBZGSXpL2BdXm5ysyPcRaIk+pMgR3XR40fClACDxv8FSmBYiWs/v0jwDvaJ1TEBuWoM6xsr4KS4CTH+GPsomAXe0tYP1JncCsIpGfjGEiHAXX19Qi3Cdg30qvszwJey5t4yIA00eqh4XKxPrjrOQDvbxjUo4XfSIuYel6hhXyocjI3R33vUpfRL/tIbqHK2dPb2HDPvE+gv5cy1NWaeQ7EDN1e6dZxOtYRuLn/RoHE15O6e9F5VUe2RdBIguncm7dDeScLTNS8HPlvzErs7CajYvb4chSa3yW4izVDumcpgXxMZiGnKgr0EUDufjtPoyJwkAzBJGA6iJ5gUo4WDe7uavS7P+eEcWqMoxwjxEEt37ZoxNgRLAESnwVr6pfO03kJqOlwG81K3C3ligWjUvN6eJ/cDmzNLt4YM80kgFO/EN2x78en41mwrgDH69mI8=
+#  on:
+#    branch: master
+#  tags: true
