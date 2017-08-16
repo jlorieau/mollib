@@ -17,7 +17,7 @@ before_install:
 - sudo rm -rf /dev/shm
 - sudo ln -s /run/shm /dev/shm
 install:
-- pip install --only-binary=numpy,scipy numpy scipy cibuildwheel==0.4.1
+- pip install --only-binary=numpy,scipy numpy scipy
 - make install
 script:
 - make develop
@@ -25,5 +25,7 @@ script:
 after_success:
 - sudo apt install python3-pip
 - sudo pip3 install auditwheel
+- pwd
+- find ~
 - for FILE in dist/*.whl; do auditwheel repair "$FILE"; done;
 - ls -hlrt wheelhouse/
