@@ -1,36 +1,59 @@
+#notifications:
+#  email: false
+#language: python
+#python:
+#- '2.7'
+#- '3.4'
+#- '3.5'
+#- '3.6'
+#os:
+#- linux
+##- osx
+##matrix:
+##  include:
+##  - os: osx
+##    language: generic
+#before_install:
+#- sudo rm -rf /dev/shm
+#- sudo ln -s /run/shm /dev/shm
+#install:
+#- pip install --only-binary=numpy,scipy numpy scipy
+#- make install
+#script:
+#- make develop
+#- pytest
+#deploy:
+#  provider: pypi
+#  server: https://test.pypi.org/legacy/
+#  user: jlorieau
+#  distributions: "sdist"
+#  password:
+#    secure: r9bZFAgKe58/sQf7VarhFXM5xiHydOV6ezlNpA2cCGG+mZHwIcLZduZMVmdGqbQDbQDMDFWp2IHu/h4f4lPjSoFX9D/E4iIhhce9Iqh/axfFFjaWwt+Gi1NnDOipnLNSew4pkJQ2W1EUn1nlSlHNgKfiWCxmuLBt0l3I8uMHReMDzXEpYp2DfDRqGH1CcMsoQqeiFs/LktqsSZ+KtyrVsuZS8u4hdlQiXfC4j42u8PvAFBZGSXpL2BdXm5ysyPcRaIk+pMgR3XR40fClACDxv8FSmBYiWs/v0jwDvaJ1TEBuWoM6xsr4KS4CTH+GPsomAXe0tYP1JncCsIpGfjGEiHAXX19Qi3Cdg30qvszwJey5t4yIA00eqh4XKxPrjrOQDvbxjUo4XfSIuYel6hhXyocjI3R33vUpfRL/tIbqHK2dPb2HDPvE+gv5cy1NWaeQ7EDN1e6dZxOtYRuLn/RoHE15O6e9F5VUe2RdBIguncm7dDeScLTNS8HPlvzErs7CajYvb4chSa3yW4izVDumcpgXxMZiGnKgr0EUDufjtPoyJwkAzBJGA6iJ5gUo4WDe7uavS7P+eEcWqMoxwjxEEt37ZoxNgRLAESnwVr6pfO03kJqOlwG81K3C3ligWjUvN6eJ/cDmzNLt4YM80kgFO/EN2x78en41mwrgDH69mI8=
+#  on:
+#    all_branches: true
+#  skip_cleanup: true
+##    branch: master
+##  tags: true
+
+
 notifications:
   email: false
-language: python
-python:
-- '2.7'
-- '3.4'
-- '3.5'
-- '3.6'
-os:
-- linux
-#- osx
-#matrix:
-#  include:
-#  - os: osx
-#    language: generic
-before_install:
-- sudo rm -rf /dev/shm
-- sudo ln -s /run/shm /dev/shm
+
+matrix:
+  include:
+    - sudo: required
+      services:
+        - docker
+      env: DOCKER_IMAGE=quay.io/pypa/manylinux1_x86_64
+    - sudo: required
+      services:
+        - docker
+      env: DOCKER_IMAGE=quay.io/pypa/manylinux1_i686
+           PRE_CMD=linux32
+
 install:
-- pip install --only-binary=numpy,scipy numpy scipy
-- make install
+  - docker pull $DOCKER_IMAGE
+
 script:
-- make develop
-- pytest
-deploy:
-  provider: pypi
-  server: https://test.pypi.org/legacy/
-  user: jlorieau
-  distributions: "sdist"
-  password:
-    secure: r9bZFAgKe58/sQf7VarhFXM5xiHydOV6ezlNpA2cCGG+mZHwIcLZduZMVmdGqbQDbQDMDFWp2IHu/h4f4lPjSoFX9D/E4iIhhce9Iqh/axfFFjaWwt+Gi1NnDOipnLNSew4pkJQ2W1EUn1nlSlHNgKfiWCxmuLBt0l3I8uMHReMDzXEpYp2DfDRqGH1CcMsoQqeiFs/LktqsSZ+KtyrVsuZS8u4hdlQiXfC4j42u8PvAFBZGSXpL2BdXm5ysyPcRaIk+pMgR3XR40fClACDxv8FSmBYiWs/v0jwDvaJ1TEBuWoM6xsr4KS4CTH+GPsomAXe0tYP1JncCsIpGfjGEiHAXX19Qi3Cdg30qvszwJey5t4yIA00eqh4XKxPrjrOQDvbxjUo4XfSIuYel6hhXyocjI3R33vUpfRL/tIbqHK2dPb2HDPvE+gv5cy1NWaeQ7EDN1e6dZxOtYRuLn/RoHE15O6e9F5VUe2RdBIguncm7dDeScLTNS8HPlvzErs7CajYvb4chSa3yW4izVDumcpgXxMZiGnKgr0EUDufjtPoyJwkAzBJGA6iJ5gUo4WDe7uavS7P+eEcWqMoxwjxEEt37ZoxNgRLAESnwVr6pfO03kJqOlwG81K3C3ligWjUvN6eJ/cDmzNLt4YM80kgFO/EN2x78en41mwrgDH69mI8=
-  on:
-    all_branches: true
-  skip_cleanup: true
-#    branch: master
-#  tags: true
+  - docker run --rm -v `pwd`:/io $DOCKER_IMAGE $PRE_CMD /io/travis/build-wheels.sh
+  - ls wheelhouse/
