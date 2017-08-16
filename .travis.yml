@@ -23,7 +23,7 @@ script:
 - make develop
 - pytest
 after_success:
-- sudo apt install python3.4
+- sudo apt install python3-pip
 - sudo pip3 install auditwheel
 - for FILE in dist/*.whl; do auditwheel repair "$FILE"; done;
 - ls -hlrt wheelhouse/
