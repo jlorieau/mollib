@@ -8,11 +8,11 @@ python:
 - '3.6'
 os:
 - linux
-- osx
-matrix:
-  include:
-  - os: osx
-    language: generic
+#- osx
+#matrix:
+#  include:
+#  - os: osx
+#    language: generic
 before_install:
 - sudo rm -rf /dev/shm
 - sudo ln -s /run/shm /dev/shm
