@@ -4,9 +4,11 @@ python:
   - "3.4"
   - "3.5"
   - "3.6"
+os:
+  - linux
+  - osx
 notifications:
   email: false
-
 before_install:
   # The next couple lines fix a crash with multiprocessing on Travis
   - sudo rm -rf /dev/shm
