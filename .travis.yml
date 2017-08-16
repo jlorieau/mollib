@@ -35,4 +35,5 @@ install:
   - make install
 # command to run tests
 script:
+  - make develop
   - pytest
