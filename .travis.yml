@@ -27,5 +27,6 @@ after_success:
 - sudo pip3 install auditwheel
 - echo $TRAVIS_BUILD_DIR
 - cd $TRAVIS_BUILD_DIR
+- python setup.py bdist_wheel
 - for FILE in dist/*.whl; do auditwheel repair "$FILE"; done;
 - ls -hlrt wheelhouse/
