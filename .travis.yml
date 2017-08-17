@@ -25,7 +25,7 @@ script:
 after_success:
 - sudo apt install python3-pip
 - cd ~ && wget https://nixos.org/releases/patchelf/patchelf-0.9/patchelf-0.9.tar.bz2
-- tar xvzf patchelf-0.9.tar.bz2
+- tar xvjf patchelf-0.9.tar.bz2
 - cd patchelf-0.9
 - ./configure&& make install
 - sudo pip3 install auditwheel
