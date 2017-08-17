@@ -112,75 +112,6 @@ Including Datasets
 Datasets are included in the ``mollib/data`` directory. Data files should be
 included in the ``MANIFEST.in`` file.
 
-Building and Deployment
-#######################
-
-Branches
-========
-
-
-
-Building
-========
-
-Platform specific distributions are needed because mollib includes C extensions
-written in Cython. These extension must be compiled using a compiler for each
-type of operating system.
-
-The build and install distribution packages, the following packages are needed:
-
-    - `Cython 0.25+ <http://cython.org>`_
-
-Linux Distributions (Python Wheels)
-***********************************
-
-    Compile and build a Python wheel package.
-
-    .. code-block:: shell-session
-
-        $ python setup.py bdist_wheel
-
-    The Python wheel can be installed using
-    `pip <https://pypi.python.org/pypi/pip>`_.
-
-    .. code-block:: shell-session
-
-        $ sudo pip install <package_file.whl>
-
-Mac OS X Distributions (mpkg)
-*****************************
-
-    1. Upload the source distribution
-
-        .. code-block:: shell-session
-
-            $ python setup.py sdist upload
-
-    2. Upload a binary distribution
-
-        .. code-block:: shell-session
-
-            $ python setup.py bdist_wheel upload
-
-    2. Compile and build a Mac OS X package (``.mpkg``) file.
-
-        .. code-block:: shell-session
-
-            $ python setup.py bdist_mpkg
-
-      The ``.mpkg`` file can be installed by dragging it into the Applications
-      folder.
-
-
-Deployment
-==========
-
-The linux and osx packages are built using the mollib-wheels repository.
-
-1. Tag a new release on the mollib master branch
-
-2. Update the tag to pull in the mollib-wheels ``config.sh`` file.
-
 Adding Plugins
 ==============
 
@@ -204,6 +135,17 @@ file for the plugin:
 
         from mollib.core import register_settings
         register_settings(settings)
+
+Branches
+========
+
+Mollib uses git-flow to organize branches. These are the main branches:
+
+1. **master**. The master branch is the default branch, and it contains
+   the *production* code. It should pass all tests including travis-ci tests.
+
+2. **development**. The development branch is used to accept new features,
+   hotfixes and releases. It should pass all tests including travis-ci tests.
 
 Docstring Format
 ================

@@ -47,4 +47,5 @@ Mollib includes tools for:
    recipes/recipes
    releases/releases
    develop
+   building
    api/api
