@@ -22,16 +22,16 @@ install:
 script:
 - make develop
 - pytest
-after_success:
-#- sudo apt install python3-pip
-- cd ~ && wget https://nixos.org/releases/patchelf/patchelf-0.9/patchelf-0.9.tar.bz2
-- tar xvjf patchelf-0.9.tar.bz2
-- cd patchelf-0.9
-- ./configure
-- sudo make install
-- sudo pip install auditwheel
-- echo $TRAVIS_BUILD_DIR
-- cd $TRAVIS_BUILD_DIR
-- python setup.py bdist_wheel
-- for FILE in dist/*.whl; do auditwheel repair "$FILE"; done;
-- ls -hlrt wheelhouse/
+#after_success:
+##- sudo apt install python3-pip
+#- cd ~ && wget https://nixos.org/releases/patchelf/patchelf-0.9/patchelf-0.9.tar.bz2
+#- tar xvjf patchelf-0.9.tar.bz2
+#- cd patchelf-0.9
+#- ./configure
+#- sudo make install
+#- sudo pip install auditwheel
+#- echo $TRAVIS_BUILD_DIR
+#- cd $TRAVIS_BUILD_DIR
+#- python setup.py bdist_wheel
+#- for FILE in dist/*.whl; do auditwheel repair "$FILE"; done;
+#- ls -hlrt wheelhouse/
