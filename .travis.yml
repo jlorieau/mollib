@@ -27,7 +27,7 @@ after_success:
 - cd ~ && wget https://nixos.org/releases/patchelf/patchelf-0.9/patchelf-0.9.tar.bz2
 - tar xvzf patchelf-0.9
 - cd patchelf-0.9
-- configure&& make install
+- ./configure&& make install
 - sudo pip3 install auditwheel
 - echo $TRAVIS_BUILD_DIR
 - cd $TRAVIS_BUILD_DIR
