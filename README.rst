@@ -1,6 +1,9 @@
 Mollib
 ======
 
+.. image:: https://travis-ci.org/jlorieau/mollib.svg?branch=master
+    :target: https://travis-ci.org/jlorieau/mollib
+
 Mollib is a *unified* command-line program and Python library for the
 validation, quality analysis and manipulation of molecular structures with an
 emphasis on biophysical analysis. Mollib is built on a plugin framework to
