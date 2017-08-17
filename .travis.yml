@@ -29,7 +29,7 @@ after_success:
 - cd patchelf-0.9
 - ./configure
 - sudo make install
-- sudo pip3 install auditwheel
+- sudo pip install auditwheel
 - echo $TRAVIS_BUILD_DIR
 - cd $TRAVIS_BUILD_DIR
 - python setup.py bdist_wheel
