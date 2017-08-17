@@ -172,6 +172,15 @@ Mac OS X Distributions (mpkg)
       folder.
 
 
+Deployment
+==========
+
+The linux and osx packages are built using the mollib-wheels repository.
+
+1. Tag a new release on the mollib master branch
+
+2. Update the tag to pull in the mollib-wheels ``config.sh`` file.
+
 Adding Plugins
 ==============
 
