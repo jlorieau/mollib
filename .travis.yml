@@ -23,7 +23,7 @@ script:
 - make develop
 - pytest
 after_success:
-- sudo apt install python3-pip patchelf
+- sudo apt install python3-pip
 - sudo pip3 install auditwheel
 - echo $TRAVIS_BUILD_DIR
 - cd $TRAVIS_BUILD_DIR
