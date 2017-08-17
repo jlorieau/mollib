@@ -103,7 +103,7 @@ setup(name='mollib',
       platforms='any',
       setup_requires=setup_requires,
       install_requires=['numpy', 'scipy', 'configparser'],
-      test_suite='nose.collector',
+      tests_require=['pytest',],
       scripts=['bin/mollib', 'bin/ml'],
       entry_points={
           'console_scripts': [

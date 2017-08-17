@@ -112,8 +112,16 @@ Including Datasets
 Datasets are included in the ``mollib/data`` directory. Data files should be
 included in the ``MANIFEST.in`` file.
 
-Building Platform Packages
-==========================
+Building and Deployment
+#######################
+
+Branches
+========
+
+
+
+Building
+========
 
 Platform specific distributions are needed because mollib includes C extensions
 written in Cython. These extension must be compiled using a compiler for each
