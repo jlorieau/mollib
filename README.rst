@@ -35,11 +35,16 @@ Mollib can be installed through pip.
 
     $ pip install mollib
 
-The mollib documentation (`html`_ | `pdf`_) is generously hosted by readthedocs.
 
+General Information
+-------------------
 
-The `mollib source code`_ is hosted on github.
+Documentation: The mollib documentation (`html`_ | `pdf`_) is generously
+hosted by readthedocs.
+
+Source code: https://github.com/jlorieau/mollib
+
+Issue Tracker: https://github.com/jlorieau/mollib/issues
 
 .. _`html`: http://mollib.readthedocs.io/en/latest/
 .. _`pdf`: http://readthedocs.org/projects/mollib/downloads/pdf/latest/
-.. _`mollib source code`: https://github.com/jlorieau/mollib
