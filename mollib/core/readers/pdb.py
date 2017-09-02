@@ -33,7 +33,7 @@ def parse_atom_lines(atom_list, atom_cls):
                           name=str(l[12:16]).strip(),
                           residue=(str(l[17:20]).strip(),
                                    int(l[22:26]),),  # ('THR', 23)
-                          chain=str(l[21:22]).strip(),
+                          chain=str(l[21:22]).strip() or 'A',
                           pos=np.array((float(l[31:38]),
                                         float(l[39:46]),
                                         float(l[47:54]),)),
