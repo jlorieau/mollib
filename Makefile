@@ -63,7 +63,7 @@ docs: develop  ## Build the documentation
 install:  ## Install mollib
 	python setup.py install
 
-#publish
+#publish:  # Publish the sdist to pypi
 # pip install 'twine>=1.5.0'
 
 analysis/profiling/%.txt: analysis/profiling/%.pyopts

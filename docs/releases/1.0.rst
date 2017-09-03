@@ -8,6 +8,7 @@ and features available in this version.
 
 Minor Releases
 --------------
+- 1.0.8 - Fixed a bug in assigning an atom's element when it is not specified.
 - 1.0.7 - Fixed a bug in defining the topology of Ser residues.
 - 1.0.6 - Fixed deployment of manylinux1 and osx releases.
 
