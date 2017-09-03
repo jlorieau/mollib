@@ -33,11 +33,18 @@ def parse_atom_lines(atom_list, atom_cls):
                           name=str(l[12:16]).strip(),
                           residue=(str(l[17:20]).strip(),
                                    int(l[22:26]),),  # ('THR', 23)
+                          # If the chain id is not available, assume that it's
+                          # 'A'
                           chain=str(l[21:22]).strip() or 'A',
                           pos=np.array((float(l[31:38]),
                                         float(l[39:46]),
                                         float(l[47:54]),)),
-                          element=str(l[76:78]).strip(),)
+                          # If the element field is not available, try to get
+                          # it from the atom name. Otherwise, leave blank.
+                          element=(str(l[76:78]).strip() or
+                                   (str(l[12:16]).strip()[0]
+                                    if not str(l[12:16]).isspace() else '')),
+                          )
                  for l in atom_list]
     return processed
 
