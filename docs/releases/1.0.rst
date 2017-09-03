@@ -6,6 +6,11 @@ Mollib 1.0 release notes
 Version 1.0 of mollib is the first release. This page documents the changes
 and features available in this version.
 
+Minor Releases
+--------------
+- 1.0.7 - Fixed a bug in defining the topology of Ser residues.
+- 1.0.6 - Fixed deployment of manylinux1 and osx releases.
+
 Compatibility
 -------------
 
