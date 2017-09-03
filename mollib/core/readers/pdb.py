@@ -33,7 +33,7 @@ def parse_atom_lines(atom_list, atom_cls):
                           name=str(l[12:16]).strip(),
                           residue=(str(l[17:20]).strip(),
                                    int(l[22:26]),),  # ('THR', 23)
-                          chain=str(l[21:22]).strip(),
+                          chain=str(l[21:22]).strip() or 'A',
                           pos=np.array((float(l[31:38]),
                                         float(l[39:46]),
                                         float(l[47:54]),)),
@@ -319,9 +319,34 @@ class PDBReader(MoleculeReader):
             # Add prev_residue and next_residue pointers in the molecules.
             molecule.link_residues()
 
+            # Translate atom names, if non-standard atom names are used.
+            # translate_atom_name(molecule)
+
             # Set the atom topologies from the 'CONECT' records
             # TODO: This test should skip CONECT items if there are more than
             #       99,999 atoms
             molecule.set_atom_topologies()
 
         return molecules
+
+#
+# def translate_atom_name(molecule):
+#     """Translate atom names that are not in the standard PDB format.
+#
+#     This is needed to process files from Xplor-NIH, for example, which uses 'HN'
+#     and 'HB1'/'HB2' atom names instead of the standard 'H' and 'HB2'/'HB3'.
+#     """
+#     for residue in molecule.residues:
+#         if 'HN' in residue:
+#             atom = residue.pop('HN')
+#             atom.name = 'H'
+#             residue['H'] = atom
+#         # if 'HT1' in residue and 'HT2' in residue and 'HT3' in residue:
+#
+#         if 'HA1' in residue and 'HA2' in residue:
+#             atom1 = residue.pop('HA1')
+#             atom2 = residue.pop('HA2')
+#             atom1.name = 'HA2'
+#             atom2.name = 'HA3'
+#             residue['HA2'] = atom1
+#             residue['HA3'] = atom2
