@@ -65,13 +65,12 @@ def calc_summary(magnetic_interactions, Saupe_components, data, predicted):
           - "Y' (deg)": The alignment beta angle (deg), float
           - "Z'' (deg)": The alignment gamma angle (deg), float
     """
-    # Calculate the overal Aa and Ar from the sum of each molecule/conformer
+    # Calculate the overall Aa and Ar from the sum of each molecule/conformer
     Aa = [v for k, v in Saupe_components.items() if k.startswith('Aa')]
     Ar = [v for k, v in Saupe_components.items() if k.startswith('Ar')]
 
     sum_Aa = sum(Aa)
     sum_Ar = sum(Ar)
-    sum_Rh = sum_Ar/sum_Aa
 
     # Prepare variables to collect statistics
     summary = OrderedDict()
@@ -117,9 +116,10 @@ def calc_summary(magnetic_interactions, Saupe_components, data, predicted):
     Q = {}
     RMS = {}
     for key in RSS:
-        Q[key] = 100. * sqrt(RSS_scaled[key] / (float(count[key]) *
-                                                sum_Aa ** 2 *
-                                                (4. + 3. * sum_Rh**2) / 5.))
+        denom = (float(count[key]) *
+                 sum([a**2 * (4. + 3. * (r / a)**2)/ 5. for a,r in
+                      zip(Aa, Ar)]))
+        Q[key] = 100. * sqrt(RSS_scaled[key] / denom)
 
         if count[key] > 1:
             RMS[key] = sqrt(RSS[key] / float(count[key] - 1))
