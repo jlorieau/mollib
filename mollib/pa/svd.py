@@ -104,8 +104,13 @@ def calc_pa_SVD(magnetic_interactions, data):
     """
     assert(isinstance(magnetic_interactions, list))
 
-    # Make an ordered list of the keys
+    # Make an ordered list of the keys. All of the interaction keys must be
+    # in the magnetic_interactions dicts. Some might be missing from the
+    # magnetic_interactions dicts if atoms and parts of a molecule is missing.
     ordered_keys = sorted(data.keys())
+    ordered_keys = filter(lambda k: all(k in d for d in magnetic_interactions),
+                          ordered_keys)  # Filter keys that aren't in all
+                                         # magnetic_interactions
 
     # Construct the A and D matrices
     A = []
@@ -122,10 +127,10 @@ def calc_pa_SVD(magnetic_interactions, data):
             # Check to see if the interaction has been processed.
             if key not in interaction_dict.keys():
                 if key not in logs.errors:
-                        msg = ("Processing of data point '{}' is not "
-                               "implemented.")
-                        logging.error(msg.format(key))
-                        logs.errors.add(key)
+                    msg = ("Processing of data point '{}' is not "
+                           "implemented.")
+                    logging.error(msg.format(key))
+                    logs.errors.add(key)
                 continue
 
             scale, arr = interaction_dict[key]
@@ -153,15 +158,29 @@ def calc_pa_SVD(magnetic_interactions, data):
 
     # Calculate the predicted RDCs and RACSs. This is done by calculating
     # a new A-matrix, including interactions not in the data.
+
+    # First we'll make a list of keys for the predicted interactions. We can
+    # only predict interactions which are available in *all* of the
+    # magnetic_interactions dicts. Missing interactions arise of one or more
+    # of the molecules have missing atoms and parts.
     keys_pred = {i for d in magnetic_interactions for i in d.keys()}
+    keys_pred = filter(lambda k: all(k in d for d in magnetic_interactions),
+                       keys_pred)  # Filter keys that aren't in all
+                                   # magnetic_interactions
+    keys_pred = sorted(keys_pred)
+
+    # Setup the data and A-matrix for the predicted values
     data_pred = {}
     A_pred = []
 
     for key in keys_pred:
+
+        # Setup the data containers
         expt_error = get_error(key, data)
         A_line = []
+
         for interaction_dict in magnetic_interactions:
-            # Check to see if the interaction has been processed.
+            # Check to see if the interaction can been processed.
             if key not in interaction_dict:
                 if key not in logs.errors:
                     msg = ("Processing of data point '{}' is not "
@@ -176,6 +195,7 @@ def calc_pa_SVD(magnetic_interactions, data):
 
         A_pred.append(A_line)
 
+    A_pred = np.array(A_pred)
     D_pred = np.dot(A_pred, S)
 
     # Copy the predicted RDC and RACS values to the data_pred dict.
@@ -245,4 +265,4 @@ def calc_pa_SVD(magnetic_interactions, data):
     return (data_pred, Saupe_components, stats)
 
 
-# TODO: Implement DA running average to find dynamics (blocks of 10)
+    # TODO: Implement DA running average to find dynamics (blocks of 10)

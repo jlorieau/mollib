@@ -90,7 +90,7 @@ def main():
     args = parser.parse_args()
 
     # Set special flags that need to be set before processing molecules
-    if args.save:
+    if getattr(args, 'save', False):
         mollib.utils.settings.save_fetched_files_locally = True
 
     # Setup the logger
